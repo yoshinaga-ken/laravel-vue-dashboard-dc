@@ -1,5 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import Pagination from "@/Components/Pagination.vue";
 
 defineProps({articles: Array})
 
@@ -13,22 +14,22 @@ defineProps({articles: Array})
             </h2>
         </template>
 
-        <div>{{ articles.length }} 件</div>
+        <Pagination :links="articles.links"/>
 
         <div class="mx-3 px-6 rounded-md shadow overflow-x-auto">
             <table class="w-full whitespace-nowrap">
                 <thead>
                 <tr class="text-left font-bold">
-                    <th>No</th>
+                    <th>Id</th>
                     <th>Title</th>
                     <th>Date</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(article, i) in articles" :key="article.id"
+                <tr v-for="(article, i) in articles.data" :key="article.id"
                     class="hover:bg-gray-100 focus-within:bg-gray-100 dark:hover:bg-gray-800 dark:focus-within:bg-gray-800">
                     <td>
-                        {{ i }}
+                        {{ article.id }}
                     </td>
                     <td>
                         {{ article.title }}
