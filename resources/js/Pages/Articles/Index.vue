@@ -37,6 +37,7 @@ const onClickArticleDelete = (article) => {
                 <tr class="text-left font-bold">
                     <th>Id</th>
                     <th>Title</th>
+                    <th>User</th>
                     <th>Date</th>
                     <th>Delete</th>
                 </tr>
@@ -49,6 +50,9 @@ const onClickArticleDelete = (article) => {
                     </td>
                     <td>
                         {{ article.title }}
+                    </td>
+                    <td>
+                        {{ article.user.name }}
                     </td>
                     <td>
                         {{ article.created_at }}
