@@ -1,9 +1,24 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from "@/Components/Pagination.vue";
+import {useForm} from "@inertiajs/vue3";
+import DangerButton from "@/Components/DangerButton.vue";
 
 defineProps({articles: Array})
 
+const form = useForm({})
+
+const onClickArticleDelete = (article) => {
+    if (confirm('記事を削除しますか?')) {
+        form.delete(route('articles.destroy', article.id), {
+            preserveScroll: true, // 削除後のスクロールリセットを防ぐ
+            errorBag: 'deleteArticle',
+            onSuccess: () => {
+                alert('削除しました');
+            }
+        });
+    }
+};
 </script>
 
 <template>
@@ -23,6 +38,7 @@ defineProps({articles: Array})
                     <th>Id</th>
                     <th>Title</th>
                     <th>Date</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,6 +52,16 @@ defineProps({articles: Array})
                     </td>
                     <td>
                         {{ article.created_at }}
+                    </td>
+                    <td>
+                        <DangerButton
+                            class="ms-3"
+                            :class="{ 'opacity-25': form.processing }"
+                            :disabled="form.processing"
+                            @click="onClickArticleDelete(article)"
+                        >
+                            DEL
+                        </DangerButton>
                     </td>
                 </tr>
                 <tr v-if="articles.length === 0">
