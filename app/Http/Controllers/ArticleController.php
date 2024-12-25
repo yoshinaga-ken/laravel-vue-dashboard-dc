@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Resource\ArticleResource;
 use App\Models\Article;
 use Inertia\Inertia;
 
@@ -14,8 +15,18 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        $articles = Article::with(['user'])
+            ->orderByDesc('created_at')
+            ->paginate(8)
+            ->withQueryString()
+            ->through(fn($article) => [
+                'id' => $article->id,
+                'title' => $article->title,
+                'created_at' => $article->created_at,
+                'user' => $article->user
+            ]);
         return Inertia::render('Articles/Index', [
-            'articles' => Article::paginate(8)
+            'articles' => $articles
         ]);
     }
 
@@ -48,7 +59,6 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
     }
 
     /**
