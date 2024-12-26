@@ -39,6 +39,7 @@ const onClickArticleDelete = (article) => {
                     <th>Title</th>
                     <th>User</th>
                     <th>Date</th>
+                    <th>Tags</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
@@ -56,6 +57,14 @@ const onClickArticleDelete = (article) => {
                     </td>
                     <td>
                         {{ article.created_at }}
+                    </td>
+                    <td>
+                        <template v-for="(tag, index) in article.tags" :key="index">
+                            <span
+                                class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                #{{ tag.name }}
+                            </span>
+                        </template>
                     </td>
                     <td>
                         <DangerButton
