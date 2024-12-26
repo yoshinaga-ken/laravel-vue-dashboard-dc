@@ -15,7 +15,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with(['user'])
+        $articles = Article::with(['user', 'tags'])
             ->orderByDesc('created_at')
             ->paginate(8)
             ->withQueryString()
@@ -23,8 +23,10 @@ class ArticleController extends Controller
                 'id' => $article->id,
                 'title' => $article->title,
                 'created_at' => $article->created_at,
-                'user' => $article->user
+                'user' => $article->user,
+                'tags' => $article->tags
             ]);
+
         return Inertia::render('Articles/Index', [
             'articles' => $articles
         ]);
