@@ -2,16 +2,26 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Article;
+use App\Traits\ValidatesTranslatedAttributes;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreArticleRequest extends FormRequest
 {
+    use ValidatesTranslatedAttributes;
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
         return true;
+    }
+
+
+    protected function model(): string
+    {
+        return Article::class;
     }
 
     /**
