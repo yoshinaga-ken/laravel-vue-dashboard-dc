@@ -6,6 +6,7 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resource\ArticleResource;
 use App\Models\Article;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ArticleController extends Controller
@@ -37,15 +38,19 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Articles/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreArticleRequest $request)
+    public function store(StoreArticleRequest $request, Article $article)
     {
-        //
+        $article->fill($request->all());
+        $article->user_id = $request->user()->id;
+        $article->save();
+
+        return Redirect::route('articles.index')->with('success', "Article:{$article->id} created.");
     }
 
     /**

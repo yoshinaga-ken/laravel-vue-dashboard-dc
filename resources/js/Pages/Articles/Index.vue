@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from "@/Components/Pagination.vue";
-import {useForm} from "@inertiajs/vue3";
+import { Link, router, useForm } from "@inertiajs/vue3";
 import DangerButton from "@/Components/DangerButton.vue";
 
 defineProps({articles: Array})
@@ -28,6 +28,14 @@ const onClickArticleDelete = (article) => {
                 Articles
             </h2>
         </template>
+
+        <div class="flex items-center justify-between mb-6">
+            <Link
+                class="inline-flex items-center justify-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
+                :href="route('articles.create')">
+                📝Create Article
+            </Link>
+        </div>
 
         <Pagination :links="articles.links"/>
 
