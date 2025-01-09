@@ -5,6 +5,9 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import {useTranslation} from "@/Composables/useTranslation.js";
+
+const {t} = useTranslation();
 
 const form = useForm({
   title: '',
@@ -47,7 +50,7 @@ const createArticle = () => {
       </div>
 
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="title" value="Article タイトル"/>
+        <InputLabel for="title" :value="`Article ${t('models.article.title')}`"/>
         <TextInput
           id="title"
           v-model="form.title"
@@ -59,7 +62,7 @@ const createArticle = () => {
       </div>
 
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="body" value="Article 本文"/>
+        <InputLabel for="body" :value="`Article ${t('models.article.body')}`"/>
         <TextInput
           id="body"
           v-model="form.body"
