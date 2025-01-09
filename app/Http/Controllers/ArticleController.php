@@ -50,7 +50,7 @@ class ArticleController extends Controller
         $article->user_id = $request->user()->id;
         $article->save();
 
-        return Redirect::route('articles.index')->with('success', "Article:{$article->id} created.");
+        return Redirect::route('articles.index')->with('success', __('Article created', ['id' => $article->id]));
     }
 
     /**
