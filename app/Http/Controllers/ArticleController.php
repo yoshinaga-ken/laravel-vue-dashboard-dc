@@ -66,6 +66,14 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
+        return Inertia::render('Articles/Edit', [
+                'article' => $article->load('user', 'tags'),
+                'permissions' => [
+                    'canDeleteArticle' => true,
+                    'canUpdateArticle' => true,
+                ],
+            ]
+        );
     }
 
     /**
@@ -73,7 +81,7 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        //
+        $article->fill($request->all())->save();
     }
 
     /**

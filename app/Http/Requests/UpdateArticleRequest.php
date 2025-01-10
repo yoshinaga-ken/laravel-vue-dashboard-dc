@@ -2,16 +2,25 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Article;
+use App\Traits\ValidatesTranslatedAttributes;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateArticleRequest extends FormRequest
 {
+    use ValidatesTranslatedAttributes;
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
+    }
+
+    protected function model(): string
+    {
+        return Article::class;
     }
 
     /**
@@ -22,7 +31,8 @@ class UpdateArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|max:50',
+            'body' => 'required|max:500',
         ];
     }
 }

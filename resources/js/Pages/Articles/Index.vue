@@ -48,6 +48,7 @@ const onClickArticleDelete = (article) => {
                     <th>User</th>
                     <th>Date</th>
                     <th>Tags</th>
+                    <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
@@ -74,7 +75,13 @@ const onClickArticleDelete = (article) => {
                             </span>
                         </template>
                     </td>
-                    <td>
+                  <td>
+                    <Link class="flex items-center px-6 py-4" :href="route('articles.edit', article.id)"
+                          tabindex="-1">
+                      📝
+                    </Link>
+                  </td>
+                  <td>
                         <DangerButton
                             class="ms-3"
                             :class="{ 'opacity-25': form.processing }"
