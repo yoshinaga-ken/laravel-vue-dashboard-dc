@@ -6,6 +6,9 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import {useTranslation} from "@/Composables/useTranslation.js";
+
+const {t} = useTranslation();
 
 const props = defineProps({
   article: Object,
@@ -51,7 +54,7 @@ const updateArticle = () => {
 
       <!-- Article Title -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="name" value="Title"/>
+        <InputLabel for="name" :value="`Article ${t('models.article.title')}`"/>
 
         <TextInput
           id="title"
@@ -66,7 +69,7 @@ const updateArticle = () => {
 
       <!-- Article Body -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="body" value="Body"/>
+        <InputLabel for="body" :value="`Article ${t('models.article.body')}`"/>
 
         <TextInput
           id="body"

@@ -58,7 +58,14 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return Inertia::render('Articles/Show', [
+                'article' => $article->load('user', 'tags'),
+                'permissions' => [
+                    'canDeleteArticle' => false,
+                    'canUpdateArticle' => false,
+                ],
+            ]
+        );
     }
 
     /**
