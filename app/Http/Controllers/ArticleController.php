@@ -111,5 +111,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
+
+        return Redirect::route('articles.index')->with('success', __('Article deleted', ['id' => $article->id]));
     }
 }
