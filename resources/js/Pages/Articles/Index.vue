@@ -4,7 +4,7 @@ import Pagination from "@/Components/Pagination.vue";
 import { Link, router, useForm } from "@inertiajs/vue3";
 import DangerButton from "@/Components/DangerButton.vue";
 
-defineProps({articles: Array})
+defineProps({articles: Object})
 
 const form = useForm({})
 
@@ -56,7 +56,9 @@ const onClickArticleDelete = (article) => {
                 <tr v-for="(article, i) in articles.data" :key="article.id"
                     class="hover:bg-gray-100 focus-within:bg-gray-100 dark:hover:bg-gray-800 dark:focus-within:bg-gray-800">
                     <td>
-                        {{ article.id }}
+                        <Link class="flex items-center px-6 py-4 underline" :href="route('articles.show', article.id)" tabindex="-1">
+                            📄{{ article.id }}
+                        </Link>
                     </td>
                     <td>
                         {{ article.title }}
@@ -76,7 +78,7 @@ const onClickArticleDelete = (article) => {
                         </template>
                     </td>
                   <td>
-                    <Link class="flex items-center px-6 py-4" :href="route('articles.edit', article.id)"
+                    <Link class="flex items-center px-6 py-4 underline" :href="route('articles.edit', article.id)"
                           tabindex="-1">
                       📝
                     </Link>

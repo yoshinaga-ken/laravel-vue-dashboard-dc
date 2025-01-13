@@ -4,5 +4,6 @@ return [
     'article' => [
         'title' => 'タイトル',
         'body' => '本文',
+        'tags' => 'タグ',
     ],
 ];

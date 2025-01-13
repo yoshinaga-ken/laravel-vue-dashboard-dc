@@ -6,6 +6,8 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resource\ArticleResource;
 use App\Models\Article;
+use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -88,7 +90,19 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        $article->fill($request->all())->save();
+        DB::transaction(function () use ($article, $request) {
+            // update article
+            $article->fill($request->all())->save();
+
+            // update tags
+            $article->tags()->detach();
+            collect($request->tags)->each(function ($tagName) use ($article) {
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $article->tags()->attach($tag);
+            });
+        });
+
+        return Redirect::back()->with('success', "Article:{$article->id} updated.");
     }
 
     /**

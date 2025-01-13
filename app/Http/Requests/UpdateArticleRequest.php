@@ -3,12 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Models\Article;
+use App\Traits\ArticleRequest;
 use App\Traits\ValidatesTranslatedAttributes;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateArticleRequest extends FormRequest
 {
     use ValidatesTranslatedAttributes;
+    use ArticleRequest;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -21,18 +23,5 @@ class UpdateArticleRequest extends FormRequest
     protected function model(): string
     {
         return Article::class;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
-    {
-        return [
-            'title' => 'required|max:50',
-            'body' => 'required|max:500',
-        ];
     }
 }

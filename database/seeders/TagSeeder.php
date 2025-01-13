@@ -14,13 +14,14 @@ class TagSeeder extends Seeder
      */
     public function run(): void
     {
-        $isRefresh = false;
+        $isRefresh = 1;
 
-        if (!$isRefresh) {
+        if ($isRefresh) {
+            DB::table('tags')->delete();
             $this->makeTags();
         }
 
-        if (!$isRefresh) {
+        if ($isRefresh) {
             DB::table('article_tag')->truncate();
         }
         $this->makeArticleTag();
