@@ -6,4 +6,7 @@ return [
         'body' => 'Body',
         'tags' => 'Tags',
     ],
+    'team' => [
+        'owner' => 'Owner',
+    ],
 ];

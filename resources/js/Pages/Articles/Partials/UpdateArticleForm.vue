@@ -46,7 +46,7 @@ const updateArticle = () => {
     <template #form>
       <!-- Article Owner Information -->
       <div class="col-span-6">
-        <InputLabel value="Owner"/>
+        <InputLabel :value="`${t('models.team.owner')}`"/>
 
         <div class="flex items-center mt-2">
           <div class="ms-4 leading-tight">
@@ -57,7 +57,7 @@ const updateArticle = () => {
 
       <!-- Article Title -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="name" :value="`Article ${t('models.article.title')}`"/>
+        <InputLabel for="name" :value="`${t('models.article.title')}`"/>
 
         <TextInput
           id="title"
@@ -72,7 +72,7 @@ const updateArticle = () => {
 
       <!-- Article Tags -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="tags" :value="`Article ${t('models.article.tags')}`"/>
+        <InputLabel for="tags" :value="`${t('models.article.tags')}`"/>
         <ElTextTagsInput
           id="tags"
           v-model="form.tags"
@@ -91,7 +91,7 @@ const updateArticle = () => {
 
       <!-- Article Body -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="body" :value="`Article ${t('models.article.body')}`"/>
+        <InputLabel for="body" :value="`${t('models.article.body')}`"/>
 
         <TextInput
           id="body"
