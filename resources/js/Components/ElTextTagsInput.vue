@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { nextTick, ref } from 'vue'
 import { ElTag, ElInput, ElButton } from 'element-plus'
-import 'element-plus/dist/index.css'
 
 const props = defineProps({
   disabled: Boolean,
