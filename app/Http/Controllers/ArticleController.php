@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
-use App\Http\Resource\ArticleResource;
 use App\Models\Article;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -18,16 +18,18 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with(['user', 'tags'])
+        $articles = Article::with(['user', 'tags', 'likes'])
             ->orderByDesc('created_at')
             ->paginate(8)
             ->withQueryString()
-            ->through(fn($article) => [
+            ->through(fn(Article $article) => [
                 'id' => $article->id,
                 'title' => $article->title,
                 'created_at' => $article->created_at,
                 'user' => $article->user,
-                'tags' => $article->tags
+                'tags' => $article->tags,
+                'likes' => $article->likes,
+                'is_liked_by' => $article->isLikedBy(),
             ]);
 
         return Inertia::render('Articles/Index', [
@@ -113,5 +115,20 @@ class ArticleController extends Controller
         $article->delete();
 
         return Redirect::route('articles.index')->with('success', __('Article deleted', ['id' => $article->id]));
+    }
+    public function like(Request $request, Article $article)
+    {
+        $article->likedBy($request->user());
+
+        $user_id = $request->user()->id;
+        return Redirect::back()->with('success', "Article:{$article->id} liked by user {$user_id}.");
+    }
+
+    public function dislike(Request $request, Article $article)
+    {
+        $article->dislikedBy($request->user());
+
+        $user_id = $request->user()->id;
+        return Redirect::back()->with('success', "Article:{$article->id} disliked by user {$user_id}.");
     }
 }
