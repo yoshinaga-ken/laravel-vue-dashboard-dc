@@ -21,6 +21,7 @@ const likeUserNames = computed(() => {
           :class="[ article.is_liked_by ? 'bg-red-200' : 'bg-gray-200', disabled ? 'opacity-50' : 'opacity-100' ]"
           :disabled="disabled">
     <div class="text-pink-500 fas fa-heart mr-1 inline-block"
+         :class="{'animate__heartBeat':article.is_liked_by}"
     >❤
     </div>
     {{ article.likes?.length }}
