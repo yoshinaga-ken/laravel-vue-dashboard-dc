@@ -17,10 +17,12 @@ const onClickToggleLike = (article) => {
     ? form.delete(route('articles.dislike', article.id), {
       errorBag: 'dislikeArticle',
       preserveScroll: true,
+      only: ['articles', 'flash'],
     })
     : form.put(route('articles.like', article.id), {
       errorBag: 'likeArticle',
       preserveScroll: true,
+      only: ['articles', 'flash'],
     });
 }
 
@@ -29,6 +31,7 @@ const onClickArticleDelete = (article) => {
     form.delete(route('articles.destroy', article.id), {
       preserveScroll: true, // 削除後のスクロールリセットを防ぐ
       errorBag: 'deleteArticle',
+      only: ['articles', 'flash'],
       onSuccess: () => {
         alert('削除しました');
       }
@@ -116,7 +119,7 @@ const onClickArticleDelete = (article) => {
             </DangerButton>
           </td>
         </tr>
-        <tr v-if="articles.length === 0">
+        <tr v-if="articles.data.length === 0">
           <td colspan="3">No articles found.</td>
         </tr>
         </tbody>

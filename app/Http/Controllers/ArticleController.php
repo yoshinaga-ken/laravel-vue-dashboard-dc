@@ -18,22 +18,23 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with(['user', 'tags', 'likes'])
-            ->orderByDesc('created_at')
-            ->paginate(8)
-            ->withQueryString()
-            ->through(fn(Article $article) => [
-                'id' => $article->id,
-                'title' => $article->title,
-                'created_at' => $article->created_at,
-                'user' => $article->user,
-                'tags' => $article->tags,
-                'likes' => $article->likes,
-                'is_liked_by' => $article->isLikedBy(),
-            ]);
-
         return Inertia::render('Articles/Index', [
-            'articles' => $articles
+            'articles' => function () {
+                $articles = Article::with(['user', 'tags', 'likes'])
+                    ->orderByDesc('created_at')
+                    ->paginate(8)
+                    ->withQueryString()
+                    ->through(fn(Article $article) => [
+                        'id' => $article->id,
+                        'title' => $article->title,
+                        'created_at' => $article->created_at,
+                        'user' => $article->user,
+                        'tags' => $article->tags,
+                        'likes' => $article->likes,
+                        'is_liked_by' => $article->isLikedBy(),
+                    ]);
+                return $articles;
+            },
         ]);
     }
 
