@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Auth;
 
 class Article extends Model
 {
@@ -38,4 +39,47 @@ class Article extends Model
     {
         return Carbon::parse($value)->format('Y/m/d H:i');
     }
+
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
+    }
+
+    /**
+     * ユーザーによっていいねされているか？
+     *
+     * @param int|null $user_id ユーザーID
+     * @return bool
+     */
+    public function isLikedBy(int $user_id = null): bool
+    {
+        $user_id = $user_id ?? Auth::id();
+        return $user_id && (bool)$this->load('likes')->likes->where('id', $user_id)->count();
+    }
+
+    /**
+     * いいねを設定する
+     *
+     * @param User $user いいねを設定するユーザー
+     * @return void
+     */
+    public function likedBy(User $user): void
+    {
+        $user_id = $user->id;
+        $this->likes()->detach($user_id);
+        $this->likes()->attach($user_id);
+    }
+
+    /**
+     * いいねを取り消す
+     *
+     * @param User $user いいねを取り消すユーザー
+     * @return void
+     */
+    public function dislikedBy(User $user): void
+    {
+        $user_id = $user->id;
+        $this->likes()->detach($user_id);
+    }
+
 }
