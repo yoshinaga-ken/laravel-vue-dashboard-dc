@@ -28,6 +28,7 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "animate.css": "^4.1.1",
         "element-plus": "^2.9.3"
     }
 }
