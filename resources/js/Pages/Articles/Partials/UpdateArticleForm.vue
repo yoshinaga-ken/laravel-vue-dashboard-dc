@@ -1,5 +1,5 @@
 <script setup>
-import {useForm} from '@inertiajs/vue3';
+import {router, useForm} from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
@@ -7,8 +7,8 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import ElTextTagsInput from "@/Components/ElTextTagsInput.vue";
-
 import {useTranslation} from "@/Composables/useTranslation.js";
+import ArticleLikeButton from "@/Components/ArticleLikeButton.vue";
 
 const {t} = useTranslation();
 
@@ -29,6 +29,24 @@ const updateArticle = () => {
     preserveScroll: true,
   });
 };
+
+const onClickToggleLike = (article) => {
+  onClickToggleLikeForm(article);
+}
+const onClickToggleLikeForm = (article) => {
+  article.is_liked_by
+    ? form.delete(route('articles.dislike', article.id), {
+      errorBag: 'dislikeArticle',
+      preserveScroll: true,
+      only: ['article'],
+    })
+    : form.put(route('articles.like', article.id), {
+      errorBag: 'likeArticle',
+      preserveScroll: true,
+      only: ['article'],
+    });
+}
+
 </script>
 
 <template>
@@ -38,9 +56,9 @@ const updateArticle = () => {
     </template>
 
     <template #description>
-      <span v-if="permissions.canUpdateArticle">
-       edit this Article.
-      </span>
+          <span v-if="permissions.canUpdateArticle">
+           edit this Article.
+          </span>
     </template>
 
     <template #form>
@@ -68,6 +86,15 @@ const updateArticle = () => {
         />
 
         <InputError :message="form.errors.title" class="mt-2"/>
+      </div>
+
+      <!-- Article Likes -->
+      <div class="col-span-6 sm:col-span-4">
+        <InputLabel for="name" :value="`${t('models.article.likes')}`"/>
+
+        <ArticleLikeButton :article="article" :is-user-list="true" @click="onClickToggleLike(article)"/>
+
+        <InputError :message="form.errors.likes" class="mt-2"/>
       </div>
 
       <!-- Article Tags -->

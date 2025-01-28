@@ -64,7 +64,10 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         return Inertia::render('Articles/Show', [
-                'article' => $article->load('user', 'tags'),
+                'article' => function () use ($article) {
+                    $article->load('user', 'tags', 'likes')->is_liked_by = $article->isLikedBy();
+                    return $article;
+                },
                 'permissions' => [
                     'canDeleteArticle' => false,
                     'canUpdateArticle' => false,
@@ -79,7 +82,10 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         return Inertia::render('Articles/Edit', [
-                'article' => $article->load('user', 'tags'),
+                'article' => function () use ($article) {
+                    $article->load('user', 'tags', 'likes')->is_liked_by = $article->isLikedBy();
+                    return $article;
+                },
                 'permissions' => [
                     'canDeleteArticle' => true,
                     'canUpdateArticle' => true,
