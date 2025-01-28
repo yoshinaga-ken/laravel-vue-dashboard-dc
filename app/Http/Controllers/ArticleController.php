@@ -111,7 +111,7 @@ class ArticleController extends Controller
             });
         });
 
-        return Redirect::back()->with('success', "Article:{$article->id} updated.");
+        return Redirect::back()->with('success', __('Article updated', ['id' => $article->id]));
     }
 
     /**

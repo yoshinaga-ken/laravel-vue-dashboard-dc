@@ -22,7 +22,7 @@ defineProps({
     <div>
       <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         <UpdateArticleForm :article="article" :permissions="permissions"/>
-        <template v-if="permissions.canDeleteArticle && ! article.personal_team">
+        <template v-if="permissions.canDeleteArticle">
           <SectionBorder/>
 
           <DeleteArticleForm class="mt-10 sm:mt-0" :article="article"/>

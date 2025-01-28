@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="page.props.flash?.success && show"
-             class="flex items-center justify-between mb-8 max-w-3xl bg-green-500 rounded">
+             class="flex items-center justify-between mb-8 bg-green-500 rounded">
             <div class="flex items-center">
                 <svg class="shrink-0 ml-4 mr-2 w-4 h-4 fill-white" xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 20 20">
@@ -18,7 +18,7 @@
             </button>
         </div>
         <div v-if="(page.props.flash?.error || Object.keys(page.props.errors).length > 0) && show"
-             class="flex items-center justify-between mb-8 max-w-3xl bg-red-500 rounded">
+             class="flex items-center justify-between mb-8 bg-red-500 rounded">
             <div class="flex items-center">
                 <svg class="shrink-0 ml-4 mr-2 w-4 h-4 fill-white" xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 20 20">
