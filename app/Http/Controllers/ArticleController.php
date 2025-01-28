@@ -122,7 +122,7 @@ class ArticleController extends Controller
         $article->likedBy($request->user());
 
         $user_id = $request->user()->id;
-        return Redirect::back()->with('success', "Article:{$article->id} liked by user {$user_id}.");
+        return Redirect::back()->with('success', __('Article liked', ['id' => $article->id, 'user_id' => $user_id]));
     }
 
     public function dislike(Request $request, Article $article)
@@ -130,6 +130,6 @@ class ArticleController extends Controller
         $article->dislikedBy($request->user());
 
         $user_id = $request->user()->id;
-        return Redirect::back()->with('success', "Article:{$article->id} disliked by user {$user_id}.");
+        return Redirect::back()->with('success', __('Article disliked', ['id' => $article->id, 'user_id' => $user_id]));
     }
 }

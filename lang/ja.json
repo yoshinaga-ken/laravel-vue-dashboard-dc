@@ -1,4 +1,7 @@
 {
     "Article": "記事",
-    "Article created": "記事ID: :id が作成されました。"
+    "Article created": "記事が作成されました。記事ID: :id",
+    "Article deleted": "記事が削除されました。記事ID: :id",
+    "Article liked": "記事がいいねされました。記事ID: :id ユーザー: :user_id",
+    "Article disliked": "記事のいいねが解除されました。記事ID: :id ユーザー: :user_id"
 }
