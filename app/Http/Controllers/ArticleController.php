@@ -16,11 +16,14 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search','');
+
         return Inertia::render('Articles/Index', [
-            'articles' => function () {
+            'articles' => function () use ($search) {
                 $articles = Article::with(['user', 'tags', 'likes'])
+                    ->where('title', 'like', "%{$search}%")
                     ->orderByDesc('created_at')
                     ->paginate(8)
                     ->withQueryString()

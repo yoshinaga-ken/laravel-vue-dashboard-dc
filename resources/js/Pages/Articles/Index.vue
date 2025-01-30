@@ -4,12 +4,37 @@ import Pagination from "@/Components/Pagination.vue";
 import {Link, useForm} from "@inertiajs/vue3";
 import DangerButton from "@/Components/DangerButton.vue";
 import ArticleLikeButton from "@/Components/ArticleLikeButton.vue";
+import {ElAutocomplete, ElButton} from "element-plus";
+import {useTranslation} from "@/Composables/useTranslation.js";
 
-defineProps({articles: Object})
+const {t} = useTranslation();
 
-const form = useForm({})
+const props = defineProps({articles: Object})
+
+const form = useForm({ search: props.search });
+
 const formProcessing = () => {
   return form.processing;
+}
+
+const formSearchSuggestions = (queryString, cb) => {
+  const lists = [
+    {value: 'abc'},
+    {value: 'abcd'},
+    {value: 'efg'},
+  ]
+  cb(lists.filter(item => item.value.includes(queryString)))
+}
+const onSelectArticleSearch = (item) => {
+  form.search = item.value
+  onClickArticleSearch();
+}
+const onClickArticleSearch = () => {
+  form.get(route('articles.index'), {
+    preserveState: true,
+    preserveScroll: true,
+    only: ['articles', 'flash'],
+  })
 }
 
 const onClickToggleLike = (article) => {
@@ -48,7 +73,18 @@ const onClickArticleDelete = (article) => {
       </h2>
     </template>
 
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center m-2 gap-2">
+      <div class="flex">
+        <el-autocomplete v-model="form.search"
+                         :fetch-suggestions="formSearchSuggestions"
+                         placeholder="Search Title"
+                         clearable
+                         @select="onSelectArticleSearch"
+                         @keydown.enter="onClickArticleSearch">
+        </el-autocomplete>
+        <el-button @click="onClickArticleSearch">🔍</el-button>
+      </div>
+
       <Link
         class="inline-flex items-center justify-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
         :href="route('articles.create')">
@@ -56,7 +92,11 @@ const onClickArticleDelete = (article) => {
       </Link>
     </div>
 
-    <Pagination :links="articles.links"/>
+    <div class="flex items-center m-2 gap-2">
+      {{ articles.total }} {{ t('Record') }}
+      <Pagination :links="articles.links"/>
+    </div>
+
 
     <div class="mx-3 px-6 rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">

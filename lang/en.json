@@ -4,5 +4,6 @@
     "Article deleted": "Article deleted. article id: :id",
     "Article updated": "Article updated. article id: :id",
     "Article liked": "Article liked. article id: :id user id: :user_id",
-    "Article disliked": "Article disliked. article id: :id user id: :user_id"
+    "Article disliked": "Article disliked. article id: :id user id: :user_id",
+    "Record": "Record"
 }
