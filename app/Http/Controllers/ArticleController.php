@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Resource\ArticleResource;
 use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -18,27 +19,48 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('search','');
+        $isWantsJson = $request->wantsJson();
 
-        return Inertia::render('Articles/Index', [
-            'articles' => function () use ($search) {
-                $articles = Article::with(['user', 'tags', 'likes'])
-                    ->where('title', 'like', "%{$search}%")
-                    ->orderByDesc('created_at')
-                    ->paginate(8)
-                    ->withQueryString()
-                    ->through(fn(Article $article) => [
-                        'id' => $article->id,
-                        'title' => $article->title,
-                        'created_at' => $article->created_at,
-                        'user' => $article->user,
-                        'tags' => $article->tags,
-                        'likes' => $article->likes,
-                        'is_liked_by' => $article->isLikedBy(),
-                    ]);
-                return $articles;
-            },
-        ]);
+        $search = $request->input('search', '');
+
+        $sort = $request->input('sort', 'created_at');
+        $order = $request->input('order', 'desc');
+
+        $from = $request->input('from', 0);
+        $to = $request->input('to', Article::PAGE_SIZE);
+
+        return $isWantsJson
+            ? response()->json(ArticleResource::collection(
+                Article::with(['user', 'likes', 'tags'])
+                    ->when($search !== '', function ($query) use ($search) {
+                        $query->where('title', 'like', "%{$search}%");
+                    })
+                    ->orderBy($sort, $order)
+                    ->skip($from)
+                    ->take($to - $from + 1)
+                    ->get()
+            ))
+            : Inertia::render('Articles/Index', [
+                'articles' => function () use ($sort, $order, $search) {
+                    $articles = Article::with(['user', 'tags', 'likes'])
+                        ->when($search !== '', function ($query) use ($search) {
+                            $query->where('title', 'like', "%{$search}%");
+                        })
+                        ->orderBy($sort, $order)
+                        ->paginate(Article::PAGE_SIZE)
+                        ->withQueryString()
+                        ->through(fn(Article $article) => [
+                            'id' => $article->id,
+                            'title' => $article->title,
+                            'created_at' => $article->created_at,
+                            'user' => $article->user,
+                            'tags' => $article->tags,
+                            'likes' => $article->likes,
+                            'is_liked_by' => $article->isLikedBy(),
+                        ]);
+                    return $articles;
+                },
+            ]);
     }
 
     /**
