@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasTranslatedAttributes;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -84,4 +85,10 @@ class Article extends Model
         $this->likes()->detach($user_id);
     }
 
+    public function scopeSearch(Builder $query, string $word): Builder
+    {
+        return $query->when($word !== '', function ($query) use ($word) {
+            $query->where('title', 'like', "%{$word}%");
+        });
+    }
 }

@@ -32,9 +32,7 @@ class ArticleController extends Controller
         return $isWantsJson
             ? response()->json(ArticleResource::collection(
                 Article::with(['user', 'likes', 'tags'])
-                    ->when($search !== '', function ($query) use ($search) {
-                        $query->where('title', 'like', "%{$search}%");
-                    })
+                    ->search($search)
                     ->orderBy($sort, $order)
                     ->skip($from)
                     ->take($to - $from + 1)
@@ -43,9 +41,7 @@ class ArticleController extends Controller
             : Inertia::render('Articles/Index', [
                 'articles' => function () use ($sort, $order, $search) {
                     $articles = Article::with(['user', 'tags', 'likes'])
-                        ->when($search !== '', function ($query) use ($search) {
-                            $query->where('title', 'like', "%{$search}%");
-                        })
+                        ->search($search)
                         ->orderBy($sort, $order)
                         ->paginate(Article::PAGE_SIZE)
                         ->withQueryString()
