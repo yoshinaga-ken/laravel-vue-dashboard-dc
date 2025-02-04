@@ -10,49 +10,50 @@ uses(TestCase::class);
 uses(RefreshDatabase::class);
 
 /**
- * いいね系メソッドのテスト
+ * いいね系メソッドの統合テスト
  * - Article::isLikedBy
  * - Article::likedBy
  * - Article::dislikedBy
  */
-test('いいね系メソッドのテスト', function () {
+test('integration tests for like methods', function () {
+    /** @var User[] $users */
     $users = User::factory()->count(3)->create();
-    /** @var Article[] $articles */
-    $articles = Article::factory()->count(1)->create();
+    /** @var Article $article */
+    $article = Article::factory()->create();
 
     // 2つのユーザーよりいいねをもらう
-    $articles[0]->likedBy($users[0]);
-    $articles[0]->likedBy($users[1]);
+    $article->likedBy($users[0]);
+    $article->likedBy($users[1]);
 
     // チェック　ユーザーからのいいね
-    $this->assertTrue($articles[0]->isLikedBy($users[0]->id));
-    $this->assertTrue($articles[0]->isLikedBy($users[1]->id));
-    $this->assertFalse($articles[0]->isLikedBy($users[2]->id));
+    $this->assertTrue($article->isLikedBy($users[0]->id));
+    $this->assertTrue($article->isLikedBy($users[1]->id));
+    $this->assertFalse($article->isLikedBy($users[2]->id));
 
     // チェック　いいねの数:2
-    expect($articles[0]->likes->count())->toEqual(2);
+    expect($article->likes->count())->toEqual(2);
 
     // User1いいね解除
-    $articles[0]->dislikedBy($users[1]);
+    $article->dislikedBy($users[1]);
     // チェック　User1いいね解除
-    $this->assertFalse($articles[0]->isLikedBy($users[1]->id));
+    $this->assertFalse($article->isLikedBy($users[1]->id));
 
     // チェック　いいねの数:1
-    expect($articles[0]->likes->count())->toEqual(1);
+    expect($article->likes->count())->toEqual(1);
 
     // User1いいね
-    $articles[0]->likedBy($users[1]);
+    $article->likedBy($users[1]);
     // チェック　User1いいね
-    $this->assertTrue($articles[0]->isLikedBy($users[1]->id));
+    $this->assertTrue($article->isLikedBy($users[1]->id));
     // チェック　いいねの数:2
-    expect($articles[0]->likes->count())->toEqual(2);
+    expect($article->likes->count())->toEqual(2);
 
     // USER2でログインする
     actingAs($users[2]);
     // チェック ログインユーザー:USER2 いいね
-    $this->assertFalse($articles[0]->isLikedBy());
+    $this->assertFalse($article->isLikedBy());
     // ログインユーザー:USER2 でいいねをする
-    $articles[0]->likedBy($users[2]);
+    $article->likedBy($users[2]);
     // チェック ログインユーザー:USER2 いいね
-    $this->assertTrue($articles[0]->isLikedBy());
+    $this->assertTrue($article->isLikedBy());
 });

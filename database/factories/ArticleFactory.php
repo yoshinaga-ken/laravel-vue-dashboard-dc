@@ -19,8 +19,8 @@ class ArticleFactory extends Factory
     {
         return [
             'user_id' => User::factory(), // User::inRandomOrder()->first()->id,
-            'title' => fake()->title(),
-            'body' => fake()->city() . ' ' . fake()->text()
+            'title' => fake()->sentence(),
+            'body' => fake()->text()
         ];
     }
 }
