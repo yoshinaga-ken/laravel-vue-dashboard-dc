@@ -14,5 +14,14 @@ Route::middleware([
     Route::apiResource('/articles', ArticleController::class)
         ->names([
             'index' => 'api.articles.index',
+            'store' => 'api.articles.store',
+            'show' => 'api.articles.show',
+            'update' => 'api.articles.update',
+            'destroy' => 'api.articles.destroy',
         ]);
+
+    Route::prefix('articles')->group(function () {
+        Route::put('/{article}/like', [ArticleController::class, 'like'])->name('api.articles.like');
+        Route::delete('/{article}/like', [ArticleController::class, 'dislike'])->name('api.articles.dislike');
+    });
 });

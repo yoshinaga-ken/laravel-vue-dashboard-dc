@@ -72,11 +72,23 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request, Article $article)
     {
-        $article->fill($request->all());
-        $article->user_id = $request->user()->id;
-        $article->save();
+        $isWantsJson = $request->wantsJson();
 
-        return Redirect::route('articles.index')->with('success', __('Article created', ['id' => $article->id]));
+        DB::transaction(function () use ($article, $request) {
+            $article->fill($request->all());
+            $article->user_id = $request->user()->id;
+            $article->save();
+
+            // create tags
+            collect($request->tags)->each(function ($tagName) use ($article) {
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $article->tags()->attach($tag);
+            });
+        });
+
+        return $isWantsJson
+            ? ArticleResource::make($article) // ['article_id' => $article->id]
+            : Redirect::route('articles.index')->with('success', __('Article created', ['id' => $article->id]));
     }
 
     /**
@@ -120,6 +132,8 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticleRequest $request, Article $article)
     {
+        $isWantsJson = $request->wantsJson();
+
         DB::transaction(function () use ($article, $request) {
             // update article
             $article->fill($request->all())->save();
@@ -132,31 +146,46 @@ class ArticleController extends Controller
             });
         });
 
-        return Redirect::back()->with('success', __('Article updated', ['id' => $article->id]));
+        return $isWantsJson
+            ? ArticleResource::make($article) // ['article_id' => $article->id]
+            : Redirect::back()->with('success', __('Article updated', ['id' => $article->id]));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Article $article)
+    public function destroy(Request $request, Article $article)
     {
+        $isWantsJson = $request->wantsJson();
+
         $article->delete();
 
-        return Redirect::route('articles.index')->with('success', __('Article deleted', ['id' => $article->id]));
+        return $isWantsJson
+            ? ['article_id' => $article->id]
+            : Redirect::route('articles.index')->with('success', __('Article deleted', ['id' => $article->id]));
     }
+
     public function like(Request $request, Article $article)
     {
+        $isWantsJson = $request->wantsJson();
+
         $article->likedBy($request->user());
 
         $user_id = $request->user()->id;
-        return Redirect::back()->with('success', __('Article liked', ['id' => $article->id, 'user_id' => $user_id]));
+        return $isWantsJson
+            ? response()->json(new ArticleResource(Article::with(['user', 'likes', 'tags'])->find($article->id)))
+            : Redirect::back()->with('success', __('Article liked', ['id' => $article->id, 'user_id' => $user_id]));
     }
 
     public function dislike(Request $request, Article $article)
     {
+        $isWantsJson = $request->wantsJson();
+
         $article->dislikedBy($request->user());
 
         $user_id = $request->user()->id;
-        return Redirect::back()->with('success', __('Article disliked', ['id' => $article->id, 'user_id' => $user_id]));
+        return $isWantsJson
+            ? response()->json(new ArticleResource(Article::with(['user', 'likes', 'tags'])->find($article->id)))
+            : Redirect::back()->with('success', __('Article disliked', ['id' => $article->id, 'user_id' => $user_id]));
     }
 }
