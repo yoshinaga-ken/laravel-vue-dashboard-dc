@@ -9,6 +9,7 @@ use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -74,6 +75,9 @@ class ArticleController extends Controller
     {
         $isWantsJson = $request->wantsJson();
 
+        $user = $request->user();
+        Gate::forUser($user)->authorize('create', $article);
+
         DB::transaction(function () use ($article, $request) {
             $article->fill($request->all());
             $article->user_id = $request->user()->id;
@@ -134,6 +138,9 @@ class ArticleController extends Controller
     {
         $isWantsJson = $request->wantsJson();
 
+        $user = $request->user();
+        Gate::forUser($user)->authorize('update', $article);
+
         DB::transaction(function () use ($article, $request) {
             // update article
             $article->fill($request->all())->save();
@@ -157,6 +164,9 @@ class ArticleController extends Controller
     public function destroy(Request $request, Article $article)
     {
         $isWantsJson = $request->wantsJson();
+
+        $user = $request->user();
+        Gate::forUser($user)->authorize('delete', $article);
 
         $article->delete();
 
