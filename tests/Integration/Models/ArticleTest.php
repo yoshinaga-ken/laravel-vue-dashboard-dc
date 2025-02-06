@@ -57,3 +57,22 @@ test('integration tests for like methods', function () {
     // チェック ログインユーザー:USER2 いいね
     $this->assertTrue($article->isLikedBy());
 });
+
+/**
+ * isLikedBy - パラメータテスト - user_id:null(default)
+ * - Article::isLikedBy
+ */
+test('@isLikedBy - parameter test - user_id:null', function () {
+    $loginUser = User::factory()->create();
+    /** @var Article $article */
+    $article = Article::factory()->create();
+
+    actingAs($loginUser);
+
+    // ログインユーザーに いいねはされていない
+    $this->assertFalse($article->isLikedBy());
+    // ログインユーザーでいいねをする
+    $article->likedBy($loginUser);
+    // ログインユーザーでいいねされている
+    $this->assertTrue($article->isLikedBy());
+});

@@ -4,6 +4,7 @@ use App\Http\Resource\ArticleResource;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Models\User;
+use Database\Factories\ArticleFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Sanctum\Sanctum;
 
@@ -75,7 +76,7 @@ it('api.articles.index', function () {
 
 it('api.articles.store|update', function (string $method) {
     $user = User::factory()->create();
-    Sanctum::actingAs($user);
+    Sanctum::actingAs($user, ['create', 'update']);
 
     if ($method === 'update') {
         $article = Article::factory()->create(['user_id' => $user->id]);
@@ -127,9 +128,10 @@ dataset('dataset.article.store|update', [
 
 it('api.articles.delete', function () {
     $user = User::factory()->create();
-    Sanctum::actingAs($user);
+    Sanctum::actingAs($user, ['delete']);
 
-    $article = Article::factory()->create();
+    // $userのArticleを作成
+    $article = Article::factory()->create(['user_id' => $user->id]);
 
     // API実行
     $j = $this->deleteJson(route('api.articles.destroy', $article->id));
@@ -192,4 +194,15 @@ it('does not allow a guest to delete', function () {
     $article = Article::factory()->create();
     $this->deleteJson(route('api.articles.destroy', $article->id))
         ->assertUnauthorized();
+});
+
+it('does not allow a user to delete another user\'s article', function () {
+    $user = User::factory()->create();
+
+    $article = ArticleFactory::new()->create();
+
+    Sanctum::actingAs($user, ['delete']);
+
+    $this->deleteJson(route('api.articles.destroy', $article->id))
+        ->assertForbidden();
 });
