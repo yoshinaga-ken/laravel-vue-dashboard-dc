@@ -5,6 +5,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import ElTextTagsInput from "@/Components/ElTextTagsInput.vue";
 import {useTranslation} from "@/Composables/useTranslation.js";
 
 const {t} = useTranslation();
@@ -49,6 +50,7 @@ const createArticle = () => {
         </div>
       </div>
 
+      <!-- Article Title -->
       <div class="col-span-6 sm:col-span-4">
         <InputLabel for="title" :value="`Article ${t('models.article.title')}`"/>
         <TextInput
@@ -61,6 +63,25 @@ const createArticle = () => {
         <InputError :message="form.errors.title" class="mt-2"/>
       </div>
 
+      <!-- Article Tags -->
+      <div class="col-span-6 sm:col-span-4">
+        <InputLabel for="tags" :value="`${t('models.article.tags')}`"/>
+        <ElTextTagsInput
+          id="tags"
+          v-model="form.tags"
+          type="text"
+          class="mt-1 block w-full"
+        />
+
+        <InputError :message="form.errors.tags" class="mt-2"/>
+        <div v-for="(tag, index) in form.tags" :key="index">
+          <InputError
+            :message="form.errors[`tags.${index}`]===undefined ? '' : ('「' + tag + '」 : ' + form.errors[`tags.${index}`])"
+            class="mt-2"/>
+        </div>
+      </div>
+
+      <!-- Article BOdy -->
       <div class="col-span-6 sm:col-span-4">
         <InputLabel for="body" :value="`Article ${t('models.article.body')}`"/>
         <TextInput
