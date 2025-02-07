@@ -143,13 +143,18 @@ const onClickArticleDelete = (article) => {
             </template>
           </td>
           <td>
-            <Link class="flex items-center px-6 py-4 underline" :href="route('articles.edit', article.id)"
-                  tabindex="-1">
+            <Link
+              v-if="$page.props.auth.user.id === article.user.id"
+              class="flex items-center px-6 py-4 underline"
+              :href="route('articles.edit', article.id)"
+              tabindex="-1"
+            >
               📝
             </Link>
           </td>
           <td>
             <DangerButton
+              v-if="$page.props.auth.user.id === article.user.id"
               class="ms-3"
               :class="{ 'opacity-25': formProcessing() }"
               :disabled="formProcessing()"
