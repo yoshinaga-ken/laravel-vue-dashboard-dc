@@ -5,14 +5,14 @@ use App\Models\Article;
 use App\Models\Tag;
 use App\Models\User;
 use Database\Factories\ArticleFactory;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
 use Tests\TestCase;
 
 uses(
     TestCase::class,
-    DatabaseMigrations::class,
+    RefreshDatabase::class,
 );
 
 beforeEach(fn() => $this->seed());
@@ -72,6 +72,10 @@ it('api.articles.index', function () {
     $article = Article::factory()->create(['title' => 'Unique title']);
     $j = $this->getJson(route('api.articles.index', ['search' => $article->title]));
     $j->assertJsonCount(1);
+
+    // Validation が実装されているか？
+    $j = $this->getJson(route('api.articles.index', ['from' => -1, 'to' => 2]));
+    $j->assertJsonStructure(['message','errors' => []]);
 });
 
 it('api.articles.store|update', function (string $method) {
