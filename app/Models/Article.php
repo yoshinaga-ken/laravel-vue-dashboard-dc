@@ -38,7 +38,7 @@ class Article extends Model
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
-    public function getCreatedAtAttribute($value): string
+    public function getCreatedAtAttribute(string $value): string
     {
         return Carbon::parse($value)->format('Y/m/d H:i');
     }

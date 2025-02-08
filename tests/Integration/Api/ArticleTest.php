@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Resource\ArticleResource;
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Models\User;

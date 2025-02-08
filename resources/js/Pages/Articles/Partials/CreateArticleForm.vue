@@ -81,9 +81,9 @@ const createArticle = () => {
         </div>
       </div>
 
-      <!-- Article BOdy -->
+      <!-- Article Body -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="body" :value="`Article ${t('models.article.body')}`"/>
+        <InputLabel for="body" :value="`${t('models.article.body')}`"/>
         <TextInput
           id="body"
           v-model="form.body"

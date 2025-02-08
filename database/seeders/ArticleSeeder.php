@@ -16,6 +16,8 @@ class ArticleSeeder extends Seeder
         // ダミーの記事をN件作る
         Article::factory(20)->create();
 
+        Sleep(1);
+
         // TEST_USER_NAMEの記事をN件作る
         $user = User::where('name', env('TEST_USER_NAME'))->first();
         Article::factory(20)->createQuietly([

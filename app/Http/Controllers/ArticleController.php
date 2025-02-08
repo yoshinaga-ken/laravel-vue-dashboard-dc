@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IndexArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
-use App\Http\Resource\ArticleResource;
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Http\Request;

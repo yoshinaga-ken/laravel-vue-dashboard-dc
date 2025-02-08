@@ -5,8 +5,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\CreatesUsers;
 
 uses(CreatesUsers::class);
-uses(RefreshDatabase::class);
-
 
 test('users cannot create an article when not logged in', function () {
     $this->get('/articles')
