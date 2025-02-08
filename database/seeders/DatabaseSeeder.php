@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             TagSeeder::class,
             LikeSeeder::class,
+            FollowerSeeder::class,
         ]);
     }
 }
