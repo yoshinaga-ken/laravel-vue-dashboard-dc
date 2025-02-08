@@ -35,6 +35,10 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        if ($request->route()->getName() == 'profile.show') {
+            $request->user()->load('followers', 'following');
+        }
+
         return array_merge(parent::share($request), [
             'flash' => function () use ($request) {
                 return [
