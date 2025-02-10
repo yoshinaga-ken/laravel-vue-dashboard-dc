@@ -1,11 +1,13 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from "@/Components/Pagination.vue";
-import {Link, useForm} from "@inertiajs/vue3";
+import {Link, router, useForm} from "@inertiajs/vue3";
 import DangerButton from "@/Components/DangerButton.vue";
 import ArticleLikeButton from "@/Components/ArticleLikeButton.vue";
 import {ElAutocomplete, ElButton} from "element-plus";
 import {useTranslation} from "@/Composables/useTranslation.js";
+import UserFollowButton from "@/Components/UserFollowButton.vue";
+import axios from "@/Utils/axios";
 
 const {t} = useTranslation();
 
@@ -51,6 +53,20 @@ const onClickToggleLike = (article) => {
     });
 }
 
+const onClickToggleFollow = (user) => {
+  form.processing = true;
+
+  axios[user.is_followed_by ? 'delete' : 'put'](
+    route(user.is_followed_by ? 'api.users.unfollow' : 'api.users.follow', { id: user.id })
+  ).then(() => {
+    router.reload({ only: ['articles', 'flash'] });
+  }).catch(error => {
+    console.log(error);
+  }).finally(() => {
+    form.processing = false;
+  });
+}
+
 const onClickArticleDelete = (article) => {
   if (confirm('記事を削除しますか?')) {
     form.delete(route('articles.destroy', article.id), {
@@ -62,7 +78,7 @@ const onClickArticleDelete = (article) => {
       }
     });
   }
-};
+}
 </script>
 
 <template>
@@ -121,10 +137,14 @@ const onClickArticleDelete = (article) => {
             </Link>
           </td>
           <td>
-            {{ article.title }}
+            {{ article.title.substring(0, 20) + (article.title.length > 20 ? '...' : '') }}
           </td>
           <td>
             {{ article.user.name }}
+            <UserFollowButton v-if="article.user.id !== $page.props.auth.user.id"
+                              :user="article.user"
+                              @click="onClickToggleFollow(props.articles.data[i].user)"
+                              :disabled="formProcessing()"/>
           </td>
           <td>
             {{ article.created_at }}

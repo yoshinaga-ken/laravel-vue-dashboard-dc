@@ -6,6 +6,7 @@ use App\Http\Requests\IndexArticleRequest;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleResource;
+use App\Http\Resources\UserResource;
 use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class ArticleController extends Controller
                     ->get()
             ))
             : Inertia::render('Articles/Index', [
-                'articles' => function () use ($sort, $order, $search) {
+                'articles' => function () use ($request, $sort, $order, $search) {
                     $articles = Article::with(['user', 'tags', 'likes'])
                         ->search($search)
                         ->orderBy($sort, $order)
@@ -51,7 +52,7 @@ class ArticleController extends Controller
                             'id' => $article->id,
                             'title' => $article->title,
                             'created_at' => $article->created_at,
-                            'user' => $article->user,
+                            'user' => UserResource::make($article->user)->toArray($request),
                             'tags' => $article->tags,
                             'likes' => $article->likes,
                             'is_liked_by' => $article->isLikedBy(),

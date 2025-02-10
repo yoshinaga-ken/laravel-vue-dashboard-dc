@@ -40,6 +40,7 @@ class HandleInertiaRequests extends Middleware
         }
 
         return array_merge(parent::share($request), [
+            'apiToken' => env('API_TOKEN'),
             'flash' => function () use ($request) {
                 return [
                     'success' => $request->session()->get('success'),

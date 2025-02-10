@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ArticleResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +16,13 @@ class ArticleResource extends JsonResource
     {
         return [
             'id' => $this->getKey(),
-            'title' => $this->title,
-            'body' => $this->body,
+            'name' => $this->name,
+            'email' => $this->email,
             'created_at' => $this->created_at,
-            'is_liked_by' => $this->isLikedBy(),
-            'user' => UserResource::make($this->user)->toArray($request),
-            'tags' => $this->tags,
-            'likes' => $this->likes,
+            'updated_at' => $this->updated_at,
+            'is_followed_by' => $this->isFollowedBy(),
+            'followers' => $this->followers,
+            'following' => $this->following,
         ];
     }
 }
