@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -69,12 +70,50 @@ class User extends Authenticatable
     }
 
     /**
+     * ユーザーがフォローしているかどうか
+     * @param int|null $user_id
+     * @return bool
+     */
+    public function isFollowedBy(int $user_id = null): bool
+    {
+        $user_id = $user_id ?? Auth::id();
+        // followersはリレーションでキャッシュされているので、loadが必要
+        return (bool)$this->load('followers')->followers->where('id', $user_id)->count();
+    }
+
+    /**
+     * ユーザーをフォローする
+     * @param User $user
+     */
+    public function followedBy(User $user): void
+    {
+        $user_id = $user->id;
+        $this->followers()->detach($user_id);
+        $this->followers()->attach($user_id);
+    }
+
+    /**
+     * ユーザーのフォローを外す
+     * @param User $user
+     */
+    public function unfollowedBy(User $user): void
+    {
+        $user_id = $user->id;
+        $this->followers()->detach($user_id);
+    }
+
+    /**
      * フォロワー（自分をフォローしているユーザー）を取得
      * @return BelongsToMany
      */
     public function followers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'followers', 'following_id', 'follower_id');
+        return $this->belongsToMany(
+            User::class,
+            'followers',
+            'following_id',
+            'follower_id'
+        )->withTimestamps();
     }
 
     /**
@@ -83,6 +122,11 @@ class User extends Authenticatable
      */
     public function following(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'following_id');
+        return $this->belongsToMany(
+            User::class,
+            'followers',
+            'follower_id',
+            'following_id'
+        )->withTimestamps();
     }
 }
