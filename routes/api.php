@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,5 +24,10 @@ Route::middleware([
     Route::prefix('articles')->group(function () {
         Route::put('/{article}/like', [ArticleController::class, 'like'])->name('api.articles.like');
         Route::delete('/{article}/like', [ArticleController::class, 'dislike'])->name('api.articles.dislike');
+    });
+
+    Route::prefix('users')->group(function () {
+        Route::put('/{user}/follow', [UserController::class, 'follow'])->name('api.users.follow');
+        Route::delete('/{user}/unfollow', [UserController::class, 'unfollow'])->name('api.users.unfollow');
     });
 });
