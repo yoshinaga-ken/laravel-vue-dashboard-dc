@@ -20,10 +20,10 @@ const likeUserNames = computed(() => {
           class="rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
           :class="[ article.is_liked_by ? 'bg-red-200' : 'bg-gray-200', disabled ? 'opacity-50' : 'opacity-100' ]"
           :disabled="disabled">
-    <div class="text-pink-500 fas fa-heart mr-1 inline-block"
-         :class="{'animate__heartBeat':article.is_liked_by}"
-    >❤
-    </div>
+    <v-icon icon="mdi-thumb-up"
+            class="text-pink-500 mr-1"
+            :class="{'animate__heartBeat':article.is_liked_by}"
+    />
     {{ article.likes?.length }}
   </button>
 

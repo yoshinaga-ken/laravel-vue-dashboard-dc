@@ -29,7 +29,8 @@ const title = computed(() => {
           class="rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
           :class="[ user.is_followed_by ? 'bg-red-200' : 'bg-gray-200', disabled ? 'opacity-50' : 'opacity-100' ]"
           :disabled="disabled">
-    <v-icon class="text-pink-500 fa-regular fa-user mr-1"
+    <v-icon icon="mdi-account-plus"
+            class="text-pink-500 mr-1"
             :class="{'animate__heartBeat':user.is_followed_by}"/>
   </button>
 
