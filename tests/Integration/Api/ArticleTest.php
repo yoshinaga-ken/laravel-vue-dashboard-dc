@@ -25,16 +25,14 @@ const ArticleJsonStructure =
     'created_at',
     'is_liked_by',
     'user' => [
-        "id",
-        "name",
-        "email",
-        "email_verified_at",
-        "two_factor_confirmed_at",
-        "current_team_id",
-        "profile_photo_path",
-        "created_at",
-        "updated_at",
-        "profile_photo_url",
+        'id',
+        'name',
+        'email',
+        'created_at',
+        'updated_at',
+        'is_followed_by',
+        'followers' => [],
+        'following' => [],
     ],
     'tags' => [
         [
@@ -51,7 +49,7 @@ it('api.articles.index', function () {
     $user = User::factory()->create();
     Sanctum::actingAs($user);
 
-    // API実行
+    // 🚀記事一覧取得
     $j = $this->getJson(route('api.articles.index', ['from' => 0, 'to' => 0]));
 
     // APIのレスポンスのJSONのフォーマットチェック
@@ -60,23 +58,44 @@ it('api.articles.index', function () {
     // ページングが正しい
     $from = 2;
     $to = 6;
+    // 🚀記事一覧取得
     $j = $this->getJson(route('api.articles.index', ['from' => $from, 'to' => $to]));
     $j->assertJsonCount($to - $from + 1);
 
     // searchキーワードでの検索結果が正しい - 存在しない
+    // 🚀記事一覧取得
     $j = $this->getJson(route('api.articles.index', ['search' => 'Keywords not in the title']));
     $j->assertJsonCount(0);
 
     // searchキーワードでの検索結果が正しい - 存在する
     /** @var Article $article */
     $article = Article::factory()->create(['title' => 'Unique title']);
+    // 🚀記事一覧取得
     $j = $this->getJson(route('api.articles.index', ['search' => $article->title]));
     $j->assertJsonCount(1);
 
     // Validation が実装されているか？
+    // 🚀記事一覧取得
     $j = $this->getJson(route('api.articles.index', ['from' => -1, 'to' => 2]));
     $j->assertJsonStructure(['message','errors' => []]);
 });
+
+it('api.articles.index - param:user_id', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    Article::factory()->count(8)->create(['user_id' => $user->id]);
+    $userArticleCount = Article::where('user_id', $user->id)->count();
+    // 🚀記事一覧取得
+    $j = $this->getJson(route('api.articles.index', ['user_id' => $user->id]));
+    $j->assertJsonCount($userArticleCount);
+
+    $from = 1; $to = 3;
+    // 🚀記事一覧取得
+    $j = $this->getJson(route('api.articles.index', ['user_id' => $user->id,'from' => $from, 'to' => $to]));
+    $j->assertJsonCount($to - $from + 1);
+});
+
 
 it('api.articles.store|update', function (string $method) {
     $user = User::factory()->create();
@@ -97,7 +116,7 @@ it('api.articles.store|update', function (string $method) {
         'tags' => [$tags[0]->name, $tags[1]->name, "newCreate{$uniqTime}"],
     ];
 
-    // API実行
+    // 🚀記事更新|新規作成
     if ($method === 'update') {
         $j = $this->putJson(route('api.articles.update', $article->id), $data);
     } else {
@@ -123,6 +142,16 @@ it('api.articles.store|update', function (string $method) {
 
     // 新規名前のTag(name:"newCreate{$uniqTime}")が1件新規追加されているかチェック
     expect(Tag::query()->count())->toBe($tagCount + 1);
+
+    // Validation が実装されているか？
+    $data['title'] = '';
+    // 🚀記事更新|新規作成
+    if ($method === 'update') {
+        $j = $this->putJson(route('api.articles.update', $article->id), $data);
+    } else {
+        $j = $this->postJson(route('api.articles.store'), $data);
+    }
+    $j->assertJsonStructure(['message','errors' => []]);
 })->with('dataset.article.store|update');
 
 dataset('dataset.article.store|update', [
@@ -137,7 +166,7 @@ it('api.articles.delete', function () {
     // $userのArticleを作成
     $article = Article::factory()->create(['user_id' => $user->id]);
 
-    // API実行
+    // 🚀記事削除
     $j = $this->deleteJson(route('api.articles.destroy', $article->id));
 
     // APIのレスポンスのJSONのフォーマットチェック
@@ -161,7 +190,7 @@ it('api.like|dislike', function () {
     // いいね OFF　チェック
     $this->assertFalse($article->isLikedBy($user->id));
 
-    // API実行 - いいね ON
+    // 🚀いいね ON
     $j = $this->putJson(route('api.articles.like', $article->id));
 
     // APIのレスポンスのJSONのフォーマットチェック
@@ -169,7 +198,7 @@ it('api.like|dislike', function () {
     // いいね ON チェック
     $this->assertTrue($article->isLikedBy($user->id));
 
-    // API実行 - いいね OFF
+    // 🚀いいね OFF
     $j = $this->deleteJson(route('api.articles.dislike', $article->id));
 
     // APIのレスポンスのJSONのフォーマットチェック
