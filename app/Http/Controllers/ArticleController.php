@@ -25,26 +25,35 @@ class ArticleController extends Controller
         $isWantsJson = $request->wantsJson();
 
         $search = $request->input('search', '');
+        $user_id = $request->input('user_id','');
 
         $sort = $request->input('sort', 'created_at');
         $order = $request->input('order', 'desc');
 
         $from = $request->input('from', 0);
-        $to = $request->input('to', Article::PAGE_SIZE);
+        $ARTICLE_MAX = 1024;
+        $to = $request->input('to', $from + $ARTICLE_MAX - 1);
 
         return $isWantsJson
             ? response()->json(ArticleResource::collection(
                 Article::with(['user', 'likes', 'tags'])
                     ->search($search)
+                    ->when($user_id !== '', function ($query) use ($user_id) {
+                        return $query->where('user_id', $user_id);
+                    })
                     ->orderBy($sort, $order)
-                    ->skip($from)
-                    ->take($to - $from + 1)
+                    ->offset($from)
+                    ->limit($to - $from + 1)
                     ->get()
             ))
             : Inertia::render('Articles/Index', [
-                'articles' => function () use ($request, $sort, $order, $search) {
+                'search' => $search,
+                'articles' => function () use ($user_id, $request, $sort, $order, $search) {
                     $articles = Article::with(['user', 'tags', 'likes'])
                         ->search($search)
+                        ->when($user_id !== '', function ($query) use ($user_id) {
+                            return $query->where('user_id', $user_id);
+                        })
                         ->orderBy($sort, $order)
                         ->paginate(Article::PAGE_SIZE)
                         ->withQueryString()
@@ -94,7 +103,7 @@ class ArticleController extends Controller
 
         return $isWantsJson
             ? ArticleResource::make($article) // ['article_id' => $article->id]
-            : Redirect::route('articles.index')->with('success', __('Article created', ['id' => $article->id]));
+            : Redirect::badk()->with('success', __('Article created', ['id' => $article->id]));
     }
 
     /**
