@@ -283,7 +283,7 @@ const aaa = ref(false)
                   </PrimaryButton>
                   <ActionMessage
                     v-if="article.id === targetArticle?.id"
-                    :on="form.recentlySuccessful" class="me-3">
+                    :on="form.recentlySuccessful" :fade-in="true" class="me-3">
                     Saved.
                   </ActionMessage>
                 </div>
@@ -337,7 +337,7 @@ const aaa = ref(false)
       </template>
 
       <template #footer>
-        <ActionMessage :on="form.recentlySuccessful" class="me-3">
+        <ActionMessage :on="form.recentlySuccessful" :fade-in="true" class="me-3">
           Created.
         </ActionMessage>
 
@@ -387,7 +387,7 @@ const aaa = ref(false)
       </template>
 
       <template #footer>
-        <ActionMessage :on="form.recentlySuccessful" class="me-3">
+        <ActionMessage :on="form.recentlySuccessful" :fade-in="true" class="me-3">
           Saved.
         </ActionMessage>
 
