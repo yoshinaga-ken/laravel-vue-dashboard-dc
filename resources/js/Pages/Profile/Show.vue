@@ -6,8 +6,8 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
-import UpdateProfileArticlesForm from "@/Pages/Profile/Partials/UpdateProfileArticlesForm.vue";
 import ActionSection from "@/Components/ActionSection.vue";
+import ArticlesForm from "@/Components/ArticlesForm.vue";
 
 defineProps({
     confirmsTwoFactorAuthentication: Boolean,
@@ -34,7 +34,7 @@ defineProps({
                 <div>
                   <ActionSection class="mt-10 sm:mt-0">
                     <template #title>
-                      Followers Information
+                      Follow Information
                     </template>
 
                     <template #description>
@@ -63,6 +63,12 @@ defineProps({
                     </template>
                   </ActionSection>
                   <SectionBorder/>
+                </div>
+
+                <div>
+                    <ArticlesForm :search="{user_id: $page.props.auth.user.id}"/>
+
+                    <SectionBorder/>
                 </div>
 
                 <div v-if="$page.props.jetstream.canUpdatePassword">
