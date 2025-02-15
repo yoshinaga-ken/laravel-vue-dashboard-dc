@@ -62,22 +62,29 @@ it('api.articles.index', function () {
     $j = $this->getJson(route('api.articles.index', ['from' => $from, 'to' => $to]));
     $j->assertJsonCount($to - $from + 1);
 
-    // searchキーワードでの検索結果が正しい - 存在しない
+    // Validation が実装されているか？
     // 🚀記事一覧取得
+    $j = $this->getJson(route('api.articles.index', ['from' => -1, 'to' => 2]));
+    $j->assertJsonStructure(['message','errors' => []]);
+});
+
+it('api.articles.index - param:search', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    // searchキーワードでの検索結果が正しい - 存在しない
     $j = $this->getJson(route('api.articles.index', ['search' => 'Keywords not in the title']));
     $j->assertJsonCount(0);
 
     // searchキーワードでの検索結果が正しい - 存在する
     /** @var Article $article */
     $article = Article::factory()->create(['title' => 'Unique title']);
-    // 🚀記事一覧取得
     $j = $this->getJson(route('api.articles.index', ['search' => $article->title]));
     $j->assertJsonCount(1);
 
-    // Validation が実装されているか？
-    // 🚀記事一覧取得
-    $j = $this->getJson(route('api.articles.index', ['from' => -1, 'to' => 2]));
-    $j->assertJsonStructure(['message','errors' => []]);
+    // searchキーワードでの検索結果が正しい - 全件取得
+    $j = $this->getJson(route('api.articles.index', ['search' => '']));
+    $j->assertJsonCount(Article::query()->count());
 });
 
 it('api.articles.index - param:user_id', function () {
