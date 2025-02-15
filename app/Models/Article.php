@@ -85,9 +85,9 @@ class Article extends Model
         $this->likes()->detach($user_id);
     }
 
-    public function scopeSearch(Builder $query, string $word): Builder
+    public function scopeSearch(Builder $query, string|null $word = null): Builder
     {
-        return $query->when($word !== '', function ($query) use ($word) {
+        return $query->when($word, function ($query) use ($word) {
             $query->where('title', 'like', "%{$word}%");
         });
     }
