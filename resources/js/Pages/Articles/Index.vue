@@ -11,7 +11,11 @@ import axios from "@/Utils/axios";
 
 const {t} = useTranslation();
 
-const props = defineProps({articles: Object})
+const props = defineProps({
+  articles: Object,
+  search: String,
+  permissions: Array,
+})
 
 const form = useForm({ search: props.search });
 
@@ -102,6 +106,7 @@ const onClickArticleDelete = (article) => {
       </div>
 
       <Link
+        v-if="permissions.canCreateArticle"
         class="inline-flex items-center justify-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
         :href="route('articles.create')">
         📝Create Article
@@ -164,7 +169,7 @@ const onClickArticleDelete = (article) => {
           </td>
           <td>
             <Link
-              v-if="$page.props.auth.user.id === article.user.id"
+              v-if="article.permissions.canUpdateArticle"
               class="flex items-center px-6 py-4 underline"
               :href="route('articles.edit', article.id)"
               tabindex="-1"
@@ -174,7 +179,7 @@ const onClickArticleDelete = (article) => {
           </td>
           <td>
             <DangerButton
-              v-if="$page.props.auth.user.id === article.user.id"
+              v-if="article.permissions.canDeleteArticle"
               class="ms-3"
               :class="{ 'opacity-25': formProcessing() }"
               :disabled="formProcessing()"

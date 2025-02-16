@@ -65,9 +65,16 @@ class ArticleController extends Controller
                             'tags' => $article->tags,
                             'likes' => $article->likes,
                             'is_liked_by' => $article->isLikedBy(),
+                            'permissions' => [
+                                'canUpdateArticle' => Gate::check('update', $article),
+                                'canDeleteArticle' => Gate::check('delete', $article),
+                            ],
                         ]);
                     return $articles;
                 },
+                'permissions' => [
+                    'canCreateArticle' => Gate::check('create', Article::class),
+                ],
             ]);
     }
 
@@ -135,8 +142,8 @@ class ArticleController extends Controller
                     return $article;
                 },
                 'permissions' => [
-                    'canDeleteArticle' => true,
-                    'canUpdateArticle' => true,
+                    'canUpdateArticle' => Gate::check('update', $article),
+                    'canDeleteArticle' => Gate::check('delete', $article),
                 ],
             ]
         );
