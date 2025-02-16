@@ -1,11 +1,13 @@
-<script setup>
+<script lang="ts" setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import UpdateArticleForm from '@/Pages/Articles/Partials/UpdateArticleForm.vue';
+import type { Article, Permission } from '@/types';
 
-defineProps({
-  article: Object,
-  permissions: Object,
-});
+defineProps<{
+  article: Article,
+  permissions: Permission,
+}>();
+
 </script>
 
 <template>

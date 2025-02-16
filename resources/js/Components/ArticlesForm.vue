@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 /**
  * 記事編集フォーム(API版)
  */
@@ -13,31 +13,50 @@ import InputLabel from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import SecondaryButton from '@/Components/SecondaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
-import axios from "@/Utils/axios";
 import { useTranslation } from "@/Composables/useTranslation.js"
 import { route } from "../../../vendor/tightenco/ziggy"
+import axios from "@/Utils/axios.js";
+import type { Article, Permission } from "@/types"
 
 const { t } = useTranslation()
+interface SearchParams {
+  search: string;
+  user_id: number;
+  sort: string;
+  order: string;
+  from: number;
+  to: number;
+}
 
-const articles = ref([])
-const props = defineProps({
-  search: {},
-  permissions: {
-    type: Object,
-    default: () => ({
-      canCreateArticle: true,
-      canUpdateArticle: true,
-      canDeleteArticle: true,
-    })
-  },
-  isUpdateDialog: {
-    type: Boolean,
-    default: false
-  }
-})
+interface Props {
+  search: Partial<SearchParams>;
+  permissions: Partial<Permission>
+  isUpdateDialog: boolean;
+}
+
+const articles = ref<Article[]>([])
+const props = withDefaults(defineProps<Props>(), {
+  search: () => ({}),
+  permissions: () => ({
+    canCreateArticle: true,
+    canUpdateArticle: true,
+    canDeleteArticle: true,
+  }),
+  isUpdateDialog: false
+});
+
 const titleInput = ref(null)
 
-const form = reactive({
+interface Form {
+  title: string;
+  body: string;
+  // tags: Object
+  errors: Record<string, string>,
+  recentlySuccessful: boolean,
+  processing: boolean,
+}
+
+const form = reactive<Form>({
   title: '',
   body: '',
   // tags: []
@@ -45,7 +64,8 @@ const form = reactive({
   recentlySuccessful: false,
   processing: false,
 })
-const formatErrors = (errors) => {
+
+const formatErrors = (errors: Record<string, string[]>): Record<string, string> => {
   const result = {};
   Object.keys(errors).forEach(key => {
     result[key] = errors[key].join(', ');
@@ -63,7 +83,7 @@ const isShowCreateDialog = ref(false)
 const isShowUpdateDialog = ref(false)
 const isShowDeleteDialog = ref(false)
 
-const targetArticle = ref(null)
+const targetArticle = ref<Article | null>(null)
 
 onMounted(() => {
   updateArticles()
@@ -72,7 +92,7 @@ onMounted(() => {
 const updateArticles = () => {
   const user_id = props.search?.user_id ?? 1
 
-  // 🚀記事一覧取得
+  // 🚀記事 - 一覧取得
   return axios.get(route('api.articles.index', { 'user_id': user_id }))
     .then(response => {
         articles.value = response.data
@@ -100,13 +120,9 @@ const onClickCreateArticle = () => {
 
   form.processing = true
 
-  // 🚀記事を新規作成
+  // 🚀記事 - 新規作成
   axios.post(route('api.articles.store'), data)
     .then(response => {
-      // 作成後フォームクリアー
-      // form.title = ''
-      // form.body = ''
-
       form.errors = {}
       form.recentlySuccessful = true
 
@@ -120,7 +136,7 @@ const onClickCreateArticle = () => {
     })
 }
 
-const onClickUpdateArticle = (article) => {
+const onClickUpdateArticle = (article: Article) => {
   targetArticle.value = article
   form.recentlySuccessful = false
 
@@ -134,7 +150,7 @@ const onClickOpenUpdateDialog = () => {
   isShowUpdateDialog.value = true
 }
 
-const updateArticle = (article) => {
+const updateArticle = (article: Article) => {
   const data = {
     title: article.title,
     body: article.body,
@@ -142,7 +158,7 @@ const updateArticle = (article) => {
 
   form.processing = true
 
-  // 🚀記事更新
+  // 🚀記事 - 更新
   axios.put(route('api.articles.update', article.id), data)
     .then(response => {
       form.errors = {}
@@ -159,13 +175,13 @@ const updateArticle = (article) => {
     })
 }
 
-const onClickOpenDeleteDialog = (article) => {
+const onClickOpenDeleteDialog = (article: Article) => {
   targetArticle.value = article
   form.errors = {}
   isShowDeleteDialog.value = true
 }
 
-const onClickDeleteArticle = (article) => {
+const onClickDeleteArticle = (article: Article) => {
   form.processing = true
 
   // 🚀記事削除

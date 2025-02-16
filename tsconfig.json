@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["resources/js/*"]
+        },
+        "typeRoots": [
+          "./node_modules/@types"
+        ],
+        "types": [
+          "google.maps"
+        ],
+        "lib": [
+            "dom",
+            "ES2020"
+        ]
+    },
+    "exclude": ["node_modules", "public"]
+}

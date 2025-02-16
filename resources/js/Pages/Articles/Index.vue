@@ -1,21 +1,47 @@
-<script setup>
+<script lang="ts" setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from "@/Components/Pagination.vue";
-import {Link, router, useForm} from "@inertiajs/vue3";
+import { Link, router, useForm } from "@inertiajs/vue3";
 import DangerButton from "@/Components/DangerButton.vue";
 import ArticleLikeButton from "@/Components/ArticleLikeButton.vue";
-import {ElAutocomplete, ElButton} from "element-plus";
-import {useTranslation} from "@/Composables/useTranslation.js";
+import { ElAutocomplete, ElButton } from "element-plus";
+import { useTranslation } from "@/Composables/useTranslation.js";
 import UserFollowButton from "@/Components/UserFollowButton.vue";
-import axios from "@/Utils/axios";
+import { route } from "../../../../vendor/tightenco/ziggy";
+import axios from "@/Utils/axios.js";
+import type { Article, Permission, User } from '@/types';
 
-const {t} = useTranslation();
+const { t } = useTranslation();
 
-const props = defineProps({
-  articles: Object,
-  search: String,
-  permissions: Array,
-})
+interface Links {
+  active: boolean,
+  label: string,
+  url: string
+}
+
+interface IndexArticle extends Article {
+  permissions: Permission,
+}
+interface ArticleProps {
+  data: IndexArticle[],
+  current_page: number,
+  from: number,
+  to: number,
+  total: number,
+  first_page_url: string,
+  last_page: number,
+  last_page_url: string,
+  links: Links[],
+  next_page_url: string,
+  per_page: number,
+  prev_page_url: string,
+}
+
+const props = defineProps<{
+  articles: ArticleProps,
+  search: string
+  permissions: Permission,
+}>();
 
 const form = useForm({ search: props.search });
 
@@ -23,18 +49,20 @@ const formProcessing = () => {
   return form.processing;
 }
 
-const formSearchSuggestions = (queryString, cb) => {
+const formSearchSuggestions = (queryString: string, cb) => {
   const lists = [
-    {value: 'abc'},
-    {value: 'abcd'},
-    {value: 'efg'},
+    { value: 'abc' },
+    { value: 'abcd' },
+    { value: 'efg' },
   ]
   cb(lists.filter(item => item.value.includes(queryString)))
 }
-const onSelectArticleSearch = (item) => {
+
+const onSelectArticleSearch = (item: { value: string }) => {
   form.search = item.value
   onClickArticleSearch();
 }
+
 const onClickArticleSearch = () => {
   form.get(route('articles.index'), {
     preserveState: true,
@@ -43,7 +71,7 @@ const onClickArticleSearch = () => {
   })
 }
 
-const onClickToggleLike = (article) => {
+const onClickToggleLike = (article: IndexArticle) => {
   article.is_liked_by
     ? form.delete(route('articles.dislike', article.id), {
       errorBag: 'dislikeArticle',
@@ -57,7 +85,7 @@ const onClickToggleLike = (article) => {
     });
 }
 
-const onClickToggleFollow = (user) => {
+const onClickToggleFollow = (user: User) => {
   form.processing = true;
 
   axios[user.is_followed_by ? 'delete' : 'put'](
@@ -71,15 +99,12 @@ const onClickToggleFollow = (user) => {
   });
 }
 
-const onClickArticleDelete = (article) => {
+const onClickArticleDelete = (article: IndexArticle) => {
   if (confirm('記事を削除しますか?')) {
     form.delete(route('articles.destroy', article.id), {
       preserveScroll: true, // 削除後のスクロールリセットを防ぐ
       errorBag: 'deleteArticle',
       only: ['articles', 'flash'],
-      onSuccess: () => {
-        alert('削除しました');
-      }
     });
   }
 }
@@ -109,7 +134,8 @@ const onClickArticleDelete = (article) => {
         v-if="permissions.canCreateArticle"
         class="inline-flex items-center justify-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150"
         :href="route('articles.create')">
-        📝Create Article
+        <v-icon icon="mdi-file-document-plus"/>
+        Create Article
       </Link>
     </div>
 
@@ -118,8 +144,7 @@ const onClickArticleDelete = (article) => {
       <Pagination :links="articles.links"/>
     </div>
 
-
-    <div class="mx-3 px-6 rounded-md shadow overflow-x-auto">
+    <div class="text-gray-800 dark:text-gray-200 mx-3 px-6 rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <thead>
         <tr class="text-left font-bold">
@@ -137,7 +162,8 @@ const onClickArticleDelete = (article) => {
         <tr v-for="(article, i) in articles.data" :key="article.id"
             class="hover:bg-gray-100 focus-within:bg-gray-100 dark:hover:bg-gray-800 dark:focus-within:bg-gray-800">
           <td>
-            <Link class="flex items-center px-6 py-4 underline" :href="route('articles.show', article.id)" tabindex="-1">
+            <Link class="flex items-center px-6 py-4 underline" :href="route('articles.show', article.id)"
+                  tabindex="-1">
               📄{{ article.id }}
             </Link>
           </td>
@@ -190,7 +216,7 @@ const onClickArticleDelete = (article) => {
           </td>
         </tr>
         <tr v-if="articles.data.length === 0">
-          <td colspan="3">No articles found.</td>
+          <td colspan="9">No articles found.</td>
         </tr>
         </tbody>
       </table>

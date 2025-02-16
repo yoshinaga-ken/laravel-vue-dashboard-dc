@@ -1,14 +1,15 @@
-<script setup>
+<script lang="ts" setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import UpdateArticleForm from '@/Pages/Articles/Partials/UpdateArticleForm.vue';
 import DeleteArticleForm from "@/Pages/Articles/Partials/DeleteArticleForm.vue";
+import type { Article, Permission } from '@/types';
 
-defineProps({
-  article: Object,
-  availableRoles: Array,
-  permissions: Object,
-});
+defineProps<{
+  article: Article,
+  permissions: Permission,
+}>();
+
 </script>
 
 <template>

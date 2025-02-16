@@ -1,5 +1,5 @@
-<script setup>
-import {router, useForm} from '@inertiajs/vue3';
+<script lang="ts" setup>
+import { useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
@@ -7,33 +7,41 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import ElTextTagsInput from "@/Components/ElTextTagsInput.vue";
-import {useTranslation} from "@/Composables/useTranslation.js";
+import { useTranslation } from "@/Composables/useTranslation.js";
 import ArticleLikeButton from "@/Components/ArticleLikeButton.vue";
+import { route } from "../../../../../vendor/tightenco/ziggy"
+import type { Article, Permission } from '@/types';
 
-const {t} = useTranslation();
+const { t } = useTranslation();
 
-const props = defineProps({
-  article: Object,
-  permissions: Object,
-});
+const props = defineProps<{
+  article: Article,
+  permissions: Permission,
+}>();
 
-const form = useForm({
+interface Form {
+  title: string,
+  body: string,
+  tags: string[],
+}
+
+const form = useForm<Form>({
   title: props.article.title,
   body: props.article.body,
   tags: props.article.tags.map((tag) => tag.name),
-});
+})
 
 const updateArticle = () => {
-  form.put(route('articles.update', props.article), {
+  form.put(route('articles.update', { id: props.article.id }), {
     errorBag: 'updateArticle',
     preserveScroll: true,
   });
 };
 
-const onClickToggleLike = (article) => {
+const onClickToggleLike = (article: Article) => {
   onClickToggleLikeForm(article);
 }
-const onClickToggleLikeForm = (article) => {
+const onClickToggleLikeForm = (article: Article) => {
   article.is_liked_by
     ? form.delete(route('articles.dislike', article.id), {
       errorBag: 'dislikeArticle',
@@ -93,8 +101,6 @@ const onClickToggleLikeForm = (article) => {
         <InputLabel for="name" :value="`${t('models.article.likes')}`"/>
 
         <ArticleLikeButton :article="article" :is-user-list="true" @click="onClickToggleLike(article)"/>
-
-        <InputError :message="form.errors.likes" class="mt-2"/>
       </div>
 
       <!-- Article Tags -->
