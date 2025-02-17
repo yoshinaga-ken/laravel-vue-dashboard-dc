@@ -1,0 +1,34 @@
+{
+  "dataType": 0,
+  "title": "コンビニ お弁当 販売数",
+  "chartMap_isShow": "1",
+  "chartAge_unit": "null",
+  "chartGMap": {},
+  "chartSView": {},
+  "chartTube": {},
+  "chartMap": {},
+  "chartName": {},
+  "chartCity": {},
+  "chartDate": {},
+  "chartYear": {
+    "isLegend": true
+  },
+  "chartSeason": {},
+  "chartWeek": {},
+  "chartSex": {
+    "unit": null
+  },
+  "chartAge": {
+    "unit": null
+  },
+  "chartCond": {},
+  "chartJob": {},
+  "chartJobCat": {},
+  "chartEx": [
+    {
+      "scale": false,
+      "isLegend": false
+    }
+  ],
+  "chartDetail": {}
+}

@@ -1,0 +1,88 @@
+{
+  "dataType": 0,
+  "title": "「一人当たり地方税」期間：2008年～2021年 / 単位：千円",
+  "isMakeAutocompleteData": true,
+  "chartGMap": {
+    "isShow": true
+  },
+  "chartMap": {
+    "isShow": true,
+    "colors": [
+      [
+        "5億円以上",
+        "#8c0a00",
+        499999
+      ],
+      [
+        "1億円以上",
+        "#ea5432",
+        99999
+      ],
+      [
+        "5000万円以上",
+        "#ff781d",
+        49999
+      ],
+      [
+        "1000万円以上",
+        "#ff9d57",
+        9999
+      ],
+      [
+        "500万円以上",
+        "#ffceab",
+        4999
+      ],
+      [
+        "100万円以上",
+        "#f5deb3",
+        999
+      ],
+      [
+        "0円",
+        "#dadada",
+        0
+      ],
+      [
+        "選択中",
+        "#ffffff",
+        0
+      ]
+    ]
+  },
+  "chartAge": {
+    "unit": [
+      "地方税",
+      "市町村民税法人分",
+      "固定資産税"
+    ]
+  },
+  "dataReference": "<ul><li><a target='_blank' href='https://opendata.resas-portal.go.jp/docs/api/v1/municipality/taxes/perYear.html'>地方財政マップ > 一人当たり地方税 @RESAS(地域経済分析システム)API</a></li><li><a target='_blank' href='https://resas.go.jp/municipality-taxes/#/graph/13/13101/2016/1/7.39231742277876/35.998703685/139.883857/-'>地方財政マップ > 一人当たり地方税 @RESAS</a></li></ul>",
+  "chartSView": {},
+  "chartTube": {},
+  "chartName": {},
+  "chartCity": {},
+  "chartDate": {},
+  "chartYear": {
+    "isLegend": true
+  },
+  "chartSeason": {},
+  "chartWeek": {},
+  "chartSex": {
+    "unit": null
+  },
+  "chartCond": {},
+  "chartJob": {},
+  "chartJobCat": {},
+  "chartEx": [
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    }
+  ],
+  "chartDetail": {}
+}
