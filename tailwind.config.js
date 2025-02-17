@@ -17,6 +17,20 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            // background-colorを拡張
+            backgroundColor: {
+                theme: {
+                    col: 'var(--bg-theme-col)',
+                    col2: 'var(--bg-theme-col2)',
+                }
+            },
+            // text-colorを拡張
+            textColor: {
+                theme: {
+                    col: 'var(--text-theme-col)',
+                    col2: 'var(--text-theme-col2)',
+                }
+            },
         },
     },
 
