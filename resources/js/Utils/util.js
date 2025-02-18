@@ -127,52 +127,51 @@ export function loadScriptVectormap(base) {
         base);
 }
 
-// export function loadScriptVirtualKeyboard(base) {
-//     return loadScriptCss(
-//         'virtual-keyboard/dist/js/jquery.keyboard.min.js',
-//         'virtual-keyboard/dist/css/keyboard.min.css',
-//         base);
-// }
+export function loadScriptVirtualKeyboard(base) {
+    return loadScriptCss(
+        'virtual-keyboard/dist/js/jquery.keyboard.min.js',
+        'virtual-keyboard/dist/css/keyboard.min.css',
+        base);
+}
 
-// export async function loadScriptFiler(base) {
-//     log
-//     if ($.fn.filer === undefined) {
-//         await loadScriptCss(
-//             'jQuery.filer/js/jquery.filer.js',
-//             'jQuery.filer/css/jquery.filer.css',
-//             base);
-//     }
-//
-//     if ($.fn.lazyload === undefined) {
-//         await loadScriptCss(
-//             'lazyload/lazyload.min.js',
-//             'jQuery.filer/css/themes/jquery.filer-dragdropbox-theme.css',
-//
-//             base);
-//     }
-//
-//     if ($.fn.dialogExtend === undefined) {
-//         await loadScriptCss(
-//             'jquery-dialogextend/build/jquery.dialogextend.min.js',
-//             null,
-//             base);
-//     }
-//
-//     const isFsFilerDlg = window.FsFilerDlg && typeof window.FsFilerDlg === 'function';
-//     if (!isFsFilerDlg) {
-//         await loadScriptCss(
-//             'fsFilerDlg.js',
-//             null,
-//             base);
-//     }
-//
-//     if ($.fn.fs_filer === undefined) {
-//         await loadScriptCss(
-//             'ch_common.js',
-//             'ch_common.css',
-//             base);
-//     }
-// }
+export async function loadScriptFiler(base) {
+    if ($.fn.filer === undefined) {
+        await loadScriptCss(
+            'jQuery.filer/js/jquery.filer.js',
+            'jQuery.filer/css/jquery.filer.css',
+            base);
+    }
+
+    if ($.fn.lazyload === undefined) {
+        await loadScriptCss(
+            'lazyload/lazyload.min.js',
+            'jQuery.filer/css/themes/jquery.filer-dragdropbox-theme.css',
+
+            base);
+    }
+
+    if ($.fn.dialogExtend === undefined) {
+        await loadScriptCss(
+            'jquery-dialogextend/build/jquery.dialogextend.min.js',
+            null,
+            base);
+    }
+
+    const isFsFilerDlg = window.FsFilerDlg && typeof window.FsFilerDlg === 'function';
+    if (!isFsFilerDlg) {
+        await loadScriptCss(
+            'fsFilerDlg.js',
+            null,
+            base);
+    }
+
+    if ($.fn.fs_filer === undefined) {
+        await loadScriptCss(
+            'ch_common.js',
+            'ch_common.css',
+            base);
+    }
+}
 
 /**
  * Updates the HTML element's class based on the user's preferred color scheme.
