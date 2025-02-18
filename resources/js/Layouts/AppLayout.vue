@@ -52,6 +52,13 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('dashboard-dc', {data: 'covid19-data-2021-02-28'})" :active="route().current('dashboard-dc')">
+                                    Dashboard-Dc
+                                    <!-- Dashboard-Dc Public URL FullScreen Version -->
+                                    <NavLink :href="route('dashboard-dc-pub', {data: 'covid19-data-2021-02-28'})">
+                                         ↗️
+                                    </NavLink>
+                                </NavLink>
                                 <NavLink :href="route('articles.index')" :active="route().current('articles.*')">
                                     Articles
                                 </NavLink>
