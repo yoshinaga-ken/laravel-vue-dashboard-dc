@@ -24,4 +24,8 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('/articles', ArticleController::class);
+    Route::prefix('articles')->group(function () {
+        Route::put('/{article}/like', [ArticleController::class, 'like'])->name('articles.like');
+        Route::delete('/{article}/like', [ArticleController::class, 'dislike'])->name('articles.dislike');
+    });
 });

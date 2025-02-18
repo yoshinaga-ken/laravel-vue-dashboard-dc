@@ -6,6 +6,8 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
+import ActionSection from "@/Components/ActionSection.vue";
+import ArticlesForm from "@/Components/ArticlesForm.vue";
 
 defineProps({
     confirmsTwoFactorAuthentication: Boolean,
@@ -27,6 +29,46 @@ defineProps({
                     <UpdateProfileInformationForm :user="$page.props.auth.user" />
 
                     <SectionBorder />
+                </div>
+
+                <div>
+                  <ActionSection class="mt-10 sm:mt-0">
+                    <template #title>
+                      Follow Information
+                    </template>
+
+                    <template #description>
+
+                    </template>
+
+                    <template #content>
+                      <div class="grid grid-cols-2">
+                        <div>
+                          <div>
+                            <span class="font-bold">{{ $page.props.auth.user.followers.length }}</span> followers
+                          </div>
+                          <ul v-for="follower in $page.props.auth.user.followers" :key="follower.id">
+                            <li>{{ follower.name }}</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <div>
+                            <span class="font-bold">{{ $page.props.auth.user.following.length }}</span> following
+                          </div>
+                          <ul v-for="following in $page.props.auth.user.following" :key="following.id">
+                            <li>{{ following.name }}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </template>
+                  </ActionSection>
+                  <SectionBorder/>
+                </div>
+
+                <div>
+                    <ArticlesForm :search="{user_id: $page.props.auth.user.id}"/>
+
+                    <SectionBorder/>
                 </div>
 
                 <div v-if="$page.props.jetstream.canUpdatePassword">
