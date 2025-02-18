@@ -14,8 +14,8 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
-    password: '',
+    email: import.meta.env.VITE_LOGIN_EMAIL_DEFAULT ?? '',
+    password: import.meta.env.VITE_LOGIN_PASSWORD_DEFAULT ?? '',
     remember: false,
 });
 
