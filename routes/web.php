@@ -31,4 +31,12 @@ Route::middleware([
     Route::get('/dashboard-dc', function () {
         return Inertia::render('DashboardDc');
     })->name('dashboard-dc');
+
+    Route::get('/jqueryui', function () {
+        return Inertia::render('JQueryUI');
+    })->name('jqueryui');
+
+    Route::get('/map', function () {
+        return Inertia::render('Map');
+    })->name('map');
 });

@@ -58,6 +58,12 @@ const logout = () => {
                                          ↗️
                                     </NavLink>
                                 </NavLink>
+                                <NavLink :href="route('jqueryui')" :active="route().current('jqueryui')">
+                                    JQueryUI
+                                </NavLink>
+                                <NavLink :href="route('map')" :active="route().current('map')">
+                                    Map
+                                </NavLink>
                             </div>
                         </div>
 
