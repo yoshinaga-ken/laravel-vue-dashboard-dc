@@ -56,7 +56,7 @@ const logout = () => {
                                     Dashboard-Dc
                                     <!-- Dashboard-Dc Public URL FullScreen Version -->
                                     <NavLink :href="route('dashboard-dc-pub', {data: 'covid19-data-2021-02-28'})">
-                                         ↗️
+                                         <v-icon icon="mdi-fullscreen" />
                                     </NavLink>
                                 </NavLink>
                                 <NavLink :href="route('articles.index')" :active="route().current('articles.*')">
