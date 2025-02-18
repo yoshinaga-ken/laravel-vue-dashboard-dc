@@ -6568,7 +6568,7 @@ const mm = {
             let per = parseInt(100 * n / p_max);
             let bar_style = "background: linear-gradient(to right, rgb(31, 119, 180, 0.3) " + per + "%, #fffacd " + per + "%, #fffacd " + (100 - per) + "%) center center / 100% 100% no-repeat;";
             let ret = '<b>' + icon + '<a target="_blank" title="' + name + 'の wikipediaへ" href="' + mm.url_name + '/' + name + '">' + name + '</a></b><br />' +
-              '<img style="width:180px;height:120px;object-fit: cover;object-position:0% 0%;" src="' + PREFECTURES_IMG_PATH + PREFECTURES_IMG[name] + '"><br />' +
+              '<img style="width:180px;height:120px;object-fit: cover;object-position:0% 0%;" src="/img/japan/pref/' + name + '.jpg"><br />' +
               (p === undefined ? 'なし<br />' : (
                 '<table><tbody>' +
                 '<tr><td>総人口　:</td><td>' + php_number_format(p.n) + '名</tr>' +
