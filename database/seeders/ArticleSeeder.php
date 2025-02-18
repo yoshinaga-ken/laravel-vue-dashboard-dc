@@ -19,7 +19,7 @@ class ArticleSeeder extends Seeder
         Sleep(1);
 
         // TEST_USER_NAMEの記事をN件作る
-        $user = User::where('name', env('TEST_USER_NAME'))->first();
+        $user = User::where('name', env('TEST_USER_NAME', 'test'))->first();
         Article::factory(20)->createQuietly([
             'user_id' => $user->id,
         ]);
