@@ -18,6 +18,8 @@
         <!-- DC_PANEL ToolbarMain -->
         <div id="toolbar_main">
 
+          <FilerDialogButton :isShowImg="!isSp"/>
+
           <i class="fa fa-filter fa-icon"></i>
           <input type="search" id="input-search" autocomplete="off"
                  class="btn_clear_none dark:bg-slate-900 dark:hover:bg-slate-700" value="">
@@ -2460,6 +2462,7 @@ import '@/Utils/font-awesome/css/v4-shims.min.css';
 
 import 'virtual-keyboard/dist/css/keyboard.min.css';
 import 'virtual-keyboard/dist/js/jquery.keyboard.min.js';
+import FilerDialogButton from "@/Components/FilerDialogButton.vue";
 
 // Global
 const gg = reactive({
