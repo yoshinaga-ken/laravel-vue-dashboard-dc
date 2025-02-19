@@ -1928,7 +1928,7 @@ import {
   loadScriptDataTables,
   loadScriptSparkline,
   loadScriptVectormap,
-} from '@/Utils/util.js';
+} from '@/Utils/utils.js';
 
 // データタイプ
 const DT_DEF = 0;   //0:汎用的なDCデータ
