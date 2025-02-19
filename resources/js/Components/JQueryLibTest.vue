@@ -116,7 +116,7 @@ import {
     loadScriptSparkline,
     loadScriptDataTables,
     //loadScriptVectormap,
-} from '@/Utils/util.js';
+} from '@/Utils/utils.js';
 
 import jQuery from 'jquery';
 

@@ -5,7 +5,7 @@ import {
     // loadScriptJQueryUIDatepickerJa,
     // loadScriptDataTables,
     loadScriptFiler
-} from '@/Utils/util.js';
+} from '@/Utils/utils.js';
 
 const emit = defineEmits(['close']);
 
