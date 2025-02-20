@@ -6,28 +6,29 @@ import JQueryLibTest from "@/Components/JQueryLibTest.vue";
 
 // TODO: これ型をTypeScriptで定義できないか？
 const article = ref({
-    id: 1,
-    title: 'title',
-    is_liked_by: true,
-    likes: [],
-    tags: [],
+  id: 1,
+  title: 'title',
+  is_liked_by: true,
+  likes: [],
+  tags: [],
 });
 
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                JQueryUI
-            </h2>
-        </template>
+  <AppLayout title="Dashboard">
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        JQueryUI
+      </h2>
+    </template>
 
-        <div class="text-white">
-            <JQueryLibTest/>>
-<!--            <VueApexChart/>-->
-        </div>
+    <div class="text-white">
+      <JQueryLibTest/>
+      >
+      <!--            <VueApexChart/>-->
+    </div>
 
 
-    </AppLayout>
+  </AppLayout>
 </template>

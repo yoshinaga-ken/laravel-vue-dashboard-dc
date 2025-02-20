@@ -120,17 +120,37 @@
 
             <span v-if="gg.dt !== DT_COVID">&nbsp;&nbsp;</span>
 
-            <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します"><input id="ch_pnl_map" type="checkbox" v-model="pnl.map.is_show"><i class="fa fa-map"></i>&nbsp;</label>
-            <label v-if="!pnl.name.isHidden" for="ch_pnl_name"><input id="ch_pnl_name" type="checkbox" v-model="pnl.name.is_show"><span v-html="pnl.name.title"></span>&nbsp;</label>
-            <label v-if="!pnl.city.isHidden" for="ch_pnl_city"><input id="ch_pnl_city" type="checkbox" v-model="pnl.city.is_show"><span  v-html="pnl.city.title"></span>&nbsp;</label>
-            <label v-if="!pnl.date.isHidden" for="ch_pnl_date"><input id="ch_pnl_date" type="checkbox" v-model="pnl.date.is_show"><span  v-html="pnl.date.title"></span>&nbsp;</label>
-            <label v-if="!pnl.year.isHidden" for="ch_pnl_year"> <input id="ch_pnl_year" type="checkbox" v-model="pnl.year.is_show"><span v-html="pnl.year.title"></span>&nbsp;</label>
-            <label v-if="!pnl.season.isHidden" for="ch_pnl_season"> <input id="ch_pnl_season" type="checkbox" v-model="pnl.season.is_show"><span v-html="pnl.season.title"></span>&nbsp;</label>
-            <label v-if="!pnl.week.isHidden" for="ch_pnl_week"><input id="ch_pnl_week" type="checkbox" v-model="pnl.week.is_show">曜日&nbsp;</label>
-            <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex"> <input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.is_show"><span v-html="pnl.sex.title"></span>&nbsp;</label>
-            <label v-if="!pnl.age.isHidden" for="ch_pnl_age"> <input id="ch_pnl_age" type="checkbox" v-model="pnl.age.is_show"><span v-html="pnl.age.title"></span>&nbsp;</label>
-            <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond"><input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.is_show"><span v-html="pnl.cond.title"></span>&nbsp;</label>
-            <label v-if="!pnl.job.isHidden" for="ch_pnl_job"> <input id="ch_pnl_job" type="checkbox" v-model="pnl.job.is_show"><span v-html="pnl.job.title"></span>&nbsp;</label>
+            <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します"><input
+              id="ch_pnl_map" type="checkbox" v-model="pnl.map.is_show"><i class="fa fa-map"></i>&nbsp;</label>
+            <label v-if="!pnl.name.isHidden" for="ch_pnl_name"><input id="ch_pnl_name" type="checkbox"
+                                                                      v-model="pnl.name.is_show"><span
+              v-html="pnl.name.title"></span>&nbsp;</label>
+            <label v-if="!pnl.city.isHidden" for="ch_pnl_city"><input id="ch_pnl_city" type="checkbox"
+                                                                      v-model="pnl.city.is_show"><span
+              v-html="pnl.city.title"></span>&nbsp;</label>
+            <label v-if="!pnl.date.isHidden" for="ch_pnl_date"><input id="ch_pnl_date" type="checkbox"
+                                                                      v-model="pnl.date.is_show"><span
+              v-html="pnl.date.title"></span>&nbsp;</label>
+            <label v-if="!pnl.year.isHidden" for="ch_pnl_year"> <input id="ch_pnl_year" type="checkbox"
+                                                                       v-model="pnl.year.is_show"><span
+              v-html="pnl.year.title"></span>&nbsp;</label>
+            <label v-if="!pnl.season.isHidden" for="ch_pnl_season"> <input id="ch_pnl_season" type="checkbox"
+                                                                           v-model="pnl.season.is_show"><span
+              v-html="pnl.season.title"></span>&nbsp;</label>
+            <label v-if="!pnl.week.isHidden" for="ch_pnl_week"><input id="ch_pnl_week" type="checkbox"
+                                                                      v-model="pnl.week.is_show">曜日&nbsp;</label>
+            <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex"> <input id="ch_pnl_sex" type="checkbox"
+                                                                     v-model="pnl.sex.is_show"><span
+              v-html="pnl.sex.title"></span>&nbsp;</label>
+            <label v-if="!pnl.age.isHidden" for="ch_pnl_age"> <input id="ch_pnl_age" type="checkbox"
+                                                                     v-model="pnl.age.is_show"><span
+              v-html="pnl.age.title"></span>&nbsp;</label>
+            <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond"><input id="ch_pnl_cond" type="checkbox"
+                                                                      v-model="pnl.cond.is_show"><span
+              v-html="pnl.cond.title"></span>&nbsp;</label>
+            <label v-if="!pnl.job.isHidden" for="ch_pnl_job"> <input id="ch_pnl_job" type="checkbox"
+                                                                     v-model="pnl.job.is_show"><span
+              v-html="pnl.job.title"></span>&nbsp;</label>
 
             <template v-for="(item, i) in pnl.ex">
                 <template v-if="!item.isHidden">
@@ -139,7 +159,8 @@
                 </template>
             </template>
 
-            <label v-if="!pnl.detail.isHidden" for="ch_pnl_detail"><input id="ch_pnl_detail" type="checkbox" v-model="pnl.detail.is_show">詳細&nbsp;</label>
+            <label v-if="!pnl.detail.isHidden" for="ch_pnl_detail"><input id="ch_pnl_detail" type="checkbox"
+                                                                          v-model="pnl.detail.is_show">詳細&nbsp;</label>
             <label for="ch_pnl_ana" v-show="gg.dt===DT_COVID && pnl.ana.is_chk_show">
                 <input id="ch_pnl_ana" type="checkbox" v-model="pnl.ana.is_show">
                 <i class="fa fa-eye"></i>分析
@@ -214,8 +235,10 @@
               <div id="tabs_d"></div>
               <div id="tabs_b"></div>
               <span v-show="!pnl.map.tabs.is_show" class="chart-title text-theme-col2" v-html="pnl.map.title"></span>
-              <span v-show="!pnl.map.tabs.is_show" class="chart-sub-title text-theme-col2" v-html="pnl.map.subTitle"></span>
-              <span v-show="!pnl.map.tabs.is_show" class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.map.is_show=0"></span>
+              <span v-show="!pnl.map.tabs.is_show" class="chart-sub-title text-theme-col2"
+                    v-html="pnl.map.subTitle"></span>
+              <span v-show="!pnl.map.tabs.is_show" class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                    @click="pnl.map.is_show=0"></span>
             </div>
 
             <div id="japan-map"></div>
@@ -352,7 +375,7 @@
           <div id="panel_date" class="bg-theme-col2 dc_panel drag" :style="pnl.date.style" v-show="pnl.date.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.date.title.indexOf('感染者数')===-1 ? '' : '<i class=\'fa fa-procedures\'>') + pnl.date.title">
+                    v-html="(pnl.date.title.indexOf('感染者数')===-1 ? '' : '<i class=\'fa fa-procedures\'>') + pnl.date.title">
               </span>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <button class="btn_play ui-button ui-button-min ui-corner-all ui-widget"
@@ -383,7 +406,7 @@
               </label>
               &nbsp;&nbsp;
               <label v-if="pnl.date.chart2.type!==0" title="ライン形式のチャートも表示します">
-              <input type="checkbox" v-model="pnl.date.chart2.is_show">📈表示</label>
+                <input type="checkbox" v-model="pnl.date.chart2.is_show">📈表示</label>
 
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.date.is_show=0"></span>
 
@@ -441,10 +464,11 @@
           </div>
 
           <!-- DC_PANEL Season -->
-          <div id="panel_season" class="bg-theme-col2 dc_panel drag" :style="pnl.season.style" v-show="pnl.season.is_show">
+          <div id="panel_season" class="bg-theme-col2 dc_panel drag" :style="pnl.season.style"
+               v-show="pnl.season.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.season.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.season.title">
+                    v-html="(pnl.season.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.season.title">
               </span>
               <a class="reset btn_reset" id="btn_reset_season" href="javascript:void(0);" style="display: none;">
                 <span class="ui-icon ui-icon-closethick"></span>
@@ -479,7 +503,7 @@
           <div id="panel_sex" class="bg-theme-col2 dc_panel drag" :style="pnl.sex.style" v-show="pnl.sex.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.sex.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.sex.title"></span>
+                    v-html="(pnl.sex.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.sex.title"></span>
               <a class="reset btn_reset" id="btn_reset_sex" href="javascript:void(0);" style="display: none;">
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
@@ -541,7 +565,7 @@
           <div id="panel_cond" class="bg-theme-col2 dc_panel drag" :style="pnl.cond.style" v-show="pnl.cond.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.cond.title.indexOf('状態')===-1 ? '' : '<i class=\'fa fa-medkit\'>') + pnl.cond.title"></span>
+                    v-html="(pnl.cond.title.indexOf('状態')===-1 ? '' : '<i class=\'fa fa-medkit\'>') + pnl.cond.title"></span>
 
               <!-- TODO: BtnComponent -->
               <label class="ui-button ui-button-min ui-corner-all ui-widget"
@@ -564,10 +588,11 @@
           </div>
 
           <!-- DC_PANEL Job -->
-          <div id="panel_job" class="scrollbar-thin bg-theme-col2 dc_panel drag" :style="pnl.job.style" v-show="pnl.job.is_show">
+          <div id="panel_job" class="scrollbar-thin bg-theme-col2 dc_panel drag" :style="pnl.job.style"
+               v-show="pnl.job.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.job.title.indexOf('職業')===-1 ? '' : '<i class=\'fa fa-id-card-o\'>') + pnl.job.title">
+                    v-html="(pnl.job.title.indexOf('職業')===-1 ? '' : '<i class=\'fa fa-id-card-o\'>') + pnl.job.title">
               </span>
               <span id="chart_job_title_sub"></span>
 
@@ -638,7 +663,8 @@
                     @click="pnl.detail.is_show=0"></span>
             </div>
             <div>
-              <div v-for="(html, id) in pnl.detail.details" class="detail text-theme-col emj" :key="id" v-html="html"></div>
+              <div v-for="(html, id) in pnl.detail.details" class="detail text-theme-col emj" :key="id"
+                   v-html="html"></div>
             </div>
           </div>
 
@@ -2185,255 +2211,255 @@ const HIRAGANA = {
 
 const WORLD_CODE = {
 //'Name' : 'Code',
-	'Afghanistan': 'AF',
-	'Åland Islands': 'AX',
-	'Albania': 'AL',
-	'Algeria': 'DZ',
-	'American Samoa': 'AS',
+  'Afghanistan': 'AF',
+  'Åland Islands': 'AX',
+  'Albania': 'AL',
+  'Algeria': 'DZ',
+  'American Samoa': 'AS',
 // 'Andorra' : 'AD',
-	'Angola': 'AO',
+  'Angola': 'AO',
 // 'Anguilla' : 'AI',
-	'Antarctica': 'AQ',
+  'Antarctica': 'AQ',
 // 'Antigua & Barbuda' : 'AG',
-	'Argentina': 'AR',
-	'Armenia': 'AM',
+  'Argentina': 'AR',
+  'Armenia': 'AM',
 // 'Aruba' : 'AW',
-	'Australia': 'AU',
-	'Austria': 'AT',
-	'Azerbaijan': 'AZ',
-	'Bahamas': 'BS',
-	'Bahrain': 'BH',
-	'Bangladesh': 'BD',
+  'Australia': 'AU',
+  'Austria': 'AT',
+  'Azerbaijan': 'AZ',
+  'Bahamas': 'BS',
+  'Bahrain': 'BH',
+  'Bangladesh': 'BD',
 // 'Barbados' : 'BB',
-	'Belarus': 'BY',
-	'Belgium': 'BE',
-	'Belize': 'BZ',
-	'Benin': 'BJ',
+  'Belarus': 'BY',
+  'Belgium': 'BE',
+  'Belize': 'BZ',
+  'Benin': 'BJ',
 // 'Bermuda' : 'BM',
-	'Bhutan': 'BT',
-	'Bolivia': 'BO', // 'Bolivia Plurinational State of'
-	'Bonaire Sint Eustatius & Saba': 'BQ',
-	'Bosnia & Herzegovina': 'BA',
-	'Botswana': 'BW',
-	'Bouvet Island': 'BV',
-	'Brazil': 'BR',
-	'British Indian Ocean Territory': 'IO',
-	'Brunei': 'BN', // 'Brunei Darussalam'
-	'Bulgaria': 'BG',
-	'Burkina Faso': 'BF',
-	'Burundi': 'BI',
-	'Cambodia': 'KH',
-	'Cameroon': 'CM',
-	'Canada': 'CA',
+  'Bhutan': 'BT',
+  'Bolivia': 'BO', // 'Bolivia Plurinational State of'
+  'Bonaire Sint Eustatius & Saba': 'BQ',
+  'Bosnia & Herzegovina': 'BA',
+  'Botswana': 'BW',
+  'Bouvet Island': 'BV',
+  'Brazil': 'BR',
+  'British Indian Ocean Territory': 'IO',
+  'Brunei': 'BN', // 'Brunei Darussalam'
+  'Bulgaria': 'BG',
+  'Burkina Faso': 'BF',
+  'Burundi': 'BI',
+  'Cambodia': 'KH',
+  'Cameroon': 'CM',
+  'Canada': 'CA',
 // 'Cape Verde' : 'CV',
 // 'Cayman Islands' : 'KY',
-	'Central African Republic': 'CF',
-	'Chad': 'TD',
-	'Chile': 'CL',
-	'China': 'CN',
-	'Christmas Island': 'CX',
-	'Cocos (Keeling) Islands': 'CC',
-	'Colombia': 'CO',
+  'Central African Republic': 'CF',
+  'Chad': 'TD',
+  'Chile': 'CL',
+  'China': 'CN',
+  'Christmas Island': 'CX',
+  'Cocos (Keeling) Islands': 'CC',
+  'Colombia': 'CO',
 // 'Comoros' : 'KM',
-	'Congo': 'CG',
-	'Congo Dem. Rep.': 'CD', // 'Congo the Democratic Republic of the'
-	'Cook Islands': 'CK',
-	'Costa Rica': 'CR',
-	'Côte dIvoire': 'CI',
-	'Croatia': 'HR',
-	'Cuba': 'CU',
-	'Curaçao': 'CW',
-	'Cyprus': 'CY',
-	'Czech Republic': 'CZ',
-	'Denmark': 'DK',
-	'Djibouti': 'DJ',
+  'Congo': 'CG',
+  'Congo Dem. Rep.': 'CD', // 'Congo the Democratic Republic of the'
+  'Cook Islands': 'CK',
+  'Costa Rica': 'CR',
+  'Côte dIvoire': 'CI',
+  'Croatia': 'HR',
+  'Cuba': 'CU',
+  'Curaçao': 'CW',
+  'Cyprus': 'CY',
+  'Czech Republic': 'CZ',
+  'Denmark': 'DK',
+  'Djibouti': 'DJ',
 // 'Dominica' : 'DM',
-	'Dominican Republic': 'DO',
-	'Ecuador': 'EC',
-	'Egypt': 'EG',
-	'El Salvador': 'SV',
-	'Equatorial Guinea': 'GQ',
-	'Eritrea': 'ER',
-	'Estonia': 'EE',
-	'Ethiopia': 'ET',
-	'Falkland Islands (Malvinas)': 'FK',
-	'Faroe Islands': 'FO',
-	'Fiji': 'FJ',
-	'Finland': 'FI',
-	'France': 'FR',
-	'French Guiana': 'GF',
-	'French Polynesia': 'PF',
-	'French Southern Territories': 'TF',
-	'Gabon': 'GA',
-	'Gambia': 'GM',
-	'Georgia': 'GE',
-	'Germany': 'DE',
-	'Ghana': 'GH',
+  'Dominican Republic': 'DO',
+  'Ecuador': 'EC',
+  'Egypt': 'EG',
+  'El Salvador': 'SV',
+  'Equatorial Guinea': 'GQ',
+  'Eritrea': 'ER',
+  'Estonia': 'EE',
+  'Ethiopia': 'ET',
+  'Falkland Islands (Malvinas)': 'FK',
+  'Faroe Islands': 'FO',
+  'Fiji': 'FJ',
+  'Finland': 'FI',
+  'France': 'FR',
+  'French Guiana': 'GF',
+  'French Polynesia': 'PF',
+  'French Southern Territories': 'TF',
+  'Gabon': 'GA',
+  'Gambia': 'GM',
+  'Georgia': 'GE',
+  'Germany': 'DE',
+  'Ghana': 'GH',
 // 'Gibraltar' : 'GI',
-	'Greece': 'GR',
-	'Greenland': 'GL',
+  'Greece': 'GR',
+  'Greenland': 'GL',
 // 'Grenada' : 'GD',
-	'Guadeloupe': 'GP',
-	'Guam': 'GU',
-	'Guatemala': 'GT',
+  'Guadeloupe': 'GP',
+  'Guam': 'GU',
+  'Guatemala': 'GT',
 // 'Guernsey' : 'GG',
-	'Guinea': 'GN',
-	'Guinea-Bissau': 'GW',
-	'Guyana': 'GY',
-	'Haiti': 'HT',
-	'Heard Island & McDonald Islands': 'HM',
+  'Guinea': 'GN',
+  'Guinea-Bissau': 'GW',
+  'Guyana': 'GY',
+  'Haiti': 'HT',
+  'Heard Island & McDonald Islands': 'HM',
 // 'Holy See (Vatican City State)' : 'VA',
-	'Honduras': 'HN',
+  'Honduras': 'HN',
 // 'Hong Kong' : 'HK',
-	'Hungary': 'HU',
-	'Iceland': 'IS',
-	'India': 'IN',
-	'Indonesia': 'ID',
-	'Iran': 'IR', // 'Iran, Islamic Republic of'
-	'Iraq': 'IQ',
-	'Ireland': 'IE',
+  'Hungary': 'HU',
+  'Iceland': 'IS',
+  'India': 'IN',
+  'Indonesia': 'ID',
+  'Iran': 'IR', // 'Iran, Islamic Republic of'
+  'Iraq': 'IQ',
+  'Ireland': 'IE',
 // 'Isle of Man' : 'IM',
-	'Israel': 'IL',
-	'Italy': 'IT',
-	'Jamaica': 'JM',
-	'Japan': 'JP',
+  'Israel': 'IL',
+  'Italy': 'IT',
+  'Jamaica': 'JM',
+  'Japan': 'JP',
 // 'Jersey' : 'JE',
-	'Jordan': 'JO',
-	'Kazakhstan': 'KZ',
-	'Kenya': 'KE',
-	'Kiribati': 'KI',
-	'North Korea': 'KP', // 'Korea Democratic Peoples Republic of'
-	'Korea': 'KR', // 'Korea Republic of'
-	'Kuwait': 'KW',
-	'Kyrgyzstan': 'KG',
-	'Laos': 'LA', // 'Lao Peoples Democratic Republic
-	'Latvia': 'LV',
-	'Lebanon': 'LB',
-	'Lesotho': 'LS',
-	'Liberia': 'LR',
-	'Libya': 'LY',
+  'Jordan': 'JO',
+  'Kazakhstan': 'KZ',
+  'Kenya': 'KE',
+  'Kiribati': 'KI',
+  'North Korea': 'KP', // 'Korea Democratic Peoples Republic of'
+  'Korea': 'KR', // 'Korea Republic of'
+  'Kuwait': 'KW',
+  'Kyrgyzstan': 'KG',
+  'Laos': 'LA', // 'Lao Peoples Democratic Republic
+  'Latvia': 'LV',
+  'Lebanon': 'LB',
+  'Lesotho': 'LS',
+  'Liberia': 'LR',
+  'Libya': 'LY',
 // 'Liechtenstein' : 'LI',
-	'Lithuania': 'LT',
+  'Lithuania': 'LT',
 // 'Luxembourg' : 'LU',
 // 'Macao' : 'MO',
-	'Macedonia': 'MK', // 'Macedonia the Former Yugoslav Republic of'
-	'Madagascar': 'MG',
-	'Malawi': 'MW',
-	'Malaysia': 'MY',
+  'Macedonia': 'MK', // 'Macedonia the Former Yugoslav Republic of'
+  'Madagascar': 'MG',
+  'Malawi': 'MW',
+  'Malaysia': 'MY',
 // 'Maldives' : 'MV',
-	'Mali': 'ML',
+  'Mali': 'ML',
 // 'Malta' : 'MT',
-	'Marshall Islands': 'MH',
-	'Martinique': 'MQ',
-	'Mauritania': 'MR',
+  'Marshall Islands': 'MH',
+  'Martinique': 'MQ',
+  'Mauritania': 'MR',
 // 'Mauritius' : 'MU',
-	'Mayotte': 'YT',
-	'Mexico': 'MX',
-	'Micronesia Federated States of': 'FM',
-	'Moldova': 'MD', // 'Moldova Republic of'
+  'Mayotte': 'YT',
+  'Mexico': 'MX',
+  'Micronesia Federated States of': 'FM',
+  'Moldova': 'MD', // 'Moldova Republic of'
 // 'Monaco' : 'MC',
-	'Mongolia': 'MN',
-	'Montenegro': 'ME',
+  'Mongolia': 'MN',
+  'Montenegro': 'ME',
 // 'Montserrat' : 'MS',
-	'Morocco': 'MA',
-	'Mozambique': 'MZ',
-	'Myanmar': 'MM',
-	'Namibia': 'NA',
-	'Nauru': 'NR',
-	'Nepal': 'NP',
-	'Netherlands': 'NL',
-	'New Caledonia': 'NC',
-	'New Zealand': 'NZ',
-	'Nicaragua': 'NI',
-	'Niger': 'NE',
-	'Nigeria': 'NG',
-	'Niue': 'NU',
-	'Norfolk Island': 'NF',
-	'Northern Mariana Islands': 'MP',
-	'Norway': 'NO',
-	'Oman': 'OM',
-	'Pakistan': 'PK',
-	'Palau': 'PW',
-	'Palestine State of': 'PS',
-	'Panama': 'PA',
-	'Papua New Guinea': 'PG',
-	'Paraguay': 'PY',
-	'Peru': 'PE',
-	'Philippines': 'PH',
-	'Pitcairn': 'PN',
-	'Poland': 'PL',
-	'Portugal': 'PT',
-	'Puerto Rico': 'PR',
-	'Qatar': 'QA',
-	'Réunion': 'RE',
-	'Romania': 'RO',
-	'Russian Federation': 'RU',
-	'Rwanda': 'RW',
-	'Saint Barthélemy': 'BL',
-	'Saint Helena Ascension & Tristan da Cunha': 'SH',
+  'Morocco': 'MA',
+  'Mozambique': 'MZ',
+  'Myanmar': 'MM',
+  'Namibia': 'NA',
+  'Nauru': 'NR',
+  'Nepal': 'NP',
+  'Netherlands': 'NL',
+  'New Caledonia': 'NC',
+  'New Zealand': 'NZ',
+  'Nicaragua': 'NI',
+  'Niger': 'NE',
+  'Nigeria': 'NG',
+  'Niue': 'NU',
+  'Norfolk Island': 'NF',
+  'Northern Mariana Islands': 'MP',
+  'Norway': 'NO',
+  'Oman': 'OM',
+  'Pakistan': 'PK',
+  'Palau': 'PW',
+  'Palestine State of': 'PS',
+  'Panama': 'PA',
+  'Papua New Guinea': 'PG',
+  'Paraguay': 'PY',
+  'Peru': 'PE',
+  'Philippines': 'PH',
+  'Pitcairn': 'PN',
+  'Poland': 'PL',
+  'Portugal': 'PT',
+  'Puerto Rico': 'PR',
+  'Qatar': 'QA',
+  'Réunion': 'RE',
+  'Romania': 'RO',
+  'Russian Federation': 'RU',
+  'Rwanda': 'RW',
+  'Saint Barthélemy': 'BL',
+  'Saint Helena Ascension & Tristan da Cunha': 'SH',
 // 'Saint Kitts & Nevis' : 'KN',
 // 'Saint Lucia' : 'LC',
-	'Saint Martin (French part)': 'MF',
-	'Saint Pierre & Miquelon': 'PM',
+  'Saint Martin (French part)': 'MF',
+  'Saint Pierre & Miquelon': 'PM',
 // 'Saint Vincent & the Grenadines' : 'VC',
-	'Samoa': 'WS',
+  'Samoa': 'WS',
 // 'San Marino' : 'SM',
 // 'Sao Tome & Principe' : 'ST',
-	'Saudi Arabia': 'SA',
-	'Senegal': 'SN',
-	'Serbia': 'RS',
+  'Saudi Arabia': 'SA',
+  'Senegal': 'SN',
+  'Serbia': 'RS',
 // 'Seychelles' : 'SC',
-	'Sierra Leone': 'SL',
-	'Singapore': 'SG',
-	'Sint Maarten (Dutch part)': 'SX',
-	'Slovakia': 'SK',
-	'Slovenia': 'SI',
-	'Solomon Islands': 'SB',
-	'Somalia': 'SO',
-	'South Africa': 'ZA',
-	'South Georgia & the South Sandwich Islands': 'GS',
-	'South Sudan': 'SS',
-	'Spain': 'ES',
-	'Sri Lanka': 'LK',
-	'Sudan': 'SD',
-	'Suriname': 'SR',
-	'Svalbard & Jan Mayen': 'SJ',
-	'Eswatini': 'SZ',
-	'Sweden': 'SE',
-	'Switzerland': 'CH',
-	'Syrian Arab Republic': 'SY', // 'Syrian Arab Republic'
-	'Taiwan Province of China': 'TW',
-	'Tajikistan': 'TJ',
-	'Tanzania': 'TZ', // 'Tanzania United Republic of'
-	'Thailand': 'TH',
-	'Timor-Leste': 'TL',
-	'Togo': 'TG',
-	'Tokelau': 'TK',
-	'Tonga': 'TO',
+  'Sierra Leone': 'SL',
+  'Singapore': 'SG',
+  'Sint Maarten (Dutch part)': 'SX',
+  'Slovakia': 'SK',
+  'Slovenia': 'SI',
+  'Solomon Islands': 'SB',
+  'Somalia': 'SO',
+  'South Africa': 'ZA',
+  'South Georgia & the South Sandwich Islands': 'GS',
+  'South Sudan': 'SS',
+  'Spain': 'ES',
+  'Sri Lanka': 'LK',
+  'Sudan': 'SD',
+  'Suriname': 'SR',
+  'Svalbard & Jan Mayen': 'SJ',
+  'Eswatini': 'SZ',
+  'Sweden': 'SE',
+  'Switzerland': 'CH',
+  'Syrian Arab Republic': 'SY', // 'Syrian Arab Republic'
+  'Taiwan Province of China': 'TW',
+  'Tajikistan': 'TJ',
+  'Tanzania': 'TZ', // 'Tanzania United Republic of'
+  'Thailand': 'TH',
+  'Timor-Leste': 'TL',
+  'Togo': 'TG',
+  'Tokelau': 'TK',
+  'Tonga': 'TO',
 // 'Trinidad & Tobago' : 'TT',
-	'Tunisia': 'TN',
-	'Turkey': 'TR',
-	'Turkmenistan': 'TM',
-	'Turks & Caicos Islands': 'TC',
-	'Tuvalu': 'TV',
-	'Uganda': 'UG',
-	'Ukraine': 'UA',
-	'United Arab Emirates': 'AE',
-	'United Kingdom': 'GB',
-	'United States': 'US',
-	'United States Minor Outlying Islands': 'UM',
-	'Uruguay': 'UY',
-	'Uzbekistan': 'UZ',
-	'Vanuatu': 'VU',
-	'Venezuela': 'VE',　// 'Venezuela Bolivarian Republic of'
-	'Vietnam': 'VN',
+  'Tunisia': 'TN',
+  'Turkey': 'TR',
+  'Turkmenistan': 'TM',
+  'Turks & Caicos Islands': 'TC',
+  'Tuvalu': 'TV',
+  'Uganda': 'UG',
+  'Ukraine': 'UA',
+  'United Arab Emirates': 'AE',
+  'United Kingdom': 'GB',
+  'United States': 'US',
+  'United States Minor Outlying Islands': 'UM',
+  'Uruguay': 'UY',
+  'Uzbekistan': 'UZ',
+  'Vanuatu': 'VU',
+  'Venezuela': 'VE',　// 'Venezuela Bolivarian Republic of'
+  'Vietnam': 'VN',
 // 'Virgin Islands British' : 'VG',
-	'Virgin Islands U.S.': 'VI',
-	'Wallis & Futuna': 'WF',
-	'Western Sahara': 'EH',
-	'Yemen': 'YE',
-	'Zambia': 'ZM',
-	'Zimbabwe': 'ZW',
+  'Virgin Islands U.S.': 'VI',
+  'Wallis & Futuna': 'WF',
+  'Western Sahara': 'EH',
+  'Yemen': 'YE',
+  'Zambia': 'ZM',
+  'Zimbabwe': 'ZW',
 };
 
 import {onMounted, ref, watch, reactive, computed} from "vue";
@@ -7307,7 +7333,7 @@ const mm = {
         return mm.util.parseOptionsCSV(path, doParseOptions);
       })
       .then((result) => {
-        gg.isPrefTable =  gg.dt === DT_COVID;
+        gg.isPrefTable = gg.dt === DT_COVID;
         mm.data_hdr = result.header;
         result.data.unshift(result.header);
         mm.setPanelFromDataOptions();
@@ -11832,7 +11858,7 @@ h4.hdr {
 }
 
 .chart-sub-title {
-  font-size:0.8em;
+  font-size: 0.8em;
 }
 
 .dc_panel {

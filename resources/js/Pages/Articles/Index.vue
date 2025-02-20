@@ -22,6 +22,7 @@ interface Links {
 interface IndexArticle extends Article {
   permissions: Permission,
 }
+
 interface ArticleProps {
   data: IndexArticle[],
   current_page: number,

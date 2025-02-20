@@ -8,10 +8,12 @@ export interface User {
     followers: Array<User>,
     following: Array<User>,
 }
+
 export interface Tag {
     id: number,
     name: string,
 }
+
 export interface Article {
     id: number,
     title: string,
@@ -23,12 +25,14 @@ export interface Article {
     likes: Array<User>,
     tags: Array<Tag>,
 }
+
 export interface Role {
-  key: string,
-  name: string,
-  description: string,
-  permissions: Object[],
+    key: string,
+    name: string,
+    description: string,
+    permissions: Object[],
 }
+
 export interface Permission {
     canCreateArticle: boolean,
     canUpdateArticle: boolean,
