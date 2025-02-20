@@ -19,6 +19,7 @@ import axios from "@/Utils/axios.js";
 import type { Article, Permission } from "@/types"
 
 const { t } = useTranslation()
+
 interface SearchParams {
   search: string;
   user_id: number;

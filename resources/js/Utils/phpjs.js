@@ -4,7 +4,7 @@
  * http://phpjs.org/functions
  */
 
-export function php_number_format (number, decimals, decPoint, thousandsSep) { // eslint-disable-line camelcase
+export function php_number_format(number, decimals, decPoint, thousandsSep) { // eslint-disable-line camelcase
   number = (number + '').replace(/[^0-9+\-Ee.]/g, '')
   var n = !isFinite(+number) ? 0 : +number
   var prec = !isFinite(+decimals) ? 0 : Math.abs(decimals)
@@ -32,11 +32,11 @@ export function php_number_format (number, decimals, decPoint, thousandsSep) { /
 }
 
 export function php_bytesToSize(bytes) {
-    if (bytes == 0) return '0';
-    var k = 1024;
-    var sizes = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
-    var i = Math.floor(Math.log(bytes) / Math.log(k));
-    return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+  if (bytes == 0) return '0';
+  var k = 1024;
+  var sizes = ['', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
+  var i = Math.floor(Math.log(bytes) / Math.log(k));
+  return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
 }
 
 export function php_str_pad(input, pad_length, pad_string, pad_type) {
@@ -44,7 +44,7 @@ export function php_str_pad(input, pad_length, pad_string, pad_type) {
   var half = '',
     pad_to_go;
 
-  var str_pad_repeater = function(s, len) {
+  var str_pad_repeater = function (s, len) {
     var collect = '',
       i;
 
@@ -77,7 +77,7 @@ export function php_str_pad(input, pad_length, pad_string, pad_type) {
   return input;
 }
 
-export function php_sprintf () {
+export function php_sprintf() {
   var regex = /%%|%(?:(\d+)\$)?((?:[-+#0 ]|'[\s\S])*)(\d+)?(?:\.(\d*))?([\s\S])/g
   var args = arguments
   var i = 0
@@ -242,29 +242,42 @@ export function php_sprintf () {
   }
 }
 
-export function php_array_keys(ary){
-	 return $.map(ary, function(element,index) {return index;});
+export function php_array_keys(ary) {
+  return $.map(ary, function (element, index) {
+    return index;
+  });
 }
-export function php_array_values(ary){
-	return $.map(ary, function(element,index) {return element;});
+
+export function php_array_values(ary) {
+  return $.map(ary, function (element, index) {
+    return element;
+  });
 }
-export function php_array_sum(ary){
-	var t=0;
-	$.map(ary, function(element,index) { t+=element;});
-	return t;
+
+export function php_array_sum(ary) {
+  var t = 0;
+  $.map(ary, function (element, index) {
+    t += element;
+  });
+  return t;
 }
-export function php_array_column(ary,column_key){
-	var t=[];
-	$.map(ary, function(element,index) { t.push(element[column_key]);});
-	return t;
+
+export function php_array_column(ary, column_key) {
+  var t = [];
+  $.map(ary, function (element, index) {
+    t.push(element[column_key]);
+  });
+  return t;
 }
-export function php_unique(ary){
-	return $.unique( ary );
+
+export function php_unique(ary) {
+  return $.unique(ary);
 }
+
 //function php_substr_count2(str,seq){
 //    return str.split(seq).length - 1;
 //}
-export function php_substr_count (haystack, needle, offset, length) {
+export function php_substr_count(haystack, needle, offset, length) {
   var cnt = 0
 
   haystack += ''
@@ -342,7 +355,7 @@ export function php_trim(str, charlist) {
   return whitespace.indexOf(str.charAt(0)) === -1 ? str : ''
 }
 
-export function php_parse_url (str, component) {
+export function php_parse_url(str, component) {
 
   try {
     globalThis.php_js = globalThis.php_js || {}
@@ -406,12 +419,13 @@ export function php_parse_url (str, component) {
   delete uri.source
   return uri
 }
-export function php_parse_str (str, array) {
+
+export function php_parse_str(str, array) {
 
   var strArr = String(str)
-    .replace(/^&/, '')
-    .replace(/&$/, '')
-    .split('&'),
+      .replace(/^&/, '')
+      .replace(/&$/, '')
+      .split('&'),
     sal = strArr.length,
     i, j, ct, p, lastObj, obj, lastIter, undef, chr, tmp, key, value,
     postLeftBracketPos, keys, keysLen,
@@ -494,7 +508,8 @@ export function php_parse_str (str, array) {
     }
   }
 }
-export function php_http_build_query (formdata, numeric_prefix, arg_separator) {
+
+export function php_http_build_query(formdata, numeric_prefix, arg_separator) {
 
   var value, key, tmp = [],
     that = this
@@ -541,60 +556,61 @@ export function php_http_build_query (formdata, numeric_prefix, arg_separator) {
 
   return tmp.join(arg_separator)
 }
+
 //===========================================================================
-export function url_append_param( uri,params )
-{
-    var out={};
-    let parse_url=php_parse_url(uri);
-    if( parse_url['query']!= undefined ){
-	    php_parse_str( parse_url['query'], out );
-	}
-    $.extend( true, out,  params );//out=array_merge( out, params );
-    return parse_url['path']+($.isEmptyObject(out)?'':'?')+php_http_build_query(out)+(parse_url.fragment?'#'+parse_url.fragment:'');
-}
-export function url_append_param_CI(url_ci, params)
-{
-    //url_append_param()は'?'が必要なので　最後の'/'を'?'にしてCALL
-    var m=url_ci.match(/^(.+)\/(.+)$/);
-    if(m && m.length==3){
-      var url = m[1]+'?'+m[2];
-      url=url_append_param(url,params).replace('?','/');
-    }
-    return url;
-}
-export function url_remove_param(uri, params)
-{
-    let parse_url=php_parse_url(uri);
-    let out={};
+export function url_append_param(uri, params) {
+  var out = {};
+  let parse_url = php_parse_url(uri);
+  if (parse_url['query'] != undefined) {
     php_parse_str(parse_url['query'], out);
-    for (var i = 0; i < params.length; i++) {
+  }
+  $.extend(true, out, params);//out=array_merge( out, params );
+  return parse_url['path'] + ($.isEmptyObject(out) ? '' : '?') + php_http_build_query(out) + (parse_url.fragment ? '#' + parse_url.fragment : '');
+}
+
+export function url_append_param_CI(url_ci, params) {
+  //url_append_param()は'?'が必要なので　最後の'/'を'?'にしてCALL
+  var m = url_ci.match(/^(.+)\/(.+)$/);
+  if (m && m.length == 3) {
+    var url = m[1] + '?' + m[2];
+    url = url_append_param(url, params).replace('?', '/');
+  }
+  return url;
+}
+
+export function url_remove_param(uri, params) {
+  let parse_url = php_parse_url(uri);
+  let out = {};
+  php_parse_str(parse_url['query'], out);
+  for (var i = 0; i < params.length; i++) {
     delete out[params[i]];
-    }
-  return parse_url['path']+($.isEmptyObject(out)?'':'?')+php_http_build_query(out)+(parse_url.fragment?'#'+parse_url.fragment:'');
+  }
+  return parse_url['path'] + ($.isEmptyObject(out) ? '' : '?') + php_http_build_query(out) + (parse_url.fragment ? '#' + parse_url.fragment : '');
 }
-export function url_remove_param_CI(url_ci, params)
-{
-    //url_append_param()は'?'が必要なので　最後の'/'を'?'にしてCALL
-    var m=url_ci.match(/^(.+)\/(.+)$/);
-    if(m && m.length==3){
-      var url = m[1]+'?'+m[2];
-      url=url_remove_param(url,params).replace('?','/');
-    }
-    return url;
+
+export function url_remove_param_CI(url_ci, params) {
+  //url_append_param()は'?'が必要なので　最後の'/'を'?'にしてCALL
+  var m = url_ci.match(/^(.+)\/(.+)$/);
+  if (m && m.length == 3) {
+    var url = m[1] + '?' + m[2];
+    url = url_remove_param(url, params).replace('?', '/');
+  }
+  return url;
 }
+
 //===========================================================================
-export function words_split( value,is_or ){
-    if(is_or){
-	    //左右の空白除去し、全角・半角空白スペース半角につめる
-	    var words = jQuery.trim( value ).replace(/( |　)+/g, ' ' );
-        words = words.replace(/\|/g,' ');//'|'削除
-    }else{
-	    //左右の空白除去し、全角・半角空白スペース半角につめる
-	    var words = jQuery.trim( value ).replace(/( &　)+/g, ' ' );
-        words = words.replace(/\&/g,' ');//'|'削除
-    }
-	jQuery.trim( words ).replace(/( )+/g, ' ' );
-	return words.split(" ");
+export function words_split(value, is_or) {
+  if (is_or) {
+    //左右の空白除去し、全角・半角空白スペース半角につめる
+    var words = jQuery.trim(value).replace(/( |　)+/g, ' ');
+    words = words.replace(/\|/g, ' ');//'|'削除
+  } else {
+    //左右の空白除去し、全角・半角空白スペース半角につめる
+    var words = jQuery.trim(value).replace(/( &　)+/g, ' ');
+    words = words.replace(/\&/g, ' ');//'|'削除
+  }
+  jQuery.trim(words).replace(/( )+/g, ' ');
+  return words.split(" ");
 }
 
 export function sscanf(str, format) {
@@ -707,17 +723,17 @@ export function sscanf(str, format) {
       if (sizeCode) {
         // This would need to be processed later
         switch (sizeCode) {
-        case 'h':
+          case 'h':
           // Treats subsequent as short int (for d,i,n) or unsigned short int (for o,u,x)
-        case 'l':
+          case 'l':
           // Treats subsequent as long int (for d,i,n), or unsigned long int (for o,u,x);
           //    or as double (for e,f,g) instead of float or wchar_t instead of char
-        case 'L':
-          // Treats subsequent as long double (for e,f,g)
-          break;
-        default:
-          throw 'Unexpected size specifier in sscanf()!';
-          break;
+          case 'L':
+            // Treats subsequent as long double (for e,f,g)
+            break;
+          default:
+            throw 'Unexpected size specifier in sscanf()!';
+            break;
         }
       }
       // PROCESS CHARACTER
@@ -727,109 +743,109 @@ export function sscanf(str, format) {
           // Also http://www.mathworks.com/access/helpdesk/help/techdoc/ref/sscanf.html
           // p, S, C arguments in C function not available
           // DOCUMENTED UNDER SSCANF
-        case 'F':
-          // Not supported in PHP sscanf; the argument is treated as a float, and
-          //  presented as a floating-point number (non-locale aware)
-          // sscanf doesn't support locales, so no need for two (see %f)
-          break;
-        case 'g':
-          // Not supported in PHP sscanf; shorter of %e and %f
-          // Irrelevant to input conversion
-          break;
-        case 'G':
-          // Not supported in PHP sscanf; shorter of %E and %f
-          // Irrelevant to input conversion
-          break;
-        case 'b':
-          // Not supported in PHP sscanf; the argument is treated as an integer, and presented as a binary number
-          // Not supported - couldn't distinguish from other integers
-          break;
-        case 'i':
-          // Integer with base detection (Equivalent of 'd', but base 0 instead of 10)
-          j = _addNext(j, /([+-])?(?:(?:0x([\da-fA-F]+))|(?:0([0-7]+))|(\d+))/, function (num, sign, hex,
-            oct, dec) {
-            return hex ? parseInt(num, 16) : oct ? parseInt(num, 8) : parseInt(num, 10);
-          });
-          break;
-        case 'n':
-          // Number of characters processed so far
-          retArr[digit !== undefined ? digit : retArr.length - 1] = j;
-          break;
+          case 'F':
+            // Not supported in PHP sscanf; the argument is treated as a float, and
+            //  presented as a floating-point number (non-locale aware)
+            // sscanf doesn't support locales, so no need for two (see %f)
+            break;
+          case 'g':
+            // Not supported in PHP sscanf; shorter of %e and %f
+            // Irrelevant to input conversion
+            break;
+          case 'G':
+            // Not supported in PHP sscanf; shorter of %E and %f
+            // Irrelevant to input conversion
+            break;
+          case 'b':
+            // Not supported in PHP sscanf; the argument is treated as an integer, and presented as a binary number
+            // Not supported - couldn't distinguish from other integers
+            break;
+          case 'i':
+            // Integer with base detection (Equivalent of 'd', but base 0 instead of 10)
+            j = _addNext(j, /([+-])?(?:(?:0x([\da-fA-F]+))|(?:0([0-7]+))|(\d+))/, function (num, sign, hex,
+                                                                                            oct, dec) {
+              return hex ? parseInt(num, 16) : oct ? parseInt(num, 8) : parseInt(num, 10);
+            });
+            break;
+          case 'n':
+            // Number of characters processed so far
+            retArr[digit !== undefined ? digit : retArr.length - 1] = j;
+            break;
           // DOCUMENTED UNDER SPRINTF
-        case 'c':
-          // Get character; suppresses skipping over whitespace! (but shouldn't be whitespace in format anyways, so no difference here)
-          // Non-greedy match
-          j = _addNext(j, new RegExp('.{1,' + (width || 1) + '}'));
-          break;
-        case 'D':
+          case 'c':
+            // Get character; suppresses skipping over whitespace! (but shouldn't be whitespace in format anyways, so no difference here)
+            // Non-greedy match
+            j = _addNext(j, new RegExp('.{1,' + (width || 1) + '}'));
+            break;
+          case 'D':
           // sscanf documented decimal number; equivalent of 'd';
-        case 'd':
-          // Optionally signed decimal integer
-          j = _addNext(j, /([+-])?(?:0*)(\d+)/, function (num, sign, dec) {
-            // Ignores initial zeroes, unlike %i and parseInt()
-            var decInt = parseInt((sign || '') + dec, 10);
-            if (decInt < 0) {
-              // PHP also won't allow less than -2147483648
-              // integer overflow with negative
-              return decInt < -2147483648 ? -2147483648 : decInt;
-            } else {
-              // PHP also won't allow greater than -2147483647
-              return decInt < 2147483647 ? decInt : 2147483647;
-            }
-          });
-          break;
-        case 'f':
+          case 'd':
+            // Optionally signed decimal integer
+            j = _addNext(j, /([+-])?(?:0*)(\d+)/, function (num, sign, dec) {
+              // Ignores initial zeroes, unlike %i and parseInt()
+              var decInt = parseInt((sign || '') + dec, 10);
+              if (decInt < 0) {
+                // PHP also won't allow less than -2147483648
+                // integer overflow with negative
+                return decInt < -2147483648 ? -2147483648 : decInt;
+              } else {
+                // PHP also won't allow greater than -2147483647
+                return decInt < 2147483647 ? decInt : 2147483647;
+              }
+            });
+            break;
+          case 'f':
           // Although sscanf doesn't support locales, this is used instead of '%F'; seems to be same as %e
-        case 'E':
+          case 'E':
           // These don't discriminate here as both allow exponential float of either case
-        case 'e':
-          j = _addNext(j, /([+-])?(?:0*)(\d*\.?\d*(?:[eE]?\d+)?)/, function (num, sign, dec) {
-            if (dec === '.') {
-              return null;
-            }
-            // Ignores initial zeroes, unlike %i and parseFloat()
-            return parseFloat((sign || '') + dec);
-          });
-          break;
-        case 'u':
-          // unsigned decimal integer
-          // We won't deal with integer overflows due to signs
-          j = _addNext(j, /([+-])?(?:0*)(\d+)/, function (num, sign, dec) {
-            // Ignores initial zeroes, unlike %i and parseInt()
-            var decInt = parseInt(dec, 10);
-            if (sign === '-') {
-              // PHP also won't allow greater than 4294967295
-              // integer overflow with negative
-              return 4294967296 - decInt;
-            } else {
-              return decInt < 4294967295 ? decInt : 4294967295;
-            }
-          });
-          break;
-        case 'o':
-          // Octal integer // Fix: add overflows as above?
-          j = _addNext(j, /([+-])?(?:0([0-7]+))/, function (num, sign, oct) {
-            return parseInt(num, 8);
-          });
-          break;
-        case 's':
-          // Greedy match
-          j = _addNext(j, /\S+/);
-          break;
-        case 'X':
+          case 'e':
+            j = _addNext(j, /([+-])?(?:0*)(\d*\.?\d*(?:[eE]?\d+)?)/, function (num, sign, dec) {
+              if (dec === '.') {
+                return null;
+              }
+              // Ignores initial zeroes, unlike %i and parseFloat()
+              return parseFloat((sign || '') + dec);
+            });
+            break;
+          case 'u':
+            // unsigned decimal integer
+            // We won't deal with integer overflows due to signs
+            j = _addNext(j, /([+-])?(?:0*)(\d+)/, function (num, sign, dec) {
+              // Ignores initial zeroes, unlike %i and parseInt()
+              var decInt = parseInt(dec, 10);
+              if (sign === '-') {
+                // PHP also won't allow greater than 4294967295
+                // integer overflow with negative
+                return 4294967296 - decInt;
+              } else {
+                return decInt < 4294967295 ? decInt : 4294967295;
+              }
+            });
+            break;
+          case 'o':
+            // Octal integer // Fix: add overflows as above?
+            j = _addNext(j, /([+-])?(?:0([0-7]+))/, function (num, sign, oct) {
+              return parseInt(num, 8);
+            });
+            break;
+          case 's':
+            // Greedy match
+            j = _addNext(j, /\S+/);
+            break;
+          case 'X':
           // Same as 'x'?
-        case 'x':
-          // Fix: add overflows as above?
-          // Initial 0x not necessary here
-          j = _addNext(j, /([+-])?(?:(?:0x)?([\da-fA-F]+))/, function (num, sign, hex) {
-            return parseInt(num, 16);
-          });
-          break;
-        case '':
-          // If no character left in expression
-          throw 'Missing character after percent mark in sscanf() format argument';
-        default:
-          throw 'Unrecognized character after percent mark in sscanf() format argument';
+          case 'x':
+            // Fix: add overflows as above?
+            // Initial 0x not necessary here
+            j = _addNext(j, /([+-])?(?:(?:0x)?([\da-fA-F]+))/, function (num, sign, hex) {
+              return parseInt(num, 16);
+            });
+            break;
+          case '':
+            // If no character left in expression
+            throw 'Missing character after percent mark in sscanf() format argument';
+          default:
+            throw 'Unrecognized character after percent mark in sscanf() format argument';
         }
       } catch (e) {
         if (e === 'No match in string') {
@@ -837,7 +853,8 @@ export function sscanf(str, format) {
           return _setExtraConversionSpecs(i + 2);
         }
         // Calculate skipping beyond initial percent too
-      }++i;
+      }
+      ++i;
     } else if (format.charAt(i) !== str.charAt(j)) {
       // Fix: Double-check i whitespace ignored in string and/or formats
       _NWS.lastIndex = 0;

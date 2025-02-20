@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
-		--text-theme-col: #1f2937;
-		--text-theme-col2: #004276;
-		--bg-theme-col: #F0F0F0;
-		--bg-theme-col2: #F8F8F8;
-	}
+  :root {
+    --text-theme-col: #1f2937;
+    --text-theme-col2: #004276;
+    --bg-theme-col: #F0F0F0;
+    --bg-theme-col2: #F8F8F8;
+  }
 
-	.dark {
-		--text-theme-col: #FFFFFF;
-		--text-theme-col2: #E0E0FF;
-		--bg-theme-col: #1F2937;
-		--bg-theme-col2: #111827;
-	}
+  .dark {
+    --text-theme-col: #FFFFFF;
+    --text-theme-col2: #E0E0FF;
+    --bg-theme-col: #1F2937;
+    --bg-theme-col2: #111827;
+  }
 }
 
 [x-cloak] {
-    display: none;
+  display: none;
 }

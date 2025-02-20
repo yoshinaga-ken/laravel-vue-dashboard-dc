@@ -39,7 +39,8 @@ const onClickArticleDelete = () => {
     <template #content>
       <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
         Deleting an Article will permanently delete all data and information relating to that Article.
-        Before deleting an Article, be sure to download any data and information relating to the Article you want to keep.
+        Before deleting an Article, be sure to download any data and information relating to the Article you want to
+        keep.
       </div>
 
       <div class="mt-5">
