@@ -1,21 +1,7 @@
 <?php
 
-use App\Events\ArticleWasSubmittedForApproval;
-use App\Http\Resources\ArticleResource;
-use App\Models\Article;
-use App\Models\Tag;
-use App\Models\Team;
 use App\Models\User;
-use Database\Factories\ArticleFactory;
-use Database\Factories\TagFactory;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
-use Laravel\Sanctum\Sanctum;
-
-use Tests\CreatesUsers;
 use Tests\TestCase;
 
 uses(
@@ -30,9 +16,8 @@ const FollowJsonStructure =
 ];
 
 it('api.users.follow|unfollow', function () {
-    $user = User::factory()->create();
+    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
     $follower1 = User::factory()->create();
-    Sanctum::actingAs($user);
 
     // フォロー OFF　チェック
     $this->assertFalse($follower1->isFollowedBy());
@@ -40,7 +25,6 @@ it('api.users.follow|unfollow', function () {
     // 🚀フォロー ON
     $this->putJson(route('api.users.follow', $follower1->id))
         ->assertJsonStructure(FollowJsonStructure);
-
 
     // フォロー ON　チェック
     $this->assertTrue($follower1->isFollowedBy());
