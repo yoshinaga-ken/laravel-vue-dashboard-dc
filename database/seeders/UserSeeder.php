@@ -12,10 +12,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->withPersonalTeam()->create([
-            'name' => env('TEST_USER_NAME', 'test'),
-            'email' => env('TEST_USER_EMAIL', 'test@example.com'),
-        ]);
+        if (!User::where('name', env('TEST_USER_NAME', 'test'))->exists()) {
+            User::factory()->withPersonalTeam()->create([
+                'name' => env('TEST_USER_NAME', 'test'),
+                'email' => env('TEST_USER_EMAIL', 'test@example.com'),
+            ]);
+        }
         User::factory(10)->withPersonalTeam()->create();
     }
 }
