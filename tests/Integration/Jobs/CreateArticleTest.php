@@ -1,8 +1,10 @@
 <?php
 
+use App\Events\ArticleCreated;
 use App\Jobs\CreateArticle;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 uses(
@@ -11,7 +13,9 @@ uses(
 );
 
 
-test('we can create article', function () {
+it('we can create article', function () {
+    Event::fake();
+
     $data = [
         'title' => 'Sample Article',
         'body' => 'This is a sample article.',
@@ -19,7 +23,7 @@ test('we can create article', function () {
     ];
     $user = User::factory()->create();
 
-    $job = new CreateArticle($data, $user);
+    $job = new CreateArticle($data, $user, true);
     $articleId = $job->handle();
 
     $this->assertDatabaseHas('articles', [
@@ -32,4 +36,6 @@ test('we can create article', function () {
     $this->assertDatabaseHas('tags', ['name' => 'php']);
     $this->assertDatabaseHas('tags', ['name' => 'laravel']);
     $this->assertDatabaseHas('article_tag', ['article_id' => $articleId]);
+
+    Event::assertDispatched(ArticleCreated::class);
 });
