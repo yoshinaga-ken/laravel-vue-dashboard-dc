@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Events\ArticleCreated;
-use App\Mail\ArticleSubmittedEmail;
 use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,23 +11,20 @@ use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Laravel\Jetstream\Mail\TeamInvitation;
 
-class CreateArticle implements ShouldQueue
+final class CreateArticle implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, SerializesModels, Queueable;
-
-    protected $data;
-    protected $user;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(array $data, $user)
+    public function __construct(
+        private array $data,
+        private       $user,
+        private bool  $isArticleCreatedEvent = false
+    )
     {
-        $this->data = $data;
-        $this->user = $user;
     }
 
     /**
@@ -50,6 +46,11 @@ class CreateArticle implements ShouldQueue
             });
             return $article->id;
         });
+
+        if ($this->isArticleCreatedEvent) {
+            $article = Article::find($articleId);
+            event(new ArticleCreated($article));
+        }
 
         return $articleId;
     }
