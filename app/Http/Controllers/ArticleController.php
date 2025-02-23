@@ -7,9 +7,11 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleResource;
 use App\Http\Resources\UserResource;
+use App\Jobs\CreateArticle;
 use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
@@ -96,21 +98,14 @@ class ArticleController extends Controller
         $user = $request->user();
         Gate::forUser($user)->authorize('create', $article);
 
-        DB::transaction(function () use ($article, $request) {
-            $article->fill($request->all());
-            $article->user_id = $request->user()->id;
-            $article->save();
+        $job = new CreateArticle($request->all(), $user);
+        $articleId = Bus::dispatchNow($job);
 
-            // create tags
-            collect($request->tags)->each(function ($tagName) use ($article) {
-                $tag = Tag::firstOrCreate(['name' => $tagName]);
-                $article->tags()->attach($tag);
-            });
-        });
+        $article = Article::find($articleId);
 
         return $isWantsJson
-            ? ArticleResource::make($article) // ['article_id' => $article->id]
-            : Redirect::badk()->with('success', __('Article created', ['id' => $article->id]));
+            ? ArticleResource::make($article)
+            : Redirect::back()->with('success', __('Article created', ['id' => $article->id]));
     }
 
     /**
