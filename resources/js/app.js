@@ -23,33 +23,33 @@ import {updateDarkModeClass} from './Utils/utils.js';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 const vuetify = createVuetify({
-    components,
-    directives,
-    icons: {
-        defaultSet: 'mdi',
-    },
-    theme: {
-        defaultTheme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
-    },
+  components,
+  directives,
+  icons: {
+    defaultSet: 'mdi',
+  },
+  theme: {
+    defaultTheme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+  },
 })
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-    setup({el, App, props, plugin}) {
-        const app = createApp({render: () => h(App, props)});
+  title: (title) => `${title} - ${appName}`,
+  resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+  setup({el, App, props, plugin}) {
+    const app = createApp({render: () => h(App, props)});
 
-        app
-            .use(plugin)
-            .use(ZiggyVue)
-            .use(vuetify)
-            .mount(el);
+    app
+      .use(plugin)
+      .use(ZiggyVue)
+      .use(vuetify)
+      .mount(el);
 
-        updateDarkModeClass();
+    updateDarkModeClass();
 
-        return app;
-    },
-    progress: {
-        color: '#4B5563',
-    },
+    return app;
+  },
+  progress: {
+    color: '#4B5563',
+  },
 });
