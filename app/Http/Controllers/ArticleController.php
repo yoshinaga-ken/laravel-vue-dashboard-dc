@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleResource;
 use App\Http\Resources\UserResource;
 use App\Jobs\CreateArticle;
+use App\Jobs\UpdateArticle;
 use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -154,20 +155,13 @@ class ArticleController extends Controller
         $user = $request->user();
         Gate::forUser($user)->authorize('update', $article);
 
-        DB::transaction(function () use ($article, $request) {
-            // update article
-            $article->fill($request->all())->save();
+        $job = new UpdateArticle($article, $request->all());
+        $articleId = Bus::dispatchNow($job);
 
-            // update tags
-            $article->tags()->detach();
-            collect($request->tags)->each(function ($tagName) use ($article) {
-                $tag = Tag::firstOrCreate(['name' => $tagName]);
-                $article->tags()->attach($tag);
-            });
-        });
+        $article = Article::find($articleId);
 
         return $isWantsJson
-            ? ArticleResource::make($article) // ['article_id' => $article->id]
+            ? ArticleResource::make($article)
             : Redirect::back()->with('success', __('Article updated', ['id' => $article->id]));
     }
 
