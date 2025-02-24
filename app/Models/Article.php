@@ -91,4 +91,13 @@ class Article extends Model
             $query->where('title', 'like', "%{$word}%");
         });
     }
+
+    public function syncTagsByName(array $tags)
+    {
+        $tagIds = array_map(function ($tagName) {
+            return Tag::firstOrCreate(['name' => $tagName])->id;
+        }, $tags);
+
+        $this->tags()->sync($tagIds);
+    }
 }
