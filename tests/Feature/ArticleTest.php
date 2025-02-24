@@ -19,6 +19,23 @@ test('article.index parameter validation check', function () {
         ->assertStatus(302);
 });
 
+test('users can update articles', function () {
+    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+    $article = Article::factory()->create(['user_id' => $user->id]);
+
+    $this->put("/articles/{$article->id}", [
+        'title' => 'Updated title',
+        'body' => 'Updated body',
+        'tags' => ['tag1', 'tag2']
+    ]);
+
+    $article->refresh();
+
+    expect($article->title)->toEqual('Updated title');
+    expect($article->body)->toEqual('Updated body');
+    expect($article->tags()->pluck('name')->toArray())->toEqual(['tag1', 'tag2']);
+});
+
 test('users can delete their own articles', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
     $article = Article::factory()->create(['user_id' => $user->id]);
