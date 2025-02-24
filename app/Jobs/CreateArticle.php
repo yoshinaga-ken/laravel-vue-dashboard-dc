@@ -22,7 +22,7 @@ final class CreateArticle implements ShouldQueue
     public function __construct(
         private array $data,
         private       $user,
-        private bool  $isArticleCreatedEvent = false
+        private bool  $shouldEventTrigger = false
     )
     {
     }
@@ -38,19 +38,13 @@ final class CreateArticle implements ShouldQueue
             $article->user_id = $this->user->id;
             $article->save();
 
-            // create tags
-            $tags = $this->data['tags'] ?? [];
-            collect($tags)->each(function ($tagName) use ($article) {
-                $tag = Tag::firstOrCreate(['name' => $tagName]);
-                $article->tags()->attach($tag);
-            });
+            $article->syncTagsByName($this->data['tags'] ?? []);
+
+            if ($this->shouldEventTrigger) {
+                event(new ArticleCreated($article));
+            }
             return $article->id;
         });
-
-        if ($this->isArticleCreatedEvent) {
-            $article = Article::find($articleId);
-            event(new ArticleCreated($article));
-        }
 
         return $articleId;
     }
