@@ -144,6 +144,22 @@ CREATE TABLE `migrations` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `notifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `notifications` (
+  `id` char(36) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `notifiable_type` varchar(255) NOT NULL,
+  `notifiable_id` bigint(20) unsigned NOT NULL,
+  `data` text NOT NULL,
+  `read_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `password_reset_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -284,3 +300,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (13,'2024_12_23_095
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (14,'2024_12_23_095830_create_article_tag_table',2);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (15,'2025_01_15_055448_create_likes_table',3);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (16,'2025_02_08_093537_create_followers_table',4);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (17,'2025_02_23_091828_create_notifications_table',5);
