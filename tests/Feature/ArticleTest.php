@@ -19,6 +19,27 @@ test('article.index parameter validation check', function () {
         ->assertStatus(302);
 });
 
+test('users can create articles', function () {
+    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+
+    /** @var Illuminate\Http\RedirectResponse $response */
+    $response = $this->post('/articles', [
+        'title' => 'Test title',
+        'body' => 'Test body',
+        'tags' => ['tag1', 'tag2']
+    ]);
+
+    $article = Article::latest()->first(); // 最後に作成された記事を取得
+
+    $response
+        ->assertRedirect(route('articles.edit', $article->id))
+        ->assertSessionHas('success', __('Article created', ['id' => $article->id]));
+
+    expect($article->title)->toEqual('Test title');
+    expect($article->body)->toEqual('Test body');
+    expect($article->tags()->pluck('name')->toArray())->toEqual(['tag1', 'tag2']);
+});
+
 test('users can update articles', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
     $article = Article::factory()->create(['user_id' => $user->id]);
@@ -27,7 +48,9 @@ test('users can update articles', function () {
         'title' => 'Updated title',
         'body' => 'Updated body',
         'tags' => ['tag1', 'tag2']
-    ]);
+    ])
+        ->assertRedirect(route('articles.edit', $article->id))
+        ->assertSessionHas('success', __('Article updated', ['id' => $article->id]));
 
     $article->refresh();
 
