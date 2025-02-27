@@ -106,7 +106,7 @@ class ArticleController extends Controller
 
         return $isWantsJson
             ? ArticleResource::make($article)
-            : Redirect::back()->with('success', __('Article created', ['id' => $article->id]));
+            : Redirect::route('articles.edit', $article->id)->with('success', __('Article created', ['id' => $article->id]));
     }
 
     /**
@@ -162,7 +162,7 @@ class ArticleController extends Controller
 
         return $isWantsJson
             ? ArticleResource::make($article)
-            : Redirect::back()->with('success', __('Article updated', ['id' => $article->id]));
+            : Redirect::route('articles.edit', $article->id)->with('success', __('Article updated', ['id' => $article->id]));
     }
 
     /**
