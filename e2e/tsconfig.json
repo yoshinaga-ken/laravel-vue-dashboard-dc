@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["resources/js/*"]
+        },
+        "typeRoots": [
+          "./node_modules/@types"
+        ],
+        "lib": [
+            "dom",
+            "ES2020"
+        ],
+      "allowSyntheticDefaultImports": true
+    },
+    "exclude": ["node_modules", "public"]
+}
