@@ -160,10 +160,10 @@ const onClickArticleDelete = (article: IndexArticle) => {
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(article, i) in articles.data" :key="article.id"
+        <tr v-for="(article, i) in articles.data" :key="article.id" :id="`row-${article.id}`"
             class="hover:bg-gray-100 focus-within:bg-gray-100 dark:hover:bg-gray-800 dark:focus-within:bg-gray-800">
           <td>
-            <Link class="flex items-center px-6 py-4 underline" :href="route('articles.show', article.id)"
+            <Link :id="`id-${article.id}`" class="flex items-center px-6 py-4 underline" :href="route('articles.show', article.id)"
                   tabindex="-1">
               📄{{ article.id }}
             </Link>
@@ -182,9 +182,11 @@ const onClickArticleDelete = (article: IndexArticle) => {
             {{ article.created_at }}
           </td>
           <td>
-            <ArticleLikeButton :article="article"
-                               @click="onClickToggleLike(article)"
-                               :disabled="formProcessing()"/>
+            <ArticleLikeButton
+              :id="`like-${article.id}`"
+              :article="article"
+              @click="onClickToggleLike(article)"
+              :disabled="formProcessing()"/>
           </td>
           <td>
             <template v-for="(tag, index) in article.tags" :key="index">
@@ -196,6 +198,7 @@ const onClickArticleDelete = (article: IndexArticle) => {
           </td>
           <td>
             <Link
+              :id="`edit-${article.id}`"
               v-if="article.permissions.canUpdateArticle"
               class="flex items-center px-6 py-4 underline"
               :href="route('articles.edit', article.id)"
@@ -206,6 +209,7 @@ const onClickArticleDelete = (article: IndexArticle) => {
           </td>
           <td>
             <DangerButton
+              :id="`delete-${article.id}`"
               v-if="article.permissions.canDeleteArticle"
               class="ms-3"
               :class="{ 'opacity-25': formProcessing() }"
