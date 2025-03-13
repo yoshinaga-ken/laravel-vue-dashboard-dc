@@ -1,3 +1,0 @@
-
-* 選択時の塗りつぶしをディフォルトでしないようにした、これがあると必ず塗りつぶしされる為
-P:\jslib\jquery-jvectormap\jquery-jvectormap-2.0.5.js:1689:             fill: "yellow"
