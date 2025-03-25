@@ -1,16 +1,32 @@
 <script lang="ts" setup>
-import { nextTick, ref } from 'vue'
-import { ElTag, ElInput, ElButton } from 'element-plus'
+import { nextTick, ref, computed } from 'vue'
+import { ElTag, ElInput, ElButton, ElAutocomplete } from 'element-plus'
+import { useQuery } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
 
 const props = defineProps({
   disabled: Boolean,
 });
 
 const inputValue = ref('')
-const dynamicTags = defineModel<string []>();
+const dynamicTags = defineModel<string[]>();
 const inputVisible = ref(false)
 const InputRef = ref<InstanceType<typeof ElInput>>()
 
+const { result } = useQuery(gql`
+  query SearchTags($keyword: String) {
+    searchTags(keyword: $keyword, limit: 512) {
+      name
+    }
+  }
+`, {
+  query: ''
+})
+
+const availableTags = computed(() => {
+  if (!result.value?.searchTags) return []
+  return result.value.searchTags.map((tag: any) => tag.name)
+})
 
 const handleClose = (tag: string) => {
   dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
@@ -19,7 +35,9 @@ const handleClose = (tag: string) => {
 const showInput = () => {
   inputVisible.value = true
   nextTick(() => {
-    InputRef.value!.input!.focus()
+    setTimeout(() => {
+      InputRef.value?.focus()
+    }, 200)
   })
 }
 
@@ -30,6 +48,16 @@ const handleInputConfirm = () => {
   inputVisible.value = false
   inputValue.value = ''
 }
+
+const querySearch = (queryString: string, cb: any) => {
+  const results = queryString
+    ? availableTags.value
+      .filter(tag => tag.toLowerCase().includes(queryString.toLowerCase()))
+      .map(tag => ({ value: tag }))
+    : availableTags.value.map(tag => ({ value: tag }))
+  cb(results)
+}
+
 </script>
 
 <template>
@@ -43,13 +71,16 @@ const handleInputConfirm = () => {
     >
       {{ tag }}
     </ElTag>
-    <ElInput
+    <ElAutocomplete
       v-if="inputVisible"
       ref="InputRef"
       v-model="inputValue"
+      :fetch-suggestions="querySearch"
       class="w-20"
       size="small"
+      clearable
       @keyup.enter="handleInputConfirm"
+      @keydown.enter.prevent
       @blur="handleInputConfirm"
     />
     <ElButton v-else-if="!disabled" class="button-new-tag" size="small" @click="showInput">
