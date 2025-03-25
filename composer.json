@@ -12,6 +12,8 @@
         "laravel/jetstream": "^5.3",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "mll-lab/laravel-graphql-playground": "^1.1",
+        "nuwave/lighthouse": "^6.50",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {

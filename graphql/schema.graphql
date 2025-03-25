@@ -1,0 +1,42 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  articles: [Article!]! @hasMany(type: PAGINATOR)
+}
+
+type Article {
+  id: ID!
+  title: String!
+  body: String!
+  user: User! @belongsTo
+  tags: [Tag!]! @belongsToMany
+}
+
+type Tag {
+  id: ID!
+  name: String!
+  articles: [Article!]! @belongsToMany(type: PAGINATOR)
+}
+
+type Query
+@guard(with: ["sanctum"])
+{
+  loginUser: User @auth(guard: "sanctum")
+
+  users: [User!]! @paginate(type: PAGINATOR model: "App\\Models\\User")
+  user(id: ID! @eq): User @find(model: "App\\Models\\User")
+
+  articles: [Article!]! @paginate(type: PAGINATOR model: "App\\Models\\Article")
+  article(id: ID! @eq): Article @find(model: "App\\Models\\Article")
+
+  tags: [Tag!]! @paginate(type: PAGINATOR model: "App\\Models\\Tag")
+  tag(id: ID! @eq): Tag @find(model: "App\\Models\\Tag")
+
+  searchTags(keyword: String, limit: Int): [Tag!]! @field(resolver: "App\\GraphQL\\Queries\\SearchTags@resolve")
+}
+
