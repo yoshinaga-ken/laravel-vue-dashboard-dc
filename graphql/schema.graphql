@@ -36,5 +36,7 @@ type Query
 
   tags: [Tag!]! @paginate(type: PAGINATOR model: "App\\Models\\Tag")
   tag(id: ID! @eq): Tag @find(model: "App\\Models\\Tag")
+
+  searchTags(keyword: String, limit: Int): [Tag!]! @field(resolver: "App\\GraphQL\\Queries\\SearchTags@resolve")
 }
 
