@@ -8,9 +8,15 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, {headers}) => {
+  let token = localStorage.getItem('token');
+  if (!token) {
+    const page = usePage()
+    token = page.props.apiToken
+  }
   return {
     headers: {
       ...headers,
+      ...(token && {authorization: `Bearer ${token}`}),
     },
   };
 });

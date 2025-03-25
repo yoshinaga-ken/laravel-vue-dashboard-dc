@@ -1,6 +1,7 @@
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
+
 type User {
   id: ID!
   name: String!
@@ -22,7 +23,9 @@ type Tag {
   articles: [Article!]! @belongsToMany(type: PAGINATOR)
 }
 
-type Query {
+type Query
+@guard(with: ["sanctum"])
+{
   loginUser: User @auth(guard: "sanctum")
 
   users: [User!]! @paginate(type: PAGINATOR model: "App\\Models\\User")
@@ -33,6 +36,5 @@ type Query {
 
   tags: [Tag!]! @paginate(type: PAGINATOR model: "App\\Models\\Tag")
   tag(id: ID! @eq): Tag @find(model: "App\\Models\\Tag")
-
 }
 
