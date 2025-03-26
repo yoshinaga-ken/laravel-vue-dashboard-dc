@@ -1,7 +1,3 @@
-/**
- * make from https://claude.ai/chat/a74e7905-67ac-40d6-8987-ac235267398c
- * TODO:tokenはログイン時に取得し　localStorage.setItem('token')する?
- */
 import axios from 'axios'
 import {usePage} from "@inertiajs/vue3";
 
