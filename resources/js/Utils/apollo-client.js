@@ -4,7 +4,7 @@ import {usePage} from "@inertiajs/vue3";
 
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: (import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT) + 'graphql',
 });
 
 const authLink = setContext((_, {headers}) => {
