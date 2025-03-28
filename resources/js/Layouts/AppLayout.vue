@@ -69,6 +69,9 @@ const logout = () => {
                 <NavLink :href="route('articles.index')" :active="route().current('articles.*')">
                   Articles
                 </NavLink>
+                <NavLink href="/graphql-playground" :active="route().current().endsWith('graphql-playground')">
+                  graphql
+                </NavLink>
               </div>
             </div>
 
@@ -226,6 +229,26 @@ const logout = () => {
           <div class="pt-2 pb-3 space-y-1">
             <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('dashboard-dc', {data: 'covid19-data-2021-02-28'})"
+                     :active="route().current('dashboard-dc')">
+              Dashboard-Dc
+              <!-- Dashboard-Dc Public URL FullScreen Version -->
+              <NavLink :href="route('dashboard-dc-pub', {data: 'covid19-data-2021-02-28'})">
+                <v-icon icon="mdi-fullscreen"/>
+              </NavLink>
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('jqueryui')" :active="route().current('jqueryui')">
+              JQueryUI
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('map')" :active="route().current('map')">
+              Map
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('articles.index')" :active="route().current('articles.*')">
+              Articles
+            </ResponsiveNavLink>
+            <ResponsiveNavLink href="/graphql-playground" :active="route().current().endsWith('graphql-playground')">
+              graphql
             </ResponsiveNavLink>
           </div>
 
