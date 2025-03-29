@@ -13,6 +13,7 @@ const {t} = useTranslation();
 const form = useForm({
   title: '',
   body: '',
+  tags: [],
 });
 
 const createArticle = () => {

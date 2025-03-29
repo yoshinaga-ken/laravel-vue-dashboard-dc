@@ -9,7 +9,9 @@ const props = defineProps({
 });
 
 const inputValue = ref('')
-const dynamicTags = defineModel<string[]>();
+const dynamicTags = defineModel<string[]>({
+  default: () => []
+});
 const inputVisible = ref(false)
 const InputRef = ref<InstanceType<typeof ElInput>>()
 
