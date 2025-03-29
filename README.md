@@ -60,7 +60,7 @@
 php artisan serve
 
 # frontend - watch build
-npm run dev
+pnpm run dev
 
 ```
 
@@ -85,7 +85,7 @@ php artisan db:seed
 composer install
 
 # Install NPM dependencies
-npm install
+pnpm install
 ```
 
 
@@ -94,7 +94,7 @@ npm install
 Build a production-ready Vue.js frontend application
 
 ```bash
-npm run build
+pnpm run build
 
 # output: public/build/
 ```
@@ -106,7 +106,7 @@ npm run build
 vendor/bin/pest -p
 
 # Frontend vitest
-npm test
+pnpm test
 
 # Frontend e2e test
 $ cd e2e
