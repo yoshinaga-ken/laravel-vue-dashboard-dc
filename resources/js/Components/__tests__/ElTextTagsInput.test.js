@@ -66,6 +66,52 @@ describe('ElTextTagsInput', () => {
     expect(wrapper.findComponent(ElButton).exists()).toBe(true)
   })
 
+  it('タグ入力しエンターキーで追加後は入力フィールドを表示して次を入力', async () => {
+    const addButton = wrapper.findComponent(ElButton)
+    await addButton.trigger('click')
+
+    const autocomplete = wrapper.findComponent(ElAutocomplete)
+    await autocomplete.setValue('test-tag')
+    await autocomplete.find('input').trigger('keyup.enter')
+
+    // 100ms wait
+    await new Promise(resolve => setTimeout(resolve, 300))
+
+    expect(wrapper.findComponent(ElAutocomplete).exists()).toBe(true)
+  })
+
+  it('タグ入力しフォーカスを失うと入力が完了し入力フィールドは非表示にになる', async () => {
+    const addButton = wrapper.findComponent(ElButton)
+    await addButton.trigger('click')
+
+    const autocomplete = wrapper.findComponent(ElAutocomplete)
+    await autocomplete.setValue('test-tag')
+    await autocomplete.find('input').trigger('blur')
+
+    // 100ms wait
+    await new Promise(resolve => setTimeout(resolve, 300))
+
+    expect(wrapper.findComponent(ElAutocomplete).exists()).toBe(false)
+  })
+
+  it('空の入力フィールドでBackspaceキーを押すと最後のタグが削除される', async () => {
+    // 初期状態で'vue'タグが存在することを確認
+    expect(wrapper.findAllComponents(ElTag)).toHaveLength(1)
+
+    // 入力フィールドを表示
+    const addButton = wrapper.findComponent(ElButton)
+    await addButton.trigger('click')
+
+    // 空の入力フィールドでBackspaceキーを押す
+    const autocomplete = wrapper.findComponent(ElAutocomplete)
+    await autocomplete.find('input').trigger('keydown', {
+      key: 'Backspace'
+    })
+
+    // 最後のタグが削除されたことを確認
+    expect(wrapper.findAllComponents(ElTag)).toHaveLength(0)
+  })
+
   it('タグが削除できる', async () => {
     const closeButton = wrapper.findComponent(ElTag).find('.el-tag__close')
     await closeButton.trigger('click')
