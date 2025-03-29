@@ -13,7 +13,8 @@ const dynamicTags = defineModel<string[]>({
   default: () => []
 });
 const inputVisible = ref(false)
-const InputRef = ref<InstanceType<typeof ElInput>>()
+const inputRef = ref<InstanceType<typeof ElAutocomplete> | null>(null)
+
 
 const { result } = useQuery(gql`
   query SearchTags($keyword: String) {
@@ -38,17 +39,31 @@ const showInput = () => {
   inputVisible.value = true
   nextTick(() => {
     setTimeout(() => {
-      InputRef.value?.focus()
+      inputRef.value?.focus()
     }, 200)
   })
 }
 
-const handleInputConfirm = () => {
+const handleInputConfirm = (inputValueVisible: boolean = true) => {
   if (inputValue.value) {
     dynamicTags.value.push(inputValue.value)
   }
-  inputVisible.value = false
   inputValue.value = ''
+
+  if (inputValueVisible) {
+    inputVisible.value = false
+    setTimeout(() => {
+      showInput()
+    }, 10)
+  } else {
+    inputVisible.value = false
+  }
+}
+
+const handleBackspace = (event: KeyboardEvent) => {
+  if (event.key === 'Backspace' && inputValue.value === '' && dynamicTags.value.length > 0) {
+    dynamicTags.value.pop()
+  }
 }
 
 const querySearch = (queryString: string, cb: any) => {
@@ -75,15 +90,16 @@ const querySearch = (queryString: string, cb: any) => {
     </ElTag>
     <ElAutocomplete
       v-if="inputVisible"
-      ref="InputRef"
+      ref="inputRef"
       v-model="inputValue"
       :fetch-suggestions="querySearch"
       class="w-20"
       size="small"
       clearable
-      @keyup.enter="handleInputConfirm"
+      @keyup.enter="handleInputConfirm(true)"
       @keydown.enter.prevent
-      @blur="handleInputConfirm"
+      @keydown="handleBackspace"
+      @blur="handleInputConfirm(false)"
     />
     <ElButton v-else-if="!disabled" class="button-new-tag" size="small" @click="showInput">
       + New Tag
