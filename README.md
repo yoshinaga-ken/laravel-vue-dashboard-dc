@@ -179,3 +179,5 @@ e2e$ npx playwright test
   - [population composition @japan](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
 - Samples
   - [Number of 👍likes for the 📄article](https://sakanaclub.xsrv.jp/dc/covid19/data=test-article-like)
+## Related Repos
+- [covid19-dc](https://github.com/yoshinaga-ken/covid19-dc)
