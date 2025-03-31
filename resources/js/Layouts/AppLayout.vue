@@ -26,6 +26,10 @@ const switchToTeam = (team) => {
 const logout = () => {
   router.post(route('logout'));
 };
+
+const onclick = () => {
+  window.open('https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/graphql-playground', '_blank')
+}
 </script>
 
 <template>
@@ -69,8 +73,8 @@ const logout = () => {
                 <NavLink :href="route('articles.index')" :active="route().current('articles.*')">
                   Articles
                 </NavLink>
-                <NavLink href="/graphql-playground" :active="route().current().endsWith('graphql-playground')">
-                  graphql
+                <NavLink @click="onclick()">
+                  Graphql<v-icon icon="mdi-fullscreen"/>
                 </NavLink>
               </div>
             </div>
@@ -231,7 +235,7 @@ const logout = () => {
               Dashboard
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('dashboard-dc', {data: 'covid19-data-2021-02-28'})"
-                     :active="route().current('dashboard-dc')">
+                               :active="route().current('dashboard-dc')">
               Dashboard-Dc
               <!-- Dashboard-Dc Public URL FullScreen Version -->
               <NavLink :href="route('dashboard-dc-pub', {data: 'covid19-data-2021-02-28'})">
@@ -247,8 +251,8 @@ const logout = () => {
             <ResponsiveNavLink :href="route('articles.index')" :active="route().current('articles.*')">
               Articles
             </ResponsiveNavLink>
-            <ResponsiveNavLink href="/graphql-playground" :active="route().current().endsWith('graphql-playground')">
-              graphql
+            <ResponsiveNavLink @click="onclick()">
+              Graphql<v-icon icon="mdi-fullscreen"/>
             </ResponsiveNavLink>
           </div>
 
