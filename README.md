@@ -2,7 +2,7 @@
 A template project for an admin panel with a dashboard using 📊dimensional charts, implemented with laravel and vue.
 - [Live demo](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=covid19-data-2021-02-28)
 
-[![img.png](doc/img/dashboard-covid19.png)](https://sakanaclub.xsrv.jp/dc/covid19/data=test-article-like)
+[![img.png](doc/img/dashboard-covid19.png)](https://sakanaclub.xsrv.jp/dc/covid19/data=test-article-likehttps://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=covid19-data-2021-02-28)
 - [Dimensional chart](http://dc-js.github.io/dc.js/) can be switched and compared with one click, making it easy to analyze in multiple dimensions.
 ![image](doc/img/covid19-dc-demo-v1.gif)
 
@@ -16,20 +16,20 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
         <summary>Expand for details</summary>
         <div style="display: flex; gap: 10px; text-align: center;">
           <div>
-            <img src="doc/img/dashboard-mode-chart.png" alt="Chart Image" width="200">
             <div>Chart</div>
+            <img src="doc/img/dashboard-mode-chart.png" alt="Chart Image" width="200">
           </div>
           <div>
-            <img src="doc/img/dashboard-mode-gmap.png" alt="Google Map Image" width="200">
             <div>GoogleMap</div>
+            <img src="doc/img/dashboard-mode-gmap.png" alt="Google Map Image" width="200">
           </div>
           <div>
-            <img src="doc/img/dashboard-mode-sview.png" alt="Street View Image" width="200">
             <div>StreetView</div>
+            <img src="doc/img/dashboard-mode-sview.png" alt="Street View Image" width="200">
           </div>
           <div>
-            <img src="doc/img/dashboard-mode-tube.png" alt="YouTube Image" width="200">
             <div>YouTube</div>
+            <img src="doc/img/dashboard-mode-tube.png" alt="YouTube Image" width="200">
           </div>
         </div>
       </details>
@@ -47,7 +47,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - CRUD Operations
   - article like/dislike operations
   - RestFul API
-  - Creating data for a dashboard to analyze article likes
+  - Creating data for [a dashboard to analyze article likes](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=test-article-like)
 - User Management 
   - user follow/unfollow operations
   - Creating dashboard data to analyze user behavior
@@ -179,3 +179,6 @@ e2e$ npx playwright test
   - [population composition @japan](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
 - Samples
   - [Number of 👍likes for the 📄article](https://sakanaclub.xsrv.jp/dc/covid19/data=test-article-like)
+
+## Related Repos
+- [covid19-dc](https://github.com/yoshinaga-ken/covid19-dc)
