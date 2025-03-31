@@ -268,20 +268,8 @@ const initMap = async () => {
 
     streetViewService = new google.maps.StreetViewService();
 
-    // let container = streetViewContainer.value
-    const streetViewContainer = document.getElementById(props.streetViewContainerId);
-    if (streetViewContainer) {
-      // Initialize Street View
-      panorama.value = new google.maps.StreetViewPanorama(streetViewContainer, {
-        position: LatLng['東京都'],
-        pov: {heading: 165, pitch: 0}, // Point of view: heading, pitch
-        zoom: 1,
-        // addressControl: true //GoogleMapで見る
-      });
+    recreateStreetViewPanorama(LatLng['東京都']);
 
-      // Link Street View to the map
-      map.value.setStreetView(panorama.value);
-    }
     // if (props.geoJsonUrl) {
     //   const { Data } = await google.maps.importLibrary("maps");
     //   const geoJsonLayer = new Data();
@@ -297,6 +285,32 @@ const initMap = async () => {
   isInitMap.value = true;
 };
 
+/**
+ * パノラマの再構築
+ * @param location
+ */
+const recreateStreetViewPanorama = (location) => {
+  const container = document.getElementById(props.streetViewContainerId);
+  if (!container) return;
+  // 古いパノラマを破棄
+  if (panorama.value) {
+    panorama.value.setVisible(false);
+    map.value.setStreetView(null);
+  }
+  // 新しいパノラマを作成
+  setTimeout(() => {
+    panorama.value = new google.maps.StreetViewPanorama(container, {
+      position: location,
+      pov: {
+        heading: 165,
+        pitch: 0
+      },
+      zoom: 1
+    });
+  }, 20);
+  // 新しいパノラマをマップに接続
+  map.value.setStreetView(panorama.value);
+};
 const loadPrefectureBoundaries = () => {
   if (map.value === null) return;
   let vals = {};
@@ -364,27 +378,28 @@ const loadPrefectureBoundaries = () => {
 
 const markers = [];
 
-// locationのradius周囲を検索して最も近い位置にストリートビューを設定
+/**
+ * locationのradius周囲を検索して最も近い位置にストリートビューを設定
+ * @param location
+ */
 const panoramaSetPosition = (location) => {
   if (panorama === null) return;
 
   streetViewService.getPanorama({location: location, radius: 1000}, (data, status) => {
     if (status === google.maps.StreetViewStatus.OK) {
-      // panorama.value.setPosition(location);
-      panorama.value.setPosition(data.location.latLng);
+      recreateStreetViewPanorama(data.location.latLng);
     } else {
-      console.log('Street View data is not available for this radius: 1000 location:', location);
       streetViewService.getPanorama({location: location, radius: 5000}, (data, status) => {
         if (status === google.maps.StreetViewStatus.OK) {
-          // panorama.value.setPosition(location);
-          panorama.value.setPosition(data.location.latLng);
+          recreateStreetViewPanorama(data.location.latLng);
         } else {
           console.log('Street View data is not available for this radius: 5000 location:', location);
         }
       });
     }
   });
-}
+};
+
 const panToAddress = (address) => {
   const addressType = typeof address;
   switch (addressType) {
