@@ -18,7 +18,7 @@
         <!-- DC_PANEL ToolbarMain -->
         <div id="toolbar_main">
 
-          <FilerDialogButton :isShowImg="!isSp"/>
+          <FilerDialogButton :is-show-img="!isSp" :is-tooltip="!isSp"/>
 
           <i class="fa fa-filter fa-icon"></i>
           <input type="search" id="input-search" autocomplete="off"

@@ -14,6 +14,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  isTooltip: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 onMounted(async () => {
@@ -31,7 +35,7 @@ onMounted(async () => {
   <input type="hidden" id="data_img" name="data_img">
 
   <span type="button"
-        tt_title="ファイルを選択してグラフのデータを読み込みます。<br />データのフォーマットはCSVで以下の並びのカラムになります。<br />例:<br /><img src='/img/hlp/csv_format.gif'><br />※日付カラムは必須"
+        :tt_title="isTooltip ? 'ファイルを選択してグラフのデータを読み込みます。<br />データのフォーマットはCSVで以下の並びのカラムになります。<br />例:<br /><img src=\'/img/hlp/csv_format.gif\'><br />※日付カラムは必須' : ''"
         class="fs_filer ui-button ui-corner-all ui-widget"
         fs_filer_select_dir="[[&quot;upload/csv/&quot;,&quot;分析(29)&quot;]]" fs_filer_is_tag="0"
         fs_filer_target="#data_img" fs_filer_target_img="#data_img_img" fs_filer_is_btn_del="1"
