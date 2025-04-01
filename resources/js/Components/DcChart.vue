@@ -5326,12 +5326,28 @@ const mm = {
       }
     },
     showDetailPanel: async function (chart) {
-      if (!(pnl.detail.is_show || pnl.tube.is_show)) return;
-
       const chartID = chart.chartID();
       const chartNameID = mm.chartName.chartID();
       const chartCityID = mm.chartCity.chartID();
       const chartJobID = mm.chartJob.chartID();
+      if (gg.dt !== DT_COVID) {
+        // chartName
+        if (chartID === chartNameID) {
+          pnl.gmap.chartGMap.panToMarkerType = 0;
+          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartName.isPanGmapMarker ? 1 : 0;
+        }
+        // chartCity
+        if (chartID === chartCityID) {
+          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartCity.isPanGmapMarker ? 1 : 0;
+        }
+        // chartJob
+        if (chartID === chartJobID) {
+          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartJob.isPanGmapMarker ? 1 : 0;
+        }
+      }
+
+      if (!(pnl.detail.is_show || pnl.tube.is_show)) return;
+
       const filters = chart.filters();
       //詳細パネル
       if (gg.dt === DT_COVID) {
@@ -5372,11 +5388,9 @@ const mm = {
       } else {
         // chartName
         if (chartID === chartNameID) {
-          pnl.gmap.chartGMap.panToMarkerType = 0;
           mm.detals = [];
           pnl.detail.details = [];
           await mm.chart.setDetails(chart, filters, D_PL1, mm.opt.detailType);
-          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartName.isPanGmapMarker ? 1 : 0;
           return;
         }
         // chartCity
@@ -5384,7 +5398,6 @@ const mm = {
           mm.detals = [];
           pnl.detail.details = [];
           await mm.chart.setDetails(chart, filters, D_PL2, mm.opt.detailType === 'city');
-          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartCity.isPanGmapMarker ? 1 : 0;
           return;
         }
         // chartJob
