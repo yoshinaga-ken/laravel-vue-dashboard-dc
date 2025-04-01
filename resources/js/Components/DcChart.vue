@@ -3441,9 +3441,15 @@ const mm = {
         return null;
       }
     },
-    getExt: (filename) => {
-      const parts = filename.split('.');
-      return parts.length > 1 ? parts.pop() : ''; // 拡張子がない場合は空文字列を
+    getFileNameParts: (filename) => {
+      const base = filename.split('?')[0];  // パラメータ部分を除去
+      const lastDotIndex = base.lastIndexOf('.');
+      if (lastDotIndex === -1) return {name: base, ext: ''};
+
+      return {
+        name: base.slice(0, lastDotIndex),
+        ext: base.slice(lastDotIndex + 1)
+      };
     },
     // 全角を2、半角を1として文字列サイズを取得
     getStrLen: (str) => {
@@ -6054,28 +6060,11 @@ const mm = {
     }
 
     // URLのdataパラメタはすべて CSVとして処理する
-    // 例:data=<name>.json or data=<name> => data=<name>.csv
-    let path = mm.get.data;
-    const ext = mm.util.getExt(mm.get.data).toLowerCase();
-    switch (ext) {
-      case '':
-        path = mm.get.data + '.csv';
-        break;
-      case 'json':
-        path = mm.get.data.replace('.json', '.csv');
-        mm.get.data = mm.get.data.replace('.json', '');
-        break;
-      case 'csv':
-        mm.get.data = mm.get.data.replace('.csv', '');
-        break;
-      default:
-        mm.get.data = mm.get.data.replace(ext, '');
-        break;
-    }
-
-    path = mm.url_data.path + path;
-
-    const pathOptionsJson = path.replace('.csv', '.options.json');
+    // (data=<name>.json or data=<name> => <name>.csv をロード)
+    const {name: fileName} = mm.util.getFileNameParts(mm.get.data);
+    mm.get.data = fileName
+    const path = mm.url_data.path + fileName + '.csv';
+    const pathOptionsJson = mm.url_data.path + fileName + '.options.json';
 
     let doParseOptions = 1;
     // CSVファイルのオプションが外部JSONファイルである場合それを読み込む
