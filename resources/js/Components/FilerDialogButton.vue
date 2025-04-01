@@ -35,7 +35,8 @@ onMounted(async () => {
   <input type="hidden" id="data_img" name="data_img">
 
   <span type="button"
-        :tt_title="isTooltip ? 'ファイルを選択してグラフのデータを読み込みます。<br />データのフォーマットはCSVで以下の並びのカラムになります。<br />例:<br /><img src=\'/img/hlp/csv_format.gif\'><br />※日付カラムは必須' : ''"
+        :tt_title="isTooltip ? 'チャートデータを選択します。<br />フォーマットは以下のようなカラムを含むCSVになります。<br />例：コロナウイルス感染状況のチャートの場合<br /><img src=\'/img/hlp/csv_format.gif\'>' : ''"
+        title="チャートデータを選択します"
         class="fs_filer ui-button ui-corner-all ui-widget"
         fs_filer_select_dir="[[&quot;upload/csv/&quot;,&quot;分析(29)&quot;]]" fs_filer_is_tag="0"
         fs_filer_target="#data_img" fs_filer_target_img="#data_img_img" fs_filer_is_btn_del="1"
