@@ -11,29 +11,54 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
 - Dashboard with [Dimensional chart(dc.js)](http://dc-js.github.io/dc.js/)
   - [Articles Dashboard](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=test-article-like)
   - [Dashboard with many more dimensional charts](#link-dc-demo)
-  - Dashboard Mode: Chart | GoogleMap | StreetView | YouTube
+  - Dashboard Mode: 📊Chart | <img src="public/img/google-map-48.png" width="16">GoogleMap | <img src="public/img/icons8-street-view-60.png" width="16">StreetView | <img src="public/img/yutube.gif" width="16">YouTube
       <details>
         <summary>Expand for details</summary>
         <div style="display: flex; gap: 10px; text-align: center;">
           <div>
-            <div>Chart</div>
-            <img src="doc/img/dashboard-mode-chart.png" alt="Chart Image" width="200">
+            <a href="https://sakanaclub.xsrv.jp/dc/covid19/data=covid19-data-2021-02-28&layout=default">
+              <div>📊Chart</div>
+              <img src="doc/img/dashboard-mode-chart.png" alt="Chart Image">
+            </a>
           </div>
           <div>
-            <div>GoogleMap</div>
-            <img src="doc/img/dashboard-mode-gmap.png" alt="Google Map Image" width="200">
+            <a href="https://sakanaclub.xsrv.jp/dc/covid19/data=ja-quake-noto-safety&layout=gmap">
+              <div>
+                  <img src="public/img/google-map-48.png" width="20">GoogleMap
+              </div>
+              <img src="doc/img/dashboard-mode-gmap.png" alt="Google Map Image">
+            </a>
           </div>
           <div>
-            <div>StreetView</div>
-            <img src="doc/img/dashboard-mode-sview.png" alt="Street View Image" width="200">
+            <a href="https://sakanaclub.xsrv.jp/dc/covid19/data=ja-quake-noto-safety&layout=sview">
+              <div>
+                  <img src="public/img/icons8-street-view-60.png" width="20">StreetView
+              </div>
+              <img src="doc/img/dashboard-mode-sview.png" alt="Street View Image">
+            </a>
           </div>
           <div>
-            <div>YouTube</div>
-            <img src="doc/img/dashboard-mode-tube.png" alt="YouTube Image" width="200">
+            <a href="https://sakanaclub.xsrv.jp/dc/covid19/data=game-fc&layout=tube">
+              <div>
+                <img src="public/img/yutube.gif" width="20">YouTube
+              </div>
+              <img src="doc/img/dashboard-mode-tube.png" alt="YouTube Image">
+            </a>
           </div>
         </div>
       </details>
-
+  - Time ▶️Play Function
+      <details>
+        <summary>Expand for details</summary>
+        <div>
+          <div>
+            <a href="https://sakanaclub.xsrv.jp/dc/covid19/data=resas-tourism-foreigners">
+            e.g. Changes in the number of foreign tourists visiting Japan
+            </a>
+          </div>
+          <img src="doc/img/dashboard-time-play.gif" alt="Chart Image">
+        </div>
+      </details>
 - [Laravel Jetstream Features](https://jetstream.laravel.com/introduction.html)
   - Authentication
   - Registration
@@ -166,6 +191,7 @@ e2e$ npx playwright test
     - [MSX](https://sakanaclub.xsrv.jp/dc/covid19/data=game-msx.csv)
 - Sports
   - [⚾List of High School Baseball Championship in Japan](https://sakanaclub.xsrv.jp/dc/covid19/data=sports-hsb.csv)
+  - [🏸Trends in sports circle participation](https://sakanaclub.xsrv.jp/dc/covid19/data=checkin-sakana)
 - Food
   - [🍜List of Ramen in Japan](https://sakanaclub.xsrv.jp/dc/covid19/data=food-ramen.csv)
 - Market Analysis
