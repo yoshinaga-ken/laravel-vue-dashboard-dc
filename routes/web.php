@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,8 +34,6 @@ Route::middleware([
         Route::put('/{article}/like', [ArticleController::class, 'like'])->name('articles.like');
         Route::delete('/{article}/like', [ArticleController::class, 'dislike'])->name('articles.dislike');
     });
-
-    Route::resource('/users', UserController::class);
 
     Route::get('/dashboard-dc', function () {
         return Inertia::render('DashboardDc');

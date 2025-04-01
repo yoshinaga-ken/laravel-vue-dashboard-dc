@@ -2,7 +2,6 @@ export interface User {
   id: number,
   name: string,
   email: string,
-  current_team_id: number,
   created_at: string,
   updated_at: string,
   is_followed_by: boolean,

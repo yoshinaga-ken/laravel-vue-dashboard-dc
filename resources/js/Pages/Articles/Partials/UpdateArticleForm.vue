@@ -105,7 +105,7 @@ const onClickToggleLikeForm = (article: Article) => {
 
       <!-- Article Tags -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="tags" :value="`🔖${t('models.article.tags')}`"/>
+        <InputLabel for="tags" :value="`${t('models.article.tags')}`"/>
         <ElTextTagsInput
           id="tags"
           v-model="form.tags"

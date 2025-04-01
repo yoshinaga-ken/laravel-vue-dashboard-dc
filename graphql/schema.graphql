@@ -6,16 +6,7 @@ type User {
   id: ID!
   name: String!
   email: String!
-  current_team_id: ID
-  profile_photo_path: String
-  created_at: DateTime!
-  updated_at: DateTime!
   articles: [Article!]! @hasMany(type: PAGINATOR)
-  followers: [User!]! @belongsToMany(type: PAGINATOR)
-  following: [User!]! @belongsToMany(type: PAGINATOR)
-  ownedTeams: [Team!]! @hasMany
-  teams: [Team!]! @belongsToMany
-  allTeams: [Team!]! @method
 }
 
 type Article {
@@ -32,14 +23,6 @@ type Tag {
   articles: [Article!]! @belongsToMany(type: PAGINATOR)
 }
 
-type Team {
-  id: ID!
-  name: String!
-  personal_team: Boolean!
-  owner: User @belongsTo
-  users: [User!]! @belongsToMany(type: PAGINATOR)
-}
-
 type Query
 @guard(with: ["sanctum"])
 {
@@ -53,8 +36,6 @@ type Query
 
   tags: [Tag!]! @paginate(type: PAGINATOR model: "App\\Models\\Tag")
   tag(id: ID! @eq): Tag @find(model: "App\\Models\\Tag")
-
-  team(id: ID! @eq): Team @find(model: "App\\Models\\Team")
 
   searchTags(keyword: String, limit: Int): [Tag!]! @field(resolver: "App\\GraphQL\\Queries\\SearchTags@resolve")
 }

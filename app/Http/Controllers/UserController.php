@@ -5,17 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function show(Request $request, int $userId)
-    {
-        return Inertia::render('Users/Show', [
-            'userId' => $userId,
-        ]);
-    }
-
     public function follow(Request $request, User $user)
     {
         $isWantsJson = $request->wantsJson();
