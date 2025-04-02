@@ -15,20 +15,25 @@ const dynamicTags = defineModel<string[]>({
 const inputVisible = ref(false)
 const inputRef = ref<InstanceType<typeof ElAutocomplete> | null>(null)
 
-
 const { result } = useQuery(gql`
-  query SearchTags($keyword: String) {
-    searchTags(keyword: $keyword, limit: 512) {
-      name
+  query FilterTags($input: FilterTagInput) {
+    tags(input: $input, first: 512) {
+      data {
+        name
+      }
     }
   }
 `, {
-  query: ''
+  variables: {
+    input: {
+      name: ''
+    }
+  }
 })
 
 const availableTags = computed(() => {
-  if (!result.value?.searchTags) return []
-  return result.value.searchTags.map((tag: any) => tag.name)
+  if (!result.value?.tags?.data) return []
+  return result.value.tags.data.map((tag: any) => tag.name)
 })
 
 const handleClose = (tag: string) => {
