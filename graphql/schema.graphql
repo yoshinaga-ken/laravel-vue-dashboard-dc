@@ -6,7 +6,16 @@ type User {
   id: ID!
   name: String!
   email: String!
+  current_team_id: ID
+  profile_photo_path: String
+  created_at: DateTime!
+  updated_at: DateTime!
   articles: [Article!]! @hasMany(type: PAGINATOR)
+  followers: [User!]! @belongsToMany(type: PAGINATOR)
+  following: [User!]! @belongsToMany(type: PAGINATOR)
+  ownedTeams: [Team!]! @hasMany
+  teams: [Team!]! @belongsToMany
+  allTeams: [Team!]! @method
 }
 
 type Article {
@@ -23,19 +32,68 @@ type Tag {
   articles: [Article!]! @belongsToMany(type: PAGINATOR)
 }
 
+type Team {
+  id: ID!
+  name: String!
+  personal_team: Boolean!
+  owner: User @belongsTo
+  users: [User!]! @belongsToMany(type: PAGINATOR)
+}
+
+input FilterUserInput {
+  name: String
+  email: String
+  created_at: DateTime
+}
+input FilterArticleInput {
+    title: String
+    body: String
+    user_id: ID
+    user_name: String
+    created_at: DateTime
+}
+
+input FilterTagInput {
+    name: String
+    created_at: DateTime
+}
+
 type Query
 @guard(with: ["sanctum"])
 {
   loginUser: User @auth(guard: "sanctum")
 
-  users: [User!]! @paginate(type: PAGINATOR model: "App\\Models\\User")
+  users(
+      input: FilterUserInput
+      @builder(method: "App\\GraphQL\\Queries\\Users\\FilterUser")
+  ): [User!]! @paginate(
+      type: "PAGINATOR"
+      defaultCount: 10
+      model: "App\\Models\\User"
+  )
   user(id: ID! @eq): User @find(model: "App\\Models\\User")
 
-  articles: [Article!]! @paginate(type: PAGINATOR model: "App\\Models\\Article")
+  articles(
+      input: FilterArticleInput
+      @builder(method: "App\\GraphQL\\Queries\\Articles\\FilterArticle")
+  ): [Article!]! @paginate(
+      type: "PAGINATOR"
+      defaultCount: 10
+      model: "App\\Models\\Article"
+  )
   article(id: ID! @eq): Article @find(model: "App\\Models\\Article")
 
-  tags: [Tag!]! @paginate(type: PAGINATOR model: "App\\Models\\Tag")
+  tags(
+      input: FilterTagInput
+      @builder(method: "App\\GraphQL\\Queries\\Tags\\FilterTag")
+  ): [Tag!]! @paginate(
+      type: "PAGINATOR"
+      defaultCount: 10
+      model: "App\\Models\\Tag"
+  )
   tag(id: ID! @eq): Tag @find(model: "App\\Models\\Tag")
+
+  team(id: ID! @eq): Team @find(model: "App\\Models\\Team")
 
   searchTags(keyword: String, limit: Int): [Tag!]! @field(resolver: "App\\GraphQL\\Queries\\SearchTags@resolve")
 }
