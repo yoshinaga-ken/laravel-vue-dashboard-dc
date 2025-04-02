@@ -154,7 +154,7 @@ const onClickArticleDelete = (article: IndexArticle) => {
           <th>User</th>
           <th>Date</th>
           <th>Likes</th>
-          <th>Tags</th>
+          <th>🔖Tags</th>
           <th>Edit</th>
           <th>Delete</th>
         </tr>
@@ -172,7 +172,10 @@ const onClickArticleDelete = (article: IndexArticle) => {
             {{ article.title.substring(0, 20) + (article.title.length > 20 ? '...' : '') }}
           </td>
           <td>
-            {{ article.user.name }}
+            <Link :id="`user-id-${article.user.id}`" class="flex items-center px-6 py-4 underline" :href="route('users.show', article.user.id)"
+                  tabindex="-1">
+              🙋‍♂️{{ article.user.name }}
+            </Link>
             <UserFollowButton v-if="article.user.id !== $page.props.auth.user.id"
                               :user="article.user"
                               @click="onClickToggleFollow(props.articles.data[i].user)"
