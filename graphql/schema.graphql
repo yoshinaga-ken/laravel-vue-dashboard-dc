@@ -94,7 +94,5 @@ type Query
   tag(id: ID! @eq): Tag @find(model: "App\\Models\\Tag")
 
   team(id: ID! @eq): Team @find(model: "App\\Models\\Team")
-
-  searchTags(keyword: String, limit: Int): [Tag!]! @field(resolver: "App\\GraphQL\\Queries\\SearchTags@resolve")
 }
 
