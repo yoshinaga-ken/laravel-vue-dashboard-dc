@@ -1,7 +1,6 @@
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
-
 type User {
   id: ID!
   name: String!
@@ -18,7 +17,9 @@ type User {
   allTeams: [Team!]! @method
 }
 
-type Article {
+type Article
+@model (model: "App\\Models\\Article")
+{
   id: ID!
   title: String!
   body: String!
@@ -30,6 +31,7 @@ type Tag {
   id: ID!
   name: String!
   articles: [Article!]! @belongsToMany(type: PAGINATOR)
+  articles_count: Int @count(relation: "articles")
 }
 
 type Team {
@@ -45,17 +47,23 @@ input FilterUserInput {
   email: String
   created_at: DateTime
 }
+
 input FilterArticleInput {
-    title: String
-    body: String
-    user_id: ID
-    user_name: String
-    created_at: DateTime
+  title: String
+  body: String
+  user_id: ID
+  user_name: String
+  created_at: DateTime
 }
 
 input FilterTagInput {
-    name: String
-    created_at: DateTime
+  name: String
+  created_at: DateTime
+}
+
+input FilterTeamInput {
+  name: String
+  created_at: DateTime
 }
 
 type Query
@@ -64,35 +72,94 @@ type Query
   loginUser: User @auth(guard: "sanctum")
 
   users(
-      input: FilterUserInput
-      @builder(method: "App\\GraphQL\\Queries\\Users\\FilterUser")
+    input: FilterUserInput
+    @builder(method: "App\\GraphQL\\Queries\\Users\\FilterUser")
   ): [User!]! @paginate(
-      type: "PAGINATOR"
-      defaultCount: 10
-      model: "App\\Models\\User"
+    type: "PAGINATOR"
+    defaultCount: 10
+    model: "App\\Models\\User"
   )
   user(id: ID! @eq): User @find(model: "App\\Models\\User")
 
   articles(
-      input: FilterArticleInput
-      @builder(method: "App\\GraphQL\\Queries\\Articles\\FilterArticle")
+    input: FilterArticleInput
+    @builder(method: "App\\GraphQL\\Queries\\Articles\\FilterArticle")
   ): [Article!]! @paginate(
-      type: "PAGINATOR"
-      defaultCount: 10
-      model: "App\\Models\\Article"
+    type: "PAGINATOR"
+    defaultCount: 10
+    model: "App\\Models\\Article"
   )
   article(id: ID! @eq): Article @find(model: "App\\Models\\Article")
 
   tags(
-      input: FilterTagInput
-      @builder(method: "App\\GraphQL\\Queries\\Tags\\FilterTag")
+    input: FilterTagInput
+    @builder(method: "App\\GraphQL\\Queries\\Tags\\FilterTag")
   ): [Tag!]! @paginate(
-      type: "PAGINATOR"
-      defaultCount: 10
-      model: "App\\Models\\Tag"
+    type: "PAGINATOR"
+    defaultCount: 10
+    model: "App\\Models\\Tag"
   )
   tag(id: ID! @eq): Tag @find(model: "App\\Models\\Tag")
 
+  teams(
+    input: FilterTeamInput
+    @builder(method: "App\\GraphQL\\Queries\\Teams\\FilterTeam")
+  ): [Team!]! @paginate(
+    type: "PAGINATOR"
+    defaultCount: 10
+    model: "App\\Models\\Team"
+  )
   team(id: ID! @eq): Team @find(model: "App\\Models\\Team")
 }
 
+input CreateArticleInput {
+  title: String! @rules(apply: ["required", "string", "max:50"])
+  body: String! @rules(apply: ["required", "string", "max:500"])
+  tags: [String]
+  user_id: ID @rules(apply: ["exists:users,id"])
+}
+
+input UpdateArticleInput {
+  title: String! @rules(apply: ["required", "string", "max:50"])
+  body: String! @rules(apply: ["required", "string", "max:500"])
+  user_id: ID @rules(apply: ["exists:users,id"])
+}
+
+type StatusResponse {
+  success: Boolean
+  message: String
+}
+
+type ArticleResponse {
+  success: Boolean
+  message: String
+  article: Article
+}
+
+type Mutation
+@guard(with: ["sanctum"])
+{
+  createArticle(
+    input: CreateArticleInput! @spread
+  ): Article
+  @field(resolver: "App\\GraphQL\\Mutations\\Articles\\ArticleMutation@store")
+  @canModel(ability: "create")
+
+  updateArticle(
+    id: ID!
+    @whereKey
+    @rules(apply: ["required", "exists:articles,id"])
+
+    input:UpdateArticleInput! @spread
+  ): Article!
+  @update
+  @canFind(ability: "update", find: "id")
+
+  deleteArticle(
+    id: ID!
+    @whereKey
+    @rules(apply: ["required", "exists:articles,id"])
+  ): Article
+  @delete
+  @canFind(ability: "delete", find: "id")
+}
