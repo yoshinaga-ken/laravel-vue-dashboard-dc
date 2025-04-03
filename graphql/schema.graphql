@@ -58,6 +58,11 @@ input FilterTagInput {
     created_at: DateTime
 }
 
+input FilterTeamInput {
+  name: String
+  created_at: DateTime
+}
+
 type Query
 @guard(with: ["sanctum"])
 {
@@ -93,6 +98,14 @@ type Query
   )
   tag(id: ID! @eq): Tag @find(model: "App\\Models\\Tag")
 
+  teams(
+    input: FilterTeamInput
+    @builder(method: "App\\GraphQL\\Queries\\Teams\\FilterTeam")
+  ): [Team!]! @paginate(
+    type: "PAGINATOR"
+    defaultCount: 10
+    model: "App\\Models\\Team"
+  )
   team(id: ID! @eq): Team @find(model: "App\\Models\\Team")
 }
 
