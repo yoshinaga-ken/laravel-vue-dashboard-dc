@@ -221,10 +221,12 @@ const onClickArticleDelete = (article: IndexArticle) => {
           </td>
           <td>
             <template v-for="(tag, index) in article.tags" :key="index">
-                            <span
-                              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                #{{ tag.name }}
-                            </span>
+              <Link
+                class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 underline"
+                :href="route('articles.index', { tags: [tag.name] })"
+                tabindex="-1">
+                {{ tag.name }}
+              </Link>
             </template>
           </td>
           <td>
