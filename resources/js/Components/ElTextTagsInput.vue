@@ -1,18 +1,30 @@
 <script lang="ts" setup>
 import { nextTick, ref, computed } from 'vue'
-import { ElTag, ElInput, ElButton, ElAutocomplete } from 'element-plus'
+import { ElTag, ElButton, ElAutocomplete, ElIcon } from 'element-plus'
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 
 const props = defineProps({
   disabled: Boolean,
+  inputVisible: {
+    type: Boolean,
+    default: false
+  },
+  inputPlaceholder: {
+    type: String,
+    default: 'Search Tag'
+  },
+  clearable: {
+    type: Boolean,
+    default: true
+  }
 });
 
 const inputValue = ref('')
 const dynamicTags = defineModel<string[]>({
   default: () => []
 });
-const inputVisible = ref(false)
+const inputVisible = ref(props.inputVisible)
 const inputRef = ref<InstanceType<typeof ElAutocomplete> | null>(null)
 
 const { result } = useQuery(gql`
@@ -61,7 +73,9 @@ const handleInputConfirm = (inputValueVisible: boolean = true) => {
       showInput()
     }, 10)
   } else {
-    inputVisible.value = false
+    if (!props.inputVisible) {
+      inputVisible.value = false
+    }
   }
 }
 
@@ -80,6 +94,9 @@ const querySearch = (queryString: string, cb: any) => {
   cb(results)
 }
 
+const clearTags = () => {
+  dynamicTags.value = [];
+};
 </script>
 
 <template>
@@ -100,14 +117,23 @@ const querySearch = (queryString: string, cb: any) => {
       :fetch-suggestions="querySearch"
       class="w-20"
       size="small"
+      :placeholder="inputPlaceholder"
       clearable
       @keyup.enter="handleInputConfirm(true)"
+      @select="(item) => { inputValue = item.value; handleInputConfirm(true); }"
       @keydown.enter.prevent
       @keydown="handleBackspace"
       @blur="handleInputConfirm(false)"
     />
     <ElButton v-else-if="!disabled" class="button-new-tag" size="small" @click="showInput">
       + New Tag
+    </ElButton>
+    <ElButton
+      v-if="!disabled && clearable && dynamicTags.length > 0"
+      class="button-clear-tags"
+      size="small"
+      @click="clearTags"
+    >ⓧ
     </ElButton>
   </div>
 </template>
