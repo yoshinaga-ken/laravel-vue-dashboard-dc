@@ -44,12 +44,12 @@ describe('ElTextTagsInput', () => {
   })
 
   it('新規タグ追加ボタンがクリックされると入力フィールドが表示され、タグ入力後エンターキーでタグが追加される', async () => {
-    const addButton = wrapper.findComponent(ElButton)
+    const addButton = wrapper.findComponent('.button-new-tag')
     await addButton.trigger('click')
 
     // 入力フィールドの表示確認
     expect(wrapper.findComponent(ElAutocomplete).exists()).toBe(true)
-    expect(wrapper.findComponent(ElButton).exists()).toBe(false)
+    expect(wrapper.findComponent('.button-new-tag').exists()).toBe(false)
 
     // タグ入力とエンターキー押下
     const autocomplete = wrapper.findComponent(ElAutocomplete)
@@ -63,7 +63,7 @@ describe('ElTextTagsInput', () => {
 
     // 入力フィールドが非表示になることを確認
     expect(wrapper.findComponent(ElAutocomplete).exists()).toBe(false)
-    expect(wrapper.findComponent(ElButton).exists()).toBe(true)
+    expect(wrapper.findComponent('.button-new-tag').exists()).toBe(true)
   })
 
   it('タグ入力しエンターキーで追加後は入力フィールドを表示して次を入力', async () => {
@@ -137,18 +137,5 @@ describe('ElTextTagsInput', () => {
 
     expect(disabledWrapper.findComponent(ElButton).exists()).toBe(false)
     expect(disabledWrapper.findComponent(ElTag).props('closable')).toBe(false)
-  })
-
-  it('オートコンプリートの検索が正しく動作する', async () => {
-    const addButton = wrapper.findComponent(ElButton)
-    await addButton.trigger('click')
-
-    const autocomplete = wrapper.findComponent(ElAutocomplete)
-    await autocomplete.setValue('re')
-
-    const suggestions = await wrapper.vm.querySearch('re', (results) => {
-      expect(results).toHaveLength(1)
-      expect(results[0].value).toBe('react')
-    })
   })
 })

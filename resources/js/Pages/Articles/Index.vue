@@ -10,6 +10,7 @@ import UserFollowButton from "@/Components/UserFollowButton.vue";
 import { route } from "../../../../vendor/tightenco/ziggy";
 import axios from "@/Utils/axios.js";
 import type { Article, Permission, User } from '@/types';
+import ElTextTagsInput from "@/Components/ElTextTagsInput.vue";
 
 const { t } = useTranslation();
 
@@ -38,13 +39,26 @@ interface ArticleProps {
   prev_page_url: string,
 }
 
+interface SearchForm {
+  title: string;
+  tags: string[];
+}
+
+const defaultSearchForm: SearchForm = {
+  title: '',
+  tags: []
+};
+
 const props = defineProps<{
   articles: ArticleProps,
-  search: string
+  search: SearchForm,
   permissions: Permission,
 }>();
 
-const form = useForm({ search: props.search });
+const form = useForm({
+  title: props.search?.title ?? defaultSearchForm.title,
+  tags: props.search?.tags ?? defaultSearchForm.tags,
+});
 
 const formProcessing = () => {
   return form.processing;
@@ -60,12 +74,16 @@ const formSearchSuggestions = (queryString: string, cb) => {
 }
 
 const onSelectArticleSearch = (item: { value: string }) => {
-  form.search = item.value
+  form.title = item.value
   onClickArticleSearch();
 }
 
 const onClickArticleSearch = () => {
   form.get(route('articles.index'), {
+    data: {
+      title: form.title,
+      tags: form.tags
+    },
     preserveState: true,
     preserveScroll: true,
     only: ['articles', 'flash'],
@@ -121,14 +139,22 @@ const onClickArticleDelete = (article: IndexArticle) => {
 
     <div class="flex items-center m-2 gap-2">
       <div class="flex">
-        <el-autocomplete v-model="form.search"
+        <el-autocomplete v-model="form.title"
                          :fetch-suggestions="formSearchSuggestions"
                          placeholder="Search Title"
                          clearable
+                         size="large"
                          @select="onSelectArticleSearch"
                          @keydown.enter="onClickArticleSearch">
         </el-autocomplete>
-        <el-button @click="onClickArticleSearch">🔍</el-button>
+
+        <ElTextTagsInput
+          id="tags"
+          v-model="form.tags"
+          :inputVisible="true"
+          type="text"
+        />
+        <el-button size="large" @click="onClickArticleSearch">🔍</el-button>
       </div>
 
       <Link
@@ -163,7 +189,8 @@ const onClickArticleDelete = (article: IndexArticle) => {
         <tr v-for="(article, i) in articles.data" :key="article.id" :id="`row-${article.id}`"
             class="hover:bg-gray-100 focus-within:bg-gray-100 dark:hover:bg-gray-800 dark:focus-within:bg-gray-800">
           <td>
-            <Link :id="`id-${article.id}`" class="flex items-center px-6 py-4 underline" :href="route('articles.show', article.id)"
+            <Link :id="`id-${article.id}`" class="flex items-center px-6 py-4 underline"
+                  :href="route('articles.show', article.id)"
                   tabindex="-1">
               📄{{ article.id }}
             </Link>
@@ -172,7 +199,8 @@ const onClickArticleDelete = (article: IndexArticle) => {
             {{ article.title.substring(0, 20) + (article.title.length > 20 ? '...' : '') }}
           </td>
           <td>
-            <Link :id="`user-id-${article.user.id}`" class="flex items-center px-6 py-4 underline" :href="route('users.show', article.user.id)"
+            <Link :id="`user-id-${article.user.id}`" class="flex items-center px-6 py-4 underline"
+                  :href="route('users.show', article.user.id)"
                   tabindex="-1">
               🙋‍♂️{{ article.user.name }}
             </Link>
@@ -193,10 +221,12 @@ const onClickArticleDelete = (article: IndexArticle) => {
           </td>
           <td>
             <template v-for="(tag, index) in article.tags" :key="index">
-                            <span
-                              class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                                #{{ tag.name }}
-                            </span>
+              <Link
+                class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 underline"
+                :href="route('articles.index', { tags: [tag.name] })"
+                tabindex="-1">
+                {{ tag.name }}
+              </Link>
             </template>
           </td>
           <td>

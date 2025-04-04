@@ -85,10 +85,29 @@ class Article extends Model
         $this->likes()->detach($user_id);
     }
 
-    public function scopeSearch(Builder $query, string|null $word = null): Builder
+    public function scopeSearch(Builder $query, array $search = [], bool $isTagsAnd = true): Builder
     {
-        return $query->when($word, function ($query) use ($word) {
-            $query->where('title', 'like', "%{$word}%");
+        $title = $search['title'] ?? null;
+        $tags = $search['tags'] ?? null;
+
+        if ($isTagsAnd) {
+            $query->when($tags, function ($query) use ($tags) {
+                foreach ($tags as $tag) {
+                    $query->whereHas('tags', function ($query) use ($tag) {
+                        $query->where('name', $tag);
+                    });
+                }
+            });
+        } else {
+            $query->when($tags, function ($query, $tags) {
+                $query->whereHas('tags', function ($query) use ($tags) {
+                    $query->whereIn('name', $tags);
+                });
+            });
+        }
+        return $query->when($title, function ($query) use ($title) {
+
+            $query->where('title', 'like', "%{$title}%");
         });
     }
 

@@ -27,7 +27,10 @@ class ArticleController extends Controller
     {
         $isWantsJson = $request->wantsJson();
 
-        $search = $request->input('search', '');
+        $search = [
+            'title' => $request->input('title', ''),
+            'tags' => $request->input('tags', [])
+        ];
         $user_id = $request->input('user_id','');
 
         $sort = $request->input('sort', 'created_at');

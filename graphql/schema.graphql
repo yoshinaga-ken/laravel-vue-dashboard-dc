@@ -40,6 +40,16 @@ type Team {
   personal_team: Boolean!
   owner: User @belongsTo
   users: [User!]! @belongsToMany(type: PAGINATOR)
+  teamInvitations: [TeamInvitation!]! @hasMany
+}
+
+type TeamInvitation
+@model (model: "App\\Models\\TeamInvitation")
+{
+  id: ID!
+  email: String!
+  role: String!
+  team: Team @belongsTo
 }
 
 input FilterUserInput {
