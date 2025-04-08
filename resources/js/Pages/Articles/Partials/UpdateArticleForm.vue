@@ -75,8 +75,14 @@ const onClickToggleLikeForm = (article: Article) => {
         <InputLabel :value="`${t('models.team.owner')}`"/>
 
         <div class="flex items-center mt-2">
+          <img class="object-cover w-12 h-12 rounded-full" :src="article.user.profile_photo_url"
+               :alt="article.user.name">
+
           <div class="ms-4 leading-tight">
             <div class="text-gray-900 dark:text-white">{{ article.user.name }}</div>
+            <div class="text-sm text-gray-700 dark:text-gray-300">
+              {{ $page.props.auth.user.email }}
+            </div>
           </div>
         </div>
       </div>
