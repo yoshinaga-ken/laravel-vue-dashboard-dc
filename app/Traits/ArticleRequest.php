@@ -4,13 +4,6 @@ namespace App\Traits;
 
 trait ArticleRequest
 {
-    public function messages()
-    {
-        return [
-            'tags.*.regex' => 'スペース、/ = \' " ; は使用できません。',
-        ];
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
