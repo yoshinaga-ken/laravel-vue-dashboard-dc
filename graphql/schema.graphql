@@ -7,6 +7,7 @@ type User {
   email: String!
   current_team_id: ID
   profile_photo_path: String
+  profile_photo_url: String
   created_at: DateTime!
   updated_at: DateTime!
   articles: [Article!]! @hasMany(type: PAGINATOR)

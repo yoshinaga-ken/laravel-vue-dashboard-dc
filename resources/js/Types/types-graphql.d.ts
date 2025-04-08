@@ -327,6 +327,7 @@ export type User = {
   name: Scalars['String']['output'];
   ownedTeams: Array<Team>;
   profile_photo_path?: Maybe<Scalars['String']['output']>;
+  profile_photo_url?: Maybe<Scalars['String']['output']>;
   teams: Array<Team>;
   updated_at: Scalars['DateTime']['output'];
 };
@@ -598,6 +599,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   ownedTeams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
   profile_photo_path?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  profile_photo_url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
   updated_at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

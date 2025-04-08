@@ -16,7 +16,7 @@ class Article extends Model
     use HasFactory;
     use HasTranslatedAttributes;
 
-    const PAGE_SIZE = 8;
+    const PAGE_SIZE = 24;
 
     protected $fillable = [
         'title',
