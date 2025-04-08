@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import type { User, Permission } from '@/types';
+import type { User } from '@/types-graphql';
 import { ref, watch } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
+import ArticleTagsFrom from "@/Components/ArticleTagsForm.vue";
 
 const props = defineProps<{
   userId: number
@@ -19,13 +20,7 @@ const { result, loading, error } = useQuery(gql`
       email
       current_team_id
       profile_photo_path
-      ownedTeams{
-        name
-      }
-      teams{
-        name
-      }
-      articles(first: 16 page: 1) {
+      articles(first: 4 page: 1) {
         paginatorInfo {
           count
           total
@@ -33,6 +28,9 @@ const { result, loading, error } = useQuery(gql`
         data{
           id
           title
+          tags{
+            name
+          }
         }
       }
       followers(first: 16 page: 1) {
@@ -45,6 +43,12 @@ const { result, loading, error } = useQuery(gql`
           name
         }
       }
+      ownedTeams{
+        name
+      }
+      teams{
+        name
+      }
     }
   }
 `,
@@ -54,6 +58,7 @@ const { result, loading, error } = useQuery(gql`
   });
 
 watch(result, (newResult) => {
+  console.log('watch(result)');
   if (newResult?.user) {
     user.value = newResult.user
   }
@@ -70,13 +75,29 @@ watch(result, (newResult) => {
       </h2>
     </template>
 
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+    <!-- User Article[0] Tags Edit -->
+    <div class="max-w-7xl mx-auto py-5 sm:px-6 lg:px-8">
       <div v-if="loading">Loading...</div>
       <div v-else-if="error">エラーが発生しました</div>
       <div v-else-if="user" class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
+
         <div class="grid grid-cols-1 gap-4">
-          <pre class="text-sm">{{ JSON.stringify(user, null, 2) }}</pre>
+          <div>📝Edit - user.articles[0].tags </div>
+          <ArticleTagsFrom :article_id="user.articles.data[0].id"></ArticleTagsFrom>
         </div>
+      </div>
+    </div>
+
+    <!-- User -->
+    <div class="max-w-7xl mx-auto py-5 sm:px-6 lg:px-8">
+      <div v-if="loading">Loading...</div>
+      <div v-else-if="error">エラーが発生しました</div>
+      <div v-else-if="user" class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
+
+      <div class="grid grid-cols-1 gap-4">
+        <div>🙋‍♂️ user</div>
+        <pre class="text-sm">{{ JSON.stringify(user, null, 2) }}</pre>
+      </div>
       </div>
     </div>
   </AppLayout>
