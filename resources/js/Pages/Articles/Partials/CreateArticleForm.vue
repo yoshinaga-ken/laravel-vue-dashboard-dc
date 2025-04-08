@@ -36,7 +36,7 @@ const createArticle = () => {
 
     <template #form>
       <div class="col-span-6">
-        <InputLabel value="Article Owner"/>
+        <InputLabel :value="`${t('models.team.owner')}`"/>
 
         <div class="flex items-center mt-2">
           <img class="object-cover w-12 h-12 rounded-full" :src="$page.props.auth.user.profile_photo_url"
@@ -53,7 +53,7 @@ const createArticle = () => {
 
       <!-- Article Title -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="title" :value="`Article ${t('models.article.title')}`"/>
+        <InputLabel for="name" :value="`${t('models.article.title')}`"/>
         <TextInput
           id="title"
           v-model="form.title"

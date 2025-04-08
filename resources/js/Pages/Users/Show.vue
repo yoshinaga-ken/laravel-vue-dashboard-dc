@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import type { User } from '@/types-graphql';
+import type { User } from '@/Types/types-graphql';
 import { ref, watch } from "vue";
 import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
@@ -20,6 +20,7 @@ const { result, loading, error } = useQuery(gql`
       email
       current_team_id
       profile_photo_path
+      profile_photo_url
       articles(first: 4 page: 1) {
         paginatorInfo {
           count
@@ -74,30 +75,44 @@ watch(result, (newResult) => {
         User Profile
       </h2>
     </template>
+    <div>
+      <div class="max-w-7xl mx-auto py-5 sm:px-6 lg:px-8">
+        <div class="col-span-6">
+          <div class="flex items-center mt-2">
+            <img class="object-cover size-12 rounded-full" :src="user.profile_photo_url" :alt="user.name">
 
-    <!-- User Article[0] Tags Edit -->
-    <div class="max-w-7xl mx-auto py-5 sm:px-6 lg:px-8">
-      <div v-if="loading">Loading...</div>
-      <div v-else-if="error">エラーが発生しました</div>
-      <div v-else-if="user" class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
-
-        <div class="grid grid-cols-1 gap-4">
-          <div>📝Edit - user.articles[0].tags </div>
-          <ArticleTagsFrom :article_id="user.articles.data[0].id"></ArticleTagsFrom>
+            <div class="ms-4 leading-tight">
+              <div class="text-gray-900 dark:text-white">{{ user.name }}</div>
+              <div class="text-sm text-gray-700 dark:text-gray-300">{{ user.email }}</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- User -->
-    <div class="max-w-7xl mx-auto py-5 sm:px-6 lg:px-8">
-      <div v-if="loading">Loading...</div>
-      <div v-else-if="error">エラーが発生しました</div>
-      <div v-else-if="user" class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
+      <!-- User Article[0] Tags Edit -->
+      <div class="max-w-7xl mx-auto py-5 sm:px-6 lg:px-8">
+        <div v-if="loading">Loading...</div>
+        <div v-else-if="error">エラーが発生しました</div>
+        <div v-else-if="user" class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
 
-      <div class="grid grid-cols-1 gap-4">
-        <div>🙋‍♂️ user</div>
-        <pre class="text-sm">{{ JSON.stringify(user, null, 2) }}</pre>
+          <div class="grid grid-cols-1 gap-4">
+            <div>📝Edit - user.articles[0].tags</div>
+            <ArticleTagsFrom :article_id="user.articles.data[0].id"></ArticleTagsFrom>
+          </div>
+        </div>
       </div>
+
+      <!-- User -->
+      <div class="max-w-7xl mx-auto py-5 sm:px-6 lg:px-8">
+        <div v-if="loading">Loading...</div>
+        <div v-else-if="error">エラーが発生しました</div>
+        <div v-else-if="user" class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
+
+          <div class="grid grid-cols-1 gap-4">
+            <div>🙋‍♂️ user</div>
+            <pre class="text-sm">{{ JSON.stringify(user, null, 2) }}</pre>
+          </div>
+        </div>
       </div>
     </div>
   </AppLayout>
