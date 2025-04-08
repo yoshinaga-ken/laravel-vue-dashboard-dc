@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import UpdateArticleForm from '@/Pages/Articles/Partials/UpdateArticleForm.vue';
-import type { Article, Permission } from '@/types';
+import type { Article, Permission } from '@/Types/types';
 
 defineProps<{
   article: Article,

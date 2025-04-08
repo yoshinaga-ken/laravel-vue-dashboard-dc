@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import UpdateArticleForm from '@/Pages/Articles/Partials/UpdateArticleForm.vue';
 import DeleteArticleForm from "@/Pages/Articles/Partials/DeleteArticleForm.vue";
-import type { Article, Permission } from '@/types';
+import type { Article, Permission } from '@/Types/types';
 
 defineProps<{
   article: Article,
