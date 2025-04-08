@@ -9,7 +9,7 @@ import { useTranslation } from "@/Composables/useTranslation.js";
 import UserFollowButton from "@/Components/UserFollowButton.vue";
 import { route } from "../../../../vendor/tightenco/ziggy";
 import axios from "@/Utils/axios.js";
-import type { Article, Permission, User } from '@/types';
+import type { Article, Permission, User } from '@/Types/types';
 import ElTextTagsInput from "@/Components/ElTextTagsInput.vue";
 
 const { t } = useTranslation();

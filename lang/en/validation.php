@@ -176,6 +176,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'tags.*' => [
+            'regex' => 'Spaces, / = \' " ; are not allowed.',
+        ],
     ],
 
     /*

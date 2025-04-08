@@ -7,6 +7,7 @@ type User {
   email: String!
   current_team_id: ID
   profile_photo_path: String
+  profile_photo_url: String
   created_at: DateTime!
   updated_at: DateTime!
   articles: [Article!]! @hasMany(type: PAGINATOR)
@@ -135,20 +136,17 @@ input UpdateArticleInput {
   user_id: ID @rules(apply: ["exists:users,id"])
 }
 
-type StatusResponse {
-  success: Boolean
-  message: String
-}
-
-type ArticleResponse {
-  success: Boolean
-  message: String
-  article: Article
-}
+#type ArticleResponse {
+#  success: Boolean
+#  message: String
+#  errors: [String!]
+#  article: Article
+#}
 
 type Mutation
 @guard(with: ["sanctum"])
 {
+  # article - crud
   createArticle(
     input: CreateArticleInput! @spread
   ): Article
@@ -172,4 +170,43 @@ type Mutation
   ): Article
   @delete
   @canFind(ability: "delete", find: "id")
+
+  # article user
+  associateUserArticle(
+    id: ID!
+    @whereKey
+    @rules(apply: ["required", "exists:articles,id"])
+    user_id: ID! @rules(apply: ["required", "exists:users,id"])
+  ): Article
+  @canFind(ability: "update", find: "id")
+  @field(resolver: "App\\GraphQL\\Mutations\\Articles\\ArticleMutation@associateUser")
+
+  # article tags
+  attachTagsArticle(
+    id: ID!,
+    tagIds: [ID!]!
+  ): Article
+  @canFind(ability: "update", find: "id")
+  @field(resolver: "App\\GraphQL\\Mutations\\Articles\\ArticleMutation@attachTags")
+
+  detachTagsArticle(
+    id: ID!,
+    tagIds: [ID!]!
+  ): Article
+  @canFind(ability: "update", find: "id")
+  @field(resolver: "App\\GraphQL\\Mutations\\Articles\\ArticleMutation@detachTags")
+
+  syncTagsArticle(
+    id: ID!,
+    tagIds: [ID!]!
+  ): Article
+  @canFind(ability: "update", find: "id")
+  @field(resolver: "App\\GraphQL\\Mutations\\Articles\\ArticleMutation@syncTags")
+
+  syncTagsByNameArticle(
+    id: ID!,
+    tagNames: [String!]! @rename(attribute: "tags")
+  ): Article
+  @canFind(ability: "update", find: "id")
+  @field(resolver: "App\\GraphQL\\Mutations\\Articles\\ArticleMutation@syncTagsByName")
 }
