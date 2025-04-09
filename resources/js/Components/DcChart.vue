@@ -1603,7 +1603,6 @@ import _ from 'lodash';
 
 import {
   php_location_get_query,
-  php_http_build_query,
   php_parse_str,
   php_number_format,
   php_trim,
@@ -1623,6 +1622,58 @@ import {
   loadScriptSparkline,
   loadScriptVectormap,
 } from '@/Utils/utils.js';
+
+const props = defineProps({
+  dataPath: {
+    type: String,
+    required: true,
+    default: '/data/'
+  },
+  data: {
+    type: String,
+    required: true,
+    default: 'covid19-data-2021-02-28.csv'
+  },
+  selectableData: {
+    type: Object,
+    required: true,
+    default: () => ({
+      'covid19-japan.jpg': 'covid19-data-2021-02-28.csv',
+      'food-ramen.jpg': 'food-ramen.csv',
+      'ja-quake-noto-safety.jpg': 'ja-quake-noto-safety.csv',
+      'ja-tokyo-gubernatorial-election.jpg': 'ja-tokyo-gubernatorial-election.csv',
+      'resas-agriculture.jpg': 'resas-agriculture.csv',
+      'resas-product-sales.jpg': 'resas-product-sales.csv',
+      'resas-tourism-foreigners.jpg': 'resas-tourism-foreigners.csv',
+      'resas-municipality-company.jpg': 'resas-municipality-company.csv',
+      'resas-municipality-taxes.jpg': 'resas-municipality-taxes.csv',
+      'resas-municipality-manufacture.jpg': 'resas-municipality-manufacture.csv',
+      'game-1983-msx.jpg': 'game-msx.csv',
+      'game-1983-fc.jpg': 'game-fc.csv',
+      'game-1987-pce.jpg': 'game-pce.csv',
+      'game-1988-smd.jpg': 'game-smd.csv',
+      'game-1989-gb.jpg': 'game-gb.csv',
+      'game-1990-smc.jpg': 'game-smc.csv',
+      'game-1991-gen4.jpg': 'game-gen4.csv',
+      'game-1994-ps1.jpg': 'game-ps1.csv',
+      'game-1995-ss.jpg': 'game-ss.csv',
+      'game-1996-n64.jpg': 'game-n64.csv',
+      'game-2001-gba.jpg': 'game-gba.csv',
+      'game-2001-gc.jpg': 'game-gc.csv',
+      'game-gen3.jpg': 'game-gen3.csv',
+      'game-ac.jpg': 'game-ac.csv',
+      'test-article-like.jpg': 'test-article-like.csv',
+      'test-drink.jpg': 'test-drink.csv',
+      'test-lunch.jpg': 'test-lunch.csv',
+      'test-agr-kikurage.jpg': 'test-agr-kikurage.csv',
+      'sports-hsb.jpg': 'sports-hsb.csv',
+      'store-cnt.jpg': 'store-cnt.csv',
+      'store-di.jpg': 'store-di.csv',
+      'kaggle-heart-disease.jpg': 'kaggle-heart-disease.csv',
+      "kaggle-countries-intermediate.jpg": "kaggle-countries-intermediate.csv"
+    })
+  }
+});
 
 // データタイプ
 const DT_DEF = 0;   //0:汎用的なDCデータ
@@ -2128,7 +2179,7 @@ const WORLD_CODE = {
   'Zimbabwe': 'ZW',
 };
 
-import {onMounted, ref, watch, reactive, computed} from "vue";
+import {onMounted, ref, watch, reactive} from "vue";
 import * as d3 from 'd3';
 
 import * as dc from 'dc';
@@ -3032,44 +3083,10 @@ const mm = {
   get: {},
   is_trigger_search: false,
   url_data: {
-    "path": "\/data\/",
-    "assets": "covid19-assets.json?20221030-zzz",
-    "data": "covid19-data-2021-02-28?20221030-zzz",
-    "filer_files": {
-      "covid19-japan.jpg": "covid19-data-2021-02-28?20221030-zzz",
-      "food-ramen.jpg": "food-ramen.csv?20221030-zzz",
-      "ja-quake-noto-safety.jpg": "ja-quake-noto-safety.csv?20221030-zzz",
-      "ja-tokyo-gubernatorial-election.jpg": "ja-tokyo-gubernatorial-election.csv?20221030-zzz",
-      "resas-agriculture.jpg": "resas-agriculture.csv?20221030-zzz",
-      "resas-product-sales.jpg": "resas-product-sales.csv?20221030-zzz",
-      "resas-tourism-foreigners.jpg": "resas-tourism-foreigners.csv?20221030-zzz",
-      "resas-municipality-company.jpg": "resas-municipality-company.csv?20221030-zzz",
-      "resas-municipality-taxes.jpg": "resas-municipality-taxes.csv?20221030-zzz",
-      "resas-municipality-manufacture.jpg": "resas-municipality-manufacture.csv?20221030-zzz",
-      "game-1983-msx.jpg": "game-msx.csv?20221030-zzz",
-      "game-1983-fc.jpg": "game-fc.csv?20221030-zzz",
-      "game-1987-pce.jpg": "game-pce.csv?20221030-zzz",
-      "game-1988-smd.jpg": "game-smd.csv?20221030-zzz",
-      "game-1989-gb.jpg": "game-gb.csv?20221030-zzz",
-      "game-1990-smc.jpg": "game-smc.csv?20221030-zzz",
-      "game-1991-gen4.jpg": "game-gen4.csv?20221030-zzz",
-      "game-1994-ps1.jpg": "game-ps1.csv?20221030-zzz",
-      "game-1995-ss.jpg": "game-ss.csv?20221030-zzz",
-      "game-1996-n64.jpg": "game-n64.csv?20221030-zzz",
-      "game-2001-gba.jpg": "game-gba.csv?20221030-zzz",
-      "game-2001-gc.jpg": "game-gc.csv?20221030-zzz",
-      "game-gen3.jpg": "game-gen3.csv?20221030-zzz",
-      "game-ac.jpg": "game-ac.csv?20221030-zzz",
-      "test-article-like.jpg": "test-article-like.csv?20221030-zzz",
-      "test-drink.jpg": "test-drink.csv?20221030-zzz",
-      "test-lunch.jpg": "test-lunch.csv?20221030-zzz",
-      "test-agr-kikurage.jpg": "test-agr-kikurage.csv?20221030-zzz",
-      "sports-hsb.jpg": "sports-hsb.csv?20221030-zzz",
-      "store-cnt.jpg": "store-cnt.csv?20221030-zzz",
-      "store-di.jpg": "store-di.csv?20221030-zzz",
-      "kaggle-heart-disease.jpg": "kaggle-heart-disease.csv?20221030-zzz",
-      "kaggle-countries-intermediate.jpg": "kaggle-countries-intermediate.csv?20221030-zzz"
-    }
+    'path': props.dataPath,
+    'assets': 'covid19-assets.json',
+    'data': props.data,
+    'filer_files': props.selectableData
   },
   url_name: 'https://ja.wikipedia.org/wiki',
 
