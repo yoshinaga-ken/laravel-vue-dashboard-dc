@@ -18,6 +18,8 @@
         <!-- DC_PANEL ToolbarMain -->
         <div id="toolbar_main">
 
+<!--          <FilerDialogButton :is-show-img="!isSp" :is-tooltip="!isSp"/>-->
+
           <i class="fa fa-filter fa-icon"></i>
           <input type="search" id="input-search" autocomplete="off"
                  class="btn_clear_none dark:bg-slate-900 dark:hover:bg-slate-700" value="">
@@ -118,17 +120,37 @@
 
             <span v-if="gg.dt !== DT_COVID">&nbsp;&nbsp;</span>
 
-            <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します"><input id="ch_pnl_map" type="checkbox" v-model="pnl.map.is_show"><i class="fa fa-map"></i>&nbsp;</label>
-            <label v-if="!pnl.name.isHidden" for="ch_pnl_name"><input id="ch_pnl_name" type="checkbox" v-model="pnl.name.is_show"><span v-html="pnl.name.title"></span>&nbsp;</label>
-            <label v-if="!pnl.city.isHidden" for="ch_pnl_city"><input id="ch_pnl_city" type="checkbox" v-model="pnl.city.is_show"><span  v-html="pnl.city.title"></span>&nbsp;</label>
-            <label v-if="!pnl.date.isHidden" for="ch_pnl_date"><input id="ch_pnl_date" type="checkbox" v-model="pnl.date.is_show"><span  v-html="pnl.date.title"></span>&nbsp;</label>
-            <label v-if="!pnl.year.isHidden" for="ch_pnl_year"> <input id="ch_pnl_year" type="checkbox" v-model="pnl.year.is_show"><span v-html="pnl.year.title"></span>&nbsp;</label>
-            <label v-if="!pnl.season.isHidden" for="ch_pnl_season"> <input id="ch_pnl_season" type="checkbox" v-model="pnl.season.is_show"><span v-html="pnl.season.title"></span>&nbsp;</label>
-            <label v-if="!pnl.week.isHidden" for="ch_pnl_week"><input id="ch_pnl_week" type="checkbox" v-model="pnl.week.is_show">曜日&nbsp;</label>
-            <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex"> <input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.is_show"><span v-html="pnl.sex.title"></span>&nbsp;</label>
-            <label v-if="!pnl.age.isHidden" for="ch_pnl_age"> <input id="ch_pnl_age" type="checkbox" v-model="pnl.age.is_show"><span v-html="pnl.age.title"></span>&nbsp;</label>
-            <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond"><input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.is_show"><span v-html="pnl.cond.title"></span>&nbsp;</label>
-            <label v-if="!pnl.job.isHidden" for="ch_pnl_job"> <input id="ch_pnl_job" type="checkbox" v-model="pnl.job.is_show"><span v-html="pnl.job.title"></span>&nbsp;</label>
+            <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します"><input
+              id="ch_pnl_map" type="checkbox" v-model="pnl.map.is_show"><i class="fa fa-map"></i>&nbsp;</label>
+            <label v-if="!pnl.name.isHidden" for="ch_pnl_name"><input id="ch_pnl_name" type="checkbox"
+                                                                      v-model="pnl.name.is_show"><span
+              v-html="pnl.name.title"></span>&nbsp;</label>
+            <label v-if="!pnl.city.isHidden" for="ch_pnl_city"><input id="ch_pnl_city" type="checkbox"
+                                                                      v-model="pnl.city.is_show"><span
+              v-html="pnl.city.title"></span>&nbsp;</label>
+            <label v-if="!pnl.date.isHidden" for="ch_pnl_date"><input id="ch_pnl_date" type="checkbox"
+                                                                      v-model="pnl.date.is_show"><span
+              v-html="pnl.date.title"></span>&nbsp;</label>
+            <label v-if="!pnl.year.isHidden" for="ch_pnl_year"> <input id="ch_pnl_year" type="checkbox"
+                                                                       v-model="pnl.year.is_show"><span
+              v-html="pnl.year.title"></span>&nbsp;</label>
+            <label v-if="!pnl.season.isHidden" for="ch_pnl_season"> <input id="ch_pnl_season" type="checkbox"
+                                                                           v-model="pnl.season.is_show"><span
+              v-html="pnl.season.title"></span>&nbsp;</label>
+            <label v-if="!pnl.week.isHidden" for="ch_pnl_week"><input id="ch_pnl_week" type="checkbox"
+                                                                      v-model="pnl.week.is_show">曜日&nbsp;</label>
+            <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex"> <input id="ch_pnl_sex" type="checkbox"
+                                                                     v-model="pnl.sex.is_show"><span
+              v-html="pnl.sex.title"></span>&nbsp;</label>
+            <label v-if="!pnl.age.isHidden" for="ch_pnl_age"> <input id="ch_pnl_age" type="checkbox"
+                                                                     v-model="pnl.age.is_show"><span
+              v-html="pnl.age.title"></span>&nbsp;</label>
+            <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond"><input id="ch_pnl_cond" type="checkbox"
+                                                                      v-model="pnl.cond.is_show"><span
+              v-html="pnl.cond.title"></span>&nbsp;</label>
+            <label v-if="!pnl.job.isHidden" for="ch_pnl_job"> <input id="ch_pnl_job" type="checkbox"
+                                                                     v-model="pnl.job.is_show"><span
+              v-html="pnl.job.title"></span>&nbsp;</label>
 
             <template v-for="(item, i) in pnl.ex">
                 <template v-if="!item.isHidden">
@@ -137,7 +159,8 @@
                 </template>
             </template>
 
-            <label v-if="!pnl.detail.isHidden" for="ch_pnl_detail"><input id="ch_pnl_detail" type="checkbox" v-model="pnl.detail.is_show">詳細&nbsp;</label>
+            <label v-if="!pnl.detail.isHidden" for="ch_pnl_detail"><input id="ch_pnl_detail" type="checkbox"
+                                                                          v-model="pnl.detail.is_show">詳細&nbsp;</label>
             <label for="ch_pnl_ana" v-show="gg.dt===DT_COVID && pnl.ana.is_chk_show">
                 <input id="ch_pnl_ana" type="checkbox" v-model="pnl.ana.is_show">
                 <i class="fa fa-eye"></i>分析
@@ -212,8 +235,10 @@
               <div id="tabs_d"></div>
               <div id="tabs_b"></div>
               <span v-show="!pnl.map.tabs.is_show" class="chart-title text-theme-col2" v-html="pnl.map.title"></span>
-              <span v-show="!pnl.map.tabs.is_show" class="chart-sub-title text-theme-col2" v-html="pnl.map.subTitle"></span>
-              <span v-show="!pnl.map.tabs.is_show" class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.map.is_show=0"></span>
+              <span v-show="!pnl.map.tabs.is_show" class="chart-sub-title text-theme-col2"
+                    v-html="pnl.map.subTitle"></span>
+              <span v-show="!pnl.map.tabs.is_show" class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                    @click="pnl.map.is_show=0"></span>
             </div>
 
             <div id="japan-map"></div>
@@ -350,7 +375,7 @@
           <div id="panel_date" class="bg-theme-col2 dc_panel drag" :style="pnl.date.style" v-show="pnl.date.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.date.title.indexOf('感染者数')===-1 ? '' : '<i class=\'fa fa-procedures\'>') + pnl.date.title">
+                    v-html="(pnl.date.title.indexOf('感染者数')===-1 ? '' : '<i class=\'fa fa-procedures\'>') + pnl.date.title">
               </span>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <button class="btn_play ui-button ui-button-min ui-corner-all ui-widget"
@@ -381,7 +406,7 @@
               </label>
               &nbsp;&nbsp;
               <label v-if="pnl.date.chart2.type!==0" title="ライン形式のチャートも表示します">
-              <input type="checkbox" v-model="pnl.date.chart2.is_show">📈表示</label>
+                <input type="checkbox" v-model="pnl.date.chart2.is_show">📈表示</label>
 
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.date.is_show=0"></span>
 
@@ -439,10 +464,11 @@
           </div>
 
           <!-- DC_PANEL Season -->
-          <div id="panel_season" class="bg-theme-col2 dc_panel drag" :style="pnl.season.style" v-show="pnl.season.is_show">
+          <div id="panel_season" class="bg-theme-col2 dc_panel drag" :style="pnl.season.style"
+               v-show="pnl.season.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.season.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.season.title">
+                    v-html="(pnl.season.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.season.title">
               </span>
               <a class="reset btn_reset" id="btn_reset_season" href="javascript:void(0);" style="display: none;">
                 <span class="ui-icon ui-icon-closethick"></span>
@@ -477,7 +503,7 @@
           <div id="panel_sex" class="bg-theme-col2 dc_panel drag" :style="pnl.sex.style" v-show="pnl.sex.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.sex.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.sex.title"></span>
+                    v-html="(pnl.sex.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.sex.title"></span>
               <a class="reset btn_reset" id="btn_reset_sex" href="javascript:void(0);" style="display: none;">
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
@@ -539,7 +565,7 @@
           <div id="panel_cond" class="bg-theme-col2 dc_panel drag" :style="pnl.cond.style" v-show="pnl.cond.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.cond.title.indexOf('状態')===-1 ? '' : '<i class=\'fa fa-medkit\'>') + pnl.cond.title"></span>
+                    v-html="(pnl.cond.title.indexOf('状態')===-1 ? '' : '<i class=\'fa fa-medkit\'>') + pnl.cond.title"></span>
 
               <!-- TODO: BtnComponent -->
               <label class="ui-button ui-button-min ui-corner-all ui-widget"
@@ -562,10 +588,11 @@
           </div>
 
           <!-- DC_PANEL Job -->
-          <div id="panel_job" class="scrollbar-thin bg-theme-col2 dc_panel drag" :style="pnl.job.style" v-show="pnl.job.is_show">
+          <div id="panel_job" class="scrollbar-thin bg-theme-col2 dc_panel drag" :style="pnl.job.style"
+               v-show="pnl.job.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
-                v-html="(pnl.job.title.indexOf('職業')===-1 ? '' : '<i class=\'fa fa-id-card-o\'>') + pnl.job.title">
+                    v-html="(pnl.job.title.indexOf('職業')===-1 ? '' : '<i class=\'fa fa-id-card-o\'>') + pnl.job.title">
               </span>
               <span id="chart_job_title_sub"></span>
 
@@ -636,7 +663,8 @@
                     @click="pnl.detail.is_show=0"></span>
             </div>
             <div>
-              <div v-for="(html, id) in pnl.detail.details" class="detail text-theme-col emj" :key="id" v-html="html"></div>
+              <div v-for="(html, id) in pnl.detail.details" class="detail text-theme-col emj" :key="id"
+                   v-html="html"></div>
             </div>
           </div>
 
@@ -1553,25 +1581,42 @@
 </template>
 
 <script setup>
+import {onMounted, ref, watch, reactive} from "vue";
+import * as d3 from 'd3';
+
+import * as dc from 'dc';
+import 'dc/dist/style/dc.min.css';
+
+import * as crossfilterModule from 'crossfilter2';
+const crossfilter = crossfilterModule.default || crossfilterModule;
+
+import moment from 'moment';
+import 'moment/dist/locale/ja';
+moment.locale('ja');
+
+import _ from 'lodash';
+
+import jQuery from 'jquery';
+window.$ = window.jQuery = jQuery;
+
+import '@/Utils/font-awesome/css/all.css';
+import '@/Utils/font-awesome/css/v4-shims.min.css';
+
+import 'virtual-keyboard/dist/css/keyboard.min.css';
+import 'virtual-keyboard/dist/js/jquery.keyboard.min.js';
+
+// Components
 import YoutubeVidInput from "@/Components/YoutubeVidInput.vue";
 import GoogleMap from "@/Components/GoogleMap.vue";
+// import FilerDialogButton from "@/Components/FilerDialogButton.vue";
 
-const G_IS_LOCAL = import.meta.env.DEV;
-const G_IS_TUBE_SEARCH = import.meta.env.PROD; // YoutubeAPIを呼ぶか? ※開発中に無駄にApiを呼ぶのを避ける時は0にする
-
+import {PREFECTURES, PREFECTURES_EN, HIRAGANA, WORLD_CODE} from '@/Constants/DcChart.constants.js';
 import {colorbrewer} from "@/Utils/colorbrewer.js";
 import '/public/jquery-ui/themes/dark-hive/jquery-ui.min.css';
 import '/public/jquery-ui-iconfont/jquery-ui-1.12.icon-font.min.css';
 
 import jvectormapJpData from '/public/jquery-jvectormap/data/jquery-jvectormap-jp-merc.json';
 import jvectormapWorldData from '/public/jquery-jvectormap/data/jquery-jvectormap-world-mill.json';
-
-import moment from 'moment';
-import 'moment/dist/locale/ja';
-
-moment.locale('ja');
-
-import _ from 'lodash';
 
 import {
   php_location_get_query,
@@ -1593,59 +1638,11 @@ import {
   loadScriptDataTables,
   loadScriptSparkline,
   loadScriptVectormap,
-} from '@/Utils/util.js';
+} from '@/Utils/utils.js';
 
-const props = defineProps({
-  dataPath: {
-    type: String,
-    required: true,
-    default: '/data/'
-  },
-  data: {
-    type: String,
-    required: true,
-    default: 'covid19-data-2021-02-28.csv'
-  },
-  selectableData: {
-    type: Object,
-    required: true,
-    default: () => ({
-      'covid19-japan.jpg': 'covid19-data-2021-02-28.csv',
-      'food-ramen.jpg': 'food-ramen.csv',
-      'ja-quake-noto-safety.jpg': 'ja-quake-noto-safety.csv',
-      'ja-tokyo-gubernatorial-election.jpg': 'ja-tokyo-gubernatorial-election.csv',
-      'resas-agriculture.jpg': 'resas-agriculture.csv',
-      'resas-product-sales.jpg': 'resas-product-sales.csv',
-      'resas-tourism-foreigners.jpg': 'resas-tourism-foreigners.csv',
-      'resas-municipality-company.jpg': 'resas-municipality-company.csv',
-      'resas-municipality-taxes.jpg': 'resas-municipality-taxes.csv',
-      'resas-municipality-manufacture.jpg': 'resas-municipality-manufacture.csv',
-      'game-1983-msx.jpg': 'game-msx.csv',
-      'game-1983-fc.jpg': 'game-fc.csv',
-      'game-1987-pce.jpg': 'game-pce.csv',
-      'game-1988-smd.jpg': 'game-smd.csv',
-      'game-1989-gb.jpg': 'game-gb.csv',
-      'game-1990-smc.jpg': 'game-smc.csv',
-      'game-1991-gen4.jpg': 'game-gen4.csv',
-      'game-1994-ps1.jpg': 'game-ps1.csv',
-      'game-1995-ss.jpg': 'game-ss.csv',
-      'game-1996-n64.jpg': 'game-n64.csv',
-      'game-2001-gba.jpg': 'game-gba.csv',
-      'game-2001-gc.jpg': 'game-gc.csv',
-      'game-gen3.jpg': 'game-gen3.csv',
-      'game-ac.jpg': 'game-ac.csv',
-      'test-article-like.jpg': 'test-article-like.csv',
-      'test-drink.jpg': 'test-drink.csv',
-      'test-lunch.jpg': 'test-lunch.csv',
-      'test-agr-kikurage.jpg': 'test-agr-kikurage.csv',
-      'sports-hsb.jpg': 'sports-hsb.csv',
-      'store-cnt.jpg': 'store-cnt.csv',
-      'store-di.jpg': 'store-di.csv',
-      'kaggle-heart-disease.jpg': 'kaggle-heart-disease.csv',
-      "kaggle-countries-intermediate.jpg": "kaggle-countries-intermediate.csv"
-    })
-  }
-});
+const BASE = import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT;
+const G_IS_LOCAL = import.meta.env.DEV;
+const G_IS_TUBE_SEARCH = import.meta.env.PROD; // YoutubeAPIを呼ぶか? ※開発中に無駄にApiを呼ぶのを避ける時は0にする
 
 // データタイプ
 const DT_DEF = 0;   //0:汎用的なDCデータ
@@ -1746,437 +1743,57 @@ const TAGICON_DS = '💾';
 const TAGICON_CD = '💿';
 colorbrewer.Set2[8][7] = colorbrewer.Set1[8][6];//Set3[12][8]:gray-> light gold
 
-
-const PREFECTURES = ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"];
-const PREFECTURES_EN = {
-  "北海道": "hokkaido",
-  "青森県": "aomori",
-  "岩手県": "iwate",
-  "宮城県": "miyagi",
-  "秋田県": "akita",
-  "山形県": "yamagata",
-  "福島県": "fukushima",
-  "茨城県": "ibaraki",
-  "栃木県": "tochigi",
-  "群馬県": "gunma",
-  "埼玉県": "saitama",
-  "千葉県": "chiba",
-  "東京都": "tokyo",
-  "神奈川県": "kanagawa",
-  "新潟県": "niigata",
-  "富山県": "toyama",
-  "石川県": "ishikawa",
-  "福井県": "fukui",
-  "山梨県": "yamanashi",
-  "長野県": "nagano",
-  "岐阜県": "gifu",
-  "静岡県": "shizuoka",
-  "愛知県": "aichi",
-  "三重県": "mie",
-  "滋賀県": "shiga",
-  "京都府": "kyoto",
-  "大阪府": "osaka",
-  "兵庫県": "hyogo",
-  "奈良県": "nara",
-  "和歌山県": "wakayama",
-  "鳥取県": "tottori",
-  "島根県": "shimane",
-  "岡山県": "okayama",
-  "広島県": "hiroshima",
-  "山口県": "yamaguchi",
-  "徳島県": "tokushima",
-  "香川県": "kagawa",
-  "愛媛県": "ehime",
-  "高知県": "kochi",
-  "福岡県": "fukuoka",
-  "佐賀県": "saga",
-  "長崎県": "nagasaki",
-  "熊本県": "kumamoto",
-  "大分県": "oita",
-  "宮崎県": "miyazaki",
-  "鹿児島県": "kagoshima",
-  "沖縄県": "okinawa"
-};
-
-const HIRAGANA = {
-  "PREF": {
-    "北海道": "ほっかいどう",
-    "青森県": "あおもり",
-    "岩手県": "いわて",
-    "宮城県": "みやぎ",
-    "秋田県": "あきた",
-    "山形県": "やまがた",
-    "福島県": "ふくしま",
-    "茨城県": "いばらき",
-    "栃木県": "とちぎ",
-    "群馬県": "ぐんま",
-    "埼玉県": "さいたま",
-    "千葉県": "ちば",
-    "東京都": "とうきょうと",
-    "神奈川県": "かながわ",
-    "新潟県": "にいがた",
-    "富山県": "とやま",
-    "石川県": "いしかわ",
-    "福井県": "ふくい",
-    "山梨県": "やまなし",
-    "長野県": "ながの",
-    "岐阜県": "ぎふ",
-    "静岡県": "しずおか",
-    "愛知県": "あいち",
-    "三重県": "みえ",
-    "滋賀県": "しが",
-    "京都府": "きょうとふ",
-    "大阪府": "おおさかふ",
-    "兵庫県": "ひょうご",
-    "奈良県": "なら",
-    "和歌山県": "わかやま",
-    "鳥取県": "とっとり",
-    "島根県": "しまね",
-    "岡山県": "おかやま",
-    "広島県": "ひろしま",
-    "山口県": "やまぐち",
-    "徳島県": "とくしま",
-    "香川県": "かがわ",
-    "愛媛県": "えひめ",
-    "高知県": "こうち",
-    "福岡県": "ふくおか",
-    "佐賀県": "さが",
-    "長崎県": "ながさき",
-    "熊本県": "くまもと",
-    "大分県": "おおいた",
-    "宮崎県": "みやざき",
-    "鹿児島県": "かごしま",
-    "沖縄県": "おきなわ"
+const props = defineProps({
+  dataPath: {
+    type: String,
+    required: true,
+    default: '/data/'
   },
-  "JOB": {
-    "無職": "むしょく",
-    "教職員": "きょうしょくいん",
-    "学生": "がくせい",
-    "保育園児": "ほいくえんじ",
-    "入所者": "にゅうしょしゃ",
-    "医師": "いし",
-    "看護師": "かんごし",
-    "看護職員": "かんごしょくいん",
-    "医療従事者": "いりょうじゅうじしゃ",
-    "介護職員": "かいごしょくいん",
-    "福祉事業従事者": "ふくしじぎょうじゅうじしゃ",
-    "保育園職員": "ほいくえんしょくいん",
-    "歯医者勤務": "はいしゃきんむ",
-    "公務員": "こうむいん",
-    "団体職員": "だんたいしょくいん",
-    "自衛・消防官": "じえいしょうぼうかん",
-    "経営者・役員": "けいえいしゃやくいん",
-    "会社員": "かいしゃいん",
-    "事務職員": "じむしょくいん",
-    "運転手": "うんてんしゅ",
-    "運送業": "うんそうぎょう",
-    "接客業": "せっきゃくぎょう",
-    "飲食業": "いんしょくぎょう",
-    "飲食店従業員": "いんしょくてんじゅうぎょういん",
-    "自営業": "じえいぎょう",
-    "パート・アルバイト": "パートアルバイト",
-    "サービス業": "さーびすぎょう",
-    "製造業": "せいぞうぎょう",
-    "土木建築業": "どぼくけんちくぎょう",
-    "スポーツ選手": "スポーツせんしゅ"
+  data: {
+    type: String,
+    required: true,
+    default: 'covid19-data-2021-02-28.csv'
   },
-  "COND": {
-    "退院": "たいいん",
-    "無症状": "むしょうじょう",
-    "重症": "じゅうしょう",
-    "死亡": "しぼう",
-    "軽症": "けいしょう",
-    "中等度": "ちゅうとうど",
-    "肺炎入院": "はいえんにゅういん",
-    "入院予定": "にゅういんよてい",
-    "入院": "にゅういん",
-    "肺炎": "はいえん",
-    "自宅待機": "じたくたいき",
-    "酸投": "さんとう",
-    "肺炎入院予定": "はいえんにゅういんよてい",
-    "再発入院": "さいはつにゅういん"
+  selectableData: {
+    type: Object,
+    required: true,
+    default: () => ({
+      'covid19-japan.jpg': 'covid19-data-2021-02-28.csv',
+      'food-ramen.jpg': 'food-ramen.csv',
+      'ja-quake-noto-safety.jpg': 'ja-quake-noto-safety.csv',
+      'ja-tokyo-gubernatorial-election.jpg': 'ja-tokyo-gubernatorial-election.csv',
+      'resas-agriculture.jpg': 'resas-agriculture.csv',
+      'resas-product-sales.jpg': 'resas-product-sales.csv',
+      'resas-tourism-foreigners.jpg': 'resas-tourism-foreigners.csv',
+      'resas-municipality-company.jpg': 'resas-municipality-company.csv',
+      'resas-municipality-taxes.jpg': 'resas-municipality-taxes.csv',
+      'resas-municipality-manufacture.jpg': 'resas-municipality-manufacture.csv',
+      'game-1983-msx.jpg': 'game-msx.csv',
+      'game-1983-fc.jpg': 'game-fc.csv',
+      'game-1987-pce.jpg': 'game-pce.csv',
+      'game-1988-smd.jpg': 'game-smd.csv',
+      'game-1989-gb.jpg': 'game-gb.csv',
+      'game-1990-smc.jpg': 'game-smc.csv',
+      'game-1991-gen4.jpg': 'game-gen4.csv',
+      'game-1994-ps1.jpg': 'game-ps1.csv',
+      'game-1995-ss.jpg': 'game-ss.csv',
+      'game-1996-n64.jpg': 'game-n64.csv',
+      'game-2001-gba.jpg': 'game-gba.csv',
+      'game-2001-gc.jpg': 'game-gc.csv',
+      'game-gen3.jpg': 'game-gen3.csv',
+      'game-ac.jpg': 'game-ac.csv',
+      'test-article-like.jpg': 'test-article-like.csv',
+      'test-drink.jpg': 'test-drink.csv',
+      'test-lunch.jpg': 'test-lunch.csv',
+      'test-agr-kikurage.jpg': 'test-agr-kikurage.csv',
+      'sports-hsb.jpg': 'sports-hsb.csv',
+      'store-cnt.jpg': 'store-cnt.csv',
+      'store-di.jpg': 'store-di.csv',
+      'kaggle-heart-disease.jpg': 'kaggle-heart-disease.csv',
+      "kaggle-countries-intermediate.jpg": "kaggle-countries-intermediate.csv"
+    })
   }
-};
-
-const WORLD_CODE = {
-//'Name' : 'Code',
-	'Afghanistan': 'AF',
-	'Åland Islands': 'AX',
-	'Albania': 'AL',
-	'Algeria': 'DZ',
-	'American Samoa': 'AS',
-// 'Andorra' : 'AD',
-	'Angola': 'AO',
-// 'Anguilla' : 'AI',
-	'Antarctica': 'AQ',
-// 'Antigua & Barbuda' : 'AG',
-	'Argentina': 'AR',
-	'Armenia': 'AM',
-// 'Aruba' : 'AW',
-	'Australia': 'AU',
-	'Austria': 'AT',
-	'Azerbaijan': 'AZ',
-	'Bahamas': 'BS',
-	'Bahrain': 'BH',
-	'Bangladesh': 'BD',
-// 'Barbados' : 'BB',
-	'Belarus': 'BY',
-	'Belgium': 'BE',
-	'Belize': 'BZ',
-	'Benin': 'BJ',
-// 'Bermuda' : 'BM',
-	'Bhutan': 'BT',
-	'Bolivia': 'BO', // 'Bolivia Plurinational State of'
-	'Bonaire Sint Eustatius & Saba': 'BQ',
-	'Bosnia & Herzegovina': 'BA',
-	'Botswana': 'BW',
-	'Bouvet Island': 'BV',
-	'Brazil': 'BR',
-	'British Indian Ocean Territory': 'IO',
-	'Brunei': 'BN', // 'Brunei Darussalam'
-	'Bulgaria': 'BG',
-	'Burkina Faso': 'BF',
-	'Burundi': 'BI',
-	'Cambodia': 'KH',
-	'Cameroon': 'CM',
-	'Canada': 'CA',
-// 'Cape Verde' : 'CV',
-// 'Cayman Islands' : 'KY',
-	'Central African Republic': 'CF',
-	'Chad': 'TD',
-	'Chile': 'CL',
-	'China': 'CN',
-	'Christmas Island': 'CX',
-	'Cocos (Keeling) Islands': 'CC',
-	'Colombia': 'CO',
-// 'Comoros' : 'KM',
-	'Congo': 'CG',
-	'Congo Dem. Rep.': 'CD', // 'Congo the Democratic Republic of the'
-	'Cook Islands': 'CK',
-	'Costa Rica': 'CR',
-	'Côte dIvoire': 'CI',
-	'Croatia': 'HR',
-	'Cuba': 'CU',
-	'Curaçao': 'CW',
-	'Cyprus': 'CY',
-	'Czech Republic': 'CZ',
-	'Denmark': 'DK',
-	'Djibouti': 'DJ',
-// 'Dominica' : 'DM',
-	'Dominican Republic': 'DO',
-	'Ecuador': 'EC',
-	'Egypt': 'EG',
-	'El Salvador': 'SV',
-	'Equatorial Guinea': 'GQ',
-	'Eritrea': 'ER',
-	'Estonia': 'EE',
-	'Ethiopia': 'ET',
-	'Falkland Islands (Malvinas)': 'FK',
-	'Faroe Islands': 'FO',
-	'Fiji': 'FJ',
-	'Finland': 'FI',
-	'France': 'FR',
-	'French Guiana': 'GF',
-	'French Polynesia': 'PF',
-	'French Southern Territories': 'TF',
-	'Gabon': 'GA',
-	'Gambia': 'GM',
-	'Georgia': 'GE',
-	'Germany': 'DE',
-	'Ghana': 'GH',
-// 'Gibraltar' : 'GI',
-	'Greece': 'GR',
-	'Greenland': 'GL',
-// 'Grenada' : 'GD',
-	'Guadeloupe': 'GP',
-	'Guam': 'GU',
-	'Guatemala': 'GT',
-// 'Guernsey' : 'GG',
-	'Guinea': 'GN',
-	'Guinea-Bissau': 'GW',
-	'Guyana': 'GY',
-	'Haiti': 'HT',
-	'Heard Island & McDonald Islands': 'HM',
-// 'Holy See (Vatican City State)' : 'VA',
-	'Honduras': 'HN',
-// 'Hong Kong' : 'HK',
-	'Hungary': 'HU',
-	'Iceland': 'IS',
-	'India': 'IN',
-	'Indonesia': 'ID',
-	'Iran': 'IR', // 'Iran, Islamic Republic of'
-	'Iraq': 'IQ',
-	'Ireland': 'IE',
-// 'Isle of Man' : 'IM',
-	'Israel': 'IL',
-	'Italy': 'IT',
-	'Jamaica': 'JM',
-	'Japan': 'JP',
-// 'Jersey' : 'JE',
-	'Jordan': 'JO',
-	'Kazakhstan': 'KZ',
-	'Kenya': 'KE',
-	'Kiribati': 'KI',
-	'North Korea': 'KP', // 'Korea Democratic Peoples Republic of'
-	'Korea': 'KR', // 'Korea Republic of'
-	'Kuwait': 'KW',
-	'Kyrgyzstan': 'KG',
-	'Laos': 'LA', // 'Lao Peoples Democratic Republic
-	'Latvia': 'LV',
-	'Lebanon': 'LB',
-	'Lesotho': 'LS',
-	'Liberia': 'LR',
-	'Libya': 'LY',
-// 'Liechtenstein' : 'LI',
-	'Lithuania': 'LT',
-// 'Luxembourg' : 'LU',
-// 'Macao' : 'MO',
-	'Macedonia': 'MK', // 'Macedonia the Former Yugoslav Republic of'
-	'Madagascar': 'MG',
-	'Malawi': 'MW',
-	'Malaysia': 'MY',
-// 'Maldives' : 'MV',
-	'Mali': 'ML',
-// 'Malta' : 'MT',
-	'Marshall Islands': 'MH',
-	'Martinique': 'MQ',
-	'Mauritania': 'MR',
-// 'Mauritius' : 'MU',
-	'Mayotte': 'YT',
-	'Mexico': 'MX',
-	'Micronesia Federated States of': 'FM',
-	'Moldova': 'MD', // 'Moldova Republic of'
-// 'Monaco' : 'MC',
-	'Mongolia': 'MN',
-	'Montenegro': 'ME',
-// 'Montserrat' : 'MS',
-	'Morocco': 'MA',
-	'Mozambique': 'MZ',
-	'Myanmar': 'MM',
-	'Namibia': 'NA',
-	'Nauru': 'NR',
-	'Nepal': 'NP',
-	'Netherlands': 'NL',
-	'New Caledonia': 'NC',
-	'New Zealand': 'NZ',
-	'Nicaragua': 'NI',
-	'Niger': 'NE',
-	'Nigeria': 'NG',
-	'Niue': 'NU',
-	'Norfolk Island': 'NF',
-	'Northern Mariana Islands': 'MP',
-	'Norway': 'NO',
-	'Oman': 'OM',
-	'Pakistan': 'PK',
-	'Palau': 'PW',
-	'Palestine State of': 'PS',
-	'Panama': 'PA',
-	'Papua New Guinea': 'PG',
-	'Paraguay': 'PY',
-	'Peru': 'PE',
-	'Philippines': 'PH',
-	'Pitcairn': 'PN',
-	'Poland': 'PL',
-	'Portugal': 'PT',
-	'Puerto Rico': 'PR',
-	'Qatar': 'QA',
-	'Réunion': 'RE',
-	'Romania': 'RO',
-	'Russian Federation': 'RU',
-	'Rwanda': 'RW',
-	'Saint Barthélemy': 'BL',
-	'Saint Helena Ascension & Tristan da Cunha': 'SH',
-// 'Saint Kitts & Nevis' : 'KN',
-// 'Saint Lucia' : 'LC',
-	'Saint Martin (French part)': 'MF',
-	'Saint Pierre & Miquelon': 'PM',
-// 'Saint Vincent & the Grenadines' : 'VC',
-	'Samoa': 'WS',
-// 'San Marino' : 'SM',
-// 'Sao Tome & Principe' : 'ST',
-	'Saudi Arabia': 'SA',
-	'Senegal': 'SN',
-	'Serbia': 'RS',
-// 'Seychelles' : 'SC',
-	'Sierra Leone': 'SL',
-	'Singapore': 'SG',
-	'Sint Maarten (Dutch part)': 'SX',
-	'Slovakia': 'SK',
-	'Slovenia': 'SI',
-	'Solomon Islands': 'SB',
-	'Somalia': 'SO',
-	'South Africa': 'ZA',
-	'South Georgia & the South Sandwich Islands': 'GS',
-	'South Sudan': 'SS',
-	'Spain': 'ES',
-	'Sri Lanka': 'LK',
-	'Sudan': 'SD',
-	'Suriname': 'SR',
-	'Svalbard & Jan Mayen': 'SJ',
-	'Eswatini': 'SZ',
-	'Sweden': 'SE',
-	'Switzerland': 'CH',
-	'Syrian Arab Republic': 'SY', // 'Syrian Arab Republic'
-	'Taiwan Province of China': 'TW',
-	'Tajikistan': 'TJ',
-	'Tanzania': 'TZ', // 'Tanzania United Republic of'
-	'Thailand': 'TH',
-	'Timor-Leste': 'TL',
-	'Togo': 'TG',
-	'Tokelau': 'TK',
-	'Tonga': 'TO',
-// 'Trinidad & Tobago' : 'TT',
-	'Tunisia': 'TN',
-	'Turkey': 'TR',
-	'Turkmenistan': 'TM',
-	'Turks & Caicos Islands': 'TC',
-	'Tuvalu': 'TV',
-	'Uganda': 'UG',
-	'Ukraine': 'UA',
-	'United Arab Emirates': 'AE',
-	'United Kingdom': 'GB',
-	'United States': 'US',
-	'United States Minor Outlying Islands': 'UM',
-	'Uruguay': 'UY',
-	'Uzbekistan': 'UZ',
-	'Vanuatu': 'VU',
-	'Venezuela': 'VE',　// 'Venezuela Bolivarian Republic of'
-	'Vietnam': 'VN',
-// 'Virgin Islands British' : 'VG',
-	'Virgin Islands U.S.': 'VI',
-	'Wallis & Futuna': 'WF',
-	'Western Sahara': 'EH',
-	'Yemen': 'YE',
-	'Zambia': 'ZM',
-	'Zimbabwe': 'ZW',
-};
-
-import {onMounted, ref, watch, reactive} from "vue";
-import * as d3 from 'd3';
-
-import * as dc from 'dc';
-import 'dc/dist/style/dc.min.css';
-
-import * as crossfilterModule from 'crossfilter2';
-
-const crossfilter = crossfilterModule.default || crossfilterModule;
-
-const BASE = import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT;
-
-import jQuery from 'jquery';
-
-window.$ = window.jQuery = jQuery;
-
-// import 'jquery-ui-dist/jquery-ui'; //NG:Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'ui')
-
-// import 'jvectormap-next';
-
-import '@/Utils/font-awesome/css/all.css';
-import '@/Utils/font-awesome/css/v4-shims.min.css';
-// import '/img/csv.png';
-
-import 'virtual-keyboard/dist/css/keyboard.min.css';
-import 'virtual-keyboard/dist/js/jquery.keyboard.min.js';
+});
 
 // Global
 const gg = reactive({
@@ -5391,7 +5008,7 @@ const mm = {
             let per = parseInt(100 * n / p_max);
             let bar_style = "background: linear-gradient(to right, rgb(31, 119, 180, 0.3) " + per + "%, #fffacd " + per + "%, #fffacd " + (100 - per) + "%) center center / 100% 100% no-repeat;";
             let ret = '<b>' + icon + '<a target="_blank" title="' + name + 'の wikipediaへ" href="' + mm.url_name + '/' + name + '">' + name + '</a></b><br />' +
-              '<img style="width:180px;height:120px;object-fit: cover;object-position:0% 0%;" src="' + PREFECTURES_IMG_PATH + PREFECTURES_IMG[name] + '"><br />' +
+              '<img style="width:180px;height:120px;object-fit: cover;object-position:0% 0%;" src="/img/japan/pref/' + name + '.jpg"><br />' +
               (p === undefined ? 'なし<br />' : (
                 '<table><tbody>' +
                 '<tr><td>総人口　:</td><td>' + php_number_format(p.n) + '名</tr>' +
@@ -6107,7 +5724,7 @@ const mm = {
         return mm.util.parseOptionsCSV(path, doParseOptions);
       })
       .then((result) => {
-        gg.isPrefTable =  gg.dt === DT_COVID;
+        gg.isPrefTable = gg.dt === DT_COVID;
         mm.data_hdr = result.header;
         result.data.unshift(result.header);
         mm.setPanelFromDataOptions();
@@ -10633,7 +10250,7 @@ h4.hdr {
 }
 
 .chart-sub-title {
-  font-size:0.8em;
+  font-size: 0.8em;
 }
 
 .dc_panel {
