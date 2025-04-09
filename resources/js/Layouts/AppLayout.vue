@@ -26,6 +26,10 @@ const switchToTeam = (team) => {
 const logout = () => {
   router.post(route('logout'));
 };
+
+const onclick = () => {
+  window.open('https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/graphql-playground', '_blank')
+}
 </script>
 
 <template>
@@ -60,8 +64,17 @@ const logout = () => {
                     <v-icon icon="mdi-fullscreen"/>
                   </NavLink>
                 </NavLink>
+                <NavLink :href="route('jqueryui')" :active="route().current('jqueryui')">
+                  JQueryUI
+                </NavLink>
+                <NavLink :href="route('map')" :active="route().current('map')">
+                  Map
+                </NavLink>
                 <NavLink :href="route('articles.index')" :active="route().current('articles.*')">
                   Articles
+                </NavLink>
+                <NavLink @click="onclick()">
+                  Graphql<v-icon icon="mdi-fullscreen"/>
                 </NavLink>
               </div>
             </div>
@@ -220,6 +233,26 @@ const logout = () => {
           <div class="pt-2 pb-3 space-y-1">
             <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
               Dashboard
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('dashboard-dc', {data: 'covid19-data-2021-02-28'})"
+                               :active="route().current('dashboard-dc')">
+              Dashboard-Dc
+              <!-- Dashboard-Dc Public URL FullScreen Version -->
+              <NavLink :href="route('dashboard-dc-pub', {data: 'covid19-data-2021-02-28'})">
+                <v-icon icon="mdi-fullscreen"/>
+              </NavLink>
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('jqueryui')" :active="route().current('jqueryui')">
+              JQueryUI
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('map')" :active="route().current('map')">
+              Map
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('articles.index')" :active="route().current('articles.*')">
+              Articles
+            </ResponsiveNavLink>
+            <ResponsiveNavLink @click="onclick()">
+              Graphql<v-icon icon="mdi-fullscreen"/>
             </ResponsiveNavLink>
           </div>
 

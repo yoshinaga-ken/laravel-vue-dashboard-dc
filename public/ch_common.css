@@ -1,0 +1,142 @@
+/*
+ *
+ */
+
+.fbred{ color:red;font-weight:bold; }
+.fbgreen{ color:green;font-weight:bold; }
+.fbblue { color:blue;font-weight:bold; }
+.fbdblue { color:#00008b;font-weight:bold; }
+.fbyellow{ color:yellow;font-weight:bold; }
+.fbblack{ color:black;font-weight:bold; }
+
+.fbd1red  { border: 1px red   solid !important; }
+.fbd1green{ border: 1px green solid !important; }
+.fbd1blue { border: 1px blue  solid !important; }
+.fbd2red  { border: 2px red   solid !important; }
+.fbd2green{ border: 2px green solid !important; }
+.fbd2blue { border: 2px blue  solid !important; }
+
+
+.fred{ color:red }
+.fgreen{ color:green }
+.fblue { color:blue }
+.fdblue { color:#00008b }
+.fyellow{ color:yellow }
+.fblack{ color:black }
+
+.sunday { color: #FF4040; }
+.saturday { color: blue;  }
+.holiday { color: red; }
+
+
+/* ===========================================================================
+ jQueryUI (version: v1.12.0)
+=========================================================================== */
+
+/* jQueryUI datepicker
+----------------------------------*/
+table.ui-datepicker-calendar tbody td.ui-datepicker-week-end a.ui-state-default {
+    color: #4040FF;
+}
+table.ui-datepicker-calendar tbody td:first-child a.ui-state-default{
+    color: #FF4040;
+    font-weight:bold;
+}
+.sunday .ui-state-default {
+  color: #FF4040;
+}
+.saturday .ui-state-default {
+  color: blue;
+  font-weight:bold;
+}
+.holiday .ui-state-default {
+  color: red !important;
+}
+
+.sun {
+  color: #FF4040;
+}
+.sat {
+  color: blue;
+  font-weight:bold;
+}
+.hol {
+  color: red !important;
+}
+
+/* jQueryUI dialog
+----------------------------------*/
+
+/* jquery-dialogextend */
+.ui-dialog-titlebar-buttonpane {
+  .ui-dialog-titlebar-collapse,
+  .ui-dialog-titlebar-maximize,
+  .ui-dialog-titlebar-restore {
+    width: 2.2em !important;
+    height: 1.8em !important;
+    margin-right: 3px !important;
+  }
+
+  .ui-dialog-titlebar-collapse span,
+  .ui-dialog-titlebar-maximize span,
+  .ui-dialog-titlebar-restore span {
+    width: 2.2em;
+    height: 1.8em;
+  }
+}
+
+/* jQueryUI button
+----------------------------------*/
+
+
+/* jQueryUI xxx
+----------------------------------*/
+
+
+/* ===========================================================================
+  DataTables
+=========================================================================== */
+
+/* ソートされたセルのクラス */
+.sorting_1 {
+    background-color: rgba(233,233,255,0.3) !important;
+}
+.sorting_2 {
+    background-color: rgba(192,192,233,0.3) !important;
+}
+.sorting_3 {
+    background-color: rgba(160,160,192,0.3) !important;
+}
+.sorting_4 {
+    background-color: rgba(128,128,160,0.3) !important;
+}
+
+/* ===========================================================================
+  TinyMCE
+=========================================================================== */
+
+
+/* ===========================================================================
+
+=========================================================================== */
+
+/* Hohidays */
+.col_sat {
+    color: #007FFF;
+}
+.col_sun {
+    color: #FF0000;
+}
+.col_hol {
+    color: #F00000;
+}
+
+.clearfix
+{
+	zoom:1;
+}
+
+.clearfix:after
+{
+	content:''; display:block; clear:both; overflow:hidden;
+}

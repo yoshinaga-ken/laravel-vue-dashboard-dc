@@ -9,6 +9,12 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::post('/files', function (Request $request) {
+    return file_get_contents(public_path('data/api-files.json'));
+})
+->name('api.files')//->middleware('auth:sanctum')
+;
+
 Route::middleware([
     'auth:sanctum',
 ])->group(function () {
