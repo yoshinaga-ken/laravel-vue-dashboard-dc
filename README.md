@@ -2,7 +2,7 @@
 A template project for an admin panel with a dashboard using 📊dimensional charts, implemented with laravel and vue.
 - [Live demo](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=covid19-data-2021-02-28)
 
-[![img.png](doc/img/dashboard-covid19.png)](https://sakanaclub.xsrv.jp/dc/covid19/data=test-article-likehttps://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=covid19-data-2021-02-28)
+[![img.png](doc/img/dashboard-covid19.png)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=covid19-data-2021-02-28)
 - [Dimensional chart](http://dc-js.github.io/dc.js/) can be switched and compared with one click, making it easy to analyze in multiple dimensions.
 ![image](doc/img/covid19-dc-demo-v1.gif)
 
@@ -17,14 +17,14 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
         <div style="display: flex; gap: 10px; text-align: center;">
           <div>
             <a href="https://sakanaclub.xsrv.jp/dc/covid19/data=covid19-data-2021-02-28&layout=default">
-              <div>📊Chart</div>
+              <div>📊Chart mode</div>
               <img src="doc/img/dashboard-mode-chart.png" alt="Chart Image">
             </a>
           </div>
           <div>
             <a href="https://sakanaclub.xsrv.jp/dc/covid19/data=ja-quake-noto-safety&layout=gmap">
               <div>
-                  <img src="public/img/google-map-48.png" width="20">GoogleMap
+                  <img src="public/img/google-map-48.png" width="20">GoogleMap mode
               </div>
               <img src="doc/img/dashboard-mode-gmap.png" alt="Google Map Image">
             </a>
@@ -32,7 +32,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
           <div>
             <a href="https://sakanaclub.xsrv.jp/dc/covid19/data=ja-quake-noto-safety&layout=sview">
               <div>
-                  <img src="public/img/icons8-street-view-60.png" width="20">StreetView
+                  <img src="public/img/icons8-street-view-60.png" width="20">StreetView mode
               </div>
               <img src="doc/img/dashboard-mode-sview.png" alt="Street View Image">
             </a>
@@ -40,7 +40,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
           <div>
             <a href="https://sakanaclub.xsrv.jp/dc/covid19/data=game-fc&layout=tube">
               <div>
-                <img src="public/img/yutube.gif" width="20">YouTube
+                <img src="public/img/yutube.gif" width="20">YouTube mode
               </div>
               <img src="doc/img/dashboard-mode-tube.png" alt="YouTube Image">
             </a>
@@ -208,3 +208,4 @@ e2e$ npx playwright test
 
 ## Related Repos
 - [covid19-dc](https://github.com/yoshinaga-ken/covid19-dc)
+- [nuxt-ui-pro-dashboard-dc](https://github.com/yoshinaga-ken/nuxt-ui-pro-dashboard-dc)
