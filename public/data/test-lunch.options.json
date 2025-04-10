@@ -1,6 +1,7 @@
 {
   "dataType": 0,
   "title": "コンビニ お弁当 販売数",
+  "isMakeAutocompleteData": true,
   "chartMap_isShow": "1",
   "chartAge_unit": "null",
   "chartGMap": {},
@@ -16,7 +17,11 @@
   "chartSeason": {},
   "chartWeek": {},
   "chartSex": {
-    "unit": null
+    "unit": [
+      "不明",
+      "♂男",
+      "♀女"
+    ]
   },
   "chartAge": {
     "unit": null

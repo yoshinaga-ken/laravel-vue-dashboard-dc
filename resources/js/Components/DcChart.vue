@@ -681,9 +681,11 @@
               <table id="tbl_ana" border="1" bordercolor="#b0b0b0" style="float:left;">
                 <caption class="bg-theme-col">第N波</caption>
                 <thead>
-                <th><span class="ui-icon ui-icon-window"></span>左ウインドウ</th>
-                <th></th>
-                <th><span class="ui-icon ui-icon-window"></span>右ウィンドウ</th>
+                <tr>
+                  <th><span class="ui-icon ui-icon-window"></span>左ウインドウ</th>
+                  <th></th>
+                  <th><span class="ui-icon ui-icon-window"></span>右ウィンドウ</th>
+                </tr>
                 </thead>
                 <tbody>
                 <tr>
@@ -772,9 +774,11 @@
               <table id="tbl_ana" border="1" bordercolor="#b0b0b0">
                 <caption class="bg-theme-col">地域</caption>
                 <thead>
-                <th><span class="ui-icon ui-icon-window"></span>左ウインドウ</th>
-                <th></th>
-                <th><span class="ui-icon ui-icon-window"></span>右ウィンドウ</th>
+                <tr>
+                  <th><span class="ui-icon ui-icon-window"></span>左ウインドウ</th>
+                  <th></th>
+                  <th><span class="ui-icon ui-icon-window"></span>右ウィンドウ</th>
+                </tr>
                 </thead>
                 <tbody>
                 <tr>
@@ -840,9 +844,11 @@
               <table id="tbl_ana" border="1" bordercolor="#b0b0b0">
                 <caption class="bg-theme-col">職業、その他</caption>
                 <thead>
-                <th><span class="ui-icon ui-icon-window"></span>左ウインドウ</th>
-                <th></th>
-                <th><span class="ui-icon ui-icon-window"></span>右ウィンドウ</th>
+                <tr>
+                  <th><span class="ui-icon ui-icon-window"></span>左ウインドウ</th>
+                  <th></th>
+                  <th><span class="ui-icon ui-icon-window"></span>右ウィンドウ</th>
+                </tr>
                 </thead>
                 <tbody>
                 <tr>
@@ -1746,17 +1752,14 @@ colorbrewer.Set2[8][7] = colorbrewer.Set1[8][6];//Set3[12][8]:gray-> light gold
 const props = defineProps({
   dataPath: {
     type: String,
-    required: true,
     default: '/data/'
   },
   data: {
     type: String,
-    required: true,
     default: 'covid19-data-2021-02-28.csv'
   },
   selectableData: {
     type: Object,
-    required: true,
     default: () => ({
       'covid19-japan.jpg': 'covid19-data-2021-02-28.csv',
       'food-ramen.jpg': 'food-ramen.csv',
@@ -10378,7 +10381,7 @@ image.pl {
 
 .btn_on {
   color: white !important;
-  background: #0075FF !important;;
+  background: #0075FF !important;
   box-shadow: 0 -1px #a2a2a2;
   padding: 0 1px 0 1px;
 }
@@ -10820,11 +10823,11 @@ table.dataTable thead th div.DataTables_sort_wrapper label * {
   }
 
   .dataTables_scroll tr.odd td {
-    background: var(--bg-theme-col) !important;;
+    background: var(--bg-theme-col) !important;
   }
 
   .dataTables_scroll tr.even td {
-    background: var(--bg-theme-col2) !important;;
+    background: var(--bg-theme-col2) !important;
   }
 
   /*.c1000 a,*/

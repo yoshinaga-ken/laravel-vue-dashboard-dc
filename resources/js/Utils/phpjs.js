@@ -582,6 +582,7 @@ export function url_remove_param(uri, params) {
   let parse_url = php_parse_url(uri);
   let out = {};
   php_parse_str(parse_url['query'], out);
+  delete out.undefined;
   for (var i = 0; i < params.length; i++) {
     delete out[params[i]];
   }

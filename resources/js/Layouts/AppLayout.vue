@@ -28,7 +28,7 @@ const logout = () => {
 };
 
 const onclick = () => {
-  window.open('https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/graphql-playground', '_blank')
+  window.open('/graphql-playground', '_blank')
 }
 </script>
 
@@ -63,12 +63,6 @@ const onclick = () => {
                   <NavLink :href="route('dashboard-dc-pub', {data: 'covid19-data-2021-02-28'})">
                     <v-icon icon="mdi-fullscreen"/>
                   </NavLink>
-                </NavLink>
-                <NavLink :href="route('jqueryui')" :active="route().current('jqueryui')">
-                  JQueryUI
-                </NavLink>
-                <NavLink :href="route('map')" :active="route().current('map')">
-                  Map
                 </NavLink>
                 <NavLink :href="route('articles.index')" :active="route().current('articles.*')">
                   Articles
@@ -241,12 +235,6 @@ const onclick = () => {
               <NavLink :href="route('dashboard-dc-pub', {data: 'covid19-data-2021-02-28'})">
                 <v-icon icon="mdi-fullscreen"/>
               </NavLink>
-            </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('jqueryui')" :active="route().current('jqueryui')">
-              JQueryUI
-            </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('map')" :active="route().current('map')">
-              Map
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('articles.index')" :active="route().current('articles.*')">
               Articles
