@@ -18,7 +18,7 @@
         <!-- DC_PANEL ToolbarMain -->
         <div id="toolbar_main">
 
-<!--          <FilerDialogButton :is-show-img="!isSp" :is-tooltip="!isSp"/>-->
+          <FileSelectMenu :data-path="dataPath" :data="selectableData"/>
 
           <i class="fa fa-filter fa-icon"></i>
           <input type="search" id="input-search" autocomplete="off"
@@ -981,7 +981,9 @@ import 'virtual-keyboard/dist/js/jquery.keyboard.min.js';
 // Components
 import YoutubeVidInput from "@/Components/YoutubeVidInput.vue";
 import GoogleMap from "@/Components/GoogleMap.vue";
+import Covid19PrefectureDatatable from "@/Components/Covid19PrefectureDatatable.vue";
 // import FilerDialogButton from "@/Components/FilerDialogButton.vue";
+import FileSelectMenu from "@/Components/FileSelectMenu.vue";
 
 import {
   PREFECTURES,
@@ -1026,7 +1028,6 @@ import {
   loadScriptJQueryUIDatepickerJa,
   loadScriptVectormap,
 } from '@/Utils/utils.js';
-import Covid19PrefectureDatatable from "@/Components/Covid19PrefectureDatatable.vue";
 
 const BASE = import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT;
 const G_IS_LOCAL = import.meta.env.DEV;
