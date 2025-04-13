@@ -15,8 +15,8 @@ class TeamSeeder extends Seeder
         if ($isRefresh) {
             DB::table('team_user')->truncate();
         }
-        $this->assignUsersToTeams();
         $this->makeTeamUser();
+        $this->assignUsersToTeams();
     }
 
     /**
@@ -24,7 +24,7 @@ class TeamSeeder extends Seeder
      */
     public function assignUsersToTeams(): void
     {
-        // 既存のチームに5~20人のユーザーをランダムに所属させる
+        // 既存のチームに5~10人のユーザーをランダムに所属させる
         Team::all()->each(function ($team) {
             $memberCount = rand(5, 10);
             $teamMembers = User::where('id', '!=', $team->user_id)
@@ -46,18 +46,18 @@ class TeamSeeder extends Seeder
 
     public function makeTeamUser(): void
     {
-        // 各ユーザーに0~2件のチームを作成
+        // 各ユーザーに5%の確率で1~2件のチームを作成
         User::all()->each(function ($user) {
-            $teamCount = rand(0, 2);
-            for ($i = 0; $i < $teamCount; $i++) {
-                $team = Team::factory()->create([
-                    'user_id' => $user->id,
-                    'name' => "{$user->name}'s Team #{$i}",
-                    'personal_team' => false,
-                ]);
-
-                // 新規作成したチームに5~20人のユーザーをランダムに所属させる
-                $this->assignUsersToTeams();
+            $isTestUser = $user->name === env('TEST_USER_NAME', 'test');
+            if (rand(1, 100) <= 5 || $isTestUser) { // 5%の確率
+                $teamCount = rand(1, 2); // 1~2件のチームを作成
+                for ($i = 0; $i < $teamCount; $i++) {
+                    Team::factory()->create([
+                        'user_id' => $user->id,
+                        'name' => "{$user->name}'s Team #{$i}",
+                        'personal_team' => false,
+                    ]);
+                }
             }
         });
     }
