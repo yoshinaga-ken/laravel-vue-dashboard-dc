@@ -18,6 +18,6 @@ class UserSeeder extends Seeder
                 'email' => env('TEST_USER_EMAIL', 'test@example.com'),
             ]);
         }
-        User::factory(10)->withPersonalTeam()->create();
+        User::factory(50)->withPersonalTeam()->create();
     }
 }

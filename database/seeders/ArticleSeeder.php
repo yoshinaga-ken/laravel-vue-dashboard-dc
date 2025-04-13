@@ -14,7 +14,7 @@ class ArticleSeeder extends Seeder
     public function run(): void
     {
         // ダミーの記事をN件作る
-        Article::factory(20)->create();
+        Article::factory(100)->create();
 
         Sleep(1);
 

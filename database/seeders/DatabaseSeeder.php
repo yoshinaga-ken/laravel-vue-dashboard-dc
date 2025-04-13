@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             TagSeeder::class,
             LikeSeeder::class,
             FollowerSeeder::class,
+            TeamSeeder::class,
         ]);
     }
 }
