@@ -16,6 +16,7 @@ type User {
   ownedTeams: [Team!]! @hasMany
   teams: [Team!]! @belongsToMany
   allTeams: [Team!]! @method
+  membership: Membership
 }
 
 type Article
@@ -33,6 +34,12 @@ type Tag {
   name: String!
   articles: [Article!]! @belongsToMany(type: PAGINATOR)
   articles_count: Int @count(relation: "articles")
+  pivot: ArticleTag
+}
+
+type ArticleTag {
+  created_at: DateTime!
+  updated_at: DateTime!
 }
 
 type Team {
@@ -42,6 +49,15 @@ type Team {
   owner: User @belongsTo
   users: [User!]! @belongsToMany(type: PAGINATOR)
   teamInvitations: [TeamInvitation!]! @hasMany
+  membership: Membership
+}
+
+type Membership
+@model (model: "App\\Models\\Membership")
+{
+  role: String
+  created_at: DateTime!
+  updated_at: DateTime!
 }
 
 type TeamInvitation
@@ -78,7 +94,7 @@ input FilterTeamInput {
 }
 
 type Query
-@guard(with: ["sanctum"])
+#@guard(with: ["sanctum"])
 {
   loginUser: User @auth(guard: "sanctum")
 
