@@ -69,8 +69,10 @@ test('users can delete their own articles', function () {
 });
 
 test('users cannot delete an article they do not own', function () {
-    $this->actingAs(User::factory()->withPersonalTeam()->create());
-    $article = Article::factory()->create();
+    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+
+    $otherUser = User::factory()->withPersonalTeam()->create();
+    $article = Article::factory()->create(['user_id' => $otherUser->id]);
 
     $this->delete("/articles/{$article->id}")
         ->assertForbidden();
