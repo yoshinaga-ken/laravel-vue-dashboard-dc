@@ -17,8 +17,11 @@ class ArticleFactory extends Factory
      */
     public function definition(): array
     {
+        $user = User::exists()
+            ? User::inRandomOrder()->first()
+            : User::factory()->create();
         return [
-            'user_id' => User::inRandomOrder()->first()->id,
+            'user_id' => $user->id,
             'title' => fake()->sentence(),
             'body' => fake()->text()
         ];

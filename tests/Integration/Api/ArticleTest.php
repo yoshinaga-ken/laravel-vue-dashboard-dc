@@ -5,14 +5,15 @@ use App\Models\Article;
 use App\Models\Tag;
 use App\Models\User;
 use Database\Factories\ArticleFactory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Sanctum\Sanctum;
 
 use Tests\TestCase;
 
 uses(
     TestCase::class,
-    RefreshDatabase::class,
+//    RefreshDatabase::class,
+    DatabaseMigrations::class
 );
 
 beforeEach(fn() => $this->seed());
@@ -72,18 +73,24 @@ it('api.articles.index - param:search', function () {
     $user = User::factory()->create();
     Sanctum::actingAs($user);
 
-    // searchキーワードでの検索結果が正しい - 存在しない
-    $j = $this->getJson(route('api.articles.index', ['search' => 'Keywords not in the title']));
+    // タイトル検索の結果が正しい - 存在しない
+    $j = $this->getJson(route('api.articles.index', ['title' => 'Keywords not in the title']));
     $j->assertJsonCount(0);
 
-    // searchキーワードでの検索結果が正しい - 存在する
+    // タイトル検索の結果が正しい - 存在する
     /** @var Article $article */
     $article = Article::factory()->create(['title' => 'Unique title']);
-    $j = $this->getJson(route('api.articles.index', ['search' => $article->title]));
+    $j = $this->getJson(route('api.articles.index', ['title' => $article->title]));
     $j->assertJsonCount(1);
 
-    // searchキーワードでの検索結果が正しい - 全件取得
-    $j = $this->getJson(route('api.articles.index', ['search' => '']));
+    // タグ検索の結果が正しい
+    $tag = Tag::factory()->create(['name' => 'unique-tag']);
+    $article->tags()->attach($tag->id);
+    $j = $this->getJson(route('api.articles.index', ['tags' => [$tag->name]]));
+    $j->assertJsonCount(1);
+
+    // 全件取得
+    $j = $this->getJson(route('api.articles.index', ['title' => '', 'tags' => []]));
     $j->assertJsonCount(Article::query()->count());
 });
 

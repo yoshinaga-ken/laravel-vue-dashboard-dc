@@ -159,7 +159,7 @@ pnpm run build
 
 ```bash
 # Backend test
-vendor/bin/pest -p
+vendor/bin/pest
 
 # Frontend vitest
 pnpm test
