@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { nextTick, ref, computed } from 'vue'
-import { ElTag, ElButton, ElAutocomplete, ElIcon } from 'element-plus'
+import { ElTag, ElButton, ElAutocomplete } from 'element-plus'
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
+import type { FilterTagInput, TagPaginator } from '@/Types/types-graphql'
 
 const props = defineProps({
   disabled: Boolean,
@@ -27,7 +28,7 @@ const dynamicTags = defineModel<string[]>({
 const inputVisible = ref(props.inputVisible)
 const inputRef = ref<InstanceType<typeof ElAutocomplete> | null>(null)
 
-const { result } = useQuery(gql`
+const { result } = useQuery<{ tags: TagPaginator }>(gql`
   query FilterTags($input: FilterTagInput) {
     tags(input: $input, first: 512) {
       data {
@@ -39,13 +40,13 @@ const { result } = useQuery(gql`
   variables: {
     input: {
       name: ''
-    }
+    } satisfies FilterTagInput
   }
 })
 
 const availableTags = computed(() => {
   if (!result.value?.tags?.data) return []
-  return result.value.tags.data.map((tag: any) => tag.name)
+  return result.value.tags.data.map((tag) => tag.name)
 })
 
 const handleClose = (tag: string) => {
