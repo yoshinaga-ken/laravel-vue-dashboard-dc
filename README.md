@@ -80,7 +80,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
 
 ## Technology Stack
 - backend
-  - [Laravel 11](https://laravel.com/) 
+  - [Laravel 12](https://laravel.com/) 
     - [Eloquent ORM](https://laravel.com/docs/12.x/eloquent-relationships)
   - [inertiajs](https://inertiajs.com/)
   - RestFul API
@@ -96,7 +96,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
     - [vuetify](https://vuetifyjs.com/en/)
     - [element-plus](https://element-plus.org/en-US/)
   - [GraphQL](https://graphql.org/) with [Vue Apollo](https://apollo.vuejs.org/)
-  - [Google Maps Api](https://developers.google.com/maps/documentation/javascript/reference?hl=en)
+  - [Google Maps API](https://developers.google.com/maps/documentation/javascript/reference?hl=en)
   - [YouTube API](https://developers.google.com/youtube/v3/docs?hl=en)
   - test 
     - vitest
