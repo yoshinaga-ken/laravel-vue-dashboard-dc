@@ -172,7 +172,7 @@ const onClickArticleDelete = (article: IndexArticle) => {
     </div>
 
     <div class="text-gray-800 dark:text-gray-200 mx-3 px-6 rounded-md shadow overflow-x-auto">
-      <table class="w-full whitespace-nowrap">
+      <table class="w-full　table-auto">
         <thead>
         <tr class="text-left font-bold">
           <th>Id</th>
