@@ -94,7 +94,7 @@ input FilterTeamInput {
 }
 
 type Query
-#@guard(with: ["sanctum"])
+@guard(with: ["sanctum"])
 {
   loginUser: User @auth(guard: "sanctum")
 
