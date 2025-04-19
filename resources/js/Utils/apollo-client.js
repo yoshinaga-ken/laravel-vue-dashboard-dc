@@ -4,14 +4,14 @@ import {usePage} from "@inertiajs/vue3";
 
 
 const httpLink = createHttpLink({
-  uri: (import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT) + 'graphql',
+  uri: import.meta.env.VITE_APP_URL + (import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT) + 'graphql',
 });
 
 const authLink = setContext((_, {headers}) => {
   let token = localStorage.getItem('token');
   if (!token) {
     const page = usePage()
-    token = page.props.apiToken
+    token = page.props?.apiToken ?? import.meta.env.VITE_API_TOKEN;
   }
   return {
     headers: {
