@@ -87,7 +87,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - [GraphQL](https://graphql.org/) with [lighthouse](https://lighthouse-php.com/)
   - Authentication with [sanctum](https://laravel.com/docs/12.x/sanctum)
   - test
-    - pest
+    - [pest](https://pestphp.com/)
 - frontend
   - [vue 3](https://vuejs.org/)
   - [tailwindcss](https://tailwindcss.com/)
@@ -99,8 +99,9 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - [Google Maps API](https://developers.google.com/maps/documentation/javascript/reference?hl=en)
   - [YouTube API](https://developers.google.com/youtube/v3/docs?hl=en)
   - test 
-    - vitest
+    - [vitest](https://vitest.dev/)
     - e2e with [playwright](https://playwright.dev/)
+  - [Storybook 8](https://storybook.js.org/)
 
 ## Database
 - [mariadb-schema.sql](database/schema/mariadb-schema.sql)
@@ -119,6 +120,7 @@ php artisan serve
 pnpm run dev
 
 ```
+Server running on <http://127.0.0.1:8000>
 
 ## Setup
 
@@ -152,7 +154,7 @@ Build a production-ready Vue.js frontend application
 ```bash
 pnpm run build
 
-# output: public/build/
+# output directory: ./public/build/
 ```
 
 ## Running tests
@@ -169,6 +171,19 @@ $ cd e2e
 e2e$ npx playwright test
 
 ```
+
+## Storybook
+```bash
+# Build and launch storybook to see the components in the browser
+pnpm storybook
+
+# Build storybook for production
+pnpm build-storybook
+# Output directory: ./storybook-static/
+
+````
+Storybook running on <http://localhost:6007/>
+
 <a id="link-dc-demo"></a>
 ## 📊Dimensional chart demo for other fields
 - [List of missing persons due to Noto Peninsula earthquake @2024/1/1](https://sakanaclub.xsrv.jp/dc/covid19/data=quake-noto-safety.csv)
