@@ -1832,17 +1832,19 @@ watch(() => pnl.date.stack_type, (v) => {
 watch(isDark, (newVal) => {
   const head = document.querySelector('#chart_map .ui-widget-header');
   if (newVal) {
-    document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/dark-hive/jquery-ui.min.css');
     head?.classList.remove('light');
     document.body.style.backgroundColor = '#1F2937';
     document.body.classList.add('dark');
+    document.documentElement.classList.add('dark');
+    document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/dark-hive/jquery-ui.min.css');
     IMG_NO = '/img/noimage-dark.png';
     localStorage.theme = 'dark';
   } else {
-    document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/blitzer/jquery-ui.min.css');
     head?.classList.add('light');
     document.body.style.backgroundColor = '#F0F0F0';
     document.body.classList.remove('dark');
+    document.documentElement.classList.remove('dark');
+    document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/blitzer/jquery-ui.min.css');
     IMG_NO = '/img/noimage.png';
     localStorage.theme = 'light';
   }
