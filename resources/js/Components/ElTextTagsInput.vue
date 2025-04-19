@@ -6,7 +6,10 @@ import gql from 'graphql-tag'
 import type { FilterTagInput, TagPaginator } from '@/Types/types-graphql'
 
 const props = defineProps({
-  disabled: Boolean,
+  disabled: {
+    type: Boolean,
+    default: false
+  },
   inputVisible: {
     type: Boolean,
     default: false
@@ -46,7 +49,9 @@ const { result } = useQuery<{ tags: TagPaginator }>(gql`
 
 const availableTags = computed(() => {
   if (!result.value?.tags?.data) return []
-  return result.value.tags.data.map((tag) => tag.name)
+  return result.value.tags.data
+    .filter(tag => tag && typeof tag.name === 'string')
+    .map(tag => tag.name)
 })
 
 const handleClose = (tag: string) => {
