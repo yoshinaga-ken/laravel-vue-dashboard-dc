@@ -73,4 +73,7 @@ const handleInputConfirm = () => {
 .v-autocomplete #tags-messages {
   display: none
 }
+.v-autocomplete input {
+  @apply border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md p-2;
+}
 </style>
