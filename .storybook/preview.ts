@@ -7,7 +7,7 @@ import { apolloClient } from '../resources/js/Utils/apollo-client';
 import '../resources/css/app.css';
 
 // Vuetify
-import 'vuetify/styles';
+// import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
@@ -67,7 +67,7 @@ const preview: Preview = {
         provide(DefaultApolloClient, apolloClient);
         return {};
       },
-      template: '<v-app><story /></v-app>',
+      template: '<div><story /></div>',
     }),
   ],
 };
