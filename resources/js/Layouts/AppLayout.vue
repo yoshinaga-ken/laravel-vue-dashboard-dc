@@ -27,7 +27,11 @@ const logout = () => {
   router.post(route('logout'));
 };
 
-const onclick = () => {
+const onclickStoryBook = () => {
+  window.open('http://localhost:6007/', '_blank')
+}
+
+const onclickGraphQL = () => {
   window.open('/graphql-playground', '_blank')
 }
 </script>
@@ -58,17 +62,26 @@ const onclick = () => {
                 </NavLink>
                 <NavLink :href="route('dashboard-dc', {data: 'covid19-data-2021-02-28'})"
                          :active="route().current('dashboard-dc')">
-                  Dashboard-Dc
+                  📊Dashboard-Dc
                   <!-- Dashboard-Dc Public URL FullScreen Version -->
                   <NavLink :href="route('dashboard-dc-pub', {data: 'covid19-data-2021-02-28'})">
                     <v-icon icon="mdi-fullscreen"/>
                   </NavLink>
                 </NavLink>
                 <NavLink :href="route('articles.index')" :active="route().current('articles.*')">
+                  📝Articles
                   Articles
                 </NavLink>
-                <NavLink @click="onclick()">
-                  Graphql<v-icon icon="mdi-fullscreen"/>
+                <NavLink @click="onclickStoryBook()">
+                  <img src="/img/storybook-icon.svg" alt="StoryBook Logo"
+                       style="width: 1.3em; height: 1.3em; vertical-align: middle;">
+                  StoryBook
+                  <v-icon icon="mdi-fullscreen"/>
+                </NavLink>
+                <NavLink @click="onclickGraphQL()">
+                  <img src="https://graphql.org/img/logo.svg" alt="GraphQL Logo" style="width: 1.3em; height: 1.3em; vertical-align: middle;">
+                  GraphQL
+                  <v-icon icon="mdi-fullscreen"/>
                 </NavLink>
               </div>
             </div>
@@ -233,17 +246,25 @@ const onclick = () => {
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('dashboard-dc', {data: 'covid19-data-2021-02-28'})"
                                :active="route().current('dashboard-dc')">
-              Dashboard-Dc
+              📊Dashboard-Dc
               <!-- Dashboard-Dc Public URL FullScreen Version -->
               <NavLink :href="route('dashboard-dc-pub', {data: 'covid19-data-2021-02-28'})">
                 <v-icon icon="mdi-fullscreen"/>
               </NavLink>
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('articles.index')" :active="route().current('articles.*')">
-              Articles
+              📝Articles
             </ResponsiveNavLink>
-            <ResponsiveNavLink @click="onclick()">
-              Graphql<v-icon icon="mdi-fullscreen"/>
+            <ResponsiveNavLink @click="onclickStoryBook()">
+              <img src="/img/storybook-icon.svg" alt="StoryBook Logo"
+                   style="width: 1.3em; height: 1.3em; vertical-align: middle;">
+              StoryBook
+              <v-icon icon="mdi-fullscreen"/>
+            </ResponsiveNavLink>
+            <ResponsiveNavLink @click="onclickGraphQL()">
+              <img src="https://graphql.org/img/logo.svg" alt="GraphQL Logo" style="width: 1.3em; height: 1.3em; vertical-align: middle;">
+              GraphQL
+              <v-icon icon="mdi-fullscreen"/>
             </ResponsiveNavLink>
           </div>
 
