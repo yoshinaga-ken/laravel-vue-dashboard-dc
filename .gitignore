@@ -5,6 +5,7 @@
 /storage/*.key
 /storage/pail
 /storage/debugbar
+/storybook-static
 /vendor
 .env
 .env.backup
