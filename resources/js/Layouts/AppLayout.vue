@@ -70,7 +70,6 @@ const onclickGraphQL = () => {
                 </NavLink>
                 <NavLink :href="route('articles.index')" :active="route().current('articles.*')">
                   📝Articles
-                  Articles
                 </NavLink>
                 <NavLink @click="onclickStoryBook()">
                   <img src="/img/storybook-icon.svg" alt="StoryBook Logo"
