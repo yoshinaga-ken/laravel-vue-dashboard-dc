@@ -103,12 +103,70 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
     - e2e with [playwright](https://playwright.dev/)
   - [Storybook 8](https://storybook.js.org/)
 
+## DeepWiki explanation
+
+A detailed explanation of the contents of this repository can be found on the DeepWiki page:
+
+[Read this repository on DeepWiki](https://deepwiki.com/yoshinaga-ken/laravel-vue-dashboard-dc)
+
 ## Database
 - [mariadb-schema.sql](database/schema/mariadb-schema.sql)
-- ![er](doc/database/er-a5er.png)
+  ![er](doc/database/er-mwb.png)
 - [<img src="https://graphql.org/img/logo.svg" alt="GraphQL Logo" style="width: 1em; height: 1em; vertical-align: middle;">
 GraphQL schema](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/graphql-playground)
-- ![er-diagram](doc/database/er-diagram.svg)
+```mermaid
+erDiagram
+    users ||--o{ articles : hasMany
+    articles ||--o{ article_tag : belongToMany
+    tags ||--o{ article_tag : belongToMany
+    users ||--o{ likes : belongToMany
+    articles ||--o{ likes : belongToMany
+    users ||--o{ followers : belongToMany
+    teams ||--o{ team_user : belongToMany
+    users ||--o{ team_user : belongToMany
+    teams ||--o{ team_invitation : hasMany
+
+    users {
+        bigint id PK
+        varchar email
+    }
+    articles {
+        bigint id PK
+        bigint user_id FK
+    }
+    article_tag {
+        bigint id PK
+        bigint article_id FK
+        bigint tag_id FK
+    }
+    tags {
+        bigint id PK
+        varchar name
+    }
+    followers {
+        bigint id PK
+        bigint follower_id FK
+        bigint following_id FK
+    }
+    likes {
+        bigint id PK
+        bigint user_id FK
+        bigint article_id FK
+    }
+    team_user {
+        bigint id PK
+        bigint team_id FK
+        bigint user_id FK
+    }
+    teams {
+        bigint id PK
+    }
+    team_invitation {
+        bigint id PK
+        bigint team_id FK
+    }
+
+```
  
 ## Quick Start
 
@@ -182,12 +240,12 @@ pnpm build-storybook
 # Output directory: ./storybook-static/
 
 ````
-Storybook running on <http://localhost:6007/>
+Storybook running on <http://localhost:6007/> [🚀demo](https://sakanaclub.xsrv.jp/laravel-sports-hp/storybook-static/?path=/docs/configure-your-project--docs)
 
 <a id="link-dc-demo"></a>
 ## 📊Dimensional chart demo for other fields
-- [List of missing persons due to Noto Peninsula earthquake @2024/1/1](https://sakanaclub.xsrv.jp/dc/covid19/data=quake-noto-safety.csv)
-- [Tokyo gubernatorial election votes by candidate @2024/7/7](https://sakanaclub.xsrv.jp/dc/covid19/data=tokyo-gubernatorial-election.csv)
+- [List of missing persons due to Noto Peninsula earthquake @2024/1/1](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-quake-noto-safety.csv)
+- [Tokyo gubernatorial election votes by candidate @2024/7/7](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-tokyo-gubernatorial-election.csv)
 - 📺🎮Tv Game in Japan
   - home video game consoles 
     - [4th generation](https://sakanaclub.xsrv.jp/dc/covid19/data=game-gen4.csv)
