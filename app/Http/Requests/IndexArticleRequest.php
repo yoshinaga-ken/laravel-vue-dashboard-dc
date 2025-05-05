@@ -25,6 +25,10 @@ class IndexArticleRequest extends FormRequest
         return [
             'from' => 'integer|min:0',
             'to' => 'integer|gte:from',
+            'date_value' => 'nullable|date',
+            'date_operator' => 'nullable|in:<,<=,=,>=,>',
+            'likes_count' => 'nullable|integer|min:0',
+            'likes_operator' => 'nullable|in:<,<=,=,>=,>',
         ];
     }
 }

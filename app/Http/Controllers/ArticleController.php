@@ -29,11 +29,18 @@ class ArticleController extends Controller
 
         $search = [
             'title' => $request->input('title', ''),
-            'tags' => $request->input('tags', [])
+            'users' => $request->input('users', []),
+            'tags' => $request->input('tags', []),
+            'date_value' => $request->input('date_value'),
+            'date_operator' => $request->input('date_operator'),
+            'likes_count' => $request->input('likes_count'),
+            'likes_operator' => $request->input('likes_operator'),
+            'date_range_value' => $request->input('date_range_value'), // 追加：日付範囲検索パラメータ
         ];
+
         $user_id = $request->input('user_id','');
 
-        $sort = $request->input('sort', 'created_at');
+        $sort = $request->input('sort', 'updated_at');
         $order = $request->input('order', 'desc');
 
         $from = $request->input('from', 0);
