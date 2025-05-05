@@ -89,6 +89,12 @@ class Article extends Model
     {
         $title = $search['title'] ?? null;
         $tags = $search['tags'] ?? null;
+        $users = $search['users'] ?? null;
+        $date_value = $search['date_value'] ?? null;
+        $date_operator = $search['date_operator'] ?? null;
+        $likes_count = $search['likes_count'] ?? null;
+        $likes_operator = $search['likes_operator'] ?? null;
+        $date_range_value = $search['date_range_value'] ?? null; // 追加：日付範囲検索パラメータ
 
         if ($isTagsAnd) {
             $query->when($tags, function ($query) use ($tags) {
@@ -105,8 +111,34 @@ class Article extends Model
                 });
             });
         }
-        return $query->when($title, function ($query) use ($title) {
 
+        $query->when($users, function ($query) use ($users) {
+            $query->whereHas('user', function ($query) use ($users) {
+                $query->whereIn('name', $users);
+            });
+        });
+
+        // 日付範囲検索の実装
+        $query->when(!empty($date_range_value), function ($query) use ($date_range_value) {
+            $dates = explode(',', $date_range_value);
+            if (count($dates) === 2) {
+                $fromDate = $dates[0];
+                $toDate = $dates[1];
+                $query->whereBetween('updated_at', [$fromDate, $toDate]);
+            }
+        });
+
+        // 単一日付検索の条件（既存）
+        $query->when(!empty($date_value) && !empty($date_operator), function ($query) use ($date_value, $date_operator) {
+            $query->where('updated_at', $date_operator, $date_value);
+        });
+
+        $query->when(!empty($likes_count) && !empty($likes_operator), function ($query) use ($likes_count, $likes_operator) {
+            $query->withCount('likes')
+                  ->having('likes_count', $likes_operator, $likes_count);
+        });
+
+        return $query->when($title, function ($query) use ($title) {
             $query->where('title', 'like', "%{$title}%");
         });
     }
