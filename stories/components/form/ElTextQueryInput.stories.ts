@@ -46,7 +46,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // サンプルトークン定義
-export const sampleAvailableTokens = [
+const sampleAvailableTokens = [
   {
     type: 'user',
     icon: 'User',
