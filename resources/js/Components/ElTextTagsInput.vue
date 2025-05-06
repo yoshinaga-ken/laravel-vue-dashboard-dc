@@ -54,6 +54,10 @@ const availableTags = computed(() => {
     .map(tag => tag.name)
 })
 
+defineExpose({
+  availableTags
+})
+
 const handleClose = (tag: string) => {
   dynamicTags.value.splice(dynamicTags.value.indexOf(tag), 1)
 }

@@ -18,6 +18,8 @@ class UserResource extends JsonResource
             'id' => $this->getKey(),
             'name' => $this->name,
             'email' => $this->email,
+            'current_team_id' => $this->current_team_id,
+            'profile_photo_url' => $this->profile_photo_url,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'is_followed_by' => $this->isFollowedBy(),

@@ -3,6 +3,7 @@ export interface User {
   name: string,
   email: string,
   current_team_id: number,
+  profile_photo_url: string,
   created_at: string,
   updated_at: string,
   is_followed_by: boolean,

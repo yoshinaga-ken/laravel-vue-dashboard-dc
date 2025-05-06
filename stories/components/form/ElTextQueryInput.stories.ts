@@ -72,7 +72,7 @@ const sampleAvailableTokens = [
     type: 'tag-fw',
     // icon: 'CollectionTag',
     title: '🔖Tag (Framework) ',
-    tags: ['Laravel', 'Vue.js', 'React'],
+    tags: ['Laravel','Vue.js','React'],
     operators: ['='], // MEMO: 1つの場合operatorの入力がないタイプ
   },
   {
