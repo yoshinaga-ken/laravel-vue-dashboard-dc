@@ -205,6 +205,15 @@ const availableTokens = [
     operators: ['>=', '<=', '='],
   },
   {
+    type: 'week',
+    title: 'Week',
+    tags: 'Input',
+    tagsComponentOptions: { // @see [Input options](https://element-plus.org/en-US/component/input.html#input)
+      type: 'week', // @see [html input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types)
+    },
+    operators: ['='],
+  },
+  {
     type: 'object',
     icon: 'Setting',
     title: 'Object',

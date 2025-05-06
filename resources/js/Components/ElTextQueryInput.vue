@@ -356,11 +356,11 @@ const isDateRangePicker = computed(() => {
   return tokenDef?.tags === 'DatePicker' && tokenDef?.tagsComponentOptions?.type === 'daterange'
 })
 
-// 値が数値入力かどうかをチェック
-const isInputNumber = computed(() => {
+// 値が入力コンポーネントかどうかをチェック
+const isInputComponent = computed(() => {
   if (!currentTokenGroup.value) return false
   const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value?.key.type)
-  return tokenDef?.tags === 'InputNumber'
+  return typeof tokenDef?.tags === 'string' && tokenDef.tags.startsWith('Input')
 })
 
 // 日付の選択処理
@@ -1088,7 +1088,7 @@ const handleCustomTokenClose = (index: number) => {
 
       <!-- 編集モード: 値入力（数値） -->
       <ElInput
-        v-else-if="inputVisible && inputStep === 'value' && isInputNumber"
+        v-else-if="inputVisible && inputStep === 'value' && isInputComponent"
         ref="inputRef"
         v-model="inputValue"
         type="number"
