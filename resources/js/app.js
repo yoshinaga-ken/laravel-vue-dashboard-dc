@@ -9,7 +9,17 @@ import {ZiggyVue} from '../../vendor/tightenco/ziggy';
 // element-plus
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import 'element-plus/dist/index.css'
+import ElementPlus from 'element-plus'
 import 'animate.css'
+
+// element-plus言語設定の準備
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import en from 'element-plus/es/locale/lang/en'
+import ja from 'element-plus/es/locale/lang/ja'
+
+// Dayjsの言語設定のインポート
+import 'dayjs/locale/zh-cn'
+import 'dayjs/locale/ja'
 
 // vuetify
 // import 'vuetify/styles'
@@ -23,6 +33,15 @@ import {apolloClient} from './Utils/apollo-client.js';
 import {DefaultApolloClient} from "@vue/apollo-composable"
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+// APP_LOCALEに基づいて言語を設定
+const appLocale = import.meta.env.VITE_APP_LOCALE || 'en';
+const elementLocales = {
+  'zh-cn': zhCn,
+  'en': en,
+  'ja': ja
+};
+const elementLocale = elementLocales[appLocale] || en;
 
 const vuetify = createVuetify({
   components,
@@ -51,6 +70,9 @@ createInertiaApp({
       .use(ZiggyVue)
       // .use(apolloProvider)
       .use(vuetify)
+      .use(ElementPlus, {
+        locale: elementLocale,
+      })
       .mount(el);
 
     updateDarkModeClass();
