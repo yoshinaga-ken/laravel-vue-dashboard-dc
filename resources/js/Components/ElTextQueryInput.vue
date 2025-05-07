@@ -34,7 +34,7 @@ type TokenDefinition = {
   icon?: string
   title: string
   tagOptions?: TagOptions
-  tags: string[] | TagObject[] | 'DatePicker' | 'InputNumber'
+  tags: string[] | TagObject[] | 'DatePicker' | 'Input'
   tagsComponentOptions?: Record<string, any> // コンポーネントオプション用
   operators: string[]
 }
@@ -360,7 +360,7 @@ const isDateRangePicker = computed(() => {
 const isInputComponent = computed(() => {
   if (!currentTokenGroup.value) return false
   const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value?.key.type)
-  return typeof tokenDef?.tags === 'string' && tokenDef.tags.startsWith('Input')
+  return tokenDef?.tags === 'Input'
 })
 
 // 日付の選択処理
@@ -1092,7 +1092,6 @@ const handleCustomTokenClose = (index: number) => {
         v-else-if="inputVisible && inputStep === 'value' && isInputComponent"
         ref="inputRef"
         v-model="inputValue"
-        type="number"
         :placeholder="getCurrentPlaceholder"
         class="input-field"
         size="small"
