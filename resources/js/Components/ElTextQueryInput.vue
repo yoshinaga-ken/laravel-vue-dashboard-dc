@@ -404,8 +404,9 @@ const handleDateSelected = (value: Date | Date[] | string | null) => {
 const handleDatePickerEnter = (event: KeyboardEvent) => {
   if (event.key === 'Enter' && inputValue.value) {
     const isArray = Array.isArray(inputValue.value)
-    let values: Date[] = [inputValue.value[0], inputValue.value[1]]
+    let values: Date[]
     if (isArray) {
+      values = [inputValue.value[0], inputValue.value[1]]
       // From/To の判別
       const inputs = Array.from(event.target.parentElement.querySelectorAll('.el-range-input'));
       const index = inputs.indexOf(event.target);
