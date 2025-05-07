@@ -99,9 +99,10 @@ const sampleAvailableTokens = [
     type: 'likes',
     // icon: 'StarFilled',
     title: '♥️Likes',
-    tags: 'InputNumber',
+    tags: 'Input',
     tagsComponentOptions: { // @see [Input options](https://element-plus.org/en-US/component/input.html#input)
       min: 0,
+      type: 'number', // @see [html input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types)
     },
     operators: ['>=', '<=', '='],
   },
