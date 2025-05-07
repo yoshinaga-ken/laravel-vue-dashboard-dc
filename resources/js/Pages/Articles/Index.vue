@@ -235,7 +235,7 @@ const availableTokens = [
   },
 ];
 
-const { result, loading, error } = useQuery<{ users: UserPaginator }>(gql`
+const usersQuery = useQuery<{ users: UserPaginator }>(gql`
   query FilterUsers($input: FilterUserInput) {
     users(input: $input, first: 512) {
       data {
@@ -251,8 +251,8 @@ const { result, loading, error } = useQuery<{ users: UserPaginator }>(gql`
   }
 })
 
-watch([() => loading.value, () => result.value], ([isLoading, data]) => {
-  if (!isLoading && !error.value && data?.users?.data) {
+watch([() => usersQuery.loading.value, () => usersQuery.result.value], ([isLoading, data]) => {
+  if (!isLoading && !usersQuery.error.value && data?.users?.data) {
     const users = data.users.data.map(user => user.name)
     availableTokens[0].tags = users
     availableTokens[1].tags = users
