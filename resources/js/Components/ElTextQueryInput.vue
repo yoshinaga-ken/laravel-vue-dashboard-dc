@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, nextTick } from 'vue'
 import { ElTag, ElButton, ElInput, ElAutocomplete, ElDatePicker, ElIcon } from 'element-plus'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import * as ElementPlusIcons from '@element-plus/icons-vue'
 
 // トークンの型定義
@@ -34,7 +34,7 @@ type TokenDefinition = {
   icon?: string
   title: string
   tagOptions?: TagOptions
-  tags: string[] | TagObject[] | 'DatePicker' | 'InputNumber'
+  tags: string[] | TagObject[] | 'DatePicker' | 'Input'
   tagsComponentOptions?: Record<string, any> // コンポーネントオプション用
   operators: string[]
 }
@@ -330,7 +330,7 @@ const showInput = () => {
 
   inputVisibleState.value = true
   inputStep.value = 'key'
-  if(inputRef.value?.highlightedIndex) inputRef.value.highlightedIndex = 0
+  if (inputRef.value?.highlightedIndex) inputRef.value.highlightedIndex = 0
   currentTokenGroup.value = null
   editingTokenIndex.value = null
   inputValue.value = ''
@@ -356,11 +356,11 @@ const isDateRangePicker = computed(() => {
   return tokenDef?.tags === 'DatePicker' && tokenDef?.tagsComponentOptions?.type === 'daterange'
 })
 
-// 値が数値入力かどうかをチェック
-const isInputNumber = computed(() => {
+// 値が入力コンポーネントかどうかをチェック
+const isInputComponent = computed(() => {
   if (!currentTokenGroup.value) return false
   const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value?.key.type)
-  return tokenDef?.tags === 'InputNumber'
+  return tokenDef?.tags === 'Input'
 })
 
 // 日付の選択処理
@@ -371,9 +371,9 @@ const handleDateSelected = (value: Date | Date[] | string | null) => {
 
   // daterangeタイプの場合、配列を文字列に変換
   if (isDateRangePicker.value && Array.isArray(value)) {
-    formattedDate = value.map(date => moment(date).format('YYYY-MM-DD')).join(',')
+    formattedDate = value.map(date => dayjs(date).format('YYYY-MM-DD')).join(',')
   } else {
-    formattedDate = moment(value).format('YYYY-MM-DD')
+    formattedDate = dayjs(value).format('YYYY-MM-DD')
   }
 
   if (editingTokenIndex.value !== null) {
@@ -397,6 +397,31 @@ const handleDateSelected = (value: Date | Date[] | string | null) => {
 
     resetInputState()
     showInput()
+  }
+}
+
+// DatePicker用のkeydown.enterイベントハンドラを追加
+const handleDatePickerEnter = (event: KeyboardEvent) => {
+  if (event.key === 'Enter' && inputValue.value) {
+    const isArray = Array.isArray(inputValue.value)
+    let values: Date[]
+    if (isArray) {
+      values = [inputValue.value[0], inputValue.value[1]]
+      // From/To の判別
+      const inputs = Array.from(event.target.parentElement.querySelectorAll('.el-range-input'));
+      const index = inputs.indexOf(event.target);
+      const isFromInput = index === 0
+      if (isFromInput) {
+        values[0] = event.target.value
+      } else {
+        values[1] = event.target.value
+      }
+    }
+    handleDateSelected(isArray ? values : dayjs(event.target.value).toDate())
+
+    nextTick(() => {
+      inputValue.value = ''
+    })
   }
 }
 
@@ -458,10 +483,12 @@ const handleKeySelected = (item: any) => {
       inputStep.value = 'value'
     }
   }
-
   nextTick(() => {
-    if (isDatePicker.value) {
-      datePickerRef.value?.focus();
+    if (isDatePicker.value && inputStep.value === 'value') {
+      if (!inputValue.value) {
+        inputValue.value = isDateRangePicker.value ? [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')] : dayjs().format('YYYY-MM-DD')
+      }
+      datePickerRef.value?.focus()
     } else {
       inputRef.value?.focus()
     }
@@ -574,7 +601,10 @@ const handleOperatorSelected = (item: any) => {
 
   nextTick(() => {
     if (isDatePicker.value) {
-      datePickerRef.value?.focus();
+      if (!inputValue.value) {
+        inputValue.value = dayjs().format('YYYY-MM-DD')
+      }
+      datePickerRef.value?.focus()
     } else {
       inputRef.value?.focus()
     }
@@ -600,7 +630,7 @@ const handleOperatorEnter = () => {
 
   nextTick(() => {
     if (isDatePicker.value) {
-      datePickerRef.value?.focus();
+      datePickerRef.value?.focus()
     } else {
       inputRef.value?.focus()
     }
@@ -766,7 +796,7 @@ const startEditing = (index: number, part: 'key' | 'operator' | 'value') => {
       if (isDateRange && typeof token.value.data === 'string' && token.value.data.includes(',')) {
         // カンマで区切られた日付文字列を配列に変換
         const dateStrings = token.value.data.split(',');
-        inputValue.value = dateStrings.map(dateStr => moment(dateStr).toDate());
+        inputValue.value = dateStrings.map(dateStr => dayjs(dateStr).toDate());
       } else if (tokenDef && Array.isArray(tokenDef.tags)) {
         // オブジェクトタイプのタグの場合、表示名を取得
         const tagObj = tokenDef.tags.find(tag =>
@@ -801,7 +831,8 @@ const startEditing = (index: number, part: 'key' | 'operator' | 'value') => {
 const handleBackspace = (event: KeyboardEvent) => {
   // ElDatePickerの場合、event.target.valueで入力値を確認する
   const isDatePickerEmpty = isDatePicker.value &&
-    (event.target instanceof HTMLInputElement && event.target.value === '');
+    (event.target instanceof HTMLInputElement &&
+      (event.target.value === '' || (event.target.value.length < 2 && isDateRangePicker.value)))
 
   if (event.key === 'Backspace' && (inputValue.value === '' || isDatePickerEmpty)) {
     if (editingTokenIndex.value !== null) {
@@ -963,24 +994,24 @@ const handleCustomTokenClose = (index: number) => {
 
       <!-- 入力中のトークングループを表示 -->
       <template
-          v-if="currentTokenGroup && !editingTokenIndex && !props.disabled && !currentTokenGroup.key.isStringValue">
+        v-if="currentTokenGroup && !editingTokenIndex && !props.disabled && !currentTokenGroup.key.isStringValue">
         <div class="token-group flex items-center">
           <!-- キータグ -->
           <ElTag
-              :class="['token-key flex items-center gap-1', { 'active': inputStep === 'key' }]"
-              v-bind="availableTokens.find(t => t.type === currentTokenGroup.key.type)?.tagOptions || {}"
+            :class="['token-key flex items-center gap-1', { 'active': inputStep === 'key' }]"
+            v-bind="availableTokens.find(t => t.type === currentTokenGroup.key.type)?.tagOptions || {}"
           >
             <ElIcon v-if="availableTokens.find(t => t.type === currentTokenGroup.key.type)?.icon">
               <component
-                  :is="ElementPlusIcons[availableTokens.find(t => t.type === currentTokenGroup.key.type)?.icon]"/>
+                :is="ElementPlusIcons[availableTokens.find(t => t.type === currentTokenGroup.key.type)?.icon]"/>
             </ElIcon>
             {{ currentTokenGroup.key.title }}
           </ElTag>
 
           <!-- オペレータータグ (inputStepが'value'の場合に表示) -->
           <ElTag
-              v-if="inputStep === 'value'"
-              :class="['token-operator flex items-center gap-1', { 'active': inputStep === 'value' }]"
+            v-if="inputStep === 'value'"
+            :class="['token-operator flex items-center gap-1', { 'active': inputStep === 'value' }]"
           >
             {{ currentTokenGroup.operator || '...' }}
           </ElTag>
@@ -1052,15 +1083,15 @@ const handleCustomTokenClose = (index: number) => {
         clearable
         @change="handleDateSelected"
         @keydown="handleBackspace"
+        @keydown.enter="handleDatePickerEnter"
         v-bind="datePickerOptions"
       />
 
       <!-- 編集モード: 値入力（数値） -->
       <ElInput
-        v-else-if="inputVisible && inputStep === 'value' && isInputNumber"
+        v-else-if="inputVisible && inputStep === 'value' && isInputComponent"
         ref="inputRef"
         v-model="inputValue"
-        type="number"
         :placeholder="getCurrentPlaceholder"
         class="input-field"
         size="small"
