@@ -16,6 +16,7 @@ const meta = {
     availableTokens: { control: 'object' },
     disabled: { control: 'boolean' },
     inputPlaceholder: { control: 'text' },
+    appendValueSuggestTypesToKey: { control: 'object' },
   },
   parameters: {
     docs: {
@@ -186,6 +187,15 @@ const descriptions = {
 ### カスタムプレースホルダー
 
 \`inputPlaceholder\`プロパティで入力フィールドのプレースホルダーテキストをカスタマイズできます。
+  `,
+  appendValueSuggestTypesToKey: `
+### キーサジェストに値サジェストを追加
+
+\`appendValueSuggestTypesToKey\`プロパティを使うと、キー入力時のサジェスト一覧に、指定したタイプの値サジェストも追加表示されます。
+これにより、ユーザーは一度のサジェスト表示で、キーと頻繁に使われる値の両方から選択できます。
+
+例えば、\`['user', 'tag-fw']\`と指定すると、通常のキーサジェストに加えて、UserとTag(Framework)の値が追加表示されます。
+値サジェストを選択した場合、\`string\`タイプのトークンとして直接追加されます。
   `,
 };
 
@@ -430,6 +440,56 @@ export const CustomPlaceholder: Story = {
         :disabled="args.disabled"
         :input-placeholder="args.inputPlaceholder"
       />
+    `,
+  }),
+};
+
+export const AppendValueSuggestTypesToKey: Story = {
+  args: {
+    modelValue: [],
+    availableTokens: sampleAvailableTokens,
+    appendValueSuggestTypesToKey: ['user', 'tag-fw'],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: descriptions.appendValueSuggestTypesToKey,
+      },
+    },
+  },
+  render: (args) => ({
+    components: { ElTextQueryInput },
+    setup() {
+      const tokens = ref(args.modelValue);
+      return { tokens, args };
+    },
+    template: `
+      <div class="mb-4">
+        <p class="text-sm text-gray-500">機能説明:</p>
+        <ul class="list-disc pl-5 text-sm">
+          <li>
+            キー入力時のサジェストに、UserとTag(Framework)の値も含まれるようになっています。
+          </li>
+          <li>
+            例えば「Vue.js」や「alpha」などの値をサジェストから選択すると、
+            <code>string</code>タイプのトークンとして直接追加されます。
+          </li>
+          <li>
+            この機能は、頻繁に検索される値をショートカットとして提供する場合に便利です。
+          </li>
+        </ul>
+      </div>
+      <ElTextQueryInput
+        v-model="tokens"
+        :available-tokens="args.availableTokens"
+        :disabled="args.disabled"
+        :input-placeholder="args.inputPlaceholder"
+        :append-value-suggest-types-to-key="args.appendValueSuggestTypesToKey"
+      />
+      <div class="mt-4">
+          <p class="text-sm text-gray-500">トークンの値:</p>
+          <pre class="bg-gray-100 p-2 rounded mt-1 text-xs">{{ tokens }}</pre>
+      </div>
     `,
   }),
 };
