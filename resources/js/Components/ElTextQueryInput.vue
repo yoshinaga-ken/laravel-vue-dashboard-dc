@@ -384,9 +384,16 @@ const showInput = () => {
   inputValue.value = ''
 
   nextTick(() => {
-    setTimeout(() => {
-      inputRef.value?.focus()
-    }, 200)
+    inputRef.value?.focus()
+    // フォーカス後に fetchSuggestions を明示的に呼び出す
+    if (inputRef.value) {
+      getKeySuggestions('', (suggestions) => {
+        // @ts-ignore: ElAutocomplete の内部プロパティにアクセス
+        inputRef.value.suggestions = suggestions
+        // @ts-ignore: ElAutocomplete の内部プロパティにアクセス
+        inputRef.value.handleFocus()
+      })
+    }
   })
 }
 
