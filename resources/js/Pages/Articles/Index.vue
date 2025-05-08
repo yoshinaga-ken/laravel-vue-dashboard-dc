@@ -13,8 +13,7 @@ import axios from "@/Utils/axios.js";
 import type { Article, Permission, User } from '@/Types/types';
 import ElTextTagsInput from "@/Components/ElTextTagsInput.vue";
 import ElTextQueryInput from "@/Components/ElTextQueryInput.vue";
-import { sampleAvailableTokens } from '/stories/components/form/ElTextQueryInput.stories';
-import { ref, watch, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { FilterUserInput, UserPaginator, FilterArticleInput, ArticlePaginator } from "@/Types/types-graphql";
 import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
@@ -286,10 +285,15 @@ const formProcessing = () => {
 // フォームの値変更を監視し、変更があれば自動的に検索を実行
 watch(
   [() => form.title, () => form.tags],
-  () => {
-    // フォーム処理中でなければ検索を実行
+  ([newTitle]) => {
     if (!formProcessing()) {
-      onClickSearch();
+      if (newTitle !== undefined) {
+        if (newTitle.length >= 5) {
+          onClickSearch();
+        }
+      } else {
+        onClickSearch();
+      }
     }
   },
   { deep: true }
@@ -433,21 +437,23 @@ const onClickArticleDelete = (article: IndexArticle) => {
     </template>
 
     <div class="flex items-center m-2 gap-2">
-      <ElTextQueryInput :available-tokens="availableTokens" v-model="searchQueryTokens" @keydown-enter="onClickArticleSearchQuery">
+      <ElTextQueryInput :available-tokens="availableTokens"
+                        :append-value-suggest-types-to-key="['user','tag-fw']"
+                        v-model="searchQueryTokens" @keydown-enter="onClickArticleSearchQuery">
         <template #append>
-          <ElButton @click="onClickArticleSearchQuery" size="large">🔍</ElButton>
+          <ElButton aria-label="Query Search" @click="onClickArticleSearchQuery" size="large">🔍</ElButton>
         </template>
       </ElTextQueryInput>
     </div>
     <div class="flex items-center m-2 gap-2">
       <div class="flex">
-        <el-autocomplete v-model="form.title"
+        <ElAutocomplete v-model="form.title"
                          :fetch-suggestions="formSearchSuggestions"
                          placeholder="Search Title"
                          clearable
                          size="large"
                          >
-        </el-autocomplete>
+        </ElAutocomplete>
 
         <ElTextTagsInput
           id="tags"
@@ -456,7 +462,7 @@ const onClickArticleDelete = (article: IndexArticle) => {
           type="text"
           ref="textTagsInputRef"
         />
-        <el-button size="large" @click="onClickSearch">🔍</el-button>
+        <ElButton aria-label="Form Search" size="large" @click="onClickSearch">🔍</ElButton>
       </div>
 
       <Link
@@ -474,7 +480,7 @@ const onClickArticleDelete = (article: IndexArticle) => {
     </div>
 
     <div class="text-gray-800 dark:text-gray-200 mx-3 px-6 rounded-md shadow overflow-x-auto">
-      <table class="w-full　table-auto">
+      <table aria-label="Articles List" class="w-full　table-auto">
         <thead>
         <tr class="text-left font-bold">
           <th>Id</th>
