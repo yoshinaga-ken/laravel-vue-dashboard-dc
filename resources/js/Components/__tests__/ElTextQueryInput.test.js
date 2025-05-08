@@ -512,7 +512,7 @@ describe('ElTextQueryInput', () => {
         modelValue: [],
         'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e}),
         availableTokens,
-        appendValueSuggestTypesToKey: 'tag-fw' // FrameWorkタイプを指定
+        appendValueSuggestTypesToKey: ['tag-fw'] // FrameWorkタイプを指定
       },
       global: {
         components: {
