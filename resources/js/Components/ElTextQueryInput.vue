@@ -153,7 +153,7 @@ const datePickerOptions = computed(() => {
   return tokenDef?.tagsComponentOptions || {}
 })
 
-const inputNumberOptions = computed(() => {
+const inputOptions = computed(() => {
   if (!currentTokenGroup.value) return {}
 
   const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value?.key.type)
@@ -412,7 +412,7 @@ const isDateRangePicker = computed(() => {
 })
 
 // 値が入力コンポーネントかどうかをチェック
-const isInputComponent = computed(() => {
+const isInput = computed(() => {
   if (!currentTokenGroup.value) return false
   const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value?.key.type)
   return tokenDef?.tags === 'Input'
@@ -1161,7 +1161,7 @@ const handleCustomTokenClose = (index: number) => {
 
       <!-- 編集モード: 値入力（数値） -->
       <ElInput
-        v-else-if="inputVisible && inputStep === 'value' && isInputComponent"
+        v-else-if="inputVisible && inputStep === 'value' && isInput"
         ref="inputRef"
         v-model="inputValue"
         :placeholder="getCurrentPlaceholder"
@@ -1172,7 +1172,7 @@ const handleCustomTokenClose = (index: number) => {
         @keydown.enter.prevent
         @keyup.enter="handleInputConfirm"
         @blur="handleInputConfirm"
-        v-bind="inputNumberOptions"
+        v-bind="inputOptions"
       />
 
       <!-- 編集モード: 値入力（通常） -->
