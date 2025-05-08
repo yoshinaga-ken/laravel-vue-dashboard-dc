@@ -146,22 +146,32 @@ const sampleAvailableTokens = [
   },
 ];
 
+// トークン表示用の共通関数
+function renderTokenDisplay() {
+  return `
+    <div class="mt-4">
+      <p class="text-sm text-gray-500 dark:text-gray-400">トークンの値:</p>
+      <pre class="bg-gray-100 dark:bg-gray-800 p-2 rounded mt-1 text-xs text-gray-800 dark:text-gray-200">{{ tokens }}</pre>
+    </div>
+  `;
+}
+
 // 各ストーリーの説明文
 const descriptions = {
   default: `
 ### 基本的な使用例
 
-空の状態から始まるデフォルトの入力フィールドです。\`availableTokens\`プロパティにより、利用可能なトークンタイプが定義されています。
+空の状態から始まるデフォルトの入力フィールド���す。\`availableTokens\`プロパティにより、利用可能なトークンタイプが定義されています。
   `,
   withTokens: `
-### 初期トークン付き
+### 初期トークン例
 
-\`modelValue\`に初期値を設定した例です。ユーザー、フレームワーク、日付の条件が初期表示されています。
+\`modelValue\`に初期値を設定した例です。ユーザー、フレームワーク、日付の条��が初期表示されています。
   `,
   withStringTokens: `
 ### 文字列タイプのトークン
 
-\`string\`タイプのトークンは、キー・オペレーター・値の構造を持たない単純な文字列検索条件として扱われます。
+\`string\`タイプのトークンは、キー・オペレータ���・値の構造を持たない単純な文字列検索条件として扱われます。
   `,
   objectTags: `
 ### オブジェクトタイプのタグ
@@ -224,10 +234,7 @@ export const Default: Story = {
         :disabled="args.disabled"
         :input-placeholder="args.inputPlaceholder"
       />
-      <div class="mt-4">
-        <p class="text-sm text-gray-500">入力したトークン:</p>
-        <pre class="bg-gray-100 p-2 rounded mt-1 text-xs">{{ tokens }}</pre>
-      </div>
+      ${renderTokenDisplay()}
     `,
   }),
 };
@@ -261,10 +268,7 @@ export const WithTokens: Story = {
         :disabled="args.disabled"
         :input-placeholder="args.inputPlaceholder"
       />
-      <div class="mt-4">
-        <p class="text-sm text-gray-500">トークンの値:</p>
-        <pre class="bg-gray-100 p-2 rounded mt-1 text-xs">{{ tokens }}</pre>
-      </div>
+      ${renderTokenDisplay()}
     `,
   }),
 };
@@ -297,10 +301,7 @@ export const WithStringTokens: Story = {
         :disabled="args.disabled"
         :input-placeholder="args.inputPlaceholder"
       />
-      <div class="mt-4">
-        <p class="text-sm text-gray-500">トークンの値:</p>
-        <pre class="bg-gray-100 p-2 rounded mt-1 text-xs">{{ tokens }}</pre>
-      </div>
+      ${renderTokenDisplay()}
     `,
   }),
 };
@@ -333,10 +334,7 @@ export const ObjectTags: Story = {
         :disabled="args.disabled"
         :input-placeholder="args.inputPlaceholder"
       />
-      <div class="mt-4">
-        <p class="text-sm text-gray-500">トークンの値:</p>
-        <pre class="bg-gray-100 p-2 rounded mt-1 text-xs">{{ tokens }}</pre>
-      </div>
+      ${renderTokenDisplay()}
     `,
   }),
 };
@@ -373,10 +371,7 @@ export const FullExample: Story = {
         :disabled="args.disabled"
         :input-placeholder="args.inputPlaceholder"
       />
-      <div class="mt-4">
-        <p class="text-sm text-gray-500">トークンの値:</p>
-        <pre class="bg-gray-100 p-2 rounded mt-1 text-xs">{{ tokens }}</pre>
-      </div>
+      ${renderTokenDisplay()}
     `,
   }),
 };
@@ -486,10 +481,8 @@ export const AppendValueSuggestTypesToKey: Story = {
         :input-placeholder="args.inputPlaceholder"
         :append-value-suggest-types-to-key="args.appendValueSuggestTypesToKey"
       />
-      <div class="mt-4">
-          <p class="text-sm text-gray-500">トークンの値:</p>
-          <pre class="bg-gray-100 p-2 rounded mt-1 text-xs">{{ tokens }}</pre>
-      </div>
+      ${renderTokenDisplay()}
     `,
   }),
 };
+
