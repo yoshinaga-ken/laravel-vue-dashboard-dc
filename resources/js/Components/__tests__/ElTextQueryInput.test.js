@@ -449,5 +449,173 @@ describe('ElTextQueryInput', () => {
     const keyInput = keyAutocomplete.find('input')
     expect(keyInput.element.value).toBe('')
   })
+
+  it('appendValueSuggestTypesToKeyプロパティが指定された場合、キーのサジェストに値のサジェストが追加される', async () => {
+    // appendValueSuggestTypesToKeyプロパティを指定して再マウント
+    wrapper = mount(ElTextQueryInput, {
+      props: {
+        modelValue: [],
+        'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e}),
+        availableTokens,
+        appendValueSuggestTypesToKey: ['tag-fw'] // FrameWorkタイプを指定
+      },
+      global: {
+        components: {
+          ElTag,
+          ElAutocomplete,
+          ElButton,
+          ElDatePicker,
+          ElIcon
+        },
+        stubs: {
+          ElIcon: true
+        }
+      }
+    })
+
+    // トークン入力の開始
+    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    expect(inputRef.exists()).toBe(true)
+    await inputRef.trigger('focus')
+
+    // キーの候補取得メソッドが呼び出された時の結果を検証
+    const keyAutocomplete = wrapper.findComponent(ElAutocomplete)
+
+    // getKeySuggestionsメソッドを直接テスト
+    let suggestions = []
+    wrapper.vm.getKeySuggestions('', (data) => {
+      suggestions = data
+    })
+
+    // サジェストには通常のキーに加えて、tag-fwタイプの値（Vue3, React）も含まれているはず
+    expect(suggestions.length).toBeGreaterThan(availableTokens.length) // 通常のキー数より多いはず
+
+    // 通常のキーサジェスト（Author, FrameWork, Date, Date (From,To)）が含まれていることを確認
+    const keyTitles = availableTokens.map(token => token.title)
+    keyTitles.forEach(title => {
+      const found = suggestions.some(suggestion => suggestion.value === title)
+      expect(found).toBe(true)
+    })
+
+    // tag-fwタイプの値（Vue3, React）も含まれていることを確認
+    const frameworkTags = availableTokens[1].tags
+    frameworkTags.forEach(tag => {
+      const found = suggestions.some(suggestion => suggestion.value === tag.name)
+      expect(found).toBe(true)
+    })
+  })
+
+  it('appendValueSuggestTypesToKeyから追加されたサジェストを選択した場合、stringタイプのトークンとして追加される', async () => {
+    // appendValueSuggestTypesToKeyプロパティを指定して再マウント
+    wrapper = mount(ElTextQueryInput, {
+      props: {
+        modelValue: [],
+        'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e}),
+        availableTokens,
+        appendValueSuggestTypesToKey: 'tag-fw' // FrameWorkタイプを指定
+      },
+      global: {
+        components: {
+          ElTag,
+          ElAutocomplete,
+          ElButton,
+          ElDatePicker,
+          ElIcon
+        },
+        stubs: {
+          ElIcon: true
+        }
+      }
+    })
+
+    // トークン入力の開始
+    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    await inputRef.trigger('focus')
+
+    // 値サジェスト（Vue3）を選択
+    const keyAutocomplete = wrapper.findComponent(ElAutocomplete)
+    await keyAutocomplete.vm.$emit('select', {
+      value: 'Vue3',
+      isValueSuggest: true,
+      valueItem: {id: 1, name: 'Vue3'},
+      valueType: 'tag-fw'
+    })
+
+    // トークンが追加されたことを確認
+    expect(wrapper.props('modelValue')).toHaveLength(1)
+    expect(wrapper.props('modelValue')[0].type).toBe('string') // stringタイプであることを確認
+    expect(wrapper.props('modelValue')[0].value.data).toBe('Vue3') // 値が正しいことを確認
+    expect(wrapper.props('modelValue')[0].value.operator).toBe('') // オペレーターは空
+  })
+
+  it('appendValueSuggestTypesToKeyプロパティが配列で指定された場合、複数のタイプの値サジェストが追加される', async () => {
+    // appendValueSuggestTypesToKeyプロパティを配列で指定して再マウント
+    wrapper = mount(ElTextQueryInput, {
+      props: {
+        modelValue: [],
+        'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e}),
+        availableTokens,
+        appendValueSuggestTypesToKey: ['user', 'tag-fw'] // 複数のタイプを指定
+      },
+      global: {
+        components: {
+          ElTag,
+          ElAutocomplete,
+          ElButton,
+          ElDatePicker,
+          ElIcon
+        },
+        stubs: {
+          ElIcon: true
+        }
+      }
+    })
+
+    // トークン入力の開始
+    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    expect(inputRef.exists()).toBe(true)
+    await inputRef.trigger('focus')
+
+    // キーの候補取得メソッドが呼び出された時の結果を検証
+    const keyAutocomplete = wrapper.findComponent(ElAutocomplete)
+
+    // getKeySuggestionsメソッドを直接テスト
+    let suggestions = []
+    wrapper.vm.getKeySuggestions('', (data) => {
+      suggestions = data
+    })
+
+    // サジェストには通常のキーに加えて、userタイプとtag-fwタイプの両方の値サジェストも含まれているはず
+    const expectedMinCount = availableTokens.length +
+      availableTokens[0].tags.length + // userタイプのタグ数
+      availableTokens[1].tags.length   // tag-fwタイプのタグ数
+
+    expect(suggestions.length).toBeGreaterThanOrEqual(expectedMinCount)
+
+    // 通常のキーサジェスト（Author, FrameWork, Date, Date (From,To)）が含まれていることを確認
+    const keyTitles = availableTokens.map(token => token.title)
+    keyTitles.forEach(title => {
+      const found = suggestions.some(suggestion => suggestion.value === title)
+      expect(found).toBe(true)
+    })
+
+    // userタイプの値（alpha, beta, gamma）が含まれていることを確認
+    const userTags = availableTokens[0].tags
+    userTags.forEach(tag => {
+      const found = suggestions.some(suggestion => suggestion.value === tag)
+      expect(found).toBe(true)
+    })
+
+    // tag-fwタイプの値（Vue3, React）も含まれていることを確認
+    const frameworkTags = availableTokens[1].tags
+    frameworkTags.forEach(tag => {
+      const found = suggestions.some(suggestion => suggestion.value === tag.name)
+      expect(found).toBe(true)
+    })
+  })
+
+  // TODO:
+  // it('props.disabled状態の時、トークンの削除や追加ができない', () => { })
+  // it('トークンクリックで、トークンの編集状態になる', () => { })
 })
 

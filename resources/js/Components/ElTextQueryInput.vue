@@ -65,6 +65,10 @@ const props = defineProps({
   inputPlaceholder: {
     type: String,
     default: 'Enter search queries (<key><operator><value>)...'
+  },
+  appendValueSuggestTypesToKey: {
+    type: Array as () => string[],
+    default: () => []
   }
 })
 
@@ -191,11 +195,55 @@ const getKeySuggestions = (queryString: string, cb: (data: any[]) => void) => {
     return
   }
 
+  // 基本のキーサジェスト
   const results = queryString
     ? props.availableTokens
       .filter(token => token.title.toLowerCase().includes(queryString.toLowerCase()))
       .map(token => ({ value: token.title, item: token }))
     : props.availableTokens.map(token => ({ value: token.title, item: token }))
+
+  // appendValueSuggestTypesToKeyが設定されていれば、それらのタイプの値サジェストを追加
+  if (props.appendValueSuggestTypesToKey.length > 0) {
+    props.appendValueSuggestTypesToKey.forEach(type => {
+      const tokenDef = props.availableTokens.find(t => t.type === type)
+
+      if (tokenDef && Array.isArray(tokenDef.tags)) {
+        // タグの候補を取得
+        const valueSuggestions = tokenDef.tags.map(tag => {
+          if (typeof tag === 'object' && tag !== null) {
+            // オブジェクトの場合、表示用の値を含むオブジェクトを返す
+            return {
+              value: tag.name,
+              // 独自のプロパティを追加して、このサジェストが値からのものであることをマーク
+              isValueSuggest: true,
+              // 元のアイテム情報を保持
+              valueItem: tag,
+              // 元のタイプ情報を保持
+              valueType: type
+            }
+          } else {
+            // 文字列の場合
+            return {
+              value: tag,
+              isValueSuggest: true,
+              valueItem: tag,
+              valueType: type
+            }
+          }
+        })
+
+        // クエリに基づいてフィルタリング
+        const filteredValueSuggestions = queryString
+          ? valueSuggestions.filter(item =>
+              item.value.toString().toLowerCase().includes(queryString.toLowerCase()))
+          : valueSuggestions
+
+        // 既存のキーサジェストと値サジェストを結合
+        results.push(...filteredValueSuggestions)
+      }
+    })
+  }
+
   cb(results)
 }
 
@@ -436,6 +484,23 @@ const resetInputState = () => {
 
 // キー選択時の処理
 const handleKeySelected = (item: any) => {
+  // appendValueSuggestTypesToKeyから追加されたサジェストアイテムの場合
+  if (item.isValueSuggest === true) {
+    // 入力値をstring型のトークンとして追加
+    modelValue.value.push({
+      type: 'string',
+      value: {
+        data: item.value,
+        operator: ''
+      }
+    })
+
+    // 入力状態をリセットして次の入力に備える
+    resetInputState()
+    showInput()
+    return
+  }
+
   const tokenDef = item.item
 
   if (editingTokenIndex.value !== null) {
