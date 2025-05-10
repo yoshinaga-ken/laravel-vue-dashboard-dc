@@ -12,81 +12,67 @@ test.describe('article', () => {
   });
 
   test('article create', async ({ page }) => {
-    const p = new ArticlesIndexPage(page);
+    const articlesPage = new ArticlesIndexPage(page);
 
-    // articles.create
-    await p.gotoIndex();
-    const { id: articleId, title } = await p.createArticle({});
+    // 記事一覧に移動
+    await articlesPage.gotoIndex();
 
-    // search
-    await p.gotoIndex();
-    await p.searchArticle(title);
-    await p.expectArticleRowToBeVisible(articleId);
+    // 記事作成
+    const { id: articleId, title: titleValue } = await articlesPage.createArticle({
+      title: 'Basic Article Test 🤖' + Date.now(),
+      body: 'This is a test article created with ArticlesIndexPage'
+    });
 
-    // articles.edit
-    const { title: editTitle } = await p.editArticle({ id: articleId });
-    await p.gotoIndex();
-    await p.searchArticle(editTitle);
-    await p.expectArticleRowToBeVisible(articleId);
+    // 検索
+    await articlesPage.gotoIndex();
+    await articlesPage.searchArticle(titleValue);
+    await articlesPage.expectArticleRowToBeVisible(articleId);
 
-    // articles.delete
-    await p.clickDeleteArticle(articleId);
-    await p.expectArticleRowToBeVisible(articleId, false);
+    // 記事編集
+    const { title: editTitle } = await articlesPage.editArticle({ id: articleId });
+    await articlesPage.gotoIndex();
+    await articlesPage.searchArticle(editTitle);
+    await articlesPage.expectArticleRowToBeVisible(articleId);
+
+    // 記事削除
+    await articlesPage.clickDeleteArticle(articleId);
+    await articlesPage.expectArticleRowToBeVisible(articleId, false);
   });
 
   test('article CRUD operation', async ({ page }) => {
-    // articles.index
-    await page.goto('/articles');
+    const articlesPage = new ArticlesIndexPage(page);
 
-    // articles.create
-    await page.getByRole('link', { name: 'Create Article' }).click();
-    let title = page.locator('input#title');
-    let titleValue = 'title test🤖';
-    const bodyValue = 'body test🤖';
-    await title.fill(titleValue);
-    await page.getByRole('textbox', { name: '本文' }).fill(bodyValue);
-    await page.getByRole('button', { name: 'Create' }).click();
+    // 記事一覧に移動
+    await articlesPage.gotoIndex();
 
-    await page.waitForURL(/articles\/\d+\/edit/);
-    const articleId = page.url().match(/articles\/(\d+)\/edit/)?.[1];
-
-    // articles.edit
-    title = page.locator('input#title');
-    titleValue += ' edit ' + Date.now();
-    await title.fill(titleValue);
-    // await page.screenshot({ path: 'edit.png' });
-    await page.getByRole('button', { name: 'Save' }).click();
-
-    // articles.index
-    await page.getByRole('link', { name: 'Articles' }).click();
-    await page.waitForURL('/articles');
-
-    // search created article
-    await page.getByRole('textbox', { name: 'Search Title' }).fill(titleValue);
-    // await this.page.getByRole('button', { name: 'Form Search' }).click();
-    await page.waitForSelector(`#row-${articleId}`);
-    // await page.screenshot({ path: 'index-search.png' });
-
-    // article.show
-    await page.locator(`#id-${articleId}`).click();
-    await page.waitForURL(/articles\/\d+/);
-    title = page.locator('input#title');
-    await expect(title).toHaveValue(titleValue);
-    // await page.screenshot({ path: 'show.png' });
-
-    // articles.index
-    await page.getByRole('link', { name: 'Articles' }).click();
-    await page.waitForURL('/articles');
-
-    // articles.delete
-    // 削除ボタンのダイアログの処理
-    page.once('dialog', dialog => {
-      console.log(`Dialog message: ${dialog.message()} id: ${articleId} OK`);
-      dialog.accept(); // OKクリック
+    // 記事作成
+    const { id: articleId, title: titleValue } = await articlesPage.createArticle({
+      title: 'CRUD Article Test 🤖' + Date.now(),
+      body: 'This is a test article created using BasePage'
     });
-    // 削除ボタンClick
-    await page.locator(`#delete-${articleId}`).click();
-    await page.waitForLoadState('networkidle');
-    await expect(page.locator(`#row-${articleId}`)).toBeHidden();
+
+    // 記事一覧に戻る
+    await articlesPage.clickNavLink('Articles');
+
+    // 作成した記事を検索
+    await articlesPage.searchArticle(titleValue);
+    await articlesPage.expectArticleRowToBeVisible(articleId);
+
+    // 記事編集
+    const { title: updatedTitle } = await articlesPage.editArticle({
+      id: articleId,
+      title: `${titleValue} (edited)`
+    });
+
+    // 記事一覧に戻る
+    await articlesPage.clickNavLink('Articles');
+
+    // 検索して表示されることを確認
+    await articlesPage.searchArticle(updatedTitle);
+    await articlesPage.expectArticleRowToBeVisible(articleId);
+
+    // 記事削除
+    await articlesPage.clickDeleteArticle(articleId);
+    await articlesPage.expectArticleRowToBeVisible(articleId, false);
   });
 });

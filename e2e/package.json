@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
-    "test:chrome": "npx playwright test --project=chromium"
+    "test:chrome": "npx playwright test --project=chromium",
+    "test:mobile": "npx playwright test --project=\"Mobile Safari\""
   },
   "keywords": [],
   "author": "",

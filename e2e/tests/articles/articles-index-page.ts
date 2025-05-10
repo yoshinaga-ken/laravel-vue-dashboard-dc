@@ -1,21 +1,19 @@
-import { test, expect, Page } from '@playwright/test';
+import { expect, Page, test } from '@playwright/test';
+import { BasePage, step } from '../base-page';
 
-export class ArticlesIndexPage {
-  constructor(private readonly page: Page) {
-  }
-
+export class ArticlesIndexPage extends BasePage {
   async gotoIndex() {
-    await this.page.goto('/articles');
+    await this.goto('/articles');
   }
 
-  // @step('index-search.png')
+  @step('index-search.png')
   async searchArticle(title: string) {
     await this.page.getByRole('textbox', { name: 'Search Title' }).fill(title);
     // await this.page.getByRole('button', { name: 'Form Search' }).click();
     await this.page.getByRole('table', { name: 'Articles List' }).waitFor();
-    // await this.page.screenshot({ path: 'index-search.png' });
   }
 
+  @step()
   async clickDeleteArticle(articleId: string, doDialogOk = true) {
     // 削除ボタンのダイアログの処理
     this.page.once('dialog', dialog => {
@@ -25,11 +23,12 @@ export class ArticlesIndexPage {
     });
     // 削除ボタンClick
     await this.page.locator(`#delete-${articleId}`).click();
-    await this.page.waitForLoadState('networkidle');
+    await this.waitForLoadState('networkidle');
   }
 
   // @step()
-  async createArticle({ title = 'title test🤖' + Date.now(), body = 'body test🤖' }) {
+  @step()
+  async createArticle({ title = 'title test🤖' + Date.now(), body = 'body test🤖' } = {}) {
     await this.clickCreateArticle();
 
     await this.page.locator('input#title').fill(title);
@@ -37,25 +36,27 @@ export class ArticlesIndexPage {
 
     await this.page.getByRole('button', { name: 'Create' }).click();
 
-    await this.page.waitForURL(/articles\/\d+\/edit/);
+    await this.waitForUrl(/articles\/\d+\/edit/);
     const articleId = this.page.url().match(/articles\/(\d+)\/edit/)?.[1];
 
     return { id: articleId, title, body };
   }
 
+  @step()
   async editArticle({ id, title = 'title test🤖' + Date.now(), body = 'body test🤖' }) {
-    await this.page.goto(`/articles/${id}/edit`);
+    await this.goto(`/articles/${id}/edit`);
 
     await this.page.locator('input#title').fill(title);
     await this.page.locator('input#body').fill(body);
 
     await this.page.getByRole('button', { name: 'Save' }).click();
 
-    await this.page.waitForURL(`/articles/${id}/edit`);
+    await this.waitForUrl(`/articles/${id}/edit`);
 
     return { id, title, body };
   }
 
+  @step()
   async clickCreateArticle() {
     await this.page.getByRole('link', { name: 'Create Article' }).click();
   }
@@ -65,17 +66,4 @@ export class ArticlesIndexPage {
   }
 }
 
-function step(screenshotPath?: string) {
-  return function (target: Function, context: ClassMethodDecoratorContext) {
-    return function replacementMethod(...args: any) {
-      const name = '🔖' + this.constructor.name + '.' + (context.name as string) + (screenshotPath ? '📷' : '');
-      return test.step(name, async () => {
-        const result = await target.call(this, ...args);
-        if (screenshotPath) {
-          await this.page.screenshot({ path: screenshotPath });
-        }
-        return result;
-      }, { box: true });
-    };
-  };
-}
+// step関数は base-page.ts に移動しました
