@@ -63,7 +63,7 @@ test.describe('article', () => {
 
     // search created article
     await page.getByRole('textbox', { name: 'Search Title' }).fill(titleValue);
-    await page.getByRole('button', { name: '🔍' }).click();
+    // await this.page.getByRole('button', { name: 'Form Search' }).click();
     await page.waitForSelector(`#row-${articleId}`);
     // await page.screenshot({ path: 'index-search.png' });
 

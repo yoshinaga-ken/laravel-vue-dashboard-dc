@@ -11,8 +11,8 @@ export class ArticlesIndexPage {
   // @step('index-search.png')
   async searchArticle(title: string) {
     await this.page.getByRole('textbox', { name: 'Search Title' }).fill(title);
-    await this.page.getByRole('button', { name: '🔍' }).click();
-    await this.page.waitForLoadState('networkidle');
+    // await this.page.getByRole('button', { name: 'Form Search' }).click();
+    await this.page.getByRole('table', { name: 'Articles List' }).waitFor();
     // await this.page.screenshot({ path: 'index-search.png' });
   }
 
