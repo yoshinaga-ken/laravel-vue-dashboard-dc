@@ -27,8 +27,15 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'http://' + process.env.E2E_DOMAIN_FOR_TEST,
+
+    // Trace Settings
+
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: process.env.APP_ENV === 'local' ? 'retain-on-failure' : 'off',
+    /* Capture screenshot when retrying the failed test. See https://playwright.dev/docs/trace-viewer#screenshots */
+    screenshot: process.env.APP_ENV === 'local' ? 'only-on-failure' : 'off',
+    /* Record video when retrying the failed test. */
+    video: process.env.PWVIDEO ? 'on' : (process.env.APP_ENV === 'local' ? 'retain-on-failure' : 'off'),
   },
 
   /* Configure projects for major browsers */

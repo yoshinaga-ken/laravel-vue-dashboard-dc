@@ -5,7 +5,11 @@
   "scripts": {
     "test": "npx playwright test",
     "test:chrome": "npx playwright test --project=chromium",
-    "test:mobile": "npx playwright test --project=\"Mobile Safari\""
+    "test:mobile": "npx playwright test --project=\"Mobile Safari\"",
+    "test:chrome:video": "cross-env PWVIDEO=1 npx playwright test --project=chromium",
+    "test:mobile:video": "cross-env PWVIDEO=1 npx playwright test --project=\"Mobile Safari\"",
+    "convert-videos": "ts-node scripts/convert-videos-to-gif.ts",
+    "convert-videos:slow": "ts-node scripts/convert-videos-to-gif.ts 2"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +20,7 @@
     "@playwright/test": "^1.50.1",
     "@types/glob": "^8.1.0",
     "@types/node": "^22.13.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "glob": "^11.0.2",
     "ts-node": "^10.9.2",
