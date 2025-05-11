@@ -244,6 +244,7 @@ Storybook running on <http://localhost:6007/> [🚀demo](https://sakanaclub.xsrv
 
 <a id="link-dc-demo"></a>
 ## 📊Dimensional chart demo for other fields
+[Details chart data](./public/data/README.md)
 - [List of missing persons due to Noto Peninsula earthquake @2024/1/1](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-quake-noto-safety.csv)
 - [Tokyo gubernatorial election votes by candidate @2024/7/7](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-tokyo-gubernatorial-election.csv)
 - 📺🎮Tv Game in Japan
@@ -262,6 +263,9 @@ Storybook running on <http://localhost:6007/> [🚀demo](https://sakanaclub.xsrv
   - [Arcade Video games 1974～2024](https://sakanaclub.xsrv.jp/dc/covid19/data=game-ac.csv)
   - Personal computer
     - [MSX](https://sakanaclub.xsrv.jp/dc/covid19/data=game-msx.csv)
+- Weather
+  - [Changes in "🌡️ Average Temperature" in major cities in Japan](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-weather-temperature.csv)
+  - [Changes in "☔ Precipitation" in major cities in Japan](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-weather-precipitation.csv)
 - Sports
   - [⚾List of High School Baseball Championship in Japan](https://sakanaclub.xsrv.jp/dc/covid19/data=sports-hsb.csv)
   - [🏸Trends in sports circle participation](https://sakanaclub.xsrv.jp/dc/covid19/data=checkin-sakana)
