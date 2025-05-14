@@ -264,8 +264,10 @@ Storybook running on <http://localhost:6007/> [🚀demo](https://sakanaclub.xsrv
   - Personal computer
     - [MSX](https://sakanaclub.xsrv.jp/dc/covid19/data=game-msx.csv)
 - Weather
-  - [Changes in "🌡️ Average Temperature" in major cities in Japan](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-weather-temperature.csv)
-  - [Changes in "☔ Precipitation" in major cities in Japan](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-weather-precipitation.csv)
+  - [Changes in "🌡️ Average Temperature" in major 12 cities in Japan @1986~(40 Years)](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-weather-temperature)
+  - [Changes in "☔ Precipitation" in major 12 cities in Japan @1986~(40 Years)](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-weather-precipitation.csv)
+  - [Changes in "🌡️ Average Temperature" in major 3 cities in Japan @1872~(153 Years)](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-weather-temperature-3)
+  - [Changes in "☔ Precipitation" in major 3 cities in Japan @1872~(153 Years)](https://sakanaclub.xsrv.jp/dc/covid19/data=ja-weather-precipitation-3)
 - Sports
   - [⚾List of High School Baseball Championship in Japan](https://sakanaclub.xsrv.jp/dc/covid19/data=sports-hsb.csv)
   - [🏸Trends in sports circle participation](https://sakanaclub.xsrv.jp/dc/covid19/data=checkin-sakana)
