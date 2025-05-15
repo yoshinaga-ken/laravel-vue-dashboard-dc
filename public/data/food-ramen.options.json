@@ -1,6 +1,9 @@
 {
   "dataType": 0,
   "title": "🍜全国有名ラーメン店一覧",
+  "common": {
+    "unit": "店"
+  },
   "searchPrefixDataIndex": 4,
   "searchPrefix": "ラーメン",
   "dataReference": "<ul><li><a target='_blank' href='http://ramenjiyuku.web.fc2.com/'>有名ラーメン店の創業年表｜年代別@らーめん自由区</a></li></ul>",
@@ -14,6 +17,8 @@
     "imageTooltip": "all",
     "orderYmd": true,
     "orderUI": true,
+    "orderUIUnitPrefix": "",
+    "orderUIUnit": "店",
     "isPanGmapMarker": "1"
   },
   "chartDate": {

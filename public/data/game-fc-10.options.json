@@ -1,6 +1,9 @@
 {
   "dataType": 0,
   "title": "「ファミコン」ソフト一覧",
+  "common": {
+    "unit": "タイトル"
+  },
   "dataReference": "<ul><li><a target='_blank' href='http://pasofami.game.coocan.jp/game/game.htm'>各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target='_blank' href='https://www.gavas.jp/user_data/famicom_game_ranking.php'>ファミコン＆ディスクシステム歴代ソフト売上ランキング＠ピコピコ大百科</a></li><li>wikipedia</li></ul>",
   "editUrl": "https://docs.google.com/spreadsheets/d/1PBGUk6X-phs_ApA_IYRN-49GPyZt7FxjKMAw5GBSEPo/edit?gid=1229582080#gid=1229582080",
   "detailType": "city",
@@ -13,7 +16,9 @@
     "imagePath": "/img/game/fc",
     "imageTooltip": "all",
     "orderYmd": true,
-    "orderUI": true
+    "orderUI": true,
+    "orderUIUnitPrefix": "売上本数",
+    "orderUIUnit": "万本"
   },
   "chartDate": {
     "elasticY": false,
@@ -72,7 +77,7 @@
     "5": {
       "scale": 100,
       "isLegend": true
-    },    
+    },
     "7": {
       "scale": false,
       "isLegend": true

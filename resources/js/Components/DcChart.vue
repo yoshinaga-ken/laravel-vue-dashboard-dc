@@ -406,7 +406,7 @@
               </label>
               &nbsp;&nbsp;
               <label v-if="pnl.date.chart2.type!==0" title="ライン形式のチャートも表示します">
-                <input type="checkbox" v-model="pnl.date.chart2.is_show">📈表示</label>
+                <input type="checkbox" v-model="pnl.date.chart2.is_show">📈Line表示</label>
 
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.date.is_show=0"></span>
 
@@ -1708,8 +1708,14 @@ watch(() => pnl.map.is_show, is_show => {
 watch(() => pnl.name.is_show, onChangeSettings);
 watch(() => pnl.city.is_show, onChangeSettings);
 watch(() => pnl.city.orderCnt, v => {
-  if (mm.url_data.data.indexOf('game-') === 0) {
-    pnl.common.unitPrefix = pnl.city.orderUI ? (pnl.city.orderCnt ? '売上本数(万本)' : 'タイトル') : '';
+  if (pnl.city.orderUI) {
+    if (pnl.city.orderCnt) {
+      pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix;
+      pnl.common.unit = mm.opt.chartCity.orderUIUnit;
+    } else {
+      pnl.common.unitPrefix = mm.opt.common.unitPrefix;
+      pnl.common.unit = mm.opt.common.unit;
+    }
   }
 
   // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
@@ -2090,7 +2096,8 @@ const mm = {
   opt: {
     dataType: DT_DEF, // DT_DEF|DT_COVID,
     common: {
-      unit: ''
+      unit: '',
+      unitPrefix: ''
     },
     chartGMap: {},
     chartSView: {},
@@ -2285,6 +2292,9 @@ const mm = {
     if (mm.opt.common.unit) {
       pnl.common.unit = mm.opt.common.unit;
     }
+    if (mm.opt.common.unitPrefix) {
+      pnl.common.unitPrefix = mm.opt.common.unitPrefix;
+    }
     if (mm.opt.dataReference) {
       pnl.common.dataReference = mm.opt.dataReference;
     }
@@ -2355,8 +2365,14 @@ const mm = {
     if (mm.opt.chartCity?.orderYmd) {
       if (mm.opt.chartCity.orderUI) {
         pnl.city.orderUI = mm.opt.chartCity.orderUI;
-        if (mm.url_data.data.indexOf('game-') === 0) {
-          pnl.common.unitPrefix = pnl.city.orderUI ? (pnl.city.orderCnt ? '売上本数(万本)' : 'タイトル') : '';
+        if (pnl.city.orderUI) {
+          if (pnl.city.orderCnt) {
+            pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix;
+            pnl.common.unit = mm.opt.chartCity.orderUIUnit;
+          } else {
+            pnl.common.unitPrefix = mm.opt.common.unitPrefix;
+            pnl.common.unit = mm.opt.common.unit;
+          }
         }
       }
     } else {

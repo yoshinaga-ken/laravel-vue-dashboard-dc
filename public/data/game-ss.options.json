@@ -1,6 +1,9 @@
 {
   "dataType": 0,
   "title": "「セガ サターン」ソフト一覧",
+  "common": {
+    "unit": "タイトル"
+  },
   "searchPrefix": "セガサターン",
   "dataReference": "<ul><li><a target='_blank' href='https://www.gavas.jp/user_data/segasaturn_game_title.php'>セガサターンのゲームタイトル一覧@ピコピコ大百科</a></li><li><a target='_blank' href='https://www.gavas.jp/user_data/segasaturn_game_ranking.php'>セガサターンソフト売上ランキングTOP50@ピコピコ大百科</a></li><li><a target='_blank' href='https://ja.wikipedia.org/wiki/セガサターンのゲームタイトル一覧'>セガサターンのゲームタイトル一覧@wikipedia</a></li></ul>",
   "detailType": "city",
@@ -13,7 +16,9 @@
     "imagePath": "/img/game/ss",
     "imageTooltip": "all",
     "orderYmd": true,
-    "orderUI": true
+    "orderUI": true,
+    "orderUIUnitPrefix": "売上本数",
+    "orderUIUnit": "万本"
   },
   "chartDate": {
     "elasticY": false,

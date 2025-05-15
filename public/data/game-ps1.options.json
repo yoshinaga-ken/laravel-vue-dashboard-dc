@@ -1,6 +1,9 @@
 {
   "dataType": 0,
   "title": "「プレイステーション」ソフト一覧",
+  "common": {
+    "unit": "タイトル"
+  },
   "searchPrefix": "プレイステーション",
   "dataReference": "<ul><li><a target='_blank' href='https://www.gavas.jp/user_data/playstation_game_title.php'>初代プレイステーションのゲームタイトル一覧@ピコピコ大百科</a></li><li><a target='_blank' href='https://www.gavas.jp/user_data/playstation_game_ranking.php'>初代プレイステーション歴代ソフト売上ランキングTOP50@ピコピコ大百科</a></li><li><a target='_blank' href='https://ja.wikipedia.org/wiki/PlayStationのゲームタイトル一覧'>PlayStationのゲームタイトル一覧@wikipedia</a></li></ul>",
   "detailType": "city",
@@ -13,7 +16,9 @@
     "imagePath": "/img/game/ps1",
     "imageTooltip": "all",
     "orderYmd": true,
-    "orderUI": true
+    "orderUI": true,
+    "orderUIUnitPrefix": "売上本数",
+    "orderUIUnit": "万本"
   },
   "chartDate": {
     "elasticY": false,
