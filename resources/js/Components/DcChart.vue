@@ -1716,6 +1716,7 @@ watch(() => pnl.city.orderCnt, v => {
       pnl.common.unitPrefix = mm.opt.common.unitPrefix;
       pnl.common.unit = mm.opt.common.unit;
     }
+    mm.onChangeURL('name2_order', pnl.city.orderCnt ? 1 : 0);
   }
 
   // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
@@ -3701,6 +3702,9 @@ const mm = {
 
     // chartCity
     isRedraw = mm.chart.filterFromGetParam(mm.chartCity, 'name2', isRedraw);
+    if (pnl.city.orderUI) {
+      if (mm.get.name2_order === '1') pnl.city.orderCnt = true;
+    }
 
     if (mm.get.name2_filter) {
       $(mm.keyboardInputCity).val(mm.get.name2_filter).data('keyboard_Input_val', mm.get.name2_filter);
@@ -3856,6 +3860,7 @@ const mm = {
         break;
       case 'name_filter':
       case 'name2_filter':
+      case 'name2_order':
         url = url_append_param(location.href, {[type]: arg});
         window.history.replaceState({}, '', url);
         break;
@@ -3902,6 +3907,7 @@ const mm = {
             'name_filter',
             'name2',
             'name2_filter',
+            'name2_order',
             'name3',
             'name4',
             'name5',
