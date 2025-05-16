@@ -6170,6 +6170,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
 
   mm.chartDate2.ordinalColors(mm.config.cDate.colors);
 
+  const valueFormat = (f) => moment(f).format('YYYY/M/D(ddd)');
   mm.composite2
     .width(chartDateW)
     .height(200)
@@ -6183,10 +6184,11 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
       right: 0,
       bottom: 20,
       left: 35
-    }).legend(dc.legend().x(isSp ? chartDateW - 200 : 45).y(10).legendText((d) => {
-    let sel_no = d.name.split(':');
-    return sel_no.length === 2 ? mm.dateStackPl1Names[sel_no[1]] : d.name;
-  }))
+    })
+    .legend(dc.legend().x(isSp ? chartDateW - 200 : 45).y(10).legendText((d) => {
+      let sel_no = d.name.split(':');
+      return sel_no.length === 2 ? mm.dateStackPl1Names[sel_no[1]] : d.name;
+    }))
     .x(mm.domainDate ? d3.scaleTime().domain(mm.domainDate) : d3.scaleTime())
     .elasticX(false)
     //.round(d3.timeDay.round)
@@ -6196,56 +6198,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     .renderVerticalGridLines(true)
     .brushOn(false)
     .elasticY(mm.config.cDate.is_elasticY) //yAxisの高さを動的に変化させる
-    .title(function (d) {
-      let is_bar = isNaN(d.value);
-      let s_suf = '';
-      //let ymd2=moment(d.key).format('YYYYMMDD');
-      //s='累計: '+mm.dateCnt[ymd2]+'名\n'; //TODO:
-      let date_str = typeof (d.key) === "object" ? moment(d.key).format('YYYY/M/D(ddd)') : d.key;
-      if (!is_bar) {
-        //N日 移動平均
-        return date_str + '\n週間移動平均: ' + php_number_format(d.value) + '名';
-      }
-
-      let flt = mm.chartName.filters();
-      let pref_mode = flt.length > 1 && flt.length <= mm.chartStack[STACK_PL1].length;
-      if (pref_mode) {
-        let s = '';
-        for (let f of flt) {
-          s += d.value.nmcnt[f] ? (f + ': ' + d.value.nmcnt[f] + '名\n') : '';
-        }
-        return date_str + '\n────────\n' + s + (flt.length > 1 ? '────────\n計: ' + d.value.total + '名' : '') + '\n' + s_suf;
-      } else if (pnl.date.stack_type === STACK_AGE) {
-        let s = '';
-        for (var i = 0; i < d.value.agcnt.length; i++) {
-          if (d.value.agcnt[i] === 0) continue
-          let per = _.round(100 * d.value.agcnt[i] / d.value.total, 1) + '%';
-          let nm = mm.chartStack[STACK_AGE][i];
-          s += php_sprintf("%' -8s", nm) + ': ' + php_sprintf("%' 3s", php_number_format(d.value.agcnt[i])) + ' (' + per + ')\n';
-        }
-        return date_str + '\n──────────\n' + s + '──────────\n計: ' + php_number_format(d.value.total) + '\n' + s_suf;
-      } else { // tack_type==='con'
-        if (gg.dt === DT_COVID) {
-          return date_str + '\n────────\n' +
-            (d.value.lv_a === 0 ? '' : CND_LV_A + ': ' + d.value.lv_a + '名\n') +
-            (d.value.lv_b === 0 ? '' : CND_LV_B + ': ' + d.value.lv_b + '名\n') +
-            (d.value.lv_c === 0 ? '' : CND_LV_C + ': ' + d.value.lv_c + '名\n') +
-            (d.value.lv_d === 0 ? '' : CND_LV_D + ': ' + d.value.lv_d + '名\n') +
-            (d.value.lv_e === 0 ? '' : CND_LV_E + ': ' + d.value.lv_e + '名\n') +
-            '────────\n計: ' + php_number_format(d.value.total) + '名' + '\n' + s_suf;
-        } else {
-          let s = '';
-          for (var i = 0; i < d.value.cdcnt.length; i++) {
-            if (d.value.cdcnt[i] === 0) continue
-            let per = _.round(100 * d.value.cdcnt[i] / d.value.total, 1) + '%';
-            let nm = mm.chartStack[STACK_CND][i];
-            s += php_sprintf("%' -8s", nm) + ': ' + php_sprintf("%' 3s", php_number_format(d.value.cdcnt[i])) + ' (' + per + ')\n';
-          }
-          return date_str + '\n──────────\n' + s + '──────────\n計: ' + php_number_format(d.value.total) + '\n' + s_suf;
-
-        }
-      }
-    })
+    .title(v => mm.util.stackedTitle(v, valueFormat, mm.opt.common.unit))
     .on('renderlet', function (chart, filter) {
     })
     .on('pretransition', mm.onChartDatePretransition)
@@ -6254,7 +6207,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
       mm.chartDate2.filterAll().filter([mm.composite.filters()]);
     })
     .on('filtered', function (chart, v) {
-      mm.showFilterUi('#panel_date', chart, (f) => moment(f).format('YYYY/M/D(ddd)'));
+      mm.showFilterUi('#panel_date', chart, valueFormat);
       mm.onChartFiltered(chart, v);
       mm.chartScroll('#div_name');
       mm.chartScroll('#div_city');
