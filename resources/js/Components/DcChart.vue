@@ -1135,7 +1135,9 @@ const props = defineProps({
       'covid19-japan.jpg': 'covid19-data-2021-02-28.csv',
       'food-ramen.jpg': 'food-ramen.csv',
       'ja-weather-precipitation.jpg': 'ja-weather-precipitation.csv',
+      'ja-weather-precipitation-3.jpg': 'ja-weather-precipitation-3.csv',
       'ja-weather-temperature.jpg': 'ja-weather-temperature.csv',
+      'ja-weather-temperature-3.jpg': 'ja-weather-temperature-3.csv',
       'ja-quake-noto-safety.jpg': 'ja-quake-noto-safety.csv',
       'ja-tokyo-gubernatorial-election.jpg': 'ja-tokyo-gubernatorial-election.csv',
       'resas-agriculture.jpg': 'resas-agriculture.csv',
@@ -1456,6 +1458,14 @@ const getPanelSettings = () => {
 const onChangeSettings = () => {
   settingsSave();
 };
+const applyRangeChartSettings = () => {
+  if (mm.opt.chartDate.isRangeChart) {
+    mm.composite2.rangeChart(mm.composite);
+  } else if (mm.opt.chartDate2.isRangeChart) {
+    mm.composite2.brushOn(true)
+    mm.composite.rangeChart(mm.composite2);
+  }
+}
 const onChangeChartDateChart2IsShow = (newVal) => {
   settingsSave();
   if (!newVal || mm.composite2 !== null) return;
@@ -1465,6 +1475,7 @@ const onChangeChartDateChart2IsShow = (newVal) => {
     case mm.opt.chartDate2.chartType === 'lines':
       pnl.date.chart2.type = CHART_DATE2_TYPE_LINES;
       initChartDate2Stacks(mm.config.cDate.width, false);
+      applyRangeChartSettings();
       break;
     case gg.dt === DT_COVID:
       pnl.date.chart2.type = CHART_DATE2_TYPE_COVID;
@@ -1473,10 +1484,12 @@ const onChangeChartDateChart2IsShow = (newVal) => {
     case mm.opt.chartDate2.chartType === 'stacks':
       pnl.date.chart2.type = CHART_DATE2_TYPE_STACKS;
       initChartDate2Stacks(mm.config.cDate.width, true);
+      applyRangeChartSettings();
       break;
     case mm.opt.chartDate2.chartType === 'series':
       pnl.date.chart2.type = CHART_DATE2_TYPE_SERIES;
       initChartDate2TypeSeries(mm.config.cDate.width);
+      applyRangeChartSettings();
       break;
   }
   mm.dateStackShow(STACK_CND);
@@ -2106,7 +2119,12 @@ const mm = {
     chartMap: {},
     chartName: {},
     chartCity: {},
-    chartDate: {},
+    chartDate: {
+      isRangeChart: false
+    },
+    chartDate2: {
+      isRangeChart: false
+    },
     chartYear: {},
     chartSeason: {},
     chartWeek: {},
@@ -5120,7 +5138,7 @@ const mm = {
         gg.isPrefTable = gg.dt === DT_COVID;
         doParseOptions = 0;
         if (G_IS_LOCAL) {
-          console.info(`INFO:オプションデータは${location.origin + pathOptionsJson}を使用`);
+          console.info(`INFO:Use Chart Options JSON:${location.origin + pathOptionsJson}`);
         }
         return mm.util.parseOptionsCSV(path, doParseOptions);
       })
@@ -6222,11 +6240,6 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     return moment(s).format(format);
   });
   mm.composite2.yAxis().tickFormat(d3.format(".2s")).ticks(5); //.tickFormat(d3.format("d"));
-
-  // mm.composite2.brushOn(true)
-  // mm.composite.rangeChart(mm.composite2);
-
-  // mm.composite2.rangeChart(mm.composite);
 }
 
 /**
@@ -6313,10 +6326,6 @@ const initChartDate2TypeSeries = (chartDateW) => {
     return moment(s).format(format);
   });
   mm.composite2.yAxis().tickFormat(d3.format(".2s")).ticks(5); //.tickFormat(d3.format("d"));
-
-  // mm.composite2.brushOn(true)
-  // mm.composite.rangeChart(mm.composite2);
-
 }
 
 /**

@@ -13,7 +13,8 @@
   "chartDate": {
     "elasticY": false,
     "width": 1000,
-    "format": "YYYY"
+    "format": "YYYY",
+    "isRangeChart": true
   },
   "chartYear": {
     "isLegend": true
