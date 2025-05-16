@@ -1692,6 +1692,8 @@ onMounted(async () => {
     if (G_IS_LOCAL) {
       mm.local.onLoadAllDataAfter();
     }
+
+    mm.setPanelFromDataOptionsAfterLoad();
   });
 });
 
@@ -2405,6 +2407,14 @@ const mm = {
       }
     } else {
       mm.opt.chartCity.orderYmd = false;
+    }
+  },
+  // データオプション(mm.opt)系をpnlに反映 - データロード後
+  setPanelFromDataOptionsAfterLoad: () => {
+    // chartEx
+    for (let k = 0; k < pnl.ex.length; k++) {
+      if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue;
+      pnl.ex[k].elasticX = mm.opt.chartEx[k].orderDesc ?? false
     }
   },
   data_hdr: [],
