@@ -406,7 +406,7 @@
               </label>
               &nbsp;&nbsp;
               <label v-if="pnl.date.chart2.type!==0" title="ライン形式のチャートも表示します">
-                <input type="checkbox" v-model="pnl.date.chart2.is_show">📈表示</label>
+                <input type="checkbox" v-model="pnl.date.chart2.is_show">📈Line表示</label>
 
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.date.is_show=0"></span>
 
@@ -1708,8 +1708,15 @@ watch(() => pnl.map.is_show, is_show => {
 watch(() => pnl.name.is_show, onChangeSettings);
 watch(() => pnl.city.is_show, onChangeSettings);
 watch(() => pnl.city.orderCnt, v => {
-  if (mm.url_data.data.indexOf('game-') === 0) {
-    pnl.common.unitPrefix = pnl.city.orderUI ? (pnl.city.orderCnt ? '売上本数(万本)' : 'タイトル') : '';
+  if (pnl.city.orderUI) {
+    if (pnl.city.orderCnt) {
+      pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix;
+      pnl.common.unit = mm.opt.chartCity.orderUIUnit;
+    } else {
+      pnl.common.unitPrefix = mm.opt.common.unitPrefix;
+      pnl.common.unit = mm.opt.common.unit;
+    }
+    mm.onChangeURL('name2_order', pnl.city.orderCnt ? 1 : 0);
   }
 
   // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
@@ -2090,7 +2097,8 @@ const mm = {
   opt: {
     dataType: DT_DEF, // DT_DEF|DT_COVID,
     common: {
-      unit: ''
+      unit: '',
+      unitPrefix: ''
     },
     chartGMap: {},
     chartSView: {},
@@ -2285,6 +2293,9 @@ const mm = {
     if (mm.opt.common.unit) {
       pnl.common.unit = mm.opt.common.unit;
     }
+    if (mm.opt.common.unitPrefix) {
+      pnl.common.unitPrefix = mm.opt.common.unitPrefix;
+    }
     if (mm.opt.dataReference) {
       pnl.common.dataReference = mm.opt.dataReference;
     }
@@ -2355,8 +2366,14 @@ const mm = {
     if (mm.opt.chartCity?.orderYmd) {
       if (mm.opt.chartCity.orderUI) {
         pnl.city.orderUI = mm.opt.chartCity.orderUI;
-        if (mm.url_data.data.indexOf('game-') === 0) {
-          pnl.common.unitPrefix = pnl.city.orderUI ? (pnl.city.orderCnt ? '売上本数(万本)' : 'タイトル') : '';
+        if (pnl.city.orderUI) {
+          if (pnl.city.orderCnt) {
+            pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix;
+            pnl.common.unit = mm.opt.chartCity.orderUIUnit;
+          } else {
+            pnl.common.unitPrefix = mm.opt.common.unitPrefix;
+            pnl.common.unit = mm.opt.common.unit;
+          }
         }
       }
     } else {
@@ -3685,6 +3702,9 @@ const mm = {
 
     // chartCity
     isRedraw = mm.chart.filterFromGetParam(mm.chartCity, 'name2', isRedraw);
+    if (pnl.city.orderUI) {
+      if (mm.get.name2_order === '1') pnl.city.orderCnt = true;
+    }
 
     if (mm.get.name2_filter) {
       $(mm.keyboardInputCity).val(mm.get.name2_filter).data('keyboard_Input_val', mm.get.name2_filter);
@@ -3840,6 +3860,7 @@ const mm = {
         break;
       case 'name_filter':
       case 'name2_filter':
+      case 'name2_order':
         url = url_append_param(location.href, {[type]: arg});
         window.history.replaceState({}, '', url);
         break;
@@ -3886,6 +3907,7 @@ const mm = {
             'name_filter',
             'name2',
             'name2_filter',
+            'name2_order',
             'name3',
             'name4',
             'name5',
@@ -6148,6 +6170,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
 
   mm.chartDate2.ordinalColors(mm.config.cDate.colors);
 
+  const valueFormat = (f) => moment(f).format('YYYY/M/D(ddd)');
   mm.composite2
     .width(chartDateW)
     .height(200)
@@ -6161,10 +6184,11 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
       right: 0,
       bottom: 20,
       left: 35
-    }).legend(dc.legend().x(isSp ? chartDateW - 200 : 45).y(10).legendText((d) => {
-    let sel_no = d.name.split(':');
-    return sel_no.length === 2 ? mm.dateStackPl1Names[sel_no[1]] : d.name;
-  }))
+    })
+    .legend(dc.legend().x(isSp ? chartDateW - 200 : 45).y(10).legendText((d) => {
+      let sel_no = d.name.split(':');
+      return sel_no.length === 2 ? mm.dateStackPl1Names[sel_no[1]] : d.name;
+    }))
     .x(mm.domainDate ? d3.scaleTime().domain(mm.domainDate) : d3.scaleTime())
     .elasticX(false)
     //.round(d3.timeDay.round)
@@ -6174,56 +6198,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     .renderVerticalGridLines(true)
     .brushOn(false)
     .elasticY(mm.config.cDate.is_elasticY) //yAxisの高さを動的に変化させる
-    .title(function (d) {
-      let is_bar = isNaN(d.value);
-      let s_suf = '';
-      //let ymd2=moment(d.key).format('YYYYMMDD');
-      //s='累計: '+mm.dateCnt[ymd2]+'名\n'; //TODO:
-      let date_str = typeof (d.key) === "object" ? moment(d.key).format('YYYY/M/D(ddd)') : d.key;
-      if (!is_bar) {
-        //N日 移動平均
-        return date_str + '\n週間移動平均: ' + php_number_format(d.value) + '名';
-      }
-
-      let flt = mm.chartName.filters();
-      let pref_mode = flt.length > 1 && flt.length <= mm.chartStack[STACK_PL1].length;
-      if (pref_mode) {
-        let s = '';
-        for (let f of flt) {
-          s += d.value.nmcnt[f] ? (f + ': ' + d.value.nmcnt[f] + '名\n') : '';
-        }
-        return date_str + '\n────────\n' + s + (flt.length > 1 ? '────────\n計: ' + d.value.total + '名' : '') + '\n' + s_suf;
-      } else if (pnl.date.stack_type === STACK_AGE) {
-        let s = '';
-        for (var i = 0; i < d.value.agcnt.length; i++) {
-          if (d.value.agcnt[i] === 0) continue
-          let per = _.round(100 * d.value.agcnt[i] / d.value.total, 1) + '%';
-          let nm = mm.chartStack[STACK_AGE][i];
-          s += php_sprintf("%' -8s", nm) + ': ' + php_sprintf("%' 3s", php_number_format(d.value.agcnt[i])) + ' (' + per + ')\n';
-        }
-        return date_str + '\n──────────\n' + s + '──────────\n計: ' + php_number_format(d.value.total) + '\n' + s_suf;
-      } else { // tack_type==='con'
-        if (gg.dt === DT_COVID) {
-          return date_str + '\n────────\n' +
-            (d.value.lv_a === 0 ? '' : CND_LV_A + ': ' + d.value.lv_a + '名\n') +
-            (d.value.lv_b === 0 ? '' : CND_LV_B + ': ' + d.value.lv_b + '名\n') +
-            (d.value.lv_c === 0 ? '' : CND_LV_C + ': ' + d.value.lv_c + '名\n') +
-            (d.value.lv_d === 0 ? '' : CND_LV_D + ': ' + d.value.lv_d + '名\n') +
-            (d.value.lv_e === 0 ? '' : CND_LV_E + ': ' + d.value.lv_e + '名\n') +
-            '────────\n計: ' + php_number_format(d.value.total) + '名' + '\n' + s_suf;
-        } else {
-          let s = '';
-          for (var i = 0; i < d.value.cdcnt.length; i++) {
-            if (d.value.cdcnt[i] === 0) continue
-            let per = _.round(100 * d.value.cdcnt[i] / d.value.total, 1) + '%';
-            let nm = mm.chartStack[STACK_CND][i];
-            s += php_sprintf("%' -8s", nm) + ': ' + php_sprintf("%' 3s", php_number_format(d.value.cdcnt[i])) + ' (' + per + ')\n';
-          }
-          return date_str + '\n──────────\n' + s + '──────────\n計: ' + php_number_format(d.value.total) + '\n' + s_suf;
-
-        }
-      }
-    })
+    .title(v => mm.util.stackedTitle(v, valueFormat, mm.opt.common.unit))
     .on('renderlet', function (chart, filter) {
     })
     .on('pretransition', mm.onChartDatePretransition)
@@ -6232,7 +6207,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
       mm.chartDate2.filterAll().filter([mm.composite.filters()]);
     })
     .on('filtered', function (chart, v) {
-      mm.showFilterUi('#panel_date', chart, (f) => moment(f).format('YYYY/M/D(ddd)'));
+      mm.showFilterUi('#panel_date', chart, valueFormat);
       mm.onChartFiltered(chart, v);
       mm.chartScroll('#div_name');
       mm.chartScroll('#div_city');

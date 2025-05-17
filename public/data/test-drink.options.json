@@ -4,6 +4,10 @@
     "chartType": "lines"
   },
   "title": "コンビニ 清涼飲料水 販売数",
+  "common": {
+    "unit": "本",
+    "unitPrefix": "販売数"
+  },
   "isMakeAutocompleteData": true,
   "chartAge_unit": "null",
   "chartGMap": {},

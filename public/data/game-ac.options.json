@@ -1,6 +1,9 @@
 {
   "dataType": 0,
   "title": "「アーケードゲーム」タイトル一覧 1974年～2024年",
+  "common": {
+    "unit": "タイトル"
+  },
   "searchPrefix": "AC",
   "searchPrefixDataIndex": 4,
   "dataReference": "<ul><li><a target='_blank' href=\"https://ja.wikipedia.org/wiki/アーケードゲームのタイトル一覧\">アーケードゲームのタイトル一覧@Wikipedia</a></li></ul>",
@@ -14,7 +17,9 @@
     "imagePath": "/img/game/ac",
     "imageTooltip": "all",
     "orderYmd": true,
-    "orderUI": true
+    "orderUI": true,
+    "orderUIUnitPrefix": "売上本数",
+    "orderUIUnit": "万本"
   },
   "chartDate": {
     "elasticY": false,

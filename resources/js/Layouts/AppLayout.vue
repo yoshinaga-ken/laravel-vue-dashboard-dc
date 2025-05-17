@@ -71,13 +71,13 @@ const onclickGraphQL = () => {
                 <NavLink :href="route('articles.index')" :active="route().current('articles.*')">
                   📝Articles
                 </NavLink>
-                <NavLink @click="onclickStoryBook()">
+                <NavLink href="#" @click="onclickStoryBook()">
                   <img src="/img/storybook-icon.svg" alt="StoryBook Logo"
                        style="width: 1.3em; height: 1.3em; vertical-align: middle;">
                   StoryBook
                   <v-icon icon="mdi-fullscreen"/>
                 </NavLink>
-                <NavLink @click="onclickGraphQL()">
+                <NavLink href="#" @click="onclickGraphQL()">
                   <img src="https://graphql.org/img/logo.svg" alt="GraphQL Logo" style="width: 1.3em; height: 1.3em; vertical-align: middle;">
                   GraphQL
                   <v-icon icon="mdi-fullscreen"/>
@@ -261,13 +261,13 @@ const onclickGraphQL = () => {
             <ResponsiveNavLink :href="route('articles.index')" :active="route().current('articles.*')">
               📝Articles
             </ResponsiveNavLink>
-            <ResponsiveNavLink @click="onclickStoryBook()">
+            <ResponsiveNavLink href="#" @click="onclickStoryBook()">
               <img src="/img/storybook-icon.svg" alt="StoryBook Logo"
                    style="width: 1.3em; height: 1.3em; vertical-align: middle;">
               StoryBook
               <v-icon icon="mdi-fullscreen"/>
             </ResponsiveNavLink>
-            <ResponsiveNavLink @click="onclickGraphQL()">
+            <ResponsiveNavLink href="#" @click="onclickGraphQL()">
               <img src="https://graphql.org/img/logo.svg" alt="GraphQL Logo" style="width: 1.3em; height: 1.3em; vertical-align: middle;">
               GraphQL
               <v-icon icon="mdi-fullscreen"/>

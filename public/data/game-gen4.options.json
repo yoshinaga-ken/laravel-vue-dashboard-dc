@@ -1,6 +1,9 @@
 {
   "dataType": 0,
   "title": "第4世代家庭用ゲーム機ソフト一覧(スーパーファミコン・PCエンジン・メガドライブ＆ファミコン)",
+  "common": {
+    "unit": "タイトル"
+  },
   "searchPrefixDataIndex": 1,
   "dataReference": "<ul><li><a target='_blank' href=\"http://pasofami.game.coocan.jp/game/game.htm\">各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target='_blank' href='https://www.gavas.jp/user_data/superfamicom_game_ranking.php'>各ゲーム機歴代ソフト売上ランキング＠ピコピコ大百科</a></li><li>wikipedia等</li></ul>",
   "detailType": "city",
@@ -13,7 +16,9 @@
     "imagePath": "/img/game/smc",
     "imageTooltip": "all",
     "orderYmd": true,
-    "orderUI": true
+    "orderUI": true,
+    "orderUIUnitPrefix": "売上本数",
+    "orderUIUnit": "万本"
   },
   "chartDate": {
     "elasticY": false,

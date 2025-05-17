@@ -1,5 +1,8 @@
 {
   "dataType": 0,
+  "common": {
+    "unit": "タイトル"
+  },
   "chartGMap": {},
   "chartSView": {},
   "chartTube": {},
@@ -12,7 +15,9 @@
     "imagePath": "/img/game/ps1",
     "imageTooltip": "all",
     "orderYmd": true,
-    "orderUI": true
+    "orderUI": true,
+    "orderUIUnitPrefix": "売上本数",
+    "orderUIUnit": "万本"
   },
   "chartDate": {
     "elasticY": false,
