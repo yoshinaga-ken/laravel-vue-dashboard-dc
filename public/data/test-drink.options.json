@@ -45,6 +45,24 @@
   "chartCond": {},
   "chartJob": {},
   "chartJobCat": {},
-  "chartEx": [],
+  "chartEx": [
+    {
+      "isDcSunburstChart": true,
+      "dcSunburstChart": {
+        "width": 600,
+        "height": 600
+      },
+      "legend": {
+        "isShow": true
+      }
+    },
+    {
+      "isDcSunburstChart": true,
+      "isStackedBarchart": true,
+      "legend": {
+        "isShow": false
+      }
+    }
+  ],
   "chartDetail": {}
 }

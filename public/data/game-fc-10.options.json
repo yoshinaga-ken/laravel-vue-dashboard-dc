@@ -49,17 +49,25 @@
       "💾2M"
     ]
   },
-  "chartEx": {
-    "0": {
-      "scale": false,
-      "isLegend": false
+  "chartEx": [
+    {
+      "name": "売り上げ本数(🏢メーカー/🙋‍♂️クリエイター) SunburstChart",
+      "isDcSunburstChart": true,
+      "dcSunburstChart": {
+        "keyIndex": "🏢$4/🙋‍♂️$9",
+        "width": 600,
+        "height": 600,
+        "margins": {
+          "left": 150
+        }
+      }
     },
-    "1": {
-      "isLegend": 1,
-      "scale": false,
-      "orderDesc": true
+    {
+      "name": "売り上げ本数(🏢メーカー/🙋‍♂️クリエイター) Barchart",
+      "isDcSunburstChart": false,
+      "isLegend": true
     }
-  },
+  ],
   "chartGMap": {},
   "chartSView": {},
   "chartTube": {},
