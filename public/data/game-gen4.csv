@@ -3966,24 +3966,3 @@
 1991-10-25,FC💾DS,💾1M,PUZ,徳間書店,ぷよぷよ💾,￥500,￥500代,0,-
 1992-04-28,FC💾DS,💾512K,PUZ,任天堂,クルクルランド💾,￥500,￥500代,0,-
 1992-12-22,FC💾DS,💾1M,PUZ,徳間書店,じゃんけんディスク城💾,￥500,￥500代,0,-
-@CsvOptions:,,,,,,,,,
-dataType=0,,,,,,,,,
-title=第4世代家庭用ゲーム機(PCエンジン・メガドライブ・スーパーファミコン)＆ファミコンソフト一覧,,,,,,,,,
-searchPrefixDataIndex=1,,,,,,,,,
-"dataReference=<ul><li><a target%3d'_blank' href%3d""http://pasofami.game.coocan.jp/game/game.htm"">各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target%3d'_blank' href%3d'https://www.gavas.jp/user_data/superfamicom_game_ranking.php'>各ゲーム機歴代ソフト売上ランキング＠ピコピコ大百科</a></li><li>wikipedia等</li></ul>",,,,,,,,,
-detailType=city,,,,,,,,,
-isMakeAutocompleteData=1,,,,,,,,,
-chartName[imagePath]=/img/game/maker,,,,,,,,,
-chartName[imageTooltip]=img,,,,,,,,,
-chartCity[imagePath]=/img/game/smc,,,,,,,,,
-chartCity[imageTooltip]=all,,,,,,,,,
-chartCity[orderYmd]=1,,,,,,,,,
-chartCity[orderUI]=1,,,,,,,,,
-chartDate[elasticY]=0,,,,,,,,,
-chartDate[width]=1000,,,,,,,,,
-chartDate[format]=YYYY,,,,,,,,,
-chartSex[unit]=null,,,,,,,,,
-chartSex[chartType]=bar,,,,,,,,,
-chartSex[isLegend]=0,,,,,,,,,
-chartAge[unit]=null,,,,,,,,,
-editUrl=https://docs.google.com/spreadsheets/d/15HWefrVChKM9QuScO5X59qOT8Iv5vAt8sMMen3PizXY/edit?gid=1347857449#gid=1347857449

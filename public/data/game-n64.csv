@@ -205,21 +205,3 @@
 2000-05-02,9,10,SPT,メディアファクトリー,日本プロゴルフツアー64,"￥3,500","￥3,500代",0
 2000-05-17,9,10,ETC,ランドネットDD,巨人のドシン解放戦線チビッコチッコ大集合,"￥3,333","￥3,500代",0
 2000-08-29,9,10,ETC,ランドネットDD,ポリゴンスタジオ,"￥3,333","￥3,500代",0
-@CsvOptions:,,,,,,,,
-dataType=0,,,,,,,,
-title=「NINTENDO64」ソフト一覧,,,,,,,,
-dataReference=<ul><li><a target%3d'_blank' href%3d'http://pasofami.game.coocan.jp/game/game.htm'>各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target%3d'_blank' href%3d'https://www.gavas.jp/user_data/nintendo64_game_ranking.php'>ニンテンドウ64歴代ソフト売上ランキング＠ピコピコ大百科</a></li><li>wikipedia</ul>,,,,,,,,
-detailType=city,,,,,,,,
-isMakeAutocompleteData=1,,,,,,,,
-chartName[imagePath]=/img/game/maker,,,,,,,,
-chartName[imageTooltip]=img,,,,,,,,
-chartCity[imagePath]=/img/game/n64,,,,,,,,
-chartCity[imageTooltip]=all,,,,,,,,
-chartCity[orderYmd]=1,,,,,,,,
-chartCity[orderUI]=1,,,,,,,,
-chartDate[elasticY]=0,,,,,,,,
-chartDate[width]=1000,,,,,,,,
-chartDate[format]=YYYY,,,,,,,,
-"chartAge[unit]=[""不明"",""64M"",""96M"",""128M"",""192M"",""196M"",""224M"",""256M"",""320M"",""512M"",""💾64MB""]",,,,,,,,
-"chartSex[unit]=[""不明"",""CP"",""EEP1"",""EEP1+CP"",""EEP2"",""EEP2+CP"",""FLASH"",""SRAM"",""SRAM+CP"",""💾64DD""]",,,,,,,,
-editUrl=https://docs.google.com/spreadsheets/d/17GLwimysInib7t18Bgj3OmpH9ApflEP9i_61m4IMVJI

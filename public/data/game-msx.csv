@@ -863,21 +863,3 @@
 1985-01-01,MSX,-,32K,ボースティック,妖怪探偵ちまちま,"￥5,600","￥5,500代",1,Mirrored
 1985-01-01,MSX,-,16K,ポニーキャニオン,連珠とおじゃま犬たち,"￥4,800","￥5,000代",1,Basic(startat0x8000)
 1987-01-01,MSX,-,不明,立石電気,連続血圧測定プログラム,"￥39,800","￥40,000代",1,?
-@CsvOptions:,,,,,,,,,
-"dataType=0,,,,,,,",,,,,,,,,
-title=「MSX」ソフト一覧,,,,,,,,,
-searchPrefix=MSX,,,,,,,,,
-dataReference=<ul><li><a target%3d'_blank' href%3d'http://pasofami.game.coocan.jp/game/game.htm'>各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a><li><a target%3d'_blank' href%3d'https://ja.wikipedia.org/wiki/MSX%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7'>MSXのゲームタイトル一覧@wikipedia</a></ul>,,,,,,,,,
-detailType=city,,,,,,,,,
-isMakeAutocompleteData=1,,,,,,,,,
-chartName[imagePath]=/img/game/maker,,,,,,,,,
-chartName[imageTooltip]=img,,,,,,,,,
-chartCity[imagePath]=@tube,,,,,,,,,
-chartCity[imageTooltip]=all,,,,,,,,,
-chartCity[orderYmd]=1,,,,,,,,,
-chartDate[elasticY]=0,,,,,,,,,
-chartDate[width]=1000,,,,,,,,,
-chartDate[format]=YYYY,,,,,,,,,
-chartAge[unit]=null,,,,,,,,,
-chartSex[unit]=null,,,,,,,,,
-editUrl=https://docs.google.com/spreadsheets/d/1bY57j7jjEaGNWkZMPd0jIN00-h2WCtrifVJVp82LQzM/edit?gid=366568963#gid=366568963,,,,,,,,,
