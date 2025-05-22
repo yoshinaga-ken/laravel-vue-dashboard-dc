@@ -4534,11 +4534,11 @@ const mm = {
       }
       // スタック登録 - CHART_DATE_STACK_GRP[STACK_PL1]
       for (i = 0; i < mm.chartStack[STACK_PL1].length; i++) {
-        chart.stack(group, mm.chartStack[STACK_PL1][i], mm.dateStackPl1Accessor(i, mm.opt.chartDate.isFilterMissingCollect));
+        chart.stack(group, mm.chartStack[STACK_PL1][i], mm.dateStackPl1Accessor(i, mm.opt.chartDate.isFilterMissingCorrect));
       }
       // スタック登録 - CHART_DATE_STACK_GRP[STACK_AGE]
       for (i = 0; i < mm.chartStack[STACK_AGE].length; i++) {
-        chart.stack(group, mm.chartStack[STACK_AGE][i], mm.dateStackAgeAccessor(i, mm.opt.chartDate.isFilterMissingCollect));
+        chart.stack(group, mm.chartStack[STACK_AGE][i], mm.dateStackAgeAccessor(i, mm.opt.chartDate.isFilterMissingCorrect));
       }
       return chart;
     },
@@ -4989,27 +4989,27 @@ const mm = {
       return v;
     }
   },
-  dateStackCndAccessor: (stackName, isFilterMissingCollect = false) => (d) => {
+  dateStackCndAccessor: (stackName, isFilterMissingCorrect = false) => (d) => {
     let v = d.value.cdcnt[stackName];
-    if (isFilterMissingCollect) v = mm.getPreviousValue(stackName, v);
+    if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v);
     return v;
   },
-  dateStackPl1Accessor: (stackName, isFilterMissingCollect = false) => (d) => {
+  dateStackPl1Accessor: (stackName, isFilterMissingCorrect = false) => (d) => {
     let flt = mm.chartName.filters();
     let pref_mode = flt.length > 1 && flt.length <= mm.chartStack[1].length
     if (pref_mode) {
       mm.dateStackPl1Names[stackName] = flt[stackName];
       let v = d.value.nmcnt[flt[stackName]] === undefined ? 0 : d.value.nmcnt[flt[stackName]];
-      if (isFilterMissingCollect) v = mm.getPreviousValue(stackName, v);
+      if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v);
       return v;
     } else {
       mm.dateStackPl1Names[stackName] = '(選択' + (stackName + 1) + ')';
       return 0;
     }
   },
-  dateStackAgeAccessor: (stackName, isFilterMissingCollect = false) => (d) => {
+  dateStackAgeAccessor: (stackName, isFilterMissingCorrect = false) => (d) => {
     let v = d.value.agcnt[stackName];
-    if (isFilterMissingCollect) v = mm.getPreviousValue(stackName, v);
+    if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v);
     return v;
   },
   chartScroll: function (sel, name = '', duration = 300) {
@@ -6193,9 +6193,9 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   // スタック登録 - CHART_DATE_STACK_GRP[0]
   for (var no = 0; no < mm.chartStack[STACK_CND].length; no++) {
     if (no === 0) {
-      mm.chartDate2.group(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCollect));
+      mm.chartDate2.group(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
     } else {
-      mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCollect));
+      mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
     }
     //mm.CHART_DATE_STACK_GRP_1_IDX[CHART_DATE_STACK_GRP[STACK_CND][no]] = no;
   }
@@ -6203,12 +6203,12 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_PL1]
   for (var no = 0; no < mm.chartStack[STACK_PL1].length; no++) {
     // mm.dateStackPl1Names[no] = '(選択' + (no + 1) + ')';
-    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(no, mm.opt.chartDate2.isFilterMissingCollect));
+    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
   }
 
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_AGE]
   for (var no = 0; no < mm.chartStack[STACK_AGE].length; no++) {
-    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_AGE][no], mm.dateStackAgeAccessor(no, mm.opt.chartDate2.isFilterMissingCollect));
+    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_AGE][no], mm.dateStackAgeAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
   }
 
   mm.chartDate2.ordinalColors(mm.config.cDate.colors);
@@ -7134,7 +7134,7 @@ const initDc = (data) => {
       pnl.map.is_show = gg.dt === DT_COVID;
     }
 
-    // charDate2
+    // chartDate2
     pnl.date.chart2.is_show = mm.opt.chartDate2?.isShow ?? false;
   }
   //タイトル変更
