@@ -1339,7 +1339,7 @@ const pnl = reactive({
     {
       isHidden: true,
       is_show: false,
-      title: 'Ex0',
+      title: 'chartEx0',
       style: '',
       info: '',
       elasticX: false,
@@ -1347,7 +1347,7 @@ const pnl = reactive({
     {
       isHidden: true,
       is_show: false,
-      title: 'Ex1',
+      title: 'chartEx1',
       style: '',
       info: '',
       elasticX: false,
@@ -1355,7 +1355,7 @@ const pnl = reactive({
     {
       isHidden: true,
       is_show: false,
-      title: 'Ex2',
+      title: 'chartEx2',
       style: '',
       info: '',
       elasticX: false,
@@ -1363,7 +1363,7 @@ const pnl = reactive({
     {
       isHidden: true,
       is_show: false,
-      title: 'Ex3',
+      title: 'chartEx3',
       style: '',
       info: '',
       elasticX: false,
@@ -1371,7 +1371,7 @@ const pnl = reactive({
     {
       isHidden: true,
       is_show: false,
-      title: 'Ex4',
+      title: 'chartEx4',
       style: '',
       info: '',
       elasticX: false,
@@ -1379,7 +1379,7 @@ const pnl = reactive({
     {
       isHidden: true,
       is_show: false,
-      title: 'Ex5',
+      title: 'chartEx5',
       style: '',
       info: '',
       elasticX: false,
@@ -1387,7 +1387,7 @@ const pnl = reactive({
     {
       isHidden: true,
       is_show: false,
-      title: 'Ex6',
+      title: 'chartEx6',
       style: '',
       info: '',
       elasticX: false,
@@ -1395,7 +1395,71 @@ const pnl = reactive({
     {
       isHidden: true,
       is_show: false,
-      title: 'Ex7',
+      title: 'chartEx7',
+      style: '',
+      info: '',
+      elasticX: false,
+    },
+    {
+      isHidden: true,
+      is_show: false,
+      title: 'chartEx8',
+      style: '',
+      info: '',
+      elasticX: false,
+    },
+    {
+      isHidden: true,
+      is_show: false,
+      title: 'chartEx9',
+      style: '',
+      info: '',
+      elasticX: false,
+    },
+    {
+      isHidden: true,
+      is_show: false,
+      title: 'chartEx10',
+      style: '',
+      info: '',
+      elasticX: false,
+    },
+    {
+      isHidden: true,
+      is_show: false,
+      title: 'chartEx11',
+      style: '',
+      info: '',
+      elasticX: false,
+    },
+    {
+      isHidden: true,
+      is_show: false,
+      title: 'chartEx12',
+      style: '',
+      info: '',
+      elasticX: false,
+    },
+    {
+      isHidden: true,
+      is_show: false,
+      title: 'chartEx13',
+      style: '',
+      info: '',
+      elasticX: false,
+    },
+    {
+      isHidden: true,
+      is_show: false,
+      title: 'chartEx14',
+      style: '',
+      info: '',
+      elasticX: false,
+    },
+    {
+      isHidden: true,
+      is_show: false,
+      title: 'chartEx15',
       style: '',
       info: '',
       elasticX: false,
@@ -3876,6 +3940,14 @@ const mm = {
       case 'name12': // chartEx[5]
       case 'name13': // chartEx[6]
       case 'name14': // chartEx[7]
+      case 'name15': // chartEx[8]
+      case 'name16': // chartEx[9]
+      case 'name17': // chartEx[10]
+      case 'name18': // chartEx[11]
+      case 'name19': // chartEx[12]
+      case 'name20': // chartEx[13]
+      case 'name21': // chartEx[14]
+      case 'name22': // chartEx[15]
         if (type !== 'name' && type !== 'name2') {
           mm.lastFilteredChart = arg;
         }
@@ -3957,6 +4029,14 @@ const mm = {
             'name12',
             'name13',
             'name14',
+            'name15',
+            'name16',
+            'name17',
+            'name18',
+            'name19',
+            'name20',
+            'name21',
+            'name22',
             'date',
             'year',
             'season',
@@ -7883,7 +7963,8 @@ const onDocumentReady = () => {
   mm.datePick.val(mm.data[0][D_YMD].slice(0, 4) + '/01/01')
 
   $('.btn_reset').on('click', function (event) {
-    switch ($(this).attr('id')) {
+    const id = $(this).attr('id');
+    switch (id) {
       case 'btn_reset_name' :
         mm.chartName.filterAll();
         $('#panel_name .filter_txt').text('');
@@ -7942,45 +8023,27 @@ const onDocumentReady = () => {
         dc.redrawAll('chartGroup');
         mm.onChangeURL('clear', 'name6');
         break;
-      case 'btn_reset_ex_0'  :
-        mm.chartEx[0].filterAll();
+      case 'btn_reset_ex_0' :
+      case 'btn_reset_ex_1' :
+      case 'btn_reset_ex_2' :
+      case 'btn_reset_ex_3' :
+      case 'btn_reset_ex_4' :
+      case 'btn_reset_ex_5' :
+      case 'btn_reset_ex_6' :
+      case 'btn_reset_ex_7' :
+      case 'btn_reset_ex_8' :
+      case 'btn_reset_ex_9' :
+      case 'btn_reset_ex_10' :
+      case 'btn_reset_ex_11' :
+      case 'btn_reset_ex_12' :
+      case 'btn_reset_ex_13' :
+      case 'btn_reset_ex_14' :
+      case 'btn_reset_ex_15' :
+        // 接尾辞の数値部分を抽出（btn_reset_ex_XX の XX 部分）
+        const n = parseInt(id.match(/btn_reset_ex_(\d+)/)[1]);
+        mm.chartEx[n].filterAll();
         dc.redrawAll('chartGroup');
-        mm.onChangeURL('clear', 'name7');
-        break;
-      case 'btn_reset_ex_1'  :
-        mm.chartEx[1].filterAll();
-        dc.redrawAll('chartGroup');
-        mm.onChangeURL('clear', 'name8');
-        break;
-      case 'btn_reset_ex_2'  :
-        mm.chartEx[2].filterAll();
-        dc.redrawAll('chartGroup');
-        mm.onChangeURL('clear', 'name9');
-        break;
-      case 'btn_reset_ex_3'  :
-        mm.chartEx[3].filterAll();
-        dc.redrawAll('chartGroup');
-        mm.onChangeURL('clear', 'name10');
-        break;
-      case 'btn_reset_ex_4'  :
-        mm.chartEx[4].filterAll();
-        dc.redrawAll('chartGroup');
-        mm.onChangeURL('clear', 'name11');
-        break;
-      case 'btn_reset_ex_5'  :
-        mm.chartEx[5].filterAll();
-        dc.redrawAll('chartGroup');
-        mm.onChangeURL('clear', 'name12');
-        break;
-      case 'btn_reset_ex_6'  :
-        mm.chartEx[6].filterAll();
-        dc.redrawAll('chartGroup');
-        mm.onChangeURL('clear', 'name13');
-        break;
-      case 'btn_reset_ex_7'  :
-        mm.chartEx[7].filterAll();
-        dc.redrawAll('chartGroup');
-        mm.onChangeURL('clear', 'name14');
+        mm.onChangeURL('clear', `name${n + 7}`);
         break;
     }
   });
