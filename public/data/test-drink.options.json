@@ -1,8 +1,5 @@
 {
   "dataType": 0,
-  "chartDate2": {
-    "chartType": "lines"
-  },
   "title": "コンビニ 清涼飲料水 販売数",
   "common": {
     "unit": "本",
@@ -18,7 +15,17 @@
   },
   "chartName": {},
   "chartCity": {},
-  "chartDate": {},
+  "chartDate": {
+    "isRangeChart": true,
+    "isFilterMissingCorrect": false
+  },
+  "chartDate2": {
+    "isShow": true,
+    "chartType": "lines",
+    "renderArea": true,
+    "renderDataPoints": true,
+    "isFilterMissingCorrect": true
+  },
   "chartYear": {
     "isLegend": true
   },

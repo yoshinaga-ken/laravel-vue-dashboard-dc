@@ -14,7 +14,17 @@
   "chartMap": {},
   "chartName": {},
   "chartCity": {},
-  "chartDate": {},
+  "chartDate": {
+    "isRangeChart": true,
+    "isFilterMissingCorrect": false
+  },
+  "chartDate2": {
+    "isShow": true,
+    "chartType": "lines",
+    "renderArea": true,
+    "renderDataPoints": true,
+    "isFilterMissingCorrect": true
+  },
   "chartYear": {
     "isLegend": true
   },

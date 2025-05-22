@@ -1753,6 +1753,13 @@ watch(() => pnl.city.orderCnt, v => {
   let chartSexW = 148;
   let chartSexH = 158;
 
+  // chartDate2
+  if (pnl.date.chart2.is_show) {
+    mm.composite2 = null;
+    mm.chartDate2 = null;
+    onChangeChartDateChart2IsShow(true)
+  }
+
   initChartYear(chartSexH);
 
   initChartSeason(chartSexW, chartSexH);
@@ -2120,10 +2127,12 @@ const mm = {
     chartName: {},
     chartCity: {},
     chartDate: {
-      isRangeChart: false
+      isRangeChart: false,
+      isFilterMissingCorrect: false
     },
     chartDate2: {
-      isRangeChart: false
+      isRangeChart: false,
+      isFilterMissingCorrect: true
     },
     chartYear: {},
     chartSeason: {},
@@ -4517,19 +4526,19 @@ const mm = {
       } else {
         for (i = 0; i < mm.chartStack[STACK_CND].length; i++) {
           if (i === 0) {
-            chart.group(group, mm.chartStack[STACK_CND][i], mm.dateStackCndAccessor(i));
+            chart.group(group, mm.chartStack[STACK_CND][i], mm.dateStackCndAccessor(i, mm.opt.chartDate.isFilterMissingCorrect));
           } else {
-            chart.stack(group, mm.chartStack[STACK_CND][i], mm.dateStackCndAccessor(i));
+            chart.stack(group, mm.chartStack[STACK_CND][i], mm.dateStackCndAccessor(i, mm.opt.chartDate.isFilterMissingCorrect));
           }
         }
       }
       // スタック登録 - CHART_DATE_STACK_GRP[STACK_PL1]
       for (i = 0; i < mm.chartStack[STACK_PL1].length; i++) {
-        chart.stack(group, mm.chartStack[STACK_PL1][i], mm.dateStackPl1Accessor(chart, i));
+        chart.stack(group, mm.chartStack[STACK_PL1][i], mm.dateStackPl1Accessor(i, mm.opt.chartDate.isFilterMissingCorrect));
       }
       // スタック登録 - CHART_DATE_STACK_GRP[STACK_AGE]
       for (i = 0; i < mm.chartStack[STACK_AGE].length; i++) {
-        chart.stack(group, mm.chartStack[STACK_AGE][i], mm.dateStackAgeAccessor(i));
+        chart.stack(group, mm.chartStack[STACK_AGE][i], mm.dateStackAgeAccessor(i, mm.opt.chartDate.isFilterMissingCorrect));
       }
       return chart;
     },
@@ -4964,28 +4973,44 @@ const mm = {
       }
     }
   },
-  dateStackCndAccessor: function (no) {
-    return function (d) {
-      return d.value.cdcnt[no];
+  dateStackPrevValue: 0,
+  dateStackPrevName: '',
+  getPreviousValue(stackName, v) {
+    const isZero = v === 0;
+    if (this.dateStackPrevName !== stackName) {
+      this.dateStackPrevValue = 0;
+    }
+    this.dateStackPrevName = stackName;
+
+    if (isZero) {
+      return this.dateStackPrevValue;
+    } else {
+      this.dateStackPrevValue = v;
+      return v;
     }
   },
-  dateStackPl1Accessor: function (chart, no) {
-    return function (d) {
-      let flt = mm.chartName.filters();
-      let pref_mode = flt.length > 1 && flt.length <= mm.chartStack[1].length
-      if (pref_mode) {
-        mm.dateStackPl1Names[no] = flt[no];
-        return d.value.nmcnt[flt[no]] === undefined ? 0 : d.value.nmcnt[flt[no]];
-      } else {
-        mm.dateStackPl1Names[no] = '(選択' + (no + 1) + ')';
-        return 0;
-      }
+  dateStackCndAccessor: (stackName, isFilterMissingCorrect = false) => (d) => {
+    let v = d.value.cdcnt[stackName];
+    if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v);
+    return v;
+  },
+  dateStackPl1Accessor: (stackName, isFilterMissingCorrect = false) => (d) => {
+    let flt = mm.chartName.filters();
+    let pref_mode = flt.length > 1 && flt.length <= mm.chartStack[1].length
+    if (pref_mode) {
+      mm.dateStackPl1Names[stackName] = flt[stackName];
+      let v = d.value.nmcnt[flt[stackName]] === undefined ? 0 : d.value.nmcnt[flt[stackName]];
+      if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v);
+      return v;
+    } else {
+      mm.dateStackPl1Names[stackName] = '(選択' + (stackName + 1) + ')';
+      return 0;
     }
   },
-  dateStackAgeAccessor: function (no) {
-    return function (d, i) {
-      return d.value.agcnt[no];
-    }
+  dateStackAgeAccessor: (stackName, isFilterMissingCorrect = false) => (d) => {
+    let v = d.value.agcnt[stackName];
+    if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v);
+    return v;
   },
   chartScroll: function (sel, name = '', duration = 300) {
     name = name || '';
@@ -5626,9 +5651,9 @@ const initChartDate = (chartDateW) => {
 
     for (no = 0; no < mm.chartStack[STACK_CND].length; no++) {
       if (no === 0) {
-        mm.chartDate.group(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no));
+        mm.chartDate.group(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate.isFilterMissingCorrect));
       } else {
-        mm.chartDate.stack(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no));
+        mm.chartDate.stack(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate.isFilterMissingCorrect));
       }
       mm.chartStackIdxCnd[mm.chartStack[STACK_CND][no]] = no;
     }
@@ -5649,7 +5674,7 @@ const initChartDate = (chartDateW) => {
   //
   for (no = 0; no < mm.chartStack[STACK_PL1].length; no++) {
     mm.dateStackPl1Names[no] = '(選択' + (no + 1) + ')';
-    mm.chartDate.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(mm.chartDate, no));
+    mm.chartDate.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(no, mm.opt.chartDate.isFilterMissingCorrect));
   }
 
   //
@@ -5682,7 +5707,7 @@ const initChartDate = (chartDateW) => {
   }
 
   for (no = 0; no < mm.chartStack[STACK_AGE].length; no++) {
-    mm.chartDate.stack(gpDateStk, mm.chartStack[STACK_AGE][no], mm.dateStackAgeAccessor(no));
+    mm.chartDate.stack(gpDateStk, mm.chartStack[STACK_AGE][no], mm.dateStackAgeAccessor(no, mm.opt.chartDate.isFilterMissingCorrect));
   }
 
   mm.config.cDate.colors = mm.config.cCond.colors.concat(COL_NAME).concat(COL_AGE);
@@ -6168,9 +6193,9 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   // スタック登録 - CHART_DATE_STACK_GRP[0]
   for (var no = 0; no < mm.chartStack[STACK_CND].length; no++) {
     if (no === 0) {
-      mm.chartDate2.group(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no));
+      mm.chartDate2.group(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
     } else {
-      mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no));
+      mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
     }
     //mm.CHART_DATE_STACK_GRP_1_IDX[CHART_DATE_STACK_GRP[STACK_CND][no]] = no;
   }
@@ -6178,12 +6203,12 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_PL1]
   for (var no = 0; no < mm.chartStack[STACK_PL1].length; no++) {
     // mm.dateStackPl1Names[no] = '(選択' + (no + 1) + ')';
-    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(mm.chartDate2, no));
+    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
   }
 
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_AGE]
   for (var no = 0; no < mm.chartStack[STACK_AGE].length; no++) {
-    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_AGE][no], mm.dateStackAgeAccessor(no));
+    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_AGE][no], mm.dateStackAgeAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
   }
 
   mm.chartDate2.ordinalColors(mm.config.cDate.colors);
@@ -7088,6 +7113,7 @@ const initDc = (data) => {
     pnl.map.tabs.is_show = 0;
   }
 
+  // ローカルストレージに設定がない場合,ディフォルト値を設定
   if (settingsLoad() === null) {
     // chart{xxx} 共通
     mm.dataOptionsChartKeys.forEach(keys => {
@@ -7107,6 +7133,9 @@ const initDc = (data) => {
     if (mm.opt.chartMap.isShow === undefined) {
       pnl.map.is_show = gg.dt === DT_COVID;
     }
+
+    // chartDate2
+    pnl.date.chart2.is_show = mm.opt.chartDate2?.isShow ?? false;
   }
   //タイトル変更
   pnl.name.title = mm.data_hdr[D_PL1];
