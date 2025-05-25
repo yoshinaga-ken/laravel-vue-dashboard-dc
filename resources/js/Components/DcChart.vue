@@ -163,7 +163,7 @@
                                                                           v-model="pnl.detail.is_show">詳細&nbsp;</label>
             <label for="ch_pnl_ana" v-show="gg.dt===DT_COVID && pnl.ana.is_chk_show">
                 <input id="ch_pnl_ana" type="checkbox" v-model="pnl.ana.is_show">
-                <i class="fa fa-eye"></i>分析
+                <i class="fa fa-eye"></i>比較分析
             </label>
           </span>
         </div>
@@ -669,261 +669,8 @@
           </div>
 
           <!-- DC_PANEL Analyze -->
-          <div id="panel_ana" class="bg-theme-col2 dc_panel drag" v-show="pnl.ana.is_show" style="display: none;">
-            <div class="chart-title-wrap">
-              <span class="chart-title text-theme-col2" v-html="pnl.ana.title"></span>
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.ana.is_show=0"></span>
-            </div>
-            <div class="clearfix"></div>
+          <DcPanelAnalyze v-if="!pnl.ana.isHidden" :options="pnl.ana" :is-sp="isSp" @close="pnl.ana.is_show=0"/>
 
-
-            <div id="ana_diff_ls">
-              <table id="tbl_ana" border="1" bordercolor="#b0b0b0" style="float:left;">
-                <caption class="bg-theme-col">第N波</caption>
-                <thead>
-                <tr>
-                  <th><span class="ui-icon ui-icon-window"></span>左ウインドウ</th>
-                  <th></th>
-                  <th><span class="ui-icon ui-icon-window"></span>右ウィンドウ</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>全国 第1波(前半)<br/><a class="wopen"
-                                              href="covid19.html?date=3-16+4-19&light=1">3/15(日)～4/19(日)</a>
-                  </td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td>全国 第2波(前半)<br/><a class="wopen"
-                                              href="covid19.html?date=6-22+7-26&light=1">6/22(月)～7/26(日)</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="diff wopen"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td></td>
-                  <td>
-                    <div class="diff wopen"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>千葉県 第1波<br/><a class="wopen"
-                                          href="covid19.html?name=千葉県&date=3-21+32&light=1">3/21(土)～4/22(水)</a>
-                  </td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td>千葉県 第2波<br/><a class="wopen"
-                                          href="covid19.html?name=千葉県&date=6-21+32&light=1">6/21(日)～7/23(木)</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="diff wopen"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td></td>
-                  <td>
-                    <div class="diff wopen"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>福岡県 第1波<br/><a class="wopen"
-                                          href="covid19.html?name=福岡県&date=3-26+17&light=1">3/26(木)～4/12(日)</a>
-                  </td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td>福岡県 第3波<br/><a class="wopen"
-                                          href="covid19.html?name=福岡県&date=7-09+17&light=1">7/9(木)～7/26(日)</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="diff wopen"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td></td>
-                  <td>
-                    <div class="diff wopen"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>福岡市 第1波<br/><a class="wopen"
-                                          href="covid19.html?q=福岡市&date=3-26+17&light=1">3/26(木)～4/12(日)</a>
-                  </td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td>福岡市 第2波<br/><a class="wopen"
-                                          href="covid19.html?q=福岡市&date=7-09+17&light=1">7/9(木)～7/26(日)</a>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-              <table id="tbl_ana" border="1" bordercolor="#b0b0b0">
-                <caption class="bg-theme-col">地域</caption>
-                <thead>
-                <tr>
-                  <th><span class="ui-icon ui-icon-window"></span>左ウインドウ</th>
-                  <th></th>
-                  <th><span class="ui-icon ui-icon-window"></span>右ウィンドウ</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td><a class="wopen" href="covid19.html?q=福岡市&light=1">福岡市</a></td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td><a class="wopen" href="covid19.html?q=北九州市&light=1">北九州市</a></td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td></td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><a class="wopen" href="covid19.html?q=札幌市&light=1">札幌市</a></td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td><a class="wopen" href="covid19.html?q=旭川市&light=1">旭川市</a></td>
-                </tr>
-                <tr>
-                  <td>東京都隣接県A<br/><a class="wopen"
-                                           href="covid19.html?name=埼玉県&light=1">埼玉県</a></td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td>東京都隣接県B<br/><a class="wopen" href="covid19.html?name=神奈川県&light=1">神奈川県</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td></td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>大阪府隣接県A<br/><a class="wopen"
-                                           href="covid19.html?name=兵庫県&light=1">兵庫県</a></td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td>大阪府隣接県B<br/><a class="wopen"
-                                           href="covid19.html?name=京都府&light=1">京都府</a></td>
-                </tr>
-                </tbody>
-              </table>
-              <table id="tbl_ana" border="1" bordercolor="#b0b0b0">
-                <caption class="bg-theme-col">職業、その他</caption>
-                <thead>
-                <tr>
-                  <th><span class="ui-icon ui-icon-window"></span>左ウインドウ</th>
-                  <th></th>
-                  <th><span class="ui-icon ui-icon-window"></span>右ウィンドウ</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td><a class="wopen" href="covid19.html?q=学生&light=1">学生</a></td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td><a class="wopen" href="covid19.html?q=医療従事者&light=1">医療従事者</a></td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td></td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><a class="wopen" href="covid19.html?q=社会人&light=1">社会人</a></td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td><a class="wopen" href="covid19.html?q=介護職員&light=1">介護職員</a></td>
-                </tr>
-                <tr>
-                  <td><a class="wopen" href="covid19.html?name=福岡県&q=学生&light=1">福岡県 学生</a>
-                  </td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td><a class="wopen" href="covid19.html?name=福岡県&q=医療従事者&light=1">福岡県
-                    医療従事者</a></td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="diff wopen"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td></td>
-                  <td>
-                    <div class="diff wopen"><span class="ui-icon ui-icon-arrow-2-n-s ic_btn"></span>比較
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><a class="wopen" href="covid19.html?name=北海道&q=学生&light=1">北海道 学生</a>
-                  </td>
-                  <td>
-                    <div class="wopen diff"><span class="ui-icon ui-icon-arrow-2-e-w ic_btn"></span>比較
-                    </div>
-                  </td>
-                  <td><a class="wopen" href="covid19.html?name=北海道&q=医療従事者&light=1">北海道
-                    医療従事者</a></td>
-                </tr>
-                </tbody>
-              </table>
-              <div class="clearfix"></div>
-            </div>
-            <ul>
-              <li><span class="wopen ui-icon ui-icon ui-icon-arrow-2-e-w sp_icon"></span>&nbsp;<span
-                class="wopen ui-icon ui-icon ui-icon-arrow-2-n-s sp_icon"></span>
-                の比較ボタンをクリックすると比較用にウインドウが左右２つ開きます。<b><a
-                  tt_title="WEBブラウザの設定によってウインドウの複数オープンがブロックされている場合があります。<br /><img src='/img/hlp/popupblock_chrome.gif'><br /><br />以下の操作で設定の変更が可能です。<br />1.アドレスバーの右上にあるをクリック<br />2.「http://***のポップアップを常に許可する」にチェックを入れる">※開かない時</a></b>
-              </li>
-              <li>このサイトのURLのパラメタについては<b><a
-                tt_title="■URLの例<br />福岡県 の状況の場合<br />https://sakanaclub.xsrv.jp/dc/covid19/name=福岡県<br /><br />福岡県 4/4(月)～5/2(土) 職業:看護師 の状況の場合<br />https://sakanaclub.xsrv.jp/dc/covid19/name=福岡県&date=4-4+5-2&q=看護師<br /><br />■パラメタの説明<br />＊name: 都道府県<br />例 name=福岡県<br />   name=福岡県+佐賀県  ...複数形式<br /><br />＊date: 日付<br />例 date=4-11     ...単一日形式  4月11日<br />　 date=4-4+5-8  ...範囲日形式  4月4日~5月8日<br />　 date=4-4+14   ...範囲日形式2 4月4日 + 14days<br /><br />＊q: 検索キーワード (市区町村・職業・状態等のキーワード)<br />例 q=北九州市 ...市区町村<br />　 q=看護師　 ...職業等<br />">こちらを参照</a></b>
-              </li>
-            </ul>
-          </div>
           <div class="clearfix"></div>
         </div>
 
@@ -981,6 +728,7 @@ import 'virtual-keyboard/dist/js/jquery.keyboard.min.js';
 // Components
 import YoutubeVidInput from "@/Components/YoutubeVidInput.vue";
 import GoogleMap from "@/Components/GoogleMap.vue";
+import DcPanelAnalyze from "@/Components/DcPanelAnalyze.vue";
 import Covid19PrefectureDatatable from "@/Components/Covid19PrefectureDatatable.vue";
 // import FilerDialogButton from "@/Components/FilerDialogButton.vue";
 import FileSelectMenu from "@/Components/FileSelectMenu.vue";
@@ -1477,7 +1225,8 @@ const pnl = reactive({
     isHidden: false,
     is_show: false,
     is_chk_show: 1,
-    title: '<i class="fa fa-eye"></i>分析',
+    title: '<i class="fa fa-eye"></i>比較分析',
+    href: '',
   }
 });
 const pnlShows = ref(null);
@@ -1758,6 +1507,14 @@ onMounted(async () => {
     }
 
     mm.setPanelFromDataOptionsAfterLoad();
+
+    if (mm.is_trigger_search) {
+      $('#input-search').trigger('input-search-update');
+      if (!pnl.tube.vidAutoChange) {
+        // 1番目の再生ボタンを押す。btn_searchのdetail取得はリクエストがあるので遅延実行
+        _.delay(() => $('.detail:last .detail-tube-play:eq(0)').trigger('click'), 600);
+      }
+    }
   });
 });
 
@@ -2475,11 +2232,16 @@ const mm = {
   },
   // データオプション(mm.opt)系をpnlに反映 - データロード後
   setPanelFromDataOptionsAfterLoad: () => {
+    if(gg.dt === DT_COVID) {
+      pnl.ana.href = location.origin + location.pathname + `?data=${mm.url_data.data}`;
+    }
     // chartEx
     for (let k = 0; k < pnl.ex.length; k++) {
       if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue;
       pnl.ex[k].elasticX = mm.opt.chartEx[k].orderDesc ?? false
     }
+
+    pnl.ana.isHidden = gg.dt !== DT_COVID;
   },
   data_hdr: [],
 
@@ -5226,15 +4988,8 @@ const mm = {
     // dataファイルのイメージ画像の設定
     mm.url_data.data = mm.get.data;
     let imgName = Object.keys(mm.url_data.filer_files).find(key => mm.url_data.filer_files[key].indexOf(mm.url_data.data) === 0);
-    dataImgSrc.value = '<?=BURL?>upload/csv/' + (imgName ?? 'covid19-japan.png');
+    dataImgSrc.value = mm.url_data.path + (imgName ?? 'covid19-japan.png');
     $('#loading').css('background-image', 'url(' + dataImgSrc.value + ')').show();
-
-    const initDcAfter = () => {
-      if (mm.config.urlParamDataReplace) {
-        mm.onChangeURL('data', mm.get.data);
-      }
-      $('#loading').fadeOut(500);
-    }
 
     // URLのdataパラメタはすべて CSVとして処理する
     // (data=<name>.json or data=<name> => <name>.csv をロード)
@@ -5272,7 +5027,6 @@ const mm = {
         return initDc(result.data);
       })
       .then(initDcAfter);
-
   },
   loadAllData: () => {
     mm.get = php_location_get_query();
@@ -7300,6 +7054,12 @@ const initDc = (data) => {
 
   mm.renderAllChart();
 }
+const initDcAfter = () => {
+  if (mm.config.urlParamDataReplace) {
+    mm.onChangeURL('data', mm.get.data);
+  }
+  $('#loading').fadeOut(500);
+}
 
 const initTabs = () => {
   const TAB_NO = {'c': 1, 'p': 2, 'pc': 3, 'd': 4, 'b': 5};
@@ -8448,52 +8208,6 @@ const onDocumentReady = () => {
     $(this).select();
   });
 
-  $('#btn_ana').on('click', function (event) {
-    event.preventDefault();
-    $('#ana_diff_ls').hide().fadeIn();
-  });
-  $('.wopen').button().on('click', function (event) {
-    event.preventDefault();
-    let o = $(this);
-    let w2 = parseInt(screen.width / 2) - 20;
-    const top = 50;//for parent title bar
-    if (o.find('span').hasClass('ui-icon-arrow-2-e-w')) {
-      let td = o.closest('td');
-      let a = td.prev().find('a');
-      let b = td.next().find('a');
-      let wL = window.open(a.attr('href'), 1, 'top=' + top + ',left=0,height=' + (screen.height - top * 4) + ',width=' + w2);
-      let wR = window.open(b.attr('href'), 2, 'top=' + top + ',left=' + (w2 + 20) + ',height=' + (screen.height - top * 4) + ',width=' + w2);
-      $(wL).on('scroll', function (event) {//wL wR sync scroll
-        let wl = $(wL);
-        $(wR).scrollTop(wl.scrollTop()).scrollLeft(wl.scrollLeft());
-      });
-      $(wR).on('scroll', function (event) {//wL wR sync scroll
-        let wr = $(wR);
-        $(wL).scrollTop(wr.scrollTop()).scrollLeft(wr.scrollLeft());
-      });
-    } else if (o.find('span').hasClass('ui-icon-arrow-2-n-s')) {
-      let idx = o.closest('td').index();
-      let tr = o.closest('tr');
-      let a = tr.prev().find('td').eq(idx).find('a');
-      let b = tr.next().find('td').eq(idx).find('a');
-      let wL = window.open(a.attr('href'), 1, 'top=' + top + ',left=0,height=' + (screen.height - top * 4) + ',width=' + w2);
-      let wR = window.open(b.attr('href'), 2, 'top=' + top + ',left=' + (w2 + 20) + ',height=' + (screen.height - top * 4) + ',width=' + w2);
-      $(wL).on('scroll', function (event) {//wL wR sync scroll
-        let wl = $(wL);
-        $(wR).scrollTop(wl.scrollTop()).scrollLeft(wl.scrollLeft());
-      });
-      $(wR).on('scroll', function (event) {//wL wR sync scroll
-        let wr = $(wR);
-        $(wL).scrollTop(wr.scrollTop()).scrollLeft(wr.scrollLeft());
-      });
-    } else {
-      let idx = o.closest('td').index();
-      window.open(o.attr('href'), (idx === 0 ? 1 : 2), 'left=' + (idx === 0 ? 0 : w2 + 20) + ',top=' + top + ',height=' + (screen.height - top * 4) + ',width=' + w2);
-    }
-
-  });
-
-
   //ShortCutKey
   $(document)
     .keyup(function (e) {
@@ -8621,14 +8335,6 @@ const onDocumentReady = () => {
     });
 
   if (gg.dt !== DT_COVID) mm.tube.setPlayEvent();
-
-  if (mm.is_trigger_search) {
-    $('#input-search').trigger('input-search-update');
-    if (!pnl.tube.vidAutoChange) {
-      // 1番目の再生ボタンを押す。btn_searchのdetail取得はリクエストがあるので遅延実行
-      _.delay(() => $('.detail:last .detail-tube-play:eq(0)').trigger('click'), 600);
-    }
-  }
 
   mm.watchMouseEvent();
 }
@@ -9520,29 +9226,6 @@ path.campaign {
 
 .tt_text-tooltip {
   width: 32em;
-}
-
-#tbl_ana {
-  float: left;
-  margin-right: 10px;
-}
-
-#tbl_ana caption {
-  font-weight: bold;
-  text-align: center;
-  padding: 2px;
-}
-
-#tbl_ana th {
-  font-weight: bold;
-  text-align: center;
-  border-bottom: 1px solid #202020;
-}
-
-#tbl_ana td {
-  text-align: center;
-  padding: 2px 0px;
-  border-bottom: 1px solid #202020;
 }
 
 .uicm { /* ui_sortable_col_move */
