@@ -1,4 +1,5 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useKeyModifier } from '@vueuse/core';
 import * as dc from 'dc';
 
 /**
@@ -21,6 +22,10 @@ export function useDcBaseChart(options: {
   const isMouseLongClick = ref(false);
   // プレスタイマー
   let pressTimer: ReturnType<typeof setTimeout> | null = null;
+
+  // VueUse を使用してキー修飾子の状態を追跡
+  const ctrlPressed = useKeyModifier('Control');
+  const shiftPressed = useKeyModifier('Shift');
 
   // margin設定の計算処理
   const computedMargins = computed(() => {
@@ -60,7 +65,7 @@ export function useDcBaseChart(options: {
   const addFilterHandler = (filters: any[], filter: any) => {
     let ret;
     // 長押しかCtrlキーまたはShiftキーが押されている場合は単一選択
-    if (isMouseLongClick.value || (window.event && ((window.event as MouseEvent).ctrlKey || (window.event as KeyboardEvent).shiftKey))) {
+    if (isMouseLongClick.value || ctrlPressed.value || shiftPressed.value) {
       ret = [filter]; // 単一選択
     } else {
       filters.push(filter); // 既存のフィルタに追加
@@ -149,6 +154,8 @@ export function useDcBaseChart(options: {
 
   return {
     isMouseLongClick,
+    ctrlPressed,
+    shiftPressed,
     addFilterHandler,
     setupMouseEvents,
     cleanupMouseEvents,
