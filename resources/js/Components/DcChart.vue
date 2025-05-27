@@ -665,7 +665,7 @@
                 :legend="mm.opt.chartEx[i]?.legend"
                 :keyIndex="mm.opt.chartEx[i]?.dcSunburstChart?.keyIndex ?? D_EX0+i"
                 :valueIndex="mm.opt.chartEx[i]?.dcSunburstChart?.valueIndex ?? D_CNT"
-                :margins="mm.opt.chartEx[i]?.dcSunburstChart.margins"
+                :margins="mm.opt.chartEx[i]?.dcSunburstChart?.margins"
                 @filtered="(event) => onFilteredSunburstChart(i, event)"
               >
                 <template #header="{chart}">
