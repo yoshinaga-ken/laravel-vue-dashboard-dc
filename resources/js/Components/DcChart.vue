@@ -621,36 +621,75 @@
           <div v-for="(item, i) in pnl.ex" :id="`panel_ex_${i}`" class="bg-theme-col2 dc_panel drag panel_ex"
                :style="item.style"
                v-show="item.is_show">
-            <div class="chart-title-wrap">
-              <span class="chart-title text-theme-col2" v-html="item.title"></span>
-              <a class="reset btn_reset" :id="`btn_reset_ex_${i}`" href="javascript:void(0);" style="display: none;">
-                <span class="ui-icon ui-icon-closethick"></span>
-              </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+            <template v-if="!item.isDcSunburstChart">
+              <div class="chart-title-wrap">
+                <span class="chart-title text-theme-col2" v-html="item.title"></span>
+                <a class="reset btn_reset" :id="`btn_reset_ex_${i}`" href="javascript:void(0);" style="display: none;">
+                  <span class="ui-icon ui-icon-closethick"></span>
+                </a>
+                <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
 
-              <!-- TODO: BtnComponent -->
-              <label class="ui-button ui-button-min ui-corner-all ui-widget"
-                     :class="item.elasticX ? 'btn_on' : 'btn_off'"
-                     title="ソートありなしを切り替えます">
-                <img src="/img/chart-sort-asc.svg" class="dark:invert -rotate-90 -scale-y-100" style="width:1.2em;">
-                <input type="checkbox" v-model="item.elasticX" class="hidden"/>
-              </label>
+                <!-- TODO: BtnComponent -->
+                <label class="ui-button ui-button-min ui-corner-all ui-widget"
+                       :class="item.elasticX ? 'btn_on' : 'btn_off'"
+                       title="ソートありなしを切り替えます">
+                  <img src="/img/chart-sort-asc.svg" class="dark:invert -rotate-90 -scale-y-100" style="width:1.2em;">
+                  <input type="checkbox" v-model="item.elasticX" class="hidden"/>
+                </label>
 
-              <!-- TODO: StackTypeComponent -->
-              <label title="チャートのスタックタイプを切り替えます">📊
-                <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
-                <label v-html="pnl.name.title" for="stack_type_pl1"></label>&nbsp;
-                <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
-                <label v-html="pnl.age.title" for="stack_type_age"></label>&nbsp;
-                <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
-                <label v-html="pnl.cond.title" for="stack_type_con"></label>
-              </label>
+                <!-- TODO: StackTypeComponent -->
+                <label title="チャートのスタックタイプを切り替えます">📊
+                  <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
+                  <label v-html="pnl.name.title" for="stack_type_pl1"></label>&nbsp;
+                  <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
+                  <label v-html="pnl.age.title" for="stack_type_age"></label>&nbsp;
+                  <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
+                  <label v-html="pnl.cond.title" for="stack_type_con"></label>
+                </label>
+                <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="item.is_show=0"></span>
+              </div>
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="item.is_show=0"></span>
-            </div>
-            <div>
-              <div :id="`chart_ex_${i}`"></div>
-            </div>
+              <div>
+                <div :id="`chart_ex_${i}`"></div>
+              </div>
+            </template>
+            <template v-if="item.isDcSunburstChart">
+              <DcSunburstChart
+                v-if="mm.isLoadAllData"
+                :ndx="mm.ndx"
+                :chartId="`chart_ex_${i}`"
+                chartGroup="chartGroup"
+                :filters="mm.chartEx[i].filters"
+                :innerRadius="mm.opt.chartEx[i]?.innerRadius"
+                :showLabels="true"
+                :legend="mm.opt.chartEx[i]?.legend"
+                :keyIndex="mm.opt.chartEx[i]?.dcSunburstChart?.keyIndex ?? D_EX0+i"
+                :valueIndex="mm.opt.chartEx[i]?.dcSunburstChart?.valueIndex ?? D_CNT"
+                :margins="mm.opt.chartEx[i]?.dcSunburstChart?.margins"
+                @filtered="(event) => onFilteredSunburstChart(i, event)"
+              >
+                <template #header="{chart}">
+                  <div class="chart-title-wrap">
+                    <span class="chart-title text-theme-col2" v-html="item.title"></span>
+
+                    <!-- Filetered items -->
+                    <template v-if="chart.filters().length > 0">
+                      <a href="javascript:void(0);"
+                         @click="chart.filterAll();dc.redrawAll('chartGroup');">
+                        <span class="ui-icon ui-icon-closethick"></span>
+                      </a>
+                      <input type="text" readonly
+                             :value="chart.filters().map(path => path.join('/')).join(',')"
+                             :title="chart.filters().map(path => path.join('/')).join(',')">
+                    </template>
+
+                    <!-- Close button -->
+                    <span class="ui-icon ui-icon-circle-close sp_icon btn_close ui-button ui-corner-all ui-widget"
+                          @click="item.is_show=0"></span>
+                  </div>
+                </template>
+              </DcSunburstChart>
+            </template>
             <div class="clearfix"></div>
           </div>
 
@@ -726,6 +765,7 @@ import 'virtual-keyboard/dist/css/keyboard.min.css';
 import 'virtual-keyboard/dist/js/jquery.keyboard.min.js';
 
 // Components
+import DcSunburstChart from "@/Components/DcSunburstChart.vue";
 import YoutubeVidInput from "@/Components/YoutubeVidInput.vue";
 import GoogleMap from "@/Components/GoogleMap.vue";
 import DcPanelAnalyze from "@/Components/DcPanelAnalyze.vue";
@@ -1225,8 +1265,7 @@ const pnl = reactive({
     isHidden: false,
     is_show: false,
     is_chk_show: 1,
-    title: '<i class="fa fa-eye"></i>比較分析',
-    href: '',
+    title: '<i class="fa fa-eye"></i>分析',
   }
 });
 const pnlShows = ref(null);
@@ -1419,7 +1458,12 @@ const setPanelXYWH = (id = null, absType = 0) => {
   ];
   for (let k = 0; k < pnl.ex.length; k++) {
     if (pnl.ex[k].isHidden) continue;
-    panelConfig.push({id: `panel_ex_${k}`, panel: pnl.ex[k], selector: `#panel_ex_${k}`, param: false});
+    panelConfig.push({
+      id: `panel_ex_${k}`,
+      panel: pnl.ex[k],
+      selector: `#panel_ex_${k}`,
+      param: pnl.ex[k].isDcSunburstChart, // isH: heightの保存可否
+    });
   }
 
   if (absType === 2) {
@@ -1487,6 +1531,8 @@ onMounted(async () => {
   mm.loadAllData().then(() => {
     isDark.value = isDarkLs; // trigger watch
     onDocumentReady();
+
+    mm.isLoadAllData = true;
 
     mm.parseURLParams();
 
@@ -1678,7 +1724,7 @@ watch(() => pnl.date.stack_type, (v) => {
     mm.composite2?.render();
   }
   for (let k = 0; k < pnl.ex.length; k++) {
-    if (pnl.ex[k].isHidden) continue
+    if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue
     mm.chartEx[k].render();
   }
 });
@@ -1890,6 +1936,7 @@ const mm = {
     },
   },
   get: {},
+  isLoadAllData: false,
   is_trigger_search: false,
   url_data: {
     'path': props.dataPath,
@@ -2236,12 +2283,43 @@ const mm = {
       pnl.ana.href = location.origin + location.pathname + `?data=${mm.url_data.data}`;
     }
     // chartEx
-    for (let k = 0; k < pnl.ex.length; k++) {
-      if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue;
-      pnl.ex[k].elasticX = mm.opt.chartEx[k].orderDesc ?? false
-    }
+    pnl.ex.forEach((panel, index) => {
+      if (panel.isHidden) return;
+
+      if (panel.isDcSunburstChart) {
+        mm.setPanelSunburstChartStyle(panel, index);
+        return;
+      }
+
+      panel.elasticX = mm.opt.chartEx[index]?.orderDesc ?? false;
+    });
 
     pnl.ana.isHidden = gg.dt !== DT_COVID;
+  },
+
+  // サンバーストチャートのスタイル設定
+  setPanelSunburstChartStyle: (panel, index) => {
+    // サイズは、localStrageの設定がなければ、Jsonオプションの設定を利用
+    if (panel.style !== '') return;
+
+    const chartConfig = mm.opt.chartEx[index]?.dcSunburstChart;
+    if (!chartConfig) return;
+
+    const styles = [];
+
+    // 幅の設定
+    if (chartConfig.width) {
+      const marginLeft = chartConfig.margins?.left ?? 0;
+      const totalWidth = chartConfig.width + marginLeft;
+      styles.push(`width:${totalWidth}px`);
+    }
+
+    // 高さの設定
+    if (chartConfig.height) {
+      styles.push(`height:${chartConfig.height}px`);
+    }
+
+    panel.style += styles.join(';') + (styles.length > 0 ? ';' : '');
   },
   data_hdr: [],
 
@@ -2395,7 +2473,7 @@ const mm = {
         $('#panel_age').width(mm.chartAge.width());
         $('#panel_cond').width(mm.chartCond.width());
         for (let k = 0; k < pnl.ex.length; k++) {
-          if (pnl.ex[k].isHidden) continue
+          if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue
           $(`#panel_ex_${k}`).width(mm.chartEx[k].width());
         }
       }
@@ -3413,7 +3491,7 @@ const mm = {
 
     for (let k = 0; k < pnl.ex.length; k++) {
       const ex = pnl.ex[k];
-      if (ex.isHidden) continue;
+      if (ex.isHidden || ex.isDcSunburstChart) continue;
       const exFilters = mm.chartEx[k].filters().map(v => mm.getLabelEx(v, k));
       if (exFilters.length) {
         const isMulti = exFilters.length > 1
@@ -4445,11 +4523,16 @@ const mm = {
     },
     filterFromGetParam: (chart, filterKey, isRedraw) => {
       if (mm.get[filterKey]) {
-        const filters = mm.get[filterKey].split(' ');
-        if (filters.length > 0) {
-          const flt = filters.length === 1 ? filters[0] : [filters];
-          chart.filterAll().filter(flt);
-          return true;
+        if (chart?.isDcSunburstChart) {
+          chart.filters = mm.get[filterKey].split(' ').map(v => v.split(','));
+          return chart.filters.length > 0;
+        } else {
+          const filters = mm.get[filterKey].split(' ');
+          if (filters.length > 0) {
+            const flt = filters.length === 1 ? filters[0] : [filters];
+            chart.filterAll().filter(flt);
+            return true;
+          }
         }
       }
       return isRedraw;
@@ -4805,7 +4888,7 @@ const mm = {
             mm.chartDate2?.showStack(stackName);
           }
           for (let k = 0; k < pnl.ex.length; k++) {
-            if (pnl.ex[k].isHidden) continue
+            if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue;
             mm.chartEx[k].showStack(stackName);
           }
         } else {
@@ -4818,7 +4901,7 @@ const mm = {
             mm.chartDate2?.hideStack(stackName);
           }
           for (let k = 0; k < pnl.ex.length; k++) {
-            if (pnl.ex[k].isHidden) continue
+            if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue;
             mm.chartEx[k].hideStack(stackName);
           }
         }
@@ -4988,8 +5071,15 @@ const mm = {
     // dataファイルのイメージ画像の設定
     mm.url_data.data = mm.get.data;
     let imgName = Object.keys(mm.url_data.filer_files).find(key => mm.url_data.filer_files[key].indexOf(mm.url_data.data) === 0);
-    dataImgSrc.value = mm.url_data.path + (imgName ?? 'covid19-japan.png');
+    dataImgSrc.value = '<?=BURL?>upload/csv/' + (imgName ?? 'covid19-japan.png');
     $('#loading').css('background-image', 'url(' + dataImgSrc.value + ')').show();
+
+    const initDcAfter = () => {
+      if (mm.config.urlParamDataReplace) {
+        mm.onChangeURL('data', mm.get.data);
+      }
+      $('#loading').fadeOut(500);
+    }
 
     // URLのdataパラメタはすべて CSVとして処理する
     // (data=<name>.json or data=<name> => <name>.csv をロード)
@@ -5027,6 +5117,7 @@ const mm = {
         return initDc(result.data);
       })
       .then(initDcAfter);
+
   },
   loadAllData: () => {
     mm.get = php_location_get_query();
@@ -6818,10 +6909,22 @@ const initChartJob = (chartSexW, chartSexH) => {
  * CHART chartEx 拡張チャート barChart|pieChart
  */
 const initChartEx = (chartIndex, dataIndex, title, height) => {
+  // オプションが未定義の場合は初期化
   if (mm.opt.chartEx[chartIndex] === undefined) {
     mm.opt.chartEx[chartIndex] = {};
   }
+
+  // パネル設定を更新
+  pnl.ex[chartIndex] = pnl.ex[chartIndex] || {};
+  pnl.ex[chartIndex].chartType = mm.opt.chartEx[chartIndex].chartType;
+  pnl.ex[chartIndex].isHidden = false;
+  pnl.ex[chartIndex].is_show = true;
+  pnl.ex[chartIndex].title = title;
+
+  // ディメンションの作成
   const dim = mm.util.getScaledDimension(dataIndex, mm.opt.chartEx[chartIndex].scale);
+
+  // フィルタリング時の共通処理
   const onFiltered = (chart, v) => {
     const valueFormat = v => mm.getLabelEx(v, chartIndex);
     mm.showFilterUi(`#panel_ex_${chartIndex}`, chart, valueFormat);
@@ -6831,21 +6934,26 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
     mm.chartScroll('#div_city');
   }
 
-  mm.chartEx[chartIndex] =
-    createStackedBarChart(dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
-      onFiltered,
-      mm.opt.chartEx[chartIndex].isLegend,
-      v => mm.getLabelEx(v, chartIndex),
-      `#panel_ex_${chartIndex}`
-    );
-  mm.chartEx[chartIndex].dataIndex = dataIndex;
+  // サンバーストチャートかどうか
+  const isDcSunburstChart = mm.opt.chartEx[chartIndex].isDcSunburstChart ?? false;
 
-  pnl.ex[chartIndex].isHidden = false;
-  pnl.ex[chartIndex].is_show = true;
-  pnl.ex[chartIndex].title = title;
-
-  mm.chartEx[chartIndex]
-    .xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex));
+  if (isDcSunburstChart) {
+    // サンバーストチャートの初期化(DcSunburstChart使用の定義)
+    pnl.ex[chartIndex].isDcSunburstChart = isDcSunburstChart;
+    mm.chartEx[chartIndex] = {isDcSunburstChart: true, filters: []};
+  } else {
+    // 標準チャート (stackedBarChart) の作成
+    mm.chartEx[chartIndex] =
+      createStackedBarChart(dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
+        onFiltered,
+        mm.opt.chartEx[chartIndex].isLegend,
+        v => mm.getLabelEx(v, chartIndex),
+        `#panel_ex_${chartIndex}`
+      );
+    mm.chartEx[chartIndex].dataIndex = dataIndex;
+    mm.chartEx[chartIndex]
+      .xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex));
+  }
 }
 const initAllChartEx = (height) => {
   for (let i = D_EX0; i < mm.data_hdr.length; i++) {
@@ -7053,12 +7161,6 @@ const initDc = (data) => {
   }
 
   mm.renderAllChart();
-}
-const initDcAfter = () => {
-  if (mm.config.urlParamDataReplace) {
-    mm.onChangeURL('data', mm.get.data);
-  }
-  $('#loading').fadeOut(500);
 }
 
 const initTabs = () => {
@@ -7494,6 +7596,15 @@ const setBgWindowZIndex = (id) => {
       break;
   }
 }
+
+const onFilteredSunburstChart = (i, {chart}) => {
+    // console.log(`@getOnSunburstFiltered ${i}`, chart.filters());
+    mm.chartEx[i].filters = chart.filters().length ? chart.filters() : [];
+    mm.onChartFiltered(chart);
+    mm.onChangeURL(`name${7 + i}`, chart);
+    mm.chartScroll('#div_name');
+    mm.chartScroll('#div_city');
+};
 
 const onDocumentReady = () => {
 
@@ -8009,7 +8120,7 @@ const onDocumentReady = () => {
     });
     $('.panel_ex').resizable({
       ...options,
-      aspectRatio: true,
+      // aspectRatio: true,
       minWidth: 100,
     });
 
@@ -8208,6 +8319,52 @@ const onDocumentReady = () => {
     $(this).select();
   });
 
+  $('#btn_ana').on('click', function (event) {
+    event.preventDefault();
+    $('#ana_diff_ls').hide().fadeIn();
+  });
+  $('.wopen').button().on('click', function (event) {
+    event.preventDefault();
+    let o = $(this);
+    let w2 = parseInt(screen.width / 2) - 20;
+    const top = 50;//for parent title bar
+    if (o.find('span').hasClass('ui-icon-arrow-2-e-w')) {
+      let td = o.closest('td');
+      let a = td.prev().find('a');
+      let b = td.next().find('a');
+      let wL = window.open(a.attr('href'), 1, 'top=' + top + ',left=0,height=' + (screen.height - top * 4) + ',width=' + w2);
+      let wR = window.open(b.attr('href'), 2, 'top=' + top + ',left=' + (w2 + 20) + ',height=' + (screen.height - top * 4) + ',width=' + w2);
+      $(wL).on('scroll', function (event) {//wL wR sync scroll
+        let wl = $(wL);
+        $(wR).scrollTop(wl.scrollTop()).scrollLeft(wl.scrollLeft());
+      });
+      $(wR).on('scroll', function (event) {//wL wR sync scroll
+        let wr = $(wR);
+        $(wL).scrollTop(wr.scrollTop()).scrollLeft(wr.scrollLeft());
+      });
+    } else if (o.find('span').hasClass('ui-icon-arrow-2-n-s')) {
+      let idx = o.closest('td').index();
+      let tr = o.closest('tr');
+      let a = tr.prev().find('td').eq(idx).find('a');
+      let b = tr.next().find('td').eq(idx).find('a');
+      let wL = window.open(a.attr('href'), 1, 'top=' + top + ',left=0,height=' + (screen.height - top * 4) + ',width=' + w2);
+      let wR = window.open(b.attr('href'), 2, 'top=' + top + ',left=' + (w2 + 20) + ',height=' + (screen.height - top * 4) + ',width=' + w2);
+      $(wL).on('scroll', function (event) {//wL wR sync scroll
+        let wl = $(wL);
+        $(wR).scrollTop(wl.scrollTop()).scrollLeft(wl.scrollLeft());
+      });
+      $(wR).on('scroll', function (event) {//wL wR sync scroll
+        let wr = $(wR);
+        $(wL).scrollTop(wr.scrollTop()).scrollLeft(wr.scrollLeft());
+      });
+    } else {
+      let idx = o.closest('td').index();
+      window.open(o.attr('href'), (idx === 0 ? 1 : 2), 'left=' + (idx === 0 ? 0 : w2 + 20) + ',top=' + top + ',height=' + (screen.height - top * 4) + ',width=' + w2);
+    }
+
+  });
+
+
   //ShortCutKey
   $(document)
     .keyup(function (e) {
@@ -8335,6 +8492,14 @@ const onDocumentReady = () => {
     });
 
   if (gg.dt !== DT_COVID) mm.tube.setPlayEvent();
+
+  if (mm.is_trigger_search) {
+    $('#input-search').trigger('input-search-update');
+    if (!pnl.tube.vidAutoChange) {
+      // 1番目の再生ボタンを押す。btn_searchのdetail取得はリクエストがあるので遅延実行
+      _.delay(() => $('.detail:last .detail-tube-play:eq(0)').trigger('click'), 600);
+    }
+  }
 
   mm.watchMouseEvent();
 }
@@ -9226,6 +9391,29 @@ path.campaign {
 
 .tt_text-tooltip {
   width: 32em;
+}
+
+#tbl_ana {
+  float: left;
+  margin-right: 10px;
+}
+
+#tbl_ana caption {
+  font-weight: bold;
+  text-align: center;
+  padding: 2px;
+}
+
+#tbl_ana th {
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #202020;
+}
+
+#tbl_ana td {
+  text-align: center;
+  padding: 2px 0px;
+  border-bottom: 1px solid #202020;
 }
 
 .uicm { /* ui_sortable_col_move */
