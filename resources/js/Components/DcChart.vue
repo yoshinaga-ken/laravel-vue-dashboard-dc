@@ -4523,7 +4523,7 @@ const mm = {
     },
     filterFromGetParam: (chart, filterKey, isRedraw) => {
       if (mm.get[filterKey]) {
-        if (chart?.class === 'dcSunburstChart') {
+        if (chart?.isDcSunburstChart) {
           chart.filters = mm.get[filterKey].split(' ').map(v => v.split(','));
           return chart.filters.length > 0;
         } else {
@@ -6940,7 +6940,7 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
   if (isDcSunburstChart) {
     // サンバーストチャートの初期化(DcSunburstChart使用の定義)
     pnl.ex[chartIndex].isDcSunburstChart = isDcSunburstChart;
-    mm.chartEx[chartIndex] = {class: 'dcSunburstChart', filters: []};
+    mm.chartEx[chartIndex] = {isDcSunburstChart: true, filters: []};
   } else {
     // 標準チャート (stackedBarChart) の作成
     mm.chartEx[chartIndex] =
