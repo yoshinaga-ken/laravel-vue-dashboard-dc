@@ -6909,10 +6909,22 @@ const initChartJob = (chartSexW, chartSexH) => {
  * CHART chartEx 拡張チャート barChart|pieChart
  */
 const initChartEx = (chartIndex, dataIndex, title, height) => {
+  // オプションが未定義の場合は初期化
   if (mm.opt.chartEx[chartIndex] === undefined) {
     mm.opt.chartEx[chartIndex] = {};
   }
+
+  // パネル設定を更新
+  pnl.ex[chartIndex] = pnl.ex[chartIndex] || {};
+  pnl.ex[chartIndex].chartType = mm.opt.chartEx[chartIndex].chartType;
+  pnl.ex[chartIndex].isHidden = false;
+  pnl.ex[chartIndex].is_show = true;
+  pnl.ex[chartIndex].title = title;
+
+  // ディメンションの作成
   const dim = mm.util.getScaledDimension(dataIndex, mm.opt.chartEx[chartIndex].scale);
+
+  // フィルタリング時の共通処理
   const onFiltered = (chart, v) => {
     const valueFormat = v => mm.getLabelEx(v, chartIndex);
     mm.showFilterUi(`#panel_ex_${chartIndex}`, chart, valueFormat);
@@ -6922,27 +6934,26 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
     mm.chartScroll('#div_city');
   }
 
+  // サンバーストチャートかどうか
   const isDcSunburstChart = mm.opt.chartEx[chartIndex].isDcSunburstChart ?? false;
-  pnl.ex[chartIndex].chartType = mm.opt.chartEx[chartIndex].chartType;
-  pnl.ex[chartIndex].isHidden = false;
-  pnl.ex[chartIndex].is_show = true;
-  pnl.ex[chartIndex].title = title;
-  pnl.ex[chartIndex].isDcSunburstChart = isDcSunburstChart;
 
   if (isDcSunburstChart) {
+    // サンバーストチャートの初期化(DcSunburstChart使用の定義)
+    pnl.ex[chartIndex].isDcSunburstChart = isDcSunburstChart;
     mm.chartEx[chartIndex] = {class: 'dcSunburstChart', filters: []};
-    return;
+  } else {
+    // 標準チャート (stackedBarChart) の作成
+    mm.chartEx[chartIndex] =
+      createStackedBarChart(dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
+        onFiltered,
+        mm.opt.chartEx[chartIndex].isLegend,
+        v => mm.getLabelEx(v, chartIndex),
+        `#panel_ex_${chartIndex}`
+      );
+    mm.chartEx[chartIndex].dataIndex = dataIndex;
+    mm.chartEx[chartIndex]
+      .xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex));
   }
-  mm.chartEx[chartIndex] =
-    createStackedBarChart(dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
-      onFiltered,
-      mm.opt.chartEx[chartIndex].isLegend,
-      v => mm.getLabelEx(v, chartIndex),
-      `#panel_ex_${chartIndex}`
-    );
-  mm.chartEx[chartIndex].dataIndex = dataIndex;
-  mm.chartEx[chartIndex]
-    .xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex));
 }
 const initAllChartEx = (height) => {
   for (let i = D_EX0; i < mm.data_hdr.length; i++) {
