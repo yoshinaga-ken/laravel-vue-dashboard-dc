@@ -1430,22 +1430,3 @@
 1999-12-01,-,4,ETC,NTTデータ,JRAPATワイド対応(NDSF付属カセット),不明,不明,0,0
 2000-01-21,-,10,SLG,任天堂,ファイアーエムブレムトラキア776,"￥5,200","￥5,000代",0,256
 2000-11-29,-,9,ADV,任天堂,メタルスレイダーグローリーディレクターズカットプリライト版,"￥5,780","￥6,000代",0,0
-@CsvOptions:,,,,,,,,,
-dataType=0,,,,,,,,,
-title=「スーパーファミコン」ソフト一覧,,,,,,,,,
-"dataReference=<ul><li><a target%3d'_blank' href%3d""""http://pasofami.game.coocan.jp/game/game.htm"""">各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target%3d'_blank' href%3d'https://www.gavas.jp/user_data/superfamicom_game_ranking.php'>スーパーファミコン歴代ソフト売上ランキング＠ピコピコ大百科</a></li><li><a target%3d'_blank' href%3d""""https://ja.wikipedia.org/wiki/%E3%82%B9%E3%83%BC%E3%83%91%E3%83%BC%E3%83%95%E3%82%A1%E3%83%9F%E3%82%B3%E3%83%B3%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7"""">スーパーファミコンのゲームタイトル一覧@wikipedia</li></ul>",,,,,,,,,
-detailType=city,,,,,,,,,
-isMakeAutocompleteData=1,,,,,,,,,
-chartName[imagePath]=/img/game/maker,,,,,,,,,
-chartName[imageTooltip]=img,,,,,,,,,
-chartCity[imagePath]=/img/game/smc,,,,,,,,,
-chartCity[imageTooltip]=all,,,,,,,,,
-chartCity[orderYmd]=1,,,,,,,,,
-chartCity[orderUI]=1,,,,,,,,,
-chartDate[elasticY]=0,,,,,,,,,
-chartDate[width]=1000,,,,,,,,,
-chartDate[format]=YYYY,,,,,,,,,
-chartSex[unit]=null,,,,,,,,,
-chartSex[chartType]=bar,,,,,,,,,
-"chartAge[unit]=[""不明"",""2M"",""4M"",""6M"",""8M"",""10M"",""12M"",""16M"",""20M"",""24M"",""32M"",""40M"",""48M""]",,,,,,,,,
-editUrl=https://docs.google.com/spreadsheets/d/1v7r5cQU_zPPv_tOJoPAEp9gsbYzjD7IduCogj51qBaM/edit?gid=365793977#gid=365793977,,,,,,,,,

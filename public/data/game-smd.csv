@@ -592,22 +592,3 @@
 1995-09-01,-,16,-,セガ,ファーレンハイト💿,-,-,0,💿メガCD
 1995-12-22,-,16,-,セガ,サージカルストライク💿,-,-,0,💿メガCD
 1996-02-23,-,16,-,コンパイル,シャドウラン💿,-,-,0,💿メガCD
-@CsvOptions:,,,,,,,,,
-dataType=0,,,,,,,,,
-title=「メガドライブ」ソフト一覧,,,,,,,,,
-"dataReference=<ul><li><a target%3d'_blank' href%3d""http://pasofami.game.coocan.jp/game/game.htm"">各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target%3d'_blank' href%3d'https://www.gavas.jp/user_data/megadrive_game_ranking.php'>メガドライブ歴代ソフト売上ランキング＠ピコピコ大百科</a></li><li>wikipedia</li></ul>",,,,,,,,,
-detailType=city,,,,,,,,,
-isMakeAutocompleteData=1,,,,,,,,,
-chartName[imagePath]=/img/game/maker,,,,,,,,,
-chartName[imageTooltip]=img,,,,,,,,,
-chartCity[imagePath]=/img/game/smd,,,,,,,,,
-chartCity[imageTooltip]=all,,,,,,,,,
-chartCity[orderYmd]=1,,,,,,,,,
-chartCity[orderUI]=1,,,,,,,,,
-chartDate[elasticY]=0,,,,,,,,,
-chartDate[width]=1000,,,,,,,,,
-chartDate[format]=YYYY,,,,,,,,,
-chartSex[unit]=null,,,,,,,,,
-chartSex[chartType]=bar,,,,,,,,,
-"chartAge[unit]=[""不明"",""1M"",""2M"",""4M"",""5M"",""6M"",""8M"",""10M"",""12M"",""16M"",""18M"",""20M"",""24M"",""26M"",""32M"",""40M"",""💿540MB""]",,,,,,,,,
-editUrl=https://docs.google.com/spreadsheets/d/19vonUZ1oQfIaY48K_nGzozskF-O7u6Wd10SfDsOSBZ0/edit?gid=1252037126#gid=1252037126,,,,,,,,,

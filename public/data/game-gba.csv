@@ -790,23 +790,3 @@
 2006-08-03,0,0,ETC,任天堂,リズム天国,"￥3,800","￥4,000代",0
 2006-10-02,0,0,RPG,スクウェア・エニックス,FINALFANTASYVADVANCE,"￥5,040","￥5,000代",0
 2006-11-30,0,0,RPG,スクウェア・エニックス,FINALFANTASYVIADVANCE,"￥5,040","￥5,000代",0
-@CsvOptions:,,,,,,,,
-dataType=0,,,,,,,,
-title=「ゲームボーイアドバンス」ソフト一覧,,,,,,,,
-dataReference=<ul><li><a target%3d'_blank' href%3d'http://pasofami.game.coocan.jp/game/game.htm'>各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target%3d'_blank' href%3d'http://www.gamegyokai.com/rank/gba.htm'>ゲームボーイアドバンスソフト販売本数@ゲーム業界.com</a></li><li>wikipedia</ul>,,,,,,,,
-detailType=city,,,,,,,,
-isMakeAutocompleteData=1,,,,,,,,
-chartName[imagePath]=/img/game/maker,,,,,,,,
-chartName[imageTooltip]=img,,,,,,,,
-chartCity[imagePath]=/img/game/gba,,,,,,,,
-chartCity[imageTooltip]=all,,,,,,,,
-chartCity[orderYmd]=1,,,,,,,,
-chartCity[orderUI]=1,,,,,,,,
-chartDate[elasticY]=0,,,,,,,,
-chartDate[width]=1000,,,,,,,,
-chartDate[format]=YYYY,,,,,,,,
-chartSex[chartType]=bar,,,,,,,,
-chartSex[isLegend]=0,,,,,,,,
-"chartAge[unit]=[""不明"",""8M"",""32M"",""64M"",""128M"",""256M""]",,,,,,,,
-"chartSex[unit]=[""不明"",""SRAM"",""FLASH"",""FLASH1"",""FLASH2"",""EEP"",""None""]",,,,,,,,
-editUrl=https://docs.google.com/spreadsheets/d/1P3J3yVB_wKhT_bLwGjvdb11rXYmwapne5RZtqNKL-ws

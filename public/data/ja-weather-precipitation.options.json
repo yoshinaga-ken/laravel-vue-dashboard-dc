@@ -13,7 +13,16 @@
   "chartDate": {
     "elasticY": false,
     "width": 1000,
-    "format": "YYYY"
+    "format": "YYYY",
+    "isRangeChart": true,
+    "isFilterMissingCorrect": false
+  },
+  "chartDate2": {
+    "isShow": true,
+    "chartType": "lines",
+    "renderArea": true,
+    "renderDataPoints": true,
+    "isFilterMissingCorrect": true
   },
   "chartYear": {
     "isLegend": true
@@ -141,8 +150,5 @@
   "dataReference": "<ul><li><a target='_blank' href='https://www.data.jma.go.jp/risk/obsdl/'>過去の気象データ・ダウンロード@気象庁</a></li></ul>",
   "editURL": "",
   "detailType": "city",
-  "isMakeAutocompleteData": false,
-  "chartDate2": {
-    "chartType": "lines"
-  }
+  "isMakeAutocompleteData": false
 }

@@ -676,20 +676,3 @@
 1996-07-26,-,11,PZL,NECホームエレクトロニクス,バザールでござーるのゲームでござーる💿,調査中,調査中,0,3
 1997-03-28,-,11,SLG,NECホームエレクトロニクス,はたらく☆少女てきぱきワーキン・ラブ💿,調査中,調査中,0,3
 1999-06-03,-,11,ADV,NECホームエレクトロニクス,デッド・オブ・ザ・ブレイン1＆2💿,調査中,調査中,0,3
-@CsvOptions:,,,,,,,,,
-dataType=0,,,,,,,,,
-title=「PCエンジン」ソフト一覧,,,,,,,,,
-"dataReference=<ul><li><a target%3d'_blank' href%3d""http://pasofami.game.coocan.jp/game/game.htm"">各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a><li><a target%3d'_blank' href%3d""https://ja.wikipedia.org/wiki/PC%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7"">PCエンジンのゲームタイトル一覧@wikipedia</a></ul>",,,,,,,,,
-detailType=city,,,,,,,,,
-isMakeAutocompleteData=1,,,,,,,,,
-chartName[imagePath]=/img/game/maker,,,,,,,,,
-chartName[imageTooltip]=img,,,,,,,,,
-chartCity[imagePath]=/img/game/pce,,,,,,,,,
-chartCity[imageTooltip]=all,,,,,,,,,
-chartCity[orderYmd]=1,,,,,,,,,
-chartDate[elasticY]=0,,,,,,,,,
-chartDate[width]=1000,,,,,,,,,
-chartDate[format]=YYYY,,,,,,,,,
-"chartSex[unit]=[""不明"",""64K-SRAM"",""💿0.5M-SRAM"",""💿2M-SRAM"",""16M-DRAM""]",,,,,,,,,
-"chartAge[unit]=[""不明"",""1M"",""2M"",""3M"",""4M"",""6M"",""8M"",""16M"",""18M"",""20M"",""32K"",""💿512MB""]",,,,,,,,,
-editUrl=https://docs[google.com/spreadsheets/d/1ArIXd3wp29bvmzHbJxomKAq5_haQDSYiquPpttZjA9s/edit?gid=1831747219#gid]=1831747219,,,,,,,,,
