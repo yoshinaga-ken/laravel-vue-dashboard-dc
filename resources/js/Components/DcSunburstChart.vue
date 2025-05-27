@@ -406,48 +406,32 @@ onUnmounted(() => {
   window.removeEventListener('resize', handleWindowResize);
 });
 
+// Common chart update logic
+const updateChart = (renderMethod: 'redraw' | 'render') => {
+  if (chart) {
+    // 親コンテナのサイズを更新
+    updateParentSize();
+
+    isResizing = true; // リサイズ中フラグを立てる
+    chart
+      .width(chartWidth.value)
+      .height(chartHeight.value);
+
+    // リサイズ後にマージンを再適用
+    applySunburstMargins(chart, chartWidth.value, chartHeight.value);
+
+    chart[renderMethod]();
+    // リサイズ中フラグを非同期で下げる（DOMの更新完了後）
+    setTimeout(() => {
+      isResizing = false;
+    }, 200);
+  }
+};
+
 // 外部からアクセス可能な関数を定義
-const redraw = () => {
-  if (chart) {
-    // 親コンテナのサイズを更新
-    updateParentSize();
+const redraw = () => updateChart('redraw');
 
-    isResizing = true; // リサイズ中フラグを立てる
-    chart
-      .width(chartWidth.value)
-      .height(chartHeight.value);
-
-    // リサイズ後にマージンを再適用
-    applySunburstMargins(chart, chartWidth.value, chartHeight.value);
-
-    chart.redraw();
-    // リサイズ中フラグを非同期で下げる（DOMの更新完了後）
-    setTimeout(() => {
-      isResizing = false;
-    }, 200);
-  }
-};
-
-const render = () => {
-  if (chart) {
-    // 親コンテナのサイズを更新
-    updateParentSize();
-
-    isResizing = true; // リサイズ中フラグを立てる
-    chart
-      .width(chartWidth.value)
-      .height(chartHeight.value);
-
-    // リサイズ後にマージンを再適用
-    applySunburstMargins(chart, chartWidth.value, chartHeight.value);
-
-    chart.render();
-    // リサイズ中フラグを非同期で下げる（DOMの更新完了後）
-    setTimeout(() => {
-      isResizing = false;
-    }, 200);
-  }
-};
+const render = () => updateChart('render');
 
 // 外部から使用できる関数を公開
 defineExpose({
