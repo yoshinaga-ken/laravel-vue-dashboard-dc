@@ -58,7 +58,6 @@
     },
     {
       "isDcSunburstChart": true,
-      "isStackedBarchart": true,
       "legend": {
         "isShow": false
       }
