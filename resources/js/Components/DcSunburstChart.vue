@@ -103,6 +103,13 @@ const {
   margins: props.margins
 });
 
+// Define resize handler at component level
+const handleWindowResize = () => {
+  if (!isResizing && chart) {
+    redraw();
+  }
+};
+
 // 親コンテナのサイズを取得する関数
 const updateParentSize = () => {
   const container = document.getElementById(props.chartId);
@@ -313,11 +320,7 @@ onMounted(() => {
   setupMouseEvents();
 
   // ウィンドウサイズ変更時にも更新
-  window.addEventListener('resize', () => {
-    if (!isResizing && chart) {
-      redraw();
-    }
-  });
+  window.addEventListener('resize', handleWindowResize);
 });
 
 // ResizeObserverのセットアップ
@@ -400,7 +403,7 @@ onUnmounted(() => {
   cleanupMouseEvents();
 
   // イベントリスナーを削除
-  window.removeEventListener('resize', redraw);
+  window.removeEventListener('resize', handleWindowResize);
 });
 
 // 外部からアクセス可能な関数を定義
