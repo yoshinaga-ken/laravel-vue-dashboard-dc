@@ -1715,6 +1715,9 @@ watch(() => pnl.ana.is_show, onChangeSettings);
 watch(() => pnl.date.stack_type, (v) => {
   mm.dateStackShow(v);
 
+  // Stackの影響をうけるチャートを再描画
+  mm.chartCity.render();
+
   mm.composite.render();
   mm.chartYear.render();
   if (pnl.sex.chartType === 'bar') {
@@ -1782,7 +1785,8 @@ const mm = {
     },
     cCond: {
       barWidth: 40,
-      colors: COL_CND
+      colors: COL_CND,
+      ordinalColors : isDark ? d3.schemeDark2 : colorbrewer.Pastel1[9]
     },
     cJob: {
       TD: 750,       //transitionDuration
@@ -2721,6 +2725,9 @@ const mm = {
                 }
                 if (mm.opt.chartAge.unit !== undefined && mm.opt.chartAge.unit !== null) {
                   row[D_AGE] = parseInt(row[D_AGE]);
+                }
+                if (mm.opt.chartCity.orderYmd) {
+                  row[D_CND] = row[D_CND] === DN_KEY2 ? '?' : row[D_CND];
                 }
               }
               if (row[D_CNT] !== undefined) row[D_CNT] = parseInt(row[D_CNT]);
@@ -5489,18 +5496,7 @@ const initChartCity = () => {
       }
       mm.onChangeURL('name2', chart);
     })
-    .ordinalColors(isDark ? d3.schemeDark2 : colorbrewer.Pastel1[9])
     .renderLabel(true) //LeftLabel
-    // .label(function(d) {
-    //     let is_filtered = mm.gpCity_all[d.key]!==d.value;
-    //     const n=is_filtered?8:6;
-    //     let s=d.key.substr(0,n);
-    //     for (var i = s.length; i < n+1; i++) s+='　';
-    //     return s+d.value + (is_filtered ? '' : (mm.pref_tbl_city_cnt[d.key] ? '▲'+mm.pref_tbl_city_cnt[d.key] : '' ));
-    // })
-    // .label(function (d) {
-    // 	return php_sprintf("%' -8s", d.key) + php_number_format(d.value);
-    // })
     .label(function (d) {
       let s = d.key;
       const wordNum = (isSp ? 6 : 8); // 何文字目から数字を表示するか？都道府県名は4文字
@@ -5516,11 +5512,37 @@ const initChartCity = () => {
     })
     .elasticX(true);
 
-  mm.chartCity.xAxis().ticks(0);
-  if (mm.opt.chartCity.orderYmd) {
-    mm.chartCity.ordering(mm.orderYmd);
+    mm.chartCity.xAxis().ticks(0);
+    if (mm.opt.chartCity.orderYmd) {
+      mm.chartCity.ordering(mm.orderYmd);
+    }
+
+    // color
+    if (mm.opt.chartCity.orderYmd) {
+      mm.chartCity
+        .colors(d => {
+          let c;
+          switch (pnl.date.stack_type) {
+            case STACK_PL1:
+              let i = mm.chartName.filters().indexOf(d[D_PL1])
+              c = COL_NAME[i];
+              break;
+            case STACK_CND:
+              c = mm.config.cCond.colorsTable[d[D_CND]];
+              break;
+            case STACK_AGE:
+              c = mm.config.cAge.colorsTable[d[D_AGE]];
+              break;
+          }
+          return c;
+        })
+        .colorAccessor(d => {
+          return mm.data[mm.citys.indexOf(d.key)];
+        })
+    } else {
+      mm.chartCity.ordinalColors(mm.config.cCond.ordinalColors)
+    }
   }
-}
 
 /**
  * CHART chartDate 感染者数(YYYY-MM-DD) barChart Init
@@ -5595,13 +5617,19 @@ const initChartDate = (chartDateW) => {
 
     mm.config.cCond.colors = Array(mm.chartStack[STACK_CND].length);
     for (let i = 0; i < mm.config.cCond.colors.length; i++) {
-      // @see [Categorical schemes](https://d3js.org/d3-scale-chromatic/categorical)
-      mm.config.cCond.colors[i] = d3.schemePaired[i % d3.schemePaired.length];
+      mm.config.cCond.colors[i] = mm.config.cCond.ordinalColors[i % mm.config.cCond.ordinalColors.length];
     }
 
     const cndAll = mm.util.getScaledDimensionCond().group().all();
     for (let i = 0; i < cndAll.length; i++) {
       colCondTbl[i] = mm.chartStack[STACK_CND].findIndex(o => o === cndAll[i].key);
+    }
+
+    if (mm.opt.chartCity.orderYmd) {
+      mm.config.cCond.colorsTable = mm.conds.reduce((table, cond, i) => {
+        table[cond] = mm.config.cCond.colors[colCondTbl[i]];
+        return table;
+      }, {});
     }
   }
   //
@@ -5638,6 +5666,18 @@ const initChartDate = (chartDateW) => {
       for (let i = 0; i < ageAll.length; i++) {
         colAgeTbl[i] = mm.chartStack[STACK_AGE].findIndex(o => mm.chartStackIdxAge[o] === ageAll[i]);
       }
+    }
+
+    if (mm.opt.chartCity.orderYmd) {
+      mm.config.cAge.colors = Array(mm.chartStack[STACK_AGE].length);
+      for (let i = 0; i < mm.config.cAge.colors.length; i++) {
+        mm.config.cAge.colors[i] = COL_AGE[i % COL_AGE.length];
+      }
+      mm.config.cAge.colorsTable = mm.ages.reduce((table, age, i) => {
+        age = mm.opt.chartAge.unit === null ? age : mm.chartStackIdxAge[age];
+        table[age] = mm.config.cAge.colors[colAgeTbl[i]];
+        return table;
+      }, {});
     }
   }
 
@@ -6999,7 +7039,11 @@ const initDc = (data) => {
   const names = _.map(mm.data, D_PL1);
   mm.names = _.uniq(names);
   mm.namesCount = _.countBy(names);
-  mm.citys = _.uniq(_.map(mm.data, D_PL2));
+  if (mm.opt.chartCity.orderYmd) {
+    mm.citys = _.map(mm.data, D_PL2);
+  } else {
+    mm.citys = _.uniq(_.map(mm.data, D_PL2));
+  }
   // mm.conds = _.uniq(_.map(mm.data, D_CND)).map(mm.getLabelCond);
   // mm.ages = _.uniq(_.map(mm.data, D_AGE)).map(mm.getLabelAge);
   mm.jobs = _.uniq(_.map(mm.data, D_JOB));
