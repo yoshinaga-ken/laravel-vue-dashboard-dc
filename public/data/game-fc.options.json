@@ -61,6 +61,7 @@
   "chartJobCat": {},
   "chartEx": [
     {
+      "name": "ハード",
       "scale": false,
       "isLegend": false,
       "unit": [
@@ -70,16 +71,61 @@
       ]
     },
     {
+      "name": "👥クリエイターズ👨‍💼👨‍💻🎨",
+      "isDcSunburstChart": true,
+      "dcSunburstChart": {
+        "keyIndex": "👨‍💼$11/👨‍💻$12/🎨$13",
+        "width": 600,
+        "height": 600
+      },
+      "orderDesc": true,
+      "legend": {
+        "isShow": false
+      }
+    },
+    {
+      "name": "👨‍💼ディレクター",
+      "orderDesc": true
+    },
+    {
+      "name": "👨‍💻プログラマー",
+      "orderDesc": true
+    },
+    {
+      "name": "🎨デザイナー/美術",
+      "orderDesc": true
+    },
+    {
+      "name": "🎵音楽",
+      "orderDesc": true
+    },
+    {
+      "name": "📝シナリオ",
+      "orderDesc": true
+    },
+    {
+      "name": "💼プロデューサー",
+      "orderDesc": true
+    },
+    {
+      "name": "カセットカラー",
       "scale": false,
       "isLegend": false
     },
     {
+      "name": "ラベル",
       "scale": false,
       "isLegend": false
     },
-    {},
-    {},
-    {}
+    {
+      "name": "「対戦」といえば？"
+    },
+    {
+      "name": "「ハイスコア」といえば？"
+    },
+    {
+      "name": "「クリアできなかった」といえば？"
+    }
   ],
   "chartDetail": {}
 }
