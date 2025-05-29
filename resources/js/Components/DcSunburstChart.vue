@@ -188,11 +188,31 @@ const initChart = () => {
       }
       // keyIndexが文字列の場合は書式指定として処理
       else if (typeof props.keyIndex === 'string') {
-        // $1, $2, $3... などのプレースホルダーを d[1], d[2], d[3]... で置換
-        value = props.keyIndex.replace(/\$(\d+)/g, (match, index) => {
-          const arrayIndex = parseInt(index, 10);
-          return d[arrayIndex] !== undefined ? d[arrayIndex] : '';
-        });
+        // まず、プレースホルダーの値を取得
+        const placeholderValues = [];
+        const placeholderPattern = /\$(\d+)/g;
+        let match;
+
+        // すべてのプレースホルダーを見つけて値を取得
+        while ((match = placeholderPattern.exec(props.keyIndex)) !== null) {
+          const arrayIndex = parseInt(match[1], 10);
+          const val = d[arrayIndex] !== undefined ? d[arrayIndex] : '';
+          placeholderValues.push(val);
+        }
+
+        // すべてのプレースホルダーの値が空かどうかをチェック
+        const allEmpty = placeholderValues.every(val => val === '' || val === null || val === undefined);
+
+        if (allEmpty && placeholderValues.length > 0) {
+          // すべてのプレースホルダーが空の場合は空文字列
+          value = '';
+        } else {
+          // $1, $2, $3... などのプレースホルダーを d[1], d[2], d[3]... で置換
+          value = props.keyIndex.replace(/\$(\d+)/g, (match, index) => {
+            const arrayIndex = parseInt(index, 10);
+            return d[arrayIndex] !== undefined ? d[arrayIndex] : '';
+          });
+        }
       }
       else {
         // その他の場合は空文字列
@@ -219,7 +239,6 @@ const initChart = () => {
       .height(chartHeight.value)
       .dimension(dimension)
       .group(group)
-      .cx(100)
       .colors(d3.scaleOrdinal(d3SchemeCategory20b))
       .innerRadius(props.innerRadius);
 
@@ -279,7 +298,6 @@ const initChart = () => {
         dc.redrawAll(props.chartGroup);
       }, 1);
     }
-
     // チャートの描画
     isResizing = true; // リサイズ中フラグを立てる
     chart.render();

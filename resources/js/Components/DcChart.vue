@@ -1715,6 +1715,9 @@ watch(() => pnl.ana.is_show, onChangeSettings);
 watch(() => pnl.date.stack_type, (v) => {
   mm.dateStackShow(v);
 
+  // Stackの影響をうけるチャートを再描画
+  mm.chartCity.render();
+
   mm.composite.render();
   mm.chartYear.render();
   if (pnl.sex.chartType === 'bar') {
@@ -1782,7 +1785,8 @@ const mm = {
     },
     cCond: {
       barWidth: 40,
-      colors: COL_CND
+      colors: COL_CND,
+      ordinalColors : isDark ? d3.schemeDark2 : colorbrewer.Pastel1[9]
     },
     cJob: {
       TD: 750,       //transitionDuration
@@ -2722,6 +2726,9 @@ const mm = {
                 if (mm.opt.chartAge.unit !== undefined && mm.opt.chartAge.unit !== null) {
                   row[D_AGE] = parseInt(row[D_AGE]);
                 }
+                if (mm.opt.chartCity.orderYmd) {
+                  row[D_CND] = row[D_CND] === DN_KEY2 ? '?' : row[D_CND];
+                }
               }
               if (row[D_CNT] !== undefined) row[D_CNT] = parseInt(row[D_CNT]);
 
@@ -2748,114 +2755,46 @@ const mm = {
       }
     },
     stackedTitle: (d, keyFormat = null, unit = '名') => {
-      let is_bar = isNaN(d.value);
-      let s_suf = '';
-      if (gg.dt === DT_COVID) {
-        switch (1) {
-          default:
-            let ymd = moment(d.key).format('YYYY-MM-DD');
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[0][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[0][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[1][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[1][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[2][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[2][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[3][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[3][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[4][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[4][1];
-              break;
-            }
-
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[5][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[5][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[6][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[6][1];
-              break;
-            }
-
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[7][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[7][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[8][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[8][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[9][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[9][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[10][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[10][1];
-              break;
-            }
-
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[11][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[11][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[12][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[12][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[13][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[13][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[14][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[14][1];
-              break;
-            }
-
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[15][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[15][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[16][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[16][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[17][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[17][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[18][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[18][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[19][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[19][1];
-              break;
-            }
-            if (ymd === mm.opt.assets.chartDateLineYmdMsg[20][0]) {
-              s_suf = mm.opt.assets.chartDateLineYmdMsg[20][1];
-              break;
-            }
-            break;
-        }
-      }
-
+      // unit = ' ' + unit;
+      let isBar = isNaN(d.value);
       let keyStr = keyFormat ? keyFormat(d.key) : d.key;
 
-      if (!is_bar) {
+      if (!isBar) {
         //N日 移動平均
         return keyStr + '\n週間移動平均: ' + php_number_format(d.value) + unit;
       }
 
       let flt = mm.chartName.filters();
-      let pref_mode = flt.length > 1 && flt.length <= mm.chartStack[STACK_PL1].length;
-      if (pref_mode) {
+      let prefMode = flt.length > 1 && flt.length <= mm.chartStack[STACK_PL1].length;
+
+      let suffix = '';
+      if (gg.dt === DT_COVID) {
+        let ymd = moment(d.key).format('YYYY-MM-DD');
+        const msgMap = mm.opt.assets.chartDateLineYmdMsg.reduce((map, [key, value]) => {
+          map[key] = value;
+          return map;
+        }, {});
+        suffix = msgMap[ymd] || '';
+      }
+
+      // case chatDate2
+      if (gg.dt === DT_COVID && d.value.pre) {
+        if (prefMode) {
+          let s = ''
+          let nmcnt = d.value.pre[mm.chartDate2Mode];
+          let total = 0;
+          for (let f of flt) {
+            s += nmcnt[f] ? (f + ': ' + php_number_format(nmcnt[f]) + unit + '\n') : '';
+            total += nmcnt[f];
+          }
+          return keyStr + '\n────────\n' + s + (flt.length > 1 ? '────────\n計: ' + php_number_format(total) + unit : '') + '\n' + suffix;
+        } else {
+          return keyStr + '\n────────\n' +
+            '計: ' + (d.value.all[mm.chartDate2Mode] === 0 ? '' : php_number_format(d.value.all[mm.chartDate2Mode]) + unit + '\n') + suffix;
+        }
+      }
+
+      if (prefMode) {
         let s = '';
         for (let f of flt) {
           if (d.value.nmcnt[f]) {
@@ -2865,7 +2804,7 @@ const mm = {
               (itemPercent !== 100 ? (' (' + itemPercent + '%)') : '') + '\n';
           }
         }
-        return keyStr + '\n────────\n' + s + (flt.length > 1 ? '────────\n計: ' + d.value.total + unit : '') + '\n' + s_suf;
+        return keyStr + '\n────────\n' + s + (flt.length > 1 ? '────────\n計: ' + d.value.total + unit : '') + '\n' + suffix;
       } else if (pnl.date.stack_type === STACK_AGE) {
         let s = '';
         let per = 0;
@@ -2876,7 +2815,7 @@ const mm = {
           s += php_sprintf("%' -8s", nm) + ': ' + php_sprintf("%' 3s", php_number_format(d.value.agcnt[i])) + unit +
             (per !== 100 ? (' (' + per + '%)') : '') + '\n';
         }
-        return keyStr + '\n──────────\n' + s + (per === 100 ? '' : ('──────────\n計: ' + php_number_format(d.value.total) + unit)) + '\n' + s_suf;
+        return keyStr + '\n──────────\n' + s + (per === 100 ? '' : ('──────────\n計: ' + php_number_format(d.value.total) + unit)) + '\n' + suffix;
       } else { // stack_type==='con'
         if (gg.dt === DT_COVID) {
           return keyStr + '\n────────\n' +
@@ -2885,7 +2824,7 @@ const mm = {
             (d.value.lv_c === 0 ? '' : CND_LV_C + ': ' + d.value.lv_c + unit + '\n') +
             (d.value.lv_d === 0 ? '' : CND_LV_D + ': ' + d.value.lv_d + unit + '\n') +
             (d.value.lv_e === 0 ? '' : CND_LV_E + ': ' + d.value.lv_e + unit + '\n') +
-            '────────\n計: ' + php_number_format(d.value.total) + unit + '\n' + s_suf;
+            '────────\n計: ' + php_number_format(d.value.total) + unit + '\n' + suffix;
         } else {
           let s = '';
           let per = 0;
@@ -2896,7 +2835,7 @@ const mm = {
             s += php_sprintf("%' -8s", nm) + ': ' + php_sprintf("%' 3s", php_number_format(d.value.cdcnt[i])) + unit +
               (per !== 100 ? (' (' + per + '%)') : '') + '\n';
           }
-          return keyStr + '\n──────────\n' + s + (per === 100 ? '' : ('──────────\n計: ' + php_number_format(d.value.total) + unit)) + '\n' + s_suf;
+          return keyStr + '\n──────────\n' + s + (per === 100 ? '' : ('──────────\n計: ' + php_number_format(d.value.total) + unit)) + '\n' + suffix;
         }
       }
     },
@@ -5489,25 +5428,19 @@ const initChartCity = () => {
       }
       mm.onChangeURL('name2', chart);
     })
-    .ordinalColors(isDark ? d3.schemeDark2 : colorbrewer.Pastel1[9])
     .renderLabel(true) //LeftLabel
-    // .label(function(d) {
-    //     let is_filtered = mm.gpCity_all[d.key]!==d.value;
-    //     const n=is_filtered?8:6;
-    //     let s=d.key.substr(0,n);
-    //     for (var i = s.length; i < n+1; i++) s+='　';
-    //     return s+d.value + (is_filtered ? '' : (mm.pref_tbl_city_cnt[d.key] ? '▲'+mm.pref_tbl_city_cnt[d.key] : '' ));
-    // })
-    // .label(function (d) {
-    // 	return php_sprintf("%' -8s", d.key) + php_number_format(d.value);
-    // })
     .label(function (d) {
       let s = d.key;
       const wordNum = (isSp ? 6 : 8); // 何文字目から数字を表示するか？都道府県名は4文字
       for (var i = 0; i < wordNum - d.key.length; i++) s += '　';
       s += ' ';
       return s
-        + (mm.opt.chartCity.isHideLabelValue ? '' : (d.value < (1000 * 1000 * 10) ? php_number_format(d.value) : mm.d3fmt(d.value)));
+        + (mm.opt.chartCity.isHideLabelValue ? '' :
+            (d.value === 1 && mm.opt.chartCity.orderYmd
+                ? ''
+                : (d.value < (1000 * 1000 * 10) ? php_number_format(d.value) : mm.d3fmt(d.value))
+            )
+        );
     })
     .renderTitleLabel(false) //RightLabel & tooltip
     .titleLabelOffsetX(20)
@@ -5516,11 +5449,37 @@ const initChartCity = () => {
     })
     .elasticX(true);
 
-  mm.chartCity.xAxis().ticks(0);
-  if (mm.opt.chartCity.orderYmd) {
-    mm.chartCity.ordering(mm.orderYmd);
+    mm.chartCity.xAxis().ticks(0);
+    if (mm.opt.chartCity.orderYmd) {
+      mm.chartCity.ordering(mm.orderYmd);
+    }
+
+    // color
+    if (mm.opt.chartCity.orderYmd) {
+      mm.chartCity
+        .colors(d => {
+          let c;
+          switch (pnl.date.stack_type) {
+            case STACK_PL1:
+              let i = mm.chartName.filters().indexOf(d[D_PL1])
+              c = COL_NAME[i];
+              break;
+            case STACK_CND:
+              c = mm.config.cCond.colorsTable[d[D_CND]];
+              break;
+            case STACK_AGE:
+              c = mm.config.cAge.colorsTable[d[D_AGE]];
+              break;
+          }
+          return c;
+        })
+        .colorAccessor(d => {
+          return mm.data[mm.citys.indexOf(d.key)];
+        })
+    } else {
+      mm.chartCity.ordinalColors(mm.config.cCond.ordinalColors)
+    }
   }
-}
 
 /**
  * CHART chartDate 感染者数(YYYY-MM-DD) barChart Init
@@ -5595,13 +5554,19 @@ const initChartDate = (chartDateW) => {
 
     mm.config.cCond.colors = Array(mm.chartStack[STACK_CND].length);
     for (let i = 0; i < mm.config.cCond.colors.length; i++) {
-      // @see [Categorical schemes](https://d3js.org/d3-scale-chromatic/categorical)
-      mm.config.cCond.colors[i] = d3.schemePaired[i % d3.schemePaired.length];
+      mm.config.cCond.colors[i] = mm.config.cCond.ordinalColors[i % mm.config.cCond.ordinalColors.length];
     }
 
     const cndAll = mm.util.getScaledDimensionCond().group().all();
     for (let i = 0; i < cndAll.length; i++) {
       colCondTbl[i] = mm.chartStack[STACK_CND].findIndex(o => o === cndAll[i].key);
+    }
+
+    if (mm.opt.chartCity.orderYmd) {
+      mm.config.cCond.colorsTable = mm.conds.reduce((table, cond, i) => {
+        table[cond] = mm.config.cCond.colors[colCondTbl[i]];
+        return table;
+      }, {});
     }
   }
   //
@@ -5638,6 +5603,18 @@ const initChartDate = (chartDateW) => {
       for (let i = 0; i < ageAll.length; i++) {
         colAgeTbl[i] = mm.chartStack[STACK_AGE].findIndex(o => mm.chartStackIdxAge[o] === ageAll[i]);
       }
+    }
+
+    if (mm.opt.chartCity.orderYmd) {
+      mm.config.cAge.colors = Array(mm.chartStack[STACK_AGE].length);
+      for (let i = 0; i < mm.config.cAge.colors.length; i++) {
+        mm.config.cAge.colors[i] = COL_AGE[i % COL_AGE.length];
+      }
+      mm.config.cAge.colorsTable = mm.ages.reduce((table, age, i) => {
+        age = mm.opt.chartAge.unit === null ? age : mm.chartStackIdxAge[age];
+        table[age] = mm.config.cAge.colors[colAgeTbl[i]];
+        return table;
+      }, {});
     }
   }
 
@@ -6999,7 +6976,11 @@ const initDc = (data) => {
   const names = _.map(mm.data, D_PL1);
   mm.names = _.uniq(names);
   mm.namesCount = _.countBy(names);
-  mm.citys = _.uniq(_.map(mm.data, D_PL2));
+  if (mm.opt.chartCity.orderYmd) {
+    mm.citys = _.map(mm.data, D_PL2);
+  } else {
+    mm.citys = _.uniq(_.map(mm.data, D_PL2));
+  }
   // mm.conds = _.uniq(_.map(mm.data, D_CND)).map(mm.getLabelCond);
   // mm.ages = _.uniq(_.map(mm.data, D_AGE)).map(mm.getLabelAge);
   mm.jobs = _.uniq(_.map(mm.data, D_JOB));

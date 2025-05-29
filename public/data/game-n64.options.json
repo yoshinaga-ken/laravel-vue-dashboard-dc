@@ -69,12 +69,41 @@
   "chartJobCat": {},
   "chartEx": [
     {
-      "scale": false,
-      "isLegend": false
+      "name": "👥クリエイターズ👨‍💼👨‍💻🎨",
+      "isDcSunburstChart": true,
+      "dcSunburstChart": {
+        "keyIndex": "👨‍💼$10/👨‍💻$11/🎨$12",
+        "width": 600,
+        "height": 600
+      },
+      "orderDesc": true,
+      "legend": {
+        "isShow": false
+      }
     },
     {
-      "scale": false,
-      "isLegend": false
+      "name": "👨‍💼ディレクター",
+      "orderDesc": true
+    },
+    {
+      "name": "👨‍💻プログラマー",
+      "orderDesc": true
+    },
+    {
+      "name": "🎨デザイナー/美術",
+      "orderDesc": true
+    },
+    {
+      "name": "🎵音楽",
+      "orderDesc": true
+    },
+    {
+      "name": "📝シナリオ",
+      "orderDesc": true
+    },
+    {
+      "name": "💼プロデューサー",
+      "orderDesc": true
     }
   ],
   "chartDetail": {}
