@@ -5022,13 +5022,11 @@ const mm = {
     return ret;
   },
   loadDcData: (name) => {
-    let promise = Promise.resolve();
-
     mm.get.data = name
     // dataファイルのイメージ画像の設定
     mm.url_data.data = mm.get.data;
-    let imgName = Object.keys(mm.url_data.filer_files).find(key => mm.url_data.filer_files[key].indexOf(mm.url_data.data) === 0);
-    dataImgSrc.value = '<?=BURL?>upload/csv/' + (imgName ?? 'covid19-japan.png');
+    const imgName = Object.keys(mm.url_data.filer_files).find(key => mm.url_data.filer_files[key].indexOf(mm.url_data.data) === 0);
+    dataImgSrc.value = mm.url_data.path + (imgName ?? 'covid19-japan.png');
     $('#loading').css('background-image', 'url(' + dataImgSrc.value + ')').show();
 
     const initDcAfter = () => {
