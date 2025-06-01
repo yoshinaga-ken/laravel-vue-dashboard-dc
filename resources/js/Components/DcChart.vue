@@ -679,7 +679,7 @@
                 :filters="mm.chartEx[i].filters"
                 :innerRadius="mm.opt.chartEx[i]?.innerRadius"
                 :showLabels="true"
-                :legend="mm.opt.chartEx[i]?.legend"
+                :legend="mm.opt.chartEx[i]?.isLegend ? mm.opt.chartEx[i]?.dcSunburstChart.legend: {isShow: false}"
                 :keyIndex="mm.opt.chartEx[i]?.dcSunburstChart?.keyIndex ?? D_EX0+i"
                 :valueIndex="mm.opt.chartEx[i]?.dcSunburstChart?.valueIndex ?? D_CNT"
                 :margins="mm.opt.chartEx[i]?.dcSunburstChart?.margins"
@@ -3997,16 +3997,15 @@ const mm = {
         default:
           if (maxLabelLen > 10) {
             $(chart._anchor).addClass('label-x-rot');
-            chart.margins({top: 0, right: 0, bottom: 100, left: 40})
+            chart.margins().bottom = 100;
             break;
           }
           if (maxLabelLen > 6) {
             $(chart._anchor).addClass('label-x-rot');
-            chart.margins({top: 0, right: 0, bottom: 70, left: 40})
+            chart.margins().bottom = 70;
             break;
           }
-
-          chart.margins({top: 0, right: 0, bottom: 20, left: 40})
+          chart.margins().bottom = 20;
           break;
       }
     },
@@ -4385,9 +4384,9 @@ const mm = {
       }
       return ret;
     },
-    createGridLegend: (chartW) => {
+    createGridLegend: (x = 45) => {
       const legend = dc.legend()
-        .x(45).y(10)
+        .x(x).y(10)
         .legendText((d) => {
           let sel_no = d.name.split(':');
           return sel_no.length === 2 ? mm.dateStackPl1Names[sel_no[1]] : d.name;
@@ -5192,15 +5191,19 @@ if (G_IS_LOCAL) {
     },
   };
 }
-const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, isLegend, keyFormat = null, panel = null) => {
+const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, isLegend,
+                               chartOptions = {}, keyFormat = null, panel = null) => {
   let group = dimension.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
   group = mm.groupRemoveKey(group, DN_EX);
   const groupAll = group.all();
 
   // 幅調整
+  const defaultMargins = {top: 0, right: 0, bottom: 20, left: 40};
+  const margins = _.merge({}, defaultMargins, chartOptions?.margins || {});
+
   const n = groupAll.length;
   const barW = n > 16 ? parseInt(0.75 * barWidth) : barWidth;
-  const chartW = (n + 1) * barW;
+  const chartW = (n + 1) * barW + margins.right + margins.left;
   if (!isSp && panel !== null) $(panel).width(chartW);
 
   const chart = new dc.BarChart(parent, "chartGroup");
@@ -5208,7 +5211,7 @@ const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, 
     .width(chartW)
     .height(height)
     .useViewBoxResizing(mm.config.panelResizable)
-    .margins({top: 0, right: 0, bottom: 20, left: 40})
+    .margins(margins)
     .gap(6)
     .transitionDuration(750)
     .dimension(dimension)
@@ -5242,7 +5245,7 @@ const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, 
   mm.chart.setStacks(chart, group);
 
   if (isLegend) {
-    const legend = mm.chart.createGridLegend(chartW);
+    const legend = mm.chart.createGridLegend(margins.left === defaultMargins.left ? 45 : 0);
     chart.legend(legend)
     chart.legendToggle = mm.chart.filterByStackName;
   }
@@ -6295,7 +6298,8 @@ const initChartYear = (height) => {
     mm.chartScroll('#div_name');
     mm.chartScroll('#div_city');
   }
-  mm.chartYear = createStackedBarChart(dimYear, '#chart_year', height, mm.config.cYear.barWidth, onFiltered, mm.opt.chartYear.isLegend);
+  mm.chartYear = createStackedBarChart(dimYear, '#chart_year', height, mm.config.cYear.barWidth,
+    onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartYear);
 }
 
 /**
@@ -6459,8 +6463,8 @@ const initChartSex = (chartSexW, chartSexH) => {
     if (mm.opt.chartSex.unit === undefined) mm.opt.chartSex.unit = null;
 
     mm.chartSex = createStackedBarChart(dimSex, chartDomId, chartSexH, mm.config.cSex.barWidth,
-      onFiltered, mm.opt.chartSex.isLegend,
-      v => mm.getLabelSex(v)
+      onFiltered, mm.opt.chartSex.isLegend, mm.opt.chartSex,
+      v => mm.getLabelSex(v),
     );
     mm.chartSex.dataIndex = D_SEX;
 
@@ -6938,8 +6942,7 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
     // 標準チャート (stackedBarChart) の作成
     mm.chartEx[chartIndex] =
       createStackedBarChart(dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
-        onFiltered,
-        mm.opt.chartEx[chartIndex].isLegend,
+        onFiltered, mm.opt.chartEx[chartIndex].isLegend, mm.opt.chartEx[chartIndex],
         v => mm.getLabelEx(v, chartIndex),
         `#panel_ex_${chartIndex}`
       );
