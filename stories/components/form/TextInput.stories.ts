@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { fn } from 'storybook/test';
 import TextInput from '@/Components/TextInput.vue';
 
 const meta = {
@@ -7,10 +8,6 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     modelValue: { control: 'text' },
-    type: { control: 'select', options: ['text', 'password', 'email', 'number'] },
-    disabled: { control: 'boolean' },
-    autofocus: { control: 'boolean' },
-    class: { control: 'text' },
   },
 } satisfies Meta<typeof TextInput>;
 
@@ -21,31 +18,24 @@ export const Default: Story = {
   args: {
     modelValue: '',
   },
+  render: (args) => ({
+    components: { TextInput },
+    setup() {
+      return { args, onUpdateModelValue: fn() };
+    },
+    template: '<TextInput v-bind="args" @update:modelValue="onUpdateModelValue" />',
+  }),
 };
 
 export const WithValue: Story = {
   args: {
     modelValue: 'Hello World',
   },
-};
-
-export const Password: Story = {
-  args: {
-    modelValue: 'password123',
-    type: 'password',
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    modelValue: 'Disabled input',
-    disabled: true,
-  },
-};
-
-export const WithCustomClass: Story = {
-  args: {
-    modelValue: 'Custom styled input',
-    class: 'bg-yellow-100 dark:bg-yellow-800',
-  },
+  render: (args) => ({
+    components: { TextInput },
+    setup() {
+      return { args, onUpdateModelValue: fn() };
+    },
+    template: '<TextInput v-bind="args" @update:modelValue="onUpdateModelValue" />',
+  }),
 };
