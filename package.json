@@ -10,7 +10,9 @@
     "codegen": "graphql-codegen --config codegen.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook"
+    "test:e2e:storybook": "cd e2e && pnpm run test:storybook",
+    "test:e2e:storybook:ui": "cd e2e && pnpm run test:storybook:ui",
+    "test:e2e:storybook:debug": "cd e2e && pnpm run test:storybook:debug"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.0.0",

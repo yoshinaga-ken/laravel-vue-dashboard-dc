@@ -8,6 +8,12 @@
     "test:mobile": "npx playwright test --project=\"Mobile Safari\"",
     "test:chrome:video": "cross-env PWVIDEO=1 npx playwright test --project=chromium",
     "test:mobile:video": "cross-env PWVIDEO=1 npx playwright test --project=\"Mobile Safari\"",
+    "test:storybook": "npx playwright test --project=storybook-chromium",
+    "test:storybook:video": "cross-env PWVIDEO=1 npx playwright test --project=storybook-chromium",
+    "test:storybook:interaction:video": "cross-env PWVIDEO=1 npx playwright test --project=storybook-chromium --grep \"InteractionTest\"",
+    "test:storybook:video:slow": "cross-env PWVIDEO=1 TEST_WAIT_TIME=1000 npx playwright test --project=storybook-chromium",
+    "test:storybook:ui": "npx playwright test --project=storybook-chromium --ui",
+    "test:storybook:debug": "npx playwright test --project=storybook-chromium --debug",
     "convert-videos": "ts-node scripts/convert-videos-to-gif.ts",
     "convert-videos:slow": "ts-node scripts/convert-videos-to-gif.ts 2"
   },
