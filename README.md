@@ -101,7 +101,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - test 
     - [vitest](https://vitest.dev/)
     - e2e with [playwright](https://playwright.dev/)
-  - [Storybook 8](https://storybook.js.org/)
+  - [Storybook 9](https://storybook.js.org/)
 
 ## DeepWiki explanation
 
