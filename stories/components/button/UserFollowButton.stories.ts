@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { fn } from 'storybook/test';
 import UserFollowButton from '@/Components/UserFollowButton.vue';
 
 const meta = {
@@ -34,6 +35,13 @@ export const Default: Story = {
   args: {
     user: mockUser,
   },
+  render: (args) => ({
+    components: { UserFollowButton },
+    setup() {
+      return { args, onClick: fn() };
+    },
+    template: '<UserFollowButton v-bind="args" @click="onClick" />',
+  }),
 };
 
 export const Followed: Story = {
@@ -43,6 +51,13 @@ export const Followed: Story = {
       is_followed_by: true,
     },
   },
+  render: (args) => ({
+    components: { UserFollowButton },
+    setup() {
+      return { args, onClick: fn() };
+    },
+    template: '<UserFollowButton v-bind="args" @click="onClick" />',
+  }),
 };
 
 export const Disabled: Story = {
@@ -50,6 +65,13 @@ export const Disabled: Story = {
     user: mockUser,
     disabled: true,
   },
+  render: (args) => ({
+    components: { UserFollowButton },
+    setup() {
+      return { args, onClick: fn() };
+    },
+    template: '<UserFollowButton v-bind="args" @click="onClick" />',
+  }),
 };
 
 export const WithFollowersList: Story = {
@@ -57,6 +79,13 @@ export const WithFollowersList: Story = {
     user: mockUser,
     isFollowersUserList: true,
   },
+  render: (args) => ({
+    components: { UserFollowButton },
+    setup() {
+      return { args, onClick: fn() };
+    },
+    template: '<UserFollowButton v-bind="args" @click="onClick" />',
+  }),
 };
 
 export const WithFollowingList: Story = {
@@ -64,6 +93,13 @@ export const WithFollowingList: Story = {
     user: mockUser,
     isFollowingUserList: true,
   },
+  render: (args) => ({
+    components: { UserFollowButton },
+    setup() {
+      return { args, onClick: fn() };
+    },
+    template: '<UserFollowButton v-bind="args" @click="onClick" />',
+  }),
 };
 
 export const WithBothLists: Story = {
@@ -72,4 +108,11 @@ export const WithBothLists: Story = {
     isFollowersUserList: true,
     isFollowingUserList: true,
   },
+  render: (args) => ({
+    components: { UserFollowButton },
+    setup() {
+      return { args, onClick: fn() };
+    },
+    template: '<UserFollowButton v-bind="args" @click="onClick" />',
+  }),
 };

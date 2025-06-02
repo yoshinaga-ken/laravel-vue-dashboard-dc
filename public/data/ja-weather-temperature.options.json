@@ -46,14 +46,20 @@
     "isStacked": 1
   },
   "chartJob": {
-    "name": "降雪量合計(cm)"
+    "name": "未使用1",
+    "isHidden": true
   },
   "chartJobCat": {},
   "chartEx": [
     {
+      "name": "降雪量合計(cm)",
+      "scale": 50,
+      "isLegend": 0
+    },
+    {
       "name": "平均湿度(％)",
       "scale": 10,
-      "isLegend": 1
+      "isLegend": 0
     },
     {
       "name": "平均雲量(10分比)",

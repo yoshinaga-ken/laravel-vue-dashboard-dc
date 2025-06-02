@@ -437,13 +437,9 @@
           </div>
 
           <!-- DC_PANEL Year -->
-          <div id="panel_year" class="bg-theme-col2 dc_panel drag" :style="pnl.year.style" v-show="pnl.year.is_show">
+          <div id="panel_year" class="bg-theme-col2 dc_panel drag panel_year" :style="pnl.year.style" v-show="pnl.year.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.year.title"></span>
-              <a class="reset btn_reset" id="btn_reset_year" href="javascript:void(0);" style="display: none;">
-                <span class="ui-icon ui-icon-closethick"></span>
-              </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
 
               <!-- TODO: StackTypeComponent -->
               <label title="チャートのスタックタイプを切り替えます">📊
@@ -455,6 +451,12 @@
                 <label v-html="pnl.cond.title" for="stack_type_con"></label>
               </label>
 
+              <!-- FilterText -->
+              <a class="reset btn_reset" id="btn_reset_year" href="javascript:void(0);" style="display: none;">
+                <span class="ui-icon ui-icon-closethick"></span>
+              </a>
+              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.year.is_show=0"></span>
             </div>
             <div>
@@ -464,16 +466,19 @@
           </div>
 
           <!-- DC_PANEL Season -->
-          <div id="panel_season" class="bg-theme-col2 dc_panel drag" :style="pnl.season.style"
+          <div id="panel_season" class="bg-theme-col2 dc_panel drag panel_season" :style="pnl.season.style"
                v-show="pnl.season.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
                     v-html="(pnl.season.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.season.title">
               </span>
+
+              <!-- FilterText -->
               <a class="reset btn_reset" id="btn_reset_season" href="javascript:void(0);" style="display: none;">
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.season.is_show=0"></span>
             </div>
             <div>
@@ -483,14 +488,17 @@
           </div>
 
           <!-- DC_PANEL Week-->
-          <div id="panel_week" class="bg-theme-col2 dc_panel drag" :style="pnl.week.style"
+          <div id="panel_week" class="bg-theme-col2 dc_panel drag panel_week" :style="pnl.week.style"
                v-show="pnl.week.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.week.title"></span>
+
+              <!-- FilterText -->
               <a class="reset btn_reset" id="btn_reset_week" href="javascript:void(0);" style="display: none;">
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.week.is_show=0"></span>
             </div>
             <div>
@@ -500,15 +508,10 @@
           </div>
 
           <!-- DC_PANEL Sex-->
-          <div id="panel_sex" class="bg-theme-col2 dc_panel drag" :style="pnl.sex.style" v-show="pnl.sex.is_show">
+          <div id="panel_sex" class="bg-theme-col2 dc_panel drag panel_sex" :style="pnl.sex.style" v-show="pnl.sex.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
                     v-html="(pnl.sex.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.sex.title"></span>
-              <a class="reset btn_reset" id="btn_reset_sex" href="javascript:void(0);" style="display: none;">
-                <span class="ui-icon ui-icon-closethick"></span>
-              </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
-
               <template v-if="pnl.sex.chartType === 'bar'">
                 <!-- TODO: BtnComponent -->
                 <label class="ui-button ui-button-min ui-corner-all ui-widget"
@@ -528,6 +531,12 @@
                 </label>
               </template>
 
+              <!-- FilterText -->
+              <a class="reset btn_reset" id="btn_reset_sex" href="javascript:void(0);" style="display: none;">
+                <span class="ui-icon ui-icon-closethick"></span>
+              </a>
+              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.sex.is_show=0"></span>
             </div>
             <div>
@@ -537,7 +546,7 @@
           </div>
 
           <!-- DC_PANEL Age-->
-          <div id="panel_age" class="bg-theme-col2 dc_panel drag" :style="pnl.age.style" v-show="pnl.age.is_show">
+          <div id="panel_age" class="bg-theme-col2 dc_panel drag panel_age" :style="pnl.age.style" v-show="pnl.age.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.age.title"></span>&nbsp;
 
@@ -549,10 +558,12 @@
                 <input type="checkbox" v-model="pnl.age.elasticX" class="hidden"/>
               </label>
 
+              <!-- FilterText -->
               <a class="reset btn_reset" id="btn_reset_age" href="javascript:void(0);" style="display: none;">
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.age.is_show=0"></span>
             </div>
             <div>
@@ -562,7 +573,7 @@
           </div>
 
           <!-- DC_PANEL Cond -->
-          <div id="panel_cond" class="bg-theme-col2 dc_panel drag" :style="pnl.cond.style" v-show="pnl.cond.is_show">
+          <div id="panel_cond" class="bg-theme-col2 dc_panel drag panel_cond" :style="pnl.cond.style" v-show="pnl.cond.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
                     v-html="(pnl.cond.title.indexOf('状態')===-1 ? '' : '<i class=\'fa fa-medkit\'>') + pnl.cond.title"></span>
@@ -575,10 +586,12 @@
                 <input type="checkbox" v-model="pnl.cond.elasticX" class="hidden"/>
               </label>
 
+              <!-- FilterText -->
               <a class="btn_reset" id="btn_reset_cond" href="javascript:void(0);" style="display: none;">
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">&nbsp;
+
               <span v-html="pnl.cond.info"></span>
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.cond.is_show=0"></span>
             </div>
@@ -588,7 +601,7 @@
           </div>
 
           <!-- DC_PANEL Job -->
-          <div id="panel_job" class="scrollbar-thin bg-theme-col2 dc_panel drag" :style="pnl.job.style"
+          <div id="panel_job" class="scrollbar-thin bg-theme-col2 dc_panel drag panel_job" :style="pnl.job.style"
                v-show="pnl.job.is_show">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
@@ -604,6 +617,7 @@
                 <input type="checkbox" v-model="pnl.job.elasticX" class="hidden"/>
               </label>
 
+              <!-- FilterText -->
               <a class="btn_reset" id="btn_reset_job" href="javascript:void(0);" style="display: none;">
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
@@ -624,10 +638,6 @@
             <template v-if="!item.isDcSunburstChart">
               <div class="chart-title-wrap">
                 <span class="chart-title text-theme-col2" v-html="item.title"></span>
-                <a class="reset btn_reset" :id="`btn_reset_ex_${i}`" href="javascript:void(0);" style="display: none;">
-                  <span class="ui-icon ui-icon-closethick"></span>
-                </a>
-                <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
 
                 <!-- TODO: BtnComponent -->
                 <label class="ui-button ui-button-min ui-corner-all ui-widget"
@@ -646,6 +656,13 @@
                   <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
                   <label v-html="pnl.cond.title" for="stack_type_con"></label>
                 </label>
+
+                <!-- FilterText -->
+                <a class="reset btn_reset" :id="`btn_reset_ex_${i}`" href="javascript:void(0);" style="display: none;">
+                  <span class="ui-icon ui-icon-closethick"></span>
+                </a>
+                <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+
                 <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="item.is_show=0"></span>
               </div>
 
@@ -662,7 +679,7 @@
                 :filters="mm.chartEx[i].filters"
                 :innerRadius="mm.opt.chartEx[i]?.innerRadius"
                 :showLabels="true"
-                :legend="mm.opt.chartEx[i]?.legend"
+                :legend="mm.opt.chartEx[i]?.isLegend ? mm.opt.chartEx[i]?.dcSunburstChart.legend: {isShow: false}"
                 :keyIndex="mm.opt.chartEx[i]?.dcSunburstChart?.keyIndex ?? D_EX0+i"
                 :valueIndex="mm.opt.chartEx[i]?.dcSunburstChart?.valueIndex ?? D_CNT"
                 :margins="mm.opt.chartEx[i]?.dcSunburstChart?.margins"
@@ -672,13 +689,14 @@
                   <div class="chart-title-wrap">
                     <span class="chart-title text-theme-col2" v-html="item.title"></span>
 
-                    <!-- Filetered items -->
+                    <!-- FilterText -->
                     <template v-if="chart.filters().length > 0">
                       <a href="javascript:void(0);"
                          @click="chart.filterAll();dc.redrawAll('chartGroup');">
                         <span class="ui-icon ui-icon-closethick"></span>
                       </a>
                       <input type="text" readonly
+                             class="dsc_filter_txt"
                              :value="chart.filters().map(path => path.join('/')).join(',')"
                              :title="chart.filters().map(path => path.join('/')).join(',')">
                     </template>
@@ -3979,16 +3997,15 @@ const mm = {
         default:
           if (maxLabelLen > 10) {
             $(chart._anchor).addClass('label-x-rot');
-            chart.margins({top: 0, right: 0, bottom: 100, left: 40})
+            chart.margins().bottom = 100;
             break;
           }
           if (maxLabelLen > 6) {
             $(chart._anchor).addClass('label-x-rot');
-            chart.margins({top: 0, right: 0, bottom: 70, left: 40})
+            chart.margins().bottom = 70;
             break;
           }
-
-          chart.margins({top: 0, right: 0, bottom: 20, left: 40})
+          chart.margins().bottom = 20;
           break;
       }
     },
@@ -4367,9 +4384,9 @@ const mm = {
       }
       return ret;
     },
-    createGridLegend: (chartW) => {
+    createGridLegend: (x = 45) => {
       const legend = dc.legend()
-        .x(45).y(10)
+        .x(x).y(10)
         .legendText((d) => {
           let sel_no = d.name.split(':');
           return sel_no.length === 2 ? mm.dateStackPl1Names[sel_no[1]] : d.name;
@@ -5004,13 +5021,11 @@ const mm = {
     return ret;
   },
   loadDcData: (name) => {
-    let promise = Promise.resolve();
-
     mm.get.data = name
     // dataファイルのイメージ画像の設定
     mm.url_data.data = mm.get.data;
-    let imgName = Object.keys(mm.url_data.filer_files).find(key => mm.url_data.filer_files[key].indexOf(mm.url_data.data) === 0);
-    dataImgSrc.value = '<?=BURL?>upload/csv/' + (imgName ?? 'covid19-japan.png');
+    const imgName = Object.keys(mm.url_data.filer_files).find(key => mm.url_data.filer_files[key].indexOf(mm.url_data.data) === 0);
+    dataImgSrc.value = mm.url_data.path + (imgName ?? 'covid19-japan.png');
     $('#loading').css('background-image', 'url(' + dataImgSrc.value + ')').show();
 
     const initDcAfter = () => {
@@ -5176,15 +5191,19 @@ if (G_IS_LOCAL) {
     },
   };
 }
-const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, isLegend, keyFormat = null, panel = null) => {
+const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, isLegend,
+                               chartOptions = {}, keyFormat = null, panel = null) => {
   let group = dimension.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
   group = mm.groupRemoveKey(group, DN_EX);
   const groupAll = group.all();
 
   // 幅調整
+  const defaultMargins = {top: 0, right: 0, bottom: 20, left: 40};
+  const margins = _.merge({}, defaultMargins, chartOptions?.margins || {});
+
   const n = groupAll.length;
   const barW = n > 16 ? parseInt(0.75 * barWidth) : barWidth;
-  const chartW = (n + 1) * barW;
+  const chartW = (n + 1) * barW + margins.right + margins.left;
   if (!isSp && panel !== null) $(panel).width(chartW);
 
   const chart = new dc.BarChart(parent, "chartGroup");
@@ -5192,7 +5211,7 @@ const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, 
     .width(chartW)
     .height(height)
     .useViewBoxResizing(mm.config.panelResizable)
-    .margins({top: 0, right: 0, bottom: 20, left: 40})
+    .margins(margins)
     .gap(6)
     .transitionDuration(750)
     .dimension(dimension)
@@ -5226,7 +5245,7 @@ const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, 
   mm.chart.setStacks(chart, group);
 
   if (isLegend) {
-    const legend = mm.chart.createGridLegend(chartW);
+    const legend = mm.chart.createGridLegend(margins.left === defaultMargins.left ? 45 : 0);
     chart.legend(legend)
     chart.legendToggle = mm.chart.filterByStackName;
   }
@@ -6279,7 +6298,8 @@ const initChartYear = (height) => {
     mm.chartScroll('#div_name');
     mm.chartScroll('#div_city');
   }
-  mm.chartYear = createStackedBarChart(dimYear, '#chart_year', height, mm.config.cYear.barWidth, onFiltered, mm.opt.chartYear.isLegend);
+  mm.chartYear = createStackedBarChart(dimYear, '#chart_year', height, mm.config.cYear.barWidth,
+    onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartYear);
 }
 
 /**
@@ -6443,8 +6463,8 @@ const initChartSex = (chartSexW, chartSexH) => {
     if (mm.opt.chartSex.unit === undefined) mm.opt.chartSex.unit = null;
 
     mm.chartSex = createStackedBarChart(dimSex, chartDomId, chartSexH, mm.config.cSex.barWidth,
-      onFiltered, mm.opt.chartSex.isLegend,
-      v => mm.getLabelSex(v)
+      onFiltered, mm.opt.chartSex.isLegend, mm.opt.chartSex,
+      v => mm.getLabelSex(v),
     );
     mm.chartSex.dataIndex = D_SEX;
 
@@ -6922,8 +6942,7 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
     // 標準チャート (stackedBarChart) の作成
     mm.chartEx[chartIndex] =
       createStackedBarChart(dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
-        onFiltered,
-        mm.opt.chartEx[chartIndex].isLegend,
+        onFiltered, mm.opt.chartEx[chartIndex].isLegend, mm.opt.chartEx[chartIndex],
         v => mm.getLabelEx(v, chartIndex),
         `#panel_ex_${chartIndex}`
       );
@@ -9190,15 +9209,39 @@ h4.hdr {
   font-size: 1.8em !important;
 }
 
-#chart_age .filter {
-  width: 8em;
+.panel_year .filter_txt,
+.panel_season .filter_txt,
+.panel_week .filter_txt,
+.panel_sex .filter_txt,
+.panel_age .filter_txt,
+.panel_cond .filter_txt,
+.panel_job .filter_txt,
+.panel_ex .filter_txt,
+.panel_ex .dsc_filter_txt {
+  flex: 1;
 }
 
-#chart_cond .filter,
-#panel_cond .filter_txt,
-#chart_job .filter,
-#panel_job .filter_txt {
-  max-width: 16em;
+.panel_year .chart-title-wrap,
+.panel_season .chart-title-wrap,
+.panel_week .chart-title-wrap,
+.panel_sex .chart-title-wrap,
+.panel_age .chart-title-wrap,
+.panel_cond .chart-title-wrap,
+.panel_job .chart-title-wrap,
+.panel_ex .chart-title-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.panel_year .chart-title-wrap .btn_close,
+.panel_season .chart-title-wrap .btn_close,
+.panel_week .chart-title-wrap .btn_close,
+.panel_sex .chart-title-wrap .btn_close,
+.panel_age .chart-title-wrap .btn_close,
+.panel_cond .chart-title-wrap .btn_close,
+.panel_job .chart-title-wrap .btn_close,
+.panel_ex .chart-title-wrap .btn_close {
+  margin-left: auto;
 }
 
 .label-x-rot .axis.x .tick text {
@@ -9806,10 +9849,6 @@ path.campaign {
     position: relative;
     width: auto !important;
     height: auto !important;
-  }
-
-  .filter, .filter_txt {
-    max-width: 8em;
   }
 
   .detail-left {

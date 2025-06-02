@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { fn } from 'storybook/test';
 import DangerButton from '@/Components/DangerButton.vue';
 
 const meta = {
@@ -7,7 +8,6 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     type: { control: 'select', options: ['button', 'submit', 'reset'] },
-    disabled: { control: 'boolean' },
   },
 } satisfies Meta<typeof DangerButton>;
 
@@ -16,9 +16,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {},
-  render: () => ({
+  render: (args) => ({
     components: { DangerButton },
-    template: '<DangerButton>Delete</DangerButton>',
+    setup() {
+      return { args, onClick: fn() };
+    },
+    template: '<DangerButton v-bind="args" @click="onClick">Delete</DangerButton>',
   }),
 };
 
@@ -26,18 +29,24 @@ export const Submit: Story = {
   args: {
     type: 'submit',
   },
-  render: () => ({
+  render: (args) => ({
     components: { DangerButton },
-    template: '<DangerButton type="submit">Submit</DangerButton>',
+    setup() {
+      return { args, onClick: fn() };
+    },
+    template: '<DangerButton v-bind="args" @click="onClick">Submit</DangerButton>',
   }),
 };
 
-export const Disabled: Story = {
+export const Reset: Story = {
   args: {
-    disabled: true,
+    type: 'reset',
   },
-  render: () => ({
+  render: (args) => ({
     components: { DangerButton },
-    template: '<DangerButton disabled>Disabled</DangerButton>',
+    setup() {
+      return { args, onClick: fn() };
+    },
+    template: '<DangerButton v-bind="args" @click="onClick">Reset</DangerButton>',
   }),
 };

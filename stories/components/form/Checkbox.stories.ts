@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { fn } from 'storybook/test';
 import Checkbox from '@/Components/Checkbox.vue';
 
 const meta = {
@@ -8,7 +9,6 @@ const meta = {
   argTypes: {
     checked: { control: 'boolean' },
     value: { control: 'text' },
-    'update:checked': { action: 'update:checked' },
   },
 } satisfies Meta<typeof Checkbox>;
 
@@ -19,12 +19,26 @@ export const Default: Story = {
   args: {
     checked: false,
   },
+  render: (args) => ({
+    components: { Checkbox },
+    setup() {
+      return { args, onUpdateChecked: fn() };
+    },
+    template: '<Checkbox v-bind="args" @update:checked="onUpdateChecked" />',
+  }),
 };
 
 export const Checked: Story = {
   args: {
     checked: true,
   },
+  render: (args) => ({
+    components: { Checkbox },
+    setup() {
+      return { args, onUpdateChecked: fn() };
+    },
+    template: '<Checkbox v-bind="args" @update:checked="onUpdateChecked" />',
+  }),
 };
 
 export const WithValue: Story = {
@@ -32,6 +46,13 @@ export const WithValue: Story = {
     checked: false,
     value: 'option1',
   },
+  render: (args) => ({
+    components: { Checkbox },
+    setup() {
+      return { args, onUpdateChecked: fn() };
+    },
+    template: '<Checkbox v-bind="args" @update:checked="onUpdateChecked" />',
+  }),
 };
 
 export const ArrayValue: Story = {
@@ -39,4 +60,11 @@ export const ArrayValue: Story = {
     checked: ['option1', 'option2'],
     value: 'option1',
   },
+  render: (args) => ({
+    components: { Checkbox },
+    setup() {
+      return { args, onUpdateChecked: fn() };
+    },
+    template: '<Checkbox v-bind="args" @update:checked="onUpdateChecked" />',
+  }),
 };
