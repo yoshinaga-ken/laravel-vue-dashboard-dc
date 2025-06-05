@@ -46,6 +46,16 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
+    // Storybook E2E tests
+    {
+      name: 'storybook-chromium',
+      testMatch: ['components/*.spec.ts'],
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: 'http://localhost:6006',
+      },
+    },
+
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },

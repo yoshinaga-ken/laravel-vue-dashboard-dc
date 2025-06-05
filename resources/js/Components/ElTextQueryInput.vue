@@ -390,8 +390,6 @@ const showInput = () => {
       getKeySuggestions('', (suggestions) => {
         // @ts-ignore: ElAutocomplete の内部プロパティにアクセス
         inputRef.value.suggestions = suggestions
-        // @ts-ignore: ElAutocomplete の内部プロパティにアクセス
-        inputRef.value.handleFocus()
       })
     }
   })
@@ -1029,6 +1027,7 @@ const handleCustomTokenClose = (index: number) => {
               :class="['token-key flex items-center gap-1 token-tag', { 'editing': tokenGroup.editing === 'key' }]"
               :closable="tokenGroup.key.isCustom && !disabled"
               :disable-transitions="false"
+              :aria-label="`tag-key-${tokenGroup.key.type}`"
               v-bind="availableTokens.find(t => t.type === tokenGroup.key.type)?.tagOptions || {}"
               @click="startEditing(index, 'key')"
               @close="handleCustomTokenClose(index)"
@@ -1042,6 +1041,7 @@ const handleCustomTokenClose = (index: number) => {
             <!-- オペレータータグ (常に表示) -->
             <ElTag
               :class="['token-operator flex items-center gap-1 token-tag', { 'editing': tokenGroup.editing === 'operator' }]"
+              :aria-label="`tag-operator-${tokenGroup.operator}`"
               @click="startEditing(index, 'operator')"
             >
               {{ tokenGroup.operator }}
@@ -1050,6 +1050,7 @@ const handleCustomTokenClose = (index: number) => {
             <!-- 値タグ（削除ボタン付き） -->
             <ElTag
               :class="['token-value flex items-center gap-1 token-tag', { 'editing': tokenGroup.editing === 'value' }]"
+              :aria-label="`tag-value-${tokenGroup.value}`"
               :closable="!disabled"
               :disable-transitions="false"
               @click="startEditing(index, 'value')"
@@ -1110,9 +1111,11 @@ const handleCustomTokenClose = (index: number) => {
         @focus="handleInputFocus"
         :highlight-first-item="true"
         title="Search(Ctrl+Enter)"
+        aria-label="input-key"
+        :teleported="false"
       >
         <template #default="{ item }">
-          <div class="flex items-center">
+          <div class="flex items-center" :aria-label="`key-type-${item.item?.type}`">
             <ElIcon class="mr-1" v-if="item.item?.icon">
               <component :is="ElementPlusIcons[item.item.icon]"/>
             </ElIcon>
@@ -1142,6 +1145,8 @@ const handleCustomTokenClose = (index: number) => {
         @blur="handleOperatorEnter"
         @input="handleInputChange"
         :highlight-first-item="true"
+        aria-label="input-operator"
+        :teleported="false"
       />
 
       <!-- 編集モード: 値入力（日付） -->
@@ -1157,6 +1162,7 @@ const handleCustomTokenClose = (index: number) => {
         @keydown="handleBackspace"
         @keydown.enter="handleDatePickerEnter"
         v-bind="datePickerOptions"
+        aria-label="input-value"
       />
 
       <!-- 編集モード: 値入力（数値） -->
@@ -1173,6 +1179,7 @@ const handleCustomTokenClose = (index: number) => {
         @keyup.enter="handleInputConfirm"
         @blur="handleInputConfirm"
         v-bind="inputOptions"
+        aria-label="input-value"
       />
 
       <!-- 編集モード: 値入力（通常） -->
@@ -1192,6 +1199,8 @@ const handleCustomTokenClose = (index: number) => {
         @blur="handleInputConfirm"
         @input="handleInputChange"
         :highlight-first-item="true"
+        aria-label="input-value"
+        :teleported="false"
       >
         <template #default="{ item }">
           <div class="flex items-center">
@@ -1210,6 +1219,7 @@ const handleCustomTokenClose = (index: number) => {
       class="clear-button"
       size="large"
       @click="clearAllTokens"
+      aria-label="input-clear"
     >
       ⓧ
     </ElButton>
@@ -1229,7 +1239,6 @@ const handleCustomTokenClose = (index: number) => {
   padding: 1px 8px 1px 11px;
   box-sizing: border-box;
   position: relative;
-  overflow-x: auto; /* 横スクロールを許可 */
 }
 
 .el-text-query-input:hover {
