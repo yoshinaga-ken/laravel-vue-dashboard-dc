@@ -544,11 +544,16 @@ export const InteractionTest: Story = {
   play: async ({ canvas, canvasElement, userEvent }) => {
     console.log('🤖InteractionTest Start');
 
-    // タイムアウト用の定数
-    const TIMEOUT = {
-      SHORT: 300, // 短い待機時間（キー入力後など）
-      MEDIUM: 350, // 中程度の待機時間（アクション完了後など）
-    };
+// ===== 定数セクション =====
+/**
+ * タイムアウト用の定数
+ * SHORT: 短い待機時間（キー入力後など） - 300ms is chosen to balance responsiveness and stability.
+ * MEDIUM: 中程度の待機時間（アクション完了後など） - 350ms allows for slightly longer operations to complete.
+ */
+const TIMEOUT = {
+  SHORT: 300,
+  MEDIUM: 350,
+};
 
     // ===== 実行制御設定 =====
     const runsIndex = 0;
