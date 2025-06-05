@@ -17,11 +17,11 @@
   "type": "commonjs",
   "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.50.1",
+    "@playwright/test": "^1.52.0",
     "@types/glob": "^8.1.0",
-    "@types/node": "^22.13.5",
+    "@types/node": "^22.15.29",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.5.0",
     "glob": "^11.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
