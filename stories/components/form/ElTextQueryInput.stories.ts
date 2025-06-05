@@ -213,7 +213,7 @@ const descriptions = {
 export const Default: Story = {
   args: {
     modelValue: [],
-    availableTokens: sampleAvailableTokens as any,
+    availableTokens: sampleAvailableTokens,
   },
   parameters: {
     docs: {
