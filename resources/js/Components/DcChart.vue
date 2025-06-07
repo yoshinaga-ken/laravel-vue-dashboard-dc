@@ -2474,15 +2474,21 @@ const mm = {
     // 名前に付加されたタグ系情報の削除
     removeLabelSuffix: function (d) {
       let name = d;
+      // case: <Label>(<XXX>) -> <Label>
       if (d.indexOf('(') !== -1) {
-        name = d.split('(')[0]; // case: <Label>(<XXX>)
-        if (mm.opt.removeLabelSufixType) {// case: <Label>♂(<AGE>)
-          name = name.replace(/[ ♂♀]/g, '');
-        }
-      } else {
-        name = d;
+        name = d.split('(')[0];
       }
-      return name.replace(TAGICON_DS, '').replace(TAGICON_CD, ''); // case: <NAME><TAGICON>
+      name = name.replace(new RegExp(`[ ♂♀]|${TAGICON_DS}|${TAGICON_CD}`, 'g'), '');
+      if (mm.opt?.removeLabelSuffixType === 'c') {
+        // nameの後ろのアルファベット記号を除去。 ex) プレイヤーC -> プレイヤー プレイヤーC+ -> プレイヤー
+        // ただし、数字の場合は除去しない。 ex) プレイヤー2 -> プレイヤー2
+        // ただし、nameがすべてアルファベットの場合は除去しない ex) Player2 -> Player2
+        const isAlpha = /^[A-Za-z]+$/.test(name);
+        if (!isAlpha) {
+          name = name.replace(/[A-Za-z]+$/, '');
+        }
+      }
+      return name
     },
     initPanelsWH: function () {
       const pos = mm.util.relToAbsPos('#panels');
@@ -2542,100 +2548,6 @@ const mm = {
         }
       }
       return address;
-    },
-    replaceSearchWordE2J: (s) => {
-      let ret = '';
-      s = s.toLowerCase();
-      switch (true) {
-        case s.indexOf('@') !== -1: // @tube のような予約語
-          ret = '';
-          break;
-        case s.indexOf('sega') !== -1:
-          ret = 'セガ';
-          break;
-        case s.indexOf('capcom') !== -1:
-          ret = 'カプコン';
-          break;
-        case s.indexOf('namco') !== -1:
-          ret = 'ナムコ';
-          break;
-        case s.indexOf('konami') !== -1:
-          ret = 'コナミ';
-          break;
-        case s.indexOf('taito') !== -1:
-          ret = 'タイトー';
-          break;
-        case s.indexOf('irem') !== -1:
-          ret = 'アイレム';
-          break;
-        case s.indexOf('nintendo') !== -1:
-          ret = '任天堂';
-          break;
-        case s.indexOf('jaleco') !== -1:
-          ret = 'ジャレコ';
-          break;
-        case s.indexOf('banpresto') !== -1:
-          ret = 'バンプレスト';
-          break;
-        case s.indexOf('nichibutsu') !== -1:
-          ret = '日本物産	';
-          break;
-        case s.indexOf('dataeast') !== -1:
-          ret = 'データイースト	';
-          break;
-        case s.indexOf('msx') !== -1:
-          ret = 'MSX';
-          break;
-        case s.indexOf('sms') !== -1:
-          ret = 'マスターシステム';
-          break;
-        case s.indexOf('smc') !== -1 || s.indexOf('sfc') !== -1:
-          ret = 'スーパーファミコン';
-          break;
-        case s.indexOf('fc') !== -1 || s.indexOf('nes') !== -1:
-          ret = 'ファミコン';
-          break;
-        case s.indexOf('pce') !== -1:
-          ret = 'PCエンジン';
-          break;
-        case s.indexOf('smd') !== -1 || s.indexOf('md') !== -1:
-          ret = 'メガドライブ';
-          break;
-        case s.indexOf('n64') !== -1:
-          ret = 'NINTENDO64';
-          break;
-        case s.indexOf('fds') !== -1:
-          ret = 'ディスクシステム';
-          break;
-        case s.indexOf('gba') !== -1:
-          ret = 'ゲームボーイアドバンス';
-          break;
-        case s.indexOf('gb') !== -1:
-          ret = 'ゲームボーイ';
-          break;
-        case s.indexOf('ps1') !== -1:
-          ret = 'プレイステーション1';
-          break;
-        case s.indexOf('gc') !== -1:
-          ret = 'ゲームキューブ';
-          break;
-        case s.indexOf('ws') !== -1:
-          ret = 'ワンダースワン';
-          break;
-        case s.indexOf('gg') !== -1:
-          ret = 'ゲームギア';
-          break;
-        case s.indexOf('vb') !== -1:
-          ret = 'バーチャルボーイ';
-          break;
-        case s.indexOf('gen') !== -1:
-          ret = 'ゲーム機';
-          break;
-        default:
-          ret = '';
-          break;
-      }
-      return ret;
     },
     isMatchRegexI: (word, keyword) => {
       try {
@@ -4093,8 +4005,8 @@ const mm = {
         });
 
         // 監視対象の要素を指定
-        const lazyImages = rootDiv.querySelectorAll('.pl');
-        lazyImages.forEach(image => {
+        const lazyImages = rootDiv?.querySelectorAll('.pl');
+        lazyImages?.forEach(image => {
           observer.observe(image);
         });
       }
@@ -4172,11 +4084,6 @@ const mm = {
     },
     setDetails: async function (chart, filters, dataIndex, detailType = false) {
       const imagePath = mm.chart.getImagePath(chart) ?? '';
-      // 検索API用KeywordPrefix取得
-      const searchPrefix = mm.opt.searchPrefix ?? '';
-      const searchPrefixP = searchPrefix ? searchPrefix + '+' : '';
-      let searchPrefix2 = mm.util.replaceSearchWordE2J(imagePath);
-      let searchPrefix2P = searchPrefix2 ? searchPrefix2 + '+' : '';
 
       for (let i = 0; i < filters.length; i++) {
         if (pnl.detail.details.length >= pnl.detail.maxDetails) break;
@@ -4196,17 +4103,19 @@ const mm = {
         const n = chart.group().all().find(d => d.key === name)?.value ?? 0;
         const dt = await mm.getDetailInfo(`${name2}`);
 
-        // 検索API用KeywordPrefix取得 (dataより取得)
-        if (mm.opt.searchPrefixDataIndex) {
-          const s = d[mm.opt.searchPrefixDataIndex];
-          searchPrefix2 = mm.util.replaceSearchWordE2J(s);
-          if (searchPrefix2 === '') searchPrefix2 = s;
-          searchPrefix2P = searchPrefix2 ? searchPrefix2 + '+' : '';
-        }
-
-
+        // 検索API用Keywords
+        const searchQueryWords = mm.opt?.searchPrefix ? [mm.opt?.searchPrefix] : [];
         if (isTube) {
-          pnl.tube.searchQuery = `${searchPrefixP}${searchPrefix2P}${name2}`;
+          // 検索API用KeywordPrefix取得 (dataより取得)
+          if (mm.opt.searchPrefixDataIndex) {
+            const isCityChart = chart.chartID() === mm.chartCity.chartID();
+            if (isCityChart) searchQueryWords.push(d[mm.opt.searchPrefixDataIndex]);
+            else searchQueryWords.push(name2);
+          } else {
+            searchQueryWords.push(name2);
+          }
+
+          pnl.tube.searchQuery = searchQueryWords.join('+');
           pnl.tube.vids = await mm.tube.search(pnl.tube.searchQuery);
           youtubePlayHtml = '';
           for (let j = 1; j <= pnl.tube.vids.length; j++) {
@@ -4215,7 +4124,7 @@ const mm = {
             youtubePlayHtml +=
               `&nbsp;<a class="detail-tube-wopen tt_img" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" ` +
               `target="_blank" href="https://www.youtube.com/watch?v=${id}" ` +
-              `title="YouTubeで「${searchPrefix} ${searchPrefix2} ${name2} 」の動画${j}を開く">` +
+              `title="YouTubeで「${searchQueryWords.join(' ')}」の動画${j}を開く">` +
               `<i class="fa fa-video"></i>${j}</a>`;
           }
           youtubePlayHtml += pnl.tube.vids.length ? '&nbsp;' : '';
@@ -4247,8 +4156,8 @@ const mm = {
 							</a>\
 							<img src="/img/yutube.gif">${youtubePlayHtml}\
 							<a target="_blank" class="detail-tube-wopen" \
-								href="https://www.youtube.com/results?search_query=${searchPrefixP}${searchPrefix2P}${name2}" \
-								title="YouTubeで「${pnl.tube.searchQuery.replaceAll('+', ' ')}」の動画一覧を開く">\
+								href="https://www.youtube.com/results?search_query=${pnl.tube.searchQuery}" \
+								title="YouTubeで「${searchQueryWords.join(' ')}」の動画一覧を開く">\
 								一覧<span class="ui-icon ui-icon-extlink" style="font-size: 0.9em"></span>\
 							</a>\
 							<table><tbody>` +
@@ -4271,7 +4180,7 @@ const mm = {
               `<div class="detail-img">\
 										<a class="detail-tube-wopen" target="_blank" \
 											href="https://www.youtube.com/watch?v=${vid}"\
-											title="YouTubeで「${searchPrefix} ${searchPrefix2} ${name2} 」の動画${j + 1}を開く">\
+											title="YouTubeで「${searchQueryWords.join(' ')}」の動画${j + 1}を開く">\
 											<img src="https://img.youtube.com/vi/${vid}/hqdefault.jpg" onerror="this.src='${IMG_NO}'">\
 										</a>\
 									</div>`;
@@ -5075,7 +4984,7 @@ const mm = {
   },
   loadAllData: () => {
     mm.get = php_location_get_query();
-    const name = mm.get.data || mm.url_data.data;
+    const name = mm.get?.viewMode === 'story' ? mm.url_data.data : (mm.get.data || mm.url_data.data);
     return mm.loadDcData(name)
       .then(() => {
         mm.init();
@@ -8246,6 +8155,15 @@ const onDocumentReady = () => {
         .render();
     });
   }
+  watch([() => props.data, () => props.dataPath], async ([newData, newDataPath]) => {
+    //新しいデータファイルでページリロード。
+    if (mm.get.viewMode === 'story') {
+      const url = url_append_param(location.href, {'args': `data:${newData}`});
+      location.href = location.origin + url;
+    } else {
+      location.href = location.pathname + '?data=' + newData;
+    }
+  });
 
   $('#div_date').scrollLeft(1000);
 

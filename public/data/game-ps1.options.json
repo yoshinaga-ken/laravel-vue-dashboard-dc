@@ -4,7 +4,8 @@
   "common": {
     "unit": "タイトル"
   },
-  "searchPrefix": "プレイステーション",
+  "searchPrefixDataIndex": 5,
+  "searchPrefix": "プレイステーション1",
   "dataReference": "<ul><li><a target='_blank' href='https://www.gavas.jp/user_data/playstation_game_title.php'>初代プレイステーションのゲームタイトル一覧@ピコピコ大百科</a></li><li><a target='_blank' href='https://www.gavas.jp/user_data/playstation_game_ranking.php'>初代プレイステーション歴代ソフト売上ランキングTOP50@ピコピコ大百科</a></li><li><a target='_blank' href='https://ja.wikipedia.org/wiki/PlayStationのゲームタイトル一覧'>PlayStationのゲームタイトル一覧@wikipedia</a></li></ul>",
   "detailType": "city",
   "isMakeAutocompleteData": true,
