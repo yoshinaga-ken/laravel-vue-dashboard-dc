@@ -1,8 +1,13 @@
 <script lang="ts" setup>
 import * as dc from 'dc';
 import * as d3 from 'd3';
-import { onMounted, ref, watch, defineProps, defineExpose, defineEmits, onUnmounted, computed } from "vue";
-import { useDcBaseChart } from '../Composables/useDcBaseChart';
+import { onMounted, ref, watch, defineProps, defineExpose, defineEmits, defineModel, onUnmounted, nextTick } from "vue";
+import { useDcBaseChart } from '@/Composables/useDcBaseChart';
+
+// v-model for filters
+const filters = defineModel<Array<any>>('filters', {
+  default: () => []
+});
 
 const props = defineProps({
   ndx: {
@@ -49,10 +54,6 @@ const props = defineProps({
       y: 8
     })
   },
-  filters: {
-    type: Array,
-    default: () => []
-  },
   emitEvents: {
     type: Boolean,
     default: true
@@ -89,6 +90,10 @@ const chartHeight = ref(props.height || 0);
 let resizeObserver = null;
 // リサイズ中かどうかを示すフラグ
 let isResizing = false;
+// フィルター更新中かどうかを示すフラグ（無限ループ防止用）
+let isUpdatingFilters = false;
+// プログラム的にフィルターを設定中かどうかを示すフラグ
+let isProgrammaticUpdate = false;
 
 // useDcBaseChartの初期化
 const {
@@ -281,22 +286,63 @@ const initChart = () => {
     if (props.emitEvents) {
       // filteredイベントを直接hookする
       chart.on('filtered', function (chart, filter) {
-        emit('filtered', {
-          filter: filter,
-          chart: chart
-        });
+        // プログラム的な更新中は処理をスキップ
+        if (isProgrammaticUpdate) {
+          return;
+        }
+
+        // フィルター更新中フラグを立てる
+        isUpdatingFilters = true;
+
+        try {
+          // v-modelのfiltersを更新
+          const currentFilters = chart.filters();
+          const newFilters = currentFilters.map(f => {
+            // HierarchyFilterの場合は配列として取得
+            if (f && f.path) {
+              return f.path; // HierarchyFilterのpathプロパティ
+            } else if (Array.isArray(f)) {
+              return f;
+            } else {
+              return [f];
+            }
+          });
+
+          filters.value = newFilters;
+
+          emit('filtered', {
+            filter: filter,
+            chart: chart,
+            filters: newFilters
+          });
+        } catch (error) {
+          console.error('Error in filtered event handler:', error);
+        } finally {
+          // フィルター更新中フラグを非同期で下げる
+          setTimeout(() => {
+            isUpdatingFilters = false;
+          }, 10);
+        }
       });
     }
 
     // フィルタの設定
-    if (props.filters.length > 0) {
-      setTimeout(() => {
+    if (filters.value.length > 0) {
+      isProgrammaticUpdate = true;
+      nextTick(() => {
+        if (!chart) return;
         chart.filterAll();
-        props.filters.forEach(path => {
-          chart.filter(dc.filters.HierarchyFilter(path));
+        filters.value.forEach(path => {
+          if (path && path.length > 0) {
+            chart.filter(dc.filters.HierarchyFilter(path));
+          }
         });
         dc.redrawAll(props.chartGroup);
-      }, 1);
+
+        nextTick(() => {
+          isProgrammaticUpdate = false;
+        });
+      });
     }
     // チャートの描画
     isResizing = true; // リサイズ中フラグを立てる
@@ -320,6 +366,52 @@ watch(() => props.ndx, (newVal) => {
     initChart();
   }
 }, { immediate: true });
+
+// フィルターの変更を監視
+watch(filters, (newFilters, oldFilters) => {
+  // 無限ループを防ぐため、フィルター更新中は処理をスキップ
+  if (!chart || isUpdatingFilters || isProgrammaticUpdate) {
+    return;
+  }
+
+  // 配列の内容が実際に変わったかチェック
+  const hasChanged = JSON.stringify(newFilters) !== JSON.stringify(oldFilters);
+  if (!hasChanged) {
+    return;
+  }
+
+  // プログラム的な更新フラグを立てる
+  isProgrammaticUpdate = true;
+
+  try {
+    nextTick(() => {
+      if (!chart) return;
+
+      // 現在のフィルターをクリア
+      chart.filterAll();
+
+      // 新しいフィルターを適用
+      if (newFilters && newFilters.length > 0) {
+        newFilters.forEach(path => {
+          if (path && path.length > 0) {
+            chart.filter(dc.filters.HierarchyFilter(path));
+          }
+        });
+      }
+
+      // チャートグループを再描画
+      dc.redrawAll(props.chartGroup);
+
+      // プログラム的な更新フラグを非同期で下げる
+      nextTick(() => {
+        isProgrammaticUpdate = false;
+      });
+    });
+  } catch (error) {
+    console.error('Error in filters watch:', error);
+    isProgrammaticUpdate = false;
+  }
+}, { deep: true });
 
 // マウント時の初期化
 onMounted(() => {

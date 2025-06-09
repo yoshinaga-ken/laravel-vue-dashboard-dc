@@ -676,16 +676,16 @@
                 :ndx="mm.ndx"
                 :chartId="`chart_ex_${i}`"
                 chartGroup="chartGroup"
-                :filters="mm.chartEx[i].filters"
+                v-model:filters="mm.chartEx[i].filters"
                 :innerRadius="mm.opt.chartEx[i]?.innerRadius"
                 :showLabels="true"
-                :legend="mm.opt.chartEx[i]?.isLegend ? mm.opt.chartEx[i]?.dcSunburstChart.legend: {isShow: false}"
+                :legend="mm.opt.chartEx[i]?.isLegend ? mm.opt.chartEx[i]?.dcSunburstChart.legend: { isShow: false }"
                 :keyIndex="mm.opt.chartEx[i]?.dcSunburstChart?.keyIndex ?? D_EX0+i"
                 :valueIndex="mm.opt.chartEx[i]?.dcSunburstChart?.valueIndex ?? D_CNT"
                 :margins="mm.opt.chartEx[i]?.dcSunburstChart?.margins"
                 @filtered="(event) => onFilteredSunburstChart(i, event)"
               >
-                <template #header="{chart}">
+                <template #header="{ chart }">
                   <div class="chart-title-wrap">
                     <span class="chart-title text-theme-col2" v-html="item.title"></span>
 
@@ -1813,7 +1813,7 @@ const mm = {
     cCond: {
       barWidth: 40,
       colors: COL_CND,
-      ordinalColors : isDark ? d3.schemeDark2 : colorbrewer.Pastel1[9]
+      ordinalColors : d3.schemeDark2
     },
     cJob: {
       TD: 750,       //transitionDuration
@@ -2695,8 +2695,8 @@ const mm = {
     },
     stackedTitle: (d, keyFormat = null, unit = '名') => {
       // unit = ' ' + unit;
-      let isBar = isNaN(d.value);
-      let keyStr = keyFormat ? keyFormat(d.key) : d.key;
+      const isBar = isNaN(d.value);
+      const keyStr = keyFormat ? keyFormat(d.key) : d.key;
 
       if (!isBar) {
         //N日 移動平均
@@ -5309,7 +5309,7 @@ const initChartName = () => {
         'div_name'
       );
     })
-    .ordinalColors(isDark ? d3.schemePaired : colorbrewer.Set2[8])
+    .ordinalColors(d3.schemePaired)
     //.gap(10) //default:5
     .renderLabel(true) //LeftLabel & tooltip
     .label(function (d) {
@@ -6083,7 +6083,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   mm.chart.stackOn(mm.chartDate2, stackOn);
 
   // スタック登録 - CHART_DATE_STACK_GRP[0]
-  for (var no = 0; no < mm.chartStack[STACK_CND].length; no++) {
+  for (let no = 0; no < mm.chartStack[STACK_CND].length; no++) {
     if (no === 0) {
       mm.chartDate2.group(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
     } else {
@@ -6093,13 +6093,13 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   }
 
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_PL1]
-  for (var no = 0; no < mm.chartStack[STACK_PL1].length; no++) {
+  for (let no = 0; no < mm.chartStack[STACK_PL1].length; no++) {
     // mm.dateStackPl1Names[no] = '(選択' + (no + 1) + ')';
     mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
   }
 
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_AGE]
-  for (var no = 0; no < mm.chartStack[STACK_AGE].length; no++) {
+  for (let no = 0; no < mm.chartStack[STACK_AGE].length; no++) {
     mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_AGE][no], mm.dateStackAgeAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
   }
 
@@ -7559,8 +7559,7 @@ const setBgWindowZIndex = (id) => {
 }
 
 const onFilteredSunburstChart = (i, {chart}) => {
-    // console.log(`@getOnSunburstFiltered ${i}`, chart.filters());
-    mm.chartEx[i].filters = chart.filters().length ? chart.filters() : [];
+    // v-modelによりmm.chartEx[i].filtersは自動同期されるため手動設定不要
     mm.onChartFiltered(chart);
     mm.onChangeURL(`name${7 + i}`, chart);
     mm.chartScroll('#div_name');
