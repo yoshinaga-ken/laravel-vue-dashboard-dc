@@ -29,6 +29,15 @@
   "chartDate2": {
     "chartType": "series_or_stack"
   },
+  "chartYear": {
+    "isShow": true,
+    "isLegend": true,
+    "margins": {
+      "left": 100
+    }
+  },
+  "chartSeason": {},
+  "chartWeek": {},
   "chartSex": {
     "chartType": "bar",
     "unit": null
@@ -52,12 +61,6 @@
   "chartSView": {},
   "chartTube": {},
   "chartMap": {},
-  "chartYear": {
-    "isShow": true,
-    "isLegend": true
-  },
-  "chartSeason": {},
-  "chartWeek": {},
   "chartCond": {},
   "chartJob": {},
   "chartJobCat": {},
