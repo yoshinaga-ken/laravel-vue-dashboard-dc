@@ -30,14 +30,19 @@
   "chartDate2": {
     "chartType": "series_or_stack"
   },
+  "chartYear": {
+    "isShow": true,
+    "isLegend": true
+  },
+  "chartSeason": {},
+  "chartWeek": {},
   "chartSex": {
-    "unit": [
-      "不明",
-      "ファミコン",
-      "💾ディスクシステム"
-    ]
+    "name": "クロスレビュー(評価)",
+    "chartType": "bar",
+    "unit": null
   },
   "chartAge": {
+    "name": "容量(bit)",
     "unit": [
       "不明",
       "128K",
@@ -50,6 +55,15 @@
       "💾1M",
       "💾2M"
     ]
+  },
+  "chartCond": {
+    "name": "ジャンル"
+  },
+  "chartJob": {
+    "name": "価格"
+  },
+  "chartJobCat": {
+    "name": "価格帯"
   },
   "chartEx": [
     {
@@ -67,21 +81,13 @@
     {
       "name": "売り上げ本数(🏢メーカー/🙋‍♂️クリエイター) Barchart",
       "isDcSunburstChart": false,
-      "isLegend": true
+      "isLegend": true,
+      "orderDesc": false
     }
   ],
   "chartGMap": {},
   "chartSView": {},
   "chartTube": {},
   "chartMap": {},
-  "chartYear": {
-    "isShow": true,
-    "isLegend": true
-  },
-  "chartSeason": {},
-  "chartWeek": {},
-  "chartCond": {},
-  "chartJob": {},
-  "chartJobCat": {},
   "chartDetail": {}
 }

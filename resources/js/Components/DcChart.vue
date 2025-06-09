@@ -758,7 +758,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref, watch, reactive} from "vue";
+import {onMounted, ref, watch, reactive, nextTick} from "vue";
 import * as d3 from 'd3';
 
 import * as dc from 'dc';
@@ -1701,6 +1701,9 @@ watch(() => pnl.age.elasticX, v => {
     .ordering(v ? t => (gg.dt === DT_COVID ? -t.value.total : -t.value) : dc.pluck('key'))
     .elasticX(true)
     .render();
+
+  // URL parameter update
+  mm.onChangeURL('name4_order', v ? 1 : 0);
 });
 watch(() => pnl.cond.is_show, onChangeSettings);
 watch(() => pnl.cond.elasticX, v => {
@@ -1708,6 +1711,9 @@ watch(() => pnl.cond.elasticX, v => {
     .ordering(v ? t => -t.value : dc.pluck('key'))
     .elasticX(true)
     .render();
+
+  // URL parameter update
+  mm.onChangeURL('name5_order', v ? 1 : 0);
 });
 watch(() => pnl.job.is_show, onChangeSettings);
 watch(() => pnl.job.elasticX, v => {
@@ -1725,7 +1731,10 @@ watch(() => pnl.job.elasticX, v => {
   mm.chartJob
     .ordering(v ? t => -t.value : dc.pluck('key'))
     .elasticX(true)
-    .render()
+    .render();
+
+  // URL parameter update
+  mm.onChangeURL('name6_order', v ? 1 : 0);
 });
 watch(() => pnl.ex, onChangeSettings, {deep: true});
 watch(() => pnl.detail.is_show, onChangeSettings);
@@ -3574,6 +3583,25 @@ const mm = {
     isRedraw = mm.chart.filterFromGetParam(mm.chartEx[6], 'name13', isRedraw);
     isRedraw = mm.chart.filterFromGetParam(mm.chartEx[7], 'name14', isRedraw);
 
+    // Chart order parameters
+    nextTick(() => {
+      // chartSex, chartAge, chartCond, chartJob order parameters
+      if (mm.get.name3_order === '1') pnl.sex.elasticX = true;
+      if (mm.get.name4_order === '1') pnl.age.elasticX = true;
+      if (mm.get.name5_order === '1') pnl.cond.elasticX = true;
+      if (mm.get.name6_order === '1') pnl.job.elasticX = true;
+
+      // chartEx order parameters
+      if (mm.get.name7_order === '1') pnl.ex[0].elasticX = true;
+      if (mm.get.name8_order === '1') pnl.ex[1].elasticX = true;
+      if (mm.get.name9_order === '1') pnl.ex[2].elasticX = true;
+      if (mm.get.name10_order === '1') pnl.ex[3].elasticX = true;
+      if (mm.get.name11_order === '1') pnl.ex[4].elasticX = true;
+      if (mm.get.name12_order === '1') pnl.ex[5].elasticX = true;
+      if (mm.get.name13_order === '1') pnl.ex[6].elasticX = true;
+      if (mm.get.name14_order === '1') pnl.ex[7].elasticX = true;
+    });
+
     // 検索INPUT
     if (mm.get.q) {
       $('#input-search').val(mm.get.q.trim());
@@ -3679,6 +3707,18 @@ const mm = {
       case 'name_filter':
       case 'name2_filter':
       case 'name2_order':
+      case 'name3_order':
+      case 'name4_order':
+      case 'name5_order':
+      case 'name6_order':
+      case 'name7_order':
+      case 'name8_order':
+      case 'name9_order':
+      case 'name10_order':
+      case 'name11_order':
+      case 'name12_order':
+      case 'name13_order':
+      case 'name14_order':
         url = url_append_param(location.href, {[type]: arg});
         window.history.replaceState({}, '', url);
         break;
@@ -3727,17 +3767,29 @@ const mm = {
             'name2_filter',
             'name2_order',
             'name3',
+            'name3_order',
             'name4',
+            'name4_order',
             'name5',
+            'name5_order',
             'name6',
+            'name6_order',
             'name7',
+            'name7_order',
             'name8',
+            'name8_order',
             'name9',
+            'name9_order',
             'name10',
+            'name10_order',
             'name11',
+            'name11_order',
             'name12',
+            'name12_order',
             'name13',
+            'name13_order',
             'name14',
+            'name14_order',
             'name15',
             'name16',
             'name17',
@@ -7829,6 +7881,7 @@ const onDocumentReady = () => {
   });
 
   $('.btn_close,.btn_winsize').button();
+  if (isSp) $('#toolbar_win_toggle label').button();
 
   if (mm.config.panelDraggable) {
     const $parent = $('#panels');
@@ -8142,6 +8195,8 @@ const onDocumentReady = () => {
         .ordering(v ? t => -t.value.total : dc.pluck('key'))
         .elasticX(true)
         .render();
+      // URL parameter update
+      mm.onChangeURL('name3_order', v ? 1 : 0);
     });
   }
 
@@ -8153,6 +8208,10 @@ const onDocumentReady = () => {
         .ordering(v ? t => -t.value.total : dc.pluck('key'))
         .elasticX(true)
         .render();
+
+      // URL parameter update
+      const paramName = `name${k + 7}_order`;
+      mm.onChangeURL(paramName, v ? 1 : 0);
     });
   }
   watch([() => props.data, () => props.dataPath], async ([newData, newDataPath]) => {
