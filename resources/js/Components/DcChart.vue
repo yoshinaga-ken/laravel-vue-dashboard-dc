@@ -676,7 +676,7 @@
                 :ndx="mm.ndx"
                 :chartId="`chart_ex_${i}`"
                 chartGroup="chartGroup"
-                :filters="mm.chartEx[i].filters"
+                v-model:filters="mm.chartEx[i].filters"
                 :innerRadius="mm.opt.chartEx[i]?.innerRadius"
                 :showLabels="true"
                 :legend="mm.opt.chartEx[i]?.isLegend ? mm.opt.chartEx[i]?.dcSunburstChart.legend: {isShow: false}"
@@ -758,7 +758,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref, watch, reactive} from "vue";
+import {onMounted, ref, watch, reactive, nextTick} from "vue";
 import * as d3 from 'd3';
 
 import * as dc from 'dc';
@@ -1701,6 +1701,9 @@ watch(() => pnl.age.elasticX, v => {
     .ordering(v ? t => (gg.dt === DT_COVID ? -t.value.total : -t.value) : dc.pluck('key'))
     .elasticX(true)
     .render();
+
+  // URL parameter update
+  mm.onChangeURL('name4_order', v ? 1 : 0);
 });
 watch(() => pnl.cond.is_show, onChangeSettings);
 watch(() => pnl.cond.elasticX, v => {
@@ -1708,6 +1711,9 @@ watch(() => pnl.cond.elasticX, v => {
     .ordering(v ? t => -t.value : dc.pluck('key'))
     .elasticX(true)
     .render();
+
+  // URL parameter update
+  mm.onChangeURL('name5_order', v ? 1 : 0);
 });
 watch(() => pnl.job.is_show, onChangeSettings);
 watch(() => pnl.job.elasticX, v => {
@@ -1725,7 +1731,10 @@ watch(() => pnl.job.elasticX, v => {
   mm.chartJob
     .ordering(v ? t => -t.value : dc.pluck('key'))
     .elasticX(true)
-    .render()
+    .render();
+
+  // URL parameter update
+  mm.onChangeURL('name6_order', v ? 1 : 0);
 });
 watch(() => pnl.ex, onChangeSettings, {deep: true});
 watch(() => pnl.detail.is_show, onChangeSettings);
@@ -2474,15 +2483,21 @@ const mm = {
     // 名前に付加されたタグ系情報の削除
     removeLabelSuffix: function (d) {
       let name = d;
+      // case: <Label>(<XXX>) -> <Label>
       if (d.indexOf('(') !== -1) {
-        name = d.split('(')[0]; // case: <Label>(<XXX>)
-        if (mm.opt.removeLabelSufixType) {// case: <Label>♂(<AGE>)
-          name = name.replace(/[ ♂♀]/g, '');
-        }
-      } else {
-        name = d;
+        name = d.split('(')[0];
       }
-      return name.replace(TAGICON_DS, '').replace(TAGICON_CD, ''); // case: <NAME><TAGICON>
+      name = name.replace(new RegExp(`[ ♂♀]|${TAGICON_DS}|${TAGICON_CD}`, 'g'), '');
+      if (mm.opt?.removeLabelSuffixType === 'c') {
+        // nameの後ろのアルファベット記号を除去。 ex) プレイヤーC -> プレイヤー プレイヤーC+ -> プレイヤー
+        // ただし、数字の場合は除去しない。 ex) プレイヤー2 -> プレイヤー2
+        // ただし、nameがすべてアルファベットの場合は除去しない ex) Player2 -> Player2
+        const isAlpha = /^[A-Za-z]+$/.test(name);
+        if (!isAlpha) {
+          name = name.replace(/[A-Za-z]+$/, '');
+        }
+      }
+      return name
     },
     initPanelsWH: function () {
       const pos = mm.util.relToAbsPos('#panels');
@@ -2542,100 +2557,6 @@ const mm = {
         }
       }
       return address;
-    },
-    replaceSearchWordE2J: (s) => {
-      let ret = '';
-      s = s.toLowerCase();
-      switch (true) {
-        case s.indexOf('@') !== -1: // @tube のような予約語
-          ret = '';
-          break;
-        case s.indexOf('sega') !== -1:
-          ret = 'セガ';
-          break;
-        case s.indexOf('capcom') !== -1:
-          ret = 'カプコン';
-          break;
-        case s.indexOf('namco') !== -1:
-          ret = 'ナムコ';
-          break;
-        case s.indexOf('konami') !== -1:
-          ret = 'コナミ';
-          break;
-        case s.indexOf('taito') !== -1:
-          ret = 'タイトー';
-          break;
-        case s.indexOf('irem') !== -1:
-          ret = 'アイレム';
-          break;
-        case s.indexOf('nintendo') !== -1:
-          ret = '任天堂';
-          break;
-        case s.indexOf('jaleco') !== -1:
-          ret = 'ジャレコ';
-          break;
-        case s.indexOf('banpresto') !== -1:
-          ret = 'バンプレスト';
-          break;
-        case s.indexOf('nichibutsu') !== -1:
-          ret = '日本物産	';
-          break;
-        case s.indexOf('dataeast') !== -1:
-          ret = 'データイースト	';
-          break;
-        case s.indexOf('msx') !== -1:
-          ret = 'MSX';
-          break;
-        case s.indexOf('sms') !== -1:
-          ret = 'マスターシステム';
-          break;
-        case s.indexOf('smc') !== -1 || s.indexOf('sfc') !== -1:
-          ret = 'スーパーファミコン';
-          break;
-        case s.indexOf('fc') !== -1 || s.indexOf('nes') !== -1:
-          ret = 'ファミコン';
-          break;
-        case s.indexOf('pce') !== -1:
-          ret = 'PCエンジン';
-          break;
-        case s.indexOf('smd') !== -1 || s.indexOf('md') !== -1:
-          ret = 'メガドライブ';
-          break;
-        case s.indexOf('n64') !== -1:
-          ret = 'NINTENDO64';
-          break;
-        case s.indexOf('fds') !== -1:
-          ret = 'ディスクシステム';
-          break;
-        case s.indexOf('gba') !== -1:
-          ret = 'ゲームボーイアドバンス';
-          break;
-        case s.indexOf('gb') !== -1:
-          ret = 'ゲームボーイ';
-          break;
-        case s.indexOf('ps1') !== -1:
-          ret = 'プレイステーション1';
-          break;
-        case s.indexOf('gc') !== -1:
-          ret = 'ゲームキューブ';
-          break;
-        case s.indexOf('ws') !== -1:
-          ret = 'ワンダースワン';
-          break;
-        case s.indexOf('gg') !== -1:
-          ret = 'ゲームギア';
-          break;
-        case s.indexOf('vb') !== -1:
-          ret = 'バーチャルボーイ';
-          break;
-        case s.indexOf('gen') !== -1:
-          ret = 'ゲーム機';
-          break;
-        default:
-          ret = '';
-          break;
-      }
-      return ret;
     },
     isMatchRegexI: (word, keyword) => {
       try {
@@ -3662,6 +3583,25 @@ const mm = {
     isRedraw = mm.chart.filterFromGetParam(mm.chartEx[6], 'name13', isRedraw);
     isRedraw = mm.chart.filterFromGetParam(mm.chartEx[7], 'name14', isRedraw);
 
+    // Chart order parameters
+    nextTick(() => {
+      // chartSex, chartAge, chartCond, chartJob order parameters
+      if (mm.get.name3_order === '1') pnl.sex.elasticX = true;
+      if (mm.get.name4_order === '1') pnl.age.elasticX = true;
+      if (mm.get.name5_order === '1') pnl.cond.elasticX = true;
+      if (mm.get.name6_order === '1') pnl.job.elasticX = true;
+
+      // chartEx order parameters
+      if (mm.get.name7_order === '1') pnl.ex[0].elasticX = true;
+      if (mm.get.name8_order === '1') pnl.ex[1].elasticX = true;
+      if (mm.get.name9_order === '1') pnl.ex[2].elasticX = true;
+      if (mm.get.name10_order === '1') pnl.ex[3].elasticX = true;
+      if (mm.get.name11_order === '1') pnl.ex[4].elasticX = true;
+      if (mm.get.name12_order === '1') pnl.ex[5].elasticX = true;
+      if (mm.get.name13_order === '1') pnl.ex[6].elasticX = true;
+      if (mm.get.name14_order === '1') pnl.ex[7].elasticX = true;
+    });
+
     // 検索INPUT
     if (mm.get.q) {
       $('#input-search').val(mm.get.q.trim());
@@ -3767,6 +3707,18 @@ const mm = {
       case 'name_filter':
       case 'name2_filter':
       case 'name2_order':
+      case 'name3_order':
+      case 'name4_order':
+      case 'name5_order':
+      case 'name6_order':
+      case 'name7_order':
+      case 'name8_order':
+      case 'name9_order':
+      case 'name10_order':
+      case 'name11_order':
+      case 'name12_order':
+      case 'name13_order':
+      case 'name14_order':
         url = url_append_param(location.href, {[type]: arg});
         window.history.replaceState({}, '', url);
         break;
@@ -3815,17 +3767,29 @@ const mm = {
             'name2_filter',
             'name2_order',
             'name3',
+            'name3_order',
             'name4',
+            'name4_order',
             'name5',
+            'name5_order',
             'name6',
+            'name6_order',
             'name7',
+            'name7_order',
             'name8',
+            'name8_order',
             'name9',
+            'name9_order',
             'name10',
+            'name10_order',
             'name11',
+            'name11_order',
             'name12',
+            'name12_order',
             'name13',
+            'name13_order',
             'name14',
+            'name14_order',
             'name15',
             'name16',
             'name17',
@@ -4093,8 +4057,8 @@ const mm = {
         });
 
         // 監視対象の要素を指定
-        const lazyImages = rootDiv.querySelectorAll('.pl');
-        lazyImages.forEach(image => {
+        const lazyImages = rootDiv?.querySelectorAll('.pl');
+        lazyImages?.forEach(image => {
           observer.observe(image);
         });
       }
@@ -4172,11 +4136,6 @@ const mm = {
     },
     setDetails: async function (chart, filters, dataIndex, detailType = false) {
       const imagePath = mm.chart.getImagePath(chart) ?? '';
-      // 検索API用KeywordPrefix取得
-      const searchPrefix = mm.opt.searchPrefix ?? '';
-      const searchPrefixP = searchPrefix ? searchPrefix + '+' : '';
-      let searchPrefix2 = mm.util.replaceSearchWordE2J(imagePath);
-      let searchPrefix2P = searchPrefix2 ? searchPrefix2 + '+' : '';
 
       for (let i = 0; i < filters.length; i++) {
         if (pnl.detail.details.length >= pnl.detail.maxDetails) break;
@@ -4196,17 +4155,19 @@ const mm = {
         const n = chart.group().all().find(d => d.key === name)?.value ?? 0;
         const dt = await mm.getDetailInfo(`${name2}`);
 
-        // 検索API用KeywordPrefix取得 (dataより取得)
-        if (mm.opt.searchPrefixDataIndex) {
-          const s = d[mm.opt.searchPrefixDataIndex];
-          searchPrefix2 = mm.util.replaceSearchWordE2J(s);
-          if (searchPrefix2 === '') searchPrefix2 = s;
-          searchPrefix2P = searchPrefix2 ? searchPrefix2 + '+' : '';
-        }
-
-
+        // 検索API用Keywords
+        const searchQueryWords = mm.opt?.searchPrefix ? [mm.opt?.searchPrefix] : [];
         if (isTube) {
-          pnl.tube.searchQuery = `${searchPrefixP}${searchPrefix2P}${name2}`;
+          // 検索API用KeywordPrefix取得 (dataより取得)
+          if (mm.opt.searchPrefixDataIndex) {
+            const isCityChart = chart.chartID() === mm.chartCity.chartID();
+            if (isCityChart) searchQueryWords.push(d[mm.opt.searchPrefixDataIndex]);
+            else searchQueryWords.push(name2);
+          } else {
+            searchQueryWords.push(name2);
+          }
+
+          pnl.tube.searchQuery = searchQueryWords.join('+');
           pnl.tube.vids = await mm.tube.search(pnl.tube.searchQuery);
           youtubePlayHtml = '';
           for (let j = 1; j <= pnl.tube.vids.length; j++) {
@@ -4215,7 +4176,7 @@ const mm = {
             youtubePlayHtml +=
               `&nbsp;<a class="detail-tube-wopen tt_img" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" ` +
               `target="_blank" href="https://www.youtube.com/watch?v=${id}" ` +
-              `title="YouTubeで「${searchPrefix} ${searchPrefix2} ${name2} 」の動画${j}を開く">` +
+              `title="YouTubeで「${searchQueryWords.join(' ')}」の動画${j}を開く">` +
               `<i class="fa fa-video"></i>${j}</a>`;
           }
           youtubePlayHtml += pnl.tube.vids.length ? '&nbsp;' : '';
@@ -4247,8 +4208,8 @@ const mm = {
 							</a>\
 							<img src="/img/yutube.gif">${youtubePlayHtml}\
 							<a target="_blank" class="detail-tube-wopen" \
-								href="https://www.youtube.com/results?search_query=${searchPrefixP}${searchPrefix2P}${name2}" \
-								title="YouTubeで「${pnl.tube.searchQuery.replaceAll('+', ' ')}」の動画一覧を開く">\
+								href="https://www.youtube.com/results?search_query=${pnl.tube.searchQuery}" \
+								title="YouTubeで「${searchQueryWords.join(' ')}」の動画一覧を開く">\
 								一覧<span class="ui-icon ui-icon-extlink" style="font-size: 0.9em"></span>\
 							</a>\
 							<table><tbody>` +
@@ -4271,7 +4232,7 @@ const mm = {
               `<div class="detail-img">\
 										<a class="detail-tube-wopen" target="_blank" \
 											href="https://www.youtube.com/watch?v=${vid}"\
-											title="YouTubeで「${searchPrefix} ${searchPrefix2} ${name2} 」の動画${j + 1}を開く">\
+											title="YouTubeで「${searchQueryWords.join(' ')}」の動画${j + 1}を開く">\
 											<img src="https://img.youtube.com/vi/${vid}/hqdefault.jpg" onerror="this.src='${IMG_NO}'">\
 										</a>\
 									</div>`;
@@ -5075,7 +5036,7 @@ const mm = {
   },
   loadAllData: () => {
     mm.get = php_location_get_query();
-    const name = mm.get.data || mm.url_data.data;
+    const name = mm.get?.viewMode === 'story' ? mm.url_data.data : (mm.get.data || mm.url_data.data);
     return mm.loadDcData(name)
       .then(() => {
         mm.init();
@@ -7598,8 +7559,7 @@ const setBgWindowZIndex = (id) => {
 }
 
 const onFilteredSunburstChart = (i, {chart}) => {
-    // console.log(`@getOnSunburstFiltered ${i}`, chart.filters());
-    mm.chartEx[i].filters = chart.filters().length ? chart.filters() : [];
+    // v-modelによりmm.chartEx[i].filtersは自動同期されるため手動設定不要
     mm.onChartFiltered(chart);
     mm.onChangeURL(`name${7 + i}`, chart);
     mm.chartScroll('#div_name');
@@ -7920,6 +7880,7 @@ const onDocumentReady = () => {
   });
 
   $('.btn_close,.btn_winsize').button();
+  if (isSp) $('#toolbar_win_toggle label').button();
 
   if (mm.config.panelDraggable) {
     const $parent = $('#panels');
@@ -8233,6 +8194,8 @@ const onDocumentReady = () => {
         .ordering(v ? t => -t.value.total : dc.pluck('key'))
         .elasticX(true)
         .render();
+      // URL parameter update
+      mm.onChangeURL('name3_order', v ? 1 : 0);
     });
   }
 
@@ -8244,8 +8207,21 @@ const onDocumentReady = () => {
         .ordering(v ? t => -t.value.total : dc.pluck('key'))
         .elasticX(true)
         .render();
+
+      // URL parameter update
+      const paramName = `name${k + 7}_order`;
+      mm.onChangeURL(paramName, v ? 1 : 0);
     });
   }
+  watch([() => props.data, () => props.dataPath], async ([newData, newDataPath]) => {
+    //新しいデータファイルでページリロード。
+    if (mm.get.viewMode === 'story') {
+      const url = url_append_param(location.href, {'args': `data:${newData}`});
+      location.href = location.origin + url;
+    } else {
+      location.href = location.pathname + '?data=' + newData;
+    }
+  });
 
   $('#div_date').scrollLeft(1000);
 

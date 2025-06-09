@@ -1,6 +1,8 @@
 {
   "dataType": 0,
   "title": "「PCエンジン」ソフト一覧",
+  "searchPrefixDataIndex": 5,
+  "searchPrefix": "PCエンジン",
   "dataReference": "<ul><li><a target='_blank' href=\"http://pasofami.game.coocan.jp/game/game.htm\">各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a><li><a target='_blank' href=\"https://ja.wikipedia.org/wiki/PCエンジンのゲームタイトル一覧\">PCエンジンのゲームタイトル一覧@Wikipedia</a></ul>",
   "detailType": "city",
   "isMakeAutocompleteData": true,

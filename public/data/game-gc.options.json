@@ -3,6 +3,8 @@
   "common": {
     "unit": "タイトル"
   },
+  "searchPrefixDataIndex": 5,
+  "searchPrefix": "ゲームキューブ",
   "chartGMap": {},
   "chartSView": {},
   "chartTube": {},
@@ -82,7 +84,6 @@
   ],
   "chartDetail": {},
   "title": "「ゲームキューブ」ソフト一覧",
-  "searchPrefix": "ゲームキューブ",
   "dataReference": "<ul><li><a target='_blank' href='https://www.gavas.jp/user_data/gamecube_game_title.php'>ゲームキューブのゲームタイトル一覧@ピコピコ大百科</a></li><li><a target='_blank' href='https://www.gavas.jp/user_data/playstation_game_ranking.php'>ゲームキューブ歴代ソフト売上ランキングTOP50@ピコピコ大百科</a></li><li><a target='_blank' href='https://www.ne.jp/asahi/dq/dq/meisaku/2002.html'>ファミ通の「新作ゲームクロスレビュー」@Game mein</a><li><a target='_blank' href='https://ja.wikipedia.org/wiki/ニンテンドーゲームキューブのゲームタイトル一覧'>ゲームキューブのゲームタイトル一覧@wikipedia</a></li></ul>",
   "detailType": "city",
   "isMakeAutocompleteData": true,
