@@ -676,7 +676,7 @@
                 :ndx="mm.ndx"
                 :chartId="`chart_ex_${i}`"
                 chartGroup="chartGroup"
-                :filters="mm.chartEx[i].filters"
+                v-model:filters="mm.chartEx[i].filters"
                 :innerRadius="mm.opt.chartEx[i]?.innerRadius"
                 :showLabels="true"
                 :legend="mm.opt.chartEx[i]?.isLegend ? mm.opt.chartEx[i]?.dcSunburstChart.legend: {isShow: false}"
@@ -7559,8 +7559,7 @@ const setBgWindowZIndex = (id) => {
 }
 
 const onFilteredSunburstChart = (i, {chart}) => {
-    // console.log(`@getOnSunburstFiltered ${i}`, chart.filters());
-    mm.chartEx[i].filters = chart.filters().length ? chart.filters() : [];
+    // v-modelによりmm.chartEx[i].filtersは自動同期されるため手動設定不要
     mm.onChartFiltered(chart);
     mm.onChangeURL(`name${7 + i}`, chart);
     mm.chartScroll('#div_name');
