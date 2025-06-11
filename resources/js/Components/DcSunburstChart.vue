@@ -413,6 +413,13 @@ watch(filters, (newFilters, oldFilters) => {
   }
 }, { deep: true });
 
+// chartGroupプロパティの変更を監視
+watch(() => props.chartGroup, (newChartGroup, oldChartGroup) => {
+  if (chart && newChartGroup !== oldChartGroup) {
+    chart.chartGroup(newChartGroup);
+  }
+}, { immediate: false });
+
 // マウント時の初期化
 onMounted(() => {
   // 親コンテナのサイズを更新

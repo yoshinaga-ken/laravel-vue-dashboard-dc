@@ -702,7 +702,7 @@
                 v-if="mm.isLoadAllData"
                 :ndx="mm.ndx"
                 :chartId="`chart_ex_${i}`"
-                chartGroup="chartGroup"
+                :chartGroup="mm.chartEx[i].chartGroup"
                 v-model:filters="mm.chartEx[i].filters"
                 :innerRadius="mm.opt.chartEx[i]?.innerRadius"
                 :showLabels="true"
@@ -1563,6 +1563,249 @@ const setPanelXYWH = (id = null, absType = 0) => {
   return isSet;
 }
 
+const setupPanelWatch = () => {
+  const handleChartVisibilityChange = (chart, newVal, oldVal) => {
+    chart?.chartGroup(newVal ? 'chartGroup' : 'hide');
+    onChangeSettings(newVal, oldVal);
+  };
+  const showWatchOptions = {immediate: true};
+
+  watch(() => pnl.common.toolbar.is_show, onChangeSettings);
+  watch(() => pnl.common.datepicker.position, onChangeSettings);
+  watch(() => pnl.gmap.is_show, () => {
+    setBgWindowZIndex('chart_gmap');
+    onChangeSettings();
+  });
+  watch(() => pnl.sview.is_show, () => {
+    setBgWindowZIndex('chart_sview');
+    onChangeSettings();
+  });
+  watch(() => pnl.tube.is_show, () => {
+    setBgWindowZIndex('chart_tube');
+    onChangeSettings()
+  });
+  watch(() => pnl.tube.vidAutoChange, onChangeSettings);
+  watch(() => pnl.map.is_show, is_show => {
+    if (is_show) {
+      _.delay(() => {
+        drawJapanMap();
+      }, 100)
+    }
+    onChangeSettings();
+  });
+  watch(() => pnl.name.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.chartName, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.city.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.chartCity, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.city.orderCnt, v => {
+    if (pnl.city.orderUI) {
+      if (pnl.city.orderCnt) {
+        pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix;
+        pnl.common.unit = mm.opt.chartCity.orderUIUnit;
+      } else {
+        pnl.common.unitPrefix = mm.opt.common.unitPrefix;
+        pnl.common.unit = mm.opt.common.unit;
+      }
+      mm.onChangeURL('name2_order', pnl.city.orderCnt ? 1 : 0);
+    }
+
+    // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
+    mm.group_reduce.base = v ? d => (d[D_CNT] || 1) : d => 1
+
+    // 以下全チャート再計算
+    initChartName();
+
+    // chartCity - 並び順だけ変更
+    mm.chartCity
+      .ordering(v
+        ? d => -d.value // カウント降順
+        : mm.orderYmd // 時間昇順
+      );
+
+    // chartDate
+    const compositeY = mm.composite.elasticY();
+    mm.chartDate.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
+    mm.composite.elasticY(true);
+
+    let chartSexW = 148;
+    let chartSexH = 158;
+
+    // chartDate2
+    if (pnl.date.chart2.is_show) {
+      mm.composite2 = null;
+      mm.chartDate2 = null;
+      onChangeChartDateChart2IsShow(true)
+    }
+
+    initChartYear(chartSexH);
+
+    initChartSeason(chartSexW, chartSexH);
+
+    initChartWeek(chartSexW, chartSexH);
+
+    initChartSex(chartSexW, chartSexH);
+
+    // chartAge
+    // initChartAge(chartSexW, chartSexH);
+    const chartAgeY = mm.chartAge.elasticY();
+    const gpAge = initChartAgeReduce(mm.chartAge.dimension());
+    mm.chartAge.group(mm.groupRemoveEmpty(gpAge))
+    mm.chartAge.elasticY(true);
+
+    // chartCond
+    // initChartCond(chartSexW, chartSexH);
+    const chartCondY = mm.chartCond.elasticY();
+    const gpCond = initChartCondReduce(mm.chartCond.dimension());
+    mm.chartCond.group(mm.groupRemoveEmpty(gpCond))
+    mm.chartCond.elasticY(true);
+
+    // chartJob
+    // initChartJob(chartSexW, chartSexH);
+    const chartJobY = mm.chartJob.elasticY();
+    initChartJobReduce();
+    mm.chartJob.group(mm.is_job_cate ? mm.gpJobCat : mm.gpJob)
+    mm.chartJob.elasticY(true);
+
+    // chartEx
+    initAllChartEx(chartSexH);
+
+    mm.dateStackShow(STACK_CND);
+
+    dc.renderAll("chartGroup");
+
+    mm.composite.elasticY(compositeY);
+    mm.chartAge.elasticY(chartAgeY);
+    mm.chartCond.elasticY(chartCondY);
+    mm.chartJob.elasticY(chartJobY);
+  });
+  watch(() => pnl.date.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.composite, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.date.chart2.is_show, (newVal, oldVal) => {
+    onChangeChartDateChart2IsShow(newVal, oldVal);
+    mm?.composite2?.chartGroup(newVal ? 'chartGroup' : 'hide');
+  }, showWatchOptions);
+  watch(() => pnl.date.isBrushOn, onChangeChartDateIsBrushOn);
+  watch(() => pnl.year.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.chartYear, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.season.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.chartSeason, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.week.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.chartWeek, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.sex.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.chartSex, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.age.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.chartAge, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.age.elasticX, v => {
+    mm.chartAge
+      .ordering(v ? t => (gg.dt === DT_COVID ? -t.value.total : -t.value) : dc.pluck('key'))
+      .elasticX(true)
+      .render();
+
+    // URL parameter update
+    mm.onChangeURL('name4_order', v ? 1 : 0);
+  });
+  watch(() => pnl.cond.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.chartCond, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.cond.elasticX, v => {
+    mm.chartCond
+      .ordering(v ? t => -t.value : dc.pluck('key'))
+      .elasticX(true)
+      .render();
+
+    // URL parameter update
+    mm.onChangeURL('name5_order', v ? 1 : 0);
+  });
+  watch(() => pnl.job.is_show, (newVal, oldVal) => {
+    handleChartVisibilityChange(mm.chartJob, newVal, oldVal);
+  }, showWatchOptions);
+  watch(() => pnl.job.elasticX, v => {
+    if (v) {
+      const wc = mm.chartJob.width();
+      const wd = $('#chart_job').width()
+      if (wc > wd) {
+        mm.config.cJob.width = mm.chartJob.width();
+        mm.chartJob.width(wd);
+      }
+    } else {
+      mm.chartJob.width(mm.config.cJob.width);
+    }
+
+    mm.chartJob
+      .ordering(v ? t => -t.value : dc.pluck('key'))
+      .elasticX(true)
+      .render();
+
+    // URL parameter update
+    mm.onChangeURL('name6_order', v ? 1 : 0);
+  });
+
+// pnl.ex配列の各要素のis_showを個別に監視
+  for (let i = 0; i < pnl.ex.length; i++) {
+    watch(() => pnl.ex[i].is_show, (newVal, oldVal) => {
+      if (mm.chartEx && mm.chartEx[i]) {
+        if (mm.chartEx[i]?.isDcSunburstChart) {
+          mm.chartEx[i].chartGroup = newVal ? 'chartGroup' : 'hide';
+          onChangeSettings(newVal, oldVal);
+        } else {
+          handleChartVisibilityChange(mm.chartEx[i], newVal, oldVal);
+        }
+      }
+    }, showWatchOptions);
+  }
+
+  watch(() => pnl.detail.is_show, onChangeSettings);
+  watch(() => pnl.ana.is_show, onChangeSettings);
+  watch(() => pnl.date.stack_type, (v) => {
+    mm.dateStackShow(v);
+
+    // Stackの影響をうけるチャートを再描画
+    mm.chartCity.render();
+
+    mm.composite.render();
+    mm.chartYear.render();
+    if (pnl.sex.chartType === 'bar') {
+      mm.chartSex.render();
+    }
+    if (pnl.date.chart2.type !== CHART_DATE2_TYPE_COVID) {
+      mm.composite2?.render();
+    }
+    for (let k = 0; k < pnl.ex.length; k++) {
+      const ex = pnl.ex[k];
+      if (ex.isHidden || ex.isDcSunburstChart) continue
+      mm.chartEx[k].render();
+    }
+  });
+  watch(isDark, (newVal) => {
+    const head = document.querySelector('#chart_map .ui-widget-header');
+    if (newVal) {
+      head?.classList.remove('light');
+      document.body.style.backgroundColor = '#1F2937';
+      document.body.classList.add('dark');
+      document.documentElement.classList.add('dark');
+      document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/dark-hive/jquery-ui.min.css');
+      IMG_NO = '/img/noimage-dark.png';
+      localStorage.theme = 'dark';
+    } else {
+      head?.classList.add('light');
+      document.body.style.backgroundColor = '#F0F0F0';
+      document.body.classList.remove('dark');
+      document.documentElement.classList.remove('dark');
+      document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/blitzer/jquery-ui.min.css');
+      IMG_NO = '/img/noimage.png';
+      localStorage.theme = 'light';
+    }
+  });
+}
+
 onMounted(async () => {
   await loadScriptJQueryUI();
   await loadScriptJQueryUIDatepickerJa();
@@ -1594,6 +1837,8 @@ onMounted(async () => {
 
     mm.setPanelFromDataOptionsAfterLoad();
 
+    setupPanelWatch();
+
     if (mm.is_trigger_search) {
       $('#input-search').trigger('input-search-update');
       if (!pnl.tube.vidAutoChange) {
@@ -1602,203 +1847,6 @@ onMounted(async () => {
       }
     }
   });
-});
-
-watch(() => pnl.common.toolbar.is_show, onChangeSettings);
-watch(() => pnl.common.datepicker.position, onChangeSettings);
-watch(() => pnl.gmap.is_show, () => {
-  setBgWindowZIndex('chart_gmap');
-  onChangeSettings();
-});
-watch(() => pnl.sview.is_show, () => {
-  setBgWindowZIndex('chart_sview');
-  onChangeSettings();
-});
-watch(() => pnl.tube.is_show, () => {
-  setBgWindowZIndex('chart_tube');
-  onChangeSettings()
-});
-watch(() => pnl.tube.vidAutoChange, onChangeSettings);
-watch(() => pnl.map.is_show, is_show => {
-  if (is_show) {
-    _.delay(() => {
-      drawJapanMap();
-    }, 100)
-  }
-  onChangeSettings();
-});
-watch(() => pnl.name.is_show, onChangeSettings);
-watch(() => pnl.city.is_show, onChangeSettings);
-watch(() => pnl.city.orderCnt, v => {
-  if (pnl.city.orderUI) {
-    if (pnl.city.orderCnt) {
-      pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix;
-      pnl.common.unit = mm.opt.chartCity.orderUIUnit;
-    } else {
-      pnl.common.unitPrefix = mm.opt.common.unitPrefix;
-      pnl.common.unit = mm.opt.common.unit;
-    }
-    mm.onChangeURL('name2_order', pnl.city.orderCnt ? 1 : 0);
-  }
-
-  // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
-  mm.group_reduce.base = v ? d => (d[D_CNT] || 1) : d => 1
-
-  // 以下全チャート再計算
-  initChartName();
-
-  // chartCity - 並び順だけ変更
-  mm.chartCity
-    .ordering(v
-      ? d => -d.value // カウント降順
-      : mm.orderYmd // 時間昇順
-    );
-
-  // chartDate
-  const compositeY = mm.composite.elasticY();
-  mm.chartDate.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
-  mm.composite.elasticY(true);
-
-  let chartSexW = 148;
-  let chartSexH = 158;
-
-  // chartDate2
-  if (pnl.date.chart2.is_show) {
-    mm.composite2 = null;
-    mm.chartDate2 = null;
-    onChangeChartDateChart2IsShow(true)
-  }
-
-  initChartYear(chartSexH);
-
-  initChartSeason(chartSexW, chartSexH);
-
-  initChartWeek(chartSexW, chartSexH);
-
-  initChartSex(chartSexW, chartSexH);
-
-  // chartAge
-  // initChartAge(chartSexW, chartSexH);
-  const chartAgeY = mm.chartAge.elasticY();
-  const gpAge = initChartAgeReduce(mm.chartAge.dimension());
-  mm.chartAge.group(mm.groupRemoveEmpty(gpAge))
-  mm.chartAge.elasticY(true);
-
-  // chartCond
-  // initChartCond(chartSexW, chartSexH);
-  const chartCondY = mm.chartCond.elasticY();
-  const gpCond = initChartCondReduce(mm.chartCond.dimension());
-  mm.chartCond.group(mm.groupRemoveEmpty(gpCond))
-  mm.chartCond.elasticY(true);
-
-  // chartJob
-  // initChartJob(chartSexW, chartSexH);
-  const chartJobY = mm.chartJob.elasticY();
-  initChartJobReduce();
-  mm.chartJob.group(mm.is_job_cate ? mm.gpJobCat : mm.gpJob)
-  mm.chartJob.elasticY(true);
-
-  // chartEx
-  initAllChartEx(chartSexH);
-
-  mm.dateStackShow(STACK_CND);
-
-  dc.renderAll("chartGroup");
-
-  mm.composite.elasticY(compositeY);
-  mm.chartAge.elasticY(chartAgeY);
-  mm.chartCond.elasticY(chartCondY);
-  mm.chartJob.elasticY(chartJobY);
-});
-watch(() => pnl.date.is_show, onChangeSettings);
-watch(() => pnl.date.chart2.is_show, onChangeChartDateChart2IsShow);
-watch(() => pnl.date.isBrushOn, onChangeChartDateIsBrushOn);
-watch(() => pnl.year.is_show, onChangeSettings);
-watch(() => pnl.season.is_show, onChangeSettings);
-watch(() => pnl.week.is_show, onChangeSettings);
-watch(() => pnl.sex.is_show, onChangeSettings);
-watch(() => pnl.age.is_show, onChangeSettings);
-watch(() => pnl.age.elasticX, v => {
-  mm.chartAge
-    .ordering(v ? t => (gg.dt === DT_COVID ? -t.value.total : -t.value) : dc.pluck('key'))
-    .elasticX(true)
-    .render();
-
-  // URL parameter update
-  mm.onChangeURL('name4_order', v ? 1 : 0);
-});
-watch(() => pnl.cond.is_show, onChangeSettings);
-watch(() => pnl.cond.elasticX, v => {
-  mm.chartCond
-    .ordering(v ? t => -t.value : dc.pluck('key'))
-    .elasticX(true)
-    .render();
-
-  // URL parameter update
-  mm.onChangeURL('name5_order', v ? 1 : 0);
-});
-watch(() => pnl.job.is_show, onChangeSettings);
-watch(() => pnl.job.elasticX, v => {
-  if (v) {
-    const wc = mm.chartJob.width();
-    const wd = $('#chart_job').width()
-    if (wc > wd) {
-      mm.config.cJob.width = mm.chartJob.width();
-      mm.chartJob.width(wd);
-    }
-  } else {
-    mm.chartJob.width(mm.config.cJob.width);
-  }
-
-  mm.chartJob
-    .ordering(v ? t => -t.value : dc.pluck('key'))
-    .elasticX(true)
-    .render();
-
-  // URL parameter update
-  mm.onChangeURL('name6_order', v ? 1 : 0);
-});
-watch(() => pnl.ex, onChangeSettings, {deep: true});
-watch(() => pnl.detail.is_show, onChangeSettings);
-watch(() => pnl.ana.is_show, onChangeSettings);
-watch(() => pnl.date.stack_type, (v) => {
-  mm.dateStackShow(v);
-
-  // Stackの影響をうけるチャートを再描画
-  mm.chartCity.render();
-
-  mm.composite.render();
-  mm.chartYear.render();
-  if (pnl.sex.chartType === 'bar') {
-    mm.chartSex.render();
-  }
-  if (pnl.date.chart2.type !== CHART_DATE2_TYPE_COVID) {
-    mm.composite2?.render();
-  }
-  for (let k = 0; k < pnl.ex.length; k++) {
-    if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue
-    mm.chartEx[k].render();
-  }
-});
-watch(isDark, (newVal) => {
-  const head = document.querySelector('#chart_map .ui-widget-header');
-  if (newVal) {
-    head?.classList.remove('light');
-    document.body.style.backgroundColor = '#1F2937';
-    document.body.classList.add('dark');
-    document.documentElement.classList.add('dark');
-    document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/dark-hive/jquery-ui.min.css');
-    IMG_NO = '/img/noimage-dark.png';
-    localStorage.theme = 'dark';
-  } else {
-    head?.classList.add('light');
-    document.body.style.backgroundColor = '#F0F0F0';
-    document.body.classList.remove('dark');
-    document.documentElement.classList.remove('dark');
-    document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/blitzer/jquery-ui.min.css');
-    IMG_NO = '/img/noimage.png';
-    localStorage.theme = 'light';
-  }
 });
 
 const mm = {
@@ -2563,7 +2611,9 @@ const mm = {
         $('#panel_age').width(mm.chartAge.width());
         $('#panel_cond').width(mm.chartCond.width());
         for (let k = 0; k < pnl.ex.length; k++) {
-          if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue
+          const ex = pnl.ex[k];
+          if (ex.isHidden || ex.isDcSunburstChart) continue
+          if(!ex.is_show) continue;
           $(`#panel_ex_${k}`).width(mm.chartEx[k].width());
         }
       }
@@ -2702,11 +2752,22 @@ const mm = {
             if (doParseOptions) mm.parseCsvOptions(urlQueryString);
           }
 
+          // DT_COVID以外の場合のhiddenなインデックスをキャッシュ
+          let hiddenExIndicesSet = null;
+          if (gg.dt !== DT_COVID) {
+            hiddenExIndicesSet = new Set();
+            for (let j = 0; j < mm.opt.chartEx.length; j++) {
+              if (mm.opt.chartEx[j] !== undefined && mm.opt.chartEx[j].isHidden) {
+                hiddenExIndicesSet.add(D_EX0 + j);
+              }
+            }
+          }
+
           // データをパース
           for (let i = dataStartIndex; i < lines.length; i++) {
             const line = lines[i].trim();
             if (line) {
-              const row = line.indexOf('"') === -1 ? line.split(',') : mm.util.parseCSVLine(line)
+              let row = line.indexOf('"') === -1 ? line.split(',') : mm.util.parseCSVLine(line)
               if (gg.dt === DT_COVID) {
                 row[D_SEX] = parseInt(row[D_SEX]);
                 row[D_AGE] = parseInt(row[D_AGE]);
@@ -2720,6 +2781,16 @@ const mm = {
                 }
                 if (mm.opt.chartCity.orderYmd) {
                   row[D_CND] = row[D_CND] === DN_KEY2 ? '?' : row[D_CND];
+                }
+
+                // 効率的なメモリ使用：hidden要素のnull化（DT_COVID以外のみ）
+                if (hiddenExIndicesSet.size > 0) {
+                  // より効率的な配列作成とhidden要素のnull化
+                  const newRow = new Array(row.length);
+                  for (let k = 0; k < row.length; k++) {
+                    newRow[k] = hiddenExIndicesSet.has(k) ? null : row[k];
+                  }
+                  row = newRow;
                 }
               }
               if (row[D_CNT] !== undefined) row[D_CNT] = parseInt(row[D_CNT]);
@@ -4858,7 +4929,8 @@ const mm = {
             mm.chartDate2?.showStack(stackName);
           }
           for (let k = 0; k < pnl.ex.length; k++) {
-            if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue;
+            const ex = pnl.ex[k];
+            if (ex.isHidden || ex.isDcSunburstChart) continue;
             mm.chartEx[k].showStack(stackName);
           }
         } else {
@@ -4871,7 +4943,8 @@ const mm = {
             mm.chartDate2?.hideStack(stackName);
           }
           for (let k = 0; k < pnl.ex.length; k++) {
-            if (pnl.ex[k].isHidden || pnl.ex[k].isDcSunburstChart) continue;
+            const ex = pnl.ex[k];
+            if (ex.isHidden || ex.isDcSunburstChart) continue;
             mm.chartEx[k].hideStack(stackName);
           }
         }
@@ -6651,7 +6724,7 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
   pnl.ex[chartIndex] = pnl.ex[chartIndex] || {};
   pnl.ex[chartIndex].chartType = mm.opt.chartEx[chartIndex].chartType;
   pnl.ex[chartIndex].isHidden = false;
-  pnl.ex[chartIndex].is_show = true;
+  pnl.ex[chartIndex].is_show = mm.opt.chartEx[chartIndex]?.isShow ?? true;
   pnl.ex[chartIndex].title = title;
 
   // ディメンションの作成
@@ -6673,7 +6746,11 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
   if (isDcSunburstChart) {
     // サンバーストチャートの初期化(DcSunburstChart使用の定義)
     pnl.ex[chartIndex].isDcSunburstChart = isDcSunburstChart;
-    mm.chartEx[chartIndex] = {isDcSunburstChart: true, filters: []};
+    mm.chartEx[chartIndex] = {
+      isDcSunburstChart: true,
+      chartGroup: 'hide',
+      filters: []
+    };
   } else {
     // 標準チャート (stackedBarChart) の作成
     mm.chartEx[chartIndex] =
