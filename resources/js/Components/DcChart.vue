@@ -1383,11 +1383,6 @@ const onChangeChartDateChart2IsShow = (newVal) => {
       initChartDate2Stacks(mm.config.cDate.width, true);
       applyRangeChartSettings();
       break;
-    case mm.opt.chartDate2.chartType === 'series':
-      pnl.date.chart2.type = CHART_DATE2_TYPE_SERIES;
-      initChartDate2TypeSeries(mm.config.cDate.width);
-      applyRangeChartSettings();
-      break;
   }
   mm.dateStackShow(STACK_CND);
   dc.renderAll("chartGroup");
@@ -5915,159 +5910,27 @@ const initChartDate2Covid = (chartDateW) => {
   //===========================================================================
   // CHART composite2_init
   //===========================================================================
+  const valueFormat = (f) => moment(f).format('YYYY/M/D(ddd)');
   mm.composite2
     .width(chartDateW)
     .height(160)
     .useViewBoxResizing(mm.config.panelResizable)
-    //左
-    // .margins({top: 0, right: 0, bottom: 20, left: 30})
-    // .legend(dc.legend().x(40).y(0))
-    //右
     .margins({
       top: 0,
       right: 0,
       bottom: 20,
       left: 50
-    }).legend(dc.legend().x(isSp ? chartDateW - 350 : 60).y(0))
+    })
+    .legend(dc.legend().x(isSp ? chartDateW - 350 : 60).y(0))
     .x(mm.domainDate ? d3.scaleTime().domain(mm.domainDate) : d3.scaleTime())
     .elasticX(false)
-    //.round(d3.timeDay.round)
     .mouseZoomable(false)
     .xUnits(d3.timeDay)
     .renderHorizontalGridLines(true)
     .brushOn(false)
     .elasticY(mm.config.cDate.is_elasticY) //yAxisの高さを動的に変化させる
-    .title(function (d) {
-      let is_bar = isNaN(d.value);
-      let s_suf = '';
-      switch (1) {
-        default:
-          let ymd = moment(d.key).format('YYYY-MM-DD');
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[0][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[0][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[1][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[1][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[2][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[2][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[3][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[3][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[4][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[4][1];
-            break;
-          }
-
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[5][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[5][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[6][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[6][1];
-            break;
-          }
-
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[7][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[7][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[8][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[8][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[9][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[9][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[10][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[10][1];
-            break;
-          }
-
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[11][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[11][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[12][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[12][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[13][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[13][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[14][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[14][1];
-            break;
-          }
-
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[15][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[15][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[16][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[16][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[17][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[17][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[18][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[18][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[19][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[19][1];
-            break;
-          }
-          if (ymd === mm.opt.assets.chartDateLineYmdMsg[20][0]) {
-            s_suf = mm.opt.assets.chartDateLineYmdMsg[20][1];
-            break;
-          }
-          break;
-      }
-      let date_str = typeof (d.key) === "object" ? moment(d.key).format('YYYY/M/D(ddd)') : d.key;
-      if (!is_bar) {
-        return date_str + '\n週間移動平均: ' + php_number_format(d.value) + '名';
-      }
-
-      let flt = mm.chartName.filters();
-      if (flt.length > 0) {
-        let s = ''
-        let nmcnt = d.value.pre[mm.chartDate2Mode];
-        let total = 0;
-        for (let f of flt) {
-          s += nmcnt[f] ? (f + ': ' + php_number_format(nmcnt[f]) + '名\n') : '';
-          total += nmcnt[f];
-        }
-        return date_str + '\n────────\n' + s + (flt.length > 1 ? '────────\n計: ' + php_number_format(total) + '名' : '') + '\n' + s_suf;
-        // }else if(flt.length==0){
-        //     return date_str+'\n:'+d.value.total+'名 (全国)'+'\n'+s;
-      } else {
-        return date_str + '\n────────\n' +
-          '全国 計: ' + (d.value.all[mm.chartDate2Mode] === 0 ? '' : php_number_format(d.value.all[mm.chartDate2Mode]) + '名\n') + s_suf;
-      }
-    })
-    .on('renderlet', function (chart, filter) {
-    })
+    .title(v => mm.util.stackedTitle(v, valueFormat, mm.opt.common.unit))
     .on('pretransition', mm.onChartDatePretransition)
-    .addFilterHandler(mm.addFilterHandler)
-    .on('preRedraw', function (chart) {
-      //フィルタを追加選択(CTRL+)した時、chartDateのフィルタには追加されない(bug?)ので、ここでcompositeのフィルタをコピー
-      mm.chartDateLegendUpdate2();
-      mm.chartDate2.filterAll().filter([mm.composite2.filters()]);
-    })
-    .on('filtered', function (chart, v) {
-      mm.showFilterUi('#panel_date', chart, (f) => moment(f).format('YYYY/M/D(ddd)'));
-      mm.onChartFiltered(chart, v);
-    })
     .compose([mm.chartDate2, mm.chartLine2])
   ;
   mm.composite2.xAxis().ticks(7).tickFormat(function (s) {
@@ -6089,7 +5952,6 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     return mm.group_reduce.base(d);
   });
   const gpDateStk = dimDate.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
-  //.order(function(d) {return d.total;});
 
   mm.composite2 = new dc.CompositeChart("#chart_date2", "chartGroup");
 
@@ -6098,36 +5960,22 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   mm.chartDate2
     //.centerBar(false) BarChart_method
     .renderArea(true)
-    // .curve(d3.curveLinear)
     .curve(d3.curveBasis)
-    // .curve(d3.curveCardinal)
     // .renderDataPoints(true)
     .transitionDuration(750)
     .dimension(dimDate)
     .hidableStacks(false) // stackNameLegend click でタックを非表示または表示
     .yAxisPadding('12%')
-    //.useRightYAxis(IS_SP) 					// .elasticX(true)
+    // .useRightYAxis(IS_SP)
+    // .elasticX(true)
     // .xAxisPadding(2)
     // .xAxisPaddingUnit()
-    .renderLabel(true)
-    .label(function (d, i) {
-      let ymd = moment(d.x).format('YYYYMMDD');
-      return (d.data.value.total === mm.dateCntMax //最大
-        || ymd === mm.dateCntTo //最新日付
-        //  ||ymd===moment(mm.dateCntTo).subtract(1, 'days').format('YYYYMMDD') //最新日付-1days
-      ) ? (d.data.value.total === 0 ? '' : php_number_format(d.data.value.total)) : '';
-      //return mm.gpDateYMMax.value===d.data.value.total ? d.data.value.total : '';
-    })
-    // .title(function(d) {//mouseホバーしたときの表示される文字
-    //     return moment(d.key).format('YYYY/MM/DD')+' : '+d.value+'名';
+    // .renderLabel(true)
+    // .label((d) => {
+    //   return d.data.value.total === 0 ? '' : php_number_format(d.data.value.total);
     // })
-    //.y(d3.scaleLinear().domain([0, 50]))
-    // .gap(isSp ? -2 : -2) // BarChart_method
-    .on('filtered', function (chart, v) {
-      //mm.showFilterUi('#panel_date',chart,(f)=>moment(f).format('M/D(ddd)'));
-      mm.onChartFiltered(chart, v);
-    })
   ;
+
   mm.chartDate2.yAxis().tickFormat(d3.format(".2s")); //ticks(5); //tickFormat(d3.format("s"));
   mm.chart.stackOn(mm.chartDate2, stackOn);
 
@@ -6138,12 +5986,10 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     } else {
       mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
     }
-    //mm.CHART_DATE_STACK_GRP_1_IDX[CHART_DATE_STACK_GRP[STACK_CND][no]] = no;
   }
 
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_PL1]
   for (let no = 0; no < mm.chartStack[STACK_PL1].length; no++) {
-    // mm.dateStackPl1Names[no] = '(選択' + (no + 1) + ')';
     mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
   }
 
@@ -6155,124 +6001,20 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   mm.chartDate2.ordinalColors(mm.config.cDate.colors);
 
   const margins = _.merge({}, mm.config.defaultMargins, mm.opt.chartDate?.margins || {});
-  const legend = mm.chart.createGridLegend(margins.left === mm.config.defaultMargins.left ? 45 : 0);
-  const valueFormat = (f) => moment(f).format('YYYY/M/D(ddd)');
-
   mm.composite2
     .width(chartDateW)
     .height(200)
     .useViewBoxResizing(mm.config.panelResizable)
     .margins(margins)
-    .legend(legend)
     .x(mm.domainDate ? d3.scaleTime().domain(mm.domainDate) : d3.scaleTime())
     .elasticX(false)
-    //.round(d3.timeDay.round)
     .mouseZoomable(false)
     .xUnits(d3.timeDay)
     .renderHorizontalGridLines(true)
     .renderVerticalGridLines(true)
     .brushOn(false)
     .elasticY(mm.config.cDate.is_elasticY) //yAxisの高さを動的に変化させる
-    .title(v => mm.util.stackedTitle(v, valueFormat, mm.opt.common.unit))
-    .on('renderlet', function (chart, filter) {
-    })
-    .on('pretransition', mm.onChartDatePretransition)
-    .addFilterHandler(mm.addFilterHandler)
-    .on('preRedraw', function (chart) {
-      mm.chartDate2.filterAll().filter([mm.composite.filters()]);
-    })
-    .on('filtered', function (chart, v) {
-      mm.showFilterUi('#panel_date', chart, valueFormat);
-      mm.onChartFiltered(chart, v);
-      mm.chartScroll('#div_name');
-      mm.chartScroll('#div_city');
-      mm.onChangeURL('date', chart)
-    })
-    .compose([mm.chartDate2])
-  ;
-  const nTick = gg.dt === DT_COVID ? 7 : (gpDate.all().length < 3 ? 2 : 14);
-  mm.composite2.xAxis().ticks(nTick).tickFormat(function (s) {
-    // データのレンジで ミクロ/マクロ を切り替える
-    const format = mm.opt.chartDate.format ?? (mm.data.length < 3000 ? 'M/Dddd' : 'YYYY/MM');
-    return moment(s).format(format);
-  });
-  mm.composite2.yAxis().tickFormat(d3.format(".2s")).ticks(5); //.tickFormat(d3.format("d"));
-}
-
-/**
- * CHART chartDate2 日付  line seriesChart Init
- */
-const initChartDate2TypeSeries = (chartDateW) => {
-  mm.composite2 = new dc.SeriesChart("#chart_date2", "chartGroup");
-
-  const dimDate = mm.ndx.dimension(function (d) {
-    return [d3.timeDay(new Date(d[D_YMD])), d[D_CND], d[D_PL1], d[D_AGE]];
-  });
-  const gpDate = dimDate.group().reduceSum(function (d) {
-    return mm.group_reduce.baseZero(d);
-  });
-
-  const margins = _.merge({}, mm.config.defaultMargins, mm.opt.chartDate?.margins || {});
-  const legend = mm.chart.createGridLegend(margins.left === mm.config.defaultMargins.left ? 45 : 0);
-
-  mm.composite2
-    .width(chartDateW)
-    .height(200)
-    .useViewBoxResizing(mm.config.panelResizable)
-    .margins(margins)
-    .legend(legend)
-    .chart(function (c) {
-      return new dc.LineChart(c)
-        // .curve(d3.curveLinear)
-        .curve(d3.curveBasis)
-        // .curve(d3.curveCardinal)
-        .renderArea(true)
-        .renderLabel(true)
-        .renderDataPoints(true)
-        // .elasticX(false)
-        // .elasticY(true)
-        ;
-    })
-    .x(mm.domainDate ? d3.scaleTime().domain(mm.domainDate) : d3.scaleTime())
-    .brushOn(false)
-    .elasticY(true)
-    .dimension(dimDate)
-    .group(gpDate)
-    // .mouseZoomable(true)
-    .seriesAccessor(function (d) {
-      // console.log(d);
-      let ret = ' ';
-      switch (pnl.date.stack_type) {
-        default:
-          ret = ' ';
-          break;
-        case STACK_CND:
-        case STACK_PL1:
-          ret = d.key[pnl.date.stack_type + 1];
-          break;
-        case STACK_AGE:
-          //CHART_DATE_STACK_GRP[STACK_AGE]
-          ret = mm.opt.chartAge.unit ? mm.opt.chartAge.unit[d.key[pnl.date.stack_type + 1]] : d.key[pnl.date.stack_type + 1];
-          break;
-
-      }
-      // console.log(pnl.date.stack_type,ret);
-      return ret;
-    })
-    .keyAccessor(function (d) {
-      // return +d.key[1];
-      return d.key[0];
-    })
-    .valueAccessor(function (d) {
-      //return +d.value - 500;application/views/covid19.php:5741
-      return d.value;
-    })
-    .title(function (d) {
-      return d.value;
-    })
-    .renderHorizontalGridLines(true)
-    .renderVerticalGridLines(true)
-    .ordinalColors(mm.config.cDate.colors);
+    .compose([mm.chartDate2]);
 
   const nTick = gg.dt === DT_COVID ? 7 : (gpDate.all().length < 3 ? 2 : 14);
   mm.composite2.xAxis().ticks(nTick).tickFormat(function (s) {
