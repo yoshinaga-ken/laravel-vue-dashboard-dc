@@ -82,7 +82,7 @@
         <!-- DC_PANEL ToolbarShow -->
         <div id="toolbar_win_toggle" class="ui-button ui-corner-all ui-widget">
           <label title="ウインドウの表示・非表示を切り替えます">
-            <input type="checkbox" v-model="pnl.common.toolbar.is_show"/>表示：
+            <input type="checkbox" v-model="pnl.common.toolbar.is_show"/> 表示：
           </label>
           <span v-show="pnl.common.toolbar.is_show">
 
@@ -120,37 +120,61 @@
 
             <span v-if="gg.dt !== DT_COVID">&nbsp;&nbsp;</span>
 
-            <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します"><input
-              id="ch_pnl_map" type="checkbox" v-model="pnl.map.is_show"><i class="fa fa-map"></i>&nbsp;</label>
-            <label v-if="!pnl.name.isHidden" for="ch_pnl_name"><input id="ch_pnl_name" type="checkbox"
-                                                                      v-model="pnl.name.is_show"><span
-              v-html="pnl.name.title"></span>&nbsp;</label>
-            <label v-if="!pnl.city.isHidden" for="ch_pnl_city"><input id="ch_pnl_city" type="checkbox"
-                                                                      v-model="pnl.city.is_show"><span
-              v-html="pnl.city.title"></span>&nbsp;</label>
-            <label v-if="!pnl.date.isHidden" for="ch_pnl_date"><input id="ch_pnl_date" type="checkbox"
-                                                                      v-model="pnl.date.is_show"><span
-              v-html="pnl.date.title"></span>&nbsp;</label>
-            <label v-if="!pnl.year.isHidden" for="ch_pnl_year"> <input id="ch_pnl_year" type="checkbox"
-                                                                       v-model="pnl.year.is_show"><span
-              v-html="pnl.year.title"></span>&nbsp;</label>
-            <label v-if="!pnl.season.isHidden" for="ch_pnl_season"> <input id="ch_pnl_season" type="checkbox"
-                                                                           v-model="pnl.season.is_show"><span
-              v-html="pnl.season.title"></span>&nbsp;</label>
-            <label v-if="!pnl.week.isHidden" for="ch_pnl_week"><input id="ch_pnl_week" type="checkbox"
-                                                                      v-model="pnl.week.is_show">曜日&nbsp;</label>
-            <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex"> <input id="ch_pnl_sex" type="checkbox"
-                                                                     v-model="pnl.sex.is_show"><span
-              v-html="pnl.sex.title"></span>&nbsp;</label>
-            <label v-if="!pnl.age.isHidden" for="ch_pnl_age"> <input id="ch_pnl_age" type="checkbox"
-                                                                     v-model="pnl.age.is_show"><span
-              v-html="pnl.age.title"></span>&nbsp;</label>
-            <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond"><input id="ch_pnl_cond" type="checkbox"
-                                                                      v-model="pnl.cond.is_show"><span
-              v-html="pnl.cond.title"></span>&nbsp;</label>
-            <label v-if="!pnl.job.isHidden" for="ch_pnl_job"> <input id="ch_pnl_job" type="checkbox"
-                                                                     v-model="pnl.job.is_show"><span
-              v-html="pnl.job.title"></span>&nbsp;</label>
+            <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します">
+              <input id="ch_pnl_map" type="checkbox" v-model="pnl.map.is_show">
+              <i class="fa fa-map"></i>&nbsp;
+            </label>
+
+            <label v-if="!pnl.name.isHidden" for="ch_pnl_name">
+              <input id="ch_pnl_name" type="checkbox" v-model="pnl.name.is_show">
+              <span v-html="pnl.name.title"></span>&nbsp;
+            </label>
+
+            <label v-if="!pnl.city.isHidden" for="ch_pnl_city">
+            	<input id="ch_pnl_city" type="checkbox" v-model="pnl.city.is_show">
+            	<span v-html="pnl.city.title"></span>&nbsp;
+            </label>
+
+            <label v-if="!pnl.date.isHidden" for="ch_pnl_date">
+            	<input id="ch_pnl_date" type="checkbox" v-model="pnl.date.is_show">
+            	<span v-html="pnl.date.title"></span>&nbsp;
+            </label>
+
+            <label v-if="!pnl.year.isHidden" for="ch_pnl_year">
+            	<input id="ch_pnl_year" type="checkbox" v-model="pnl.year.is_show">
+            	<span v-html="pnl.year.title"></span>&nbsp;
+            </label>
+
+            <label v-if="!pnl.season.isHidden" for="ch_pnl_season">
+            	<input id="ch_pnl_season" type="checkbox" v-model="pnl.season.is_show">
+            	<span v-html="pnl.season.title"></span>&nbsp;
+            </label>
+
+            <label v-if="!pnl.week.isHidden" for="ch_pnl_week">
+              <input id="ch_pnl_week" type="checkbox" v-model="pnl.week.is_show">
+              <span v-html="pnl.week.title"></span>&nbsp;
+            </label>
+
+            <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex">
+            	<input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.is_show">
+            	<span v-html="pnl.sex.title"></span>&nbsp;
+            </label>
+
+            <label v-if="!pnl.age.isHidden" for="ch_pnl_age">
+            	<input id="ch_pnl_age" type="checkbox" v-model="pnl.age.is_show">
+            	<span v-html="pnl.age.title"></span>&nbsp;
+            </label>
+
+            <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond">
+            	<input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.is_show">
+            	<span v-html="pnl.cond.title"></span>&nbsp;
+            </label>
+
+            <label v-if="!pnl.job.isHidden" for="ch_pnl_job">
+            	<input id="ch_pnl_job" type="checkbox" v-model="pnl.job.is_show">
+            	<span v-html="pnl.job.title"></span>&nbsp;
+            </label>
+
 
             <template v-for="(item, i) in pnl.ex">
                 <template v-if="!item.isHidden">
@@ -165,6 +189,9 @@
                 <input id="ch_pnl_ana" type="checkbox" v-model="pnl.ana.is_show">
                 <i class="fa fa-eye"></i>比較分析
             </label>
+
+            <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.common.toolbar.is_show=0"></span>
+
           </span>
         </div>
 

@@ -18,6 +18,70 @@
   }
 }
 
+@layer components {
+  /* jQuery UIのhover/focusスタイルのみを無効化（通常時のスタイルは維持） */
+  /* ライトモード用 - blitzerテーマ */
+  #toolbar_win_toggle:hover,
+  #toolbar_win_toggle:focus,
+  #toolbar_win_toggle.ui-state-hover,
+  #toolbar_win_toggle.ui-widget-content.ui-state-hover,
+  #toolbar_win_toggle.ui-widget-header.ui-state-hover,
+  #toolbar_win_toggle.ui-state-focus,
+  #toolbar_win_toggle.ui-widget-content.ui-state-focus,
+  #toolbar_win_toggle.ui-widget-header.ui-state-focus,
+  #toolbar_win_toggle.ui-button:hover,
+  #toolbar_win_toggle.ui-button:focus {
+    border: 1px solid #d8dcdf !important;
+    background: #eeeeee url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABkEAAAAAAy19n/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0T//xSrMc0AAAAHdElNRQfgCQ4NIgnh6cm3AAAARElEQVQY02P4qc3EwDBw6D3Dj80MPySZ/rsw/Tdi+q/I9F+J6b8A038Bhk/CTP+VmP47M7w/y/DemOHduwF1JwMTAwMAu3UUf4F5n80AAAAldEVYdGRhdGU6Y3JlYXRlADIwMTYtMDktMTRUMTM6MzQ6MDktMDQ6MDD5M2UMAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE2LTA5LTE0VDEzOjM0OjA5LTA0OjAwiG7dsAAAAABJRU5ErkJggg==") 50% 50% repeat-x !important;
+    font-weight: bold !important;
+    color: #004276 !important;
+  }
+
+  /* ダークモード用 - dark-hiveテーマ */
+  .dark #toolbar_win_toggle:hover,
+  .dark #toolbar_win_toggle:focus,
+  .dark #toolbar_win_toggle.ui-state-hover,
+  .dark #toolbar_win_toggle.ui-widget-content.ui-state-hover,
+  .dark #toolbar_win_toggle.ui-widget-header.ui-state-hover,
+  .dark #toolbar_win_toggle.ui-state-focus,
+  .dark #toolbar_win_toggle.ui-widget-content.ui-state-focus,
+  .dark #toolbar_win_toggle.ui-widget-header.ui-state-focus,
+  .dark #toolbar_win_toggle.ui-button:hover,
+  .dark #toolbar_win_toggle.ui-button:focus {
+    border: 1px solid #444444 !important;
+    background: #222222 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABkEAAAAAAy19n/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0T//xSrMc0AAAAHdElNRQfgCQ4NIgnh6cm3AAAAXklEQVQY02MI2MnEwEAXtInB7xnT/yoG71tM/3WY/t5n+neP6d89pn8TmP5OYPo3gcHyMdO/CQymzEx/nZn+3WP6O4Hp332mfzpM/+4xqIkz/dNlUGZh+i9GL9diQQAk1CDL O9W3MAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxNi0wOS0xNFQxMzozNDowOS0wNDowMPkzZQwAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTYtMDktMTRUMTM6MzQ6MDktMDQ6MDCIbt2wAAAAAElFTkSuQmCC") 50% 50% repeat-x !important;
+    font-weight: normal !important;
+    color: #eeeeee !important;
+  }
+
+  /* toolbar_win_toggle内のlabel要素にjQuery UIボタンのhover/activeスタイルを適用 */
+  /* ライトモード用 - blitzerテーマ */
+  #toolbar_win_toggle label:hover,
+  #toolbar_win_toggle label:active,
+  #toolbar_win_toggle label:focus {
+    border: 1px solid #cdd5da !important;
+    border-radius: 6px !important;
+    padding: 4px 0 !important;
+    background: #f6f6f6 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABkEAAAAAAy19n/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0T//xSrMc0AAAAHdElNRQfgCQ4NIgnh6cm3AAAARElEQVQY02P4k8TEwDBw6DvDHyWG3xeZGOYw/GZg+t/F8EuE4edUhp9iDD8WMPzQYvh+nIlhKcN3KYZv3wbUnQxMDAwADqYU1YFrf5wAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTYtMDktMTRUMTM6MzQ6MDktMDQ6MDD5M2UMAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE2LTA5LTE0VDEzOjM0OjA5LTA0OjAwiG7dsAAAAABJRU5ErkJggg==") 50% 50% repeat-x !important;
+    font-weight: bold !important;
+    color: #111111 !important;
+    cursor: pointer !important;
+  }
+
+  /* ダークモード用 - dark-hiveテーマ */
+  .dark #toolbar_win_toggle label:hover,
+  .dark #toolbar_win_toggle label:active,
+  .dark #toolbar_win_toggle label:focus {
+    border: 1px solid #0b93d5 !important;
+    border-radius: 6px !important;
+    padding: 4px 0 !important;
+    background: #003147 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABkEAIAAACY3hF0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0T///////8JWPfcAAAAB3RJTUUH4AkODSIJ4enJtwAAAJVJREFUKM/lkLENgmAUhF+O2Flj+5M4ARVYS/FLT+UyUjkDaMDe0p4ewwxu8O4siDqCJlZfvuLukrP8Uq73d5iZmf0NTrraDYxqNEBRrQYwstGAJqpYgx0zbuE9gwqwY2ABLzkxBXecmM62gs/G0ie9zRc8+gh2zPTJzS1MWKmG9wosoMj2NXsAz3xoCYFltvn2Sz+OJ+TwZbdoCygPAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE2LTA5LTE0VDEzOjM0OjA5LTA0OjAw+TNlDAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNi0wOS0xNFQxMzozNDowOS0wNDowMIhu3bAAAAAASUVORK5CYII=") 50% 50% repeat-x !important;
+    font-weight: normal !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+  }
+}
+
 [x-cloak] {
   display: none;
 }
