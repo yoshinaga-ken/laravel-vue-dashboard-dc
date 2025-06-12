@@ -36,7 +36,7 @@ const props = defineProps({
   },
   chartGroup: {
     type: String,
-    default: 'chartGroup'
+    default: 'show'
   },
   innerRadius: {
     type: Number,
@@ -412,6 +412,13 @@ watch(filters, (newFilters, oldFilters) => {
     isProgrammaticUpdate = false;
   }
 }, { deep: true });
+
+// chartGroupプロパティの変更を監視
+watch(() => props.chartGroup, (newChartGroup, oldChartGroup) => {
+  if (chart && newChartGroup !== oldChartGroup) {
+    chart.chartGroup(newChartGroup);
+  }
+}, { immediate: false });
 
 // マウント時の初期化
 onMounted(() => {
