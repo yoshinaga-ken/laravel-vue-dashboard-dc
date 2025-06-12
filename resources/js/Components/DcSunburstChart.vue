@@ -36,7 +36,7 @@ const props = defineProps({
   },
   chartGroup: {
     type: String,
-    default: 'chartGroup'
+    default: 'show'
   },
   innerRadius: {
     type: Number,

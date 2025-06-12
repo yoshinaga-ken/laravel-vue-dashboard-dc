@@ -82,16 +82,16 @@
         <!-- DC_PANEL ToolbarShow -->
         <div id="toolbar_win_toggle" class="ui-button ui-corner-all ui-widget">
           <label title="ウインドウの表示・非表示を切り替えます">
-            <input type="checkbox" v-model="pnl.common.toolbar.is_show"/> 表示：
+            <input type="checkbox" v-model="pnl.common.toolbar.isShow"/> 表示：
           </label>
-          <span v-show="pnl.common.toolbar.is_show">
+          <span v-show="pnl.common.toolbar.isShow">
 
             <template v-if="!pnl.gmap.isHidden">
               <label for="ch_pnl_gmap" title="GoogleMapウインドウを表示します">
-                  <input id="ch_pnl_gmap" type="checkbox" v-model="pnl.gmap.is_show">
+                  <input id="ch_pnl_gmap" type="checkbox" v-model="pnl.gmap.isShow">
                   <img src="/img/google-map-48.png" width="20" style="margin-top:-6px;">
               </label>
-              <span v-if="!isSp && pnl.gmap.is_show" class="ui-icon sp_icon"
+              <span v-if="!isSp && pnl.gmap.isShow" class="ui-icon sp_icon"
                     :class="pnl.gmap.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
                     @click="onClickPanelMaximize('chart_gmap')"></span>
               &nbsp;
@@ -99,10 +99,10 @@
 
             <template v-if="!pnl.sview.isHidden">
               <label title="ストリートビューウインドウを表示します" for="ch_pnl_sview">
-                  <input id="ch_pnl_sview" type="checkbox" v-model="pnl.sview.is_show">
+                  <input id="ch_pnl_sview" type="checkbox" v-model="pnl.sview.isShow">
                   <img src="/img/icons8-street-view-60.png" width="22" style="margin-top:-10px;">
               </label>
-              <span v-if="!isSp && pnl.sview.is_show" class="ui-icon sp_icon"
+              <span v-if="!isSp && pnl.sview.isShow" class="ui-icon sp_icon"
                     :class="pnl.sview.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
                     @click="onClickPanelMaximize('chart_sview')"></span>
               &nbsp;
@@ -110,10 +110,10 @@
 
             <template v-if="!pnl.tube.isHidden">
               <label v-if="gg.dt !== DT_COVID" for="ch_pnl_tube" title="YOUTUBE動画再生ウインドウを表示します">
-                  <input id="ch_pnl_tube" type="checkbox" v-model="pnl.tube.is_show">
+                  <input id="ch_pnl_tube" type="checkbox" v-model="pnl.tube.isShow">
                   <img src="/img/yutube.gif" width="18" style="margin-left:3px;margin-top:-8px;">
               </label>
-              <span v-if="!isSp && pnl.tube.is_show" class="ui-icon sp_icon"
+              <span v-if="!isSp && pnl.tube.isShow" class="ui-icon sp_icon"
                     :class="pnl.tube.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
                     @click="onClickPanelMaximize('chart_tube')"></span>
             </template>
@@ -121,76 +121,76 @@
             <span v-if="gg.dt !== DT_COVID">&nbsp;&nbsp;</span>
 
             <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します">
-              <input id="ch_pnl_map" type="checkbox" v-model="pnl.map.is_show">
+              <input id="ch_pnl_map" type="checkbox" v-model="pnl.map.isShow">
               <i class="fa fa-map"></i>&nbsp;
             </label>
 
             <label v-if="!pnl.name.isHidden" for="ch_pnl_name">
-              <input id="ch_pnl_name" type="checkbox" v-model="pnl.name.is_show">
+              <input id="ch_pnl_name" type="checkbox" v-model="pnl.name.isShow">
               <span v-html="pnl.name.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.city.isHidden" for="ch_pnl_city">
-            	<input id="ch_pnl_city" type="checkbox" v-model="pnl.city.is_show">
+            	<input id="ch_pnl_city" type="checkbox" v-model="pnl.city.isShow">
             	<span v-html="pnl.city.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.date.isHidden" for="ch_pnl_date">
-            	<input id="ch_pnl_date" type="checkbox" v-model="pnl.date.is_show">
+            	<input id="ch_pnl_date" type="checkbox" v-model="pnl.date.isShow">
             	<span v-html="pnl.date.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.year.isHidden" for="ch_pnl_year">
-            	<input id="ch_pnl_year" type="checkbox" v-model="pnl.year.is_show">
+            	<input id="ch_pnl_year" type="checkbox" v-model="pnl.year.isShow">
             	<span v-html="pnl.year.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.season.isHidden" for="ch_pnl_season">
-            	<input id="ch_pnl_season" type="checkbox" v-model="pnl.season.is_show">
+            	<input id="ch_pnl_season" type="checkbox" v-model="pnl.season.isShow">
             	<span v-html="pnl.season.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.week.isHidden" for="ch_pnl_week">
-              <input id="ch_pnl_week" type="checkbox" v-model="pnl.week.is_show">
+              <input id="ch_pnl_week" type="checkbox" v-model="pnl.week.isShow">
               <span v-html="pnl.week.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex">
-            	<input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.is_show">
+            	<input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.isShow">
             	<span v-html="pnl.sex.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.age.isHidden" for="ch_pnl_age">
-            	<input id="ch_pnl_age" type="checkbox" v-model="pnl.age.is_show">
+            	<input id="ch_pnl_age" type="checkbox" v-model="pnl.age.isShow">
             	<span v-html="pnl.age.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond">
-            	<input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.is_show">
+            	<input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.isShow">
             	<span v-html="pnl.cond.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.job.isHidden" for="ch_pnl_job">
-            	<input id="ch_pnl_job" type="checkbox" v-model="pnl.job.is_show">
+            	<input id="ch_pnl_job" type="checkbox" v-model="pnl.job.isShow">
             	<span v-html="pnl.job.title"></span>&nbsp;
             </label>
 
 
             <template v-for="(item, i) in pnl.ex">
                 <template v-if="!item.isHidden">
-                    <label> <input type="checkbox" v-model="item.is_show"><span
+                    <label> <input type="checkbox" v-model="item.isShow"><span
                       v-html="item.title"></span>&nbsp;</label>
                 </template>
             </template>
 
             <label v-if="!pnl.detail.isHidden" for="ch_pnl_detail"><input id="ch_pnl_detail" type="checkbox"
-                                                                          v-model="pnl.detail.is_show">詳細&nbsp;</label>
+                                                                          v-model="pnl.detail.isShow">詳細&nbsp;</label>
             <label for="ch_pnl_ana" v-show="gg.dt===DT_COVID && pnl.ana.is_chk_show">
-                <input id="ch_pnl_ana" type="checkbox" v-model="pnl.ana.is_show">
+                <input id="ch_pnl_ana" type="checkbox" v-model="pnl.ana.isShow">
                 <i class="fa fa-eye"></i>比較分析
             </label>
 
-            <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.common.toolbar.is_show=0"></span>
+            <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.common.toolbar.isShow=0"></span>
 
           </span>
         </div>
@@ -198,7 +198,7 @@
         <div id="panels">
           <!-- DC_PANEL GoogleMap -->
           <div id="chart_gmap" class="bg-theme-col2 dc_panel drag" :style="pnl.gmap.style"
-               v-show="pnl.gmap.is_show">
+               v-show="pnl.gmap.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.gmap.title"></span>
               &nbsp;&nbsp;<label title="ズームアウトすると 3D で地球を見ることができます"><input
@@ -206,13 +206,13 @@
               type="checkbox"
               v-model="pnl.gmap.is3">地球表示</label>
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.gmap.is_show=0"></span>
+                    @click="pnl.gmap.isShow=0"></span>
               <span v-if="!isSp" class="ui-icon sp_icon btn_winsize"
                     :class="pnl.gmap.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
                     @click="onClickPanelMaximize('chart_gmap')"></span>
             </div>
             <GoogleMap
-              v-if="pnl.gmap.is_show || pnl.sview.is_show"
+              v-if="pnl.gmap.isShow || pnl.sview.isShow"
               :layer-prefectures="pnl.gmap.chartGMap.layer"
               :focus-prefectures="pnl.gmap.chartGMap.focus"
               :center="pnl.gmap.chartGMap.center"
@@ -226,11 +226,11 @@
 
           <!-- DC_PANEL StreetView -->
           <div id="chart_sview" class="bg-theme-col2 dc_panel drag" :style="pnl.sview.style"
-               v-show="pnl.sview.is_show">
+               v-show="pnl.sview.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.sview.title"></span>
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.sview.is_show=0"></span>
+                    @click="pnl.sview.isShow=0"></span>
               <span v-if="!isSp" class="ui-icon sp_icon btn_winsize"
                     :class="pnl.sview.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
                     @click="onClickPanelMaximize('chart_sview')"></span>
@@ -240,9 +240,9 @@
 
           <!-- DC_PANEL VectorMap -->
           <div id="chart_map" class="bg-theme-col2 dc_panel drag" :style="pnl.map.style"
-               v-show="pnl.map.is_show">
+               v-show="pnl.map.isShow">
             <div class="chart-title-wrap">
-              <ul class="chart-title text-theme-col2" v-show="pnl.map.tabs.is_show">
+              <ul class="chart-title text-theme-col2" v-show="pnl.map.tabs.isShow">
                 <!--          <li><a href="#tabs_w" title="世界の感染状況"><i class="fa fa-globe"></i>世界</a></li>-->
                 <li><a href="#tabs_c" title="感染者数 @日本">感染</a></li>
                 <li><a href="#tabs_p"
@@ -252,7 +252,7 @@
                 </li>
                 <li><a href="#tabs_d" title="死亡者数 - 日本">死亡</a></li>
                 <li><a href="#tabs_b" title="対策病床数 - 日本">病床</a></li>
-                <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.map.is_show=0"
+                <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.map.isShow=0"
                       style="top: 8px;"></span>
               </ul>
               <div id="tabs_w"></div>
@@ -261,11 +261,11 @@
               <div id="tabs_pc"></div>
               <div id="tabs_d"></div>
               <div id="tabs_b"></div>
-              <span v-show="!pnl.map.tabs.is_show" class="chart-title text-theme-col2" v-html="pnl.map.title"></span>
-              <span v-show="!pnl.map.tabs.is_show" class="chart-sub-title text-theme-col2"
+              <span v-show="!pnl.map.tabs.isShow" class="chart-title text-theme-col2" v-html="pnl.map.title"></span>
+              <span v-show="!pnl.map.tabs.isShow" class="chart-sub-title text-theme-col2"
                     v-html="pnl.map.subTitle"></span>
-              <span v-show="!pnl.map.tabs.is_show" class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.map.is_show=0"></span>
+              <span v-show="!pnl.map.tabs.isShow" class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                    @click="pnl.map.isShow=0"></span>
             </div>
 
             <div id="japan-map"></div>
@@ -273,7 +273,7 @@
 
           <!-- DC_PANEL YouTube -->
           <div v-if="gg.dt !== DT_COVID" id="chart_tube" class="bg-theme-col2 dc_panel drag"
-               :style="pnl.tube.style" v-show="pnl.tube.is_show">
+               :style="pnl.tube.style" v-show="pnl.tube.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.tube.title"></span>
               &nbsp;
@@ -298,7 +298,7 @@
               &nbsp;<label title="フィルタされたタイミングで動画を自動で切り替えます"><input
               type="checkbox" v-model="pnl.tube.vidAutoChange">自動</label>
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.tube.is_show=0"></span>
+                    @click="pnl.tube.isShow=0"></span>
               <span v-if="!isSp" class="ui-icon sp_icon btn_winsize"
                     :class="pnl.tube.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
                     @click="onClickPanelMaximize('chart_tube')"></span>
@@ -312,7 +312,7 @@
           </div>
 
           <!-- DC_PANEL Name -->
-          <div id="panel_name" class="bg-theme-col2 dc_panel drag" :style="pnl.name.style" v-show="pnl.name.is_show">
+          <div id="panel_name" class="bg-theme-col2 dc_panel drag" :style="pnl.name.style" v-show="pnl.name.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.name.title"></span>
 
@@ -341,7 +341,7 @@
               </div>
 
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.name.is_show=0"></span>
+                    @click="pnl.name.isShow=0"></span>
             </div>
             <div id="div_name" class="scrollbar-thin">
               <div id="chart_name"></div>
@@ -350,7 +350,7 @@
           </div>
 
           <!-- DC_PANEL City -->
-          <div id="panel_city" class="bg-theme-col2 dc_panel drag" :style="pnl.city.style" v-show="pnl.city.is_show">
+          <div id="panel_city" class="bg-theme-col2 dc_panel drag" :style="pnl.city.style" v-show="pnl.city.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.city.title"></span>
 
@@ -389,7 +389,7 @@
               </div>
 
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close inline-block"
-                    @click="pnl.city.is_show=0"></span>
+                    @click="pnl.city.isShow=0"></span>
 
             </div>
             <div id="div_city" class="scrollbar-thin">
@@ -399,7 +399,7 @@
           </div>
 
           <!-- DC_PANEL Date -->
-          <div id="panel_date" class="bg-theme-col2 dc_panel drag" :style="pnl.date.style" v-show="pnl.date.is_show">
+          <div id="panel_date" class="bg-theme-col2 dc_panel drag" :style="pnl.date.style" v-show="pnl.date.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
                     v-html="(pnl.date.title.indexOf('感染者数')===-1 ? '' : '<i class=\'fa fa-procedures\'>') + pnl.date.title">
@@ -433,9 +433,9 @@
               </label>
               &nbsp;&nbsp;
               <label v-if="pnl.date.chart2.type!==0" title="ライン形式のチャートも表示します">
-                <input type="checkbox" v-model="pnl.date.chart2.is_show">📈Line表示</label>
+                <input type="checkbox" v-model="pnl.date.chart2.isShow">📈Line表示</label>
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.date.is_show=0"></span>
+              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.date.isShow=0"></span>
 
               <div class="div_total">{{ pnl.common.unitPrefix }} 累計&nbsp;
                 <span class="div_total_cnt" v-text="pnl.date.cnt"></span> {{ pnl.common.unit }}
@@ -450,7 +450,7 @@
               <div id="chart_date"></div>
             </div>
 
-            <div v-show="pnl.date.chart2.is_show">
+            <div v-show="pnl.date.chart2.isShow">
               <span class="chart-title text-theme-col2" v-html="pnl.date.chart2.title"></span>
               <span class="chart-title2 text-theme-col2 " v-html="pnl.date.chart2.title2"></span>
               <div v-if="pnl.date.chart2.type === 0" class="div_total">累計&nbsp;<span
@@ -464,7 +464,7 @@
           </div>
 
           <!-- DC_PANEL Year -->
-          <div id="panel_year" class="bg-theme-col2 dc_panel drag panel_year" :style="pnl.year.style" v-show="pnl.year.is_show">
+          <div id="panel_year" class="bg-theme-col2 dc_panel drag panel_year" :style="pnl.year.style" v-show="pnl.year.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.year.title"></span>
 
@@ -484,7 +484,7 @@
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.year.is_show=0"></span>
+              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.year.isShow=0"></span>
             </div>
             <div>
               <div id="chart_year"></div>
@@ -494,7 +494,7 @@
 
           <!-- DC_PANEL Season -->
           <div id="panel_season" class="bg-theme-col2 dc_panel drag panel_season" :style="pnl.season.style"
-               v-show="pnl.season.is_show">
+               v-show="pnl.season.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
                     v-html="(pnl.season.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.season.title">
@@ -506,7 +506,7 @@
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.season.is_show=0"></span>
+              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.season.isShow=0"></span>
             </div>
             <div>
               <div id="chart_season"></div>
@@ -516,7 +516,7 @@
 
           <!-- DC_PANEL Week-->
           <div id="panel_week" class="bg-theme-col2 dc_panel drag panel_week" :style="pnl.week.style"
-               v-show="pnl.week.is_show">
+               v-show="pnl.week.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.week.title"></span>
 
@@ -526,7 +526,7 @@
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.week.is_show=0"></span>
+              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.week.isShow=0"></span>
             </div>
             <div>
               <div id="chart_week"></div>
@@ -535,7 +535,7 @@
           </div>
 
           <!-- DC_PANEL Sex-->
-          <div id="panel_sex" class="bg-theme-col2 dc_panel drag panel_sex" :style="pnl.sex.style" v-show="pnl.sex.is_show">
+          <div id="panel_sex" class="bg-theme-col2 dc_panel drag panel_sex" :style="pnl.sex.style" v-show="pnl.sex.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
                     v-html="(pnl.sex.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.sex.title"></span>
@@ -564,7 +564,7 @@
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.sex.is_show=0"></span>
+              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.sex.isShow=0"></span>
             </div>
             <div>
               <div id="chart_sex"></div>
@@ -573,7 +573,7 @@
           </div>
 
           <!-- DC_PANEL Age-->
-          <div id="panel_age" class="bg-theme-col2 dc_panel drag panel_age" :style="pnl.age.style" v-show="pnl.age.is_show">
+          <div id="panel_age" class="bg-theme-col2 dc_panel drag panel_age" :style="pnl.age.style" v-show="pnl.age.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.age.title"></span>&nbsp;
 
@@ -591,7 +591,7 @@
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.age.is_show=0"></span>
+              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.age.isShow=0"></span>
             </div>
             <div>
               <div id="chart_age"></div>
@@ -600,7 +600,7 @@
           </div>
 
           <!-- DC_PANEL Cond -->
-          <div id="panel_cond" class="bg-theme-col2 dc_panel drag panel_cond" :style="pnl.cond.style" v-show="pnl.cond.is_show">
+          <div id="panel_cond" class="bg-theme-col2 dc_panel drag panel_cond" :style="pnl.cond.style" v-show="pnl.cond.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
                     v-html="(pnl.cond.title.indexOf('状態')===-1 ? '' : '<i class=\'fa fa-medkit\'>') + pnl.cond.title"></span>
@@ -620,7 +620,7 @@
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">&nbsp;
 
               <span v-html="pnl.cond.info"></span>
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.cond.is_show=0"></span>
+              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.cond.isShow=0"></span>
             </div>
             <div>
               <div id="chart_cond"></div>
@@ -629,7 +629,7 @@
 
           <!-- DC_PANEL Job -->
           <div id="panel_job" class="scrollbar-thin bg-theme-col2 dc_panel drag panel_job" :style="pnl.job.style"
-               v-show="pnl.job.is_show">
+               v-show="pnl.job.isShow">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2"
                     v-html="(pnl.job.title.indexOf('職業')===-1 ? '' : '<i class=\'fa fa-id-card-o\'>') + pnl.job.title">
@@ -650,7 +650,7 @@
               </a>
               <input type="text" class="filter_txt tt_filter" readonly style="display: none;">&nbsp;
               <span v-html="pnl.job.info"></span>
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.job.is_show=0"></span>
+              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.job.isShow=0"></span>
             </div>
             <div>
               <div id="chart_job"></div>
@@ -661,7 +661,7 @@
           <!-- DC_PANEL Ex[] -->
           <div v-for="(item, i) in pnl.ex" :id="`panel_ex_${i}`" class="bg-theme-col2 dc_panel drag panel_ex"
                :style="item.style"
-               v-show="item.is_show">
+               v-show="item.isShow">
             <template v-if="!item.isDcSunburstChart">
               <div class="chart-title-wrap">
                 <span class="chart-title text-theme-col2" v-html="item.title"></span>
@@ -690,7 +690,7 @@
                 </a>
                 <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
 
-                <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="item.is_show=0"></span>
+                <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="item.isShow=0"></span>
               </div>
 
               <div>
@@ -719,7 +719,7 @@
                     <!-- FilterText -->
                     <template v-if="chart.filters().length > 0">
                       <a href="javascript:void(0);"
-                         @click="chart.filterAll();dc.redrawAll('chartGroup');">
+                         @click="chart.filterAll();dc.redrawAll(CGRP_SHOW);">
                         <span class="ui-icon ui-icon-closethick"></span>
                       </a>
                       <input type="text" readonly
@@ -730,7 +730,7 @@
 
                     <!-- Close button -->
                     <span class="ui-icon ui-icon-circle-close sp_icon btn_close ui-button ui-corner-all ui-widget"
-                          @click="item.is_show=0"></span>
+                          @click="item.isShow=0"></span>
                   </div>
                 </template>
               </DcSunburstChart>
@@ -740,11 +740,11 @@
 
           <!-- DC_PANEL Detail -->
           <div id="panel_detail" class="bg-theme-col2 dc_panel drag" :style="pnl.detail.style"
-               v-show="pnl.detail.is_show && pnl.detail.details.length>0">
+               v-show="pnl.detail.isShow && pnl.detail.details.length>0">
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.detail.title"></span>
               <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.detail.is_show=0"></span>
+                    @click="pnl.detail.isShow=0"></span>
             </div>
             <div>
               <div v-for="(html, id) in pnl.detail.details" class="detail text-theme-col emj" :key="id"
@@ -753,7 +753,7 @@
           </div>
 
           <!-- DC_PANEL Analyze -->
-          <DcPanelAnalyze v-if="!pnl.ana.isHidden" :options="pnl.ana" :is-sp="isSp" @close="pnl.ana.is_show=0"/>
+          <DcPanelAnalyze v-if="!pnl.ana.isHidden" :options="pnl.ana" :is-sp="isSp" @close="pnl.ana.isShow=0"/>
 
           <div class="clearfix"></div>
         </div>
@@ -914,6 +914,10 @@ const DI_AGE_LT10 = 0; // 0 :10歳未満(小学生、園児)
 //const DI_AGE_100 =11;// 100 :100歳
 const DI_AGE_NONE = 12;// -1:不明
 
+// chart group
+const CGRP_SHOW = 'show';
+const CGRP_HIDE = 'hide';
+
 const COL_NAME = colorbrewer.Set2[5];
 // 0        1         2     3       4      5     6       7     8     9      10     11   12
 // '幼児','10歳未満','10代','20代','30代','40代','50代','60代','70代','80代','90代','100代',DN_LABEL_DEF
@@ -931,7 +935,6 @@ const CHART_DATE2_STACK2_N = 5 + 1;
 const CHART_DATE2_TYPE_COVID = 0;
 const CHART_DATE2_TYPE_LINES = 1;
 const CHART_DATE2_TYPE_STACKS = 2;
-const CHART_DATE2_TYPE_SERIES = 3;
 const CHART_DATE2_TYPE_HIDE = -1;
 
 const COL_SEX = ["#B0B0B0", "#8dd3c7", "pink"];
@@ -952,6 +955,8 @@ const IMG_THUMBNAIL_W = 30;
 const TAGICON_DS = '💾';
 const TAGICON_CD = '💿';
 colorbrewer.Set2[8][7] = colorbrewer.Set1[8][6];//Set3[12][8]:gray-> light gold
+
+const URL_WIKI = 'https://ja.wikipedia.org/wiki';
 
 const props = defineProps({
   dataPath: {
@@ -1023,12 +1028,12 @@ const pnl = reactive({
       position: {}
     },
     toolbar: {
-      is_show: true,
+      isShow: true,
     }
   },
   gmap: {
     isHidden: false,
-    is_show: 0,
+    isShow: 0,
     is3D: false,
     title: '<img src="/img/google-map-48.png" width="20">Googleマップ',
     style: '',
@@ -1055,14 +1060,14 @@ const pnl = reactive({
   },
   sview: {
     isHidden: false,
-    is_show: 0,
+    isShow: 0,
     title: '<img src="/img/icons8-street-view-60.png" width="22" style="margin-top:-6px;">ストリートビュー',
     style: '',
     styleBak: null, // !=nullの時は最大化中
   },
   tube: {
     isHidden: false,
-    is_show: 0,
+    isShow: 0,
     title: '<img src="/img/yutube.gif" width="18">YouTube',
     style: '',
     styleBak: null, // !=nullの時は最大化中
@@ -1073,24 +1078,24 @@ const pnl = reactive({
   },
   map: {
     isHidden: false,
-    is_show: true,
+    isShow: true,
     title: '<i class="fa fa-map"></i>日本地図',
     subTitle: '',
     style: isSp ? 'width:100%;height:100%;' : 'width:460px;height:450px;',
     colors: [["1000人以上", "#8c0a00", 999], ["500人以上", "#ea5432", 499], ["100人以上", "#ff781d", 99], ["50人以上", "#ff9d57", 49], ["10人以上", "#ffceab", 9], ["1人以上", "#f5deb3", 0], ["0人", "#dadada", 0], ["選択中", "#ffffff", 0]],
     tabs: {
-      is_show: false,
+      isShow: false,
     }
   },
   name: {
     isHidden: false,
-    is_show: true,
+    isShow: true,
     title: '都道府県',
     style: '',
   },
   city: {
     isHidden: false,
-    is_show: true,
+    isShow: true,
     title: '市区町村',
     style: '',
     orderUI: false,
@@ -1098,7 +1103,7 @@ const pnl = reactive({
   },
   date: {
     isHidden: false,
-    is_show: true,
+    isShow: true,
     title: '感染者数',
     style: '',
     stack_type: -1, // for trigger watch
@@ -1112,7 +1117,7 @@ const pnl = reactive({
       from: null,
     },
     chart2: {
-      is_show: false,
+      isShow: false,
       type: 0, //0:患者・PCR・死亡 1:日付LineChart 2:日付seriesChart
       title: '<i class="fa fa-vials"></i>PCR検査人数</span>',
       title2: '',
@@ -1121,7 +1126,7 @@ const pnl = reactive({
   },
   sex: {
     isHidden: false,
-    is_show: true,
+    isShow: true,
     title: '性別',
     style: '',
     chartType: 'pie',
@@ -1129,32 +1134,32 @@ const pnl = reactive({
   },
   year: {
     isHidden: false,
-    is_show: false,
+    isShow: false,
     title: '年度',
     style: '',
   },
   season: {
     isHidden: false,
-    is_show: false,
+    isShow: false,
     title: '季節',
     style: '',
   },
   week: {
     isHidden: false,
-    is_show: false,
+    isShow: false,
     title: '曜日',
     style: '',
   },
   age: {
     isHidden: false,
-    is_show: true,
+    isShow: true,
     title: '年齢',
     style: '',
     elasticX: false,
   },
   cond: {
     isHidden: false,
-    is_show: true,
+    isShow: true,
     title: '状態',
     style: '',
     info: '',
@@ -1162,7 +1167,7 @@ const pnl = reactive({
   },
   job: {
     isHidden: false,
-    is_show: true,
+    isShow: true,
     title: '職業',
     style: '',
     info: '',
@@ -1171,7 +1176,7 @@ const pnl = reactive({
   ex: [
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx0',
       style: '',
       info: '',
@@ -1179,7 +1184,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx1',
       style: '',
       info: '',
@@ -1187,7 +1192,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx2',
       style: '',
       info: '',
@@ -1195,7 +1200,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx3',
       style: '',
       info: '',
@@ -1203,7 +1208,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx4',
       style: '',
       info: '',
@@ -1211,7 +1216,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx5',
       style: '',
       info: '',
@@ -1219,7 +1224,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx6',
       style: '',
       info: '',
@@ -1227,7 +1232,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx7',
       style: '',
       info: '',
@@ -1235,7 +1240,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx8',
       style: '',
       info: '',
@@ -1243,7 +1248,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx9',
       style: '',
       info: '',
@@ -1251,7 +1256,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx10',
       style: '',
       info: '',
@@ -1259,7 +1264,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx11',
       style: '',
       info: '',
@@ -1267,7 +1272,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx12',
       style: '',
       info: '',
@@ -1275,7 +1280,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx13',
       style: '',
       info: '',
@@ -1283,7 +1288,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx14',
       style: '',
       info: '',
@@ -1291,7 +1296,7 @@ const pnl = reactive({
     },
     {
       isHidden: true,
-      is_show: false,
+      isShow: false,
       title: 'chartEx15',
       style: '',
       info: '',
@@ -1300,7 +1305,7 @@ const pnl = reactive({
   ],
   detail: {
     isHidden: false,
-    is_show: true,
+    isShow: true,
     title: '詳細',
     style: '',
     maxDetails: 24,
@@ -1308,7 +1313,7 @@ const pnl = reactive({
   },
   ana: {
     isHidden: false,
-    is_show: false,
+    isShow: false,
     is_chk_show: 1,
     title: '<i class="fa fa-eye"></i>分析',
   }
@@ -1327,13 +1332,13 @@ const settingsName = () => {
 const getPanelSettings = () => {
   const o = {}; // pnlのlocalStorage 保存対象はここで指定
   const panelSettingCreate = (k, v) => {
-    const ret = {is_show: v.is_show};
+    const ret = {isShow: v.isShow};
     if (v.style) ret.style = v.style;
     if (v.vidAutoChange !== undefined) ret.vidAutoChange = v.vidAutoChange;
     if (v.styleBak !== null) ret.styleBak = v.styleBak;
-    if (v?.chart2?.is_show !== undefined) ret['chart2'] = {is_show: v.chart2.is_show};
+    if (v?.chart2?.isShow !== undefined) ret['chart2'] = {isShow: v.chart2.isShow};
     // common
-    if (v?.toolbar?.is_show !== undefined) ret['toolbar'] = {is_show: v.toolbar.is_show};
+    if (v?.toolbar?.isShow !== undefined) ret['toolbar'] = {isShow: v.toolbar.isShow};
     if (v?.datepicker?.position) {
       ret['datepicker'] = {position: v.datepicker.position};
     }
@@ -1385,7 +1390,7 @@ const onChangeChartDateChart2IsShow = (newVal) => {
       break;
   }
   mm.dateStackShow(STACK_CND);
-  dc.renderAll("chartGroup");
+  dc.renderAll(CGRP_SHOW);
 };
 
 const onChangeChartDateIsBrushOn = (newVal) => {
@@ -1444,7 +1449,7 @@ const settingsLoad = (settingsJson = null) => {
 const pnlShowsLoadStore = (isLoad) => {
   if (isLoad) {
     _.forEach(pnlShows.value, (v, k) => {
-      pnl[k].is_show = v.is_show;
+      pnl[k].isShow = v.isShow;
     });
     pnlShows.value = null;
   } else {
@@ -1565,38 +1570,38 @@ const setPanelXYWH = (id = null, absType = 0) => {
 
 const setupPanelWatch = () => {
   const handleChartVisibilityChange = (chart, newVal, oldVal) => {
-    chart?.chartGroup(newVal ? 'chartGroup' : 'hide');
+    chart?.chartGroup(newVal ? CGRP_SHOW : CGRP_HIDE);
     onChangeSettings(newVal, oldVal);
   };
   const showWatchOptions = {immediate: true};
 
-  watch(() => pnl.common.toolbar.is_show, onChangeSettings);
+  watch(() => pnl.common.toolbar.isShow, onChangeSettings);
   watch(() => pnl.common.datepicker.position, onChangeSettings);
-  watch(() => pnl.gmap.is_show, () => {
+  watch(() => pnl.gmap.isShow, () => {
     setBgWindowZIndex('chart_gmap');
     onChangeSettings();
   });
-  watch(() => pnl.sview.is_show, () => {
+  watch(() => pnl.sview.isShow, () => {
     setBgWindowZIndex('chart_sview');
     onChangeSettings();
   });
-  watch(() => pnl.tube.is_show, () => {
+  watch(() => pnl.tube.isShow, () => {
     setBgWindowZIndex('chart_tube');
     onChangeSettings()
   });
   watch(() => pnl.tube.vidAutoChange, onChangeSettings);
-  watch(() => pnl.map.is_show, is_show => {
-    if (is_show) {
+  watch(() => pnl.map.isShow, isShow => {
+    if (isShow) {
       _.delay(() => {
         drawJapanMap();
       }, 100)
     }
     onChangeSettings();
   });
-  watch(() => pnl.name.is_show, (newVal, oldVal) => {
+  watch(() => pnl.name.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.chartName, newVal, oldVal);
   }, showWatchOptions);
-  watch(() => pnl.city.is_show, (newVal, oldVal) => {
+  watch(() => pnl.city.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.chartCity, newVal, oldVal);
   }, showWatchOptions);
   watch(() => pnl.city.orderCnt, v => {
@@ -1633,7 +1638,7 @@ const setupPanelWatch = () => {
     let chartSexH = 158;
 
     // chartDate2
-    if (pnl.date.chart2.is_show) {
+    if (pnl.date.chart2.isShow) {
       mm.composite2 = null;
       mm.chartDate2 = null;
       onChangeChartDateChart2IsShow(true)
@@ -1673,34 +1678,34 @@ const setupPanelWatch = () => {
 
     mm.dateStackShow(STACK_CND);
 
-    dc.renderAll("chartGroup");
+    dc.renderAll(CGRP_SHOW);
 
     mm.composite.elasticY(compositeY);
     mm.chartAge.elasticY(chartAgeY);
     mm.chartCond.elasticY(chartCondY);
     mm.chartJob.elasticY(chartJobY);
   });
-  watch(() => pnl.date.is_show, (newVal, oldVal) => {
+  watch(() => pnl.date.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.composite, newVal, oldVal);
   }, showWatchOptions);
-  watch(() => pnl.date.chart2.is_show, (newVal, oldVal) => {
+  watch(() => pnl.date.chart2.isShow, (newVal, oldVal) => {
     onChangeChartDateChart2IsShow(newVal, oldVal);
-    mm?.composite2?.chartGroup(newVal ? 'chartGroup' : 'hide');
+    mm?.composite2?.chartGroup(newVal ? CGRP_SHOW : 'hide');
   }, showWatchOptions);
   watch(() => pnl.date.isBrushOn, onChangeChartDateIsBrushOn);
-  watch(() => pnl.year.is_show, (newVal, oldVal) => {
+  watch(() => pnl.year.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.chartYear, newVal, oldVal);
   }, showWatchOptions);
-  watch(() => pnl.season.is_show, (newVal, oldVal) => {
+  watch(() => pnl.season.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.chartSeason, newVal, oldVal);
   }, showWatchOptions);
-  watch(() => pnl.week.is_show, (newVal, oldVal) => {
+  watch(() => pnl.week.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.chartWeek, newVal, oldVal);
   }, showWatchOptions);
-  watch(() => pnl.sex.is_show, (newVal, oldVal) => {
+  watch(() => pnl.sex.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.chartSex, newVal, oldVal);
   }, showWatchOptions);
-  watch(() => pnl.age.is_show, (newVal, oldVal) => {
+  watch(() => pnl.age.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.chartAge, newVal, oldVal);
   }, showWatchOptions);
   watch(() => pnl.age.elasticX, v => {
@@ -1712,7 +1717,7 @@ const setupPanelWatch = () => {
     // URL parameter update
     mm.onChangeURL('name4_order', v ? 1 : 0);
   });
-  watch(() => pnl.cond.is_show, (newVal, oldVal) => {
+  watch(() => pnl.cond.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.chartCond, newVal, oldVal);
   }, showWatchOptions);
   watch(() => pnl.cond.elasticX, v => {
@@ -1724,7 +1729,7 @@ const setupPanelWatch = () => {
     // URL parameter update
     mm.onChangeURL('name5_order', v ? 1 : 0);
   });
-  watch(() => pnl.job.is_show, (newVal, oldVal) => {
+  watch(() => pnl.job.isShow, (newVal, oldVal) => {
     handleChartVisibilityChange(mm.chartJob, newVal, oldVal);
   }, showWatchOptions);
   watch(() => pnl.job.elasticX, v => {
@@ -1750,10 +1755,10 @@ const setupPanelWatch = () => {
 
 // pnl.ex配列の各要素のis_showを個別に監視
   for (let i = 0; i < pnl.ex.length; i++) {
-    watch(() => pnl.ex[i].is_show, (newVal, oldVal) => {
+    watch(() => pnl.ex[i].isShow, (newVal, oldVal) => {
       if (mm.chartEx && mm.chartEx[i]) {
         if (mm.chartEx[i]?.isDcSunburstChart) {
-          mm.chartEx[i].chartGroup = newVal ? 'chartGroup' : 'hide';
+          mm.chartEx[i].chartGroup = newVal ? CGRP_SHOW : 'hide';
           onChangeSettings(newVal, oldVal);
         } else {
           handleChartVisibilityChange(mm.chartEx[i], newVal, oldVal);
@@ -1762,8 +1767,8 @@ const setupPanelWatch = () => {
     }, showWatchOptions);
   }
 
-  watch(() => pnl.detail.is_show, onChangeSettings);
-  watch(() => pnl.ana.is_show, onChangeSettings);
+  watch(() => pnl.detail.isShow, onChangeSettings);
+  watch(() => pnl.ana.isShow, onChangeSettings);
   watch(() => pnl.date.stack_type, (v) => {
     mm.dateStackShow(v);
 
@@ -1822,7 +1827,7 @@ onMounted(async () => {
     if (gg.dt === DT_DEF && pnl.city.orderUI && !mm.opt.chartCity.orderYmd) {
       pnl.city.orderCnt = true;
     }
-    if (pnl.gmap.is_show || pnl.sview.is_show || pnl.map.is_show) {
+    if (pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow) {
       $('#panel_name,#panel_city').css('height', '500px');
     }
 
@@ -2046,8 +2051,6 @@ const mm = {
     'data': props.data,
     'filer_files': props.selectableData
   },
-  url_name: 'https://ja.wikipedia.org/wiki',
-
   chartGMap: {
     center: undefined,
     prefecture: '東京都',
@@ -2308,10 +2311,10 @@ const mm = {
         pnl[panelKey].isHidden = mm.opt[key].isHidden;
       }
       if (mm.opt[key]?.isShow) {
-        pnl[panelKey].is_show = mm.opt[key].isShow;
+        pnl[panelKey].isShow = mm.opt[key].isShow;
       }
       if (mm.opt[key].isHidden) {
-        pnl[panelKey].is_show = false;
+        pnl[panelKey].isShow = false;
       }
     });
 
@@ -2344,11 +2347,11 @@ const mm = {
     // chartYear,chartSeason,chartWeek
     if (mm.opt.chartDate.isHidden) {
       pnl.year.isHidden = true
-      pnl.year.is_show = false;
+      pnl.year.isShow = false;
       pnl.season.isHidden = true
-      pnl.season.is_show = false;
+      pnl.season.isShow = false;
       pnl.week.isHidden = true
-      pnl.week.is_show = false;
+      pnl.week.isShow = false;
     }
 
     // chartSex
@@ -2387,26 +2390,26 @@ const mm = {
       const panelKey = keys[1];
       if (mm.opt[key].isShow !== undefined) {
         if (pnl[panelKey] !== undefined) {
-          pnl[panelKey].is_show = mm.opt[key].isShow;
+          pnl[panelKey].isShow = mm.opt[key].isShow;
         }
       }
     });
 
     // chartGMap
-    if (gg.dt === DT_COVID) pnl.gmap.is_show = false;
+    if (gg.dt === DT_COVID) pnl.gmap.isShow = false;
 
     // chartMap
     if (mm.opt.chartMap.isShow === undefined) {
-      pnl.map.is_show = gg.dt === DT_COVID;
+      pnl.map.isShow = gg.dt === DT_COVID;
     }
 
     // chartDate2
-    pnl.date.chart2.is_show = mm.opt.chartDate2?.isShow ?? false;
+    pnl.date.chart2.isShow = mm.opt.chartDate2?.isShow ?? false;
 
     // chartEx
     pnl.ex.forEach((panel, index) => {
       if (panel.isHidden) return;
-      panel.is_show = mm.opt.chartEx[index]?.isShow ? true : false;
+      panel.isShow = mm.opt.chartEx[index]?.isShow ? true : false;
     });
   },
   // 呼順3:データオプション(mm.opt)系をpnlに反映 - データロード後
@@ -2613,7 +2616,7 @@ const mm = {
         for (let k = 0; k < pnl.ex.length; k++) {
           const ex = pnl.ex[k];
           if (ex.isHidden || ex.isDcSunburstChart) continue
-          if(!ex.is_show) continue;
+          if(!ex.isShow) continue;
           $(`#panel_ex_${k}`).width(mm.chartEx[k].width());
         }
       }
@@ -3779,7 +3782,7 @@ const mm = {
         pnl.date.isBrushOn = true;
       }
     }
-    if (!mm.is_trigger_search && isRedraw) dc.redrawAll("chartGroup");
+    if (!mm.is_trigger_search && isRedraw) dc.redrawAll(CGRP_SHOW);
   },
   onChangeURL: function (type, arg) {
     let url = '', filters;
@@ -4036,7 +4039,7 @@ const mm = {
     setPlayEvent: function () {
       $(document)
         .on('click', '.detail-tube-play', function (e) {
-          if (!pnl.tube.is_show) return;
+          if (!pnl.tube.isShow) return;
           e.preventDefault();
           pnl.tube.vid = $(this).attr('vid');
           //tubePlayer.playVideo(); // TODO:
@@ -4366,7 +4369,7 @@ const mm = {
 
         pnl.detail.details.push(ret);
       }
-      if (gg.dt !== DT_COVID && pnl.tube.is_show) {
+      if (gg.dt !== DT_COVID && pnl.tube.isShow) {
         if (pnl.tube.vidAutoChange) {
           // 1番目の再生ボタンを押す。btn_searchのdetail取得はリクエストがあるので遅延実行
           _.delay(() => $('#chart_tube .detail-tube-play:eq(0)').trigger('click'), 600);
@@ -4394,7 +4397,7 @@ const mm = {
         }
       }
 
-      if (!(pnl.detail.is_show || pnl.tube.is_show)) return;
+      if (!(pnl.detail.isShow || pnl.tube.isShow)) return;
 
       const filters = chart.filters();
       //詳細パネル
@@ -4415,7 +4418,7 @@ const mm = {
             let icon = '<img src="/img/japan/' + PREFECTURES_EN[name] + '.gif">';
             let per = parseInt(100 * n / p_max);
             let bar_style = "background: linear-gradient(to right, rgb(31, 119, 180, 0.3) " + per + "%, #fffacd " + per + "%, #fffacd " + (100 - per) + "%) center center / 100% 100% no-repeat;";
-            let ret = '<b>' + icon + '<a target="_blank" title="' + name + 'の wikipediaへ" href="' + mm.url_name + '/' + name + '">' + name + '</a></b><br />' +
+            let ret = '<b>' + icon + '<a target="_blank" title="' + name + 'の wikipediaへ" href="' + URL_WIKI + '/' + name + '">' + name + '</a></b><br />' +
               '<img style="width:180px;height:120px;object-fit: cover;object-position:0% 0%;" src="/img/japan/pref/' + name + '.jpg"><br />' +
               (p === undefined ? 'なし<br />' : (
                 '<table><tbody>' +
@@ -4465,7 +4468,7 @@ const mm = {
         // テンプレートリテラル内の変数を展開。例:`/player.php?&id=${d.key}`で変数d.keyを展開
         ret = new Function('d', `return \`${link}\`;`)(d);
       } else {
-        ret = mm.url_name + '/' + mm.util.removeLabelSuffix(d.key);
+        ret = URL_WIKI + '/' + mm.util.removeLabelSuffix(d.key);
       }
       return ret;
     },
@@ -4548,17 +4551,17 @@ const mm = {
       switch (pnl.date.stack_type) {
         case STACK_CND:
           mm.chartCond.filter(name);
-          dc.redrawAll('chartGroup');
+          dc.redrawAll(CGRP_SHOW);
           break;
         case STACK_PL1:
           if (name !== undefined) {
             mm.chartName.filter(name);
-            dc.redrawAll('chartGroup');
+            dc.redrawAll(CGRP_SHOW);
           }
           break;
         case STACK_AGE:
           mm.chartAge.filter(name);
-          dc.redrawAll('chartGroup');
+          dc.redrawAll(CGRP_SHOW);
           break;
       }
     },
@@ -4809,7 +4812,7 @@ const mm = {
     }
     $('.jvectormap-tip').hide();
 
-    if (pnl.gmap.is_show || pnl.sview.is_show) {
+    if (pnl.gmap.isShow || pnl.sview.isShow) {
       if (ci === mm.chartName.chartID()
         || ci === mm.chartCity.chartID()
         || (ci === mm.chartJob.chartID() && mm.opt.chartJob.isPanGmap)
@@ -4832,7 +4835,7 @@ const mm = {
       mm.chartDate.y(d3.scaleLinear().domain([0, _.max(_.map(mm.gpDate.all(), 'value')) + 10])); //高さ範囲再計算
     }
 
-    dc.renderAll("chartGroup");
+    dc.renderAll(CGRP_SHOW);
   },
   updateGMap: function () {
     // Focus
@@ -5292,7 +5295,7 @@ const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, 
   const chartW = (n + 1) * barW + margins.right + margins.left;
   if (!isSp && panel !== null) $(panel).width(chartW);
 
-  const chart = new dc.BarChart(parent, "chartGroup");
+  const chart = new dc.BarChart(parent, CGRP_SHOW);
   chart
     .width(chartW)
     .height(height)
@@ -5374,7 +5377,7 @@ const initChartName = () => {
     }
   }
 
-  mm.chartName = new dc.RowChart("#chart_name", "chartGroup");
+  mm.chartName = new dc.RowChart("#chart_name", CGRP_SHOW);
   mm.chartName.dataIndex = D_PL1;
   mm.chartName
     .width(isSp ? parseInt(window.innerWidth / 2) + 15 : 205)
@@ -5498,7 +5501,7 @@ const initChartCity = () => {
     }
   }
 
-  mm.chartCity = new dc.RowChart("#chart_city", "chartGroup");
+  mm.chartCity = new dc.RowChart("#chart_city", CGRP_SHOW);
   mm.chartCity.dataIndex = D_PL2;
   mm.chartCity
     .width(isSp ? parseInt(window.innerWidth / 2) - 30 : 230)
@@ -5601,7 +5604,7 @@ const initChartDate = (chartDateW) => {
   const gpDateStk = dimDate.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
   //.order(function(d) {return d.total;});
 
-  mm.composite = new dc.CompositeChart("#chart_date", "chartGroup");
+  mm.composite = new dc.CompositeChart("#chart_date", CGRP_SHOW);
   mm.composite.dataIndex = D_YMD;
 
   mm.chartDate = new dc.BarChart(mm.composite);
@@ -5860,7 +5863,7 @@ const initChartDate2Covid = (chartDateW) => {
     }
   );
 
-  mm.composite2 = new dc.CompositeChart("#chart_date2", "chartGroup");
+  mm.composite2 = new dc.CompositeChart("#chart_date2", CGRP_SHOW);
   mm.chartDate2 = new dc.BarChart(mm.composite2);
   mm.chartLine2 = new dc.LineChart(mm.composite2);
 
@@ -6026,7 +6029,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   });
   const gpDateStk = dimDate.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
 
-  mm.composite2 = new dc.CompositeChart("#chart_date2", "chartGroup");
+  mm.composite2 = new dc.CompositeChart("#chart_date2", CGRP_SHOW);
 
   mm.chartDate2 = new dc.LineChart(mm.composite2);
 
@@ -6128,7 +6131,7 @@ const initChartSeason = (chartSexW, chartSexH) => {
     return mm.group_reduce.base(d);
   });
 
-  mm.chartSeason = new dc.PieChart('#chart_season', 'chartGroup');
+  mm.chartSeason = new dc.PieChart('#chart_season', CGRP_SHOW);
   mm.chartSeason.dataIndex = D_YMD;
   mm.chartSeason
     .width(chartSexW)
@@ -6182,7 +6185,7 @@ const initChartWeek = (chartSexW, chartSexH) => {
     $('#chart_week').css('width', (chartWeekW + 5) + 'px');
   }
 
-  mm.chartWeek = new dc.BarChart("#chart_week", "chartGroup");
+  mm.chartWeek = new dc.BarChart("#chart_week", CGRP_SHOW);
   mm.chartWeek.dataIndex = D_YMD;
   mm.chartWeek
     .width(chartWeekW)
@@ -6302,7 +6305,7 @@ const initChartSex = (chartSexW, chartSexH) => {
     return mm.group_reduce.base(d);
   });
 
-  mm.chartSex = new dc.PieChart(chartDomId, 'chartGroup');
+  mm.chartSex = new dc.PieChart(chartDomId, CGRP_SHOW);
   mm.chartSex.dataIndex = D_SEX;
   mm.chartSex
     .width(chartSexW)
@@ -6647,7 +6650,7 @@ const initChartJob = (chartSexW, chartSexH) => {
   const chartW = (n + 1) * barW;
   if (!isSp) $('#panel_job').width(chartW);
 
-  mm.chartJob = new dc.BarChart('#chart_job', 'chartGroup');
+  mm.chartJob = new dc.BarChart('#chart_job', CGRP_SHOW);
   mm.chartJob.dataIndex = D_JOB;
   mm.chartJob
     .width(chartW)
@@ -6724,7 +6727,7 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
   pnl.ex[chartIndex] = pnl.ex[chartIndex] || {};
   pnl.ex[chartIndex].chartType = mm.opt.chartEx[chartIndex].chartType;
   pnl.ex[chartIndex].isHidden = false;
-  pnl.ex[chartIndex].is_show = mm.opt.chartEx[chartIndex]?.isShow ?? true;
+  pnl.ex[chartIndex].isShow = mm.opt.chartEx[chartIndex]?.isShow ?? true;
   pnl.ex[chartIndex].title = title;
 
   // ディメンションの作成
@@ -6832,11 +6835,11 @@ const initDc = (data) => {
   let chartSexW = 148;
   let chartSexH = 158;
 
-  mm.chartAge = new dc.BarChart("#chart_age", "chartGroup");
+  mm.chartAge = new dc.BarChart("#chart_age", CGRP_SHOW);
   mm.chartAge.dataIndex = D_AGE;
   initChartAge(chartSexW, chartSexH);
 
-  mm.chartCond = new dc.BarChart('#chart_cond', 'chartGroup');
+  mm.chartCond = new dc.BarChart('#chart_cond', CGRP_SHOW);
   mm.chartCond.dataIndex = D_CND;
   initChartCond(chartSexW, chartSexH);
 
@@ -6873,13 +6876,13 @@ const initDc = (data) => {
   //data_typeによる UI制御
   //
   if (gg.dt === DT_COVID) {
-    pnl.map.tabs.is_show = 1;
+    pnl.map.tabs.isShow = 1;
     mm.chartCity.addFilterHandler(mm.addFilterHandler);
     mm.chartCond.addFilterHandler(mm.addFilterHandler)
   } else {
     mm.sel_tab = 'tabs_c';
     if (pnl.date.chart2.type !== CHART_DATE2_TYPE_COVID) pnl.date.chart2.title = '';
-    pnl.map.tabs.is_show = 0;
+    pnl.map.tabs.isShow = 0;
   }
 
   // ローカルストレージに設定がない場合のディフォルト値を設定
@@ -6973,7 +6976,7 @@ const initTabs = () => {
 
           mm.chartName.group(mm.gpName).render();
           pnl.name.title = '都道府県';
-          pnl.date.chart2.is_show = false;
+          pnl.date.chart2.isShow = false;
           pnl.date.chart2.title2 = '';
           $('#japan-map').show();
           drawJapanMap();
@@ -6990,24 +6993,24 @@ const initTabs = () => {
 
           // パネルの表示状態を[PCR・死亡]モードにする
           pnlShowsLoadStore(0);
-          pnl.name.is_show = 1;
-          pnl.city.is_show = 0;
-          pnl.sex.is_show = 0;
-          pnl.year.is_show = 0;
-          pnl.week.is_show = 0;
-          pnl.season.is_show = 0;
-          pnl.age.is_show = 0;
-          pnl.cond.is_show = 0;
-          pnl.job.is_show = 0;
+          pnl.name.isShow = 1;
+          pnl.city.isShow = 0;
+          pnl.sex.isShow = 0;
+          pnl.year.isShow = 0;
+          pnl.week.isShow = 0;
+          pnl.season.isShow = 0;
+          pnl.age.isShow = 0;
+          pnl.cond.isShow = 0;
+          pnl.job.isShow = 0;
 
           if (mm.sel_tab === 'tabs_b') {//病床
-            pnl.date.is_show = 0;
-            pnl.date.chart2.is_show = false;
+            pnl.date.isShow = 0;
+            pnl.date.chart2.isShow = false;
 
             let gpName2 = mm.dimName2.group().reduce((p, v) => mm.opt.assets.pref_tbl_last_m1[v[D3_PL1]].bed, (p, v) => mm.opt.assets.pref_tbl_last_m1[v[D3_PL1]].bed, (p, v) => 0);
             mm.chartName.group(gpName2).render();
           } else {
-            pnl.date.is_show = 1;
+            pnl.date.isShow = 1;
             let gpName2;
             switch (mm.sel_tab) {
               case 'tabs_p':
@@ -7036,7 +7039,7 @@ const initTabs = () => {
                 pnl.date.chart2.title2 = '';
                 break;
             }
-            pnl.date.chart2.is_show = true;
+            pnl.date.chart2.isShow = true;
             $('#div_date2').scrollLeft($('#div_date').scrollLeft());
 
             mm.chartName.group(gpName2);
@@ -7215,8 +7218,8 @@ var map;
 
 //vectorMap for pc
 const drawJapanMap = () => {
-  if (pnl.gmap.is_show) mm.updateGMap();
-  if (!pnl.map.is_show) return;
+  if (pnl.gmap.isShow) mm.updateGMap();
+  if (!pnl.map.isShow) return;
   $("#japan-map").empty();
 
   let series_scale = mm.sel_tab === 'tabs_pc'
@@ -7496,7 +7499,7 @@ const onDocumentReady = () => {
     pnl.date.isBrushOn = false;
 
     mm.dimJob.filterAll();
-    dc.filterAll('chartGroup');
+    dc.filterAll(CGRP_SHOW);
 
     mm.map.doDraw = 1;
     mm.renderAllChart();
@@ -7636,14 +7639,14 @@ const onDocumentReady = () => {
         mm.chartName.filterAll();
         $('#panel_name .filter_txt').text('');
         if (mm.opt.chartMap.refData !== 'city') mm.map.doDraw = 1;
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', 'name');
         break;
       case 'btn_reset_city' :
         mm.chartCity.filterAll();
         $('#panel_city .filter_txt').text('');
         if (mm.opt.chartMap.refData === 'city') mm.map.doDraw = 1;
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', 'name2');
         break;
       case 'btn_reset_date' :
@@ -7657,37 +7660,37 @@ const onDocumentReady = () => {
         break;
       case 'btn_reset_sex'  :
         mm.chartSex.filterAll();
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', 'name3');
         break;
       case 'btn_reset_age'  :
         mm.chartAge.filterAll();
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', 'name4');
         break;
       case 'btn_reset_year' :
         mm.chartYear.filterAll();
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', 'year');
         break;
       case 'btn_reset_season' :
         mm.chartSeason.filterAll();
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', 'season');
         break;
       case 'btn_reset_week' :
         mm.chartWeek.filterAll();
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', 'week');
         break;
       case 'btn_reset_cond' :
         mm.chartCond.filterAll();
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', 'name5');
         break;
       case 'btn_reset_job'  :
         mm.chartJob.filterAll();
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', 'name6');
         break;
       case 'btn_reset_ex_0' :
@@ -7709,7 +7712,7 @@ const onDocumentReady = () => {
         // 接尾辞の数値部分を抽出（btn_reset_ex_XX の XX 部分）
         const n = parseInt(id.match(/btn_reset_ex_(\d+)/)[1]);
         mm.chartEx[n].filterAll();
-        dc.redrawAll('chartGroup');
+        dc.redrawAll(CGRP_SHOW);
         mm.onChangeURL('clear', `name${n + 7}`);
         break;
     }
@@ -8376,7 +8379,7 @@ const onClickChartDatePlay = () => {
     window.history.replaceState({}, '', url);
     mm.get = php_location_get_query();
     mm.parseURLParams();
-    dc.redrawAll('chartGroup');
+    dc.redrawAll(CGRP_SHOW);
 
     pnl.date.play.from = moment(pnl.date.play.from).add(addDays, 'days'); // next
   }
@@ -8471,23 +8474,23 @@ const onClickPanelMaximize = (id, isSettingsSave = true) => {
 }
 
 const onClickStyleLoad = (type) => {
-  const sDefMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":false,"style":"position:absolute;left:0.046321%;top:26.596859%;width:20.056882%;height:35.078534%"},"sview":{"is_show":false,"style":"position:absolute;left:0.138962%;top:62.303665%;width:19.223108%;height:32.879581%"},"tube":{"is_show":true,"style":"position:absolute;left:67.211399%;top:52.565445%;width:31.822351%;height:46.806283%","vidAutoChange":true},"map":{"is_show":false,"style":"position:absolute;left:76.707151%;top:0.000000%;width:20.612731%;height:29.424084%"},"name":{"is_show":true,"style":"position:absolute;left:0.046321%;top:0.000000%;width:9.403111%;height:100.000000%"},"city":{"is_show":true,"style":"position:absolute;left:9.681035%;top:0.000000%;width:10.792733%;height:100.000000%"},"date":{"is_show":true,"style":"position:absolute;left:20.751693%;top:0.000000%;width:55.492251%;"},"sex":{"is_show":true,"style":"position:absolute;left:20.705372%;top:53.089005%;width:18.481977%;"},"year":{"is_show":true,"style":"position:absolute;left:20.751693%;top:30.261780%;width:27.699805%;"},"season":{"is_show":true,"style":"position:absolute;left:91.020261%;top:0.000000%;width:6.901791%;"},"week":{"is_show":0,"style":"position:absolute;left:3.520376%;top:0.000000%;width:14.220468%;"},"age":{"is_show":true,"style":"position:absolute;left:41.040179%;top:53.403141%;width:25.708013%;"},"cond":{"is_show":true,"style":"position:absolute;left:49.007346%;top:29.738220%;width:34.462633%;"},"job":{"is_show":true,"style":"position:absolute;left:20.798014%;top:76.858639%;width:33.397256%;height:19.371728%"},"ex":[{"is_show":true,"style":"position:absolute;left:84.118470%;top:22.303665%;width:4.863678%;"},{"is_show":true,"style":"position:absolute;left:54.473194%;top:76.858639%;width:8.152451%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"},{"is_show":false},{"is_show":false},{"is_show":false},{"is_show":false}],"detail":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.418848%;width:2.408679%;height:3.036649%"},"ana":{"is_show":false}}';
-  const sDefSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:44.790668%;height:50.000000%"},"sview":{"is_show":false,"style":"position:absolute;left:NaN%;top:NaN%;width:44.790668%;height:50.000000%"},"tube":{"is_show":true,"style":"position:absolute;left:65.172033%;top:72.500000%;width:34.398589%;height:23.500000%"},"map":{"is_show":false,"style":"position:absolute;left:NaN%;top:NaN%;width:42.857258%;height:44.916667%"},"name":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:14.178341%;height:95.583333%"},"city":{"is_show":true,"style":"position:absolute;left:14.420017%;top:0.000000%;width:17.884044%;height:95.333333%"},"date":{"is_show":true,"style":"position:absolute;left:33.029090%;top:0.000000%;width:65.333151%;"},"sex":{"is_show":true,"style":"position:absolute;left:33.431884%;top:31.416667%;width:11.036550%;"},"year":{"is_show":true,"style":"position:absolute;left:33.029090%;top:17.250000%;width:34.076354%;"},"season":{"is_show":true,"style":"position:absolute;left:67.508237%;top:17.250000%;width:8.942022%;"},"week":{"is_show":true,"style":"position:absolute;left:76.611377%;top:17.000000%;width:22.959245%;"},"age":{"is_show":true,"style":"position:absolute;left:45.435138%;top:31.500000%;width:51.074251%;"},"cond":{"is_show":true,"style":"position:absolute;left:32.867972%;top:52.333333%;width:64.930357%;"},"job":{"is_show":true,"style":"position:absolute;left:33.029090%;top:73.583333%;width:64.285887%;height:18.000000%"},"detail":{"is_show":true,"style":"position:absolute;left:0.402794%;top:60.333333%;width:15.950634%;height:35.000000%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sDefMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:17.184996%;height:37.172775%"},"sview":{"is_show":true,"style":"position:absolute;left:0.000000%;top:38.010471%;width:17.046034%;height:30.157068%"},"tube":{"is_show":true,"style":"position:absolute;left:17.277637%;top:38.010471%;width:16.860751%;height:30.366492%","vidAutoChange":true},"map":{"is_show":true,"style":"position:absolute;left:17.323958%;top:0.000000%;width:16.536505%;height:37.172775%"},"name":{"is_show":true,"style":"position:absolute;left:34.231029%;top:0.000000%;width:7.596602%;height:80.418848%"},"city":{"is_show":true,"style":"position:absolute;left:42.059235%;top:0.000000%;width:8.384055%;height:80.628272%"},"date":{"is_show":true,"style":"position:absolute;left:50.952818%;top:0.000000%;width:48.127252%;"},"sex":{"is_show":true,"style":"position:absolute;left:50.813855%;top:46.910995%;width:13.294053%;"},"year":{"is_show":true,"style":"position:absolute;left:50.906497%;top:27.015707%;width:22.326598%;"},"season":{"is_show":true,"style":"position:absolute;left:90.973940%;top:26.806283%;width:7.318677%;"},"week":{"is_show":true,"style":"position:absolute;left:73.881586%;top:26.596859%;width:16.675468%;"},"age":{"is_show":true,"style":"position:absolute;left:64.941682%;top:47.539267%;width:19.454712%;"},"cond":{"is_show":true,"style":"position:absolute;left:50.674893%;top:64.816754%;width:22.789806%;"},"job":{"is_show":true,"style":"position:absolute;left:34.092067%;top:81.151832%;width:39.187349%;height:19.895288%"},"ex":[{"is_show":true,"style":"position:absolute;left:74.483755%;top:65.235602%;width:6.762829%;"},{"is_show":true,"style":"position:absolute;left:83.423659%;top:65.026178%;width:13.803582%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"},{"is_show":false},{"is_show":false},{"is_show":false},{"is_show":false}],"detail":{"is_show":true,"style":"position:absolute;left:0.000000%;top:7.120419%;width:2.408679%;height:3.036649%"},"ana":{"is_show":false}}'
-  const sDefMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:24.433076%;height:30.455408%"},"sview":{"is_show":true,"style":"position:absolute;left:0.000000%;top:31.593928%;width:24.602750%;height:18.026565%"},"tube":{"is_show":true,"style":"position:absolute;left:0.000000%;top:50.189753%;width:24.433076%;height:16.603416%"},"map":{"is_show":true,"style":"position:absolute;left:25.026936%;top:0.000000%;width:28.929441%;height:30.834915%"},"name":{"is_show":true,"style":"position:absolute;left:54.295725%;top:0.000000%;width:14.422302%;height:31.309298%"},"city":{"is_show":true,"style":"position:absolute;left:69.142212%;top:0.000000%;width:16.543229%;height:31.119545%"},"date":{"is_show":true,"style":"position:absolute;left:25.026936%;top:31.783681%;width:73.808251%;"},"sex":{"is_show":true,"style":"position:absolute;left:25.875306%;top:49.905123%;width:10.604634%;"},"year":{"is_show":false,"style":"position:absolute;left:16.967414%;top:36.242884%;width:26.723677%;"},"season":{"is_show":false,"style":"position:absolute;left:69.142212%;top:36.053131%;width:8.738218%;"},"week":{"is_show":false,"style":"position:absolute;left:78.134942%;top:36.337761%;width:19.512526%;"},"age":{"is_show":true,"style":"position:absolute;left:37.497985%;top:49.715370%;width:15.270673%;"},"cond":{"is_show":true,"style":"position:absolute;left:25.026936%;top:67.457306%;width:45.896855%;"},"job":{"is_show":true,"style":"position:absolute;left:25.026936%;top:82.163188%;width:73.808251%;height:14.990512%"},"detail":{"is_show":true,"style":"position:absolute;left:0.000000%;top:67.077799%;width:16.797740%;height:30.740038%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sDefCovidMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":true,"style":"position:absolute;left:0.000000%;top:56.205674%;width:20.805840%;height:42.287234%"},"sview":{"is_show":true,"style":"position:absolute;left:20.964361%;top:56.560284%;width:17.595796%;height:42.287234%"},"tube":{"is_show":0,"style":"position:absolute;left:NaN%;top:NaN%;width:NaN%;height:NaN%"},"map":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.088652%;width:20.805840%;height:55.230496%"},"name":{"is_show":true,"style":"position:absolute;left:21.083251%;top:0.354610%;width:8.203445%;height:54.787234%"},"city":{"is_show":true,"style":"position:absolute;left:29.564108%;top:0.000000%;width:8.996049%;height:55.673759%"},"date":{"is_show":true,"style":"position:absolute;left:38.956458%;top:0.709220%;width:60.911573%;"},"sex":{"is_show":true,"style":"position:absolute;left:38.916828%;top:31.205674%;width:7.727883%;"},"year":{"is_show":false,"style":"position:absolute;left:1.981509%;top:0.354610%;width:5.270813%;"},"season":{"is_show":true,"style":"position:absolute;left:63.408274%;top:6.028369%;width:4.914141%;"},"week":{"is_show":true,"style":"position:absolute;left:68.758347%;top:4.875887%;width:13.196847%;"},"age":{"is_show":true,"style":"position:absolute;left:47.199534%;top:31.205674%;width:32.694891%;"},"cond":{"is_show":true,"style":"position:absolute;left:39.114979%;top:52.925532%;width:43.593188%;"},"job":{"is_show":true,"style":"position:absolute;left:38.956458%;top:72.074468%;width:60.356751%;height:27.216312%"},"detail":{"is_show":true,"style":"position:absolute;left:75.693627%;top:69.060284%;width:7.846774%;height:29.609929%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sDefCovidSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:20.784159%;height:42.236025%"},"sview":{"is_show":0,"style":"position:absolute;left:0.000000%;top:0.000000%;width:17.481250%;height:40.905058%"},"tube":{"is_show":0,"style":"position:absolute;left:NaN%;top:NaN%;width:NaN%;height:NaN%"},"map":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:43.018375%;height:42.590949%"},"name":{"is_show":true,"style":"position:absolute;left:42.776699%;top:0.000000%;width:25.778802%;height:42.147294%"},"city":{"is_show":true,"style":"position:absolute;left:68.877736%;top:0.443656%;width:25.939919%;height:41.703638%"},"date":{"is_show":true,"style":"position:absolute;left:0.000000%;top:43.034605%;width:99.328946%;"},"sex":{"is_show":true,"style":"position:absolute;left:0.161118%;top:67.968057%;width:8.055876%;"},"year":{"is_show":0,"style":"position:absolute;left:0.080559%;top:0.266193%;width:8.458669%;"},"season":{"is_show":true,"style":"position:absolute;left:44.468433%;top:43.566992%;width:10.472638%;"},"week":{"is_show":true,"style":"position:absolute;left:55.504983%;top:43.478261%;width:24.570420%;"},"age":{"is_show":true,"style":"position:absolute;left:8.619787%;top:68.234250%;width:34.076354%;"},"cond":{"is_show":true,"style":"position:absolute;left:43.582287%;top:68.411713%;width:55.102189%;"},"job":{"is_show":true,"style":"position:absolute;left:0.000000%;top:81.543922%;width:98.684476%;height:14.729370%"},"detail":{"is_show":true,"style":"position:absolute;left:74.355731%;top:68.411713%;width:15.950634%;height:29.636202%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sDefMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.046321%;top:26.596859%;width:20.056882%;height:35.078534%"},"sview":{"isShow":false,"style":"position:absolute;left:0.138962%;top:62.303665%;width:19.223108%;height:32.879581%"},"tube":{"isShow":true,"style":"position:absolute;left:67.211399%;top:52.565445%;width:31.822351%;height:46.806283%","vidAutoChange":true},"map":{"isShow":false,"style":"position:absolute;left:76.707151%;top:0.000000%;width:20.612731%;height:29.424084%"},"name":{"isShow":true,"style":"position:absolute;left:0.046321%;top:0.000000%;width:9.403111%;height:100.000000%"},"city":{"isShow":true,"style":"position:absolute;left:9.681035%;top:0.000000%;width:10.792733%;height:100.000000%"},"date":{"isShow":true,"style":"position:absolute;left:20.751693%;top:0.000000%;width:55.492251%;"},"sex":{"isShow":true,"style":"position:absolute;left:20.705372%;top:53.089005%;width:18.481977%;"},"year":{"isShow":true,"style":"position:absolute;left:20.751693%;top:30.261780%;width:27.699805%;"},"season":{"isShow":true,"style":"position:absolute;left:91.020261%;top:0.000000%;width:6.901791%;"},"week":{"isShow":0,"style":"position:absolute;left:3.520376%;top:0.000000%;width:14.220468%;"},"age":{"isShow":true,"style":"position:absolute;left:41.040179%;top:53.403141%;width:25.708013%;"},"cond":{"isShow":true,"style":"position:absolute;left:49.007346%;top:29.738220%;width:34.462633%;"},"job":{"isShow":true,"style":"position:absolute;left:20.798014%;top:76.858639%;width:33.397256%;height:19.371728%"},"ex":[{"isShow":true,"style":"position:absolute;left:84.118470%;top:22.303665%;width:4.863678%;"},{"isShow":true,"style":"position:absolute;left:54.473194%;top:76.858639%;width:8.152451%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"},{"isShow":false},{"isShow":false},{"isShow":false},{"isShow":false}],"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.418848%;width:2.408679%;height:3.036649%"},"ana":{"isShow":false}}';
+  const sDefSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:44.790668%;height:50.000000%"},"sview":{"isShow":false,"style":"position:absolute;left:NaN%;top:NaN%;width:44.790668%;height:50.000000%"},"tube":{"isShow":true,"style":"position:absolute;left:65.172033%;top:72.500000%;width:34.398589%;height:23.500000%"},"map":{"isShow":false,"style":"position:absolute;left:NaN%;top:NaN%;width:42.857258%;height:44.916667%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:14.178341%;height:95.583333%"},"city":{"isShow":true,"style":"position:absolute;left:14.420017%;top:0.000000%;width:17.884044%;height:95.333333%"},"date":{"isShow":true,"style":"position:absolute;left:33.029090%;top:0.000000%;width:65.333151%;"},"sex":{"isShow":true,"style":"position:absolute;left:33.431884%;top:31.416667%;width:11.036550%;"},"year":{"isShow":true,"style":"position:absolute;left:33.029090%;top:17.250000%;width:34.076354%;"},"season":{"isShow":true,"style":"position:absolute;left:67.508237%;top:17.250000%;width:8.942022%;"},"week":{"isShow":true,"style":"position:absolute;left:76.611377%;top:17.000000%;width:22.959245%;"},"age":{"isShow":true,"style":"position:absolute;left:45.435138%;top:31.500000%;width:51.074251%;"},"cond":{"isShow":true,"style":"position:absolute;left:32.867972%;top:52.333333%;width:64.930357%;"},"job":{"isShow":true,"style":"position:absolute;left:33.029090%;top:73.583333%;width:64.285887%;height:18.000000%"},"detail":{"isShow":true,"style":"position:absolute;left:0.402794%;top:60.333333%;width:15.950634%;height:35.000000%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sDefMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:17.184996%;height:37.172775%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:38.010471%;width:17.046034%;height:30.157068%"},"tube":{"isShow":true,"style":"position:absolute;left:17.277637%;top:38.010471%;width:16.860751%;height:30.366492%","vidAutoChange":true},"map":{"isShow":true,"style":"position:absolute;left:17.323958%;top:0.000000%;width:16.536505%;height:37.172775%"},"name":{"isShow":true,"style":"position:absolute;left:34.231029%;top:0.000000%;width:7.596602%;height:80.418848%"},"city":{"isShow":true,"style":"position:absolute;left:42.059235%;top:0.000000%;width:8.384055%;height:80.628272%"},"date":{"isShow":true,"style":"position:absolute;left:50.952818%;top:0.000000%;width:48.127252%;"},"sex":{"isShow":true,"style":"position:absolute;left:50.813855%;top:46.910995%;width:13.294053%;"},"year":{"isShow":true,"style":"position:absolute;left:50.906497%;top:27.015707%;width:22.326598%;"},"season":{"isShow":true,"style":"position:absolute;left:90.973940%;top:26.806283%;width:7.318677%;"},"week":{"isShow":true,"style":"position:absolute;left:73.881586%;top:26.596859%;width:16.675468%;"},"age":{"isShow":true,"style":"position:absolute;left:64.941682%;top:47.539267%;width:19.454712%;"},"cond":{"isShow":true,"style":"position:absolute;left:50.674893%;top:64.816754%;width:22.789806%;"},"job":{"isShow":true,"style":"position:absolute;left:34.092067%;top:81.151832%;width:39.187349%;height:19.895288%"},"ex":[{"isShow":true,"style":"position:absolute;left:74.483755%;top:65.235602%;width:6.762829%;"},{"isShow":true,"style":"position:absolute;left:83.423659%;top:65.026178%;width:13.803582%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"},{"isShow":false},{"isShow":false},{"isShow":false},{"isShow":false}],"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:7.120419%;width:2.408679%;height:3.036649%"},"ana":{"isShow":false}}'
+  const sDefMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:24.433076%;height:30.455408%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:31.593928%;width:24.602750%;height:18.026565%"},"tube":{"isShow":true,"style":"position:absolute;left:0.000000%;top:50.189753%;width:24.433076%;height:16.603416%"},"map":{"isShow":true,"style":"position:absolute;left:25.026936%;top:0.000000%;width:28.929441%;height:30.834915%"},"name":{"isShow":true,"style":"position:absolute;left:54.295725%;top:0.000000%;width:14.422302%;height:31.309298%"},"city":{"isShow":true,"style":"position:absolute;left:69.142212%;top:0.000000%;width:16.543229%;height:31.119545%"},"date":{"isShow":true,"style":"position:absolute;left:25.026936%;top:31.783681%;width:73.808251%;"},"sex":{"isShow":true,"style":"position:absolute;left:25.875306%;top:49.905123%;width:10.604634%;"},"year":{"isShow":false,"style":"position:absolute;left:16.967414%;top:36.242884%;width:26.723677%;"},"season":{"isShow":false,"style":"position:absolute;left:69.142212%;top:36.053131%;width:8.738218%;"},"week":{"isShow":false,"style":"position:absolute;left:78.134942%;top:36.337761%;width:19.512526%;"},"age":{"isShow":true,"style":"position:absolute;left:37.497985%;top:49.715370%;width:15.270673%;"},"cond":{"isShow":true,"style":"position:absolute;left:25.026936%;top:67.457306%;width:45.896855%;"},"job":{"isShow":true,"style":"position:absolute;left:25.026936%;top:82.163188%;width:73.808251%;height:14.990512%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:67.077799%;width:16.797740%;height:30.740038%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sDefCovidMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:56.205674%;width:20.805840%;height:42.287234%"},"sview":{"isShow":true,"style":"position:absolute;left:20.964361%;top:56.560284%;width:17.595796%;height:42.287234%"},"tube":{"isShow":0,"style":"position:absolute;left:NaN%;top:NaN%;width:NaN%;height:NaN%"},"map":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.088652%;width:20.805840%;height:55.230496%"},"name":{"isShow":true,"style":"position:absolute;left:21.083251%;top:0.354610%;width:8.203445%;height:54.787234%"},"city":{"isShow":true,"style":"position:absolute;left:29.564108%;top:0.000000%;width:8.996049%;height:55.673759%"},"date":{"isShow":true,"style":"position:absolute;left:38.956458%;top:0.709220%;width:60.911573%;"},"sex":{"isShow":true,"style":"position:absolute;left:38.916828%;top:31.205674%;width:7.727883%;"},"year":{"isShow":false,"style":"position:absolute;left:1.981509%;top:0.354610%;width:5.270813%;"},"season":{"isShow":true,"style":"position:absolute;left:63.408274%;top:6.028369%;width:4.914141%;"},"week":{"isShow":true,"style":"position:absolute;left:68.758347%;top:4.875887%;width:13.196847%;"},"age":{"isShow":true,"style":"position:absolute;left:47.199534%;top:31.205674%;width:32.694891%;"},"cond":{"isShow":true,"style":"position:absolute;left:39.114979%;top:52.925532%;width:43.593188%;"},"job":{"isShow":true,"style":"position:absolute;left:38.956458%;top:72.074468%;width:60.356751%;height:27.216312%"},"detail":{"isShow":true,"style":"position:absolute;left:75.693627%;top:69.060284%;width:7.846774%;height:29.609929%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sDefCovidSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:20.784159%;height:42.236025%"},"sview":{"isShow":0,"style":"position:absolute;left:0.000000%;top:0.000000%;width:17.481250%;height:40.905058%"},"tube":{"isShow":0,"style":"position:absolute;left:NaN%;top:NaN%;width:NaN%;height:NaN%"},"map":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:43.018375%;height:42.590949%"},"name":{"isShow":true,"style":"position:absolute;left:42.776699%;top:0.000000%;width:25.778802%;height:42.147294%"},"city":{"isShow":true,"style":"position:absolute;left:68.877736%;top:0.443656%;width:25.939919%;height:41.703638%"},"date":{"isShow":true,"style":"position:absolute;left:0.000000%;top:43.034605%;width:99.328946%;"},"sex":{"isShow":true,"style":"position:absolute;left:0.161118%;top:67.968057%;width:8.055876%;"},"year":{"isShow":0,"style":"position:absolute;left:0.080559%;top:0.266193%;width:8.458669%;"},"season":{"isShow":true,"style":"position:absolute;left:44.468433%;top:43.566992%;width:10.472638%;"},"week":{"isShow":true,"style":"position:absolute;left:55.504983%;top:43.478261%;width:24.570420%;"},"age":{"isShow":true,"style":"position:absolute;left:8.619787%;top:68.234250%;width:34.076354%;"},"cond":{"isShow":true,"style":"position:absolute;left:43.582287%;top:68.411713%;width:55.102189%;"},"job":{"isShow":true,"style":"position:absolute;left:0.000000%;top:81.543922%;width:98.684476%;height:14.729370%"},"detail":{"isShow":true,"style":"position:absolute;left:74.355731%;top:68.411713%;width:15.950634%;height:29.636202%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
 
-  const sGMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.947292%;height:100.000000%","styleBak":""},"sview":{"is_show":true,"style":"position:absolute;left:0.475562%;top:50.374688%;width:19.537674%;height:28.642798%"},"tube":{"is_show":false,"style":"position:absolute;left:76.525861%;top:75.353872%;width:21.003991%;height:23.980017%"},"map":{"is_show":true,"style":"position:absolute;left:79.062192%;top:6.744380%;width:20.132127%;height:33.888426%"},"name":{"is_show":true,"style":"position:absolute;left:0.475562%;top:6.994172%;width:9.075309%;height:42.381349%"},"city":{"is_show":true,"style":"position:absolute;left:9.828282%;top:6.994172%;width:10.303845%;height:42.381349%"},"date":{"is_show":false,"style":"position:absolute;left:24.214035%;top:0.000000%;width:36.023826%;"},"sex":{"is_show":false,"style":"position:absolute;left:73.593228%;top:27.560366%;width:5.072662%;"},"year":{"is_show":false,"style":"position:absolute;left:60.634162%;top:0.000000%;width:18.031728%;"},"season":{"is_show":false,"style":"position:absolute;left:62.417520%;top:14.404663%;width:4.953771%;"},"week":{"is_show":false,"style":"position:absolute;left:67.529812%;top:14.487927%;width:11.175708%;"},"age":{"is_show":false,"style":"position:absolute;left:76.763642%;top:43.213988%;width:20.964361%;"},"cond":{"is_show":false,"style":"position:absolute;left:76.724012%;top:60.116570%;width:20.647319%;"},"job":{"is_show":true,"style":"position:absolute;left:0.356672%;top:79.517069%;width:25.244419%;height:19.233972%"},"detail":{"is_show":false,"style":"position:absolute;left:0.079260%;top:0.416320%;width:2.060769%;height:2.414654%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sGMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.918781%;height:100.000000%","styleBak":""},"sview":{"is_show":true,"style":"position:absolute;left:1.038853%;top:43.373494%;width:30.976711%;height:25.903614%"},"tube":{"is_show":false},"map":{"is_show":0,"style":"position:absolute;left:6.327560%;top:2.108434%;width:23.610298%;height:23.594378%"},"name":{"is_show":true,"style":"position:absolute;left:0.755530%;top:8.534137%;width:14.260620%;height:33.835341%"},"city":{"is_show":true,"style":"position:absolute;left:15.393914%;top:8.232932%;width:17.093856%;height:34.136546%"},"date":{"is_show":0,"style":"position:absolute;left:2.644353%;top:5.120482%;width:63.086716%;"},"sex":{"is_show":0,"style":"position:absolute;left:5.949795%;top:6.726908%;width:10.010766%;"},"season":{"is_show":0,"style":"position:absolute;left:2.644353%;top:6.726908%;width:11.049619%;"},"week":{"is_show":0,"style":"position:absolute;left:3.777648%;top:6.726908%;width:23.799180%;"},"age":{"is_show":0,"style":"position:absolute;left:7.271972%;top:6.626506%;width:14.260620%;"},"cond":{"is_show":0,"style":"position:absolute;left:4.533177%;top:8.232932%;width:44.765125%;"},"job":{"is_show":true,"style":"position:absolute;left:1.038853%;top:69.979920%;width:38.248683%;height:20.883534%"},"detail":{"is_show":false,"style":"position:absolute;left:4.438736%;top:6.325301%;width:5.288707%;height:2.911647%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sGMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.947292%;height:100.000000%","styleBak":""},"sview":{"isShow":true,"style":"position:absolute;left:0.475562%;top:50.374688%;width:19.537674%;height:28.642798%"},"tube":{"isShow":false,"style":"position:absolute;left:76.525861%;top:75.353872%;width:21.003991%;height:23.980017%"},"map":{"isShow":true,"style":"position:absolute;left:79.062192%;top:6.744380%;width:20.132127%;height:33.888426%"},"name":{"isShow":true,"style":"position:absolute;left:0.475562%;top:6.994172%;width:9.075309%;height:42.381349%"},"city":{"isShow":true,"style":"position:absolute;left:9.828282%;top:6.994172%;width:10.303845%;height:42.381349%"},"date":{"isShow":false,"style":"position:absolute;left:24.214035%;top:0.000000%;width:36.023826%;"},"sex":{"isShow":false,"style":"position:absolute;left:73.593228%;top:27.560366%;width:5.072662%;"},"year":{"isShow":false,"style":"position:absolute;left:60.634162%;top:0.000000%;width:18.031728%;"},"season":{"isShow":false,"style":"position:absolute;left:62.417520%;top:14.404663%;width:4.953771%;"},"week":{"isShow":false,"style":"position:absolute;left:67.529812%;top:14.487927%;width:11.175708%;"},"age":{"isShow":false,"style":"position:absolute;left:76.763642%;top:43.213988%;width:20.964361%;"},"cond":{"isShow":false,"style":"position:absolute;left:76.724012%;top:60.116570%;width:20.647319%;"},"job":{"isShow":true,"style":"position:absolute;left:0.356672%;top:79.517069%;width:25.244419%;height:19.233972%"},"detail":{"isShow":false,"style":"position:absolute;left:0.079260%;top:0.416320%;width:2.060769%;height:2.414654%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sGMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.918781%;height:100.000000%","styleBak":""},"sview":{"isShow":true,"style":"position:absolute;left:1.038853%;top:43.373494%;width:30.976711%;height:25.903614%"},"tube":{"isShow":false},"map":{"isShow":0,"style":"position:absolute;left:6.327560%;top:2.108434%;width:23.610298%;height:23.594378%"},"name":{"isShow":true,"style":"position:absolute;left:0.755530%;top:8.534137%;width:14.260620%;height:33.835341%"},"city":{"isShow":true,"style":"position:absolute;left:15.393914%;top:8.232932%;width:17.093856%;height:34.136546%"},"date":{"isShow":0,"style":"position:absolute;left:2.644353%;top:5.120482%;width:63.086716%;"},"sex":{"isShow":0,"style":"position:absolute;left:5.949795%;top:6.726908%;width:10.010766%;"},"season":{"isShow":0,"style":"position:absolute;left:2.644353%;top:6.726908%;width:11.049619%;"},"week":{"isShow":0,"style":"position:absolute;left:3.777648%;top:6.726908%;width:23.799180%;"},"age":{"isShow":0,"style":"position:absolute;left:7.271972%;top:6.626506%;width:14.260620%;"},"cond":{"isShow":0,"style":"position:absolute;left:4.533177%;top:8.232932%;width:44.765125%;"},"job":{"isShow":true,"style":"position:absolute;left:1.038853%;top:69.979920%;width:38.248683%;height:20.883534%"},"detail":{"isShow":false,"style":"position:absolute;left:4.438736%;top:6.325301%;width:5.288707%;height:2.911647%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
 
-  const sSViewMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":true,"style":"position:absolute;left:0.435932%;top:46.960866%;width:18.784701%;height:31.640300%"},"sview":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.947292%;height:100.000000%","styleBak":""},"tube":{"is_show":false,"style":"position:absolute;left:77.397724%;top:71.940050%;width:19.577305%;height:26.311407%"},"map":{"is_show":true,"style":"position:absolute;left:79.181082%;top:6.661116%;width:20.092497%;height:31.140716%"},"name":{"is_show":true,"style":"position:absolute;left:0.317041%;top:8.076603%;width:9.669762%;height:38.134888%"},"city":{"is_show":true,"style":"position:absolute;left:10.303845%;top:8.159867%;width:8.718638%;height:38.467943%"},"date":{"is_show":false,"style":"position:absolute;left:24.134774%;top:0.416320%;width:36.657908%;"},"sex":{"is_show":false,"style":"position:absolute;left:74.425462%;top:26.228143%;width:4.161168%;"},"year":{"is_show":false,"style":"position:absolute;left:61.188984%;top:0.749376%;width:17.318385%;"},"season":{"is_show":false,"style":"position:absolute;left:63.685685%;top:13.905079%;width:4.359319%;"},"week":{"is_show":false,"style":"position:absolute;left:68.282785%;top:13.905079%;width:10.343475%;"},"age":{"is_show":false,"style":"position:absolute;left:77.358094%;top:39.883430%;width:20.528429%;"},"cond":{"is_show":false,"style":"position:absolute;left:77.358094%;top:57.368859%;width:20.488799%;"},"job":{"is_show":true,"style":"position:absolute;left:0.277411%;top:79.184013%;width:25.442570%;height:19.900083%"},"detail":{"is_show":false,"style":"position:absolute;left:0.079260%;top:0.416320%;width:2.060769%;height:2.414654%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sSViewSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":true,"style":"position:absolute;left:0.566647%;top:42.068273%;width:35.132123%;height:26.004016%"},"sview":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.918781%;height:100.000000%","styleBak":""},"tube":{"is_show":false},"map":{"is_show":0,"style":"position:absolute;left:6.516442%;top:1.405622%;width:24.082504%;height:25.200803%"},"name":{"is_show":true,"style":"position:absolute;left:0.472206%;top:9.538153%;width:16.243885%;height:31.927711%"},"city":{"is_show":true,"style":"position:absolute;left:16.999414%;top:10.040161%;width:18.227150%;height:31.927711%"},"date":{"is_show":0,"style":"position:absolute;left:3.399883%;top:4.618474%;width:56.759156%;"},"sex":{"is_show":0,"style":"position:absolute;left:4.249854%;top:7.128514%;width:8.688590%;"},"season":{"is_show":0,"style":"position:absolute;left:3.399883%;top:6.124498%;width:9.255237%;"},"week":{"is_show":0,"style":"position:absolute;left:4.438736%;top:6.024096%;width:16.621650%;"},"age":{"is_show":0,"style":"position:absolute;left:6.044236%;top:6.024096%;width:17.377179%;"},"cond":{"is_show":0,"style":"position:absolute;left:3.966530%;top:8.232932%;width:52.792626%;"},"job":{"is_show":true,"style":"position:absolute;left:0.566647%;top:68.674699%;width:40.515271%;height:21.987952%"},"detail":{"is_show":false,"style":"position:absolute;left:5.005383%;top:8.433735%;width:5.288707%;height:2.911647%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sSViewMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.435932%;top:46.960866%;width:18.784701%;height:31.640300%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.947292%;height:100.000000%","styleBak":""},"tube":{"isShow":false,"style":"position:absolute;left:77.397724%;top:71.940050%;width:19.577305%;height:26.311407%"},"map":{"isShow":true,"style":"position:absolute;left:79.181082%;top:6.661116%;width:20.092497%;height:31.140716%"},"name":{"isShow":true,"style":"position:absolute;left:0.317041%;top:8.076603%;width:9.669762%;height:38.134888%"},"city":{"isShow":true,"style":"position:absolute;left:10.303845%;top:8.159867%;width:8.718638%;height:38.467943%"},"date":{"isShow":false,"style":"position:absolute;left:24.134774%;top:0.416320%;width:36.657908%;"},"sex":{"isShow":false,"style":"position:absolute;left:74.425462%;top:26.228143%;width:4.161168%;"},"year":{"isShow":false,"style":"position:absolute;left:61.188984%;top:0.749376%;width:17.318385%;"},"season":{"isShow":false,"style":"position:absolute;left:63.685685%;top:13.905079%;width:4.359319%;"},"week":{"isShow":false,"style":"position:absolute;left:68.282785%;top:13.905079%;width:10.343475%;"},"age":{"isShow":false,"style":"position:absolute;left:77.358094%;top:39.883430%;width:20.528429%;"},"cond":{"isShow":false,"style":"position:absolute;left:77.358094%;top:57.368859%;width:20.488799%;"},"job":{"isShow":true,"style":"position:absolute;left:0.277411%;top:79.184013%;width:25.442570%;height:19.900083%"},"detail":{"isShow":false,"style":"position:absolute;left:0.079260%;top:0.416320%;width:2.060769%;height:2.414654%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sSViewSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.566647%;top:42.068273%;width:35.132123%;height:26.004016%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.918781%;height:100.000000%","styleBak":""},"tube":{"isShow":false},"map":{"isShow":0,"style":"position:absolute;left:6.516442%;top:1.405622%;width:24.082504%;height:25.200803%"},"name":{"isShow":true,"style":"position:absolute;left:0.472206%;top:9.538153%;width:16.243885%;height:31.927711%"},"city":{"isShow":true,"style":"position:absolute;left:16.999414%;top:10.040161%;width:18.227150%;height:31.927711%"},"date":{"isShow":0,"style":"position:absolute;left:3.399883%;top:4.618474%;width:56.759156%;"},"sex":{"isShow":0,"style":"position:absolute;left:4.249854%;top:7.128514%;width:8.688590%;"},"season":{"isShow":0,"style":"position:absolute;left:3.399883%;top:6.124498%;width:9.255237%;"},"week":{"isShow":0,"style":"position:absolute;left:4.438736%;top:6.024096%;width:16.621650%;"},"age":{"isShow":0,"style":"position:absolute;left:6.044236%;top:6.024096%;width:17.377179%;"},"cond":{"isShow":0,"style":"position:absolute;left:3.966530%;top:8.232932%;width:52.792626%;"},"job":{"isShow":true,"style":"position:absolute;left:0.566647%;top:68.674699%;width:40.515271%;height:21.987952%"},"detail":{"isShow":false,"style":"position:absolute;left:5.005383%;top:8.433735%;width:5.288707%;height:2.911647%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
 
-  const sTubeMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":false,"style":"position:absolute;left:0.000000%;top:63.316993%;width:16.089837%;height:34.885621%"},"sview":{"is_show":false,"style":"position:absolute;left:16.274777%;top:63.643791%;width:16.681647%;height:34.150327%"},"tube":{"is_show":true,"style":"position:absolute;left:34.805831%;top:0.000000%;width:64.322359%;height:100.408497%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"is_show":false,"style":"position:absolute;left:0.000000%;top:0.081699%;width:16.829599%;height:36.928105%"},"name":{"is_show":true,"style":"position:absolute;left:0.000000%;top:25.816993%;width:11.725237%;height:73.529412%"},"city":{"is_show":true,"style":"position:absolute;left:12.021142%;top:25.735294%;width:22.562760%;height:73.611111%"},"date":{"is_show":false,"style":"position:absolute;left:50.118917%;top:0.000000%;width:49.342166%;"},"sex":{"is_show":false,"style":"position:absolute;left:86.182344%;top:22.630719%;width:13.389703%;"},"year":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:34.583902%;"},"season":{"is_show":false,"style":"position:absolute;left:82.483531%;top:0.653595%;width:4.808457%;"},"week":{"is_show":false,"style":"position:absolute;left:69.870579%;top:0.408497%;width:12.206083%;"},"age":{"is_show":false,"style":"position:absolute;left:35.027760%;top:80.473856%;width:23.376498%;"},"cond":{"is_show":false,"style":"position:absolute;left:68.982863%;top:79.575163%;width:29.775445%;"},"job":{"is_show":false,"style":"position:absolute;left:34.768843%;top:78.022876%;width:34.029080%;height:21.977124%"},"detail":{"is_show":true,"style":"position:absolute;left:0.000000%;top:4.983660%;width:1.923383%;height:2.287582%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sTubeSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:15.488355%;height:37.673426%"},"sview":{"is_show":false,"style":"position:absolute;left:0.000000%;top:37.886873%;width:15.205032%;height:27.641409%"},"tube":{"is_show":true,"style":"z-index:0;position:absolute;left:33.148858%;top:27.961580%;width:65.919952%;height:68.943436%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"is_show":false,"style":"position:absolute;left:15.771679%;top:0.000000%;width:17.566062%;height:38.633938%"},"name":{"is_show":true,"style":"position:absolute;left:0.094441%;top:0.000000%;width:15.960561%;height:97.545358%"},"city":{"is_show":true,"style":"position:absolute;left:16.055003%;top:0.000000%;width:16.810532%;height:97.118463%"},"date":{"is_show":false,"style":"position:absolute;left:50.148273%;top:0.000000%;width:49.298302%;"},"sex":{"is_show":true,"style":"position:absolute;left:67.808775%;top:13.127001%;width:8.688590%;"},"year":{"is_show":true,"style":"position:absolute;left:33.054417%;top:0.000000%;width:33.998829%;"},"season":{"is_show":false,"style":"position:absolute;left:91.041309%;top:13.340448%;width:9.349678%;"},"week":{"is_show":true,"style":"position:absolute;left:77.536218%;top:13.127001%;width:20.210415%;"},"age":{"is_show":true,"style":"position:absolute;left:67.714334%;top:0.106724%;width:26.821298%;"},"cond":{"is_show":true,"style":"position:absolute;left:33.054417%;top:14.514408%;width:33.904388%;"},"job":{"is_show":false,"style":"position:absolute;left:34.187711%;top:78.121665%;width:65.069981%;height:20.277481%"},"detail":{"is_show":true,"style":"position:absolute;left:0.000000%;top:53.681964%;width:18.699356%;height:43.649947%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sTubeMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":true,"style":"position:absolute;left:0.046321%;top:69.278997%;width:14.915279%;height:30.825496%"},"sview":{"is_show":true,"style":"position:absolute;left:15.239525%;top:69.070010%;width:17.926128%;height:31.138976%"},"tube":{"is_show":true,"style":"z-index:0;position:absolute;left:33.489897%;top:0.000000%;width:66.238663%;height:100.313480%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"is_show":false,"style":"position:absolute;left:0.185283%;top:42.006270%;width:14.683676%;height:26.541275%"},"name":{"is_show":true,"style":"position:absolute;left:0.046321%;top:0.000000%;width:15.007921%;height:68.861024%"},"city":{"is_show":true,"style":"position:absolute;left:15.239525%;top:0.000000%;width:17.833486%;height:68.234065%"},"date":{"is_show":false,"style":"position:absolute;left:50.072724%;top:0.000000%;width:49.285271%;"},"sex":{"is_show":false,"style":"position:absolute;left:86.156583%;top:22.570533%;width:13.340374%;"},"year":{"is_show":false,"style":"position:absolute;left:50.072724%;top:22.570533%;width:17.277637%;"},"season":{"is_show":false,"style":"position:absolute;left:80.644414%;top:22.570533%;width:5.141603%;"},"week":{"is_show":false,"style":"position:absolute;left:67.767248%;top:22.570533%;width:12.506601%;"},"age":{"is_show":false,"style":"position:absolute;left:50.072724%;top:38.453501%;width:8.615658%;"},"cond":{"is_show":false,"style":"position:absolute;left:62.671966%;top:57.053292%;width:36.547067%;"},"job":{"is_show":false,"style":"position:absolute;left:34.184709%;top:78.160920%;width:65.034324%;height:20.167189%"},"detail":{"is_show":true,"style":"position:absolute;left:0.138962%;top:34.587252%;width:9.171507%;height:33.855799%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sTubeMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"is_show":true,"style":"position:absolute;left:33.148858%;top:54.331551%;width:32.015564%;height:29.411765%"},"sview":{"is_show":true,"style":"position:absolute;left:65.164422%;top:54.331551%;width:33.809947%;height:29.197861%"},"tube":{"is_show":true,"style":"z-index:0;position:absolute;left:32.959976%;top:0.000000%;width:66.864364%;height:53.903743%","vidAutoChange":true,"styleBak":"position:absolute;left:32.959976%;top:0.000000%;width:66.486599%;height:53.796791%"},"map":{"is_show":false,"style":"position:absolute;left:51.659332%;top:54.331551%;width:23.326974%;height:29.625668%"},"name":{"is_show":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:14.921708%;height:53.475936%"},"city":{"is_show":true,"style":"position:absolute;left:15.110591%;top:0.000000%;width:17.471620%;height:53.582888%"},"date":{"is_show":true,"style":"position:absolute;left:0.188882%;top:84.812834%;width:41.931889%;"},"sex":{"is_show":true,"style":"position:absolute;left:0.000000%;top:67.058824%;width:10.766296%;"},"year":{"is_show":true,"style":"position:absolute;left:0.000000%;top:54.010695%;width:24.082504%;"},"season":{"is_show":true,"style":"position:absolute;left:24.082504%;top:53.903743%;width:9.349678%;"},"week":{"is_show":false,"style":"position:absolute;left:0.283324%;top:67.058824%;width:23.988063%;"},"age":{"is_show":true,"style":"position:absolute;left:11.616267%;top:65.668449%;width:17.849385%;"},"cond":{"is_show":false,"style":"position:absolute;left:0.188882%;top:73.262032%;width:33.621064%;"},"job":{"is_show":true,"style":"position:absolute;left:42.404095%;top:84.385027%;width:55.248097%;height:21.604278%"},"detail":{"is_show":true,"style":"position:absolute;left:0.000000%;top:60.636364%;width:18.699356%;height:34.652406%"},"ana":{"is_show":false},"ex":[{"is_show":false,"style":"position:absolute;left:0%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:25%;top:80%;"},{"is_show":false,"style":"position:absolute;;left:50%;top:80%;"},{"is_show":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sTubeMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:63.316993%;width:16.089837%;height:34.885621%"},"sview":{"isShow":false,"style":"position:absolute;left:16.274777%;top:63.643791%;width:16.681647%;height:34.150327%"},"tube":{"isShow":true,"style":"position:absolute;left:34.805831%;top:0.000000%;width:64.322359%;height:100.408497%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.081699%;width:16.829599%;height:36.928105%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:25.816993%;width:11.725237%;height:73.529412%"},"city":{"isShow":true,"style":"position:absolute;left:12.021142%;top:25.735294%;width:22.562760%;height:73.611111%"},"date":{"isShow":false,"style":"position:absolute;left:50.118917%;top:0.000000%;width:49.342166%;"},"sex":{"isShow":false,"style":"position:absolute;left:86.182344%;top:22.630719%;width:13.389703%;"},"year":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:34.583902%;"},"season":{"isShow":false,"style":"position:absolute;left:82.483531%;top:0.653595%;width:4.808457%;"},"week":{"isShow":false,"style":"position:absolute;left:69.870579%;top:0.408497%;width:12.206083%;"},"age":{"isShow":false,"style":"position:absolute;left:35.027760%;top:80.473856%;width:23.376498%;"},"cond":{"isShow":false,"style":"position:absolute;left:68.982863%;top:79.575163%;width:29.775445%;"},"job":{"isShow":false,"style":"position:absolute;left:34.768843%;top:78.022876%;width:34.029080%;height:21.977124%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:4.983660%;width:1.923383%;height:2.287582%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sTubeSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:15.488355%;height:37.673426%"},"sview":{"isShow":false,"style":"position:absolute;left:0.000000%;top:37.886873%;width:15.205032%;height:27.641409%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:33.148858%;top:27.961580%;width:65.919952%;height:68.943436%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:15.771679%;top:0.000000%;width:17.566062%;height:38.633938%"},"name":{"isShow":true,"style":"position:absolute;left:0.094441%;top:0.000000%;width:15.960561%;height:97.545358%"},"city":{"isShow":true,"style":"position:absolute;left:16.055003%;top:0.000000%;width:16.810532%;height:97.118463%"},"date":{"isShow":false,"style":"position:absolute;left:50.148273%;top:0.000000%;width:49.298302%;"},"sex":{"isShow":true,"style":"position:absolute;left:67.808775%;top:13.127001%;width:8.688590%;"},"year":{"isShow":true,"style":"position:absolute;left:33.054417%;top:0.000000%;width:33.998829%;"},"season":{"isShow":false,"style":"position:absolute;left:91.041309%;top:13.340448%;width:9.349678%;"},"week":{"isShow":true,"style":"position:absolute;left:77.536218%;top:13.127001%;width:20.210415%;"},"age":{"isShow":true,"style":"position:absolute;left:67.714334%;top:0.106724%;width:26.821298%;"},"cond":{"isShow":true,"style":"position:absolute;left:33.054417%;top:14.514408%;width:33.904388%;"},"job":{"isShow":false,"style":"position:absolute;left:34.187711%;top:78.121665%;width:65.069981%;height:20.277481%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:53.681964%;width:18.699356%;height:43.649947%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sTubeMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.046321%;top:69.278997%;width:14.915279%;height:30.825496%"},"sview":{"isShow":true,"style":"position:absolute;left:15.239525%;top:69.070010%;width:17.926128%;height:31.138976%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:33.489897%;top:0.000000%;width:66.238663%;height:100.313480%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:0.185283%;top:42.006270%;width:14.683676%;height:26.541275%"},"name":{"isShow":true,"style":"position:absolute;left:0.046321%;top:0.000000%;width:15.007921%;height:68.861024%"},"city":{"isShow":true,"style":"position:absolute;left:15.239525%;top:0.000000%;width:17.833486%;height:68.234065%"},"date":{"isShow":false,"style":"position:absolute;left:50.072724%;top:0.000000%;width:49.285271%;"},"sex":{"isShow":false,"style":"position:absolute;left:86.156583%;top:22.570533%;width:13.340374%;"},"year":{"isShow":false,"style":"position:absolute;left:50.072724%;top:22.570533%;width:17.277637%;"},"season":{"isShow":false,"style":"position:absolute;left:80.644414%;top:22.570533%;width:5.141603%;"},"week":{"isShow":false,"style":"position:absolute;left:67.767248%;top:22.570533%;width:12.506601%;"},"age":{"isShow":false,"style":"position:absolute;left:50.072724%;top:38.453501%;width:8.615658%;"},"cond":{"isShow":false,"style":"position:absolute;left:62.671966%;top:57.053292%;width:36.547067%;"},"job":{"isShow":false,"style":"position:absolute;left:34.184709%;top:78.160920%;width:65.034324%;height:20.167189%"},"detail":{"isShow":true,"style":"position:absolute;left:0.138962%;top:34.587252%;width:9.171507%;height:33.855799%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sTubeMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:33.148858%;top:54.331551%;width:32.015564%;height:29.411765%"},"sview":{"isShow":true,"style":"position:absolute;left:65.164422%;top:54.331551%;width:33.809947%;height:29.197861%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:32.959976%;top:0.000000%;width:66.864364%;height:53.903743%","vidAutoChange":true,"styleBak":"position:absolute;left:32.959976%;top:0.000000%;width:66.486599%;height:53.796791%"},"map":{"isShow":false,"style":"position:absolute;left:51.659332%;top:54.331551%;width:23.326974%;height:29.625668%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:14.921708%;height:53.475936%"},"city":{"isShow":true,"style":"position:absolute;left:15.110591%;top:0.000000%;width:17.471620%;height:53.582888%"},"date":{"isShow":true,"style":"position:absolute;left:0.188882%;top:84.812834%;width:41.931889%;"},"sex":{"isShow":true,"style":"position:absolute;left:0.000000%;top:67.058824%;width:10.766296%;"},"year":{"isShow":true,"style":"position:absolute;left:0.000000%;top:54.010695%;width:24.082504%;"},"season":{"isShow":true,"style":"position:absolute;left:24.082504%;top:53.903743%;width:9.349678%;"},"week":{"isShow":false,"style":"position:absolute;left:0.283324%;top:67.058824%;width:23.988063%;"},"age":{"isShow":true,"style":"position:absolute;left:11.616267%;top:65.668449%;width:17.849385%;"},"cond":{"isShow":false,"style":"position:absolute;left:0.188882%;top:73.262032%;width:33.621064%;"},"job":{"isShow":true,"style":"position:absolute;left:42.404095%;top:84.385027%;width:55.248097%;height:21.604278%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:60.636364%;width:18.699356%;height:34.652406%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
 
   const isSm = window.innerWidth < 1400;
 
@@ -8504,7 +8507,7 @@ const onClickStyleLoad = (type) => {
     case 'default':
       if (gg.dt === DT_COVID || mm.get.data.indexOf('checkin') === 0) {
         settingsLoad(isSm ? sDefCovidSmAbs : sDefCovidMdAbs);
-      } else if (pnl.gmap.is_show || pnl.sview.is_show || pnl.map.is_show) {
+      } else if (pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow) {
         settingsLoad(isSm ? sDefMapSmAbs : sDefMapMdAbs);
       } else {
         settingsLoad(isSm ? sDefSmAbs : sDefMdAbs);
@@ -8530,7 +8533,7 @@ const onClickStyleLoad = (type) => {
       if (isSp) {
         settingsLoad(isSm ? sTubeSmAbs : sTubeMdAbs);
       } else {
-        if (pnl.gmap.is_show || pnl.sview.is_show || pnl.map.is_show) {
+        if (pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow) {
           settingsLoad(isSm ? sTubeMapSmAbs : sTubeMapMdAbs);
         } else {
           settingsLoad(isSm ? sTubeSmAbs : sTubeMdAbs);
@@ -8545,7 +8548,7 @@ const onClickStyleLoad = (type) => {
 }
 const onClickStyleReset = () => {
   const isSm = window.innerWidth < 1400;
-  const isMap = pnl.gmap.is_show || pnl.sview.is_show || pnl.map.is_show;
+  const isMap = pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow;
   setPanelXYWH(null, 2);// absolute化
   _.forEach(pnl, (v, k) => {
     if (v.style) {
@@ -8556,7 +8559,7 @@ const onClickStyleReset = () => {
           v.style = '';
         }
       } else {
-        v.style = v.is_show ? '' : 'display:none';
+        v.style = v.isShow ? '' : 'display:none';
       }
     }
     if (v?.styleBak !== null) v.styleBak = null;
