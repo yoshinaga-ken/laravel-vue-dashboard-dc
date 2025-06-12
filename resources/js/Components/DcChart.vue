@@ -127,17 +127,17 @@
 
             <label v-if="!pnl.name.isHidden" for="ch_pnl_name">
               <input id="ch_pnl_name" type="checkbox" v-model="pnl.name.isShow">
-              <span v-html="pnl.name.title"></span>&nbsp;
+              <span v-html="mm.util.shortTitle(pnl.name.title)" :title="pnl.name.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.city.isHidden" for="ch_pnl_city">
             	<input id="ch_pnl_city" type="checkbox" v-model="pnl.city.isShow">
-            	<span v-html="pnl.city.title"></span>&nbsp;
+            	<span v-html="mm.util.shortTitle(pnl.city.title)" :title="pnl.city.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.date.isHidden" for="ch_pnl_date">
             	<input id="ch_pnl_date" type="checkbox" v-model="pnl.date.isShow">
-            	<span v-html="pnl.date.title"></span>&nbsp;
+            	<span v-html="mm.util.shortTitle(pnl.date.title)" :title="pnl.date.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.year.isHidden" for="ch_pnl_year">
@@ -157,29 +157,31 @@
 
             <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex">
             	<input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.isShow">
-            	<span v-html="pnl.sex.title"></span>&nbsp;
+            	<span v-html="mm.util.shortTitle(pnl.sex.title)" :title="pnl.sex.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.age.isHidden" for="ch_pnl_age">
             	<input id="ch_pnl_age" type="checkbox" v-model="pnl.age.isShow">
-            	<span v-html="pnl.age.title"></span>&nbsp;
+            	<span v-html="mm.util.shortTitle(pnl.age.title)" :title="pnl.age.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond">
             	<input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.isShow">
-            	<span v-html="pnl.cond.title"></span>&nbsp;
+            	<span v-html="mm.util.shortTitle(pnl.cond.title)" :title="pnl.cond.title"></span>&nbsp;
             </label>
 
             <label v-if="!pnl.job.isHidden" for="ch_pnl_job">
             	<input id="ch_pnl_job" type="checkbox" v-model="pnl.job.isShow">
-            	<span v-html="pnl.job.title"></span>&nbsp;
+            	<span v-html="mm.util.shortTitle(pnl.job.title)" :title="pnl.job.title"></span>&nbsp;
             </label>
 
 
-            <template v-for="(item, i) in pnl.ex">
+            <template v-for="(item) in pnl.ex">
                 <template v-if="!item.isHidden">
-                    <label> <input type="checkbox" v-model="item.isShow"><span
-                      v-html="item.title"></span>&nbsp;</label>
+                    <label>
+                      <input type="checkbox" v-model="item.isShow">
+                      <span v-html="mm.util.shortTitle(item.title)" :title="item.title"></span>&nbsp;
+                    </label>
                 </template>
             </template>
 
@@ -3001,6 +3003,10 @@ const mm = {
         ret += `<tr><td>${ex.title}</td><td>: ${v}</td></tr>`;
       }
       return ret;
+    },
+    shortTitle: (text, maxLength = 7) => {
+      if (isSp) return text;
+      return text.substring(0, maxLength) + (text.length > maxLength ? '…' : '');
     }
   },
   // group_reduce function set (CND,PL1,AGE)
