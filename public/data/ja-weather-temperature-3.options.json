@@ -20,6 +20,7 @@
   "chartDate2": {
     "isShow": true,
     "chartType": "lines",
+    "elasticYMinMax": true,
     "renderArea": true,
     "renderDataPoints": true,
     "isFilterMissingCorrect": true

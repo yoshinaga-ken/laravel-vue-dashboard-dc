@@ -16,15 +16,21 @@
   "chartName": {},
   "chartCity": {},
   "chartDate": {
+    "elasticY": false,
+    "#yDomain": [10,40],
     "isRangeChart": true,
     "isFilterMissingCorrect": false
   },
   "chartDate2": {
     "isShow": true,
-    "chartType": "lines",
+    "elasticY": true,
+    "elasticYMinMax": true,
+    "#yDomain": [10,40],
+    "#chartType": "stacks",
     "renderArea": true,
     "renderDataPoints": true,
-    "isFilterMissingCorrect": true
+    "isFilterMissingCorrect": true,
+    "isLabel": true
   },
   "chartYear": {
     "isLegend": true,

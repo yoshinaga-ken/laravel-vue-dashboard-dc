@@ -93,7 +93,9 @@
               </label>
               <span v-if="!isSp && pnl.gmap.isShow" class="ui-icon sp_icon"
                     :class="pnl.gmap.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                    @click="onClickPanelMaximize('chart_gmap')"></span>
+                    title="GoogleMapウインドウを最大化します"
+                    @click="onClickPanelMaximize('chart_gmap')">
+              </span>
               &nbsp;
             </template>
 
@@ -104,7 +106,9 @@
               </label>
               <span v-if="!isSp && pnl.sview.isShow" class="ui-icon sp_icon"
                     :class="pnl.sview.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                    @click="onClickPanelMaximize('chart_sview')"></span>
+                    title="ストリートビューウインドウを最大化します"
+                    @click="onClickPanelMaximize('chart_sview')">
+              </span>
               &nbsp;
             </template>
 
@@ -115,7 +119,9 @@
               </label>
               <span v-if="!isSp && pnl.tube.isShow" class="ui-icon sp_icon"
                     :class="pnl.tube.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                    @click="onClickPanelMaximize('chart_tube')"></span>
+                    title="YouTubeウインドウを最大化します"
+                    @click="onClickPanelMaximize('chart_tube')">
+              </span>
             </template>
 
             <span v-if="gg.dt !== DT_COVID">&nbsp;&nbsp;</span>
@@ -1373,24 +1379,7 @@ const applyRangeChartSettings = () => {
 const onChangeChartDateChart2IsShow = (newVal) => {
   settingsSave();
   if (!newVal || mm.composite2 !== null) return;
-
-  switch (true) {
-    default:
-    case mm.opt.chartDate2.chartType === 'lines':
-      pnl.date.chart2.type = CHART_DATE2_TYPE_LINES;
-      initChartDate2Stacks(mm.config.cDate.width, false);
-      applyRangeChartSettings();
-      break;
-    case gg.dt === DT_COVID:
-      pnl.date.chart2.type = CHART_DATE2_TYPE_COVID;
-      initChartDate2Covid(mm.config.cDate.width);
-      break;
-    case mm.opt.chartDate2.chartType === 'stacks':
-      pnl.date.chart2.type = CHART_DATE2_TYPE_STACKS;
-      initChartDate2Stacks(mm.config.cDate.width, true);
-      applyRangeChartSettings();
-      break;
-  }
+  initChartDate2();
   mm.dateStackShow(STACK_CND);
   dc.renderAll(CGRP_SHOW);
 };
@@ -1871,7 +1860,6 @@ const mm = {
       preMatch: 0,  // 1:前方一致(word*) 0:部分一致(*word*)
     },
     cDate: {
-      is_elasticY: 1,
       width: 200,
       colors: COL_DATE,
     },
@@ -2104,10 +2092,15 @@ const mm = {
     chartName: {},
     chartCity: {},
     chartDate: {
+      elasticY: true,
       isRangeChart: false,
       isFilterMissingCorrect: false
     },
     chartDate2: {
+      chartType: "lines",     // lines|stacks
+      elasticY: true,　　　    // y軸の表示範囲を、0~yAxisMax()に動的に変化させる
+      elasticYMinMax: false,　// y軸の表示範囲を、yAxisMin()(not zero)~yAxisMax()に動的に変化させる
+      //yDomain: [min,max],   // y軸の表示範囲を、min~maxに制限する。elasticY:falseになる
       isRangeChart: false,
       isFilterMissingCorrect: true
     },
@@ -2211,15 +2204,11 @@ const mm = {
       }
 
       // chartDate
-      if (mm.opt.chartDate.elasticY) {
-        mm.config.cDate.is_elasticY
-          = mm.opt.chartDate.elasticY
-          = Boolean(parseInt(mm.opt.chartDate.elasticY));
-      }
-
+      mm.opt.chartDate.elasticY = Boolean(parseInt(mm.opt.chartDate.elasticY ?? 1));
       mm.opt.chartDate.width = isNaN(mm.opt.chartDate.width) ? undefined : parseInt(mm.opt.chartDate.width);
 
       // chartDate2
+      mm.opt.chartDate2.elasticY = Boolean(parseInt(mm.opt.chartDate2.elasticY ?? 1));
       if (mm.opt.chartDate2 === undefined) {
         mm.opt.chartDate2 = {chartType: mm.config.cDate2.chartType};
       }
@@ -3788,7 +3777,7 @@ const mm = {
         pnl.date.isBrushOn = true;
       }
     }
-    if (!mm.is_trigger_search && isRedraw) dc.redrawAll(CGRP_SHOW);
+    if (!mm.is_trigger_search && isRedraw) mm.renderAllChart();
   },
   onChangeURL: function (type, arg) {
     let url = '', filters;
@@ -4493,6 +4482,13 @@ const mm = {
 
       return legend;
     },
+    // StackMixin の yAxisMin メソッドのゼロ除外バージョン
+    // @see src/base/stack-mixin.js:188
+    yAxisMin: (chart) => {
+      const data = chart._flattenStack();
+      const filteredData = data.filter(v => v.y !== 0); // フィルタ欠損値(0)を除外
+      return _.minBy(filteredData, p => p.y).y;
+    },
     setStacks: (chart, group) => {
       let i;
       // スタック登録 - CHART_DATE_STACK_GRP[STACK_CND]
@@ -4523,7 +4519,7 @@ const mm = {
       return chart;
     },
     stackOn: (chart, stackOn) => {
-      // StackMixin の data メソッドのをオーバーバード
+      // StackMixin の data メソッドをオーバーバードする
       // @see src/base/stack-mixin.js:24
       chart.data(function () {
         const layers = this._stack.filter(this._visibility);
@@ -4653,7 +4649,16 @@ const mm = {
   },
   onChartDatePretransition: function (chart) {
     let ci = chart.chartID();
-//console.log('on_chartDate_pretransition() id:'+ci);
+
+    if (mm.opt.chartDate2?.elasticYMinMax) {
+      if (mm.composite2) {
+        const max = mm.chartDate2.yAxisMax();
+        const min = mm.chart.yAxisMin(mm.chartDate2);
+        const div = parseInt((max - min) * 0.1);
+        const range = [min - div, max + div];
+        mm.composite2.elasticY(false).y(d3.scaleLinear().domain(range));
+      }
+    }
 
     let is_comp = mm.composite.chartID() === ci;
     let flt = mm.chartName.filters();
@@ -4837,10 +4842,6 @@ const mm = {
     mm.composite2.legend().y(pref_mode ? -30 : 0);
   },
   renderAllChart: function () {
-    if (!mm.config.cDate.is_elasticY) {
-      mm.chartDate.y(d3.scaleLinear().domain([0, _.max(_.map(mm.gpDate.all(), 'value')) + 10])); //高さ範囲再計算
-    }
-
     dc.renderAll(CGRP_SHOW);
   },
   updateGMap: function () {
@@ -5809,7 +5810,7 @@ const initChartDate = (chartDateW) => {
     .renderHorizontalGridLines(true)
     .renderVerticalGridLines(gg.dt !== DT_COVID)
     .brushOn(false)
-    .elasticY(mm.config.cDate.is_elasticY) //yAxisの高さを動的に変化させる
+    .elasticY(mm.opt.chartDate.elasticY) //yAxisの高さを動的に変化させる
     .title(v => mm.util.stackedTitle(v, valueFormat, mm.opt.common.unit))
     .on('pretransition', mm.onChartDatePretransition)
     .addFilterHandler(mm.addFilterHandler)
@@ -5833,8 +5834,29 @@ const initChartDate = (chartDateW) => {
   });
   mm.composite.yAxis().tickFormat(d3.format(".2s")).ticks(5); //.tickFormat(d3.format("d"));
 
+  if (mm.opt.chartDate.yDomain) {
+    mm.composite.elasticY(false).y(d3.scaleLinear().domain(mm.opt.chartDate.yDomain));
+  }
 }
-
+const initChartDate2 = () => {
+  switch (true) {
+    default:
+    case mm.opt.chartDate2.chartType === 'lines':
+      pnl.date.chart2.type = CHART_DATE2_TYPE_LINES;
+      initChartDate2Stacks(mm.config.cDate.width, false);
+      applyRangeChartSettings();
+      break;
+    case gg.dt === DT_COVID:
+      pnl.date.chart2.type = CHART_DATE2_TYPE_COVID;
+      initChartDate2Covid(mm.config.cDate.width);
+      break;
+    case mm.opt.chartDate2.chartType === 'stacks':
+      pnl.date.chart2.type = CHART_DATE2_TYPE_STACKS;
+      initChartDate2Stacks(mm.config.cDate.width, true);
+      applyRangeChartSettings();
+      break;
+  }
+};
 /**
  * CHART chartDate2 患者・PCR・死亡(YYYY-MM-DD) barChart Init
  */
@@ -6010,7 +6032,7 @@ const initChartDate2Covid = (chartDateW) => {
     .xUnits(d3.timeDay)
     .renderHorizontalGridLines(true)
     .brushOn(false)
-    .elasticY(mm.config.cDate.is_elasticY) //yAxisの高さを動的に変化させる
+    .elasticY(mm.opt.chartDate.elasticY) //yAxisの高さを動的に変化させる
     .title(v => mm.util.stackedTitle(v, valueFormat, mm.opt.common.unit))
     .on('pretransition', mm.onChartDatePretransition)
     .compose([mm.chartDate2, mm.chartLine2])
@@ -6033,6 +6055,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
   const gpDate = dimDate.group().reduceSum(function (d) {
     return mm.group_reduce.base(d);
   });
+  mm.gpDate2 = gpDate;
   const gpDateStk = dimDate.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
 
   mm.composite2 = new dc.CompositeChart("#chart_date2", CGRP_SHOW);
@@ -6047,16 +6070,19 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     .transitionDuration(750)
     .dimension(dimDate)
     .hidableStacks(false) // stackNameLegend click でタックを非表示または表示
-    .yAxisPadding('12%')
+    .yAxisPadding('12%');
     // .useRightYAxis(IS_SP)
     // .elasticX(true)
     // .xAxisPadding(2)
     // .xAxisPaddingUnit()
-    // .renderLabel(true)
-    // .label((d) => {
-    //   return d.data.value.total === 0 ? '' : php_number_format(d.data.value.total);
-    // })
-  ;
+
+  if (mm.opt.chartDate2.isLabel) {
+    mm.chartDate2
+      .renderLabel(true)
+      .label((d) => {
+        return d.data.value.total === 0 ? '' : php_number_format(d.data.value.total);
+      });
+  }
 
   mm.chartDate2.yAxis().tickFormat(d3.format(".2s")); //ticks(5); //tickFormat(d3.format("s"));
   mm.chart.stackOn(mm.chartDate2, stackOn);
@@ -6095,7 +6121,7 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     .renderHorizontalGridLines(true)
     .renderVerticalGridLines(true)
     .brushOn(false)
-    .elasticY(mm.config.cDate.is_elasticY) //yAxisの高さを動的に変化させる
+    .elasticY(mm.opt.chartDate2.elasticY) //yAxisの高さを動的に変化させる
     .compose([mm.chartDate2]);
 
   const nTick = gg.dt === DT_COVID ? 7 : (gpDate.all().length < 3 ? 2 : 14);
@@ -6105,6 +6131,10 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     return moment(s).format(format);
   });
   mm.composite2.yAxis().tickFormat(d3.format(".2s")).ticks(5); //.tickFormat(d3.format("d"));
+
+  if (mm.opt.chartDate2.yDomain) {
+    mm.composite2.elasticY(false).y(d3.scaleLinear().domain(mm.opt.chartDate2.yDomain));
+  }
 }
 
 /**
@@ -6862,6 +6892,10 @@ const initDc = (data) => {
   pnl.date.chart2.type = gg.dt === DT_COVID ? CHART_DATE2_TYPE_COVID : CHART_DATE2_TYPE_HIDE;
   if (pnl.date.chart2.type === CHART_DATE2_TYPE_COVID) {
     initChartDate2Covid(mm.config.cDate.width);
+  } else {
+    if (mm.opt.chartDate2.isShow) {
+      initChartDate2();
+    }
   }
 
   initChartYear(chartSexH);
