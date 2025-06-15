@@ -19,7 +19,8 @@
     "elasticY": false,
     "#yDomain": [10,40],
     "isRangeChart": true,
-    "isFilterMissingCorrect": false
+    "isFilterMissingCorrect": false,
+    "labelType": 2
   },
   "chartDate2": {
     "isShow": true,
@@ -30,7 +31,8 @@
     "renderArea": true,
     "renderDataPoints": true,
     "isFilterMissingCorrect": true,
-    "isLabel": true
+    "isLabel": true,
+    "labelType": 1
   },
   "chartYear": {
     "isLegend": true,
