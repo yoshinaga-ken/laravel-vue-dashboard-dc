@@ -2094,7 +2094,8 @@ const mm = {
     chartDate: {
       elasticY: true,
       isRangeChart: false,
-      isFilterMissingCorrect: false
+      isFilterMissingCorrect: false,
+      labelType: 0            // 0:非表示 1:全て 2:min/maxのみ
     },
     chartDate2: {
       chartType: "lines",     // lines|stacks
@@ -2102,7 +2103,8 @@ const mm = {
       elasticYMinMax: false,　// y軸の表示範囲を、yAxisMin()(not zero)~yAxisMax()に動的に変化させる
       //yDomain: [min,max],   // y軸の表示範囲を、min~maxに制限する。elasticY:falseになる
       isRangeChart: false,
-      isFilterMissingCorrect: true
+      isFilterMissingCorrect: true,
+      labelType: 0            // 0:非表示 1:全て 2:min/maxのみ
     },
     chartYear: {},
     chartSeason: {},
@@ -2996,6 +2998,11 @@ const mm = {
     shortTitle: (text, maxLength = 7) => {
       if (isSp) return text;
       return text.substring(0, maxLength) + (text.length > maxLength ? '…' : '');
+    },
+    chartDateXAxisTickFormat: (s) => {
+      // 設定 || データのレンジで ミクロ/マクロ を切り替える
+      const format = mm.opt.chartDate.format ?? (mm.data.length < 3000 ? 'M/Dddd' : 'YYYY/MM');
+      return moment(s).format(format);
     }
   },
   // group_reduce function set (CND,PL1,AGE)
@@ -4487,7 +4494,14 @@ const mm = {
     yAxisMin: (chart) => {
       const data = chart._flattenStack();
       const filteredData = data.filter(v => v.y !== 0); // フィルタ欠損値(0)を除外
+      if (filteredData.length === 0) return 0;
       return _.minBy(filteredData, p => p.y).y;
+    },
+    yAxisMax: (chart) => {
+      const data = chart._flattenStack();
+      const filteredData = data.filter(v => v.y !== 0); // フィルタ欠損値(0)を除外
+      if (filteredData.length === 0) return 0;
+      return _.maxBy(filteredData, p => p.y).y;
     },
     setStacks: (chart, group) => {
       let i;
@@ -4583,6 +4597,59 @@ const mm = {
       }
       return isRedraw;
     },
+    setupLabel: (chart, labelType, isTotalTypeY = true) => {
+      switch (labelType) {
+        case 1:
+          chart
+            .renderLabel(true)
+            .label((d) => {
+              const total = isTotalTypeY ? d.y : d.data.value.total;
+              if (total === 0) return '';
+              return php_number_format(total);
+            });
+          break;
+        case 2:
+          chart
+            .renderLabel(true)
+            .on('pretransition', function () {
+              chart.__labelCache = null; // 初期化
+            })
+            .label((d) => {
+              const total = isTotalTypeY ? d.y : d.data.value.total;
+
+              if (total === 0) return '';
+
+              // 静的変数として管理（1回だけ計算）
+              if (!chart.__labelCache) {
+                chart.__labelCache = {
+                  yAxisMax: mm.chart.yAxisMax(chart),
+                  yAxisMin: mm.chart.yAxisMin(chart),
+                  maxShown: false,
+                  minShown: false
+                };
+              }
+
+              const cache = chart.__labelCache;
+              const isMax = total === cache.yAxisMax;
+              const isMin = total === cache.yAxisMin;
+
+              // 1度表示したMax/Minは表示しない
+              if (isMax && !cache.maxShown) {
+                cache.maxShown = true;
+                return php_number_format(total);
+              }
+              if (isMin && !cache.minShown) {
+                cache.minShown = true;
+                return php_number_format(total);
+              }
+
+              return '';
+            });
+          chart.__labelCache = null; // 初期化
+          break;
+      }
+
+    }
   },
   //MAPの選択Nameのエリア枠を描画
   mapSetSelectedRegions: function () {
@@ -5625,21 +5692,14 @@ const initChartDate = (chartDateW) => {
     //.useRightYAxis(IS_SP) 				// .elasticX(true)
     // .xAxisPadding(2)
     // .xAxisPaddingUnit()
-    .renderLabel(true)
-    .label(function (d, i) {
-      let ymd = moment(d.x).format('YYYYMMDD');
-
-      return (d.data.value.total === mm.dateCntMax //最大
-        || ymd === mm.dateCntTo //最新日付
-        //  ||ymd===moment(mm.dateCntTo).subtract(1, 'days').format('YYYYMMDD') //最新日付-1days
-      ) ? (d.data.value.total === 0 ? '' : php_number_format(d.data.value.total)) : '';
-      //return mm.gpDateYMMax.value===d.data.value.total ? d.data.value.total : '';
-    })
     .on('filtered', function (chart, v) {
       //mm.showFilterUi('#panel_date',chart,(f)=>moment(f).format('M/D(ddd)'));
       mm.onChartFiltered(chart, v);
     })
   ;
+
+  mm.chart.setupLabel(mm.chartDate, mm.opt.chartDate.labelType, false);
+
   mm.chartDate.yAxis().tickFormat(d3.format(".2s")).ticks(5); //tickFormat(d3.format("s"));
 
   //
@@ -5827,12 +5887,8 @@ const initChartDate = (chartDateW) => {
     .compose(gg.dt === DT_COVID ? [mm.chartDate, mm.chartLine] : [mm.chartDate])
   ;
   const nTick = gg.dt === DT_COVID ? 7 : (mm.gpDate.all().length < 3 ? 2 : 14);
-  mm.composite.xAxis().ticks(nTick).tickFormat(function (s) {
-    // データのレンジで ミクロ/マクロ を切り替える
-    const format = mm.opt.chartDate.format ?? (mm.data.length < 3000 ? 'M/Dddd' : 'YYYY/MM');
-    return moment(s).format(format);
-  });
-  mm.composite.yAxis().tickFormat(d3.format(".2s")).ticks(5); //.tickFormat(d3.format("d"));
+  mm.composite.xAxis().ticks(nTick).tickFormat(mm.util.chartDateXAxisTickFormat);
+  mm.composite.yAxis().tickFormat(d3.format(".2s")).ticks(5);
 
   if (mm.opt.chartDate.yDomain) {
     mm.composite.elasticY(false).y(d3.scaleLinear().domain(mm.opt.chartDate.yDomain));
@@ -6076,15 +6132,9 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     // .xAxisPadding(2)
     // .xAxisPaddingUnit()
 
-  if (mm.opt.chartDate2.isLabel) {
-    mm.chartDate2
-      .renderLabel(true)
-      .label((d) => {
-        return d.data.value.total === 0 ? '' : php_number_format(d.data.value.total);
-      });
-  }
+  mm.chart.setupLabel(mm.chartDate2, mm.opt.chartDate2.labelType, true);
 
-  mm.chartDate2.yAxis().tickFormat(d3.format(".2s")); //ticks(5); //tickFormat(d3.format("s"));
+  mm.chartDate2.yAxis().tickFormat(d3.format(".2s"));
   mm.chart.stackOn(mm.chartDate2, stackOn);
 
   // スタック登録 - CHART_DATE_STACK_GRP[0]
@@ -6121,16 +6171,15 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     .renderHorizontalGridLines(true)
     .renderVerticalGridLines(true)
     .brushOn(false)
-    .elasticY(mm.opt.chartDate2.elasticY) //yAxisの高さを動的に変化させる
+    .title((d) => {
+      return `${mm.util.chartDateXAxisTickFormat(d.key)} : ${php_number_format(d.value.total)} ${mm.opt.common.unit}`;
+    })
+    .elasticY(mm.opt.chartDate2.elasticY)
     .compose([mm.chartDate2]);
 
   const nTick = gg.dt === DT_COVID ? 7 : (gpDate.all().length < 3 ? 2 : 14);
-  mm.composite2.xAxis().ticks(nTick).tickFormat(function (s) {
-    // データのレンジで ミクロ/マクロ を切り替える
-    const format = mm.opt.chartDate.format ?? (mm.data.length < 3000 ? 'M/Dddd' : 'YYYY/MM');
-    return moment(s).format(format);
-  });
-  mm.composite2.yAxis().tickFormat(d3.format(".2s")).ticks(5); //.tickFormat(d3.format("d"));
+  mm.composite2.xAxis().ticks(nTick).tickFormat(mm.util.chartDateXAxisTickFormat);
+  mm.composite2.yAxis().tickFormat(d3.format(".2s")).ticks(5);
 
   if (mm.opt.chartDate2.yDomain) {
     mm.composite2.elasticY(false).y(d3.scaleLinear().domain(mm.opt.chartDate2.yDomain));
