@@ -15,35 +15,44 @@
     "width": 1000,
     "format": "YYYY",
     "isRangeChart": true,
-    "isFilterMissingCorrect": false
+    "isFilterMissingCorrect": false,
+    "labelType": 2
   },
   "chartDate2": {
     "isShow": true,
     "chartType": "lines",
+    "elasticYMinMax": true,
     "renderArea": true,
     "renderDataPoints": true,
-    "isFilterMissingCorrect": true
+    "isFilterMissingCorrect": true,
+    "labelType": 2
   },
   "chartYear": {
     "isLegend": true
   },
-  "chartSeason": {},
+  "chartSeason": {
+    "isShow": 1
+  },
   "chartWeek": {},
   "chartSex": {
     "name": "降水量の合計(mm)",
+    "isShow": 0,
     "chartType": "bar",
     "scale": 100,
     "unit": null
   },
   "chartAge": {
     "name": "平均風速(m/s)",
+    "isShow": 0,
     "isStacked": 1,
     "scale": 0.5,
     "unit": null
   },
   "chartCond": {
     "name": "最多風向(16方位)",
-    "isStacked": 1
+    "isShow": 1,
+    "isStacked": 1,
+    "hasWindRoseChart": true
   },
   "chartJob": {
     "name": "未使用1",
@@ -54,14 +63,14 @@
     {
       "name": "降雪量合計(cm)",
       "isHidden": 0,
-      "isShow": 1,
+      "isShow": 0,
       "scale": 50,
       "isLegend": 0
     },
     {
       "name": "平均湿度(％)",
       "isHidden": 0,
-      "isShow": 1,
+      "isShow": 0,
       "isLegend": 0,
       "scale": 10
     },
@@ -163,7 +172,9 @@
   },
   "chartSView": {},
   "chartTube": {},
-  "chartDetail": {},
+  "chartDetail": {
+    "isShow": 0
+  },
   "title": "日本の12主要都市の「🌡️平均気温(℃)」の変化 @1986~(40 Years)",
   "searchPrefix": "WeatherData",
   "dataReference": "<ul><li><a target='_blank' href='https://www.data.jma.go.jp/risk/obsdl/'>過去の気象データ・ダウンロード@気象庁</a></li></ul>",
