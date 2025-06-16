@@ -5,6 +5,8 @@
   },
   "chartName": {},
   "chartCity": {
+    "name": "市区町村",
+    "isShow": 0,
     "imagePath": "@tube",
     "imageTooltip": "all",
     "orderYmd": false,
