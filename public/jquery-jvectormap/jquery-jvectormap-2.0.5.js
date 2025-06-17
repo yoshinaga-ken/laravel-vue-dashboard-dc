@@ -1449,7 +1449,7 @@ jvm.Map.prototype = {
                     width: Math.max(bbox.x + bbox.width, itemBbox.x + itemBbox.width) - Math.min(bbox.x, itemBbox.x),
                     height: Math.max(bbox.y + bbox.height, itemBbox.y + itemBbox.height) - Math.min(bbox.y, itemBbox.y)
                 });
-            return this.setScale(Math.min(this.width / bbox.width, this.height / bbox.height), -(bbox.x + bbox.width / 2), -(bbox.y + bbox.height / 2), !0, config.animate)
+            return this.params.zoomEnable ? this.setScale(Math.min(this.width / bbox.width, this.height / bbox.height), -(bbox.x + bbox.width / 2), -(bbox.y + bbox.height / 2), !0, config.animate) : this.setScale(this.scale, -(bbox.x + bbox.width / 2), -(bbox.y + bbox.height / 2), !0, config.animate)
         }
         return void 0 !== config.lat && void 0 !== config.lng ? (point = this.latLngToPoint(config.lat, config.lng),
         config.x = this.transX - point.x / this.scale,
@@ -1666,6 +1666,7 @@ jvm.Map.defaultParams = {
     zoomOnScroll: !0,
     zoomOnScrollSpeed: 3,
     panOnDrag: !0,
+    zoomEnable: !0,
     zoomMax: 8,
     zoomMin: 1,
     zoomStep: 1.6,

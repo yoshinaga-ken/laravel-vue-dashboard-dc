@@ -4677,7 +4677,7 @@ const mm = {
       }
       if (sels.length) {
         map.setSelectedRegions(sels)
-        map.setFocus({regions: sels, animate: 1});
+        map.setFocus({regions: sels, animate: mm.opt.chartMap?.animate ?? false});
         mm.map.isSelectedRegions = 0;
         mm.map.doDraw = 0;
       }
@@ -7383,6 +7383,7 @@ const drawJapanMap = () => {
         animate: false
       },
     backgroundColor: null,
+    zoomEnable: mm.opt.chartMap?.zoomEnable ?? true,
     zoomOnScroll: false,
     zoomOnScrollSpeed: 1, //def:3
     zoomStep: 1.4,
