@@ -1403,12 +1403,14 @@ const onChangeChartDateIsBrushOn = (newVal) => {
   mm.renderAllChart();
 };
 
+// ローカルストレージに設定をセーブ
 const settingsSave = () => {
   const settings = getPanelSettings();
   localStorage.setItem(settingsName(), JSON.stringify(settings));
   mm.onChangeURL('clear_layout');
 };
 
+// ローカルストレージより設定をロード
 const settingsLoad = (settingsJson = null) => {
   if (settingsJson === null) settingsJson = localStorage.getItem(settingsName());
   if (settingsJson === null) return null;
@@ -1421,13 +1423,6 @@ const settingsLoad = (settingsJson = null) => {
         delete v.style;
       }
     });
-  }
-
-  // 性別チャートは(pie|bar)の複数タイプがあるので横幅調整
-  if (pnl.sex.chartType === 'bar' && settings?.sex?.style) {
-    const chartSexW = (mm.chartSex.group().all().length + 1) * mm.config.cSex.barWidth;
-    const percent = mm.util.pxToPer(0, 0, parseInt(chartSexW, 10), 0, '#panels');
-    settings.sex.style = settings.sex.style.replace(/width:\d+(\.\d+)?%;/, `width:${percent.width}`);
   }
 
   if (settings) {
@@ -2602,14 +2597,15 @@ const mm = {
       $('#panels').css('height', h + 'px');
 
       if (!isSp) {
-        $('#panel_year').width(mm.chartYear.width());
-        $('#panel_week').width(mm.chartWeek.width());
-        $('#panel_age').width(mm.chartAge.width());
-        $('#panel_cond').width(mm.chartCond.width());
+        if (pnl.year.style === '') $('#panel_year').width(mm.chartYear.width());
+        if (pnl.week.style === '') $('#panel_week').width(mm.chartWeek.width());
+        if (pnl.age.style === '') $('#panel_age').width(mm.chartAge.width());
+        if (pnl.cond.style === '') $('#panel_cond').width(mm.chartCond.width());
         for (let k = 0; k < pnl.ex.length; k++) {
           const ex = pnl.ex[k];
           if (ex.isHidden || ex.isDcSunburstChart) continue
-          if(!ex.isShow) continue;
+          if (!ex.isShow) continue;
+          if (ex.style !== '') continue;
           $(`#panel_ex_${k}`).width(mm.chartEx[k].width());
         }
       }
@@ -5356,22 +5352,17 @@ if (G_IS_LOCAL) {
   };
 }
 const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, isLegend,
-                               chartOptions = {}, keyFormat = null, panel = null) => {
+                               chartOptions = {}, keyFormat = null) => {
   let group = dimension.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
   group = mm.groupRemoveKey(group, DN_EX);
   const groupAll = group.all();
+  const isSetCalcChartW = 1;
 
   // 幅調整
   const margins = _.merge({}, mm.config.defaultMargins, chartOptions?.margins || {});
 
-  const n = groupAll.length;
-  const barW = n > 16 ? parseInt(0.75 * barWidth) : barWidth;
-  const chartW = (n + 1) * barW + margins.right + margins.left;
-  if (!isSp && panel !== null) $(panel).width(chartW);
-
   const chart = new dc.BarChart(parent, CGRP_SHOW);
   chart
-    .width(chartW)
     .height(height)
     .useViewBoxResizing(mm.config.panelResizable)
     .margins(margins)
@@ -5400,6 +5391,15 @@ const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, 
       return mm.d3fmt(d.data.value.total);
     })
     .title(v => mm.util.stackedTitle(v, keyFormat, mm.opt.common.unit));
+
+  const n = groupAll.length;
+  const barW = n > 16 ? parseInt(0.75 * barWidth) : barWidth;
+
+  // チャートの幅を計算して調整
+  if (isSetCalcChartW) {
+    const chartW = (n + 1) * barW + margins.right + margins.left;
+    chart.width(chartW);
+  }
 
   // chart.xAxis().ticks(4);
   chart.yAxis().tickFormat(d3.format(".2s")).ticks(4);
@@ -6200,7 +6200,9 @@ const initChartYear = (height) => {
     mm.chartScroll('#div_name');
     mm.chartScroll('#div_city');
   }
-  mm.chartYear = createStackedBarChart(dimYear, '#chart_year', height, mm.config.cYear.barWidth,
+
+  mm.chartYear = createStackedBarChart(
+    dimYear, '#chart_year', height, mm.config.cYear.barWidth,
     onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartYear);
 }
 
@@ -6364,10 +6366,12 @@ const initChartSex = (chartSexW, chartSexH) => {
   if (pnl.sex.chartType === 'bar') {
     if (mm.opt.chartSex.unit === undefined) mm.opt.chartSex.unit = null;
 
-    mm.chartSex = createStackedBarChart(dimSex, chartDomId, chartSexH, mm.config.cSex.barWidth,
-      onFiltered, mm.opt.chartSex.isLegend, mm.opt.chartSex,
-      v => mm.getLabelSex(v),
-    );
+
+    mm.chartSex = createStackedBarChart(
+      dimSex, chartDomId, chartSexH, mm.config.cSex.barWidth,
+      onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartYear,
+      v => mm.getLabelSex(v));
+
     mm.chartSex.dataIndex = D_SEX;
 
     if (isSp) $(panelDomId).css('width', '100%');
@@ -6812,7 +6816,6 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
   pnl.ex[chartIndex] = pnl.ex[chartIndex] || {};
   pnl.ex[chartIndex].chartType = mm.opt.chartEx[chartIndex].chartType;
   pnl.ex[chartIndex].isHidden = false;
-  pnl.ex[chartIndex].isShow = mm.opt.chartEx[chartIndex]?.isShow ?? true;
   pnl.ex[chartIndex].title = title;
 
   // ディメンションの作成
@@ -6842,14 +6845,13 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
   } else {
     // 標準チャート (stackedBarChart) の作成
     mm.chartEx[chartIndex] =
-      createStackedBarChart(dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
+      createStackedBarChart(
+        dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
         onFiltered, mm.opt.chartEx[chartIndex].isLegend, mm.opt.chartEx[chartIndex],
-        v => mm.getLabelEx(v, chartIndex),
-        `#panel_ex_${chartIndex}`
-      );
+        v => mm.getLabelEx(v, chartIndex));
+
     mm.chartEx[chartIndex].dataIndex = dataIndex;
-    mm.chartEx[chartIndex]
-      .xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex));
+    mm.chartEx[chartIndex].xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex));
   }
 }
 const initAllChartEx = (height) => {
@@ -6870,6 +6872,12 @@ const initAllChartEx = (height) => {
 const initDc = (data) => {
   mm.data_hdr = data.shift();
   mm.data = data;
+
+  // ローカルストレージより設定をロード
+  if (settingsLoad() === null) {
+    // 設定がない場合のディフォルト値を設定
+    mm.setPanelFromDataOptionsAfterLocalStorageNone();
+  }
 
   if (gg.dt === DT_COVID) {
     mm.domainDate = [moment('2020-03-30').subtract(1, 'days').toDate(), moment(mm.opt.assets.spk.max_ymd).add(3, 'days').toDate()];
@@ -6974,10 +6982,6 @@ const initDc = (data) => {
     pnl.map.tabs.isShow = 0;
   }
 
-  // ローカルストレージに設定がない場合のディフォルト値を設定
-  if (settingsLoad() === null) {
-    mm.setPanelFromDataOptionsAfterLocalStorageNone();
-  }
   //タイトル変更
   pnl.name.title = mm.data_hdr[D_PL1];
   pnl.city.title = mm.data_hdr[D_PL2];
