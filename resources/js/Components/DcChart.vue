@@ -431,7 +431,7 @@
               <span class="filter_txt_diff"></span>&nbsp;
 
               <!-- TODO: StackTypeComponent -->
-              <label title="チャートのスタックタイプを切り替えます">📊
+              <label v-if="mm.opt.chartDate?.isStackSelect ?? true" title="チャートのスタックタイプを切り替えます">📊
                 <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
                 <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
                 <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
@@ -477,7 +477,7 @@
               <span class="chart-title text-theme-col2" v-html="pnl.year.title"></span>
 
               <!-- TODO: StackTypeComponent -->
-              <label title="チャートのスタックタイプを切り替えます">📊
+              <label v-if="mm.opt.chartYear?.isStackSelect ?? true" title="チャートのスタックタイプを切り替えます">📊
                 <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
                 <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
                 <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
@@ -556,7 +556,7 @@
                 </label>
 
                 <!-- TODO: StackTypeComponent -->
-                <label title="チャートのスタックタイプを切り替えます">📊
+                <label v-if="mm.opt.sex?.isStackSelect ?? true" title="チャートのスタックタイプを切り替えます">📊
                   <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
                   <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
                   <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
@@ -683,7 +683,7 @@
                 </label>
 
                 <!-- TODO: StackTypeComponent -->
-                <label title="チャートのスタックタイプを切り替えます">📊
+                <label v-if="mm.opt.chartEx[i]?.isStackSelect ?? false" title="チャートのスタックタイプを切り替えます">📊
                   <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
                   <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
                   <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
