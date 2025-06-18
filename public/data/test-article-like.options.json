@@ -56,12 +56,16 @@
   },
   "chartName": {},
   "chartCity": {},
-  "chartDate": {},
+  "chartDate": {
+    "format": "YYYY/MM"
+  },
   "chartYear": {
     "isLegend": true
   },
   "chartSeason": {},
-  "chartWeek": {},
+  "chartWeek": {
+    "isShow": true
+  },
   "chartSex": {
     "unit": [
       "不明",

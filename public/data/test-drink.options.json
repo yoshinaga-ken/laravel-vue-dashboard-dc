@@ -11,9 +11,7 @@
   "chartSView": {},
   "chartTube": {},
   "chartMap": {
-    "isShow": 1,
-    "zoomEnable": 0,
-    "#animate": 1
+    "isShow": 1
   },
   "chartName": {},
   "chartCity": {},

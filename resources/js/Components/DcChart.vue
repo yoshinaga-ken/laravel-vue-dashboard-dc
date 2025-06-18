@@ -714,7 +714,7 @@
                 v-model:filters="mm.chartEx[i].filters"
                 :innerRadius="mm.opt.chartEx[i]?.innerRadius"
                 :showLabels="true"
-                :legend="mm.opt.chartEx[i]?.isLegend ? mm.opt.chartEx[i]?.dcSunburstChart.legend: { isShow: false }"
+                :legend="mm.opt.chartEx[i]?.isLegend ? (mm.opt.chartEx[i]?.dcSunburstChart.legend ?? { isShow: true }) : { isShow: false }"
                 :keyIndex="mm.opt.chartEx[i]?.dcSunburstChart?.keyIndex ?? D_EX0+i"
                 :valueIndex="mm.opt.chartEx[i]?.dcSunburstChart?.valueIndex ?? D_CNT"
                 :margins="mm.opt.chartEx[i]?.dcSunburstChart?.margins"
@@ -810,6 +810,9 @@ import _ from 'lodash';
 
 import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
+
+// string-width for text width calculation
+import stringWidth from 'string-width';
 
 import '@/Utils/font-awesome/css/all.css';
 import '@/Utils/font-awesome/css/v4-shims.min.css';
@@ -2548,25 +2551,17 @@ const mm = {
     },
     // 全角を2、半角を1として文字列サイズを取得
     getStrLen: (str) => {
-      return Array.from(str).reduce((acc, char) => {
-        const code = char.codePointAt(0);
-        if (code <= 0x7F) {
-          // ASCII characters (half-width)
-          return acc + 1;
-        } else if (code >= 0x1F300 && code <= 0x1F64F) {
-          // Emoticons and most common icon characters
-          return acc + 2;
-        } else {
-          // Other Unicode characters (full-width)
-          return acc + 2;
-        }
-      }, 0);
+      return stringWidth(str);
     },
     // 文字列配列中の最大文字サイズを取得
     arrStrMaxLen: (arrStr) => {
       return _.max(_.map(arrStr, d => mm.util.getStrLen(d)));
     },
-    isHankaku: (str) => /^[\u0000-\u00FF]*$/.test(str),
+    isHankaku: (str) => {
+      // string-widthを使用してより正確な半角判定
+      // 文字列全体の幅が文字数と等しければ半角のみ
+      return stringWidth(str) === str.length;
+    },
     toZenkaku: (str) => {
       return str.replace(/[A-Za-z0-9]/g, (s) =>
         String.fromCharCode(s.charCodeAt(0) + 0xFEE0)
@@ -2600,11 +2595,13 @@ const mm = {
         if (pnl.year.style === '') $('#panel_year').width(mm.chartYear.width());
         if (pnl.week.style === '') $('#panel_week').width(mm.chartWeek.width());
         if (pnl.age.style === '') $('#panel_age').width(mm.chartAge.width());
-        if (pnl.cond.style === '') $('#panel_cond').width(mm.chartCond.width());
+        if (pnl.cond.style === '') {
+          const w = mm.opt.chartCond.hasWindRoseChart ? 800 : mm.chartCond.width();
+          $('#panel_cond').width(w);
+        }
         for (let k = 0; k < pnl.ex.length; k++) {
           const ex = pnl.ex[k];
           if (ex.isHidden || ex.isDcSunburstChart) continue
-          if (!ex.isShow) continue;
           if (ex.style !== '') continue;
           $(`#panel_ex_${k}`).width(mm.chartEx[k].width());
         }
@@ -2991,9 +2988,24 @@ const mm = {
       }
       return ret;
     },
-    shortTitle: (text, maxLength = 5) => {
+    shortTitle: (text, maxLength = 8) => {
       if (isSp) return text;
-      return text.substring(0, maxLength) + (text.length > maxLength ? '…' : '');
+
+      // string-widthを使用してより正確な文字幅計算
+      let currentLength = 0;
+      let cutIndex = 0;
+
+      for (const char of text) {
+        const charWidth = stringWidth(char);
+        if (currentLength + charWidth > maxLength) {
+          break;
+        }
+        currentLength += charWidth;
+        cutIndex += char.length; // サロゲートペアの場合はlengthが2になる
+      }
+
+      const truncated = text.substring(0, cutIndex);
+      return truncated + (cutIndex < text.length ? '…' : '');
     },
     chartDateXAxisTickFormat: (s) => {
       // 設定 || データのレンジで ミクロ/マクロ を切り替える
@@ -6369,7 +6381,7 @@ const initChartSex = (chartSexW, chartSexH) => {
 
     mm.chartSex = createStackedBarChart(
       dimSex, chartDomId, chartSexH, mm.config.cSex.barWidth,
-      onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartYear,
+      onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartSex,
       v => mm.getLabelSex(v));
 
     mm.chartSex.dataIndex = D_SEX;
@@ -9912,7 +9924,7 @@ path.campaign {
   }
 
   .panel_ex {
-    width: 100%;
+    width: 100% !important;
   }
 
   #panel_detail {
