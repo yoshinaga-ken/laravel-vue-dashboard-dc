@@ -76,6 +76,7 @@
     "moment": "^2.30.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "string-width": "^7.2.0",
     "virtual-keyboard": "^1.30.4",
     "vue3-google-map": "0.22.0",
     "vuetify": "^3.8.8",

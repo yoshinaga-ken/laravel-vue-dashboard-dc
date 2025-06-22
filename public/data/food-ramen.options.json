@@ -22,33 +22,44 @@
     "isPanGmapMarker": "1"
   },
   "chartDate": {
-    "elasticY": false,
+    "elasticY": true,
     "width": 1000,
     "format": "YYYY"
   },
-  "chartSex": {
-    "chartType": "bar",
-    "isLegend": false,
-    "unit": null
+  "chartDate2": {
+    "labelType": 2
   },
-  "chartAge": {
-    "unit": null
-  },
-  "chartJob": {
-    "isPanGmap": "1"
-  },
-  "editUrl": "https://docs.google.com/spreadsheets/d/186UHvNBXlavGoJ19eBIPhbFRvqPnO6y9SWUAzMsvoL8/edit?gid",
-  "chartGMap": {},
-  "chartSView": {},
-  "chartTube": {},
-  "chartMap": {},
   "chartYear": {
     "isLegend": true
   },
   "chartSeason": {},
   "chartWeek": {},
-  "chartCond": {},
+  "chartSex": {
+    "name": "麺の種類(サンプル)",
+    "chartType": "bar",
+    "isLegend": false,
+    "isStackSelect": 1,
+    "unit": null,
+    "margins": {
+      "left": 270
+    }
+  },
+  "chartAge": {
+    "name" : "価格帯(サンプル)",
+    "unit": null
+  },
+  "chartCond": {
+    "name": "ジャンル(サンプル)"
+  },
+  "chartJob": {
+    "isPanGmap": "1"
+  },
   "chartJobCat": {},
+  "editUrl": "https://docs.google.com/spreadsheets/d/186UHvNBXlavGoJ19eBIPhbFRvqPnO6y9SWUAzMsvoL8/edit?gid",
+  "chartGMap": {},
+  "chartSView": {},
+  "chartTube": {},
+  "chartMap": {},
   "chartEx": [
     {
       "scale": false,

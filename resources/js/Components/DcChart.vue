@@ -431,13 +431,13 @@
               <span class="filter_txt_diff"></span>&nbsp;
 
               <!-- TODO: StackTypeComponent -->
-              <label title="チャートのスタックタイプを切り替えます">📊
+              <label v-if="mm.opt.chartDate?.isStackSelect ?? true" title="チャートのスタックタイプを切り替えます">📊
                 <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
-                <label v-html="pnl.name.title" for="stack_type_pl1"></label>&nbsp;
+                <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
                 <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
-                <label v-html="pnl.age.title" for="stack_type_age"></label>&nbsp;
+                <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label>&nbsp;
                 <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
-                <label v-html="pnl.cond.title" for="stack_type_con"></label>
+                <label v-html="mm.util.shortTitle(pnl.cond.title)" for="stack_type_con"></label>
               </label>
               &nbsp;&nbsp;
               <label v-if="pnl.date.chart2.type!==0" title="ライン形式のチャートも表示します">
@@ -477,13 +477,13 @@
               <span class="chart-title text-theme-col2" v-html="pnl.year.title"></span>
 
               <!-- TODO: StackTypeComponent -->
-              <label title="チャートのスタックタイプを切り替えます">📊
+              <label v-if="mm.opt.chartYear?.isStackSelect ?? true" title="チャートのスタックタイプを切り替えます">📊
                 <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
-                <label v-html="pnl.name.title" for="stack_type_pl1"></label>&nbsp;
+                <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
                 <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
-                <label v-html="pnl.age.title" for="stack_type_age"></label>&nbsp;
+                <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label>&nbsp;
                 <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
-                <label v-html="pnl.cond.title" for="stack_type_con"></label>
+                <label v-html="mm.util.shortTitle(pnl.cond.title)" for="stack_type_con"></label>
               </label>
 
               <!-- FilterText -->
@@ -556,13 +556,13 @@
                 </label>
 
                 <!-- TODO: StackTypeComponent -->
-                <label title="チャートのスタックタイプを切り替えます">📊
+                <label v-if="mm.opt.sex?.isStackSelect ?? true" title="チャートのスタックタイプを切り替えます">📊
                   <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
-                  <label v-html="pnl.name.title" for="stack_type_pl1"></label>&nbsp;
+                  <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
                   <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
-                  <label v-html="pnl.age.title" for="stack_type_age"></label>&nbsp;
+                  <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label>&nbsp;
                   <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
-                  <label v-html="pnl.cond.title" for="stack_type_con"></label>
+                  <label v-html="mm.util.shortTitle(pnl.cond.title)" for="stack_type_con"></label>
                 </label>
               </template>
 
@@ -683,13 +683,13 @@
                 </label>
 
                 <!-- TODO: StackTypeComponent -->
-                <label title="チャートのスタックタイプを切り替えます">📊
+                <label v-if="mm.opt.chartEx[i]?.isStackSelect ?? false" title="チャートのスタックタイプを切り替えます">📊
                   <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
-                  <label v-html="pnl.name.title" for="stack_type_pl1"></label>&nbsp;
+                  <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
                   <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
-                  <label v-html="pnl.age.title" for="stack_type_age"></label>&nbsp;
+                  <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label>&nbsp;
                   <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
-                  <label v-html="pnl.cond.title" for="stack_type_con"></label>
+                  <label v-html="mm.util.shortTitle(pnl.cond.title)" for="stack_type_con"></label>
                 </label>
 
                 <!-- FilterText -->
@@ -714,7 +714,7 @@
                 v-model:filters="mm.chartEx[i].filters"
                 :innerRadius="mm.opt.chartEx[i]?.innerRadius"
                 :showLabels="true"
-                :legend="mm.opt.chartEx[i]?.isLegend ? mm.opt.chartEx[i]?.dcSunburstChart.legend: { isShow: false }"
+                :legend="mm.opt.chartEx[i]?.isLegend ? (mm.opt.chartEx[i]?.dcSunburstChart.legend ?? { isShow: true }) : { isShow: false }"
                 :keyIndex="mm.opt.chartEx[i]?.dcSunburstChart?.keyIndex ?? D_EX0+i"
                 :valueIndex="mm.opt.chartEx[i]?.dcSunburstChart?.valueIndex ?? D_CNT"
                 :margins="mm.opt.chartEx[i]?.dcSunburstChart?.margins"
@@ -810,6 +810,9 @@ import _ from 'lodash';
 
 import jQuery from 'jquery';
 window.$ = window.jQuery = jQuery;
+
+// string-width for text width calculation
+import stringWidth from 'string-width';
 
 import '@/Utils/font-awesome/css/all.css';
 import '@/Utils/font-awesome/css/v4-shims.min.css';
@@ -1403,12 +1406,14 @@ const onChangeChartDateIsBrushOn = (newVal) => {
   mm.renderAllChart();
 };
 
+// ローカルストレージに設定をセーブ
 const settingsSave = () => {
   const settings = getPanelSettings();
   localStorage.setItem(settingsName(), JSON.stringify(settings));
   mm.onChangeURL('clear_layout');
 };
 
+// ローカルストレージより設定をロード
 const settingsLoad = (settingsJson = null) => {
   if (settingsJson === null) settingsJson = localStorage.getItem(settingsName());
   if (settingsJson === null) return null;
@@ -1421,13 +1426,6 @@ const settingsLoad = (settingsJson = null) => {
         delete v.style;
       }
     });
-  }
-
-  // 性別チャートは(pie|bar)の複数タイプがあるので横幅調整
-  if (pnl.sex.chartType === 'bar' && settings?.sex?.style) {
-    const chartSexW = (mm.chartSex.group().all().length + 1) * mm.config.cSex.barWidth;
-    const percent = mm.util.pxToPer(0, 0, parseInt(chartSexW, 10), 0, '#panels');
-    settings.sex.style = settings.sex.style.replace(/width:\d+(\.\d+)?%;/, `width:${percent.width}`);
   }
 
   if (settings) {
@@ -2553,25 +2551,17 @@ const mm = {
     },
     // 全角を2、半角を1として文字列サイズを取得
     getStrLen: (str) => {
-      return Array.from(str).reduce((acc, char) => {
-        const code = char.codePointAt(0);
-        if (code <= 0x7F) {
-          // ASCII characters (half-width)
-          return acc + 1;
-        } else if (code >= 0x1F300 && code <= 0x1F64F) {
-          // Emoticons and most common icon characters
-          return acc + 2;
-        } else {
-          // Other Unicode characters (full-width)
-          return acc + 2;
-        }
-      }, 0);
+      return stringWidth(str);
     },
     // 文字列配列中の最大文字サイズを取得
     arrStrMaxLen: (arrStr) => {
       return _.max(_.map(arrStr, d => mm.util.getStrLen(d)));
     },
-    isHankaku: (str) => /^[\u0000-\u00FF]*$/.test(str),
+    isHankaku: (str) => {
+      // string-widthを使用してより正確な半角判定
+      // 文字列全体の幅が文字数と等しければ半角のみ
+      return stringWidth(str) === str.length;
+    },
     toZenkaku: (str) => {
       return str.replace(/[A-Za-z0-9]/g, (s) =>
         String.fromCharCode(s.charCodeAt(0) + 0xFEE0)
@@ -2602,14 +2592,17 @@ const mm = {
       $('#panels').css('height', h + 'px');
 
       if (!isSp) {
-        $('#panel_year').width(mm.chartYear.width());
-        $('#panel_week').width(mm.chartWeek.width());
-        $('#panel_age').width(mm.chartAge.width());
-        $('#panel_cond').width(mm.chartCond.width());
+        if (pnl.year.style === '') $('#panel_year').width(mm.chartYear.width());
+        if (pnl.week.style === '') $('#panel_week').width(mm.chartWeek.width());
+        if (pnl.age.style === '') $('#panel_age').width(mm.chartAge.width());
+        if (pnl.cond.style === '') {
+          const w = mm.opt.chartCond.hasWindRoseChart ? 800 : mm.chartCond.width();
+          $('#panel_cond').width(w);
+        }
         for (let k = 0; k < pnl.ex.length; k++) {
           const ex = pnl.ex[k];
           if (ex.isHidden || ex.isDcSunburstChart) continue
-          if(!ex.isShow) continue;
+          if (ex.style !== '') continue;
           $(`#panel_ex_${k}`).width(mm.chartEx[k].width());
         }
       }
@@ -2995,9 +2988,24 @@ const mm = {
       }
       return ret;
     },
-    shortTitle: (text, maxLength = 7) => {
+    shortTitle: (text, maxLength = 8) => {
       if (isSp) return text;
-      return text.substring(0, maxLength) + (text.length > maxLength ? '…' : '');
+
+      // string-widthを使用してより正確な文字幅計算
+      let currentLength = 0;
+      let cutIndex = 0;
+
+      for (const char of text) {
+        const charWidth = stringWidth(char);
+        if (currentLength + charWidth > maxLength) {
+          break;
+        }
+        currentLength += charWidth;
+        cutIndex += char.length; // サロゲートペアの場合はlengthが2になる
+      }
+
+      const truncated = text.substring(0, cutIndex);
+      return truncated + (cutIndex < text.length ? '…' : '');
     },
     chartDateXAxisTickFormat: (s) => {
       // 設定 || データのレンジで ミクロ/マクロ を切り替える
@@ -3781,7 +3789,9 @@ const mm = {
       if (range) {
         mm.composite.replaceFilter(range);
         mm.chartDate.replaceFilter(range);
-        pnl.date.isBrushOn = true;
+        nextTick(() => {
+          pnl.date.isBrushOn = true;
+        });
       }
     }
     if (!mm.is_trigger_search && isRedraw) mm.renderAllChart();
@@ -4677,7 +4687,7 @@ const mm = {
       }
       if (sels.length) {
         map.setSelectedRegions(sels)
-        map.setFocus({regions: sels, animate: 1});
+        map.setFocus({regions: sels, animate: mm.opt.chartMap?.animate ?? false});
         mm.map.isSelectedRegions = 0;
         mm.map.doDraw = 0;
       }
@@ -5356,22 +5366,17 @@ if (G_IS_LOCAL) {
   };
 }
 const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, isLegend,
-                               chartOptions = {}, keyFormat = null, panel = null) => {
+                               chartOptions = {}, keyFormat = null) => {
   let group = dimension.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
   group = mm.groupRemoveKey(group, DN_EX);
   const groupAll = group.all();
+  const isSetCalcChartW = 1;
 
   // 幅調整
   const margins = _.merge({}, mm.config.defaultMargins, chartOptions?.margins || {});
 
-  const n = groupAll.length;
-  const barW = n > 16 ? parseInt(0.75 * barWidth) : barWidth;
-  const chartW = (n + 1) * barW + margins.right + margins.left;
-  if (!isSp && panel !== null) $(panel).width(chartW);
-
   const chart = new dc.BarChart(parent, CGRP_SHOW);
   chart
-    .width(chartW)
     .height(height)
     .useViewBoxResizing(mm.config.panelResizable)
     .margins(margins)
@@ -5400,6 +5405,15 @@ const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, 
       return mm.d3fmt(d.data.value.total);
     })
     .title(v => mm.util.stackedTitle(v, keyFormat, mm.opt.common.unit));
+
+  const n = groupAll.length;
+  const barW = n > 16 ? parseInt(0.75 * barWidth) : barWidth;
+
+  // チャートの幅を計算して調整
+  if (isSetCalcChartW) {
+    const chartW = (n + 1) * barW + margins.right + margins.left;
+    chart.width(chartW);
+  }
 
   // chart.xAxis().ticks(4);
   chart.yAxis().tickFormat(d3.format(".2s")).ticks(4);
@@ -6200,7 +6214,9 @@ const initChartYear = (height) => {
     mm.chartScroll('#div_name');
     mm.chartScroll('#div_city');
   }
-  mm.chartYear = createStackedBarChart(dimYear, '#chart_year', height, mm.config.cYear.barWidth,
+
+  mm.chartYear = createStackedBarChart(
+    dimYear, '#chart_year', height, mm.config.cYear.barWidth,
     onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartYear);
 }
 
@@ -6364,10 +6380,12 @@ const initChartSex = (chartSexW, chartSexH) => {
   if (pnl.sex.chartType === 'bar') {
     if (mm.opt.chartSex.unit === undefined) mm.opt.chartSex.unit = null;
 
-    mm.chartSex = createStackedBarChart(dimSex, chartDomId, chartSexH, mm.config.cSex.barWidth,
-      onFiltered, mm.opt.chartSex.isLegend, mm.opt.chartSex,
-      v => mm.getLabelSex(v),
-    );
+
+    mm.chartSex = createStackedBarChart(
+      dimSex, chartDomId, chartSexH, mm.config.cSex.barWidth,
+      onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartSex,
+      v => mm.getLabelSex(v));
+
     mm.chartSex.dataIndex = D_SEX;
 
     if (isSp) $(panelDomId).css('width', '100%');
@@ -6812,7 +6830,6 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
   pnl.ex[chartIndex] = pnl.ex[chartIndex] || {};
   pnl.ex[chartIndex].chartType = mm.opt.chartEx[chartIndex].chartType;
   pnl.ex[chartIndex].isHidden = false;
-  pnl.ex[chartIndex].isShow = mm.opt.chartEx[chartIndex]?.isShow ?? true;
   pnl.ex[chartIndex].title = title;
 
   // ディメンションの作成
@@ -6842,14 +6859,13 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
   } else {
     // 標準チャート (stackedBarChart) の作成
     mm.chartEx[chartIndex] =
-      createStackedBarChart(dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
+      createStackedBarChart(
+        dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
         onFiltered, mm.opt.chartEx[chartIndex].isLegend, mm.opt.chartEx[chartIndex],
-        v => mm.getLabelEx(v, chartIndex),
-        `#panel_ex_${chartIndex}`
-      );
+        v => mm.getLabelEx(v, chartIndex));
+
     mm.chartEx[chartIndex].dataIndex = dataIndex;
-    mm.chartEx[chartIndex]
-      .xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex));
+    mm.chartEx[chartIndex].xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex));
   }
 }
 const initAllChartEx = (height) => {
@@ -6870,6 +6886,12 @@ const initAllChartEx = (height) => {
 const initDc = (data) => {
   mm.data_hdr = data.shift();
   mm.data = data;
+
+  // ローカルストレージより設定をロード
+  if (settingsLoad() === null) {
+    // 設定がない場合のディフォルト値を設定
+    mm.setPanelFromDataOptionsAfterLocalStorageNone();
+  }
 
   if (gg.dt === DT_COVID) {
     mm.domainDate = [moment('2020-03-30').subtract(1, 'days').toDate(), moment(mm.opt.assets.spk.max_ymd).add(3, 'days').toDate()];
@@ -6974,10 +6996,6 @@ const initDc = (data) => {
     pnl.map.tabs.isShow = 0;
   }
 
-  // ローカルストレージに設定がない場合のディフォルト値を設定
-  if (settingsLoad() === null) {
-    mm.setPanelFromDataOptionsAfterLocalStorageNone();
-  }
   //タイトル変更
   pnl.name.title = mm.data_hdr[D_PL1];
   pnl.city.title = mm.data_hdr[D_PL2];
@@ -7383,6 +7401,7 @@ const drawJapanMap = () => {
         animate: false
       },
     backgroundColor: null,
+    zoomEnable: mm.opt.chartMap?.zoomEnable ?? true,
     zoomOnScroll: false,
     zoomOnScrollSpeed: 1, //def:3
     zoomStep: 1.4,
@@ -8576,8 +8595,8 @@ const onClickStyleLoad = (type) => {
   const sSViewMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.435932%;top:46.960866%;width:18.784701%;height:31.640300%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.947292%;height:100.000000%","styleBak":""},"tube":{"isShow":false,"style":"position:absolute;left:77.397724%;top:71.940050%;width:19.577305%;height:26.311407%"},"map":{"isShow":true,"style":"position:absolute;left:79.181082%;top:6.661116%;width:20.092497%;height:31.140716%"},"name":{"isShow":true,"style":"position:absolute;left:0.317041%;top:8.076603%;width:9.669762%;height:38.134888%"},"city":{"isShow":true,"style":"position:absolute;left:10.303845%;top:8.159867%;width:8.718638%;height:38.467943%"},"date":{"isShow":false,"style":"position:absolute;left:24.134774%;top:0.416320%;width:36.657908%;"},"sex":{"isShow":false,"style":"position:absolute;left:74.425462%;top:26.228143%;width:4.161168%;"},"year":{"isShow":false,"style":"position:absolute;left:61.188984%;top:0.749376%;width:17.318385%;"},"season":{"isShow":false,"style":"position:absolute;left:63.685685%;top:13.905079%;width:4.359319%;"},"week":{"isShow":false,"style":"position:absolute;left:68.282785%;top:13.905079%;width:10.343475%;"},"age":{"isShow":false,"style":"position:absolute;left:77.358094%;top:39.883430%;width:20.528429%;"},"cond":{"isShow":false,"style":"position:absolute;left:77.358094%;top:57.368859%;width:20.488799%;"},"job":{"isShow":true,"style":"position:absolute;left:0.277411%;top:79.184013%;width:25.442570%;height:19.900083%"},"detail":{"isShow":false,"style":"position:absolute;left:0.079260%;top:0.416320%;width:2.060769%;height:2.414654%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
   const sSViewSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.566647%;top:42.068273%;width:35.132123%;height:26.004016%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.918781%;height:100.000000%","styleBak":""},"tube":{"isShow":false},"map":{"isShow":0,"style":"position:absolute;left:6.516442%;top:1.405622%;width:24.082504%;height:25.200803%"},"name":{"isShow":true,"style":"position:absolute;left:0.472206%;top:9.538153%;width:16.243885%;height:31.927711%"},"city":{"isShow":true,"style":"position:absolute;left:16.999414%;top:10.040161%;width:18.227150%;height:31.927711%"},"date":{"isShow":0,"style":"position:absolute;left:3.399883%;top:4.618474%;width:56.759156%;"},"sex":{"isShow":0,"style":"position:absolute;left:4.249854%;top:7.128514%;width:8.688590%;"},"season":{"isShow":0,"style":"position:absolute;left:3.399883%;top:6.124498%;width:9.255237%;"},"week":{"isShow":0,"style":"position:absolute;left:4.438736%;top:6.024096%;width:16.621650%;"},"age":{"isShow":0,"style":"position:absolute;left:6.044236%;top:6.024096%;width:17.377179%;"},"cond":{"isShow":0,"style":"position:absolute;left:3.966530%;top:8.232932%;width:52.792626%;"},"job":{"isShow":true,"style":"position:absolute;left:0.566647%;top:68.674699%;width:40.515271%;height:21.987952%"},"detail":{"isShow":false,"style":"position:absolute;left:5.005383%;top:8.433735%;width:5.288707%;height:2.911647%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
 
-  const sTubeMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:63.316993%;width:16.089837%;height:34.885621%"},"sview":{"isShow":false,"style":"position:absolute;left:16.274777%;top:63.643791%;width:16.681647%;height:34.150327%"},"tube":{"isShow":true,"style":"position:absolute;left:34.805831%;top:0.000000%;width:64.322359%;height:100.408497%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.081699%;width:16.829599%;height:36.928105%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:25.816993%;width:11.725237%;height:73.529412%"},"city":{"isShow":true,"style":"position:absolute;left:12.021142%;top:25.735294%;width:22.562760%;height:73.611111%"},"date":{"isShow":false,"style":"position:absolute;left:50.118917%;top:0.000000%;width:49.342166%;"},"sex":{"isShow":false,"style":"position:absolute;left:86.182344%;top:22.630719%;width:13.389703%;"},"year":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:34.583902%;"},"season":{"isShow":false,"style":"position:absolute;left:82.483531%;top:0.653595%;width:4.808457%;"},"week":{"isShow":false,"style":"position:absolute;left:69.870579%;top:0.408497%;width:12.206083%;"},"age":{"isShow":false,"style":"position:absolute;left:35.027760%;top:80.473856%;width:23.376498%;"},"cond":{"isShow":false,"style":"position:absolute;left:68.982863%;top:79.575163%;width:29.775445%;"},"job":{"isShow":false,"style":"position:absolute;left:34.768843%;top:78.022876%;width:34.029080%;height:21.977124%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:4.983660%;width:1.923383%;height:2.287582%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sTubeSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:15.488355%;height:37.673426%"},"sview":{"isShow":false,"style":"position:absolute;left:0.000000%;top:37.886873%;width:15.205032%;height:27.641409%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:33.148858%;top:27.961580%;width:65.919952%;height:68.943436%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:15.771679%;top:0.000000%;width:17.566062%;height:38.633938%"},"name":{"isShow":true,"style":"position:absolute;left:0.094441%;top:0.000000%;width:15.960561%;height:97.545358%"},"city":{"isShow":true,"style":"position:absolute;left:16.055003%;top:0.000000%;width:16.810532%;height:97.118463%"},"date":{"isShow":false,"style":"position:absolute;left:50.148273%;top:0.000000%;width:49.298302%;"},"sex":{"isShow":true,"style":"position:absolute;left:67.808775%;top:13.127001%;width:8.688590%;"},"year":{"isShow":true,"style":"position:absolute;left:33.054417%;top:0.000000%;width:33.998829%;"},"season":{"isShow":false,"style":"position:absolute;left:91.041309%;top:13.340448%;width:9.349678%;"},"week":{"isShow":true,"style":"position:absolute;left:77.536218%;top:13.127001%;width:20.210415%;"},"age":{"isShow":true,"style":"position:absolute;left:67.714334%;top:0.106724%;width:26.821298%;"},"cond":{"isShow":true,"style":"position:absolute;left:33.054417%;top:14.514408%;width:33.904388%;"},"job":{"isShow":false,"style":"position:absolute;left:34.187711%;top:78.121665%;width:65.069981%;height:20.277481%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:53.681964%;width:18.699356%;height:43.649947%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sTubeMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:63.316993%;width:16.089837%;height:34.885621%"},"sview":{"isShow":false,"style":"position:absolute;left:16.274777%;top:63.643791%;width:16.681647%;height:34.150327%"},"tube":{"isShow":true,"style":"position:absolute;left:34.805831%;top:0.000000%;width:64.322359%;height:100.408497%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.081699%;width:16.829599%;height:36.928105%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:26%;width:11.725237%;height:73.529412%"},"city":{"isShow":true,"style":"position:absolute;left:12.021142%;top:26%;width:22.562760%;height:73.611111%"},"date":{"isShow":false,"style":"position:absolute;left:50.118917%;top:0.000000%;width:49.342166%;"},"sex":{"isShow":false,"style":"position:absolute;left:86.182344%;top:22.630719%;width:13.389703%;"},"year":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:34.583902%;"},"season":{"isShow":false,"style":"position:absolute;left:82.483531%;top:0.653595%;width:4.808457%;"},"week":{"isShow":false,"style":"position:absolute;left:69.870579%;top:0.408497%;width:12.206083%;"},"age":{"isShow":false,"style":"position:absolute;left:35.027760%;top:80.473856%;width:23.376498%;"},"cond":{"isShow":false,"style":"position:absolute;left:68.982863%;top:79.575163%;width:29.775445%;"},"job":{"isShow":false,"style":"position:absolute;left:34.768843%;top:78.022876%;width:34.029080%;height:21.977124%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:70%;width:1.923383%;height:2.287582%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sTubeSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:15.488355%;height:37.673426%"},"sview":{"isShow":false,"style":"position:absolute;left:0.000000%;top:37.886873%;width:15.205032%;height:27.641409%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:33.148858%;top:27.961580%;width:65.919952%;height:68.943436%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:15.771679%;top:0.000000%;width:17.566062%;height:38.633938%"},"name":{"isShow":true,"style":"position:absolute;left:0.094441%;top:0.000000%;width:15.960561%;height:97.545358%"},"city":{"isShow":true,"style":"position:absolute;left:16.055003%;top:0.000000%;width:16.810532%;height:97.118463%"},"date":{"isShow":false,"style":"position:absolute;left:50.148273%;top:0.000000%;width:49.298302%;"},"sex":{"isShow":true,"style":"position:absolute;left:67.808775%;top:13.127001%;width:8.688590%;"},"year":{"isShow":true,"style":"position:absolute;left:33.054417%;top:0.000000%;width:33.998829%;"},"season":{"isShow":false,"style":"position:absolute;left:91.041309%;top:13.340448%;width:9.349678%;"},"week":{"isShow":true,"style":"position:absolute;left:77.536218%;top:13.127001%;width:20.210415%;"},"age":{"isShow":true,"style":"position:absolute;left:67.714334%;top:0.106724%;width:26.821298%;"},"cond":{"isShow":true,"style":"position:absolute;left:33.054417%;top:14.514408%;width:33.904388%;"},"job":{"isShow":false,"style":"position:absolute;left:34.187711%;top:78.121665%;width:65.069981%;height:20.277481%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:70%;width:18.699356%;height:43.649947%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
   const sTubeMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.046321%;top:69.278997%;width:14.915279%;height:30.825496%"},"sview":{"isShow":true,"style":"position:absolute;left:15.239525%;top:69.070010%;width:17.926128%;height:31.138976%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:33.489897%;top:0.000000%;width:66.238663%;height:100.313480%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:0.185283%;top:42.006270%;width:14.683676%;height:26.541275%"},"name":{"isShow":true,"style":"position:absolute;left:0.046321%;top:0.000000%;width:15.007921%;height:68.861024%"},"city":{"isShow":true,"style":"position:absolute;left:15.239525%;top:0.000000%;width:17.833486%;height:68.234065%"},"date":{"isShow":false,"style":"position:absolute;left:50.072724%;top:0.000000%;width:49.285271%;"},"sex":{"isShow":false,"style":"position:absolute;left:86.156583%;top:22.570533%;width:13.340374%;"},"year":{"isShow":false,"style":"position:absolute;left:50.072724%;top:22.570533%;width:17.277637%;"},"season":{"isShow":false,"style":"position:absolute;left:80.644414%;top:22.570533%;width:5.141603%;"},"week":{"isShow":false,"style":"position:absolute;left:67.767248%;top:22.570533%;width:12.506601%;"},"age":{"isShow":false,"style":"position:absolute;left:50.072724%;top:38.453501%;width:8.615658%;"},"cond":{"isShow":false,"style":"position:absolute;left:62.671966%;top:57.053292%;width:36.547067%;"},"job":{"isShow":false,"style":"position:absolute;left:34.184709%;top:78.160920%;width:65.034324%;height:20.167189%"},"detail":{"isShow":true,"style":"position:absolute;left:0.138962%;top:34.587252%;width:9.171507%;height:33.855799%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
   const sTubeMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:33.148858%;top:54.331551%;width:32.015564%;height:29.411765%"},"sview":{"isShow":true,"style":"position:absolute;left:65.164422%;top:54.331551%;width:33.809947%;height:29.197861%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:32.959976%;top:0.000000%;width:66.864364%;height:53.903743%","vidAutoChange":true,"styleBak":"position:absolute;left:32.959976%;top:0.000000%;width:66.486599%;height:53.796791%"},"map":{"isShow":false,"style":"position:absolute;left:51.659332%;top:54.331551%;width:23.326974%;height:29.625668%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:14.921708%;height:53.475936%"},"city":{"isShow":true,"style":"position:absolute;left:15.110591%;top:0.000000%;width:17.471620%;height:53.582888%"},"date":{"isShow":true,"style":"position:absolute;left:0.188882%;top:84.812834%;width:41.931889%;"},"sex":{"isShow":true,"style":"position:absolute;left:0.000000%;top:67.058824%;width:10.766296%;"},"year":{"isShow":true,"style":"position:absolute;left:0.000000%;top:54.010695%;width:24.082504%;"},"season":{"isShow":true,"style":"position:absolute;left:24.082504%;top:53.903743%;width:9.349678%;"},"week":{"isShow":false,"style":"position:absolute;left:0.283324%;top:67.058824%;width:23.988063%;"},"age":{"isShow":true,"style":"position:absolute;left:11.616267%;top:65.668449%;width:17.849385%;"},"cond":{"isShow":false,"style":"position:absolute;left:0.188882%;top:73.262032%;width:33.621064%;"},"job":{"isShow":true,"style":"position:absolute;left:42.404095%;top:84.385027%;width:55.248097%;height:21.604278%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:60.636364%;width:18.699356%;height:34.652406%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
 
@@ -9907,7 +9926,7 @@ path.campaign {
   }
 
   .panel_ex {
-    width: 100%;
+    width: 100% !important;
   }
 
   #panel_detail {

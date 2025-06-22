@@ -41,7 +41,7 @@
   "chartWeek": {},
   "chartSex": {
     "name": "クロスレビュー(評価)",
-    "chartType": "bar",
+    "#chartType": "bar",
     "unit": null
   },
   "chartAge": {
@@ -72,12 +72,17 @@
     {
       "name": "売り上げ本数(🏢メーカー/🙋‍♂️クリエイター) SunburstChart",
       "isDcSunburstChart": true,
+      "isLegend": true,
       "dcSunburstChart": {
         "keyIndex": "🏢$4/🙋‍♂️$9",
         "width": 600,
         "height": 600,
+        "legend": {
+          "x": 0,
+          "y": 300
+        },
         "margins": {
-          "left": 150
+          "left": 250
         }
       }
     },

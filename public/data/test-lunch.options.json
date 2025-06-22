@@ -1,6 +1,7 @@
 {
   "dataType": 0,
   "title": "コンビニ お弁当 販売数",
+  "description": "お弁当種別・店舗規模別・地域別コンビニエンスストア弁当販売データの多次元分析",
   "common": {
     "unit": "個",
     "unitPrefix": "販売数"
@@ -38,7 +39,8 @@
     ]
   },
   "chartAge": {
-    "unit": null
+    "unit": null,
+    "labelSuffix": "代"
   },
   "chartCond": {},
   "chartJob": {},
