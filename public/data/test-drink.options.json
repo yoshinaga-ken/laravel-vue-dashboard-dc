@@ -1,6 +1,7 @@
 {
   "dataType": 0,
   "title": "コンビニ 清涼飲料水 販売数",
+  "description": "飲料種別・店舗規模別・地域別コンビニエンスストア清涼飲料水販売データの多次元分析",
   "common": {
     "unit": "本",
     "unitPrefix": "販売数"
@@ -57,7 +58,8 @@
   },
   "chartAge": {
     "scale": 10,
-    "unit": null
+    "unit": null,
+    "labelSuffix": "代"
   },
   "chartCond": {},
   "chartJob": {},

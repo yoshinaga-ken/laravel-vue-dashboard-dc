@@ -1,9 +1,10 @@
 {
   "dataType": 0,
+  "title": "記事のいいねの数",
+  "description": "記事カテゴリ別・投稿時間帯別・著者別SNS記事のいいね数データの多次元分析",
   "chartDate2": {
     "chartType": "lines"
   },
-  "title": "記事のいいねの数",
   "isMakeAutocompleteData": true,
   "chartAge_unit": "null",
   "chartGMap": {},
@@ -75,7 +76,8 @@
   },
   "chartAge": {
     "scale": 10,
-    "unit": null
+    "unit": null,
+    "labelSuffix": "代"
   },
   "chartCond": {},
   "chartJob": {},

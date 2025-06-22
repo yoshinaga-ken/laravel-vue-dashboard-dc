@@ -1,6 +1,7 @@
 {
   "dataType": 0,
   "title": "きくらげ栽培・販売データ",
+  "description": "地域別・規模別・品種別きくらげ栽培事業者の生産・販売データの多次元分析",
   "isMakeAutocompleteData": true,
   "chartGMap": {
     "isShow": true
@@ -63,7 +64,8 @@
     "unit": null
   },
   "chartAge": {
-    "unit": null
+    "unit": null,
+    "labelSuffix": "代"
   },
   "chartJobCat": {
     "isHidden": true

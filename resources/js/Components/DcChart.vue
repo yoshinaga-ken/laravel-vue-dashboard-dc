@@ -3789,7 +3789,9 @@ const mm = {
       if (range) {
         mm.composite.replaceFilter(range);
         mm.chartDate.replaceFilter(range);
-        pnl.date.isBrushOn = true;
+        nextTick(() => {
+          pnl.date.isBrushOn = true;
+        });
       }
     }
     if (!mm.is_trigger_search && isRedraw) mm.renderAllChart();
