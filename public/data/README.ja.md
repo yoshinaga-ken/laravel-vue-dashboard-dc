@@ -209,6 +209,9 @@
 - **データ出典**: [スーパーマーケット店舗数@一般社団法人全国スーパーマーケット協会](http://www.j-sosm.jp/dl/index.html)
 
 ### 17. テスト用データ
+
+#### 基本テストデータ
+
 - **飲料評価データ**: `test-drink.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-drink)
   - **フォーマット**:
@@ -226,6 +229,207 @@
     ```
   - **説明**: ランチ商品の購入データ。購入者情報（性別、年齢、職業）、商品名、店舗、都道府県などが含まれる
   - **データ出典**: サンプルデータ
+
+#### 教育分野のテストデータ
+
+- **大学受験データ**: `test-university-entrance.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-university-entrance)
+  - **フォーマット**:
+
+    ```csv
+    日付,性別,年齢,学部系統,都道府県,市区町村,志望区分,未使用,志願者数,偏差値,合格者数,受験回数,私立公立,学費
+    ```
+
+  - **説明**: 大学受験に関するデータ。受験生の基本情報、学部系統、志願者数、偏差値、合格者数、受験回数、学費などが含まれる
+  - **データ出典**: サンプルデータ
+
+- **学力テスト結果データ**: `test-academic-achievement.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-academic-achievement)
+  - **フォーマット**:
+
+    ```csv
+    日付,性別,年齢,教科,都道府県,市区町村,学校種別,未使用,平均点,学校規模,地域区分,習熟度レベル,受験者数,全国順位,偏差値,学習時間
+    ```
+
+  - **説明**: 学力テストの結果データ。教科別平均点、学校規模、地域区分、習熟度レベル、受験者数、偏差値、学習時間などが含まれる
+  - **データ出典**: サンプルデータ
+
+#### 交通・移動分野のテストデータ
+
+- **交通事故データ**: `test-traffic-accident.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-traffic-accident)
+  - **フォーマット**:
+
+    ```csv
+    日時,性別,年齢,事故類型,都道府県,市区町村,職業,未使用,カウント,天候,道路種別,車両種別,時間帯,負傷者数
+    ```
+
+  - **説明**: 交通事故に関するデータ。事故類型、天候、道路種別、車両種別、時間帯、負傷者数などの詳細情報が含まれる
+  - **データ出典**: サンプルデータ
+
+- **公共交通利用データ**: `test-public-transport.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-public-transport)
+  - **フォーマット**:
+
+    ```csv
+    年月,路線名,駅名,都道府県,利用者数,時間帯,曜日区分,季節,交通手段
+    ```
+
+  - **説明**: 公共交通機関の利用状況データ。路線別、時間帯別、曜日区分、季節変動の分析が可能
+  - **データ出典**: サンプルデータ
+
+#### 住宅・不動産分野のテストデータ
+
+- **不動産取引データ**: `test-real-estate.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-real-estate)
+  - **フォーマット**:
+
+    ```csv
+    年月,都道府県,市区町村,物件種別,築年数,面積,価格,最寄り駅距離,間取り,取引件数
+    ```
+
+  - **説明**: 不動産取引に関するデータ。物件種別、築年数、面積、価格、駅距離、間取り別の取引動向が分析可能
+  - **データ出典**: サンプルデータ
+
+- **住宅着工統計**: `test-housing-construction.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-housing-construction)
+  - **フォーマット**:
+
+    ```csv
+    年月,都道府県,構造区分,建て方,利用関係,床面積,工事費予定額,着工戸数,世帯構成
+    ```
+
+  - **説明**: 住宅着工に関するデータ。構造区分、建て方、利用関係、床面積、工事費、着工戸数の動向分析
+  - **データ出典**: サンプルデータ
+
+#### 消費行動分野のテストデータ
+
+- **家計調査データ**: `test-household-survey.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-household-survey)
+  - **フォーマット**:
+
+    ```csv
+    年月,都道府県,世帯人員,年齢階級,職業,支出項目,支出金額,収入,貯蓄額,消費性向
+    ```
+
+  - **説明**: 家計の消費行動データ。支出項目別、年齢階級別、職業別の消費動向分析が可能
+  - **データ出典**: サンプルデータ
+
+- **電子商取引データ**: `test-ecommerce.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ecommerce)
+  - **フォーマット**:
+
+    ```csv
+    日付,性別,年齢,商品カテゴリ,都道府県,市区町村,職業,未使用,購入金額,デバイス種別,決済方法,購入回数,配送方法,満足度,会員ランク,利用時間帯
+    ```
+
+  - **説明**: EC（電子商取引）の購入データ。商品カテゴリ別、デバイス種別、決済方法、利用時間帯などの詳細分析が可能
+  - **データ出典**: サンプルデータ
+
+#### 環境・エネルギー分野のテストデータ
+
+- **環境調査データ**: `test-environment-survey.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-environment-survey)
+  - **フォーマット**:
+
+    ```csv
+    日時,都道府県,測定局名,汚染物質,濃度,気象条件,季節,地域特性,測定値数
+    ```
+
+  - **説明**: 環境汚染の測定データ。汚染物質別、気象条件別、季節変動、地域特性の分析が可能
+  - **データ出典**: サンプルデータ
+
+#### 労働・雇用分野のテストデータ
+
+- **雇用・労働データ**: `test-employment-labor.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-employment-labor)
+  - **フォーマット**:
+
+    ```csv
+    年月,都道府県,職種,業界,年齢層,性別,求人数,平均給与,雇用形態,経験年数
+    ```
+
+  - **説明**: 求人・転職市場のデータ。職種別、業界別、年齢層別の求人動向と給与水準の分析が可能
+  - **データ出典**: サンプルデータ
+
+#### 国際・世界データ分野のテストデータ
+
+- **世界環境・気候変動データ**: `test-global-climate-environmental.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-climate-environmental)
+  - **フォーマット**:
+
+    ```csv
+    日付,平均気温変化(℃),森林被覆率(%),CO2排出量(トン/人),国名,大陸,未使用,再生可能エネルギー比率,カウント,再生可能エネルギー比率(%),水資源量(1人当たり立方メートル),大気汚染指数(PM2.5濃度),環境政策スコア(100点満点),エネルギー消費量(1人当たりTOE),海面上昇影響度(mm/年)
+    ```
+
+  - **説明**: 世界各国の環境・気候変動データ。CO2排出量、再生可能エネルギー比率、森林被覆率、大気汚染指数など多角的な環境指標の分析が可能
+  - **データ出典**: サンプルデータ
+
+- **世界教育・人材開発データ**: `test-global-education-human-development.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-education-human-development)
+  - **フォーマット**:
+
+    ```csv
+    年度,性別,年齢,国・地域名,大陸,経済レベル,政治体制,未使用,識字率,大学進学率,研究開発費率,特許出願数,教育予算率,平均教育年数,デジタルリテラシー率,イノベーション指数
+    ```
+
+  - **説明**: 世界各国の教育・人材開発指標データ。識字率、大学進学率、研究開発費、特許出願数、イノベーション指数の国際比較分析が可能
+  - **データ出典**: サンプルデータ
+
+- **世界保健・医療システムデータ**: `test-global-health-medical-systems.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-health-medical-systems)
+  - **フォーマット**:
+
+    ```csv
+    年度,性別,年齢,国・地域名,大陸,所得グループ,医療制度型,未使用,平均寿命,乳児死亡率,医療費率,医師数率,病床数率,ワクチン接種率,感染症発生率,医療アクセス指数
+    ```
+
+  - **説明**: 世界各国の保健・医療システムデータ。平均寿命、医療費、医師数、病床数、ワクチン接種率など医療システムの国際比較分析が可能
+  - **データ出典**: サンプルデータ
+
+#### その他の分野のテストデータ
+
+- **犯罪統計データ**: `test-crime-statistics.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-crime-statistics)
+  - **説明**: 犯罪発生状況の統計データ。犯罪種別、発生時間帯、地域別の治安状況分析が可能
+
+- **インターネット利用状況**: `test-internet-usage.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-internet-usage)
+  - **説明**: インターネット利用状況データ。年齢層別、利用目的別、デバイス別の利用動向分析
+
+- **投資信託データ**: `test-investment-trust.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-investment-trust)
+  - **説明**: 投資信託の運用データ。ファンド種別、投資地域別、リスク区分別の投資動向分析
+
+- **医療調査データ**: `test-medical-survey.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-medical-survey)
+  - **説明**: 医療に関する調査データ。診療科別、年齢層別、地域別の医療利用状況分析
+
+- **映画興行データ**: `test-movie-box-office.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-movie-box-office)
+  - **説明**: 映画の興行成績データ。ジャンル別、上映期間別、観客動員数の分析
+
+- **博物館来館データ**: `test-museum-visitor.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-museum-visitor)
+  - **説明**: 博物館・美術館の来館者データ。施設種別、展示内容別、年齢層別の来館動向分析
+
+- **特許出願データ**: `test-patent-application.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-patent-application)
+  - **説明**: 特許出願に関するデータ。技術分野別、出願人種別、地域別の特許動向分析
+
+- **小売調査データ**: `test-retail-survey.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-retail-survey)
+  - **説明**: 小売業の調査データ。業態別、立地条件別、売上動向の分析
+
+- **国際貿易データ**: `test-international-trade.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-international-trade)
+  - **説明**: 国際貿易統計データ。品目別、相手国別、輸出入動向の分析
+
+- **訪日外国人消費データ**: `test-foreign-visitor-consumption.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-foreign-visitor-consumption)
+  - **説明**: 訪日外国人の消費行動データ。国籍別、消費項目別、地域別の消費動向分析
+
+※各テストデータは、DC.jsを使用した多次元チャート分析のサンプルとして作成されており、実際のデータ分析手法や可視化技術の学習・検証に活用できます。
 
 ## 使用方法
 
