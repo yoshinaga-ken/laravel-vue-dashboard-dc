@@ -7,6 +7,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import ElTextTagsInput from "@/Components/ElTextTagsInput.vue";
+import ElMentionTextarea from "@/Components/ElMentionTextarea.vue";
 import { useTranslation } from "@/Composables/useTranslation.js";
 import ArticleLikeButton from "@/Components/ArticleLikeButton.vue";
 import { route } from "../../../../../vendor/tightenco/ziggy"
@@ -19,13 +20,7 @@ const props = defineProps<{
   permissions: Permission,
 }>();
 
-interface Form {
-  title: string,
-  body: string,
-  tags: string[],
-}
-
-const form = useForm<Form>({
+const form = useForm({
   title: props.article.title,
   body: props.article.body,
   tags: props.article.tags.map((tag) => tag.name),
@@ -81,7 +76,7 @@ const onClickToggleLikeForm = (article: Article) => {
           <div class="ms-4 leading-tight">
             <div class="text-gray-900 dark:text-white">{{ article.user.name }}</div>
             <div class="text-sm text-gray-700 dark:text-gray-300">
-              {{ $page.props.auth.user.email }}
+              {{ article.user.email || 'メールアドレス非公開' }}
             </div>
           </div>
         </div>
@@ -132,12 +127,13 @@ const onClickToggleLikeForm = (article: Article) => {
       <div class="col-span-6 sm:col-span-4">
         <InputLabel for="body" :value="`${t('models.article.body')}`"/>
 
-        <TextInput
+        <ElMentionTextarea
           id="body"
           v-model="form.body"
-          type="text"
-          class="mt-1 block w-full"
+          class="block w-full mt-1"
+          :rows="6"
           :disabled="! permissions.canUpdateArticle"
+          placeholder="記事本文を入力してください。@でユーザー、#でタグを補完できます。"
         />
 
         <InputError :message="form.errors.body" class="mt-2"/>

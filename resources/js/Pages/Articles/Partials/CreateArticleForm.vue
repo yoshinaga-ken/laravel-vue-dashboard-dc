@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import ElTextTagsInput from "@/Components/ElTextTagsInput.vue";
+import ElMentionTextarea from "@/Components/ElMentionTextarea.vue";
 import {useTranslation} from "@/Composables/useTranslation.js";
 
 const {t} = useTranslation();
@@ -85,11 +86,12 @@ const createArticle = () => {
       <!-- Article Body -->
       <div class="col-span-6 sm:col-span-4">
         <InputLabel for="body" :value="`${t('models.article.body')}`"/>
-        <TextInput
+        <ElMentionTextarea
           id="body"
           v-model="form.body"
-          type="text"
           class="block w-full mt-1"
+          :rows="6"
+          placeholder="記事本文を入力してください。@でユーザー、#でタグを補完できます。"
         />
         <InputError :message="form.errors.body" class="mt-2"/>
       </div>
