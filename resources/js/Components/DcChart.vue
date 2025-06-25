@@ -7,200 +7,209 @@
 
 
       <div class="container_dc text-theme-col bg-theme-col">
-        <h4 class="hdr"></h4>
+        <div class="header" ref="headerRef">
+          <h4 class="hdr"></h4>
 
-        <div class="usage" style="font-size: 10pt">
-          ※キーワード入力やグラフのバーをクリックする事で任意の項目での<i class="fa fa-filter"></i>フィルタリングが行えます
-        </div>
+          <div class="usage" style="font-size: 10pt">
+            ※キーワード入力やグラフのバーをクリックする事で任意の項目での<i class="fa fa-filter"></i>フィルタリングが行えます
+          </div>
 
-        <h4 class="hdr_flt emj"></h4>
+          <h4 class="hdr_flt emj"></h4>
 
-        <!-- DC_PANEL ToolbarMain -->
-        <div id="toolbar_main">
+          <!-- DC_PANEL ToolbarMain -->
+          <div id="toolbar_main">
 
-          <FileSelectMenu :data-path="dataPath" :data="selectableData"/>
+            <FileSelectMenu :data-path="dataPath" :data="selectableData"/>
 
-          <i class="fa fa-filter fa-icon"></i>
-          <input type="search" id="input-search" autocomplete="off"
-                 class="btn_clear_none dark:bg-slate-900 dark:hover:bg-slate-700" value="">
-          <button class="btn_clear_all ui-button ui-corner-all ui-widget"
-                  title="全てのチャートのフィルタをクリアします" href="#">
-            <span class="ui-icon ui-icon-closethick"></span><span v-if="!isSp">クリア</span>
-          </button>
-          <button v-if="!isSp" id="btn_search_keyboard" title="キーパッドを表示します"
-                  class="ui-button ui-corner-all ui-widget ui-button-min">
-            <span style="font-size:1.6em;">⌨</span>
-          </button>
+            <i class="fa fa-filter fa-icon"></i>
+            <input type="search" id="input-search" autocomplete="off"
+                   class="btn_clear_none dark:bg-slate-900 dark:hover:bg-slate-700" value="">
+            <button class="btn_clear_all ui-button ui-corner-all ui-widget"
+                    title="全てのチャートのフィルタをクリアします" href="#">
+              <span class="ui-icon ui-icon-closethick"></span><span v-if="!isSp">クリア</span>
+            </button>
+            <button v-if="!isSp" id="btn_search_keyboard" title="キーパッドを表示します"
+                    class="ui-button ui-corner-all ui-widget ui-button-min">
+              <span style="font-size:1.6em;">⌨</span>
+            </button>
 
-          <input type="text" id="btn_date" value="" style="display: none;">
+            <input type="text" id="btn_date" value="" style="display: none;">
 
-          <button v-if="!isSp" id="btn_download_csv"
-                  title="フィルタリングされたグラフのデータをCSV形式でダウンロードします。"
-                  class="btn_export_file">
-            <i v-if="!isSp" class="ui-icon ui-icon-arrowstop-1-s"></i>
-            <img width="20" src="/img/csv.png">
-          </button>
+            <button v-if="!isSp" id="btn_download_csv"
+                    title="フィルタリングされたグラフのデータをCSV形式でダウンロードします。"
+                    class="btn_export_file">
+              <i v-if="!isSp" class="ui-icon ui-icon-arrowstop-1-s"></i>
+              <img width="20" src="/img/csv.png">
+            </button>
 
-          <button v-if="!isSp" id="btn_edit_csv" title="チャートのデータをGoogleスプレッドシートで編集します。"
-                  class="dark:text-white emj ui-button ui-corner-all ui-widget" disabled="true">
-            ✏
-          </button>
+            <button v-if="!isSp" id="btn_edit_csv" title="チャートのデータをGoogleスプレッドシートで編集します。"
+                    class="dark:text-white emj ui-button ui-corner-all ui-widget" disabled="true">
+              ✏
+            </button>
 
-          <span v-if="!isSp||1">&nbsp;</span>
+            <span v-if="!isSp||1">&nbsp;</span>
 
-          <button v-if="!isSp||1" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                  title="レイアウトを「グーグルマップベース」にします" @click="onClickStyleLoad('gmap')">
-            <img src="/img/google-map-48.png" width="20">
-          </button>
-          <button v-if="!isSp" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                  title="レイアウトを「ストリートビューベース」にします" @click="onClickStyleLoad('sview')">
-            <img src="/img/icons8-street-view-60.png" width="22">
-          </button>
-          <button v-if="!isSp||1" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                  title="レイアウトを「YouTubeベース」にします" @click="onClickStyleLoad('tube')">
-            <img src="/img/yutube.gif">
-          </button>
-          <button v-if="!isSp||1" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                  title="レイアウトを「チャートベース」にします" @click="onClickStyleLoad('default');">
-            📊️
-          </button>
+            <button v-if="!isSp||1" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
+                    title="レイアウトを「グーグルマップベース」にします" @click="onClickStyleLoad('gmap')">
+              <img src="/img/google-map-48.png" width="20">
+            </button>
+            <button v-if="!isSp" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
+                    title="レイアウトを「ストリートビューベース」にします" @click="onClickStyleLoad('sview')">
+              <img src="/img/icons8-street-view-60.png" width="22">
+            </button>
+            <button v-if="!isSp||1" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
+                    title="レイアウトを「YouTubeベース」にします" @click="onClickStyleLoad('tube')">
+              <img src="/img/yutube.gif">
+            </button>
+            <button v-if="!isSp||1" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
+                    title="レイアウトを「チャートベース」にします" @click="onClickStyleLoad('default');">
+              📊️
+            </button>
 
-          <button v-if="!isSp" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                  title="レイアウトを自動整形します" @click="onClickStyleReset()">
-            ✖️
-          </button>
+            <button v-if="!isSp" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
+                    title="レイアウトを自動整形します" @click="onClickStyleReset()">
+              ✖️
+            </button>
 
-          <span v-if="!isSp">&nbsp;</span>
+            <span v-if="!isSp">&nbsp;</span>
 
-          <label class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                 :title="isDark ? '☀ライトモードへ' : '🌛ダークモードへ' " for="darkmode">
-            {{ isDark ? '☀' : '🌛' }}
-            <input type="checkbox" v-model="isDark" id="darkmode" class="hidden"/>
-          </label>
-        </div>
+            <label class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
+                   :title="isDark ? '☀ライトモードへ' : '🌛ダークモードへ' " for="darkmode">
+              {{ isDark ? '☀' : '🌛' }}
+              <input type="checkbox" v-model="isDark" id="darkmode" class="hidden"/>
+            </label>
+          </div>
 
-        <!-- DC_PANEL ToolbarShow -->
-        <div id="toolbar_win_toggle" class="ui-button ui-corner-all ui-widget">
-          <label title="ウインドウの表示・非表示を切り替えます">
-            <input type="checkbox" v-model="pnl.common.toolbar.isShow"/> 表示：
-          </label>
-          <span v-show="pnl.common.toolbar.isShow">
+          <div v-if="!isSp" class="ui-button ui-corner-all ui-widget">
+            <label title="ウインドウの表示・非表示を切り替えます">
+              <input type="checkbox" v-model="pnl.common.toolbar.isShow"/>
+              <span class="ui-icon ui-icon-newwin"></span>表示
+            </label>
+          </div>
 
-            <template v-if="!pnl.gmap.isHidden">
-              <label for="ch_pnl_gmap" title="GoogleMapウインドウを表示します">
+          <!-- DC_PANEL ToolbarShow -->
+          <Transition name="slide-down">
+            <div id="toolbar_win_toggle" v-show="pnl.common.toolbar.isDivShow"
+                 class="ui-button ui-corner-all ui-widget">
+
+              <template v-if="!pnl.gmap.isHidden">
+                <label for="ch_pnl_gmap" title="GoogleMapウインドウを表示します">
                   <input id="ch_pnl_gmap" type="checkbox" v-model="pnl.gmap.isShow">
                   <img src="/img/google-map-48.png" width="20" style="margin-top:-6px;">
-              </label>
-              <span v-if="!isSp && pnl.gmap.isShow" class="ui-icon sp_icon"
-                    :class="pnl.gmap.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                    title="GoogleMapウインドウを最大化します"
-                    @click="onClickPanelMaximize('chart_gmap')">
+                </label>
+                <span v-if="!isSp && pnl.gmap.isShow" class="ui-icon sp_icon"
+                      :class="pnl.gmap.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
+                      title="GoogleMapウインドウを最大化します"
+                      @click="onClickPanelMaximize('chart_gmap')">
               </span>
-              &nbsp;
-            </template>
+                &nbsp;
+              </template>
 
-            <template v-if="!pnl.sview.isHidden">
-              <label title="ストリートビューウインドウを表示します" for="ch_pnl_sview">
+              <template v-if="!pnl.sview.isHidden">
+                <label title="ストリートビューウインドウを表示します" for="ch_pnl_sview">
                   <input id="ch_pnl_sview" type="checkbox" v-model="pnl.sview.isShow">
                   <img src="/img/icons8-street-view-60.png" width="22" style="margin-top:-10px;">
-              </label>
-              <span v-if="!isSp && pnl.sview.isShow" class="ui-icon sp_icon"
-                    :class="pnl.sview.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                    title="ストリートビューウインドウを最大化します"
-                    @click="onClickPanelMaximize('chart_sview')">
+                </label>
+                <span v-if="!isSp && pnl.sview.isShow" class="ui-icon sp_icon"
+                      :class="pnl.sview.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
+                      title="ストリートビューウインドウを最大化します"
+                      @click="onClickPanelMaximize('chart_sview')">
               </span>
-              &nbsp;
-            </template>
+                &nbsp;
+              </template>
 
-            <template v-if="!pnl.tube.isHidden">
-              <label v-if="gg.dt !== DT_COVID" for="ch_pnl_tube" title="YOUTUBE動画再生ウインドウを表示します">
+              <template v-if="!pnl.tube.isHidden">
+                <label v-if="gg.dt !== DT_COVID" for="ch_pnl_tube" title="YOUTUBE動画再生ウインドウを表示します">
                   <input id="ch_pnl_tube" type="checkbox" v-model="pnl.tube.isShow">
                   <img src="/img/yutube.gif" width="18" style="margin-left:3px;margin-top:-8px;">
-              </label>
-              <span v-if="!isSp && pnl.tube.isShow" class="ui-icon sp_icon"
-                    :class="pnl.tube.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                    title="YouTubeウインドウを最大化します"
-                    @click="onClickPanelMaximize('chart_tube')">
+                </label>
+                <span v-if="!isSp && pnl.tube.isShow" class="ui-icon sp_icon"
+                      :class="pnl.tube.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
+                      title="YouTubeウインドウを最大化します"
+                      @click="onClickPanelMaximize('chart_tube')">
               </span>
-            </template>
+              </template>
 
-            <span v-if="gg.dt !== DT_COVID">&nbsp;&nbsp;</span>
+              <span v-if="gg.dt !== DT_COVID">&nbsp;&nbsp;</span>
 
-            <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します">
-              <input id="ch_pnl_map" type="checkbox" v-model="pnl.map.isShow">
-              <i class="fa fa-map"></i>&nbsp;
-            </label>
+              <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します">
+                <input id="ch_pnl_map" type="checkbox" v-model="pnl.map.isShow">
+                <i class="fa fa-map"></i>&nbsp;
+              </label>
 
-            <label v-if="!pnl.name.isHidden" for="ch_pnl_name">
-              <input id="ch_pnl_name" type="checkbox" v-model="pnl.name.isShow">
-              <span v-html="mm.util.shortTitle(pnl.name.title)" :title="pnl.name.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.name.isHidden" for="ch_pnl_name">
+                <input id="ch_pnl_name" type="checkbox" v-model="pnl.name.isShow">
+                <span v-html="mm.util.shortTitle(pnl.name.title)" :title="pnl.name.title"></span>&nbsp;
+              </label>
 
-            <label v-if="!pnl.city.isHidden" for="ch_pnl_city">
-            	<input id="ch_pnl_city" type="checkbox" v-model="pnl.city.isShow">
-            	<span v-html="mm.util.shortTitle(pnl.city.title)" :title="pnl.city.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.city.isHidden" for="ch_pnl_city">
+                <input id="ch_pnl_city" type="checkbox" v-model="pnl.city.isShow">
+                <span v-html="mm.util.shortTitle(pnl.city.title)" :title="pnl.city.title"></span>&nbsp;
+              </label>
 
-            <label v-if="!pnl.date.isHidden" for="ch_pnl_date">
-            	<input id="ch_pnl_date" type="checkbox" v-model="pnl.date.isShow">
-            	<span v-html="mm.util.shortTitle(pnl.date.title)" :title="pnl.date.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.date.isHidden" for="ch_pnl_date">
+                <input id="ch_pnl_date" type="checkbox" v-model="pnl.date.isShow">
+                <span v-html="mm.util.shortTitle(pnl.date.title)" :title="pnl.date.title"></span>&nbsp;
+              </label>
 
-            <label v-if="!pnl.year.isHidden" for="ch_pnl_year">
-            	<input id="ch_pnl_year" type="checkbox" v-model="pnl.year.isShow">
-            	<span v-html="pnl.year.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.year.isHidden" for="ch_pnl_year">
+                <input id="ch_pnl_year" type="checkbox" v-model="pnl.year.isShow">
+                <span v-html="pnl.year.title"></span>&nbsp;
+              </label>
 
-            <label v-if="!pnl.season.isHidden" for="ch_pnl_season">
-            	<input id="ch_pnl_season" type="checkbox" v-model="pnl.season.isShow">
-            	<span v-html="pnl.season.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.season.isHidden" for="ch_pnl_season">
+                <input id="ch_pnl_season" type="checkbox" v-model="pnl.season.isShow">
+                <span v-html="pnl.season.title"></span>&nbsp;
+              </label>
 
-            <label v-if="!pnl.week.isHidden" for="ch_pnl_week">
-              <input id="ch_pnl_week" type="checkbox" v-model="pnl.week.isShow">
-              <span v-html="pnl.week.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.week.isHidden" for="ch_pnl_week">
+                <input id="ch_pnl_week" type="checkbox" v-model="pnl.week.isShow">
+                <span v-html="pnl.week.title"></span>&nbsp;
+              </label>
 
-            <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex">
-            	<input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.isShow">
-            	<span v-html="mm.util.shortTitle(pnl.sex.title)" :title="pnl.sex.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex">
+                <input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.isShow">
+                <span v-html="mm.util.shortTitle(pnl.sex.title)" :title="pnl.sex.title"></span>&nbsp;
+              </label>
 
-            <label v-if="!pnl.age.isHidden" for="ch_pnl_age">
-            	<input id="ch_pnl_age" type="checkbox" v-model="pnl.age.isShow">
-            	<span v-html="mm.util.shortTitle(pnl.age.title)" :title="pnl.age.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.age.isHidden" for="ch_pnl_age">
+                <input id="ch_pnl_age" type="checkbox" v-model="pnl.age.isShow">
+                <span v-html="mm.util.shortTitle(pnl.age.title)" :title="pnl.age.title"></span>&nbsp;
+              </label>
 
-            <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond">
-            	<input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.isShow">
-            	<span v-html="mm.util.shortTitle(pnl.cond.title)" :title="pnl.cond.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond">
+                <input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.isShow">
+                <span v-html="mm.util.shortTitle(pnl.cond.title)" :title="pnl.cond.title"></span>&nbsp;
+              </label>
 
-            <label v-if="!pnl.job.isHidden" for="ch_pnl_job">
-            	<input id="ch_pnl_job" type="checkbox" v-model="pnl.job.isShow">
-            	<span v-html="mm.util.shortTitle(pnl.job.title)" :title="pnl.job.title"></span>&nbsp;
-            </label>
+              <label v-if="!pnl.job.isHidden" for="ch_pnl_job">
+                <input id="ch_pnl_job" type="checkbox" v-model="pnl.job.isShow">
+                <span v-html="mm.util.shortTitle(pnl.job.title)" :title="pnl.job.title"></span>&nbsp;
+              </label>
 
 
-            <template v-for="(item) in pnl.ex">
+              <template v-for="(item) in pnl.ex">
                 <template v-if="!item.isHidden">
-                    <label>
-                      <input type="checkbox" v-model="item.isShow">
-                      <span v-html="mm.util.shortTitle(item.title)" :title="item.title"></span>&nbsp;
-                    </label>
+                  <label>
+                    <input type="checkbox" v-model="item.isShow">
+                    <span v-html="mm.util.shortTitle(item.title)" :title="item.title"></span>&nbsp;
+                  </label>
                 </template>
-            </template>
+              </template>
 
-            <label v-if="!pnl.detail.isHidden" for="ch_pnl_detail"><input id="ch_pnl_detail" type="checkbox"
-                                                                          v-model="pnl.detail.isShow">詳細&nbsp;</label>
-            <label for="ch_pnl_ana" v-show="gg.dt===DT_COVID && pnl.ana.is_chk_show">
+              <label v-if="!pnl.detail.isHidden" for="ch_pnl_detail">
+                <input id="ch_pnl_detail" type="checkbox" v-model="pnl.detail.isShow">詳細&nbsp;
+              </label>
+
+              <label for="ch_pnl_ana" v-show="gg.dt===DT_COVID && pnl.ana.is_chk_show">
                 <input id="ch_pnl_ana" type="checkbox" v-model="pnl.ana.isShow">
                 <i class="fa fa-eye"></i>比較分析
-            </label>
+              </label>
 
-            <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.common.toolbar.isShow=0"></span>
+              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.common.toolbar.isShow=0"></span>
 
-          </span>
+            </div>
+          </Transition>
         </div>
 
         <div id="panels">
@@ -794,6 +803,7 @@
 
 <script setup>
 import {onMounted, ref, watch, reactive, nextTick} from "vue";
+import {useElementHover} from '@vueuse/core';
 import * as d3 from 'd3';
 
 import * as dc from 'dc';
@@ -1030,6 +1040,8 @@ const gg = reactive({
 });
 const isSp = window.innerWidth <= 768;
 const dataImgSrc = ref('');
+const headerRef = ref(null);
+
 const pnl = reactive({
   common: {
     unitPrefix: '', // '売上本数(万本)' : 'タイトル';
@@ -1038,8 +1050,10 @@ const pnl = reactive({
     datepicker: {
       position: {}
     },
+    // パネル表示ツールバー
     toolbar: {
-      isShow: true,
+      isShow: true, // ツールバーを常に表示するか？
+      isDivShow: false, // ツールバーの表示状態
     }
   },
   gmap: {
@@ -1556,7 +1570,21 @@ const setPanelXYWH = (id = null, absType = 0) => {
 
   return isSet;
 }
-
+const setupToolbarWatch = () => {
+  const headerHover = useElementHover(headerRef)
+  // ヘッダーホバーでツールバーの表示・非表示を制御
+  watch(headerHover, (hovered) => {
+    if (hovered) {
+      // ヘッダーにホバーした時はツールバーを表示
+      pnl.common.toolbar.isDivShow = true
+    } else {
+      // ヘッダーから離れた時は即座にツールバーを非表示
+      if (!pnl.common.toolbar.isShow) {
+        pnl.common.toolbar.isDivShow = false
+      }
+    }
+  })
+}
 const setupPanelWatch = () => {
   const handleChartVisibilityChange = (chart, newVal, oldVal) => {
     chart?.chartGroup(newVal ? CGRP_SHOW : CGRP_HIDE);
@@ -1830,6 +1858,8 @@ onMounted(async () => {
     }
 
     mm.setPanelFromDataOptionsAfterLoad();
+
+    if (!isSp) setupToolbarWatch();
 
     setupPanelWatch();
 
@@ -2405,6 +2435,9 @@ const mm = {
   },
   // 呼順3:データオプション(mm.opt)系をpnlに反映 - データロード後
   setPanelFromDataOptionsAfterLoad: () => {
+    if (isSp) pnl.common.toolbar.isShow = true;
+    pnl.common.toolbar.isDivShow = pnl.common.toolbar.isShow;
+
     if(gg.dt === DT_COVID) {
       pnl.ana.href = location.origin + location.pathname + `?data=${mm.url_data.data}`;
     }
@@ -8704,6 +8737,32 @@ body {
   td, th {
     padding: 0;
   }
+}
+
+/* スライドダウンアニメーション */
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+}
+
+.slide-down-enter-from {
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(-10px);
+}
+
+.slide-down-leave-to {
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(-10px);
+}
+
+.slide-down-enter-to,
+.slide-down-leave-from {
+  opacity: 1;
+  max-height: 200px; /* ツールバーの想定最大高さ */
+  transform: translateY(0);
 }
 
 .tab-data {
