@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onBeforeUnmount, computed } from 'vue'
+import { ref, onBeforeUnmount, computed, watchEffect } from 'vue'
 import { ElMention } from 'element-plus'
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
@@ -80,15 +80,26 @@ const { result: usersResult, refetch: refetchUsers } = useQuery<{ users: UserPag
   }
 })
 
+// キャッシュ戦略の決定ロジック
+watchEffect(() => {
+  // タグのキャッシュ戦略を決定
+  const tagTotal = tagsResult.value?.tags?.paginatorInfo?.total || 0
+  if (tagTotal > CACHE_THRESHOLD) {
+    useTagCache.value = false
+  }
+})
+
+watchEffect(() => {
+  // ユーザーのキャッシュ戦略を決定
+  const userTotal = usersResult.value?.users?.paginatorInfo?.total || 0
+  if (userTotal > CACHE_THRESHOLD) {
+    useUserCache.value = false
+  }
+})
+
 /** @description 利用可能なタグ一覧 */
 const availableTags = computed(() => {
   if (!tagsResult.value?.tags?.data) return []
-
-  // 初回取得時にキャッシュ戦略を決定
-  const total = tagsResult.value.tags.paginatorInfo?.total || 0
-  if (total > CACHE_THRESHOLD) {
-    useTagCache.value = false
-  }
 
   return tagsResult.value.tags.data
     .filter(tag => tag && typeof tag.name === 'string')
@@ -98,12 +109,6 @@ const availableTags = computed(() => {
 /** @description 利用可能なユーザー一覧 */
 const availableUsers = computed(() => {
   if (!usersResult.value?.users?.data) return []
-
-  // 初回取得時にキャッシュ戦略を決定
-  const total = usersResult.value.users.paginatorInfo?.total || 0
-  if (total > CACHE_THRESHOLD) {
-    useUserCache.value = false
-  }
 
   return usersResult.value.users.data
     .filter(user => user && typeof user.name === 'string')
