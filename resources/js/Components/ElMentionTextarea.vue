@@ -3,6 +3,7 @@ import { ref, onBeforeUnmount, computed, watchEffect } from 'vue'
 import { ElMention } from 'element-plus'
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
+import { debounce } from 'lodash'
 import type { MentionOption } from 'element-plus'
 import type { FilterTagInput, TagPaginator, FilterUserInput, UserPaginator } from '@/Types/types-graphql'
 
@@ -115,8 +116,6 @@ const availableUsers = computed(() => {
     .map(user => user.name)
 })
 
-let timer: ReturnType<typeof setTimeout>
-
 /** @description 検索結果をフィルタリングしてMentionOptionに変換 */
 const filterAndMapItems = (items: string[], pattern: string): MentionOption[] => {
   return items
@@ -127,71 +126,81 @@ const filterAndMapItems = (items: string[], pattern: string): MentionOption[] =>
     }))
 }
 
-/** @description メンション検索ハンドラー */
-const handleSearch = async (pattern: string, prefix: string) => {
-  if (timer) clearTimeout(timer)
+/** @description 検索実行関数 */
+const executeSearch = async (pattern: string, prefix: string): Promise<MentionOption[]> => {
+  let results: MentionOption[] = []
 
-  loading.value = true
+  try {
+    if (prefix === '@') {
+      if (useUserCache.value) {
+        // キャッシュ戦略: クライアントサイドフィルタリング
+        results = filterAndMapItems(availableUsers.value, pattern)
+      } else {
+        // 動的検索戦略: GraphQLクエリ実行
+        const response = await refetchUsers({
+          input: {
+            name: pattern
+          } satisfies FilterUserInput
+        })
 
-  timer = setTimeout(async () => {
-    let results: MentionOption[] = []
-
-    try {
-      if (prefix === '@') {
-        if (useUserCache.value) {
-          // キャッシュ戦略: クライアントサイドフィルタリング
-          results = filterAndMapItems(availableUsers.value, pattern)
-        } else {
-          // 動的検索戦略: GraphQLクエリ実行
-          const response = await refetchUsers({
-            input: {
-              name: pattern
-            } satisfies FilterUserInput
-          })
-
-          if (response?.data?.users?.data) {
-            results = response.data.users.data
-              .filter(user => user && typeof user.name === 'string')
-              .map(user => ({
-                label: user.name,
-                value: user.name,
-              }))
-          }
-        }
-      } else if (prefix === '#') {
-        if (useTagCache.value) {
-          // キャッシュ戦略: クライアントサイドフィルタリング
-          results = filterAndMapItems(availableTags.value, pattern)
-        } else {
-          // 動的検索戦略: GraphQLクエリ実行
-          const response = await refetchTags({
-            input: {
-              name: pattern
-            } satisfies FilterTagInput
-          })
-
-          if (response?.data?.tags?.data) {
-            results = response.data.tags.data
-              .filter(tag => tag && typeof tag.name === 'string')
-              .map(tag => ({
-                label: tag.name,
-                value: tag.name,
-              }))
-          }
+        if (response?.data?.users?.data) {
+          results = response.data.users.data
+            .filter(user => user && typeof user.name === 'string')
+            .map(user => ({
+              label: user.name,
+              value: user.name,
+            }))
         }
       }
-    } catch (error) {
-      console.error('Search error:', error)
-      results = []
-    }
+    } else if (prefix === '#') {
+      if (useTagCache.value) {
+        // キャッシュ戦略: クライアントサイドフィルタリング
+        results = filterAndMapItems(availableTags.value, pattern)
+      } else {
+        // 動的検索戦略: GraphQLクエリ実行
+        const response = await refetchTags({
+          input: {
+            name: pattern
+          } satisfies FilterTagInput
+        })
 
+        if (response?.data?.tags?.data) {
+          results = response.data.tags.data
+            .filter(tag => tag && typeof tag.name === 'string')
+            .map(tag => ({
+              label: tag.name,
+              value: tag.name,
+            }))
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Search error:', error)
+    results = []
+  }
+
+  return results
+}
+
+/** @description デバウンス化された検索関数 */
+const debouncedSearch = debounce(async (pattern: string, prefix: string) => {
+  loading.value = true
+  try {
+    const results = await executeSearch(pattern, prefix)
     options.value = results
+  } finally {
     loading.value = false
-  }, SEARCH_DEBOUNCE_MS)
+  }
+}, SEARCH_DEBOUNCE_MS)
+
+/** @description メンション検索ハンドラー */
+const handleSearch = (pattern: string, prefix: string) => {
+  debouncedSearch(pattern, prefix)
 }
 
 onBeforeUnmount(() => {
-  if (timer) clearTimeout(timer)
+  // lodashのdebounceは自動的にクリーンアップされるため、手動でのタイマークリアは不要
+  debouncedSearch.cancel()
 })
 
 /** @description 外部公開API */
