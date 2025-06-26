@@ -15,6 +15,7 @@ import { mdi } from 'vuetify/iconsets/mdi';
 import '@mdi/font/css/materialdesignicons.css';
 
 // Element Plus
+import ElementPlus from 'element-plus';
 import 'element-plus/theme-chalk/dark/css-vars.css';
 import 'element-plus/dist/index.css';
 import 'animate.css';
@@ -41,6 +42,7 @@ const vuetify = createVuetify({
 
 setup(app => {
   app.use(vuetify);
+  app.use(ElementPlus);
 });
 
 const preview: Preview = {

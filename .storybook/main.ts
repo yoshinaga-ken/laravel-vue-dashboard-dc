@@ -4,6 +4,7 @@ const config: StorybookConfig = {
   stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
     "@storybook/addon-essentials",
+    "@storybook/addon-docs",
     "@storybook/addon-interactions",
     "@storybook/addon-links",
     {
@@ -15,12 +16,21 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: "@storybook/vue3-vite",
-    options: {},
+    options: {
+      viteConfigPath: '../vite.config.js'
+    },
   },
   docs: {
-    autodocs: "tag",
+    autodocs: true,
   },
   staticDirs: ['../public'],
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
+    },
+  },
 };
 
 export default config;
