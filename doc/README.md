@@ -8,16 +8,16 @@
 
 | ファイル | 概要 | 対象読者 |
 |---------|------|---------|
-| [DcChart-Analysis.md](./DcChart-Analysis.md) | 現状アーキテクチャの詳細分析 | 開発者・アーキテクト |
-| [DcChart-Refactoring-Plan.md](./DcChart-Refactoring-Plan.md) | 段階的リファクタリング計画 | プロジェクトマネージャー・開発者 |
-| [DcChart-Issues-Breakdown.md](./DcChart-Issues-Breakdown.md) | 個別Issue分割計画 | 開発者・スクラムマスター |
-| [DcChart-Refactoring-Summary.md](./DcChart-Refactoring-Summary.md) | 提案の実行計画サマリー | すべてのステークホルダー |
+| [DcChart-Analysis.md](./component/DcChart/DcChart-Analysis.md) | 現状アーキテクチャの詳細分析 | 開発者・アーキテクト |
+| [DcChart-Refactoring-Plan.md](./component/DcChart/DcChart-Refactoring-Plan.md) | 段階的リファクタリング計画 | プロジェクトマネージャー・開発者 |
+| [DcChart-Issues-Breakdown.md](./component/DcChart/DcChart-Issues-Breakdown.md) | 個別Issue分割計画 | 開発者・スクラムマスター |
+| [DcChart-Refactoring-Summary.md](./component/DcChart/DcChart-Refactoring-Summary.md) | 提案の実行計画サマリー | すべてのステークホルダー |
 
 ### 📋 Issue テンプレート
 
 | ファイル | 概要 |
 |---------|------|
-| [issue-templates/Issue-22-TypeScript-Types.md](./issue-templates/Issue-22-TypeScript-Types.md) | 最初のIssue実装例 |
+| [issue-templates/Issue-22-TypeScript-Types.md](./component/DcChart/issue-templates/Issue-22-TypeScript-Types.md) | 最初のIssue実装例 |
 
 ## 🎯 リファクタリング概要
 
@@ -62,7 +62,7 @@ src/
 ### 1. 最初のIssue作成
 ```bash
 # Issue #22: TypeScript型定義の作成
-# テンプレート: ./issue-templates/Issue-22-TypeScript-Types.md
+# テンプレート: ./component/DcChart/issue-templates/Issue-22-TypeScript-Types.md
 ```
 
 ### 2. Phase 1開始
