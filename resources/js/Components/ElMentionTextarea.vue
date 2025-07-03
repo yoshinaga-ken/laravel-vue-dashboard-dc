@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onBeforeUnmount, computed, watchEffect } from 'vue'
+import { ref, onBeforeUnmount, computed, watchEffect, watch } from 'vue'
 import { ElMention } from 'element-plus'
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
@@ -117,11 +117,11 @@ const availableUsers = computed(() => {
 })
 
 /** @description 検索結果をフィルタリングしてMentionOptionに変換 */
-const filterAndMapItems = (items: string[], pattern: string): MentionOption[] => {
+const filterAndMapItems = (items: string[], pattern: string, normalizedPrefix: string): MentionOption[] => {
   return items
     .filter(item => pattern === '' || item.toLowerCase().includes(pattern.toLowerCase()))
     .map(item => ({
-      label: item,
+      label: `${normalizedPrefix}${item}`,
       value: item,
     }))
 }
@@ -131,10 +131,13 @@ const executeSearch = async (pattern: string, prefix: string): Promise<MentionOp
   let results: MentionOption[] = []
 
   try {
-    if (prefix === '@') {
+    // 全角記号を半角に正規化
+    const normalizedPrefix = prefix === '＠' ? '@' : prefix === '＃' ? '#' : prefix
+
+    if (normalizedPrefix === '@') {
       if (useUserCache.value) {
         // キャッシュ戦略: クライアントサイドフィルタリング
-        results = filterAndMapItems(availableUsers.value, pattern)
+        results = filterAndMapItems(availableUsers.value, pattern, normalizedPrefix)
       } else {
         // 動的検索戦略: GraphQLクエリ実行
         const response = await refetchUsers({
@@ -147,15 +150,15 @@ const executeSearch = async (pattern: string, prefix: string): Promise<MentionOp
           results = response.data.users.data
             .filter(user => user && typeof user.name === 'string')
             .map(user => ({
-              label: user.name,
+              label: `${normalizedPrefix}${user.name}`,
               value: user.name,
             }))
         }
       }
-    } else if (prefix === '#') {
+    } else if (normalizedPrefix === '#') {
       if (useTagCache.value) {
         // キャッシュ戦略: クライアントサイドフィルタリング
-        results = filterAndMapItems(availableTags.value, pattern)
+        results = filterAndMapItems(availableTags.value, pattern, normalizedPrefix)
       } else {
         // 動的検索戦略: GraphQLクエリ実行
         const response = await refetchTags({
@@ -168,7 +171,7 @@ const executeSearch = async (pattern: string, prefix: string): Promise<MentionOp
           results = response.data.tags.data
             .filter(tag => tag && typeof tag.name === 'string')
             .map(tag => ({
-              label: tag.name,
+              label: `${normalizedPrefix}${tag.name}`,
               value: tag.name,
             }))
         }
@@ -198,6 +201,21 @@ const handleSearch = (pattern: string, prefix: string) => {
   debouncedSearch(pattern, prefix)
 }
 
+/** @description modelValueの変更を監視して全角プレフィックスを正規化 */
+watch(modelValue, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    // 全角プレフィックスを半角に置換
+    const normalizedValue = newValue
+      .replace(/＠/g, '@')
+      .replace(/＃/g, '#')
+
+    if (normalizedValue !== newValue) {
+      // 正規化が必要な場合のみ更新
+      modelValue.value = normalizedValue
+    }
+  }
+}, { flush: 'post' })
+
 onBeforeUnmount(() => {
   // lodashのdebounceは自動的にクリーンアップされるため、手動でのタイマークリアは不要
   debouncedSearch.cancel()
@@ -224,7 +242,7 @@ defineExpose({
     :placeholder="placeholder"
     :disabled="disabled"
     :rows="rows"
-    :prefix="['@', '#']"
+    :prefix="['@', '#', '＠', '＃']"
     type="textarea"
     style="width: 100%"
     @search="handleSearch"

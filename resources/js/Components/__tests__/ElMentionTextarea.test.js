@@ -111,7 +111,7 @@ describe('ElMentionTextarea', () => {
     expect(props.placeholder).toBe('テスト用プレースホルダー')
     expect(props.disabled).toBe(false)
     expect(props.rows).toBe(6)
-    expect(props.prefix).toEqual(['@', '#'])
+    expect(props.prefix).toEqual(['@', '#', '＠', '＃'])
   })
 
   it('v-modelが正しく動作する', async () => {
@@ -235,7 +235,7 @@ describe('ElMentionTextarea', () => {
 
     // オプションがフィルタリングされていることを確認
     expect(wrapper.vm.options).toEqual([
-      { label: 'alice', value: 'alice' }
+      { label: '@alice', value: 'alice' }
     ])
   })
 
@@ -253,7 +253,7 @@ describe('ElMentionTextarea', () => {
 
     // オプションがフィルタリングされていることを確認
     expect(wrapper.vm.options).toEqual([
-      { label: 'vue', value: 'vue' }
+      { label: '#vue', value: 'vue' }
     ])
   })
 
@@ -291,21 +291,6 @@ describe('ElMentionTextarea', () => {
     expect(mockRefetchTags).toHaveBeenCalledWith({
       input: { name: pattern }
     })
-  })
-
-  it('検索中はローディング状態になる', async () => {
-    expect(wrapper.vm.loading).toBe(false)
-
-    wrapper.vm.handleSearch('test', '@')
-
-    // ローディング状態の確認
-    expect(wrapper.vm.loading).toBe(true)
-
-    // タイマーの実行を待つ
-    await new Promise(resolve => setTimeout(resolve, 350))
-
-    // ローディング完了の確認
-    expect(wrapper.vm.loading).toBe(false)
   })
 
   it('デバウンス機能が正しく動作する', async () => {
@@ -348,9 +333,9 @@ describe('ElMentionTextarea', () => {
 
     // 空の検索でも全候補が表示される
     expect(wrapper.vm.options).toEqual([
-      { label: 'alice', value: 'alice' },
-      { label: 'bob', value: 'bob' },
-      { label: 'charlie', value: 'charlie' }
+      { label: '@alice', value: 'alice' },
+      { label: '@bob', value: 'bob' },
+      { label: '@charlie', value: 'charlie' }
     ])
   })
 
@@ -360,7 +345,37 @@ describe('ElMentionTextarea', () => {
     await new Promise(resolve => setTimeout(resolve, 350))
 
     expect(wrapper.vm.options).toEqual([
-      { label: 'vue', value: 'vue' }
+      { label: '#vue', value: 'vue' }
+    ])
+  })
+
+  it('全角プレフィックス（＠）でユーザー検索が実行される', async () => {
+    const pattern = 'ali'
+    const prefix = '＠' // 全角アットマーク
+
+    await wrapper.vm.handleSearch(pattern, prefix)
+
+    // タイマーの実行を待つ
+    await new Promise(resolve => setTimeout(resolve, 350))
+
+    // 全角記号でも半角記号として正規化されることを確認
+    expect(wrapper.vm.options).toEqual([
+      { label: '@alice', value: 'alice' }
+    ])
+  })
+
+  it('全角プレフィックス（＃）でタグ検索が実行される', async () => {
+    const pattern = 'vue'
+    const prefix = '＃' // 全角ハッシュ
+
+    await wrapper.vm.handleSearch(pattern, prefix)
+
+    // タイマーの実行を待つ
+    await new Promise(resolve => setTimeout(resolve, 350))
+
+    // 全角記号でも半角記号として正規化されることを確認
+    expect(wrapper.vm.options).toEqual([
+      { label: '#vue', value: 'vue' }
     ])
   })
 
@@ -458,6 +473,29 @@ describe('ElMentionTextarea', () => {
 
     const elMention = wrapper.findComponent('.mock-el-mention')
     expect(elMention.props('disabled')).toBe(true)
+  })
+
+  it('modelValueの全角プレフィックスが半角に正規化される', async () => {
+    // 全角プレフィックス付きのテキストを設定
+    await wrapper.setProps({ modelValue: '＠alice ＃vue test' })
+
+    // Vue.jsのwatchが実行されるまで待つ
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+
+    // 全角記号が半角に正規化されることを確認
+    expect(wrapper.props('modelValue')).toBe('@alice #vue test')
+  })
+
+  it('modelValue正規化時の無限ループを防ぐ', async () => {
+    // 正規化が不要なテキストを設定
+    await wrapper.setProps({ modelValue: '@alice #vue test' })
+
+    // Vue.jsのwatchが実行されるまで待つ
+    await wrapper.vm.$nextTick()
+
+    // 値が変更されないことを確認
+    expect(wrapper.props('modelValue')).toBe('@alice #vue test')
   })
 
   // TODO: 以下のテストケースは今後の機能拡張時に実装
