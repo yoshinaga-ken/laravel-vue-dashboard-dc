@@ -592,4 +592,39 @@ table td {
   @apply px-6 py-4;
   @apply border-t;
 }
+
+/* より確実なスクロールバー表示のために、Element Plusの内部実装に対応 */
+:deep(.el-popper.el-autocomplete__popper .el-scrollbar) {
+  --el-scrollbar-opacity: 0.4;
+  --el-scrollbar-hover-opacity: 0.6;
+}
+
+/* スクロールバーのバー部分（垂直・水平両方）を常に表示 */
+:deep(.el-popper.el-autocomplete__popper .el-scrollbar .el-scrollbar__bar.is-vertical),
+:deep(.el-popper.el-autocomplete__popper .el-scrollbar .el-scrollbar__bar.is-horizontal) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* スクロールバーのサムネイル部分を常に表示 */
+:deep(.el-popper.el-autocomplete__popper .el-scrollbar .el-scrollbar__bar.is-vertical .el-scrollbar__thumb),
+:deep(.el-popper.el-autocomplete__popper .el-scrollbar .el-scrollbar__bar.is-horizontal .el-scrollbar__thumb) {
+  opacity: var(--el-scrollbar-opacity, 0.4) !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* グローバルスコープでも適用（より確実な表示のため） */
+:global(.el-popper.el-autocomplete__popper .el-scrollbar .el-scrollbar__bar) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+:global(.el-popper.el-autocomplete__popper .el-scrollbar .el-scrollbar__thumb) {
+  opacity: 0.4 !important;
+  visibility: visible !important;
+  display: block !important;
+}
 </style>
