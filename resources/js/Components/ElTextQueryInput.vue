@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { ref, computed, watch, nextTick } from 'vue'
-import { ElTag, ElButton, ElInput, ElAutocomplete, ElDatePicker, ElIcon } from 'element-plus'
+import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElButton, ElTag, ElInput, ElAutocomplete, ElDatePicker, ElIcon, ElSelect, ElSelectV2 } from 'element-plus'
+import { Clock } from '@element-plus/icons-vue'
 import dayjs from 'dayjs'
 import * as ElementPlusIcons from '@element-plus/icons-vue'
+import { useLocalStorage } from '@vueuse/core'
 
 // トークンの型定義
 type TokenValue = {
@@ -34,7 +36,7 @@ type TokenDefinition = {
   icon?: string
   title: string
   tagOptions?: TagOptions
-  tags: string[] | TagObject[] | 'DatePicker' | 'Input'
+  tags: string[] | TagObject[] | 'DatePicker' | 'Select' | 'Input'
   tagsComponentOptions?: Record<string, any> // コンポーネントオプション用
   operators: string[]
 }
@@ -75,6 +77,11 @@ const props = defineProps({
 const modelValue = defineModel<Token[]>({
   default: () => []
 })
+
+const HISTORY_KEY = 'el-text-query-input-history'
+const MAX_HISTORY_COUNT = 20
+const queryHistory = useLocalStorage<string[]>(HISTORY_KEY, [])
+const isHistoryDropdownVisible = ref(false)
 
 const emit = defineEmits(['keydown-enter'])
 
@@ -416,6 +423,12 @@ const isInput = computed(() => {
   return tokenDef?.tags === 'Input'
 })
 
+// 値が入力コンポーネントかどうかをチェック
+const isSelect = computed(() => {
+  if (!currentTokenGroup.value) return false
+  const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value?.key.type)
+  return tokenDef?.tags === 'Select'
+})
 // 日付の選択処理
 const handleDateSelected = (value: Date | Date[] | string | null) => {
   if (!currentTokenGroup.value || !value) return
@@ -561,12 +574,16 @@ const handleKeySelected = (item: any) => {
       datePickerRef.value?.focus()
     } else {
       inputRef.value?.focus()
+      if(isSelect.value){
+        inputRef.value.expanded = true
+      }
     }
   })
 }
 const handleKeyEnterPrevnt = (event: KeyboardEvent) => {
   if (event.ctrlKey && event.key === 'Enter') {
     inputRef.value.highlightedIndex = -1
+    addToHistory(modelValue.value)
     emit('keydown-enter', event)
   }
 }
@@ -606,6 +623,7 @@ const handleKeyEnter = (event: KeyboardEvent) => {
   }
   if (event.ctrlKey && event.key === 'Enter') {
     inputRef.value.highlightedIndex = -1
+    addToHistory(modelValue.value)
     emit('keydown-enter', event)
   }
 }
@@ -751,8 +769,78 @@ const handleValueSelected = (item: any) => {
   }
 }
 
-// 入力確定時の処理
-const handleInputConfirm = () => {
+// 履歴に追加
+const addToHistory = (tokens: Token[]) => {
+  const value = JSON.stringify(tokens)
+  if (!tokens || tokens.length === 0) return
+  const idx = queryHistory.value.indexOf(value)
+  if (idx !== -1) queryHistory.value.splice(idx, 1)
+  queryHistory.value.unshift(value)
+  if (queryHistory.value.length > MAX_HISTORY_COUNT) queryHistory.value.pop()
+}
+
+// 履歴選択時の処理
+const handleHistorySelect = (query: string) => {
+  try {
+    modelValue.value = JSON.parse(query)
+  } catch (e) {
+    // JSON parse error: 履歴データが壊れている場合
+    alert('履歴データの復元に失敗しました')
+    return
+  }
+  nextTick(() => {
+    inputRef.value?.focus()
+  })
+  isHistoryDropdownVisible.value = false
+}
+
+// 履歴クリア
+const clearHistory = () => {
+  if (confirm('履歴を全て削除しますか？')) queryHistory.value = []
+}
+
+/** @description 指定した履歴クエリを削除 */
+const removeHistoryItem = (query: string) => {
+  const idx = queryHistory.value.indexOf(query)
+  if (idx !== -1) {
+    queryHistory.value.splice(idx, 1)
+  }
+}
+
+const filteredHistory = computed(() => {
+  if (!inputValue.value) return queryHistory.value
+  // 履歴の内容（JSON）をパースして、typeやvalueのdataにinputValueが含まれるものだけ表示
+  return queryHistory.value.filter(q => {
+    try {
+      const tokens = JSON.parse(q)
+      return Array.isArray(tokens) && tokens.some(t => {
+        return t.type.includes(inputValue.value) || (typeof t.value.data === 'string' && t.value.data.includes(inputValue.value))
+      })
+    } catch {
+      return false
+    }
+  })
+})
+
+// 履歴表示用のフォーマット関数
+const formatHistoryLabel = (query: string) => {
+  try {
+    const tokens: Token[] = JSON.parse(query)
+    return tokens.map(token => {
+      const def = props.availableTokens.find(t => t.type === token.type)
+      const title = def?.title || token.type
+      const operator = token.value.operator
+      const data = token.value.data
+      return `${title} ${operator} ${data}`
+    }).join(', ')
+  } catch {
+    return '[履歴データ不正]'
+  }
+}
+
+// emit('keydown-enter', event) 時に履歴保存
+const handleInputConfirm = (event?: KeyboardEvent) => {
+  if (isSelect.value && currentTokenGroup.value.data === '') return
   if (!inputValue.value || !currentTokenGroup.value) return
 
   if (inputStep.value === 'value') {
@@ -779,7 +867,9 @@ const handleInputConfirm = () => {
           operator = currentTokenGroup.value.operator;
         }
       }
-
+      if (isSelect.value && Array.isArray(inputValue.value)) {
+        inputValue.value = inputValue.value.join(',')
+      }
       modelValue.value.push({
         type: currentTokenGroup.value.key.type,
         value: {
@@ -792,6 +882,8 @@ const handleInputConfirm = () => {
       showInput()
     }
   }
+  addToHistory(modelValue.value)
+  emit('keydown-enter', event as any)
 }
 
 // ElTagクリック時に編集モードを開始
@@ -861,9 +953,9 @@ const startEditing = (index: number, part: 'key' | 'operator' | 'value') => {
       inputValue.value = currentTokenGroup.value.operator;
     } else if (part === 'value') {
       // 日付範囲タイプの場合の特別処理
-      const isDateRange = tokenDef?.tags === 'DatePicker' && tokenDef?.tagsComponentOptions?.type === 'daterange';
-
-      if (isDateRange && typeof token.value.data === 'string' && token.value.data.includes(',')) {
+      if (isSelect.value) {
+        inputValue.value = currentTokenGroup.value.value.split(',');
+      } else if (isDateRangePicker.value && typeof token.value.data === 'string' && token.value.data.includes(',')) {
         // カンマで区切られた日付文字列を配列に変換
         const dateStrings = token.value.data.split(',');
         inputValue.value = dateStrings.map(dateStr => dayjs(dateStr).toDate());
@@ -894,8 +986,16 @@ const startEditing = (index: number, part: 'key' | 'operator' | 'value') => {
       datePickerRef.value?.focus();
     } else {
       inputRef.value?.focus();
+      if (isSelect.value) {
+        inputRef.value.expanded = true
+      }
     }
   });
+}
+
+let isRemovingTag = false
+const handleSelectRemoveTag = () => {
+  isRemovingTag = true
 }
 // Backspace処理
 const handleBackspace = (event: KeyboardEvent) => {
@@ -904,61 +1004,65 @@ const handleBackspace = (event: KeyboardEvent) => {
     (event.target instanceof HTMLInputElement &&
       (event.target.value === '' || (event.target.value.length < 2 && isDateRangePicker.value)))
 
-  if (event.key === 'Backspace' && (inputValue.value === '' || isDatePickerEmpty)) {
-    if (editingTokenIndex.value !== null) {
-      // 編集モードの場合はキャンセル
-      currentTokenGroup.value!.editing = null
-      editingTokenIndex.value = null
-      resetInputState()
-    } else {
-      // 新規作成モード
-      if (inputStep.value === 'value') {
-        // 現在のトークンのタイプに対応するトークン定義を取得
-        const tokenDef = currentTokenGroup.value
-          ? props.availableTokens.find(t => t.type === currentTokenGroup.value.key.type)
-          : null;
+  // ElSelectの場合、タグ削除の場合(isRemovingTag:true)は除外する
+  const isSelectEmpty = isSelect.value && inputValue.value.length === 0 && !isRemovingTag && event.target instanceof HTMLInputElement && event.target.value === ''
+  isRemovingTag = false
 
-        // オペレーターの条件判定
-        const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0;
-        const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1;
+  if (inputValue.value !== '' && !isDatePickerEmpty && !isSelectEmpty) return
 
-        if (hasOperators && !hasSingleOperator) {
-          // 複数のオペレーターがある場合のみオペレーター選択ステップに戻る
-          inputStep.value = 'operator';
-          inputValue.value = '';
-        } else {
-          // オペレーターがない場合またはオペレーターが1つだけの場合は直接キー入力に戻る
-          inputStep.value = 'key';
-          inputValue.value = '';
-          currentTokenGroup.value = null;
-        }
+  if (editingTokenIndex.value !== null) {
+    // 編集モードの場合はキャンセル
+    currentTokenGroup.value!.editing = null
+    editingTokenIndex.value = null
+    resetInputState()
+  } else {
+    // 新規作成モード
+    if (inputStep.value === 'value') {
+      // 現在のトークンのタイプに対応するトークン定義を取得
+      const tokenDef = currentTokenGroup.value
+        ? props.availableTokens.find(t => t.type === currentTokenGroup.value.key.type)
+        : null;
 
-        nextTick(() => {
-          setTimeout(() => {
-            inputRef.value?.focus();
-          }, 50);
-        });
-      } else if (inputStep.value === 'operator') {
-        inputStep.value = 'key'
-        inputValue.value = ''
-        currentTokenGroup.value = null
-        nextTick(() => {
-          setTimeout(() => {
-            inputRef.value?.focus()
-          }, 50)
-        })
-      } else if (inputStep.value === 'key' && modelValue.value.length > 0) {
-        // key入力中にバックスペースを押した場合、最後のトークングループの値を編集状態にする
-        event.preventDefault() // デフォルトのバックスペース動作を防止
+      // オペレーターの条件判定
+      const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0;
+      const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1;
 
-        // 最後のトークンのインデックスを取得
-        const lastTokenIndex = modelValue.value.length - 1
-
-        // startEditing経由で値の編集モードを開始
-        startEditing(lastTokenIndex, 'value')
-
-        // 編集モードのステートがすでにセットされているため、重複処理は不要
+      if (hasOperators && !hasSingleOperator) {
+        // 複数のオペレーターがある場合のみオペレーター選択ステップに戻る
+        inputStep.value = 'operator';
+        inputValue.value = '';
+      } else {
+        // オペレーターがない場合またはオペレーターが1つだけの場合は直接キー入力に戻る
+        inputStep.value = 'key';
+        inputValue.value = '';
+        currentTokenGroup.value = null;
       }
+
+      nextTick(() => {
+        setTimeout(() => {
+          inputRef.value?.focus();
+        }, 50);
+      });
+    } else if (inputStep.value === 'operator') {
+      inputStep.value = 'key'
+      inputValue.value = ''
+      currentTokenGroup.value = null
+      nextTick(() => {
+        setTimeout(() => {
+          inputRef.value?.focus()
+        }, 50)
+      })
+    } else if (inputStep.value === 'key' && modelValue.value.length > 0) {
+      // key入力中にバックスペースを押した場合、最後のトークングループの値を編集状態にする
+      event.preventDefault() // デフォルトのバックスペース動作を防止
+
+      // 最後のトークンのインデックスを取得
+      const lastTokenIndex = modelValue.value.length - 1
+
+      // startEditing経由で値の編集モードを開始
+      startEditing(lastTokenIndex, 'value')
+
+      // 編集モードのステートがすでにセットされているため、重複処理は不要
     }
   }
 }
@@ -1103,7 +1207,7 @@ const handleCustomTokenClose = (index: number) => {
         size="small"
         clearable
         @select="handleKeySelected"
-        @keydown="handleBackspace"
+        @keydown.backspace="handleBackspace"
         @keydown.enter.prevent="handleKeyEnterPrevnt"
         @keyup.enter="handleKeyEnter"
         @blur="handleKeyBlur"
@@ -1139,7 +1243,7 @@ const handleCustomTokenClose = (index: number) => {
         size="small"
         clearable
         @select="handleOperatorSelected"
-        @keydown="handleBackspace"
+        @keydown.backspace="handleBackspace"
         @keydown.enter.prevent
         @keyup.enter="handleOperatorEnter"
         @blur="handleOperatorEnter"
@@ -1159,11 +1263,34 @@ const handleCustomTokenClose = (index: number) => {
         size="small"
         clearable
         @change="handleDateSelected"
-        @keydown="handleBackspace"
+        @keydown.backspace="handleBackspace"
         @keydown.enter="handleDatePickerEnter"
         v-bind="datePickerOptions"
         aria-label="input-value"
       />
+
+      <!-- 編集モード: 値入力（数値） -->
+      <ElSelect
+        v-else-if="inputVisible && inputStep === 'value' && isSelect"
+        ref="inputRef"
+        v-model="inputValue"
+        :placeholder="getCurrentPlaceholder"
+        class="input-field"
+        size="small"
+        clearable
+        @remove-tag="handleSelectRemoveTag"
+        @keyup.backspace="handleBackspace"
+        @keyup.enter.prevent
+        @blur="handleInputConfirm"
+        v-bind="inputOptions"
+      >
+        <ElOption
+          v-for="item in inputOptions.options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        />
+      </ElSelect>
 
       <!-- 編集モード: 値入力（数値） -->
       <ElInput
@@ -1174,7 +1301,7 @@ const handleCustomTokenClose = (index: number) => {
         class="input-field"
         size="small"
         clearable
-        @keydown="handleBackspace"
+        @keydown.backspace="handleBackspace"
         @keydown.enter.prevent
         @keyup.enter="handleInputConfirm"
         @blur="handleInputConfirm"
@@ -1193,7 +1320,7 @@ const handleCustomTokenClose = (index: number) => {
         size="small"
         clearable
         @select="handleValueSelected"
-        @keydown="handleBackspace"
+        @keydown.backspace="handleBackspace"
         @keydown.enter.prevent
         @keyup.enter="handleInputConfirm"
         @blur="handleInputConfirm"
@@ -1211,20 +1338,65 @@ const handleCustomTokenClose = (index: number) => {
           </div>
         </template>
       </ElAutocomplete>
-    </div>
 
-    <!-- 全クリアボタン -->
-    <ElButton
-      v-if="!disabled && modelValue.length > 0 && !currentTokenGroup?.editing"
-      class="clear-button"
-      size="large"
-      @click="clearAllTokens"
-      aria-label="input-clear"
-    >
-      ⓧ
-    </ElButton>
+      <!-- 履歴表示ボタン＋ElDropdown -->
+      <ElDropdown
+        v-if="queryHistory.length > 0"
+        v-model:visible="isHistoryDropdownVisible"
+        trigger="click"
+        placement="bottom"
+        class="history-dropdown"
+      >
+        <template #dropdown>
+          <ElDropdownMenu>
+            <ElDropdownItem
+              v-for="(query, idx) in filteredHistory"
+              :key="`history-${idx}`"
+              @click="handleHistorySelect(query)"
+            >
+              <div class="history-message" style="display: flex; align-items: center; width: 100%;">
+                <span>
+                  {{ formatHistoryLabel(query) }}
+                </span>
+                <ElButton
+                  size="small"
+                  circle
+                  plain
+                  @click.stop="removeHistoryItem(query)"
+                  class="history-remove-btn"
+                  :title="'この履歴を削除'"
+                >
+                  ×
+                </ElButton>
+              </div>
+            </ElDropdownItem>
+            <ElDropdownItem divided @click="clearHistory">
+              🗑️ 履歴の全消去
+            </ElDropdownItem>
+          </ElDropdownMenu>
+        </template>
+        <ElButton
+          :icon="Clock"
+          class="history-button"
+          size="large"
+          :title="queryHistory.length > 0 ? `過去の履歴から入力 (${queryHistory.length}件)` : '過去の履歴から入力'"
+          aria-label="show-history"
+        />
+      </ElDropdown>
+
+      <!-- 全クリアボタン -->
+      <ElButton
+        v-if="!disabled && modelValue.length > 0 && !currentTokenGroup?.editing"
+        class="clear-button"
+        size="large"
+        @click="clearAllTokens"
+        aria-label="input-clear"
+      >
+        ⓧ
+      </ElButton>
+    </div>
+    <slot name="append"/>
   </div>
-  <slot name="append"/>
 </template>
 
 <style scoped>
@@ -1338,5 +1510,27 @@ const handleCustomTokenClose = (index: number) => {
 .token-tag.active {
   background-color: var(--el-color-primary-light-9);
   border-color: var(--el-color-primary-light-5);
+}
+
+.history-button {
+  border: none;
+  background: transparent;
+  color: var(--el-color-primary);
+  padding: 2px 0 2px 8px;
+  height: 24px;
+  line-height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.history-button:hover {
+  color: var(--el-color-danger);
+}
+.history-dropdown {
+  margin-right: 5px;
+}
+.history-remove-btn {
+  margin-left: auto;
+  border: none !important;
+  box-shadow: none !important;
 }
 </style>

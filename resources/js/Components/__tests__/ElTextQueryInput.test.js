@@ -1,7 +1,7 @@
 import {mount} from '@vue/test-utils'
 import {describe, it, expect, vi, beforeEach} from 'vitest'
 import ElTextQueryInput from '@/Components/ElTextQueryInput.vue'
-import {ElTag, ElAutocomplete, ElButton, ElDatePicker, ElIcon} from 'element-plus'
+import {ElTag, ElAutocomplete, ElButton, ElDatePicker, ElIcon, ElOption} from 'element-plus'
 
 // Element Plusのアイコンコンポーネントのモック
 vi.mock('@element-plus/icons-vue', () => ({
@@ -47,6 +47,22 @@ describe('ElTextQueryInput', () => {
       },
       operators: [':'],
     },
+    {
+      type: 'users',
+      icon: 'User',
+      title: 'Users',
+      tags: 'Select',
+      tagsComponentOptions: { // @see [element-plus select](https://element-plus.org/en-US/component/select.html#remote-search)
+        multiple: true,
+        filterable: true,
+        options: [
+          {value: 'User1', label: '🙋‍♂️User1'},
+          {value: 'User2', label: '🙋‍♀️User2'},
+          {value: 'User3', label: '🙆User3'},
+        ],
+      },
+      operators: ['in'],
+    },
   ]
 
   beforeEach(() => {
@@ -64,7 +80,8 @@ describe('ElTextQueryInput', () => {
           ElAutocomplete,
           ElButton,
           ElDatePicker,
-          ElIcon
+          ElIcon,
+          ElOption
         },
         stubs: {
           ElIcon: true
