@@ -5,11 +5,11 @@ import { ElMention } from 'element-plus'
 
 // GraphQL関連のモック
 vi.mock('@vue/apollo-composable', () => ({
-  useQuery: vi.fn()
+  useQuery: vi.fn(),
 }))
 
 vi.mock('graphql-tag', () => ({
-  default: vi.fn()
+  default: vi.fn(),
 }))
 
 describe('ElMentionTextarea', () => {
@@ -21,17 +21,12 @@ describe('ElMentionTextarea', () => {
   // モックデータ
   const mockTagsData = {
     tags: {
-      data: [
-        { name: 'vue' },
-        { name: 'react' },
-        { name: 'javascript' },
-        { name: 'typescript' }
-      ],
+      data: [{ name: 'vue' }, { name: 'react' }, { name: 'javascript' }, { name: 'typescript' }],
       paginatorInfo: {
         count: 4,
-        total: 4
-      }
-    }
+        total: 4,
+      },
+    },
   }
 
   const mockUsersData = {
@@ -39,13 +34,13 @@ describe('ElMentionTextarea', () => {
       data: [
         { name: 'alice', email: 'alice@example.com' },
         { name: 'bob', email: 'bob@example.com' },
-        { name: 'charlie', email: 'charlie@example.com' }
+        { name: 'charlie', email: 'charlie@example.com' },
       ],
       paginatorInfo: {
         count: 3,
-        total: 3
-      }
-    }
+        total: 3,
+      },
+    },
   }
 
   beforeEach(async () => {
@@ -53,16 +48,17 @@ describe('ElMentionTextarea', () => {
     mockRefetchTags = vi.fn().mockResolvedValue({ data: mockTagsData })
     mockRefetchUsers = vi.fn().mockResolvedValue({ data: mockUsersData })
 
-    mockUseQuery = vi.fn()
+    mockUseQuery = vi
+      .fn()
       .mockReturnValueOnce({
         // タグクエリの戻り値
         result: { value: mockTagsData },
-        refetch: mockRefetchTags
+        refetch: mockRefetchTags,
       })
       .mockReturnValueOnce({
         // ユーザークエリの戻り値
         result: { value: mockUsersData },
-        refetch: mockRefetchUsers
+        refetch: mockRefetchUsers,
       })
 
     const { useQuery } = await import('@vue/apollo-composable')
@@ -71,23 +67,32 @@ describe('ElMentionTextarea', () => {
     wrapper = mount(ElMentionTextarea, {
       props: {
         modelValue: '',
-        'onUpdate:modelValue': (e) => wrapper.setProps({ modelValue: e }),
+        'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
         placeholder: 'テスト用プレースホルダー',
         disabled: false,
-        rows: 6
+        rows: 6,
       },
       global: {
         components: {
-          ElMention
+          ElMention,
         },
         stubs: {
           ElMention: {
-            template: '<div class="mock-el-mention"><textarea v-bind="$attrs" @input="$emit(\'update:modelValue\', $event.target.value)" /></div>',
+            template:
+              '<div class="mock-el-mention"><textarea v-bind="$attrs" @input="$emit(\'update:modelValue\', $event.target.value)" /></div>',
             emits: ['update:modelValue', 'search'],
-            props: ['modelValue', 'options', 'loading', 'placeholder', 'disabled', 'rows', 'prefix']
-          }
-        }
-      }
+            props: [
+              'modelValue',
+              'options',
+              'loading',
+              'placeholder',
+              'disabled',
+              'rows',
+              'prefix',
+            ],
+          },
+        },
+      },
     })
 
     // コンポーネントの初期化を待つ
@@ -159,19 +164,22 @@ describe('ElMentionTextarea', () => {
         data: Array.from({ length: 100 }, (_, i) => ({ name: `tag${i}` })),
         paginatorInfo: {
           count: 100,
-          total: 1000 // 512を超過
-        }
-      }
+          total: 1000, // 512を超過
+        },
+      },
     }
 
     const largeUsersData = {
       users: {
-        data: Array.from({ length: 100 }, (_, i) => ({ name: `user${i}`, email: `user${i}@example.com` })),
+        data: Array.from({ length: 100 }, (_, i) => ({
+          name: `user${i}`,
+          email: `user${i}@example.com`,
+        })),
         paginatorInfo: {
           count: 100,
-          total: 1000 // 512を超過
-        }
-      }
+          total: 1000, // 512を超過
+        },
+      },
     }
 
     // モックを完全にリセット
@@ -181,14 +189,15 @@ describe('ElMentionTextarea', () => {
     const mockRefetchTagsLarge = vi.fn().mockResolvedValue({ data: largeTagsData })
     const mockRefetchUsersLarge = vi.fn().mockResolvedValue({ data: largeUsersData })
 
-    const mockUseQueryLarge = vi.fn()
+    const mockUseQueryLarge = vi
+      .fn()
       .mockReturnValueOnce({
         result: { value: largeTagsData },
-        refetch: mockRefetchTagsLarge
+        refetch: mockRefetchTagsLarge,
       })
       .mockReturnValueOnce({
         result: { value: largeUsersData },
-        refetch: mockRefetchUsersLarge
+        refetch: mockRefetchUsersLarge,
       })
 
     const { useQuery } = await import('@vue/apollo-composable')
@@ -197,17 +206,25 @@ describe('ElMentionTextarea', () => {
     const wrapperLarge = mount(ElMentionTextarea, {
       props: {
         modelValue: '',
-        'onUpdate:modelValue': (e) => wrapperLarge.setProps({ modelValue: e })
+        'onUpdate:modelValue': e => wrapperLarge.setProps({ modelValue: e }),
       },
       global: {
         components: { ElMention },
         stubs: {
           ElMention: {
             template: '<div class="mock-el-mention" />',
-            props: ['modelValue', 'options', 'loading', 'placeholder', 'disabled', 'rows', 'prefix']
-          }
-        }
-      }
+            props: [
+              'modelValue',
+              'options',
+              'loading',
+              'placeholder',
+              'disabled',
+              'rows',
+              'prefix',
+            ],
+          },
+        },
+      },
     })
 
     await wrapperLarge.vm.$nextTick()
@@ -234,9 +251,7 @@ describe('ElMentionTextarea', () => {
     expect(mockRefetchUsers).not.toHaveBeenCalled()
 
     // オプションがフィルタリングされていることを確認
-    expect(wrapper.vm.options).toEqual([
-      { label: '@alice', value: 'alice' }
-    ])
+    expect(wrapper.vm.options).toEqual([{ label: '@alice', value: 'alice' }])
   })
 
   it('#プレフィックスでタグ検索が実行される（キャッシュ戦略）', async () => {
@@ -252,9 +267,7 @@ describe('ElMentionTextarea', () => {
     expect(mockRefetchTags).not.toHaveBeenCalled()
 
     // オプションがフィルタリングされていることを確認
-    expect(wrapper.vm.options).toEqual([
-      { label: '#vue', value: 'vue' }
-    ])
+    expect(wrapper.vm.options).toEqual([{ label: '#vue', value: 'vue' }])
   })
 
   it('動的検索戦略でユーザー検索が実行される', async () => {
@@ -271,7 +284,7 @@ describe('ElMentionTextarea', () => {
 
     // 動的検索なのでrefetchが呼ばれることを確認
     expect(mockRefetchUsers).toHaveBeenCalledWith({
-      input: { name: pattern }
+      input: { name: pattern },
     })
   })
 
@@ -289,7 +302,7 @@ describe('ElMentionTextarea', () => {
 
     // 動的検索なのでrefetchが呼ばれることを確認
     expect(mockRefetchTags).toHaveBeenCalledWith({
-      input: { name: pattern }
+      input: { name: pattern },
     })
   })
 
@@ -335,7 +348,7 @@ describe('ElMentionTextarea', () => {
     expect(wrapper.vm.options).toEqual([
       { label: '@alice', value: 'alice' },
       { label: '@bob', value: 'bob' },
-      { label: '@charlie', value: 'charlie' }
+      { label: '@charlie', value: 'charlie' },
     ])
   })
 
@@ -344,9 +357,7 @@ describe('ElMentionTextarea', () => {
 
     await new Promise(resolve => setTimeout(resolve, 350))
 
-    expect(wrapper.vm.options).toEqual([
-      { label: '#vue', value: 'vue' }
-    ])
+    expect(wrapper.vm.options).toEqual([{ label: '#vue', value: 'vue' }])
   })
 
   it('全角プレフィックス（＠）でユーザー検索が実行される', async () => {
@@ -359,9 +370,7 @@ describe('ElMentionTextarea', () => {
     await new Promise(resolve => setTimeout(resolve, 350))
 
     // 全角記号でも半角記号として正規化されることを確認
-    expect(wrapper.vm.options).toEqual([
-      { label: '@alice', value: 'alice' }
-    ])
+    expect(wrapper.vm.options).toEqual([{ label: '@alice', value: 'alice' }])
   })
 
   it('全角プレフィックス（＃）でタグ検索が実行される', async () => {
@@ -374,9 +383,7 @@ describe('ElMentionTextarea', () => {
     await new Promise(resolve => setTimeout(resolve, 350))
 
     // 全角記号でも半角記号として正規化されることを確認
-    expect(wrapper.vm.options).toEqual([
-      { label: '#vue', value: 'vue' }
-    ])
+    expect(wrapper.vm.options).toEqual([{ label: '#vue', value: 'vue' }])
   })
 
   it('検索エラーが適切にハンドリングされる', async () => {
@@ -434,14 +441,15 @@ describe('ElMentionTextarea', () => {
     const mockRefetchTagsDefault = vi.fn().mockResolvedValue({ data: mockTagsData })
     const mockRefetchUsersDefault = vi.fn().mockResolvedValue({ data: mockUsersData })
 
-    const mockUseQueryDefault = vi.fn()
+    const mockUseQueryDefault = vi
+      .fn()
       .mockReturnValueOnce({
         result: { value: mockTagsData },
-        refetch: mockRefetchTagsDefault
+        refetch: mockRefetchTagsDefault,
       })
       .mockReturnValueOnce({
         result: { value: mockUsersData },
-        refetch: mockRefetchUsersDefault
+        refetch: mockRefetchUsersDefault,
       })
 
     const { useQuery } = await import('@vue/apollo-composable')
@@ -453,10 +461,18 @@ describe('ElMentionTextarea', () => {
         stubs: {
           ElMention: {
             template: '<div class="mock-el-mention" />',
-            props: ['modelValue', 'options', 'loading', 'placeholder', 'disabled', 'rows', 'prefix']
-          }
-        }
-      }
+            props: [
+              'modelValue',
+              'options',
+              'loading',
+              'placeholder',
+              'disabled',
+              'rows',
+              'prefix',
+            ],
+          },
+        },
+      },
     })
 
     await defaultWrapper.vm.$nextTick()

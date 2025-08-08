@@ -1,5 +1,5 @@
-import {mount} from '@vue/test-utils'
-import {describe, it, expect, vi, beforeEach} from 'vitest'
+import { mount } from '@vue/test-utils'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import VfTextTagsInput from '@/Components/VfTextTagsInput.vue'
 
 // GraphQL のモック
@@ -8,15 +8,11 @@ vi.mock('@vue/apollo-composable', () => ({
     result: {
       value: {
         tags: {
-          data: [
-            {name: 'vue'},
-            {name: 'react'},
-            {name: 'angular'}
-          ]
-        }
-      }
-    }
-  })
+          data: [{ name: 'vue' }, { name: 'react' }, { name: 'angular' }],
+        },
+      },
+    },
+  }),
 }))
 
 describe('VfTextTagsInput', () => {
@@ -26,7 +22,7 @@ describe('VfTextTagsInput', () => {
     wrapper = mount(VfTextTagsInput, {
       props: {
         modelValue: ['vue'],
-        'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e})
+        'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
       },
       global: {
         stubs: {
@@ -40,10 +36,21 @@ describe('VfTextTagsInput', () => {
                 />
               </div>
             `,
-            props: ['modelValue', 'search', 'items', 'chips', 'multiple', 'closable-chips', 'clearable', 'placeholder', 'disabled', 'variant']
-          }
-        }
-      }
+            props: [
+              'modelValue',
+              'search',
+              'items',
+              'chips',
+              'multiple',
+              'closable-chips',
+              'clearable',
+              'placeholder',
+              'disabled',
+              'variant',
+            ],
+          },
+        },
+      },
     })
   })
 

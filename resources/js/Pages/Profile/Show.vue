@@ -1,51 +1,46 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue';
-import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue';
-import SectionBorder from '@/Components/SectionBorder.vue';
-import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
-import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
-import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
-import ActionSection from "@/Components/ActionSection.vue";
-import ArticlesForm from "@/Components/ArticlesForm.vue";
+import AppLayout from '@/Layouts/AppLayout.vue'
+import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue'
+import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue'
+import SectionBorder from '@/Components/SectionBorder.vue'
+import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue'
+import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue'
+import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue'
+import ActionSection from '@/Components/ActionSection.vue'
+import ArticlesForm from '@/Components/ArticlesForm.vue'
 
 defineProps({
   confirmsTwoFactorAuthentication: Boolean,
   sessions: Array,
-});
+})
 </script>
 
 <template>
   <AppLayout title="Profile">
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-        Profile
-      </h2>
+      <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Profile</h2>
     </template>
 
     <div>
-      <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-7xl py-10 sm:px-6 lg:px-8">
         <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-          <UpdateProfileInformationForm :user="$page.props.auth.user"/>
+          <UpdateProfileInformationForm :user="$page.props.auth.user" />
 
-          <SectionBorder/>
+          <SectionBorder />
         </div>
 
         <div>
           <ActionSection class="mt-10 sm:mt-0">
-            <template #title>
-              Follow Information
-            </template>
+            <template #title> Follow Information </template>
 
-            <template #description>
-
-            </template>
+            <template #description> </template>
 
             <template #content>
               <div class="grid grid-cols-2">
                 <div>
                   <div>
-                    <span class="font-bold">{{ $page.props.auth.user.followers.length }}</span> followers
+                    <span class="font-bold">{{ $page.props.auth.user.followers.length }}</span>
+                    followers
                   </div>
                   <ul v-for="follower in $page.props.auth.user.followers" :key="follower.id">
                     <li>{{ follower.name }}</li>
@@ -53,7 +48,8 @@ defineProps({
                 </div>
                 <div>
                   <div>
-                    <span class="font-bold">{{ $page.props.auth.user.following.length }}</span> following
+                    <span class="font-bold">{{ $page.props.auth.user.following.length }}</span>
+                    following
                   </div>
                   <ul v-for="following in $page.props.auth.user.following" :key="following.id">
                     <li>{{ following.name }}</li>
@@ -62,19 +58,19 @@ defineProps({
               </div>
             </template>
           </ActionSection>
-          <SectionBorder/>
+          <SectionBorder />
         </div>
 
         <div>
-          <ArticlesForm :search="{user_id: $page.props.auth.user.id}"/>
+          <ArticlesForm :search="{ user_id: $page.props.auth.user.id }" />
 
-          <SectionBorder/>
+          <SectionBorder />
         </div>
 
         <div v-if="$page.props.jetstream.canUpdatePassword">
-          <UpdatePasswordForm class="mt-10 sm:mt-0"/>
+          <UpdatePasswordForm class="mt-10 sm:mt-0" />
 
-          <SectionBorder/>
+          <SectionBorder />
         </div>
 
         <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
@@ -83,15 +79,15 @@ defineProps({
             class="mt-10 sm:mt-0"
           />
 
-          <SectionBorder/>
+          <SectionBorder />
         </div>
 
-        <LogoutOtherBrowserSessionsForm :sessions="sessions" class="mt-10 sm:mt-0"/>
+        <LogoutOtherBrowserSessionsForm :sessions="sessions" class="mt-10 sm:mt-0" />
 
         <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
-          <SectionBorder/>
+          <SectionBorder />
 
-          <DeleteUserForm class="mt-10 sm:mt-0"/>
+          <DeleteUserForm class="mt-10 sm:mt-0" />
         </template>
       </div>
     </div>

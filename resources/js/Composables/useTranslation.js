@@ -1,5 +1,4 @@
-import {usePage} from '@inertiajs/vue3'
-
+import { usePage } from '@inertiajs/vue3'
 
 /**
  * Translate the given key using translations stored in the page props.
@@ -20,7 +19,7 @@ export function useTranslation() {
     const keys = key.split('.')
     let value = page.props.translations
 
-    keys.forEach((k) => {
+    keys.forEach(k => {
       if (value && typeof value === 'object') {
         value = value[k]
       }
@@ -40,6 +39,6 @@ export function useTranslation() {
   }
 
   return {
-    t
+    t,
   }
 }

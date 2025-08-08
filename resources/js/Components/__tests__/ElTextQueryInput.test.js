@@ -1,13 +1,13 @@
-import {mount} from '@vue/test-utils'
-import {describe, it, expect, vi, beforeEach} from 'vitest'
+import { mount } from '@vue/test-utils'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import ElTextQueryInput from '@/Components/ElTextQueryInput.vue'
-import {ElTag, ElAutocomplete, ElButton, ElDatePicker, ElIcon, ElOption} from 'element-plus'
+import { ElTag, ElAutocomplete, ElButton, ElDatePicker, ElIcon, ElOption } from 'element-plus'
 
 // Element Plusのアイコンコンポーネントのモック
 vi.mock('@element-plus/icons-vue', () => ({
   User: vi.fn(),
   Calendar: vi.fn(),
-  Flag: vi.fn()
+  Flag: vi.fn(),
 }))
 
 describe('ElTextQueryInput', () => {
@@ -25,8 +25,8 @@ describe('ElTextQueryInput', () => {
       icon: 'Flag',
       title: 'FrameWork',
       tags: [
-        {id: 1, name: 'Vue3'},
-        {id: 2, name: 'React'},
+        { id: 1, name: 'Vue3' },
+        { id: 2, name: 'React' },
       ],
       operators: ['=', '!='],
     },
@@ -42,8 +42,9 @@ describe('ElTextQueryInput', () => {
       icon: 'Calendar',
       title: 'Date (From,To)',
       tags: 'DatePicker',
-      tagsComponentOptions: { // @see [DatePicker options](https://element-plus.org/en-US/component/date-picker)
-        type: "daterange"
+      tagsComponentOptions: {
+        // @see [DatePicker options](https://element-plus.org/en-US/component/date-picker)
+        type: 'daterange',
       },
       operators: [':'],
     },
@@ -52,13 +53,14 @@ describe('ElTextQueryInput', () => {
       icon: 'User',
       title: 'Users',
       tags: 'Select',
-      tagsComponentOptions: { // @see [element-plus select](https://element-plus.org/en-US/component/select.html#remote-search)
+      tagsComponentOptions: {
+        // @see [element-plus select](https://element-plus.org/en-US/component/select.html#remote-search)
         multiple: true,
         filterable: true,
         options: [
-          {value: 'User1', label: '🙋‍♂️User1'},
-          {value: 'User2', label: '🙋‍♀️User2'},
-          {value: 'User3', label: '🙆User3'},
+          { value: 'User1', label: '🙋‍♂️User1' },
+          { value: 'User2', label: '🙋‍♀️User2' },
+          { value: 'User3', label: '🙆User3' },
         ],
       },
       operators: ['in'],
@@ -68,11 +70,9 @@ describe('ElTextQueryInput', () => {
   beforeEach(() => {
     wrapper = mount(ElTextQueryInput, {
       props: {
-        modelValue: [
-          {type: 'user', value: {data: 'alpha', operator: '='}}
-        ],
-        'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e}),
-        availableTokens
+        modelValue: [{ type: 'user', value: { data: 'alpha', operator: '=' } }],
+        'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+        availableTokens,
       },
       global: {
         components: {
@@ -81,12 +81,12 @@ describe('ElTextQueryInput', () => {
           ElButton,
           ElDatePicker,
           ElIcon,
-          ElOption
+          ElOption,
         },
         stubs: {
-          ElIcon: true
-        }
-      }
+          ElIcon: true,
+        },
+      },
     })
   })
 
@@ -100,27 +100,27 @@ describe('ElTextQueryInput', () => {
 
   it('キー、オペレーター、値の順で入力プロセスが進む - Key:Author', async () => {
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     expect(inputRef.exists()).toBe(true)
     await inputRef.trigger('focus')
 
     // キー選択
     const keyAutocomplete = wrapper.findComponent(ElAutocomplete)
-    await keyAutocomplete.vm.$emit('select', {value: 'Author', item: availableTokens[0]})
+    await keyAutocomplete.vm.$emit('select', { value: 'Author', item: availableTokens[0] })
 
     // オペレーター選択フィールドの表示確認
     const operatorAutocomplete = wrapper.findComponent(ElAutocomplete)
     expect(operatorAutocomplete.exists()).toBe(true)
 
     // オペレーター選択
-    await operatorAutocomplete.vm.$emit('select', {value: '!='})
+    await operatorAutocomplete.vm.$emit('select', { value: '!=' })
 
     // 値選択フィールドの表示確認
     const valueAutocomplete = wrapper.findComponent(ElAutocomplete)
     expect(valueAutocomplete.exists()).toBe(true)
 
     // 値選択
-    await valueAutocomplete.vm.$emit('select', {value: 'beta'})
+    await valueAutocomplete.vm.$emit('select', { value: 'beta' })
 
     // トークンが追加されたことを確認
     await wrapper.vm.$nextTick()
@@ -133,7 +133,7 @@ describe('ElTextQueryInput', () => {
 
   it('キー入力をでEnterキーで決定したら、type=stringでトークンが入力され、キー入力プロセスにすすむ', async () => {
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     expect(inputRef.exists()).toBe(true)
     await inputRef.trigger('focus')
 
@@ -184,13 +184,13 @@ describe('ElTextQueryInput', () => {
 
   it('値入力中、入力内容が空の時Backspaceキーで、オペレーター、キーの順で入力プロセスが戻る - Key:Author', async () => {
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     expect(inputRef.exists()).toBe(true)
     await inputRef.trigger('focus')
 
     // キー選択
     const keyAutocomplete = wrapper.findComponent(ElAutocomplete)
-    await keyAutocomplete.vm.$emit('select', {value: 'Author', item: availableTokens[0]})
+    await keyAutocomplete.vm.$emit('select', { value: 'Author', item: availableTokens[0] })
 
     // キー選択後、オペレーター選択ステップになったことを確認
     await wrapper.vm.$nextTick()
@@ -198,7 +198,7 @@ describe('ElTextQueryInput', () => {
 
     // オペレーター選択
     let operatorAutocomplete = wrapper.findComponent(ElAutocomplete)
-    await operatorAutocomplete.vm.$emit('select', {value: '!='})
+    await operatorAutocomplete.vm.$emit('select', { value: '!=' })
 
     // オペレーター選択後、値選択ステップになったことを確認
     await wrapper.vm.$nextTick()
@@ -213,7 +213,7 @@ describe('ElTextQueryInput', () => {
     expect(valueInput.element.value).toBe('')
 
     // 値選択フィールドでBackspaceを押す（値入力が空の状態）
-    await valueInput.trigger('keydown', {key: 'Backspace'})
+    await valueInput.trigger('keydown', { key: 'Backspace' })
 
     // 値入力からオペレーター選択に戻ったことを確認
     await wrapper.vm.$nextTick()
@@ -228,7 +228,7 @@ describe('ElTextQueryInput', () => {
     expect(operatorInput.element.value).toBe('')
 
     // オペレーター選択フィールドでBackspaceを押す（オペレーター入力が空の状態）
-    await operatorInput.trigger('keydown', {key: 'Backspace'})
+    await operatorInput.trigger('keydown', { key: 'Backspace' })
 
     tags = wrapper.findAllComponents(ElTag)
     expect(tags).toHaveLength(3)
@@ -248,20 +248,20 @@ describe('ElTextQueryInput', () => {
 
   it('キー、オペレーター、値の順で入力プロセスが進む - Key:Date', async () => {
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     expect(inputRef.exists()).toBe(true)
     await inputRef.trigger('focus')
 
     // キー選択 (Date)
     const keyAutocomplete = wrapper.findComponent(ElAutocomplete)
-    await keyAutocomplete.vm.$emit('select', {value: 'Date', item: availableTokens[2]})
+    await keyAutocomplete.vm.$emit('select', { value: 'Date', item: availableTokens[2] })
 
     // オペレーター選択フィールドの表示確認
     const operatorAutocomplete = wrapper.findComponent(ElAutocomplete)
     expect(operatorAutocomplete.exists()).toBe(true)
 
     // オペレーター選択
-    await operatorAutocomplete.vm.$emit('select', {value: '>'})
+    await operatorAutocomplete.vm.$emit('select', { value: '>' })
 
     // 値選択フィールドの表示確認（DateタイプなのでDatePickerが表示されるはず）
     const datePicker = wrapper.findComponent(ElDatePicker)
@@ -283,13 +283,13 @@ describe('ElTextQueryInput', () => {
 
   it('値入力中、入力内容が空の時Backspaceキーで、オペレーター、キーの順で入力プロセスが戻る - Key:Date', async () => {
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     expect(inputRef.exists()).toBe(true)
     await inputRef.trigger('focus')
 
     // キー選択 (Date)
     const keyAutocomplete = wrapper.findComponent(ElAutocomplete)
-    await keyAutocomplete.vm.$emit('select', {value: 'Date', item: availableTokens[2]})
+    await keyAutocomplete.vm.$emit('select', { value: 'Date', item: availableTokens[2] })
 
     // キー選択後、オペレーター選択ステップになったことを確認
     await wrapper.vm.$nextTick()
@@ -297,7 +297,7 @@ describe('ElTextQueryInput', () => {
 
     // オペレーター選択
     let operatorAutocomplete = wrapper.findComponent(ElAutocomplete)
-    await operatorAutocomplete.vm.$emit('select', {value: '>'})
+    await operatorAutocomplete.vm.$emit('select', { value: '>' })
 
     // オペレーター選択後、値選択ステップになったことを確認
     await wrapper.vm.$nextTick()
@@ -328,10 +328,10 @@ describe('ElTextQueryInput', () => {
         target: {
           value: '',
           parentElement: {
-            querySelectorAll: () => []
-          }
+            querySelectorAll: () => [],
+          },
         },
-        preventDefault: vi.fn()
+        preventDefault: vi.fn(),
       }
 
       // handleBackspaceメソッドを直接呼び出し
@@ -352,7 +352,7 @@ describe('ElTextQueryInput', () => {
 
     // オペレーター選択フィールドでBackspaceを押す（オペレーター入力が空の状態）
     const operatorInput = operatorAutocomplete.find('input')
-    await operatorInput.trigger('keydown', {key: 'Backspace'})
+    await operatorInput.trigger('keydown', { key: 'Backspace' })
 
     // オペレーター入力からキー選択に戻ったことを確認
     await wrapper.vm.$nextTick()
@@ -373,13 +373,13 @@ describe('ElTextQueryInput', () => {
 
   it('キー、値の順で入力プロセスが進む - Key:Date (From,To)', async () => {
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     expect(inputRef.exists()).toBe(true)
     await inputRef.trigger('focus')
 
     // キー選択 (Date (From,To))
     const keyAutocomplete = wrapper.findComponent(ElAutocomplete)
-    await keyAutocomplete.vm.$emit('select', {value: 'Date (From,To)', item: availableTokens[3]})
+    await keyAutocomplete.vm.$emit('select', { value: 'Date (From,To)', item: availableTokens[3] })
 
     // キー選択後、オペレーターがひとつしかないためオペレーター選択ステップをスキップして
     // 値選択ステップになったことを確認
@@ -407,13 +407,13 @@ describe('ElTextQueryInput', () => {
 
   it('値入力中、入力内容が空の時Backspaceキーで、キーの順で入力プロセスが戻る - Key:Date (From,To)', async () => {
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     expect(inputRef.exists()).toBe(true)
     await inputRef.trigger('focus')
 
     // キー選択 (Date (From,To))
     const keyAutocomplete = wrapper.findComponent(ElAutocomplete)
-    await keyAutocomplete.vm.$emit('select', {value: 'Date (From,To)', item: availableTokens[3]})
+    await keyAutocomplete.vm.$emit('select', { value: 'Date (From,To)', item: availableTokens[3] })
 
     // キー選択後、オペレーターがひとつしかないためオペレーター選択ステップをスキップして
     // 値選択ステップになったことを確認
@@ -444,10 +444,10 @@ describe('ElTextQueryInput', () => {
         target: {
           value: '',
           parentElement: {
-            querySelectorAll: () => []
-          }
+            querySelectorAll: () => [],
+          },
         },
-        preventDefault: vi.fn()
+        preventDefault: vi.fn(),
       }
 
       // handleBackspaceメソッドを直接呼び出し
@@ -472,9 +472,9 @@ describe('ElTextQueryInput', () => {
     wrapper = mount(ElTextQueryInput, {
       props: {
         modelValue: [],
-        'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e}),
+        'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
         availableTokens,
-        appendValueSuggestTypesToKey: ['tag-fw'] // FrameWorkタイプを指定
+        appendValueSuggestTypesToKey: ['tag-fw'], // FrameWorkタイプを指定
       },
       global: {
         components: {
@@ -482,16 +482,16 @@ describe('ElTextQueryInput', () => {
           ElAutocomplete,
           ElButton,
           ElDatePicker,
-          ElIcon
+          ElIcon,
         },
         stubs: {
-          ElIcon: true
-        }
-      }
+          ElIcon: true,
+        },
+      },
     })
 
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     expect(inputRef.exists()).toBe(true)
     await inputRef.trigger('focus')
 
@@ -500,7 +500,7 @@ describe('ElTextQueryInput', () => {
 
     // getKeySuggestionsメソッドを直接テスト
     let suggestions = []
-    wrapper.vm.getKeySuggestions('', (data) => {
+    wrapper.vm.getKeySuggestions('', data => {
       suggestions = data
     })
 
@@ -527,9 +527,9 @@ describe('ElTextQueryInput', () => {
     wrapper = mount(ElTextQueryInput, {
       props: {
         modelValue: [],
-        'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e}),
+        'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
         availableTokens,
-        appendValueSuggestTypesToKey: ['tag-fw'] // FrameWorkタイプを指定
+        appendValueSuggestTypesToKey: ['tag-fw'], // FrameWorkタイプを指定
       },
       global: {
         components: {
@@ -537,16 +537,16 @@ describe('ElTextQueryInput', () => {
           ElAutocomplete,
           ElButton,
           ElDatePicker,
-          ElIcon
+          ElIcon,
         },
         stubs: {
-          ElIcon: true
-        }
-      }
+          ElIcon: true,
+        },
+      },
     })
 
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     await inputRef.trigger('focus')
 
     // 値サジェスト（Vue3）を選択
@@ -554,8 +554,8 @@ describe('ElTextQueryInput', () => {
     await keyAutocomplete.vm.$emit('select', {
       value: 'Vue3',
       isValueSuggest: true,
-      valueItem: {id: 1, name: 'Vue3'},
-      valueType: 'tag-fw'
+      valueItem: { id: 1, name: 'Vue3' },
+      valueType: 'tag-fw',
     })
 
     // トークンが追加されたことを確認
@@ -570,9 +570,9 @@ describe('ElTextQueryInput', () => {
     wrapper = mount(ElTextQueryInput, {
       props: {
         modelValue: [],
-        'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e}),
+        'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
         availableTokens,
-        appendValueSuggestTypesToKey: ['user', 'tag-fw'] // 複数のタイプを指定
+        appendValueSuggestTypesToKey: ['user', 'tag-fw'], // 複数のタイプを指定
       },
       global: {
         components: {
@@ -580,16 +580,16 @@ describe('ElTextQueryInput', () => {
           ElAutocomplete,
           ElButton,
           ElDatePicker,
-          ElIcon
+          ElIcon,
         },
         stubs: {
-          ElIcon: true
-        }
-      }
+          ElIcon: true,
+        },
+      },
     })
 
     // トークン入力の開始
-    const inputRef = wrapper.findComponent({ref: 'inputRef'})
+    const inputRef = wrapper.findComponent({ ref: 'inputRef' })
     expect(inputRef.exists()).toBe(true)
     await inputRef.trigger('focus')
 
@@ -598,14 +598,15 @@ describe('ElTextQueryInput', () => {
 
     // getKeySuggestionsメソッドを直接テスト
     let suggestions = []
-    wrapper.vm.getKeySuggestions('', (data) => {
+    wrapper.vm.getKeySuggestions('', data => {
       suggestions = data
     })
 
     // サジェストには通常のキーに加えて、userタイプとtag-fwタイプの両方の値サジェストも含まれているはず
-    const expectedMinCount = availableTokens.length +
+    const expectedMinCount =
+      availableTokens.length +
       availableTokens[0].tags.length + // userタイプのタグ数
-      availableTokens[1].tags.length   // tag-fwタイプのタグ数
+      availableTokens[1].tags.length // tag-fwタイプのタグ数
 
     expect(suggestions.length).toBeGreaterThanOrEqual(expectedMinCount)
 
@@ -635,4 +636,3 @@ describe('ElTextQueryInput', () => {
   // it('props.disabled状態の時、トークンの削除や追加ができない', () => { })
   // it('トークンクリックで、トークンの編集状態になる', () => { })
 })
-

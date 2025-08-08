@@ -19,7 +19,7 @@ Element PlusのElMentionコンポーネントをラッピングした、@ユー�
     :rows="6"
     :disabled="false"
     placeholder="記事の内容を入力してください。@でユーザーメンション、#でタグが利用できます。"
-    class="block w-full mt-1"
+    class="mt-1 block w-full"
   />
 </template>
 
@@ -33,11 +33,11 @@ const content = ref('')
 
 ## Props
 
-| プロパティ | 型 | デフォルト | 説明 |
-|-----------|-----|-----------|------|
-| `placeholder` | String | `'input @ to mention people, # to mention tag'` | プレースホルダーテキスト |
-| `disabled` | Boolean | `false` | 無効状態 |
-| `rows` | Number | `4` | テキストエリアの行数 |
+| プロパティ    | 型      | デフォルト                                      | 説明                     |
+| ------------- | ------- | ----------------------------------------------- | ------------------------ |
+| `placeholder` | String  | `'input @ to mention people, # to mention tag'` | プレースホルダーテキスト |
+| `disabled`    | Boolean | `false`                                         | 無効状態                 |
+| `rows`        | Number  | `4`                                             | テキストエリアの行数     |
 
 ## Events
 

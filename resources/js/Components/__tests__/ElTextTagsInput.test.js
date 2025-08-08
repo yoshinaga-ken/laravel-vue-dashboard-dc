@@ -1,20 +1,16 @@
-import {mount} from '@vue/test-utils'
-import {describe, it, expect, vi, beforeEach} from 'vitest'
+import { mount } from '@vue/test-utils'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import ElTextTagsInput from '@/Components/ElTextTagsInput.vue'
-import {ElTag, ElInput, ElButton, ElAutocomplete} from 'element-plus'
+import { ElTag, ElInput, ElButton, ElAutocomplete } from 'element-plus'
 
 vi.mock('@vue/apollo-composable', () => ({
   useQuery: () => ({
     result: {
       value: {
-        searchTags: [
-          {name: 'vue'},
-          {name: 'react'},
-          {name: 'angular'}
-        ]
-      }
-    }
-  })
+        searchTags: [{ name: 'vue' }, { name: 'react' }, { name: 'angular' }],
+      },
+    },
+  }),
 }))
 
 describe('ElTextTagsInput', () => {
@@ -24,16 +20,16 @@ describe('ElTextTagsInput', () => {
     wrapper = mount(ElTextTagsInput, {
       props: {
         modelValue: ['vue'],
-        'onUpdate:modelValue': (e) => wrapper.setProps({modelValue: e})
+        'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
       },
       global: {
         components: {
           ElTag,
           ElInput,
           ElButton,
-          ElAutocomplete
-        }
-      }
+          ElAutocomplete,
+        },
+      },
     })
   })
 
@@ -105,7 +101,7 @@ describe('ElTextTagsInput', () => {
     // 空の入力フィールドでBackspaceキーを押す
     const autocomplete = wrapper.findComponent(ElAutocomplete)
     await autocomplete.find('input').trigger('keydown', {
-      key: 'Backspace'
+      key: 'Backspace',
     })
 
     // 最後のタグが削除されたことを確認
@@ -123,16 +119,16 @@ describe('ElTextTagsInput', () => {
     const disabledWrapper = mount(ElTextTagsInput, {
       props: {
         modelValue: ['vue'],
-        disabled: true
+        disabled: true,
       },
       global: {
         components: {
           ElTag,
           ElInput,
           ElButton,
-          ElAutocomplete
-        }
-      }
+          ElAutocomplete,
+        },
+      },
     })
 
     expect(disabledWrapper.findComponent(ElButton).exists()).toBe(false)

@@ -5,24 +5,32 @@ import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { debounce } from 'lodash'
 import type { MentionOption } from 'element-plus'
-import type { FilterTagInput, TagPaginator, FilterUserInput, UserPaginator } from '@/Types/types-graphql'
+import type {
+  FilterTagInput,
+  TagPaginator,
+  FilterUserInput,
+  UserPaginator,
+} from '@/Types/types-graphql'
 
-const props = withDefaults(defineProps<{
-  /** @description プレースホルダーテキスト */
-  placeholder?: string
-  /** @description 無効状態 */
-  disabled?: boolean
-  /** @description 行数 */
-  rows?: number
-}>(), {
-  placeholder: 'input @ to mention people, # to mention tag',
-  disabled: false,
-  rows: 4
-})
+withDefaults(
+  defineProps<{
+    /** @description プレースホルダーテキスト */
+    placeholder?: string
+    /** @description 無効状態 */
+    disabled?: boolean
+    /** @description 行数 */
+    rows?: number
+  }>(),
+  {
+    placeholder: 'input @ to mention people, # to mention tag',
+    disabled: false,
+    rows: 4,
+  }
+)
 
 /** @description v-model対応 */
 const modelValue = defineModel<string>({
-  default: ''
+  default: '',
 })
 
 const loading = ref(false)
@@ -39,47 +47,53 @@ const useUserCache = ref(true)
 const useTagCache = ref(true)
 
 // タグ取得用GraphQLクエリ
-const { result: tagsResult, refetch: refetchTags } = useQuery<{ tags: TagPaginator }>(gql`
-  query FilterTags($input: FilterTagInput) {
-    tags(input: $input, first: 512) {
-      data {
-        name
-      }
-      paginatorInfo {
-        count
-        total
+const { result: tagsResult, refetch: refetchTags } = useQuery<{ tags: TagPaginator }>(
+  gql`
+    query FilterTags($input: FilterTagInput) {
+      tags(input: $input, first: 512) {
+        data {
+          name
+        }
+        paginatorInfo {
+          count
+          total
+        }
       }
     }
+  `,
+  {
+    variables: {
+      input: {
+        name: '',
+      } satisfies FilterTagInput,
+    },
   }
-`, {
-  variables: {
-    input: {
-      name: ''
-    } satisfies FilterTagInput
-  }
-})
+)
 
 // ユーザー取得用GraphQLクエリ
-const { result: usersResult, refetch: refetchUsers } = useQuery<{ users: UserPaginator }>(gql`
-  query FilterUsers($input: FilterUserInput) {
-    users(input: $input, first: 512) {
-      data {
-        name
-        email
-      }
-      paginatorInfo {
-        count
-        total
+const { result: usersResult, refetch: refetchUsers } = useQuery<{ users: UserPaginator }>(
+  gql`
+    query FilterUsers($input: FilterUserInput) {
+      users(input: $input, first: 512) {
+        data {
+          name
+          email
+        }
+        paginatorInfo {
+          count
+          total
+        }
       }
     }
+  `,
+  {
+    variables: {
+      input: {
+        name: '',
+      } satisfies FilterUserInput,
+    },
   }
-`, {
-  variables: {
-    input: {
-      name: ''
-    } satisfies FilterUserInput
-  }
-})
+)
 
 // キャッシュ戦略の決定ロジック
 watchEffect(() => {
@@ -117,7 +131,11 @@ const availableUsers = computed(() => {
 })
 
 /** @description 検索結果をフィルタリングしてMentionOptionに変換 */
-const filterAndMapItems = (items: string[], pattern: string, normalizedPrefix: string): MentionOption[] => {
+const filterAndMapItems = (
+  items: string[],
+  pattern: string,
+  normalizedPrefix: string
+): MentionOption[] => {
   return items
     .filter(item => pattern === '' || item.toLowerCase().includes(pattern.toLowerCase()))
     .map(item => ({
@@ -142,8 +160,8 @@ const executeSearch = async (pattern: string, prefix: string): Promise<MentionOp
         // 動的検索戦略: GraphQLクエリ実行
         const response = await refetchUsers({
           input: {
-            name: pattern
-          } satisfies FilterUserInput
+            name: pattern,
+          } satisfies FilterUserInput,
         })
 
         if (response?.data?.users?.data) {
@@ -163,8 +181,8 @@ const executeSearch = async (pattern: string, prefix: string): Promise<MentionOp
         // 動的検索戦略: GraphQLクエリ実行
         const response = await refetchTags({
           input: {
-            name: pattern
-          } satisfies FilterTagInput
+            name: pattern,
+          } satisfies FilterTagInput,
         })
 
         if (response?.data?.tags?.data) {
@@ -202,19 +220,21 @@ const handleSearch = (pattern: string, prefix: string) => {
 }
 
 /** @description modelValueの変更を監視して全角プレフィックスを正規化 */
-watch(modelValue, (newValue, oldValue) => {
-  if (newValue !== oldValue) {
-    // 全角プレフィックスを半角に置換
-    const normalizedValue = newValue
-      .replace(/＠/g, '@')
-      .replace(/＃/g, '#')
+watch(
+  modelValue,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      // 全角プレフィックスを半角に置換
+      const normalizedValue = newValue.replace(/＠/g, '@').replace(/＃/g, '#')
 
-    if (normalizedValue !== newValue) {
-      // 正規化が必要な場合のみ更新
-      modelValue.value = normalizedValue
+      if (normalizedValue !== newValue) {
+        // 正規化が必要な場合のみ更新
+        modelValue.value = normalizedValue
+      }
     }
-  }
-}, { flush: 'post' })
+  },
+  { flush: 'post' }
+)
 
 onBeforeUnmount(() => {
   // lodashのdebounceは自動的にクリーンアップされるため、手動でのタイマークリアは不要
@@ -230,7 +250,7 @@ defineExpose({
   /** @description 入力値をクリア */
   clear: () => {
     modelValue.value = ''
-  }
+  },
 })
 </script>
 
@@ -265,8 +285,12 @@ defineExpose({
 }
 
 /* スクロールバーのサムネイル部分を常に表示 */
-:deep(.el-popper.el-mention__popper .el-scrollbar .el-scrollbar__bar.is-vertical .el-scrollbar__thumb),
-:deep(.el-popper.el-mention__popper .el-scrollbar .el-scrollbar__bar.is-horizontal .el-scrollbar__thumb) {
+:deep(
+  .el-popper.el-mention__popper .el-scrollbar .el-scrollbar__bar.is-vertical .el-scrollbar__thumb
+),
+:deep(
+  .el-popper.el-mention__popper .el-scrollbar .el-scrollbar__bar.is-horizontal .el-scrollbar__thumb
+) {
   opacity: var(--el-scrollbar-opacity, 0.4) !important;
   visibility: visible !important;
   display: block !important;
@@ -284,5 +308,4 @@ defineExpose({
   visibility: visible !important;
   display: block !important;
 }
-
 </style>

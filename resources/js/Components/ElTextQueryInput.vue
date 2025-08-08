@@ -1,6 +1,17 @@
 <script lang="ts" setup>
 import { ref, computed, watch, nextTick } from 'vue'
-import { ElDropdown, ElDropdownMenu, ElDropdownItem, ElButton, ElTag, ElInput, ElAutocomplete, ElDatePicker, ElIcon, ElSelect, ElSelectV2 } from 'element-plus'
+import {
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+  ElButton,
+  ElTag,
+  ElInput,
+  ElAutocomplete,
+  ElDatePicker,
+  ElIcon,
+  ElSelect,
+} from 'element-plus'
 import { Clock } from '@element-plus/icons-vue'
 import dayjs from 'dayjs'
 import * as ElementPlusIcons from '@element-plus/icons-vue'
@@ -58,24 +69,24 @@ type TokenGroup = {
 const props = defineProps({
   availableTokens: {
     type: Array as () => TokenDefinition[],
-    required: true
+    required: true,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   inputPlaceholder: {
     type: String,
-    default: 'Enter search queries (<key><operator><value>)...'
+    default: 'Enter search queries (<key><operator><value>)...',
   },
   appendValueSuggestTypesToKey: {
     type: Array as () => string[],
-    default: () => []
-  }
+    default: () => [],
+  },
 })
 
 const modelValue = defineModel<Token[]>({
-  default: () => []
+  default: () => [],
 })
 
 const HISTORY_KEY = 'el-text-query-input-history'
@@ -97,29 +108,29 @@ const tokenGroups = computed<TokenGroup[]>(() => {
           type: 'string',
           title: token.value.data as string,
           isCustom: true,
-          isStringValue: true // stringタイプを識別するフラグ
+          isStringValue: true, // stringタイプを識別するフラグ
         },
         operator: '',
         value: '',
         displayValue: token.value.data, // 表示用の値
         valueIcon: null, // アイコン情報
-        editing: null
+        editing: null,
       }
     }
 
     // 保存値と表示値を計算
-    let displayValue = token.value.data;
-    let valueIcon = null;
+    let displayValue = token.value.data
+    let valueIcon = null
 
     // タグオブジェクトの場合、表示用の値とアイコンを設定
     if (tokenDef && Array.isArray(tokenDef.tags)) {
-      const tagObj = tokenDef.tags.find(tag =>
-        typeof tag === 'object' && tag !== null && tag.id === token.value.data
-      );
+      const tagObj = tokenDef.tags.find(
+        tag => typeof tag === 'object' && tag !== null && tag.id === token.value.data
+      )
 
       if (tagObj) {
-        displayValue = tagObj.name;
-        valueIcon = tagObj.icon || null;
+        displayValue = tagObj.name
+        valueIcon = tagObj.icon || null
       }
     }
 
@@ -127,13 +138,13 @@ const tokenGroups = computed<TokenGroup[]>(() => {
       key: {
         type: token.type,
         title: tokenDef?.title || token.type,
-        isCustom: !tokenDef
+        isCustom: !tokenDef,
       },
       operator: token.value.operator,
       value: token.value.data,
       displayValue, // 表示用の値
-      valueIcon,    // アイコン情報
-      editing: null
+      valueIcon, // アイコン情報
+      editing: null,
     }
   })
 })
@@ -192,7 +203,9 @@ const getKeySuggestions = (queryString: string, cb: (data: any[]) => void) => {
     initialEditMode.value = false // 一度表示した後はフラグをオフにする
     const results = props.availableTokens.map(token => ({ value: token.title, item: token }))
     // フォーカスを現在のクエリ文字列と一致するアイテムに設定
-    const focusItem = results.findIndex(item => item.value.toLowerCase() === queryString.toLowerCase())
+    const focusItem = results.findIndex(
+      item => item.value.toLowerCase() === queryString.toLowerCase()
+    )
     if (focusItem !== -1) {
       setTimeout(() => {
         // DOMでフォーカスを設定する処理があれば実装
@@ -205,8 +218,8 @@ const getKeySuggestions = (queryString: string, cb: (data: any[]) => void) => {
   // 基本のキーサジェスト
   const results = queryString
     ? props.availableTokens
-      .filter(token => token.title.toLowerCase().includes(queryString.toLowerCase()))
-      .map(token => ({ value: token.title, item: token }))
+        .filter(token => token.title.toLowerCase().includes(queryString.toLowerCase()))
+        .map(token => ({ value: token.title, item: token }))
     : props.availableTokens.map(token => ({ value: token.title, item: token }))
 
   // appendValueSuggestTypesToKeyが設定されていれば、それらのタイプの値サジェストを追加
@@ -226,7 +239,7 @@ const getKeySuggestions = (queryString: string, cb: (data: any[]) => void) => {
               // 元のアイテム情報を保持
               valueItem: tag,
               // 元のタイプ情報を保持
-              valueType: type
+              valueType: type,
             }
           } else {
             // 文字列の場合
@@ -234,7 +247,7 @@ const getKeySuggestions = (queryString: string, cb: (data: any[]) => void) => {
               value: tag,
               isValueSuggest: true,
               valueItem: tag,
-              valueType: type
+              valueType: type,
             }
           }
         })
@@ -242,7 +255,8 @@ const getKeySuggestions = (queryString: string, cb: (data: any[]) => void) => {
         // クエリに基づいてフィルタリング
         const filteredValueSuggestions = queryString
           ? valueSuggestions.filter(item =>
-              item.value.toString().toLowerCase().includes(queryString.toLowerCase()))
+              item.value.toString().toLowerCase().includes(queryString.toLowerCase())
+            )
           : valueSuggestions
 
         // 既存のキーサジェストと値サジェストを結合
@@ -268,7 +282,9 @@ const getOperatorSuggestions = (queryString: string, cb: (data: any[]) => void) 
     initialEditMode.value = false // 一度表示した後はフラグをオフにする
     const results = operators.map(op => ({ value: op }))
     // 現在のクエリと一致する項目にフォーカスを当てる
-    const focusItem = results.findIndex(item => item.value.toLowerCase() === queryString.toLowerCase())
+    const focusItem = results.findIndex(
+      item => item.value.toLowerCase() === queryString.toLowerCase()
+    )
     if (focusItem !== -1) {
       setTimeout(() => {
         // DOMでフォーカスを設定する処理があれば実装
@@ -279,9 +295,7 @@ const getOperatorSuggestions = (queryString: string, cb: (data: any[]) => void) 
   }
 
   const results = queryString
-    ? operators
-      .filter(op => op.includes(queryString))
-      .map(op => ({ value: op }))
+    ? operators.filter(op => op.includes(queryString)).map(op => ({ value: op }))
     : operators.map(op => ({ value: op }))
   cb(results)
 }
@@ -301,9 +315,7 @@ const getValueSuggestions = (queryString: string, cb: (data: any[]) => void) => 
   }
 
   // 通常の配列の場合
-  const tags = Array.isArray(tagsDef)
-    ? tagsDef
-    : []
+  const tags = Array.isArray(tagsDef) ? tagsDef : []
 
   // 初期編集モードかつクエリ文字列がある場合は全アイテムを表示（フィルタなし）
   if (initialEditMode.value && queryString) {
@@ -333,11 +345,20 @@ const getValueSuggestions = (queryString: string, cb: (data: any[]) => void) => 
 
   const results = queryString
     ? tags
-      .filter(tag => {
-        const tagValue = typeof tag === 'object' && tag !== null ? tag.name : tag
-        return String(tagValue).toLowerCase().includes(queryString.toLowerCase())
-      })
-      .map(tag => {
+        .filter(tag => {
+          const tagValue = typeof tag === 'object' && tag !== null ? tag.name : tag
+          return String(tagValue).toLowerCase().includes(queryString.toLowerCase())
+        })
+        .map(tag => {
+          if (typeof tag === 'object' && tag !== null) {
+            // オブジェクトの場合は元のオブジェクトを保持し、valueプロパティに表示用のテキストを設定
+            return { value: tag.name, item: tag }
+          } else {
+            // 文字列の場合は従来通り
+            return { value: tag }
+          }
+        })
+    : tags.map(tag => {
         if (typeof tag === 'object' && tag !== null) {
           // オブジェクトの場合は元のオブジェクトを保持し、valueプロパティに表示用のテキストを設定
           return { value: tag.name, item: tag }
@@ -346,21 +367,13 @@ const getValueSuggestions = (queryString: string, cb: (data: any[]) => void) => 
           return { value: tag }
         }
       })
-    : tags.map(tag => {
-      if (typeof tag === 'object' && tag !== null) {
-        // オブジェクトの場合は元のオブジェクトを保持し、valueプロパティに表示用のテキストを設定
-        return { value: tag.name, item: tag }
-      } else {
-        // 文字列の場合は従来通り
-        return { value: tag }
-      }
-    })
   cb(results)
 }
 
 // 現在の入力ステップに応じたプレースホルダー
 const getCurrentPlaceholder = computed(() => {
-  if (!isInputRefFocus.value && currentTokenGroup.value === null && modelValue.value.length === 0) return props.inputPlaceholder
+  if (!isInputRefFocus.value && currentTokenGroup.value === null && modelValue.value.length === 0)
+    return props.inputPlaceholder
   switch (inputStep.value) {
     case 'key':
       return 'Enter key...'
@@ -394,7 +407,7 @@ const showInput = () => {
     inputRef.value?.focus()
     // フォーカス後に fetchSuggestions を明示的に呼び出す
     if (inputRef.value) {
-      getKeySuggestions('', (suggestions) => {
+      getKeySuggestions('', suggestions => {
         // @ts-ignore: ElAutocomplete の内部プロパティにアクセス
         inputRef.value.suggestions = suggestions
       })
@@ -457,8 +470,8 @@ const handleDateSelected = (value: Date | Date[] | string | null) => {
       type: newTokenGroup.key.type,
       value: {
         data: formattedDate,
-        operator: newTokenGroup.operator
-      }
+        operator: newTokenGroup.operator,
+      },
     })
 
     resetInputState()
@@ -474,8 +487,8 @@ const handleDatePickerEnter = (event: KeyboardEvent) => {
     if (isArray) {
       values = [inputValue.value[0], inputValue.value[1]]
       // From/To の判別
-      const inputs = Array.from(event.target.parentElement.querySelectorAll('.el-range-input'));
-      const index = inputs.indexOf(event.target);
+      const inputs = Array.from(event.target.parentElement.querySelectorAll('.el-range-input'))
+      const index = inputs.indexOf(event.target)
       const isFromInput = index === 0
       if (isFromInput) {
         values[0] = event.target.value
@@ -509,8 +522,8 @@ const handleKeySelected = (item: any) => {
       type: 'string',
       value: {
         data: item.value,
-        operator: ''
-      }
+        operator: '',
+      },
     })
 
     // 入力状態をリセットして次の入力に備える
@@ -528,7 +541,7 @@ const handleKeySelected = (item: any) => {
 
     tokenGroup.key = {
       type: tokenDef.type,
-      title: tokenDef.title
+      title: tokenDef.title,
     }
 
     const token = modelValue.value[editingTokenIndex.value]
@@ -541,11 +554,11 @@ const handleKeySelected = (item: any) => {
     currentTokenGroup.value = {
       key: {
         type: tokenDef.type,
-        title: tokenDef.title
+        title: tokenDef.title,
       },
       operator: '',
       value: '',
-      editing: null
+      editing: null,
     }
 
     inputValue.value = ''
@@ -569,12 +582,14 @@ const handleKeySelected = (item: any) => {
   nextTick(() => {
     if (isDatePicker.value && inputStep.value === 'value') {
       if (!inputValue.value) {
-        inputValue.value = isDateRangePicker.value ? [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')] : dayjs().format('YYYY-MM-DD')
+        inputValue.value = isDateRangePicker.value
+          ? [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')]
+          : dayjs().format('YYYY-MM-DD')
       }
       datePickerRef.value?.focus()
     } else {
       inputRef.value?.focus()
-      if(isSelect.value){
+      if (isSelect.value) {
         inputRef.value.expanded = true
       }
     }
@@ -599,7 +614,7 @@ const handleKeyEnter = (event: KeyboardEvent) => {
     tokenGroup.key = {
       type: 'string',
       title: inputValue.value,
-      isCustom: true
+      isCustom: true,
     }
 
     const token = modelValue.value[editingTokenIndex.value]
@@ -613,8 +628,8 @@ const handleKeyEnter = (event: KeyboardEvent) => {
       type: 'string',
       value: {
         data: inputValue.value,
-        operator: ''
-      }
+        operator: '',
+      },
     })
 
     // 入力状態をリセットして次の入力に備える
@@ -645,7 +660,7 @@ const handleKeyBlur = () => {
       tokenGroup.key = {
         type: 'string',
         title: inputValue.value,
-        isCustom: true
+        isCustom: true,
       }
 
       const token = modelValue.value[editingTokenIndex.value]
@@ -659,8 +674,8 @@ const handleKeyBlur = () => {
         type: 'string',
         value: {
           data: inputValue.value,
-          operator: ''
-        }
+          operator: '',
+        },
       })
 
       // 入力状態をリセットして次の入力に備える
@@ -740,19 +755,19 @@ const handleValueSelected = (item: any) => {
     currentTokenGroup.value.editing = null
   } else {
     // 新規作成モード
-    const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value.key.type);
-    const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0;
-    const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1;
+    const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value.key.type)
+    const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0
+    const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1
 
     // オペレーターの決定
-    let operator = '';
+    let operator = ''
     if (hasOperators) {
       if (hasSingleOperator) {
         // 単一オペレーターの場合は自動選択
-        operator = tokenDef.operators[0];
+        operator = tokenDef.operators[0]
       } else {
         // 複数オペレーターの場合は選択されたものを使用
-        operator = currentTokenGroup.value.operator;
+        operator = currentTokenGroup.value.operator
       }
     }
 
@@ -760,8 +775,8 @@ const handleValueSelected = (item: any) => {
       type: currentTokenGroup.value.key.type,
       value: {
         data: saveValue,
-        operator: operator
-      }
+        operator: operator,
+      },
     })
 
     resetInputState()
@@ -783,7 +798,7 @@ const addToHistory = (tokens: Token[]) => {
 const handleHistorySelect = (query: string) => {
   try {
     modelValue.value = JSON.parse(query)
-  } catch (e) {
+  } catch {
     // JSON parse error: 履歴データが壊れている場合
     alert('履歴データの復元に失敗しました')
     return
@@ -813,9 +828,15 @@ const filteredHistory = computed(() => {
   return queryHistory.value.filter(q => {
     try {
       const tokens = JSON.parse(q)
-      return Array.isArray(tokens) && tokens.some(t => {
-        return t.type.includes(inputValue.value) || (typeof t.value.data === 'string' && t.value.data.includes(inputValue.value))
-      })
+      return (
+        Array.isArray(tokens) &&
+        tokens.some(t => {
+          return (
+            t.type.includes(inputValue.value) ||
+            (typeof t.value.data === 'string' && t.value.data.includes(inputValue.value))
+          )
+        })
+      )
     } catch {
       return false
     }
@@ -826,13 +847,15 @@ const filteredHistory = computed(() => {
 const formatHistoryLabel = (query: string) => {
   try {
     const tokens: Token[] = JSON.parse(query)
-    return tokens.map(token => {
-      const def = props.availableTokens.find(t => t.type === token.type)
-      const title = def?.title || token.type
-      const operator = token.value.operator
-      const data = token.value.data
-      return `${title} ${operator} ${data}`
-    }).join(', ')
+    return tokens
+      .map(token => {
+        const def = props.availableTokens.find(t => t.type === token.type)
+        const title = def?.title || token.type
+        const operator = token.value.operator
+        const data = token.value.data
+        return `${title} ${operator} ${data}`
+      })
+      .join(', ')
   } catch {
     return '[履歴データ不正]'
   }
@@ -852,19 +875,19 @@ const handleInputConfirm = (event?: KeyboardEvent) => {
       currentTokenGroup.value.editing = null
     } else {
       // 新規作成モード
-      const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value.key.type);
-      const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0;
-      const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1;
+      const tokenDef = props.availableTokens.find(t => t.type === currentTokenGroup.value.key.type)
+      const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0
+      const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1
 
       // オペレーターの決定
-      let operator = '';
+      let operator = ''
       if (hasOperators) {
         if (hasSingleOperator) {
           // 単一オペレーターの場合は自動選択
-          operator = tokenDef.operators[0];
+          operator = tokenDef.operators[0]
         } else {
           // 複数オペレーターの場合は選択されたものを使用
-          operator = currentTokenGroup.value.operator;
+          operator = currentTokenGroup.value.operator
         }
       }
       if (isSelect.value && Array.isArray(inputValue.value)) {
@@ -874,8 +897,8 @@ const handleInputConfirm = (event?: KeyboardEvent) => {
         type: currentTokenGroup.value.key.type,
         value: {
           data: inputValue.value,
-          operator: operator
-        }
+          operator: operator,
+        },
       })
 
       resetInputState()
@@ -894,20 +917,20 @@ const startEditing = (index: number, part: 'key' | 'operator' | 'value') => {
   initialEditMode.value = true
 
   // クリックされたトークンを取得
-  const token = modelValue.value[index];
-  const tokenDef = props.availableTokens.find(t => t.type === token.type);
+  const token = modelValue.value[index]
+  const tokenDef = props.availableTokens.find(t => t.type === token.type)
 
   // オペレーター条件をチェック
-  const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0;
-  const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1;
+  const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0
+  const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1
 
   // オペレーターがない場合またはオペレーターが一つだけの場合にオペレーター部分をクリックしたら何もしない
   if (part === 'operator' && (!hasOperators || hasSingleOperator)) {
-    return;
+    return
   }
 
   // トークンをモデルから削除
-  modelValue.value.splice(index, 1);
+  modelValue.value.splice(index, 1)
 
   // 取得したトークンを編集状態にする
   if (token.type === 'string') {
@@ -917,80 +940,84 @@ const startEditing = (index: number, part: 'key' | 'operator' | 'value') => {
         type: 'string',
         title: token.value.data as string,
         isCustom: true,
-        isStringValue: true // stringタイプを識別するフラグ
+        isStringValue: true, // stringタイプを識別するフラグ
       },
       operator: '',
       value: '',
-      editing: null
-    };
+      editing: null,
+    }
 
-    inputStep.value = 'key';
-    inputValue.value = token.value.data.toString();
+    inputStep.value = 'key'
+    inputValue.value = token.value.data.toString()
   } else {
     // 通常のトークン
     currentTokenGroup.value = {
       key: {
         type: token.type,
         title: tokenDef?.title || token.type,
-        isCustom: !tokenDef
+        isCustom: !tokenDef,
       },
       operator: token.value.operator,
       value: token.value.data,
-      editing: null
-    };
+      editing: null,
+    }
 
     // クリックされた部分に応じて編集ステップを設定
     if (part === 'operator' && hasSingleOperator) {
       // 単一オペレーターの場合はオペレーター編集をスキップして値編集に進む
-      inputStep.value = 'value';
+      inputStep.value = 'value'
     } else {
-      inputStep.value = part;
+      inputStep.value = part
     }
 
     if (part === 'key') {
-      inputValue.value = currentTokenGroup.value.key.title;
+      inputValue.value = currentTokenGroup.value.key.title
     } else if (part === 'operator') {
-      inputValue.value = currentTokenGroup.value.operator;
+      inputValue.value = currentTokenGroup.value.operator
     } else if (part === 'value') {
       // 日付範囲タイプの場合の特別処理
       if (isSelect.value) {
-        inputValue.value = currentTokenGroup.value.value.split(',');
-      } else if (isDateRangePicker.value && typeof token.value.data === 'string' && token.value.data.includes(',')) {
+        inputValue.value = currentTokenGroup.value.value.split(',')
+      } else if (
+        isDateRangePicker.value &&
+        typeof token.value.data === 'string' &&
+        token.value.data.includes(',')
+      ) {
         // カンマで区切られた日付文字列を配列に変換
-        const dateStrings = token.value.data.split(',');
-        inputValue.value = dateStrings.map(dateStr => dayjs(dateStr).toDate());
+        const dateStrings = token.value.data.split(',')
+        inputValue.value = dateStrings.map(dateStr => dayjs(dateStr).toDate())
       } else if (tokenDef && Array.isArray(tokenDef.tags)) {
         // オブジェクトタイプのタグの場合、表示名を取得
-        const tagObj = tokenDef.tags.find(tag =>
-          typeof tag === 'object' && tag !== null && tag.id === token.value.data
-        );
+        const tagObj = tokenDef.tags.find(
+          tag => typeof tag === 'object' && tag !== null && tag.id === token.value.data
+        )
 
         if (tagObj) {
           // 名前を入力フィールドにセット
-          inputValue.value = tagObj.name;
+          inputValue.value = tagObj.name
         } else {
           // オブジェクトが見つからない場合は通常通り文字列化
-          inputValue.value = currentTokenGroup.value.value.toString();
+          inputValue.value = currentTokenGroup.value.value.toString()
         }
       } else {
         // オブジェクトタイプでない場合は通常通り
-        inputValue.value = currentTokenGroup.value.value.toString();
+        inputValue.value = currentTokenGroup.value.value.toString()
       }
     }
   }
 
-  inputVisibleState.value = true;
+  inputVisibleState.value = true
 
   nextTick(() => {
     if (part === 'value' && isDatePicker.value) {
-      datePickerRef.value?.focus();
+      datePickerRef.value?.focus()
     } else {
-      inputRef.value?.focus();
+      inputRef.value?.focus()
       if (isSelect.value) {
         inputRef.value.expanded = true
       }
     }
-  });
+  })
 }
 
 let isRemovingTag = false
@@ -1000,12 +1027,18 @@ const handleSelectRemoveTag = () => {
 // Backspace処理
 const handleBackspace = (event: KeyboardEvent) => {
   // ElDatePickerの場合、event.target.valueで入力値を確認する
-  const isDatePickerEmpty = isDatePicker.value &&
-    (event.target instanceof HTMLInputElement &&
-      (event.target.value === '' || (event.target.value.length < 2 && isDateRangePicker.value)))
+  const isDatePickerEmpty =
+    isDatePicker.value &&
+    event.target instanceof HTMLInputElement &&
+    (event.target.value === '' || (event.target.value.length < 2 && isDateRangePicker.value))
 
   // ElSelectの場合、タグ削除の場合(isRemovingTag:true)は除外する
-  const isSelectEmpty = isSelect.value && inputValue.value.length === 0 && !isRemovingTag && event.target instanceof HTMLInputElement && event.target.value === ''
+  const isSelectEmpty =
+    isSelect.value &&
+    inputValue.value.length === 0 &&
+    !isRemovingTag &&
+    event.target instanceof HTMLInputElement &&
+    event.target.value === ''
   isRemovingTag = false
 
   if (inputValue.value !== '' && !isDatePickerEmpty && !isSelectEmpty) return
@@ -1021,28 +1054,28 @@ const handleBackspace = (event: KeyboardEvent) => {
       // 現在のトークンのタイプに対応するトークン定義を取得
       const tokenDef = currentTokenGroup.value
         ? props.availableTokens.find(t => t.type === currentTokenGroup.value.key.type)
-        : null;
+        : null
 
       // オペレーターの条件判定
-      const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0;
-      const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1;
+      const hasOperators = tokenDef?.operators && tokenDef.operators.length > 0
+      const hasSingleOperator = tokenDef?.operators && tokenDef.operators.length === 1
 
       if (hasOperators && !hasSingleOperator) {
         // 複数のオペレーターがある場合のみオペレーター選択ステップに戻る
-        inputStep.value = 'operator';
-        inputValue.value = '';
+        inputStep.value = 'operator'
+        inputValue.value = ''
       } else {
         // オペレーターがない場合またはオペレーターが1つだけの場合は直接キー入力に戻る
-        inputStep.value = 'key';
-        inputValue.value = '';
-        currentTokenGroup.value = null;
+        inputStep.value = 'key'
+        inputValue.value = ''
+        currentTokenGroup.value = null
       }
 
       nextTick(() => {
         setTimeout(() => {
-          inputRef.value?.focus();
-        }, 50);
-      });
+          inputRef.value?.focus()
+        }, 50)
+      })
     } else if (inputStep.value === 'operator') {
       inputStep.value = 'key'
       inputValue.value = ''
@@ -1071,13 +1104,13 @@ const handleBackspace = (event: KeyboardEvent) => {
 const clearAllTokens = () => {
   if (props.disabled) return
   modelValue.value = []
-  inputRef.value?.focus();
+  inputRef.value?.focus()
 }
 
 // コンポーネント初期化時に入力フィールドを表示
 watch(
   () => inputVisibleState.value,
-  (newVal) => {
+  newVal => {
     if (newVal && inputStep.value === 'key' && !props.disabled) {
       nextTick(() => {
         inputRef.value?.focus()
@@ -1089,7 +1122,7 @@ watch(
 // disabledプロパティの変更を監視
 watch(
   () => props.disabled,
-  (newVal) => {
+  newVal => {
     if (newVal) {
       // 無効になった場合は入力フィールドを非表示にする
       inputVisibleState.value = false
@@ -1112,7 +1145,7 @@ const handleCustomTokenClose = (index: number) => {
         <!-- stringタイプの場合は1つのElTagのみ表示 -->
         <template v-if="tokenGroup.key.isStringValue">
           <ElTag
-            class="flex items-center gap-1 token-tag"
+            class="token-tag flex items-center gap-1"
             :closable="!disabled"
             :disable-transitions="false"
             v-bind="availableTokens.find(t => t.type === tokenGroup.key.type)?.tagOptions || {}"
@@ -1128,7 +1161,10 @@ const handleCustomTokenClose = (index: number) => {
           <div class="token-group flex items-center">
             <!-- キータグ -->
             <ElTag
-              :class="['token-key flex items-center gap-1 token-tag', { 'editing': tokenGroup.editing === 'key' }]"
+              :class="[
+                'token-key token-tag flex items-center gap-1',
+                { editing: tokenGroup.editing === 'key' },
+              ]"
               :closable="tokenGroup.key.isCustom && !disabled"
               :disable-transitions="false"
               :aria-label="`tag-key-${tokenGroup.key.type}`"
@@ -1137,14 +1173,23 @@ const handleCustomTokenClose = (index: number) => {
               @close="handleCustomTokenClose(index)"
             >
               <ElIcon v-if="availableTokens.find(t => t.type === tokenGroup.key.type)?.icon">
-                <component :is="ElementPlusIcons[availableTokens.find(t => t.type === tokenGroup.key.type)?.icon]"/>
+                <component
+                  :is="
+                    ElementPlusIcons[
+                      availableTokens.find(t => t.type === tokenGroup.key.type)?.icon
+                    ]
+                  "
+                />
               </ElIcon>
               {{ tokenGroup.key.title }}
             </ElTag>
 
             <!-- オペレータータグ (常に表示) -->
             <ElTag
-              :class="['token-operator flex items-center gap-1 token-tag', { 'editing': tokenGroup.editing === 'operator' }]"
+              :class="[
+                'token-operator token-tag flex items-center gap-1',
+                { editing: tokenGroup.editing === 'operator' },
+              ]"
               :aria-label="`tag-operator-${tokenGroup.operator}`"
               @click="startEditing(index, 'operator')"
             >
@@ -1153,7 +1198,10 @@ const handleCustomTokenClose = (index: number) => {
 
             <!-- 値タグ（削除ボタン付き） -->
             <ElTag
-              :class="['token-value flex items-center gap-1 token-tag', { 'editing': tokenGroup.editing === 'value' }]"
+              :class="[
+                'token-value token-tag flex items-center gap-1',
+                { editing: tokenGroup.editing === 'value' },
+              ]"
               :aria-label="`tag-value-${tokenGroup.value}`"
               :closable="!disabled"
               :disable-transitions="false"
@@ -1161,7 +1209,7 @@ const handleCustomTokenClose = (index: number) => {
               @close="handleTokenGroupClose(index)"
             >
               <ElIcon v-if="tokenGroup.valueIcon">
-                <component :is="ElementPlusIcons[tokenGroup.valueIcon]"/>
+                <component :is="ElementPlusIcons[tokenGroup.valueIcon]" />
               </ElIcon>
               {{ tokenGroup.displayValue }}
             </ElTag>
@@ -1171,16 +1219,29 @@ const handleCustomTokenClose = (index: number) => {
 
       <!-- 入力中のトークングループを表示 -->
       <template
-        v-if="currentTokenGroup && !editingTokenIndex && !props.disabled && !currentTokenGroup.key.isStringValue">
+        v-if="
+          currentTokenGroup &&
+          !editingTokenIndex &&
+          !props.disabled &&
+          !currentTokenGroup.key.isStringValue
+        "
+      >
         <div class="token-group flex items-center">
           <!-- キータグ -->
           <ElTag
-            :class="['token-key flex items-center gap-1', { 'active': inputStep === 'key' }]"
-            v-bind="availableTokens.find(t => t.type === currentTokenGroup.key.type)?.tagOptions || {}"
+            :class="['token-key flex items-center gap-1', { active: inputStep === 'key' }]"
+            v-bind="
+              availableTokens.find(t => t.type === currentTokenGroup.key.type)?.tagOptions || {}
+            "
           >
             <ElIcon v-if="availableTokens.find(t => t.type === currentTokenGroup.key.type)?.icon">
               <component
-                :is="ElementPlusIcons[availableTokens.find(t => t.type === currentTokenGroup.key.type)?.icon]"/>
+                :is="
+                  ElementPlusIcons[
+                    availableTokens.find(t => t.type === currentTokenGroup.key.type)?.icon
+                  ]
+                "
+              />
             </ElIcon>
             {{ currentTokenGroup.key.title }}
           </ElTag>
@@ -1188,7 +1249,7 @@ const handleCustomTokenClose = (index: number) => {
           <!-- オペレータータグ (inputStepが'value'の場合に表示) -->
           <ElTag
             v-if="inputStep === 'value'"
-            :class="['token-operator flex items-center gap-1', { 'active': inputStep === 'value' }]"
+            :class="['token-operator flex items-center gap-1', { active: inputStep === 'value' }]"
           >
             {{ currentTokenGroup.operator || '...' }}
           </ElTag>
@@ -1198,7 +1259,11 @@ const handleCustomTokenClose = (index: number) => {
       <!-- 入力フィールド部分 -->
       <!-- 編集モード: キー入力 -->
       <ElAutocomplete
-        v-if="inputVisible && inputStep === 'key' && (editingTokenIndex !== null ? currentTokenGroup?.editing === 'key' : true)"
+        v-if="
+          inputVisible &&
+          inputStep === 'key' &&
+          (editingTokenIndex !== null ? currentTokenGroup?.editing === 'key' : true)
+        "
         ref="inputRef"
         v-model="inputValue"
         :fetch-suggestions="getKeySuggestions"
@@ -1221,7 +1286,7 @@ const handleCustomTokenClose = (index: number) => {
         <template #default="{ item }">
           <div class="flex items-center" :aria-label="`key-type-${item.item?.type}`">
             <ElIcon class="mr-1" v-if="item.item?.icon">
-              <component :is="ElementPlusIcons[item.item.icon]"/>
+              <component :is="ElementPlusIcons[item.item.icon]" />
             </ElIcon>
             <span>{{ item.value }}</span>
           </div>
@@ -1230,11 +1295,14 @@ const handleCustomTokenClose = (index: number) => {
 
       <!-- 編集モード: オペレーター入力 (operators が複数定義されている場合のみ表示) -->
       <ElAutocomplete
-        v-else-if="inputVisible && inputStep === 'operator' &&
-                  (editingTokenIndex !== null ? currentTokenGroup?.editing === 'operator' : true) &&
-                  currentTokenGroup &&
-                  availableTokens.find(t => t.type === currentTokenGroup.key.type)?.operators &&
-                  availableTokens.find(t => t.type === currentTokenGroup.key.type)?.operators.length > 1"
+        v-else-if="
+          inputVisible &&
+          inputStep === 'operator' &&
+          (editingTokenIndex !== null ? currentTokenGroup?.editing === 'operator' : true) &&
+          currentTokenGroup &&
+          availableTokens.find(t => t.type === currentTokenGroup.key.type)?.operators &&
+          availableTokens.find(t => t.type === currentTokenGroup.key.type)?.operators.length > 1
+        "
         ref="inputRef"
         v-model="inputValue"
         :fetch-suggestions="getOperatorSuggestions"
@@ -1332,7 +1400,7 @@ const handleCustomTokenClose = (index: number) => {
         <template #default="{ item }">
           <div class="flex items-center">
             <ElIcon class="mr-1" v-if="item.item?.icon">
-              <component :is="ElementPlusIcons[item.item.icon]"/>
+              <component :is="ElementPlusIcons[item.item.icon]" />
             </ElIcon>
             <span>{{ item.value }}</span>
           </div>
@@ -1354,7 +1422,7 @@ const handleCustomTokenClose = (index: number) => {
               :key="`history-${idx}`"
               @click="handleHistorySelect(query)"
             >
-              <div class="history-message" style="display: flex; align-items: center; width: 100%;">
+              <div class="history-message" style="display: flex; align-items: center; width: 100%">
                 <span>
                   {{ formatHistoryLabel(query) }}
                 </span>
@@ -1370,16 +1438,18 @@ const handleCustomTokenClose = (index: number) => {
                 </ElButton>
               </div>
             </ElDropdownItem>
-            <ElDropdownItem divided @click="clearHistory">
-              🗑️ 履歴の全消去
-            </ElDropdownItem>
+            <ElDropdownItem divided @click="clearHistory"> 🗑️ 履歴の全消去 </ElDropdownItem>
           </ElDropdownMenu>
         </template>
         <ElButton
           :icon="Clock"
           class="history-button"
           size="large"
-          :title="queryHistory.length > 0 ? `過去の履歴から入力 (${queryHistory.length}件)` : '過去の履歴から入力'"
+          :title="
+            queryHistory.length > 0
+              ? `過去の履歴から入力 (${queryHistory.length}件)`
+              : '過去の履歴から入力'
+          "
           aria-label="show-history"
         />
       </ElDropdown>
@@ -1395,7 +1465,7 @@ const handleCustomTokenClose = (index: number) => {
         ⓧ
       </ElButton>
     </div>
-    <slot name="append"/>
+    <slot name="append" />
   </div>
 </template>
 

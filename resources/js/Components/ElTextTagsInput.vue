@@ -8,44 +8,47 @@ import type { FilterTagInput, TagPaginator } from '@/Types/types-graphql'
 const props = defineProps({
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   inputVisible: {
     type: Boolean,
-    default: false
+    default: false,
   },
   inputPlaceholder: {
     type: String,
-    default: 'Search Tag'
+    default: 'Search Tag',
   },
   clearable: {
     type: Boolean,
-    default: true
-  }
-});
+    default: true,
+  },
+})
 
 const inputValue = ref('')
 const dynamicTags = defineModel<string[]>({
-  default: () => []
-});
+  default: () => [],
+})
 const inputVisible = ref(props.inputVisible)
 const inputRef = ref<InstanceType<typeof ElAutocomplete> | null>(null)
 
-const { result } = useQuery<{ tags: TagPaginator }>(gql`
-  query FilterTags($input: FilterTagInput) {
-    tags(input: $input, first: 512) {
-      data {
-        name
+const { result } = useQuery<{ tags: TagPaginator }>(
+  gql`
+    query FilterTags($input: FilterTagInput) {
+      tags(input: $input, first: 512) {
+        data {
+          name
+        }
       }
     }
+  `,
+  {
+    variables: {
+      input: {
+        name: '',
+      } satisfies FilterTagInput,
+    },
   }
-`, {
-  variables: {
-    input: {
-      name: ''
-    } satisfies FilterTagInput
-  }
-})
+)
 
 const availableTags = computed(() => {
   if (!result.value?.tags?.data) return []
@@ -55,7 +58,7 @@ const availableTags = computed(() => {
 })
 
 defineExpose({
-  availableTags
+  availableTags,
 })
 
 const handleClose = (tag: string) => {
@@ -98,15 +101,15 @@ const handleBackspace = (event: KeyboardEvent) => {
 const querySearch = (queryString: string, cb: any) => {
   const results = queryString
     ? availableTags.value
-      .filter(tag => tag.toLowerCase().includes(queryString.toLowerCase()))
-      .map(tag => ({ value: tag }))
+        .filter(tag => tag.toLowerCase().includes(queryString.toLowerCase()))
+        .map(tag => ({ value: tag }))
     : availableTags.value.map(tag => ({ value: tag }))
   cb(results)
 }
 
 const clearTags = () => {
-  dynamicTags.value = [];
-};
+  dynamicTags.value = []
+}
 </script>
 
 <template>
@@ -130,7 +133,12 @@ const clearTags = () => {
       :placeholder="inputPlaceholder"
       clearable
       @keyup.enter="handleInputConfirm(true)"
-      @select="(item) => { inputValue = item.value; handleInputConfirm(true); }"
+      @select="
+        item => {
+          inputValue = item.value
+          handleInputConfirm(true)
+        }
+      "
       @keydown.enter.prevent
       @keydown="handleBackspace"
       @blur="handleInputConfirm(false)"
@@ -143,7 +151,7 @@ const clearTags = () => {
       class="button-clear-tags"
       size="small"
       @click="clearTags"
-    >ⓧ
+      >ⓧ
     </ElButton>
   </div>
 </template>

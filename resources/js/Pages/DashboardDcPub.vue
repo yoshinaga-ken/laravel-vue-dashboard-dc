@@ -1,7 +1,7 @@
 <script setup>
-import DcChart from "@/Components/DcChart.vue";
+import DcChart from '@/Components/DcChart.vue'
 </script>
 
 <template>
-  <DcChart/>
+  <DcChart />
 </template>

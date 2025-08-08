@@ -8,48 +8,51 @@ defineProps({
   disabled: Boolean,
   inputPlaceholder: {
     type: String,
-    default: 'Search Tag'
+    default: 'Search Tag',
   },
   clearable: {
     type: Boolean,
-    default: true
-  }
-});
+    default: true,
+  },
+})
 
 const selectedTags = defineModel<string[]>({
-  default: () => []
-});
+  default: () => [],
+})
 
-const inputValue = ref('');
+const inputValue = ref('')
 
-const { result } = useQuery<{ tags: TagPaginator }>(gql`
-  query FilterTags($input: FilterTagInput) {
-    tags(input: $input, first: 512) {
-      data {
-        name
+const { result } = useQuery<{ tags: TagPaginator }>(
+  gql`
+    query FilterTags($input: FilterTagInput) {
+      tags(input: $input, first: 512) {
+        data {
+          name
+        }
       }
     }
+  `,
+  {
+    variables: {
+      input: {
+        name: '',
+      } satisfies FilterTagInput,
+    },
   }
-`, {
-  variables: {
-    input: {
-      name: ''
-    } satisfies FilterTagInput
-  }
-})
+)
 
 const availableTags = computed(() => {
   if (!result.value?.tags?.data) return []
-  return result.value.tags.data.map((tag) => tag.name)
+  return result.value.tags.data.map(tag => tag.name)
 })
 
 const handleInputConfirm = () => {
-  const currentInput = inputValue.value;
+  const currentInput = inputValue.value
   if (currentInput && !selectedTags.value.includes(currentInput)) {
-    selectedTags.value.push(currentInput);
+    selectedTags.value.push(currentInput)
   }
-  inputValue.value = '';
-};
+  inputValue.value = ''
+}
 </script>
 
 <template>
@@ -71,9 +74,9 @@ const handleInputConfirm = () => {
 
 <style>
 .v-autocomplete #tags-messages {
-  display: none
+  display: none;
 }
 .v-autocomplete input {
-  @apply border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 rounded-md p-2;
+  @apply rounded-md border border-gray-300 p-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300;
 }
 </style>

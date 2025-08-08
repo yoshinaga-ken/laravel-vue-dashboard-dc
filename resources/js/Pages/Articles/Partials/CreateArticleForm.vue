@@ -1,47 +1,52 @@
-<script setup>
-import {useForm} from '@inertiajs/vue3';
-import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import ElTextTagsInput from "@/Components/ElTextTagsInput.vue";
-import ElMentionTextarea from "@/Components/ElMentionTextarea.vue";
-import {useTranslation} from "@/Composables/useTranslation.js";
+<script lang="ts" setup>
+import { useForm } from '@inertiajs/vue3'
+import FormSection from '@/Components/FormSection.vue'
+import InputError from '@/Components/InputError.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+import TextInput from '@/Components/TextInput.vue'
+import ElTextTagsInput from '@/Components/ElTextTagsInput.vue'
+import ElMentionTextarea from '@/Components/ElMentionTextarea.vue'
+import { useTranslation } from '@/Composables/useTranslation.js'
 
-const {t} = useTranslation();
+interface ArticleForm {
+  title: string
+  body: string
+  tags: string[]
+}
 
-const form = useForm({
+const { t } = useTranslation()
+
+const form = useForm<ArticleForm>({
   title: '',
   body: '',
   tags: [],
-});
+})
 
-const createArticle = () => {
+const createArticle = (): void => {
   form.post(route('articles.store'), {
     errorBag: 'createArticle',
     preserveScroll: true,
-  });
-};
+  })
+}
 </script>
 
 <template>
   <FormSection @submitted="createArticle">
-    <template #title>
-      Article Details
-    </template>
+    <template #title> Article Details </template>
 
-    <template #description>
-      Create a new Article
-    </template>
+    <template #description> Create a new Article </template>
 
     <template #form>
       <div class="col-span-6">
-        <InputLabel :value="`${t('models.team.owner')}`"/>
+        <InputLabel :value="`${t('models.team.owner')}`" />
 
-        <div class="flex items-center mt-2">
-          <img class="object-cover w-12 h-12 rounded-full" :src="$page.props.auth.user.profile_photo_url"
-               :alt="$page.props.auth.user.name">
+        <div class="mt-2 flex items-center">
+          <img
+            class="h-12 w-12 rounded-full object-cover"
+            :src="$page.props.auth.user.profile_photo_url"
+            :alt="$page.props.auth.user.name"
+          />
 
           <div class="ms-4 leading-tight">
             <div class="text-gray-900 dark:text-white">{{ $page.props.auth.user.name }}</div>
@@ -54,46 +59,46 @@ const createArticle = () => {
 
       <!-- Article Title -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="name" :value="`${t('models.article.title')}`"/>
+        <InputLabel for="name" :value="`${t('models.article.title')}`" />
         <TextInput
           id="title"
           v-model="form.title"
           type="text"
-          class="block w-full mt-1"
+          class="mt-1 block w-full"
           autofocus
         />
-        <InputError :message="form.errors.title" class="mt-2"/>
+        <InputError :message="form.errors.title" class="mt-2" />
       </div>
 
       <!-- Article Tags -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="tags" :value="`${t('models.article.tags')}`"/>
-        <ElTextTagsInput
-          id="tags"
-          v-model="form.tags"
-          type="text"
-          class="mt-1 block w-full"
-        />
+        <InputLabel for="tags" :value="`${t('models.article.tags')}`" />
+        <ElTextTagsInput id="tags" v-model="form.tags" type="text" class="mt-1 block w-full" />
 
-        <InputError :message="form.errors.tags" class="mt-2"/>
+        <InputError :message="form.errors.tags" class="mt-2" />
         <div v-for="(tag, index) in form.tags" :key="index">
           <InputError
-            :message="form.errors[`tags.${index}`]===undefined ? '' : ('「' + tag + '」 : ' + form.errors[`tags.${index}`])"
-            class="mt-2"/>
+            :message="
+              form.errors[`tags.${index}`] === undefined
+                ? ''
+                : '「' + tag + '」 : ' + form.errors[`tags.${index}`]
+            "
+            class="mt-2"
+          />
         </div>
       </div>
 
       <!-- Article Body -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel for="body" :value="`${t('models.article.body')}`"/>
+        <InputLabel for="body" :value="`${t('models.article.body')}`" />
         <ElMentionTextarea
           id="body"
           v-model="form.body"
-          class="block w-full mt-1"
+          class="mt-1 block w-full"
           :rows="6"
           placeholder="記事本文を入力してください。@でユーザー、#でタグを補完できます。"
         />
-        <InputError :message="form.errors.body" class="mt-2"/>
+        <InputError :message="form.errors.body" class="mt-2" />
       </div>
     </template>
 

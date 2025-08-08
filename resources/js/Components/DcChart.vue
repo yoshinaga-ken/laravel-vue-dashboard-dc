@@ -3,230 +3,310 @@
     <div id="loading">
       <i class="fa fa-spinner fa-spin"></i>
     </div>
-    <div :class="{dark:isDark}">
-
-
-      <div class="container_dc text-theme-col bg-theme-col">
+    <div :class="{ dark: isDark }">
+      <div class="container_dc bg-theme-col text-theme-col">
         <div class="header" ref="headerRef">
           <h4 class="hdr"></h4>
 
           <div class="usage" style="font-size: 10pt">
-            ※キーワード入力やグラフのバーをクリックする事で任意の項目での<i class="fa fa-filter"></i>フィルタリングが行えます
+            ※キーワード入力やグラフのバーをクリックする事で任意の項目での<i class="fa fa-filter"></i
+            >フィルタリングが行えます
           </div>
 
           <h4 class="hdr_flt emj"></h4>
 
           <!-- DC_PANEL ToolbarMain -->
           <div id="toolbar_main">
-
-            <FileSelectMenu :data-path="dataPath" :data="selectableData"/>
+            <FileSelectMenu :data-path="dataPath" :data="selectableData" />
 
             <i class="fa fa-filter fa-icon"></i>
-            <input type="search" id="input-search" autocomplete="off"
-                   class="btn_clear_none dark:bg-slate-900 dark:hover:bg-slate-700" value="">
-            <button class="btn_clear_all ui-button ui-corner-all ui-widget"
-                    title="全てのチャートのフィルタをクリアします" href="#">
+            <input
+              type="search"
+              id="input-search"
+              autocomplete="off"
+              class="btn_clear_none dark:bg-slate-900 dark:hover:bg-slate-700"
+              value=""
+            />
+            <button
+              class="btn_clear_all ui-button ui-corner-all ui-widget"
+              title="全てのチャートのフィルタをクリアします"
+              href="#"
+            >
               <span class="ui-icon ui-icon-closethick"></span><span v-if="!isSp">クリア</span>
             </button>
-            <button v-if="!isSp" id="btn_search_keyboard" title="キーパッドを表示します"
-                    class="ui-button ui-corner-all ui-widget ui-button-min">
-              <span style="font-size:1.6em;">⌨</span>
+            <button
+              v-if="!isSp"
+              id="btn_search_keyboard"
+              title="キーパッドを表示します"
+              class="ui-button ui-corner-all ui-widget ui-button-min"
+            >
+              <span style="font-size: 1.6em">⌨</span>
             </button>
 
-            <input type="text" id="btn_date" value="" style="display: none;">
+            <input type="text" id="btn_date" value="" style="display: none" />
 
-            <button v-if="!isSp" id="btn_download_csv"
-                    title="フィルタリングされたグラフのデータをCSV形式でダウンロードします。"
-                    class="btn_export_file">
+            <button
+              v-if="!isSp"
+              id="btn_download_csv"
+              title="フィルタリングされたグラフのデータをCSV形式でダウンロードします。"
+              class="btn_export_file"
+            >
               <i v-if="!isSp" class="ui-icon ui-icon-arrowstop-1-s"></i>
-              <img width="20" src="/img/csv.png">
+              <img width="20" src="/img/csv.png" />
             </button>
 
-            <button v-if="!isSp" id="btn_edit_csv" title="チャートのデータをGoogleスプレッドシートで編集します。"
-                    class="dark:text-white emj ui-button ui-corner-all ui-widget" disabled="true">
+            <button
+              v-if="!isSp"
+              id="btn_edit_csv"
+              title="チャートのデータをGoogleスプレッドシートで編集します。"
+              class="emj ui-button ui-corner-all ui-widget dark:text-white"
+              disabled="true"
+            >
               ✏
             </button>
 
-            <span v-if="!isSp||1">&nbsp;</span>
+            <span v-if="!isSp || 1">&nbsp;</span>
 
-            <button v-if="!isSp||1" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                    title="レイアウトを「グーグルマップベース」にします" @click="onClickStyleLoad('gmap')">
-              <img src="/img/google-map-48.png" width="20">
+            <button
+              v-if="!isSp || 1"
+              class="emj ui-button ui-corner-all ui-widget mb-0 dark:text-white"
+              title="レイアウトを「グーグルマップベース」にします"
+              @click="onClickStyleLoad('gmap')"
+            >
+              <img src="/img/google-map-48.png" width="20" />
             </button>
-            <button v-if="!isSp" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                    title="レイアウトを「ストリートビューベース」にします" @click="onClickStyleLoad('sview')">
-              <img src="/img/icons8-street-view-60.png" width="22">
+            <button
+              v-if="!isSp"
+              class="emj ui-button ui-corner-all ui-widget mb-0 dark:text-white"
+              title="レイアウトを「ストリートビューベース」にします"
+              @click="onClickStyleLoad('sview')"
+            >
+              <img src="/img/icons8-street-view-60.png" width="22" />
             </button>
-            <button v-if="!isSp||1" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                    title="レイアウトを「YouTubeベース」にします" @click="onClickStyleLoad('tube')">
-              <img src="/img/yutube.gif">
+            <button
+              v-if="!isSp || 1"
+              class="emj ui-button ui-corner-all ui-widget mb-0 dark:text-white"
+              title="レイアウトを「YouTubeベース」にします"
+              @click="onClickStyleLoad('tube')"
+            >
+              <img src="/img/yutube.gif" />
             </button>
-            <button v-if="!isSp||1" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                    title="レイアウトを「チャートベース」にします" @click="onClickStyleLoad('default');">
+            <button
+              v-if="!isSp || 1"
+              class="emj ui-button ui-corner-all ui-widget mb-0 dark:text-white"
+              title="レイアウトを「チャートベース」にします"
+              @click="onClickStyleLoad('default')"
+            >
               📊️
             </button>
 
-            <button v-if="!isSp" class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                    title="レイアウトを自動整形します" @click="onClickStyleReset()">
+            <button
+              v-if="!isSp"
+              class="emj ui-button ui-corner-all ui-widget mb-0 dark:text-white"
+              title="レイアウトを自動整形します"
+              @click="onClickStyleReset()"
+            >
               ✖️
             </button>
 
             <span v-if="!isSp">&nbsp;</span>
 
-            <label class="dark:text-white emj ui-button ui-corner-all ui-widget mb-0"
-                   :title="isDark ? '☀ライトモードへ' : '🌛ダークモードへ' " for="darkmode">
+            <label
+              class="emj ui-button ui-corner-all ui-widget mb-0 dark:text-white"
+              :title="isDark ? '☀ライトモードへ' : '🌛ダークモードへ'"
+              for="darkmode"
+            >
               {{ isDark ? '☀' : '🌛' }}
-              <input type="checkbox" v-model="isDark" id="darkmode" class="hidden"/>
+              <input type="checkbox" v-model="isDark" id="darkmode" class="hidden" />
             </label>
           </div>
 
           <div v-if="!isSp" class="ui-button ui-corner-all ui-widget">
             <label title="ウインドウの表示・非表示を切り替えます">
-              <input type="checkbox" v-model="pnl.common.toolbar.isShow"/>
+              <input type="checkbox" v-model="pnl.common.toolbar.isShow" />
               <span class="ui-icon ui-icon-newwin"></span>表示
             </label>
           </div>
 
           <!-- DC_PANEL ToolbarShow -->
           <Transition name="slide-down">
-            <div id="toolbar_win_toggle" v-show="pnl.common.toolbar.isDivShow"
-                 class="ui-button ui-corner-all ui-widget">
-
+            <div
+              id="toolbar_win_toggle"
+              v-show="pnl.common.toolbar.isDivShow"
+              class="ui-button ui-corner-all ui-widget"
+            >
               <template v-if="!pnl.gmap.isHidden">
                 <label for="ch_pnl_gmap" title="GoogleMapウインドウを表示します">
-                  <input id="ch_pnl_gmap" type="checkbox" v-model="pnl.gmap.isShow">
-                  <img src="/img/google-map-48.png" width="20" style="margin-top:-6px;">
+                  <input id="ch_pnl_gmap" type="checkbox" v-model="pnl.gmap.isShow" />
+                  <img src="/img/google-map-48.png" width="20" style="margin-top: -6px" />
                 </label>
-                <span v-if="!isSp && pnl.gmap.isShow" class="ui-icon sp_icon"
-                      :class="pnl.gmap.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                      title="GoogleMapウインドウを最大化します"
-                      @click="onClickPanelMaximize('chart_gmap')">
-              </span>
+                <span
+                  v-if="!isSp && pnl.gmap.isShow"
+                  class="ui-icon sp_icon"
+                  :class="pnl.gmap.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
+                  title="GoogleMapウインドウを最大化します"
+                  @click="onClickPanelMaximize('chart_gmap')"
+                >
+                </span>
                 &nbsp;
               </template>
 
               <template v-if="!pnl.sview.isHidden">
                 <label title="ストリートビューウインドウを表示します" for="ch_pnl_sview">
-                  <input id="ch_pnl_sview" type="checkbox" v-model="pnl.sview.isShow">
-                  <img src="/img/icons8-street-view-60.png" width="22" style="margin-top:-10px;">
+                  <input id="ch_pnl_sview" type="checkbox" v-model="pnl.sview.isShow" />
+                  <img src="/img/icons8-street-view-60.png" width="22" style="margin-top: -10px" />
                 </label>
-                <span v-if="!isSp && pnl.sview.isShow" class="ui-icon sp_icon"
-                      :class="pnl.sview.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                      title="ストリートビューウインドウを最大化します"
-                      @click="onClickPanelMaximize('chart_sview')">
-              </span>
+                <span
+                  v-if="!isSp && pnl.sview.isShow"
+                  class="ui-icon sp_icon"
+                  :class="pnl.sview.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
+                  title="ストリートビューウインドウを最大化します"
+                  @click="onClickPanelMaximize('chart_sview')"
+                >
+                </span>
                 &nbsp;
               </template>
 
               <template v-if="!pnl.tube.isHidden">
-                <label v-if="gg.dt !== DT_COVID" for="ch_pnl_tube" title="YOUTUBE動画再生ウインドウを表示します">
-                  <input id="ch_pnl_tube" type="checkbox" v-model="pnl.tube.isShow">
-                  <img src="/img/yutube.gif" width="18" style="margin-left:3px;margin-top:-8px;">
+                <label
+                  v-if="gg.dt !== DT_COVID"
+                  for="ch_pnl_tube"
+                  title="YOUTUBE動画再生ウインドウを表示します"
+                >
+                  <input id="ch_pnl_tube" type="checkbox" v-model="pnl.tube.isShow" />
+                  <img
+                    src="/img/yutube.gif"
+                    width="18"
+                    style="margin-left: 3px; margin-top: -8px"
+                  />
                 </label>
-                <span v-if="!isSp && pnl.tube.isShow" class="ui-icon sp_icon"
-                      :class="pnl.tube.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                      title="YouTubeウインドウを最大化します"
-                      @click="onClickPanelMaximize('chart_tube')">
-              </span>
+                <span
+                  v-if="!isSp && pnl.tube.isShow"
+                  class="ui-icon sp_icon"
+                  :class="pnl.tube.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
+                  title="YouTubeウインドウを最大化します"
+                  @click="onClickPanelMaximize('chart_tube')"
+                >
+                </span>
               </template>
 
               <span v-if="gg.dt !== DT_COVID">&nbsp;&nbsp;</span>
 
-              <label v-if="!pnl.map.isHidden" for="ch_pnl_map" title="日本都道府県地図ウインドウを表示します">
-                <input id="ch_pnl_map" type="checkbox" v-model="pnl.map.isShow">
+              <label
+                v-if="!pnl.map.isHidden"
+                for="ch_pnl_map"
+                title="日本都道府県地図ウインドウを表示します"
+              >
+                <input id="ch_pnl_map" type="checkbox" v-model="pnl.map.isShow" />
                 <i class="fa fa-map"></i>&nbsp;
               </label>
 
               <label v-if="!pnl.name.isHidden" for="ch_pnl_name">
-                <input id="ch_pnl_name" type="checkbox" v-model="pnl.name.isShow">
-                <span v-html="mm.util.shortTitle(pnl.name.title)" :title="pnl.name.title"></span>&nbsp;
+                <input id="ch_pnl_name" type="checkbox" v-model="pnl.name.isShow" />
+                <span v-html="mm.util.shortTitle(pnl.name.title)" :title="pnl.name.title"></span
+                >&nbsp;
               </label>
 
               <label v-if="!pnl.city.isHidden" for="ch_pnl_city">
-                <input id="ch_pnl_city" type="checkbox" v-model="pnl.city.isShow">
-                <span v-html="mm.util.shortTitle(pnl.city.title)" :title="pnl.city.title"></span>&nbsp;
+                <input id="ch_pnl_city" type="checkbox" v-model="pnl.city.isShow" />
+                <span v-html="mm.util.shortTitle(pnl.city.title)" :title="pnl.city.title"></span
+                >&nbsp;
               </label>
 
               <label v-if="!pnl.date.isHidden" for="ch_pnl_date">
-                <input id="ch_pnl_date" type="checkbox" v-model="pnl.date.isShow">
-                <span v-html="mm.util.shortTitle(pnl.date.title)" :title="pnl.date.title"></span>&nbsp;
+                <input id="ch_pnl_date" type="checkbox" v-model="pnl.date.isShow" />
+                <span v-html="mm.util.shortTitle(pnl.date.title)" :title="pnl.date.title"></span
+                >&nbsp;
               </label>
 
               <label v-if="!pnl.year.isHidden" for="ch_pnl_year">
-                <input id="ch_pnl_year" type="checkbox" v-model="pnl.year.isShow">
+                <input id="ch_pnl_year" type="checkbox" v-model="pnl.year.isShow" />
                 <span v-html="pnl.year.title"></span>&nbsp;
               </label>
 
               <label v-if="!pnl.season.isHidden" for="ch_pnl_season">
-                <input id="ch_pnl_season" type="checkbox" v-model="pnl.season.isShow">
+                <input id="ch_pnl_season" type="checkbox" v-model="pnl.season.isShow" />
                 <span v-html="pnl.season.title"></span>&nbsp;
               </label>
 
               <label v-if="!pnl.week.isHidden" for="ch_pnl_week">
-                <input id="ch_pnl_week" type="checkbox" v-model="pnl.week.isShow">
+                <input id="ch_pnl_week" type="checkbox" v-model="pnl.week.isShow" />
                 <span v-html="pnl.week.title"></span>&nbsp;
               </label>
 
               <label v-if="!pnl.sex.isHidden" for="ch_pnl_sex">
-                <input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.isShow">
-                <span v-html="mm.util.shortTitle(pnl.sex.title)" :title="pnl.sex.title"></span>&nbsp;
+                <input id="ch_pnl_sex" type="checkbox" v-model="pnl.sex.isShow" />
+                <span v-html="mm.util.shortTitle(pnl.sex.title)" :title="pnl.sex.title"></span
+                >&nbsp;
               </label>
 
               <label v-if="!pnl.age.isHidden" for="ch_pnl_age">
-                <input id="ch_pnl_age" type="checkbox" v-model="pnl.age.isShow">
-                <span v-html="mm.util.shortTitle(pnl.age.title)" :title="pnl.age.title"></span>&nbsp;
+                <input id="ch_pnl_age" type="checkbox" v-model="pnl.age.isShow" />
+                <span v-html="mm.util.shortTitle(pnl.age.title)" :title="pnl.age.title"></span
+                >&nbsp;
               </label>
 
               <label v-if="!pnl.cond.isHidden" for="ch_pnl_cond">
-                <input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.isShow">
-                <span v-html="mm.util.shortTitle(pnl.cond.title)" :title="pnl.cond.title"></span>&nbsp;
+                <input id="ch_pnl_cond" type="checkbox" v-model="pnl.cond.isShow" />
+                <span v-html="mm.util.shortTitle(pnl.cond.title)" :title="pnl.cond.title"></span
+                >&nbsp;
               </label>
 
               <label v-if="!pnl.job.isHidden" for="ch_pnl_job">
-                <input id="ch_pnl_job" type="checkbox" v-model="pnl.job.isShow">
-                <span v-html="mm.util.shortTitle(pnl.job.title)" :title="pnl.job.title"></span>&nbsp;
+                <input id="ch_pnl_job" type="checkbox" v-model="pnl.job.isShow" />
+                <span v-html="mm.util.shortTitle(pnl.job.title)" :title="pnl.job.title"></span
+                >&nbsp;
               </label>
 
-
-              <template v-for="(item) in pnl.ex">
+              <template v-for="item in pnl.ex">
                 <template v-if="!item.isHidden">
                   <label>
-                    <input type="checkbox" v-model="item.isShow">
+                    <input type="checkbox" v-model="item.isShow" />
                     <span v-html="mm.util.shortTitle(item.title)" :title="item.title"></span>&nbsp;
                   </label>
                 </template>
               </template>
 
               <label v-if="!pnl.detail.isHidden" for="ch_pnl_detail">
-                <input id="ch_pnl_detail" type="checkbox" v-model="pnl.detail.isShow">詳細&nbsp;
+                <input id="ch_pnl_detail" type="checkbox" v-model="pnl.detail.isShow" />詳細&nbsp;
               </label>
 
-              <label for="ch_pnl_ana" v-show="gg.dt===DT_COVID && pnl.ana.is_chk_show">
-                <input id="ch_pnl_ana" type="checkbox" v-model="pnl.ana.isShow">
+              <label for="ch_pnl_ana" v-show="gg.dt === DT_COVID && pnl.ana.is_chk_show">
+                <input id="ch_pnl_ana" type="checkbox" v-model="pnl.ana.isShow" />
                 <i class="fa fa-eye"></i>比較分析
               </label>
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.common.toolbar.isShow=0"></span>
-
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.common.toolbar.isShow = 0"
+              ></span>
             </div>
           </Transition>
         </div>
 
         <div id="panels">
           <!-- DC_PANEL GoogleMap -->
-          <div id="chart_gmap" class="bg-theme-col2 dc_panel drag" :style="pnl.gmap.style"
-               v-show="pnl.gmap.isShow">
+          <div
+            id="chart_gmap"
+            class="dc_panel drag bg-theme-col2"
+            :style="pnl.gmap.style"
+            v-show="pnl.gmap.isShow"
+          >
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.gmap.title"></span>
-              &nbsp;&nbsp;<label title="ズームアウトすると 3D で地球を見ることができます"><input
-              disabled="true"
-              type="checkbox"
-              v-model="pnl.gmap.is3">地球表示</label>
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.gmap.isShow=0"></span>
-              <span v-if="!isSp" class="ui-icon sp_icon btn_winsize"
-                    :class="pnl.gmap.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                    @click="onClickPanelMaximize('chart_gmap')"></span>
+              &nbsp;&nbsp;<label title="ズームアウトすると 3D で地球を見ることができます"
+                ><input disabled="true" type="checkbox" v-model="pnl.gmap.is3" />地球表示</label
+              >
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.gmap.isShow = 0"
+              ></span>
+              <span
+                v-if="!isSp"
+                class="ui-icon sp_icon btn_winsize"
+                :class="pnl.gmap.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
+                @click="onClickPanelMaximize('chart_gmap')"
+              ></span>
             </div>
             <GoogleMap
               v-if="pnl.gmap.isShow || pnl.sview.isShow"
@@ -242,35 +322,58 @@
           </div>
 
           <!-- DC_PANEL StreetView -->
-          <div id="chart_sview" class="bg-theme-col2 dc_panel drag" :style="pnl.sview.style"
-               v-show="pnl.sview.isShow">
+          <div
+            id="chart_sview"
+            class="dc_panel drag bg-theme-col2"
+            :style="pnl.sview.style"
+            v-show="pnl.sview.isShow"
+          >
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.sview.title"></span>
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.sview.isShow=0"></span>
-              <span v-if="!isSp" class="ui-icon sp_icon btn_winsize"
-                    :class="pnl.sview.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                    @click="onClickPanelMaximize('chart_sview')"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.sview.isShow = 0"
+              ></span>
+              <span
+                v-if="!isSp"
+                class="ui-icon sp_icon btn_winsize"
+                :class="pnl.sview.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
+                @click="onClickPanelMaximize('chart_sview')"
+              ></span>
             </div>
             <div id="street-view"></div>
           </div>
 
           <!-- DC_PANEL VectorMap -->
-          <div id="chart_map" class="bg-theme-col2 dc_panel drag" :style="pnl.map.style"
-               v-show="pnl.map.isShow">
+          <div
+            id="chart_map"
+            class="dc_panel drag bg-theme-col2"
+            :style="pnl.map.style"
+            v-show="pnl.map.isShow"
+          >
             <div class="chart-title-wrap">
               <ul class="chart-title text-theme-col2" v-show="pnl.map.tabs.isShow">
                 <!--          <li><a href="#tabs_w" title="世界の感染状況"><i class="fa fa-globe"></i>世界</a></li>-->
                 <li><a href="#tabs_c" title="感染者数 @日本">感染</a></li>
-                <li><a href="#tabs_p"
-                       title="入院治療等を要する患者数(累計)。(感染者数-無症状者数-退院者数-死亡者数) @日本">患者</a>
+                <li>
+                  <a
+                    href="#tabs_p"
+                    title="入院治療等を要する患者数(累計)。(感染者数-無症状者数-退院者数-死亡者数) @日本"
+                    >患者</a
+                  >
                 </li>
-                <li><a href="#tabs_pc" title="人口一人あたりのPCR検査率(100*PCR検査数/総人口)% @日本">PCR</a>
+                <li>
+                  <a href="#tabs_pc" title="人口一人あたりのPCR検査率(100*PCR検査数/総人口)% @日本"
+                    >PCR</a
+                  >
                 </li>
                 <li><a href="#tabs_d" title="死亡者数 - 日本">死亡</a></li>
                 <li><a href="#tabs_b" title="対策病床数 - 日本">病床</a></li>
-                <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.map.isShow=0"
-                      style="top: 8px;"></span>
+                <span
+                  class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                  @click="pnl.map.isShow = 0"
+                  style="top: 8px"
+                ></span>
               </ul>
               <div id="tabs_w"></div>
               <div id="tabs_c"></div>
@@ -278,87 +381,134 @@
               <div id="tabs_pc"></div>
               <div id="tabs_d"></div>
               <div id="tabs_b"></div>
-              <span v-show="!pnl.map.tabs.isShow" class="chart-title text-theme-col2" v-html="pnl.map.title"></span>
-              <span v-show="!pnl.map.tabs.isShow" class="chart-sub-title text-theme-col2"
-                    v-html="pnl.map.subTitle"></span>
-              <span v-show="!pnl.map.tabs.isShow" class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.map.isShow=0"></span>
+              <span
+                v-show="!pnl.map.tabs.isShow"
+                class="chart-title text-theme-col2"
+                v-html="pnl.map.title"
+              ></span>
+              <span
+                v-show="!pnl.map.tabs.isShow"
+                class="chart-sub-title text-theme-col2"
+                v-html="pnl.map.subTitle"
+              ></span>
+              <span
+                v-show="!pnl.map.tabs.isShow"
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.map.isShow = 0"
+              ></span>
             </div>
 
             <div id="japan-map"></div>
           </div>
 
           <!-- DC_PANEL YouTube -->
-          <div v-if="gg.dt !== DT_COVID" id="chart_tube" class="bg-theme-col2 dc_panel drag"
-               :style="pnl.tube.style" v-show="pnl.tube.isShow">
+          <div
+            v-if="gg.dt !== DT_COVID"
+            id="chart_tube"
+            class="dc_panel drag bg-theme-col2"
+            :style="pnl.tube.style"
+            v-show="pnl.tube.isShow"
+          >
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.tube.title"></span>
               &nbsp;
-              <YoutubeVidInput v-model="pnl.tube.vid"/>
+              <YoutubeVidInput v-model="pnl.tube.vid" />
 
-              <button v-for="(id, i) in pnl.tube.vids" :key="i"
-                      class="detail-tube-play tt_img ui-button ui-button-min ui-corner-all ui-widget"
-                      :vid="id"
-                      :src="`https://img.youtube.com/vi/${id}/hqdefault.jpg`"
-                      :title="`「${pnl.tube.searchQuery.replaceAll('+', ' ')}」の動画${i+1}を再生`"
-                      style="margin-left: 2px;">
+              <button
+                v-for="(id, i) in pnl.tube.vids"
+                :key="i"
+                class="detail-tube-play tt_img ui-button ui-button-min ui-corner-all ui-widget"
+                :vid="id"
+                :src="`https://img.youtube.com/vi/${id}/hqdefault.jpg`"
+                :title="`「${pnl.tube.searchQuery.replaceAll('+', ' ')}」の動画${i + 1}を再生`"
+                style="margin-left: 2px"
+              >
                 <span class="ui-icon ui-icon-play" style="font-size: 0.8em"></span>{{ i }}
               </button>
-              <a target="_blank" class="detail-tube-wopen"
-                 :href="`https://www.youtube.com/results?search_query=${pnl.tube.searchQuery}`"
-                 :title="`YouTubeで「${pnl.tube.searchQuery.replaceAll('+', ' ')}」の動画一覧を見る`">{{
-                  isSp ? '' : '一覧'
-                }}
+              <a
+                target="_blank"
+                class="detail-tube-wopen"
+                :href="`https://www.youtube.com/results?search_query=${pnl.tube.searchQuery}`"
+                :title="`YouTubeで「${pnl.tube.searchQuery.replaceAll('+', ' ')}」の動画一覧を見る`"
+                >{{ isSp ? '' : '一覧' }}
                 <span class="ui-icon ui-icon-extlink" style="font-size: 0.9em"></span>
               </a>
 
-              &nbsp;<label title="フィルタされたタイミングで動画を自動で切り替えます"><input
-              type="checkbox" v-model="pnl.tube.vidAutoChange">自動</label>
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.tube.isShow=0"></span>
-              <span v-if="!isSp" class="ui-icon sp_icon btn_winsize"
-                    :class="pnl.tube.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
-                    @click="onClickPanelMaximize('chart_tube')"></span>
+              &nbsp;<label title="フィルタされたタイミングで動画を自動で切り替えます"
+                ><input type="checkbox" v-model="pnl.tube.vidAutoChange" />自動</label
+              >
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.tube.isShow = 0"
+              ></span>
+              <span
+                v-if="!isSp"
+                class="ui-icon sp_icon btn_winsize"
+                :class="pnl.tube.styleBak === null ? 'ui-icon-extlink' : 'ui-icon-newwin'"
+                @click="onClickPanelMaximize('chart_tube')"
+              ></span>
             </div>
-            <iframe id="tube_iframe" width="100%" :height="isSp?'90%':'95%'"
-                    :src="'https://www.youtube.com/embed/' + pnl.tube.vid"
-                    title="YouTube video player" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
+            <iframe
+              id="tube_iframe"
+              width="100%"
+              :height="isSp ? '90%' : '95%'"
+              :src="'https://www.youtube.com/embed/' + pnl.tube.vid"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
           </div>
 
           <!-- DC_PANEL Name -->
-          <div id="panel_name" class="bg-theme-col2 dc_panel drag" :style="pnl.name.style" v-show="pnl.name.isShow">
+          <div
+            id="panel_name"
+            class="dc_panel drag bg-theme-col2"
+            :style="pnl.name.style"
+            v-show="pnl.name.isShow"
+          >
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.name.title"></span>
 
               <div class="inline-block">
-                <a class="btn_reset" id="btn_reset_name" href="javascript:void(0);"
-                   title="チャートのフィルタをクリアーします。&#x0A;バーは長押しで単一選択となります。"
-                   style="display: none;">
+                <a
+                  class="btn_reset"
+                  id="btn_reset_name"
+                  href="javascript:void(0);"
+                  title="チャートのフィルタをクリアーします。&#x0A;バーは長押しで単一選択となります。"
+                  style="display: none"
+                >
                   <span class="ui-icon ui-icon-closethick"></span>
                 </a>
-                <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+                <input type="text" class="filter_txt tt_filter" readonly style="display: none" />
               </div>
 
               <!-- TODO: FilterComponent -->
               <div class="inline-block">
-                <button title="フィルタ入力欄の表示・非表示を切り替えます"
-                        class="chart-filter-toggle name ui-button ui-corner-all ui-widget ui-button-min"
-                        data-toggle_target="#name_search">
-                  <img src="/img/filter.gif">
+                <button
+                  title="フィルタ入力欄の表示・非表示を切り替えます"
+                  class="chart-filter-toggle name ui-button ui-corner-all ui-widget ui-button-min"
+                  data-toggle_target="#name_search"
+                >
+                  <img src="/img/filter.gif" />
                 </button>
-                <input type="search" id="name_search"
-                       class="chart-filter" data-filter_svg_div="#div_name"
-                       data-filter_cnt="#name_filter_cnt"
-                       placeholder="キーワード(正規表現可)"
-                       title="入力したキーワードで表示をフィルタリングできます。&#x0A;正規表現可能。&#x0A;正規表現例:<WORD>|<WORD2>">
+                <input
+                  type="search"
+                  id="name_search"
+                  class="chart-filter"
+                  data-filter_svg_div="#div_name"
+                  data-filter_cnt="#name_filter_cnt"
+                  placeholder="キーワード(正規表現可)"
+                  title="入力したキーワードで表示をフィルタリングできます。&#x0A;正規表現可能。&#x0A;正規表現例:<WORD>|<WORD2>"
+                />
                 <span id="name_filter_cnt" class="chart-filter-cnt"></span>
               </div>
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.name.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.name.isShow = 0"
+              ></span>
             </div>
             <div id="div_name" class="scrollbar-thin">
               <div id="chart_name"></div>
@@ -367,47 +517,69 @@
           </div>
 
           <!-- DC_PANEL City -->
-          <div id="panel_city" class="bg-theme-col2 dc_panel drag" :style="pnl.city.style" v-show="pnl.city.isShow">
+          <div
+            id="panel_city"
+            class="dc_panel drag bg-theme-col2"
+            :style="pnl.city.style"
+            v-show="pnl.city.isShow"
+          >
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.city.title"></span>
 
               <template v-if="pnl.city.orderUI">
                 <!-- TODO: BtnComponent -->
-                <label class="ui-button ui-button-min ui-corner-all ui-widget"
-                       :class="pnl.city.orderCnt ? 'btn_on' : 'btn_off'"
-                       :title="(pnl.city.orderCnt ? '時間昇順で並び替え' : '値降順で並び替え')">
-                  <img src="/img/chart-sort-asc.svg" class="dark:invert -scale-y-100" style="width:1.2em;">
-                  <input type="checkbox" v-model="pnl.city.orderCnt" class="hidden"/>
+                <label
+                  class="ui-button ui-button-min ui-corner-all ui-widget"
+                  :class="pnl.city.orderCnt ? 'btn_on' : 'btn_off'"
+                  :title="pnl.city.orderCnt ? '時間昇順で並び替え' : '値降順で並び替え'"
+                >
+                  <img
+                    src="/img/chart-sort-asc.svg"
+                    class="-scale-y-100 dark:invert"
+                    style="width: 1.2em"
+                  />
+                  <input type="checkbox" v-model="pnl.city.orderCnt" class="hidden" />
                 </label>
               </template>
 
               <div class="inline-block">
-                <a class="btn_reset" id="btn_reset_city" href="javascript:void(0);"
-                   title="チャートのフィルタをクリアーします。&#x0A;バーは長押しで単一選択となります。"
-                   style="display: none;">
+                <a
+                  class="btn_reset"
+                  id="btn_reset_city"
+                  href="javascript:void(0);"
+                  title="チャートのフィルタをクリアーします。&#x0A;バーは長押しで単一選択となります。"
+                  style="display: none"
+                >
                   <span class="ui-icon ui-icon-closethick"></span>
                 </a>
-                <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+                <input type="text" class="filter_txt tt_filter" readonly style="display: none" />
               </div>
 
               <!-- TODO: FilterComponent -->
               <div class="inline-block">
-                <button title="フィルタ入力欄の表示・非表示を切り替えます"
-                        class="chart-filter-toggle city ui-button ui-corner-all ui-widget ui-button-min"
-                        data-toggle_target="#city_search">
-                  <img src="/img/filter.gif">
+                <button
+                  title="フィルタ入力欄の表示・非表示を切り替えます"
+                  class="chart-filter-toggle city ui-button ui-corner-all ui-widget ui-button-min"
+                  data-toggle_target="#city_search"
+                >
+                  <img src="/img/filter.gif" />
                 </button>
-                <input type="search" id="city_search"
-                       class="chart-filter" data-filter_svg_div="#div_city"
-                       data-filter_cnt="#city_filter_cnt"
-                       placeholder="キーワード(正規表現可)"
-                       title="入力したキーワードで表示をフィルタリングできます。&#x0A;正規表現可能。&#x0A;正規表現例:<WORD>|<WORD2>">
+                <input
+                  type="search"
+                  id="city_search"
+                  class="chart-filter"
+                  data-filter_svg_div="#div_city"
+                  data-filter_cnt="#city_filter_cnt"
+                  placeholder="キーワード(正規表現可)"
+                  title="入力したキーワードで表示をフィルタリングできます。&#x0A;正規表現可能。&#x0A;正規表現例:<WORD>|<WORD2>"
+                />
                 <span id="city_filter_cnt" class="chart-filter-cnt"></span>
               </div>
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close inline-block"
-                    @click="pnl.city.isShow=0"></span>
-
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close inline-block"
+                @click="pnl.city.isShow = 0"
+              ></span>
             </div>
             <div id="div_city" class="scrollbar-thin">
               <div id="chart_city"></div>
@@ -416,45 +588,75 @@
           </div>
 
           <!-- DC_PANEL Date -->
-          <div id="panel_date" class="bg-theme-col2 dc_panel drag" :style="pnl.date.style" v-show="pnl.date.isShow">
+          <div
+            id="panel_date"
+            class="dc_panel drag bg-theme-col2"
+            :style="pnl.date.style"
+            v-show="pnl.date.isShow"
+          >
             <div class="chart-title-wrap">
-              <span class="chart-title text-theme-col2"
-                    v-html="(pnl.date.title.indexOf('感染者数')===-1 ? '' : '<i class=\'fa fa-procedures\'>') + pnl.date.title">
+              <span
+                class="chart-title text-theme-col2"
+                v-html="
+                  (pnl.date.title.indexOf('感染者数') === -1
+                    ? ''
+                    : '<i class=\'fa fa-procedures\'>') + pnl.date.title
+                "
+              >
               </span>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <button class="btn_play ui-button ui-button-min ui-corner-all ui-widget"
-                      @click="onClickChartDatePlay"
-                      title="選択時間をシフトさせ、すべてのチャートの変化を再生します。">
+              <button
+                class="btn_play ui-button ui-button-min ui-corner-all ui-widget"
+                @click="onClickChartDatePlay"
+                title="選択時間をシフトさせ、すべてのチャートの変化を再生します。"
+              >
                 {{ pnl.date.play.label }}
               </button>
-              <span class="btn_brush ui-button ui-button-min ui-corner-all ui-widget"
-                    :class="pnl.date.isBrushOn?'btn_on':'btn_off'"
-                    @click="onClickChartDateBrushBtn"
-                    title="日付のフィルタの範囲ドラッグ選択モードをON・OFFします。&#x0A;選択した範囲はドラッグする事で時間軸での変化の分析が可能です。">
+              <span
+                class="btn_brush ui-button ui-button-min ui-corner-all ui-widget"
+                :class="pnl.date.isBrushOn ? 'btn_on' : 'btn_off'"
+                @click="onClickChartDateBrushBtn"
+                title="日付のフィルタの範囲ドラッグ選択モードをON・OFFします。&#x0A;選択した範囲はドラッグする事で時間軸での変化の分析が可能です。"
+              >
                 <span class="ui-icon ui-icon-arrow-2-e-w sp_icon"></span>選択
               </span>
-              <a class="btn_reset" id="btn_reset_date" href="javascript:void(0);" style="display: none;">
+              <a
+                class="btn_reset"
+                id="btn_reset_date"
+                href="javascript:void(0);"
+                style="display: none"
+              >
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
-              <input type="text" class="filter_txt" readonly style="display: none;">&nbsp;
+              <input type="text" class="filter_txt" readonly style="display: none" />&nbsp;
               <span class="filter_txt_diff"></span>&nbsp;
 
               <!-- TODO: StackTypeComponent -->
-              <label v-if="mm.opt.chartDate?.isStackSelect ?? true" title="チャートのスタックタイプを切り替えます">📊
-                <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
-                <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
-                <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
-                <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label>&nbsp;
-                <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
+              <label
+                v-if="mm.opt.chartDate?.isStackSelect ?? true"
+                title="チャートのスタックタイプを切り替えます"
+                >📊
+                <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1" />
+                <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label
+                >&nbsp;
+                <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2" />
+                <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label
+                >&nbsp;
+                <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0" />
                 <label v-html="mm.util.shortTitle(pnl.cond.title)" for="stack_type_con"></label>
               </label>
               &nbsp;&nbsp;
-              <label v-if="pnl.date.chart2.type!==0" title="ライン形式のチャートも表示します">
-                <input type="checkbox" v-model="pnl.date.chart2.isShow">📈Line表示</label>
+              <label v-if="pnl.date.chart2.type !== 0" title="ライン形式のチャートも表示します">
+                <input type="checkbox" v-model="pnl.date.chart2.isShow" />📈Line表示</label
+              >
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.date.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.date.isShow = 0"
+              ></span>
 
-              <div class="div_total">{{ pnl.common.unitPrefix }} 累計&nbsp;
+              <div class="div_total">
+                {{ pnl.common.unitPrefix }} 累計&nbsp;
                 <span class="div_total_cnt" v-text="pnl.date.cnt"></span> {{ pnl.common.unit }}
               </div>
               <div class="clearfix"></div>
@@ -469,11 +671,13 @@
 
             <div v-show="pnl.date.chart2.isShow">
               <span class="chart-title text-theme-col2" v-html="pnl.date.chart2.title"></span>
-              <span class="chart-title2 text-theme-col2 " v-html="pnl.date.chart2.title2"></span>
-              <div v-if="pnl.date.chart2.type === 0" class="div_total">累計&nbsp;<span
-                class="div_total_cnt" v-text="pnl.date.chart2.cnt"></span>&nbsp;{{ pnl.common.unit }}
+              <span class="chart-title2 text-theme-col2" v-html="pnl.date.chart2.title2"></span>
+              <div v-if="pnl.date.chart2.type === 0" class="div_total">
+                累計&nbsp;<span class="div_total_cnt" v-text="pnl.date.chart2.cnt"></span>&nbsp;{{
+                  pnl.common.unit
+                }}
               </div>
-              <div id="div_date2" style="overflow-x: auto;width: 100%;">
+              <div id="div_date2" style="overflow-x: auto; width: 100%">
                 <div id="chart_date2"></div>
               </div>
             </div>
@@ -481,27 +685,45 @@
           </div>
 
           <!-- DC_PANEL Year -->
-          <div id="panel_year" class="bg-theme-col2 dc_panel drag panel_year" :style="pnl.year.style" v-show="pnl.year.isShow">
+          <div
+            id="panel_year"
+            class="dc_panel drag panel_year bg-theme-col2"
+            :style="pnl.year.style"
+            v-show="pnl.year.isShow"
+          >
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.year.title"></span>
 
               <!-- TODO: StackTypeComponent -->
-              <label v-if="mm.opt.chartYear?.isStackSelect ?? true" title="チャートのスタックタイプを切り替えます">📊
-                <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
-                <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
-                <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
-                <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label>&nbsp;
-                <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
+              <label
+                v-if="mm.opt.chartYear?.isStackSelect ?? true"
+                title="チャートのスタックタイプを切り替えます"
+                >📊
+                <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1" />
+                <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label
+                >&nbsp;
+                <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2" />
+                <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label
+                >&nbsp;
+                <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0" />
                 <label v-html="mm.util.shortTitle(pnl.cond.title)" for="stack_type_con"></label>
               </label>
 
               <!-- FilterText -->
-              <a class="reset btn_reset" id="btn_reset_year" href="javascript:void(0);" style="display: none;">
+              <a
+                class="reset btn_reset"
+                id="btn_reset_year"
+                href="javascript:void(0);"
+                style="display: none"
+              >
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+              <input type="text" class="filter_txt tt_filter" readonly style="display: none" />
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.year.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.year.isShow = 0"
+              ></span>
             </div>
             <div>
               <div id="chart_year"></div>
@@ -510,20 +732,38 @@
           </div>
 
           <!-- DC_PANEL Season -->
-          <div id="panel_season" class="bg-theme-col2 dc_panel drag panel_season" :style="pnl.season.style"
-               v-show="pnl.season.isShow">
+          <div
+            id="panel_season"
+            class="dc_panel drag panel_season bg-theme-col2"
+            :style="pnl.season.style"
+            v-show="pnl.season.isShow"
+          >
             <div class="chart-title-wrap">
-              <span class="chart-title text-theme-col2"
-                    v-html="(pnl.season.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.season.title">
+              <span
+                class="chart-title text-theme-col2"
+                v-html="
+                  (pnl.season.title.indexOf('性別') === -1
+                    ? ''
+                    : '<i class=\'fa fa-venus-mars\'>') + pnl.season.title
+                "
+              >
               </span>
 
               <!-- FilterText -->
-              <a class="reset btn_reset" id="btn_reset_season" href="javascript:void(0);" style="display: none;">
+              <a
+                class="reset btn_reset"
+                id="btn_reset_season"
+                href="javascript:void(0);"
+                style="display: none"
+              >
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+              <input type="text" class="filter_txt tt_filter" readonly style="display: none" />
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.season.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.season.isShow = 0"
+              ></span>
             </div>
             <div>
               <div id="chart_season"></div>
@@ -532,18 +772,30 @@
           </div>
 
           <!-- DC_PANEL Week-->
-          <div id="panel_week" class="bg-theme-col2 dc_panel drag panel_week" :style="pnl.week.style"
-               v-show="pnl.week.isShow">
+          <div
+            id="panel_week"
+            class="dc_panel drag panel_week bg-theme-col2"
+            :style="pnl.week.style"
+            v-show="pnl.week.isShow"
+          >
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.week.title"></span>
 
               <!-- FilterText -->
-              <a class="reset btn_reset" id="btn_reset_week" href="javascript:void(0);" style="display: none;">
+              <a
+                class="reset btn_reset"
+                id="btn_reset_week"
+                href="javascript:void(0);"
+                style="display: none"
+              >
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+              <input type="text" class="filter_txt tt_filter" readonly style="display: none" />
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.week.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.week.isShow = 0"
+              ></span>
             </div>
             <div>
               <div id="chart_week"></div>
@@ -552,36 +804,81 @@
           </div>
 
           <!-- DC_PANEL Sex-->
-          <div id="panel_sex" class="bg-theme-col2 dc_panel drag panel_sex" :style="pnl.sex.style" v-show="pnl.sex.isShow">
+          <div
+            id="panel_sex"
+            class="dc_panel drag panel_sex bg-theme-col2"
+            :style="pnl.sex.style"
+            v-show="pnl.sex.isShow"
+          >
             <div class="chart-title-wrap">
-              <span class="chart-title text-theme-col2"
-                    v-html="(pnl.sex.title.indexOf('性別')===-1 ? '' : '<i class=\'fa fa-venus-mars\'>') + pnl.sex.title"></span>
+              <span
+                class="chart-title text-theme-col2"
+                v-html="
+                  (pnl.sex.title.indexOf('性別') === -1 ? '' : '<i class=\'fa fa-venus-mars\'>') +
+                  pnl.sex.title
+                "
+              ></span>
               <template v-if="pnl.sex.chartType === 'bar'">
                 <!-- TODO: BtnComponent -->
-                <label class="ui-button ui-button-min ui-corner-all ui-widget"
-                       :class="pnl.sex.elasticX ? 'btn_on' : 'btn_off'" title="ソートありなしを切り替えます">
-                  <img src="/img/chart-sort-asc.svg" class="dark:invert -rotate-90 -scale-y-100" style="width:1.2em;">
-                  <input type="checkbox" v-model="pnl.sex.elasticX" class="hidden"/>
+                <label
+                  class="ui-button ui-button-min ui-corner-all ui-widget"
+                  :class="pnl.sex.elasticX ? 'btn_on' : 'btn_off'"
+                  title="ソートありなしを切り替えます"
+                >
+                  <img
+                    src="/img/chart-sort-asc.svg"
+                    class="-rotate-90 -scale-y-100 dark:invert"
+                    style="width: 1.2em"
+                  />
+                  <input type="checkbox" v-model="pnl.sex.elasticX" class="hidden" />
                 </label>
 
                 <!-- TODO: StackTypeComponent -->
-                <label v-if="mm.opt.sex?.isStackSelect ?? true" title="チャートのスタックタイプを切り替えます">📊
-                  <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
-                  <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
-                  <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
-                  <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label>&nbsp;
-                  <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
+                <label
+                  v-if="mm.opt.sex?.isStackSelect ?? true"
+                  title="チャートのスタックタイプを切り替えます"
+                  >📊
+                  <input
+                    type="radio"
+                    id="stack_type_pl1"
+                    v-model="pnl.date.stack_type"
+                    :value="1"
+                  />
+                  <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label
+                  >&nbsp;
+                  <input
+                    type="radio"
+                    id="stack_type_age"
+                    v-model="pnl.date.stack_type"
+                    :value="2"
+                  />
+                  <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label
+                  >&nbsp;
+                  <input
+                    type="radio"
+                    id="stack_type_con"
+                    v-model="pnl.date.stack_type"
+                    :value="0"
+                  />
                   <label v-html="mm.util.shortTitle(pnl.cond.title)" for="stack_type_con"></label>
                 </label>
               </template>
 
               <!-- FilterText -->
-              <a class="reset btn_reset" id="btn_reset_sex" href="javascript:void(0);" style="display: none;">
+              <a
+                class="reset btn_reset"
+                id="btn_reset_sex"
+                href="javascript:void(0);"
+                style="display: none"
+              >
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+              <input type="text" class="filter_txt tt_filter" readonly style="display: none" />
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.sex.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.sex.isShow = 0"
+              ></span>
             </div>
             <div>
               <div id="chart_sex"></div>
@@ -590,25 +887,44 @@
           </div>
 
           <!-- DC_PANEL Age-->
-          <div id="panel_age" class="bg-theme-col2 dc_panel drag panel_age" :style="pnl.age.style" v-show="pnl.age.isShow">
+          <div
+            id="panel_age"
+            class="dc_panel drag panel_age bg-theme-col2"
+            :style="pnl.age.style"
+            v-show="pnl.age.isShow"
+          >
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.age.title"></span>&nbsp;
 
               <!-- TODO: BtnComponent -->
-              <label class="ui-button ui-button-min ui-corner-all ui-widget"
-                     :class="pnl.age.elasticX ? 'btn_on' : 'btn_off'"
-                     title="ソートありなしを切り替えます">
-                <img src="/img/chart-sort-asc.svg" class="dark:invert -rotate-90 -scale-y-100" style="width:1.2em;">
-                <input type="checkbox" v-model="pnl.age.elasticX" class="hidden"/>
+              <label
+                class="ui-button ui-button-min ui-corner-all ui-widget"
+                :class="pnl.age.elasticX ? 'btn_on' : 'btn_off'"
+                title="ソートありなしを切り替えます"
+              >
+                <img
+                  src="/img/chart-sort-asc.svg"
+                  class="-rotate-90 -scale-y-100 dark:invert"
+                  style="width: 1.2em"
+                />
+                <input type="checkbox" v-model="pnl.age.elasticX" class="hidden" />
               </label>
 
               <!-- FilterText -->
-              <a class="reset btn_reset" id="btn_reset_age" href="javascript:void(0);" style="display: none;">
+              <a
+                class="reset btn_reset"
+                id="btn_reset_age"
+                href="javascript:void(0);"
+                style="display: none"
+              >
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+              <input type="text" class="filter_txt tt_filter" readonly style="display: none" />
 
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.age.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.age.isShow = 0"
+              ></span>
             </div>
             <div>
               <div id="chart_age"></div>
@@ -617,27 +933,56 @@
           </div>
 
           <!-- DC_PANEL Cond -->
-          <div id="panel_cond" class="bg-theme-col2 dc_panel drag panel_cond" :style="pnl.cond.style" v-show="pnl.cond.isShow">
+          <div
+            id="panel_cond"
+            class="dc_panel drag panel_cond bg-theme-col2"
+            :style="pnl.cond.style"
+            v-show="pnl.cond.isShow"
+          >
             <div class="chart-title-wrap">
-              <span class="chart-title text-theme-col2"
-                    v-html="(pnl.cond.title.indexOf('状態')===-1 ? '' : '<i class=\'fa fa-medkit\'>') + pnl.cond.title"></span>
+              <span
+                class="chart-title text-theme-col2"
+                v-html="
+                  (pnl.cond.title.indexOf('状態') === -1 ? '' : '<i class=\'fa fa-medkit\'>') +
+                  pnl.cond.title
+                "
+              ></span>
 
               <!-- TODO: BtnComponent -->
-              <label class="ui-button ui-button-min ui-corner-all ui-widget"
-                     :class="pnl.cond.elasticX ? 'btn_on' : 'btn_off'"
-                     title="ソートありなしを切り替えます">
-                <img src="/img/chart-sort-asc.svg" class="dark:invert -rotate-90 -scale-y-100" style="width:1.2em;">
-                <input type="checkbox" v-model="pnl.cond.elasticX" class="hidden"/>
+              <label
+                class="ui-button ui-button-min ui-corner-all ui-widget"
+                :class="pnl.cond.elasticX ? 'btn_on' : 'btn_off'"
+                title="ソートありなしを切り替えます"
+              >
+                <img
+                  src="/img/chart-sort-asc.svg"
+                  class="-rotate-90 -scale-y-100 dark:invert"
+                  style="width: 1.2em"
+                />
+                <input type="checkbox" v-model="pnl.cond.elasticX" class="hidden" />
               </label>
 
               <!-- FilterText -->
-              <a class="btn_reset" id="btn_reset_cond" href="javascript:void(0);" style="display: none;">
+              <a
+                class="btn_reset"
+                id="btn_reset_cond"
+                href="javascript:void(0);"
+                style="display: none"
+              >
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">&nbsp;
+              <input
+                type="text"
+                class="filter_txt tt_filter"
+                readonly
+                style="display: none"
+              />&nbsp;
 
               <span v-html="pnl.cond.info"></span>
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.cond.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.cond.isShow = 0"
+              ></span>
             </div>
             <div>
               <div id="chart_cond"></div>
@@ -645,69 +990,134 @@
           </div>
 
           <!-- DC_PANEL Job -->
-          <div id="panel_job" class="scrollbar-thin bg-theme-col2 dc_panel drag panel_job" :style="pnl.job.style"
-               v-show="pnl.job.isShow">
+          <div
+            id="panel_job"
+            class="scrollbar-thin dc_panel drag panel_job bg-theme-col2"
+            :style="pnl.job.style"
+            v-show="pnl.job.isShow"
+          >
             <div class="chart-title-wrap">
-              <span class="chart-title text-theme-col2"
-                    v-html="(pnl.job.title.indexOf('職業')===-1 ? '' : '<i class=\'fa fa-id-card-o\'>') + pnl.job.title">
+              <span
+                class="chart-title text-theme-col2"
+                v-html="
+                  (pnl.job.title.indexOf('職業') === -1 ? '' : '<i class=\'fa fa-id-card-o\'>') +
+                  pnl.job.title
+                "
+              >
               </span>
               <span id="chart_job_title_sub"></span>
 
               <!-- TODO: BtnComponent -->
-              <label class="ui-button ui-button-min ui-corner-all ui-widget"
-                     :class="pnl.job.elasticX ? 'btn_on' : 'btn_off'"
-                     title="ソートありなしを切り替えます">
-                <img src="/img/chart-sort-asc.svg" class="dark:invert -rotate-90 -scale-y-100" style="width:1.2em;">
-                <input type="checkbox" v-model="pnl.job.elasticX" class="hidden"/>
+              <label
+                class="ui-button ui-button-min ui-corner-all ui-widget"
+                :class="pnl.job.elasticX ? 'btn_on' : 'btn_off'"
+                title="ソートありなしを切り替えます"
+              >
+                <img
+                  src="/img/chart-sort-asc.svg"
+                  class="-rotate-90 -scale-y-100 dark:invert"
+                  style="width: 1.2em"
+                />
+                <input type="checkbox" v-model="pnl.job.elasticX" class="hidden" />
               </label>
 
               <!-- FilterText -->
-              <a class="btn_reset" id="btn_reset_job" href="javascript:void(0);" style="display: none;">
+              <a
+                class="btn_reset"
+                id="btn_reset_job"
+                href="javascript:void(0);"
+                style="display: none"
+              >
                 <span class="ui-icon ui-icon-closethick"></span>
               </a>
-              <input type="text" class="filter_txt tt_filter" readonly style="display: none;">&nbsp;
+              <input
+                type="text"
+                class="filter_txt tt_filter"
+                readonly
+                style="display: none"
+              />&nbsp;
               <span v-html="pnl.job.info"></span>
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="pnl.job.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.job.isShow = 0"
+              ></span>
             </div>
             <div>
               <div id="chart_job"></div>
             </div>
           </div>
 
-
           <!-- DC_PANEL Ex[] -->
-          <div v-for="(item, i) in pnl.ex" :id="`panel_ex_${i}`" class="bg-theme-col2 dc_panel drag panel_ex"
-               :style="item.style"
-               v-show="item.isShow">
+          <div
+            v-for="(item, i) in pnl.ex"
+            :id="`panel_ex_${i}`"
+            class="dc_panel drag panel_ex bg-theme-col2"
+            :style="item.style"
+            v-show="item.isShow"
+          >
             <template v-if="!item.isDcSunburstChart">
               <div class="chart-title-wrap">
                 <span class="chart-title text-theme-col2" v-html="item.title"></span>
 
                 <!-- TODO: BtnComponent -->
-                <label class="ui-button ui-button-min ui-corner-all ui-widget"
-                       :class="item.elasticX ? 'btn_on' : 'btn_off'"
-                       title="ソートありなしを切り替えます">
-                  <img src="/img/chart-sort-asc.svg" class="dark:invert -rotate-90 -scale-y-100" style="width:1.2em;">
-                  <input type="checkbox" v-model="item.elasticX" class="hidden"/>
+                <label
+                  class="ui-button ui-button-min ui-corner-all ui-widget"
+                  :class="item.elasticX ? 'btn_on' : 'btn_off'"
+                  title="ソートありなしを切り替えます"
+                >
+                  <img
+                    src="/img/chart-sort-asc.svg"
+                    class="-rotate-90 -scale-y-100 dark:invert"
+                    style="width: 1.2em"
+                  />
+                  <input type="checkbox" v-model="item.elasticX" class="hidden" />
                 </label>
 
                 <!-- TODO: StackTypeComponent -->
-                <label v-if="mm.opt.chartEx[i]?.isStackSelect ?? false" title="チャートのスタックタイプを切り替えます">📊
-                  <input type="radio" id="stack_type_pl1" v-model="pnl.date.stack_type" :value="1">
-                  <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label>&nbsp;
-                  <input type="radio" id="stack_type_age" v-model="pnl.date.stack_type" :value="2">
-                  <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label>&nbsp;
-                  <input type="radio" id="stack_type_con" v-model="pnl.date.stack_type" :value="0">
+                <label
+                  v-if="mm.opt.chartEx[i]?.isStackSelect ?? false"
+                  title="チャートのスタックタイプを切り替えます"
+                  >📊
+                  <input
+                    type="radio"
+                    id="stack_type_pl1"
+                    v-model="pnl.date.stack_type"
+                    :value="1"
+                  />
+                  <label v-html="mm.util.shortTitle(pnl.name.title)" for="stack_type_pl1"></label
+                  >&nbsp;
+                  <input
+                    type="radio"
+                    id="stack_type_age"
+                    v-model="pnl.date.stack_type"
+                    :value="2"
+                  />
+                  <label v-html="mm.util.shortTitle(pnl.age.title)" for="stack_type_age"></label
+                  >&nbsp;
+                  <input
+                    type="radio"
+                    id="stack_type_con"
+                    v-model="pnl.date.stack_type"
+                    :value="0"
+                  />
                   <label v-html="mm.util.shortTitle(pnl.cond.title)" for="stack_type_con"></label>
                 </label>
 
                 <!-- FilterText -->
-                <a class="reset btn_reset" :id="`btn_reset_ex_${i}`" href="javascript:void(0);" style="display: none;">
+                <a
+                  class="reset btn_reset"
+                  :id="`btn_reset_ex_${i}`"
+                  href="javascript:void(0);"
+                  style="display: none"
+                >
                   <span class="ui-icon ui-icon-closethick"></span>
                 </a>
-                <input type="text" class="filter_txt tt_filter" readonly style="display: none;">
+                <input type="text" class="filter_txt tt_filter" readonly style="display: none" />
 
-                <span class="ui-icon ui-icon-circle-close sp_icon btn_close" @click="item.isShow=0"></span>
+                <span
+                  class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                  @click="item.isShow = 0"
+                ></span>
               </div>
 
               <div>
@@ -723,11 +1133,15 @@
                 v-model:filters="mm.chartEx[i].filters"
                 :innerRadius="mm.opt.chartEx[i]?.innerRadius"
                 :showLabels="true"
-                :legend="mm.opt.chartEx[i]?.isLegend ? (mm.opt.chartEx[i]?.dcSunburstChart.legend ?? { isShow: true }) : { isShow: false }"
-                :keyIndex="mm.opt.chartEx[i]?.dcSunburstChart?.keyIndex ?? D_EX0+i"
+                :legend="
+                  mm.opt.chartEx[i]?.isLegend
+                    ? (mm.opt.chartEx[i]?.dcSunburstChart.legend ?? { isShow: true })
+                    : { isShow: false }
+                "
+                :keyIndex="mm.opt.chartEx[i]?.dcSunburstChart?.keyIndex ?? D_EX0 + i"
                 :valueIndex="mm.opt.chartEx[i]?.dcSunburstChart?.valueIndex ?? D_CNT"
                 :margins="mm.opt.chartEx[i]?.dcSunburstChart?.margins"
-                @filtered="(event) => onFilteredSunburstChart(i, event)"
+                @filtered="event => onFilteredSunburstChart(i, event)"
               >
                 <template #header="{ chart }">
                   <div class="chart-title-wrap">
@@ -735,19 +1149,39 @@
 
                     <!-- FilterText -->
                     <template v-if="chart.filters().length > 0">
-                      <a href="javascript:void(0);"
-                         @click="chart.filterAll();dc.redrawAll(CGRP_SHOW);">
+                      <a
+                        href="javascript:void(0);"
+                        @click="
+                          chart.filterAll()
+                          dc.redrawAll(CGRP_SHOW)
+                        "
+                      >
                         <span class="ui-icon ui-icon-closethick"></span>
                       </a>
-                      <input type="text" readonly
-                             class="dsc_filter_txt"
-                             :value="chart.filters().map(path => path.join('/')).join(',')"
-                             :title="chart.filters().map(path => path.join('/')).join(',')">
+                      <input
+                        type="text"
+                        readonly
+                        class="dsc_filter_txt"
+                        :value="
+                          chart
+                            .filters()
+                            .map(path => path.join('/'))
+                            .join(',')
+                        "
+                        :title="
+                          chart
+                            .filters()
+                            .map(path => path.join('/'))
+                            .join(',')
+                        "
+                      />
                     </template>
 
                     <!-- Close button -->
-                    <span class="ui-icon ui-icon-circle-close sp_icon btn_close ui-button ui-corner-all ui-widget"
-                          @click="item.isShow=0"></span>
+                    <span
+                      class="ui-icon ui-icon-circle-close sp_icon btn_close ui-button ui-corner-all ui-widget"
+                      @click="item.isShow = 0"
+                    ></span>
                   </div>
                 </template>
               </DcSunburstChart>
@@ -756,21 +1190,36 @@
           </div>
 
           <!-- DC_PANEL Detail -->
-          <div id="panel_detail" class="bg-theme-col2 dc_panel drag" :style="pnl.detail.style"
-               v-show="pnl.detail.isShow && pnl.detail.details.length>0">
+          <div
+            id="panel_detail"
+            class="dc_panel drag bg-theme-col2"
+            :style="pnl.detail.style"
+            v-show="pnl.detail.isShow && pnl.detail.details.length > 0"
+          >
             <div class="chart-title-wrap">
               <span class="chart-title text-theme-col2" v-html="pnl.detail.title"></span>
-              <span class="ui-icon ui-icon-circle-close sp_icon btn_close"
-                    @click="pnl.detail.isShow=0"></span>
+              <span
+                class="ui-icon ui-icon-circle-close sp_icon btn_close"
+                @click="pnl.detail.isShow = 0"
+              ></span>
             </div>
             <div>
-              <div v-for="(html, id) in pnl.detail.details" class="detail text-theme-col emj" :key="id"
-                   v-html="html"></div>
+              <div
+                v-for="(html, id) in pnl.detail.details"
+                class="detail emj text-theme-col"
+                :key="id"
+                v-html="html"
+              ></div>
             </div>
           </div>
 
           <!-- DC_PANEL Analyze -->
-          <DcPanelAnalyze v-if="!pnl.ana.isHidden" :options="pnl.ana" :is-sp="isSp" @close="pnl.ana.isShow=0"/>
+          <DcPanelAnalyze
+            v-if="!pnl.ana.isHidden"
+            :options="pnl.ana"
+            :is-sp="isSp"
+            @close="pnl.ana.isShow = 0"
+          />
 
           <div class="clearfix"></div>
         </div>
@@ -781,63 +1230,62 @@
           <label>データ参照先</label>
           <div v-html="pnl.common.dataReference"></div>
         </div>
-
-      </div><!-- container -->
+      </div>
+      <!-- container -->
 
       <Covid19PrefectureDatatable
         v-if="gg.isPrefTable && gg.isShowPrefTable"
         :data="{
-          'ac_data_tbl': mm.opt.assets.ac_data_tbl,
-          'chartDateLineYmdMsg': mm.opt.assets.chartDateLineYmdMsg,
-          'prefTable': mm.opt.assets.prefTable,
-          'pref_tbl_last_m1': mm.opt.assets.pref_tbl_last_m1,
-          'pref_tbl_last_m2': mm.opt.assets.pref_tbl_last_m2,
-          'spk': mm.opt.assets.spk
+          ac_data_tbl: mm.opt.assets.ac_data_tbl,
+          chartDateLineYmdMsg: mm.opt.assets.chartDateLineYmdMsg,
+          prefTable: mm.opt.assets.prefTable,
+          pref_tbl_last_m1: mm.opt.assets.pref_tbl_last_m1,
+          pref_tbl_last_m2: mm.opt.assets.pref_tbl_last_m2,
+          spk: mm.opt.assets.spk,
         }"
         :is-dark="isDark"
       />
-
     </div>
   </div>
 </template>
 
 <script setup>
-import {onMounted, ref, watch, reactive, nextTick} from "vue";
-import {useElementHover} from '@vueuse/core';
-import * as d3 from 'd3';
+import { onMounted, ref, watch, reactive, nextTick } from 'vue'
+import { useElementHover } from '@vueuse/core'
+import * as d3 from 'd3'
 
-import * as dc from 'dc';
-import 'dc/dist/style/dc.min.css';
+import * as dc from 'dc'
+import 'dc/dist/style/dc.min.css'
 
-import * as crossfilterModule from 'crossfilter2';
-const crossfilter = crossfilterModule.default || crossfilterModule;
+import * as crossfilterModule from 'crossfilter2'
+const crossfilter = crossfilterModule.default || crossfilterModule
 
-import moment from 'moment';
-import 'moment/dist/locale/ja';
-moment.locale('ja');
+import moment from 'moment'
+import 'moment/dist/locale/ja'
+moment.locale('ja')
 
-import _ from 'lodash';
+import _ from 'lodash'
 
-import jQuery from 'jquery';
-window.$ = window.jQuery = jQuery;
+import jQuery from 'jquery'
+window.$ = window.jQuery = jQuery
 
 // string-width for text width calculation
-import stringWidth from 'string-width';
+import stringWidth from 'string-width'
 
-import '@/Utils/font-awesome/css/all.css';
-import '@/Utils/font-awesome/css/v4-shims.min.css';
+import '@/Utils/font-awesome/css/all.css'
+import '@/Utils/font-awesome/css/v4-shims.min.css'
 
-import 'virtual-keyboard/dist/css/keyboard.min.css';
-import 'virtual-keyboard/dist/js/jquery.keyboard.min.js';
+import 'virtual-keyboard/dist/css/keyboard.min.css'
+import 'virtual-keyboard/dist/js/jquery.keyboard.min.js'
 
 // Components
-import DcSunburstChart from "@/Components/DcSunburstChart.vue";
-import YoutubeVidInput from "@/Components/YoutubeVidInput.vue";
-import GoogleMap from "@/Components/GoogleMap.vue";
-import DcPanelAnalyze from "@/Components/DcPanelAnalyze.vue";
-import Covid19PrefectureDatatable from "@/Components/Covid19PrefectureDatatable.vue";
+import DcSunburstChart from '@/Components/DcSunburstChart.vue'
+import YoutubeVidInput from '@/Components/YoutubeVidInput.vue'
+import GoogleMap from '@/Components/GoogleMap.vue'
+import DcPanelAnalyze from '@/Components/DcPanelAnalyze.vue'
+import Covid19PrefectureDatatable from '@/Components/Covid19PrefectureDatatable.vue'
 // import FilerDialogButton from "@/Components/FilerDialogButton.vue";
-import FileSelectMenu from "@/Components/FileSelectMenu.vue";
+import FileSelectMenu from '@/Components/FileSelectMenu.vue'
 
 import {
   PREFECTURES,
@@ -855,13 +1303,13 @@ import {
   // COL_CND_C,
   // COL_CND_D,
   COL_CND_E,
-} from '@/Constants/DcChart.constants.js';
-import {colorbrewer} from "@/Utils/colorbrewer.js";
-import '/public/jquery-ui/themes/dark-hive/jquery-ui.min.css';
-import '/public/jquery-ui-iconfont/jquery-ui-1.12.icon-font.min.css';
+} from '@/Constants/DcChart.constants.js'
+import { colorbrewer } from '@/Utils/colorbrewer.js'
+import '/public/jquery-ui/themes/dark-hive/jquery-ui.min.css'
+import '/public/jquery-ui-iconfont/jquery-ui-1.12.icon-font.min.css'
 
-import jvectormapJpData from '/public/jquery-jvectormap/data/jquery-jvectormap-jp-merc.json';
-import jvectormapWorldData from '/public/jquery-jvectormap/data/jquery-jvectormap-world-mill.json';
+import jvectormapJpData from '/public/jquery-jvectormap/data/jquery-jvectormap-jp-merc.json'
+import jvectormapWorldData from '/public/jquery-jvectormap/data/jquery-jvectormap-world-mill.json'
 
 import {
   php_location_get_query,
@@ -870,123 +1318,140 @@ import {
   php_trim,
   php_printf02d,
   php_sprintf,
-
   url_append_param,
-  url_remove_param
-} from '@/Utils/phpjs.js';
+  url_remove_param,
+} from '@/Utils/phpjs.js'
 
-import {toRomaji} from 'wanakana';
+import { toRomaji } from 'wanakana'
 
 import {
   loadScriptJQueryUI,
   loadScriptJQueryUIDatepickerJa,
   loadScriptVectormap,
-} from '@/Utils/utils.js';
+} from '@/Utils/utils.js'
 
-const BASE = import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT;
-const G_IS_LOCAL = import.meta.env.DEV;
-const G_IS_TUBE_SEARCH = import.meta.env.PROD; // YoutubeAPIを呼ぶか? ※開発中に無駄にApiを呼ぶのを避ける時は0にする
+const BASE = import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT
+const G_IS_LOCAL = import.meta.env.DEV
+const G_IS_TUBE_SEARCH = import.meta.env.PROD // YoutubeAPIを呼ぶか? ※開発中に無駄にApiを呼ぶのを避ける時は0にする
 
 // データタイプ
-const DT_DEF = 0;   //0:汎用的なDCデータ
-const DT_COVID = 1; //1:新型コロナウイルス感染状況のデータ
+const DT_DEF = 0 //0:汎用的なDCデータ
+const DT_COVID = 1 //1:新型コロナウイルス感染状況のデータ
 // データのカラムのタイプ
-const D_YMD = 0;    // 日付。 例:2020-01-30
-const D_SEX = 1;    // 性別ID。INT。0:不明 1:男 2:女 。data_opt.chartSex_unitで定義可
-const D_AGE = 2;    // 年齢。  INT。-1:不明 0:幼児 1:10歳未満 / 10~N:10~N代。data_opt.chartAge_unitで定義可
-const D_CND = 3;    // 状態。 例:無症,退院,感染。状態ワード(無症状,退院,入院,肺炎,...)から4つのレベル(無症・退院,感染,肺炎・入院,酸投...)に集約される
-const D_PL1 = 4;    // 都道府県。 例:福岡県
-const D_PL2 = 5;    // 市区町村。 例:福岡市
-const D_JOB = 6;    // 職業。 例:会社員
-const D_JOBCAT = 7; // ジョブカテゴリID。 INT。例:'教職員'=>['教職員','大学職員','小学校教諭','専門学校職員...]。定義が0or種類が1つしかない場合使用しない
-const D_CNT = 8;    // カウント。INT。(未必須:ない場合:1)
-const D_EX0 = 9;    // chartEx用データ始点
+const D_YMD = 0 // 日付。 例:2020-01-30
+const D_SEX = 1 // 性別ID。INT。0:不明 1:男 2:女 。data_opt.chartSex_unitで定義可
+const D_AGE = 2 // 年齢。  INT。-1:不明 0:幼児 1:10歳未満 / 10~N:10~N代。data_opt.chartAge_unitで定義可
+const D_CND = 3 // 状態。 例:無症,退院,感染。状態ワード(無症状,退院,入院,肺炎,...)から4つのレベル(無症・退院,感染,肺炎・入院,酸投...)に集約される
+const D_PL1 = 4 // 都道府県。 例:福岡県
+const D_PL2 = 5 // 市区町村。 例:福岡市
+const D_JOB = 6 // 職業。 例:会社員
+const D_JOBCAT = 7 // ジョブカテゴリID。 INT。例:'教職員'=>['教職員','大学職員','小学校教諭','専門学校職員...]。定義が0or種類が1つしかない場合使用しない
+const D_CNT = 8 // カウント。INT。(未必須:ない場合:1)
+const D_EX0 = 9 // chartEx用データ始点
 // データ3のカラムのタイプ
-const D3_YMD = 0;
-const D3_PL1 = 1;
-const D3_CNT = 2;
-const D3_TYP = 3;
+const D3_YMD = 0
+const D3_PL1 = 1
+const D3_CNT = 2
+const D3_TYP = 3
 
 // chartDate2のモード
-const MD_PCR = 0;
-const MD_DEA = 1;
-const MD_PAT = 2;
+const MD_PCR = 0
+const MD_DEA = 1
+const MD_PAT = 2
 
 // 表示しない空データ定義(key)
-const DN_KEY1 = ''; // 共通
-const DN_KEY2 = '-';
+const DN_KEY1 = '' // 共通
+const DN_KEY2 = '-'
 //const DN_SEX = ''; // chartSex pieChartは表示する,barChartは表示しない
-const DN_AGE = -1; // chartAge
-const DN_AGE2 = '';
-const DN_CND = ''; // chartCond
-const DN_CND2 = '不明';
-const DN_PL1 = ''; // chartName
-const DN_PL2 = ''; // chartCity
-const DN_JOB = ''; // chartJob
-const DN_JOBCAT = 0;
-const DN_EX = '-'; // chartEx[]
+const DN_AGE = -1 // chartAge
+const DN_AGE2 = ''
+const DN_CND = '' // chartCond
+const DN_CND2 = '不明'
+const DN_PL1 = '' // chartName
+const DN_PL2 = '' // chartCity
+const DN_JOB = '' // chartJob
+const DN_JOBCAT = 0
+const DN_EX = '-' // chartEx[]
 // 表示しない空データ定義(label)
-const DN_LABEL_DEF = '不明';
+const DN_LABEL_DEF = '不明'
 
-const DI_AGE_INFA = 1; // 1 :幼児 (0歳,1歳未満,男児,女児,幼児,未就学児)
-const DI_AGE_LT10 = 0; // 0 :10歳未満(小学生、園児)
+const DI_AGE_INFA = 1 // 1 :幼児 (0歳,1歳未満,男児,女児,幼児,未就学児)
+const DI_AGE_LT10 = 0 // 0 :10歳未満(小学生、園児)
 //const DI_AGE_10  =2; // 10 :10代 ※以後1ずらす
 //const DI_AGE_20  =3; // 20 :20代
 //const DI_AGE_100 =11;// 100 :100歳
-const DI_AGE_NONE = 12;// -1:不明
+const DI_AGE_NONE = 12 // -1:不明
 
 // chart group
-const CGRP_SHOW = 'show';
-const CGRP_HIDE = 'hide';
+const CGRP_SHOW = 'show'
+const CGRP_HIDE = 'hide'
 
-const COL_NAME = colorbrewer.Set2[5];
+const COL_NAME = colorbrewer.Set2[5]
 // 0        1         2     3       4      5     6       7     8     9      10     11   12
 // '幼児','10歳未満','10代','20代','30代','40代','50代','60代','70代','80代','90代','100代',DN_LABEL_DEF
 // green                  |  blue                     | yellow-orange
-const COL_AGE = d3.schemeGreens[4].slice(1).concat(d3.schemeBlues[4].slice(1)).concat(d3.schemeYlOrRd[7].slice(1)).concat(['#B0B0B0']);
-const COL_DATE = COL_CND.concat(COL_NAME).concat(COL_AGE);
+const COL_AGE = d3.schemeGreens[4]
+  .slice(1)
+  .concat(d3.schemeBlues[4].slice(1))
+  .concat(d3.schemeYlOrRd[7].slice(1))
+  .concat(['#B0B0B0'])
+const COL_DATE = COL_CND.concat(COL_NAME).concat(COL_AGE)
 
-const STACK_CND = 0;
-const STACK_PL1 = 1;
-const STACK_AGE = 2;
+const STACK_CND = 0
+const STACK_PL1 = 1
+const STACK_AGE = 2
 
-const COL_DATE2 = ['#20b2aa', COL_CND_E, COL_CND_B];// chartDate2 の [感染,PCR,死亡] の色
-const CHART_DATE2_STACK1_N = 3;
-const CHART_DATE2_STACK2_N = 5 + 1;
-const CHART_DATE2_TYPE_COVID = 0;
-const CHART_DATE2_TYPE_LINES = 1;
-const CHART_DATE2_TYPE_STACKS = 2;
-const CHART_DATE2_TYPE_HIDE = -1;
+const COL_DATE2 = ['#20b2aa', COL_CND_E, COL_CND_B] // chartDate2 の [感染,PCR,死亡] の色
+const CHART_DATE2_STACK1_N = 3
+const CHART_DATE2_STACK2_N = 5 + 1
+const CHART_DATE2_TYPE_COVID = 0
+const CHART_DATE2_TYPE_LINES = 1
+const CHART_DATE2_TYPE_STACKS = 2
+const CHART_DATE2_TYPE_HIDE = -1
 
-const COL_SEX = ["#B0B0B0", "#8dd3c7", "pink"];
-let SEX_LABEL = ["不明", "♂男性", "♀女性"];
+const COL_SEX = ['#B0B0B0', '#8dd3c7', 'pink']
+let SEX_LABEL = ['不明', '♂男性', '♀女性']
 
 // 季節
 // '🌸春': 3,4,5, '🎆夏': 6,7,8, '🍁秋': 9,10,11, '☃冬':12,1,2
-const MONTH_2_SEASON = ['', '☃冬', '☃冬', '🌸春', '🌸春', '🌸春', '🎆夏', '🎆夏', '🎆夏', '🍁秋', '🍁秋', '🍁秋', '☃冬'];
-const SEASON_COL = ['#FAD8D9', '#87CFDB', '#EF781E', '#8C93C9'];
-const SEASON_IDX = {'🌸春': 0, '🎆夏': 1, '🍁秋': 2, '☃冬': 3};
-const SEASON_IDX2_MONTH = {'🌸春': 3, '🎆夏': 6, '🍁秋': 9, '☃冬': 12};
+const MONTH_2_SEASON = [
+  '',
+  '☃冬',
+  '☃冬',
+  '🌸春',
+  '🌸春',
+  '🌸春',
+  '🎆夏',
+  '🎆夏',
+  '🎆夏',
+  '🍁秋',
+  '🍁秋',
+  '🍁秋',
+  '☃冬',
+]
+const SEASON_COL = ['#FAD8D9', '#87CFDB', '#EF781E', '#8C93C9']
+const SEASON_IDX = { '🌸春': 0, '🎆夏': 1, '🍁秋': 2, '☃冬': 3 }
+const SEASON_IDX2_MONTH = { '🌸春': 3, '🎆夏': 6, '🍁秋': 9, '☃冬': 12 }
 
-const WEEK_LABEL = moment.weekdaysMin();
-const COL_WEEK = ['orange', '#ffffcc', '#c2e699', '#78c679', '#31a354', '#006837', 'blue'];
-let IMG_NO = '/img/noimage.png';
-const IMG_THUMBNAIL_W = 30;
+const WEEK_LABEL = moment.weekdaysMin()
+const COL_WEEK = ['orange', '#ffffcc', '#c2e699', '#78c679', '#31a354', '#006837', 'blue']
+let IMG_NO = '/img/noimage.png'
+const IMG_THUMBNAIL_W = 30
 
-const TAGICON_DS = '💾';
-const TAGICON_CD = '💿';
-colorbrewer.Set2[8][7] = colorbrewer.Set1[8][6];//Set3[12][8]:gray-> light gold
+const TAGICON_DS = '💾'
+const TAGICON_CD = '💿'
+colorbrewer.Set2[8][7] = colorbrewer.Set1[8][6] //Set3[12][8]:gray-> light gold
 
-const URL_WIKI = 'https://ja.wikipedia.org/wiki';
+const URL_WIKI = 'https://ja.wikipedia.org/wiki'
 
 const props = defineProps({
   dataPath: {
     type: String,
-    default: '/data/'
+    default: '/data/',
   },
   data: {
     type: String,
-    default: 'covid19-data-2021-02-28.csv'
+    default: 'covid19-data-2021-02-28.csv',
   },
   selectableData: {
     type: Object,
@@ -1027,20 +1492,20 @@ const props = defineProps({
       'store-cnt.jpg': 'store-cnt.csv',
       'store-di.jpg': 'store-di.csv',
       'kaggle-heart-disease.jpg': 'kaggle-heart-disease.csv',
-      "kaggle-countries-intermediate.jpg": "kaggle-countries-intermediate.csv"
-    })
-  }
-});
+      'kaggle-countries-intermediate.jpg': 'kaggle-countries-intermediate.csv',
+    }),
+  },
+})
 
 // Global
 const gg = reactive({
   dt: DT_COVID, // データタイプ
   isPrefTable: false,
-  isShowPrefTable: false
-});
-const isSp = window.innerWidth <= 768;
-const dataImgSrc = ref('');
-const headerRef = ref(null);
+  isShowPrefTable: false,
+})
+const isSp = window.innerWidth <= 768
+const dataImgSrc = ref('')
+const headerRef = ref(null)
 
 const pnl = reactive({
   common: {
@@ -1048,13 +1513,13 @@ const pnl = reactive({
     unit: '',
     dataReference: '',
     datepicker: {
-      position: {}
+      position: {},
     },
     // パネル表示ツールバー
     toolbar: {
       isShow: true, // ツールバーを常に表示するか？
       isDivShow: false, // ツールバーの表示状態
-    }
+    },
   },
   gmap: {
     isHidden: false,
@@ -1086,7 +1551,8 @@ const pnl = reactive({
   sview: {
     isHidden: false,
     isShow: 0,
-    title: '<img src="/img/icons8-street-view-60.png" width="22" style="margin-top:-6px;">ストリートビュー',
+    title:
+      '<img src="/img/icons8-street-view-60.png" width="22" style="margin-top:-6px;">ストリートビュー',
     style: '',
     styleBak: null, // !=nullの時は最大化中
   },
@@ -1107,10 +1573,19 @@ const pnl = reactive({
     title: '<i class="fa fa-map"></i>日本地図',
     subTitle: '',
     style: isSp ? 'width:100%;height:100%;' : 'width:460px;height:450px;',
-    colors: [["1000人以上", "#8c0a00", 999], ["500人以上", "#ea5432", 499], ["100人以上", "#ff781d", 99], ["50人以上", "#ff9d57", 49], ["10人以上", "#ffceab", 9], ["1人以上", "#f5deb3", 0], ["0人", "#dadada", 0], ["選択中", "#ffffff", 0]],
+    colors: [
+      ['1000人以上', '#8c0a00', 999],
+      ['500人以上', '#ea5432', 499],
+      ['100人以上', '#ff781d', 99],
+      ['50人以上', '#ff9d57', 49],
+      ['10人以上', '#ffceab', 9],
+      ['1人以上', '#f5deb3', 0],
+      ['0人', '#dadada', 0],
+      ['選択中', '#ffffff', 0],
+    ],
     tabs: {
       isShow: false,
-    }
+    },
   },
   name: {
     isHidden: false,
@@ -1124,7 +1599,7 @@ const pnl = reactive({
     title: '市区町村',
     style: '',
     orderUI: false,
-    orderCnt: false,　// 1:Sumタイプ 0:Countタイプ
+    orderCnt: false, // 1:Sumタイプ 0:Countタイプ
   },
   date: {
     isHidden: false,
@@ -1146,8 +1621,8 @@ const pnl = reactive({
       type: 0, //0:患者・PCR・死亡 1:日付LineChart 2:日付seriesChart
       title: '<i class="fa fa-vials"></i>PCR検査人数</span>',
       title2: '',
-      cnt: ''
-    }
+      cnt: '',
+    },
   },
   sex: {
     isHidden: false,
@@ -1341,184 +1816,188 @@ const pnl = reactive({
     isShow: false,
     is_chk_show: 1,
     title: '<i class="fa fa-eye"></i>分析',
-  }
-});
-const pnlShows = ref(null);
+  },
+})
+const pnlShows = ref(null)
 
-const isDarkLs = localStorage.theme === 'dark'
-  || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-const isDark = ref(!isDarkLs);
-IMG_NO = isDarkLs ? '/img/noimage-dark.png' : '/img/noimage.png';
+const isDarkLs =
+  localStorage.theme === 'dark' ||
+  (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+const isDark = ref(!isDarkLs)
+IMG_NO = isDarkLs ? '/img/noimage-dark.png' : '/img/noimage.png'
 
 const settingsName = () => {
-  return `dcjs/data=${mm.url_data.data}`;
-};
+  return `dcjs/data=${mm.url_data.data}`
+}
 
 const getPanelSettings = () => {
-  const o = {}; // pnlのlocalStorage 保存対象はここで指定
+  const o = {} // pnlのlocalStorage 保存対象はここで指定
   const panelSettingCreate = (k, v) => {
-    const ret = {isShow: v.isShow};
-    if (v.style) ret.style = v.style;
-    if (v.vidAutoChange !== undefined) ret.vidAutoChange = v.vidAutoChange;
-    if (v.styleBak !== null) ret.styleBak = v.styleBak;
-    if (v?.chart2?.isShow !== undefined) ret['chart2'] = {isShow: v.chart2.isShow};
+    const ret = { isShow: v.isShow }
+    if (v.style) ret.style = v.style
+    if (v.vidAutoChange !== undefined) ret.vidAutoChange = v.vidAutoChange
+    if (v.styleBak !== null) ret.styleBak = v.styleBak
+    if (v?.chart2?.isShow !== undefined) ret['chart2'] = { isShow: v.chart2.isShow }
     // common
-    if (v?.toolbar?.isShow !== undefined) ret['toolbar'] = {isShow: v.toolbar.isShow};
+    if (v?.toolbar?.isShow !== undefined) ret['toolbar'] = { isShow: v.toolbar.isShow }
     if (v?.datepicker?.position) {
-      ret['datepicker'] = {position: v.datepicker.position};
+      ret['datepicker'] = { position: v.datepicker.position }
     }
-    return ret;
+    return ret
   }
 
   _.forEach(pnl, (v, k) => {
-    o[k] = panelSettingCreate(k, v);
-  });
+    o[k] = panelSettingCreate(k, v)
+  })
 
-  o.ex = [];
+  o.ex = []
   _.forEach(pnl.ex, (v, k) => {
-    o.ex[k] = panelSettingCreate(k, v);
-  });
+    o.ex[k] = panelSettingCreate(k, v)
+  })
 
-  return o;
-};
+  return o
+}
 
 const onChangeSettings = () => {
-  settingsSave();
-};
+  settingsSave()
+}
 const applyRangeChartSettings = () => {
   if (mm.opt.chartDate.isRangeChart) {
-    mm.composite2.rangeChart(mm.composite);
+    mm.composite2.rangeChart(mm.composite)
   } else if (mm.opt.chartDate2.isRangeChart) {
     mm.composite2.brushOn(true)
-    mm.composite.rangeChart(mm.composite2);
+    mm.composite.rangeChart(mm.composite2)
   }
 }
-const onChangeChartDateChart2IsShow = (newVal) => {
-  settingsSave();
-  if (!newVal || mm.composite2 !== null) return;
-  initChartDate2();
-  mm.dateStackShow(STACK_CND);
-  dc.renderAll(CGRP_SHOW);
-};
+const onChangeChartDateChart2IsShow = newVal => {
+  settingsSave()
+  if (!newVal || mm.composite2 !== null) return
+  initChartDate2()
+  mm.dateStackShow(STACK_CND)
+  dc.renderAll(CGRP_SHOW)
+}
 
-const onChangeChartDateIsBrushOn = (newVal) => {
+const onChangeChartDateIsBrushOn = newVal => {
   if (newVal) {
     // 選択がある場合その日を選択
-    let f = mm.composite.filters();
+    let f = mm.composite.filters()
     if (f.length && f[0].filterType !== 'RangedFilter') {
-      const from = moment(f[0]);
-      const range = dc.filters.RangedFilter(from.toDate(), from.add(1, 'days').toDate());
-      mm.composite.replaceFilter(range);
-      mm.chartDate.replaceFilter(range);
+      const from = moment(f[0])
+      const range = dc.filters.RangedFilter(from.toDate(), from.add(1, 'days').toDate())
+      mm.composite.replaceFilter(range)
+      mm.chartDate.replaceFilter(range)
     }
-    mm.composite.brushOn(true);
-    mm.chartDate.brushOn(true);
+    mm.composite.brushOn(true)
+    mm.chartDate.brushOn(true)
   } else {
-    mm.composite.brushOn(false).filterAll();
-    mm.chartDate.brushOn(false).filterAll();
+    mm.composite.brushOn(false).filterAll()
+    mm.chartDate.brushOn(false).filterAll()
   }
-  mm.renderAllChart();
-};
+  mm.renderAllChart()
+}
 
 // ローカルストレージに設定をセーブ
 const settingsSave = () => {
-  const settings = getPanelSettings();
-  localStorage.setItem(settingsName(), JSON.stringify(settings));
-  mm.onChangeURL('clear_layout');
-};
+  const settings = getPanelSettings()
+  localStorage.setItem(settingsName(), JSON.stringify(settings))
+  mm.onChangeURL('clear_layout')
+}
 
 // ローカルストレージより設定をロード
 const settingsLoad = (settingsJson = null) => {
-  if (settingsJson === null) settingsJson = localStorage.getItem(settingsName());
-  if (settingsJson === null) return null;
-  const settings = JSON.parse(settingsJson);
+  if (settingsJson === null) settingsJson = localStorage.getItem(settingsName())
+  if (settingsJson === null) return null
+  const settings = JSON.parse(settingsJson)
 
   if (isSp) {
     // スタイルはロード除外
-    _.forEach(settings, (v) => {
+    _.forEach(settings, v => {
       if (v.style) {
-        delete v.style;
+        delete v.style
       }
-    });
+    })
   }
 
   if (settings) {
-    _.merge(pnl, settings);
+    _.merge(pnl, settings)
   }
-  return settings;
-};
+  return settings
+}
 
 //パネルの表示状態のLoadStore
-const pnlShowsLoadStore = (isLoad) => {
+const pnlShowsLoadStore = isLoad => {
   if (isLoad) {
     _.forEach(pnlShows.value, (v, k) => {
-      pnl[k].isShow = v.isShow;
-    });
-    pnlShows.value = null;
+      pnl[k].isShow = v.isShow
+    })
+    pnlShows.value = null
   } else {
     if (pnlShows.value === null) {
-      pnlShows.value = getPanelSettings();
+      pnlShows.value = getPanelSettings()
     }
   }
-};
+}
 
 const getXYWHStyle = (selector, isH = 1, isAbs = 0) => {
-  const o = $(selector);
+  const o = $(selector)
   const clumpX = v => _.clamp(parseInt(v, 10), 0, window.innerWidth - 80)
   const clumpY = v => _.clamp(parseInt(v, 10), 0, window.innerHeight - 80)
-  let x, y, w, h;
-  x = clumpX(o.css('left'));
-  y = clumpY(o.css('top'));
-  w = o.css('width');
+  let x, y, w, h
+  x = clumpX(o.css('left'))
+  y = clumpY(o.css('top'))
+  w = o.css('width')
   if (isH) {
-    h = o.css('height');
+    h = o.css('height')
   }
   if (isAbs) {
     // const pos = mm.util.relToAbsPos(selector);
-    const pos = {left: x, top: y};
-    const p = mm.util.pxToPer(pos.left, pos.top, parseInt(w, 10), parseInt(h, 10), '#panels');
-    return `position:absolute;left:${p.left};top:${p.top};width:${p.width};` + (isH ? `height:${p.height}` : '');
+    const pos = { left: x, top: y }
+    const p = mm.util.pxToPer(pos.left, pos.top, parseInt(w, 10), parseInt(h, 10), '#panels')
+    return (
+      `position:absolute;left:${p.left};top:${p.top};width:${p.width};` +
+      (isH ? `height:${p.height}` : '')
+    )
     // return `position:absolute;left:${parseInt(pos.left)}px;top:${parseInt(pos.top)}px;width:${w};` + (isH ? `height:${h}` : '');
   } else {
-    return `left:${x}px;top:${y}px;width:${w};` + (isH ? `height:${h}` : '');
+    return `left:${x}px;top:${y}px;width:${w};` + (isH ? `height:${h}` : '')
   }
 }
 
 const setPanelXYWH = (id = null, absType = 0) => {
-  let isSet = true;
+  let isSet = true
   // IDと対応するスタイル設定を定義
   const panelConfig = [
-    {id: 'chart_gmap', panel: pnl.gmap, selector: '#chart_gmap'},
-    {id: 'chart_sview', panel: pnl.sview, selector: '#chart_sview'},
-    {id: 'chart_tube', panel: pnl.tube, selector: '#chart_tube'},
-    {id: 'chart_map', panel: pnl.map, selector: '#chart_map'},
-    {id: 'panel_name', panel: pnl.name, selector: '#panel_name'},
-    {id: 'panel_city', panel: pnl.city, selector: '#panel_city'},
-    {id: 'panel_date', panel: pnl.date, selector: '#panel_date', param: false},
-    {id: 'panel_year', panel: pnl.year, selector: '#panel_year', param: false},
-    {id: 'panel_season', panel: pnl.season, selector: '#panel_season', param: false},
-    {id: 'panel_week', panel: pnl.week, selector: '#panel_week', param: false},
-    {id: 'panel_sex', panel: pnl.sex, selector: '#panel_sex', param: false},
-    {id: 'panel_age', panel: pnl.age, selector: '#panel_age', param: false},
-    {id: 'panel_cond', panel: pnl.cond, selector: '#panel_cond', param: false},
-    {id: 'panel_job', panel: pnl.job, selector: '#panel_job'},
-    {id: 'panel_detail', panel: pnl.detail, selector: '#panel_detail'},
-  ];
+    { id: 'chart_gmap', panel: pnl.gmap, selector: '#chart_gmap' },
+    { id: 'chart_sview', panel: pnl.sview, selector: '#chart_sview' },
+    { id: 'chart_tube', panel: pnl.tube, selector: '#chart_tube' },
+    { id: 'chart_map', panel: pnl.map, selector: '#chart_map' },
+    { id: 'panel_name', panel: pnl.name, selector: '#panel_name' },
+    { id: 'panel_city', panel: pnl.city, selector: '#panel_city' },
+    { id: 'panel_date', panel: pnl.date, selector: '#panel_date', param: false },
+    { id: 'panel_year', panel: pnl.year, selector: '#panel_year', param: false },
+    { id: 'panel_season', panel: pnl.season, selector: '#panel_season', param: false },
+    { id: 'panel_week', panel: pnl.week, selector: '#panel_week', param: false },
+    { id: 'panel_sex', panel: pnl.sex, selector: '#panel_sex', param: false },
+    { id: 'panel_age', panel: pnl.age, selector: '#panel_age', param: false },
+    { id: 'panel_cond', panel: pnl.cond, selector: '#panel_cond', param: false },
+    { id: 'panel_job', panel: pnl.job, selector: '#panel_job' },
+    { id: 'panel_detail', panel: pnl.detail, selector: '#panel_detail' },
+  ]
   for (let k = 0; k < pnl.ex.length; k++) {
-    if (pnl.ex[k].isHidden) continue;
+    if (pnl.ex[k].isHidden) continue
     panelConfig.push({
       id: `panel_ex_${k}`,
       panel: pnl.ex[k],
       selector: `#panel_ex_${k}`,
       param: pnl.ex[k].isDcSunburstChart, // isH: heightの保存可否
-    });
+    })
   }
 
   if (absType === 2) {
     // #panelsのrelative配置された子要素を同じレイアウトでabsoluteで配置
     const getElementInfo = (element, parent) => {
-      const parentRect = parent.getBoundingClientRect();
-      const elementRect = element.getBoundingClientRect();
+      const parentRect = parent.getBoundingClientRect()
+      const elementRect = element.getBoundingClientRect()
 
       // コンピュートされたスタイルを取得
       // const computedStyle = window.getComputedStyle(element);
@@ -1533,47 +2012,51 @@ const setPanelXYWH = (id = null, absType = 0) => {
         // margin: computedStyle.margin,
         // backgroundColor: computedStyle.backgroundColor,
         // color: computedStyle.color
-      };
+      }
     }
-    const sourceParent = document.getElementById('panels');
-    let maxBottomInfo = {top: 0, height: 0};
-    panelConfig.forEach(({id, panel}) => {
-      const sourceChild = document.getElementById(id);
+    const sourceParent = document.getElementById('panels')
+    let maxBottomInfo = { top: 0, height: 0 }
+    panelConfig.forEach(({ id, panel }) => {
+      const sourceChild = document.getElementById(id)
       if (sourceChild !== null) {
-        const info = getElementInfo(sourceChild, sourceParent);
-        panel.style = `position:absolute;left:${info.left}px;top:${info.top}px;width:${info.width}px;height:${info.height}px;`;
+        const info = getElementInfo(sourceChild, sourceParent)
+        panel.style = `position:absolute;left:${info.left}px;top:${info.top}px;width:${info.width}px;height:${info.height}px;`
         if (info.top + info.height > maxBottomInfo.top + maxBottomInfo.height) {
-          maxBottomInfo = info;
+          maxBottomInfo = info
         }
       }
-    });
-    return maxBottomInfo;
+    })
+    return maxBottomInfo
   }
 
-  const isAbs = absType === 1;
+  const isAbs = absType === 1
 
   // すべての処理を実行する場合
   if (id === null) {
-    panelConfig.forEach(({panel, selector, param = true}) => {
-      panel.style = getXYWHStyle(selector, param, isAbs || panel.style.indexOf('absolute') !== -1);
-    });
-    return isSet;
+    panelConfig.forEach(({ panel, selector, param = true }) => {
+      panel.style = getXYWHStyle(selector, param, isAbs || panel.style.indexOf('absolute') !== -1)
+    })
+    return isSet
   }
 
   // 個別のIDが指定されている場合
-  const config = panelConfig.find(config => config.id === id);
+  const config = panelConfig.find(config => config.id === id)
   if (config) {
-    config.panel.style = getXYWHStyle(config.selector, config.param ?? true, isAbs || config.panel.style.indexOf('absolute') !== -1);
+    config.panel.style = getXYWHStyle(
+      config.selector,
+      config.param ?? true,
+      isAbs || config.panel.style.indexOf('absolute') !== -1
+    )
   } else {
-    isSet = false;
+    isSet = false
   }
 
-  return isSet;
+  return isSet
 }
 const setupToolbarWatch = () => {
   const headerHover = useElementHover(headerRef)
   // ヘッダーホバーでツールバーの表示・非表示を制御
-  watch(headerHover, (hovered) => {
+  watch(headerHover, hovered => {
     if (hovered) {
       // ヘッダーにホバーした時はツールバーを表示
       pnl.common.toolbar.isDivShow = true
@@ -1587,305 +2070,387 @@ const setupToolbarWatch = () => {
 }
 const setupPanelWatch = () => {
   const handleChartVisibilityChange = (chart, newVal, oldVal) => {
-    chart?.chartGroup(newVal ? CGRP_SHOW : CGRP_HIDE);
-    onChangeSettings(newVal, oldVal);
-  };
-  const showWatchOptions = {immediate: true};
+    chart?.chartGroup(newVal ? CGRP_SHOW : CGRP_HIDE)
+    onChangeSettings(newVal, oldVal)
+  }
+  const showWatchOptions = { immediate: true }
 
-  watch(() => pnl.common.toolbar.isShow, onChangeSettings);
-  watch(() => pnl.common.datepicker.position, onChangeSettings);
-  watch(() => pnl.gmap.isShow, () => {
-    setBgWindowZIndex('chart_gmap');
-    onChangeSettings();
-  });
-  watch(() => pnl.sview.isShow, () => {
-    setBgWindowZIndex('chart_sview');
-    onChangeSettings();
-  });
-  watch(() => pnl.tube.isShow, () => {
-    setBgWindowZIndex('chart_tube');
-    onChangeSettings()
-  });
-  watch(() => pnl.tube.vidAutoChange, onChangeSettings);
-  watch(() => pnl.map.isShow, isShow => {
-    if (isShow) {
-      _.delay(() => {
-        drawJapanMap();
-      }, 100)
+  watch(() => pnl.common.toolbar.isShow, onChangeSettings)
+  watch(() => pnl.common.datepicker.position, onChangeSettings)
+  watch(
+    () => pnl.gmap.isShow,
+    () => {
+      setBgWindowZIndex('chart_gmap')
+      onChangeSettings()
     }
-    onChangeSettings();
-  });
-  watch(() => pnl.name.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.chartName, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.city.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.chartCity, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.city.orderCnt, v => {
-    if (pnl.city.orderUI) {
-      if (pnl.city.orderCnt) {
-        pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix;
-        pnl.common.unit = mm.opt.chartCity.orderUIUnit;
-      } else {
-        pnl.common.unitPrefix = mm.opt.common.unitPrefix;
-        pnl.common.unit = mm.opt.common.unit;
+  )
+  watch(
+    () => pnl.sview.isShow,
+    () => {
+      setBgWindowZIndex('chart_sview')
+      onChangeSettings()
+    }
+  )
+  watch(
+    () => pnl.tube.isShow,
+    () => {
+      setBgWindowZIndex('chart_tube')
+      onChangeSettings()
+    }
+  )
+  watch(() => pnl.tube.vidAutoChange, onChangeSettings)
+  watch(
+    () => pnl.map.isShow,
+    isShow => {
+      if (isShow) {
+        _.delay(() => {
+          drawJapanMap()
+        }, 100)
       }
-      mm.onChangeURL('name2_order', pnl.city.orderCnt ? 1 : 0);
+      onChangeSettings()
     }
-
-    // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
-    mm.group_reduce.base = v ? d => (d[D_CNT] || 1) : d => 1
-
-    // 以下全チャート再計算
-    initChartName();
-
-    // chartCity - 並び順だけ変更
-    mm.chartCity
-      .ordering(v
-        ? d => -d.value // カウント降順
-        : mm.orderYmd // 時間昇順
-      );
-
-    // chartDate
-    const compositeY = mm.composite.elasticY();
-    mm.chartDate.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
-    mm.composite.elasticY(true);
-
-    let chartSexW = 148;
-    let chartSexH = 158;
-
-    // chartDate2
-    if (pnl.date.chart2.isShow) {
-      mm.composite2 = null;
-      mm.chartDate2 = null;
-      onChangeChartDateChart2IsShow(true)
-    }
-
-    initChartYear(chartSexH);
-
-    initChartSeason(chartSexW, chartSexH);
-
-    initChartWeek(chartSexW, chartSexH);
-
-    initChartSex(chartSexW, chartSexH);
-
-    // chartAge
-    // initChartAge(chartSexW, chartSexH);
-    const chartAgeY = mm.chartAge.elasticY();
-    const gpAge = initChartAgeReduce(mm.chartAge.dimension());
-    mm.chartAge.group(mm.groupRemoveEmpty(gpAge))
-    mm.chartAge.elasticY(true);
-
-    // chartCond
-    // initChartCond(chartSexW, chartSexH);
-    const chartCondY = mm.chartCond.elasticY();
-    const gpCond = initChartCondReduce(mm.chartCond.dimension());
-    mm.chartCond.group(mm.groupRemoveEmpty(gpCond))
-    mm.chartCond.elasticY(true);
-
-    // chartJob
-    // initChartJob(chartSexW, chartSexH);
-    const chartJobY = mm.chartJob.elasticY();
-    initChartJobReduce();
-    mm.chartJob.group(mm.is_job_cate ? mm.gpJobCat : mm.gpJob)
-    mm.chartJob.elasticY(true);
-
-    // chartEx
-    initAllChartEx(chartSexH);
-
-    mm.dateStackShow(STACK_CND);
-
-    dc.renderAll(CGRP_SHOW);
-
-    mm.composite.elasticY(compositeY);
-    mm.chartAge.elasticY(chartAgeY);
-    mm.chartCond.elasticY(chartCondY);
-    mm.chartJob.elasticY(chartJobY);
-  });
-  watch(() => pnl.date.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.composite, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.date.chart2.isShow, (newVal, oldVal) => {
-    onChangeChartDateChart2IsShow(newVal, oldVal);
-    mm?.composite2?.chartGroup(newVal ? CGRP_SHOW : 'hide');
-  }, showWatchOptions);
-  watch(() => pnl.date.isBrushOn, onChangeChartDateIsBrushOn);
-  watch(() => pnl.year.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.chartYear, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.season.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.chartSeason, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.week.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.chartWeek, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.sex.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.chartSex, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.age.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.chartAge, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.age.elasticX, v => {
-    mm.chartAge
-      .ordering(v ? t => (gg.dt === DT_COVID ? -t.value.total : -t.value) : dc.pluck('key'))
-      .elasticX(true)
-      .render();
-
-    // URL parameter update
-    mm.onChangeURL('name4_order', v ? 1 : 0);
-  });
-  watch(() => pnl.cond.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.chartCond, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.cond.elasticX, v => {
-    mm.chartCond
-      .ordering(v ? t => -t.value : dc.pluck('key'))
-      .elasticX(true)
-      .render();
-
-    // URL parameter update
-    mm.onChangeURL('name5_order', v ? 1 : 0);
-  });
-  watch(() => pnl.job.isShow, (newVal, oldVal) => {
-    handleChartVisibilityChange(mm.chartJob, newVal, oldVal);
-  }, showWatchOptions);
-  watch(() => pnl.job.elasticX, v => {
-    if (v) {
-      const wc = mm.chartJob.width();
-      const wd = $('#chart_job').width()
-      if (wc > wd) {
-        mm.config.cJob.width = mm.chartJob.width();
-        mm.chartJob.width(wd);
-      }
-    } else {
-      mm.chartJob.width(mm.config.cJob.width);
-    }
-
-    mm.chartJob
-      .ordering(v ? t => -t.value : dc.pluck('key'))
-      .elasticX(true)
-      .render();
-
-    // URL parameter update
-    mm.onChangeURL('name6_order', v ? 1 : 0);
-  });
-
-// pnl.ex配列の各要素のis_showを個別に監視
-  for (let i = 0; i < pnl.ex.length; i++) {
-    watch(() => pnl.ex[i].isShow, (newVal, oldVal) => {
-      if (mm.chartEx && mm.chartEx[i]) {
-        if (mm.chartEx[i]?.isDcSunburstChart) {
-          mm.chartEx[i].chartGroup = newVal ? CGRP_SHOW : 'hide';
-          onChangeSettings(newVal, oldVal);
+  )
+  watch(
+    () => pnl.name.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.chartName, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.city.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.chartCity, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.city.orderCnt,
+    v => {
+      if (pnl.city.orderUI) {
+        if (pnl.city.orderCnt) {
+          pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix
+          pnl.common.unit = mm.opt.chartCity.orderUIUnit
         } else {
-          handleChartVisibilityChange(mm.chartEx[i], newVal, oldVal);
+          pnl.common.unitPrefix = mm.opt.common.unitPrefix
+          pnl.common.unit = mm.opt.common.unit
         }
+        mm.onChangeURL('name2_order', pnl.city.orderCnt ? 1 : 0)
       }
-    }, showWatchOptions);
+
+      // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
+      mm.group_reduce.base = v ? d => d[D_CNT] || 1 : d => 1
+
+      // 以下全チャート再計算
+      initChartName()
+
+      // chartCity - 並び順だけ変更
+      mm.chartCity.ordering(
+        v
+          ? d => -d.value // カウント降順
+          : mm.orderYmd // 時間昇順
+      )
+
+      // chartDate
+      const compositeY = mm.composite.elasticY()
+      mm.chartDate
+        .group()
+        .reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init)
+      mm.composite.elasticY(true)
+
+      let chartSexW = 148
+      let chartSexH = 158
+
+      // chartDate2
+      if (pnl.date.chart2.isShow) {
+        mm.composite2 = null
+        mm.chartDate2 = null
+        onChangeChartDateChart2IsShow(true)
+      }
+
+      initChartYear(chartSexH)
+
+      initChartSeason(chartSexW, chartSexH)
+
+      initChartWeek(chartSexW, chartSexH)
+
+      initChartSex(chartSexW, chartSexH)
+
+      // chartAge
+      // initChartAge(chartSexW, chartSexH);
+      const chartAgeY = mm.chartAge.elasticY()
+      const gpAge = initChartAgeReduce(mm.chartAge.dimension())
+      mm.chartAge.group(mm.groupRemoveEmpty(gpAge))
+      mm.chartAge.elasticY(true)
+
+      // chartCond
+      // initChartCond(chartSexW, chartSexH);
+      const chartCondY = mm.chartCond.elasticY()
+      const gpCond = initChartCondReduce(mm.chartCond.dimension())
+      mm.chartCond.group(mm.groupRemoveEmpty(gpCond))
+      mm.chartCond.elasticY(true)
+
+      // chartJob
+      // initChartJob(chartSexW, chartSexH);
+      const chartJobY = mm.chartJob.elasticY()
+      initChartJobReduce()
+      mm.chartJob.group(mm.is_job_cate ? mm.gpJobCat : mm.gpJob)
+      mm.chartJob.elasticY(true)
+
+      // chartEx
+      initAllChartEx(chartSexH)
+
+      mm.dateStackShow(STACK_CND)
+
+      dc.renderAll(CGRP_SHOW)
+
+      mm.composite.elasticY(compositeY)
+      mm.chartAge.elasticY(chartAgeY)
+      mm.chartCond.elasticY(chartCondY)
+      mm.chartJob.elasticY(chartJobY)
+    }
+  )
+  watch(
+    () => pnl.date.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.composite, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.date.chart2.isShow,
+    (newVal, oldVal) => {
+      onChangeChartDateChart2IsShow(newVal, oldVal)
+      mm?.composite2?.chartGroup(newVal ? CGRP_SHOW : 'hide')
+    },
+    showWatchOptions
+  )
+  watch(() => pnl.date.isBrushOn, onChangeChartDateIsBrushOn)
+  watch(
+    () => pnl.year.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.chartYear, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.season.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.chartSeason, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.week.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.chartWeek, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.sex.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.chartSex, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.age.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.chartAge, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.age.elasticX,
+    v => {
+      mm.chartAge
+        .ordering(v ? t => (gg.dt === DT_COVID ? -t.value.total : -t.value) : dc.pluck('key'))
+        .elasticX(true)
+        .render()
+
+      // URL parameter update
+      mm.onChangeURL('name4_order', v ? 1 : 0)
+    }
+  )
+  watch(
+    () => pnl.cond.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.chartCond, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.cond.elasticX,
+    v => {
+      mm.chartCond
+        .ordering(v ? t => -t.value : dc.pluck('key'))
+        .elasticX(true)
+        .render()
+
+      // URL parameter update
+      mm.onChangeURL('name5_order', v ? 1 : 0)
+    }
+  )
+  watch(
+    () => pnl.job.isShow,
+    (newVal, oldVal) => {
+      handleChartVisibilityChange(mm.chartJob, newVal, oldVal)
+    },
+    showWatchOptions
+  )
+  watch(
+    () => pnl.job.elasticX,
+    v => {
+      if (v) {
+        const wc = mm.chartJob.width()
+        const wd = $('#chart_job').width()
+        if (wc > wd) {
+          mm.config.cJob.width = mm.chartJob.width()
+          mm.chartJob.width(wd)
+        }
+      } else {
+        mm.chartJob.width(mm.config.cJob.width)
+      }
+
+      mm.chartJob
+        .ordering(v ? t => -t.value : dc.pluck('key'))
+        .elasticX(true)
+        .render()
+
+      // URL parameter update
+      mm.onChangeURL('name6_order', v ? 1 : 0)
+    }
+  )
+
+  // pnl.ex配列の各要素のis_showを個別に監視
+  for (let i = 0; i < pnl.ex.length; i++) {
+    watch(
+      () => pnl.ex[i].isShow,
+      (newVal, oldVal) => {
+        if (mm.chartEx && mm.chartEx[i]) {
+          if (mm.chartEx[i]?.isDcSunburstChart) {
+            mm.chartEx[i].chartGroup = newVal ? CGRP_SHOW : 'hide'
+            onChangeSettings(newVal, oldVal)
+          } else {
+            handleChartVisibilityChange(mm.chartEx[i], newVal, oldVal)
+          }
+        }
+      },
+      showWatchOptions
+    )
   }
 
-  watch(() => pnl.detail.isShow, onChangeSettings);
-  watch(() => pnl.ana.isShow, onChangeSettings);
-  watch(() => pnl.date.stack_type, (v) => {
-    mm.dateStackShow(v);
+  watch(() => pnl.detail.isShow, onChangeSettings)
+  watch(() => pnl.ana.isShow, onChangeSettings)
+  watch(
+    () => pnl.date.stack_type,
+    v => {
+      mm.dateStackShow(v)
 
-    // Stackの影響をうけるチャートを再描画
-    mm.chartCity.render();
+      // Stackの影響をうけるチャートを再描画
+      mm.chartCity.render()
 
-    mm.composite.render();
-    mm.chartYear.render();
-    if (pnl.sex.chartType === 'bar') {
-      mm.chartSex.render();
+      mm.composite.render()
+      mm.chartYear.render()
+      if (pnl.sex.chartType === 'bar') {
+        mm.chartSex.render()
+      }
+      if (pnl.date.chart2.type !== CHART_DATE2_TYPE_COVID) {
+        mm.composite2?.render()
+      }
+      for (let k = 0; k < pnl.ex.length; k++) {
+        const ex = pnl.ex[k]
+        if (ex.isHidden || ex.isDcSunburstChart) continue
+        mm.chartEx[k].render()
+      }
     }
-    if (pnl.date.chart2.type !== CHART_DATE2_TYPE_COVID) {
-      mm.composite2?.render();
-    }
-    for (let k = 0; k < pnl.ex.length; k++) {
-      const ex = pnl.ex[k];
-      if (ex.isHidden || ex.isDcSunburstChart) continue
-      mm.chartEx[k].render();
-    }
-  });
-  watch(isDark, (newVal) => {
-    const head = document.querySelector('#chart_map .ui-widget-header');
+  )
+  watch(isDark, newVal => {
+    const head = document.querySelector('#chart_map .ui-widget-header')
     if (newVal) {
-      head?.classList.remove('light');
-      document.body.style.backgroundColor = '#1F2937';
-      document.body.classList.add('dark');
-      document.documentElement.classList.add('dark');
-      document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/dark-hive/jquery-ui.min.css');
-      IMG_NO = '/img/noimage-dark.png';
-      localStorage.theme = 'dark';
+      head?.classList.remove('light')
+      document.body.style.backgroundColor = '#1F2937'
+      document.body.classList.add('dark')
+      document.documentElement.classList.add('dark')
+      document
+        .getElementById('jqui-stylesheet')
+        .setAttribute('href', BASE + 'jquery-ui/themes/dark-hive/jquery-ui.min.css')
+      IMG_NO = '/img/noimage-dark.png'
+      localStorage.theme = 'dark'
     } else {
-      head?.classList.add('light');
-      document.body.style.backgroundColor = '#F0F0F0';
-      document.body.classList.remove('dark');
-      document.documentElement.classList.remove('dark');
-      document.getElementById('jqui-stylesheet').setAttribute('href', BASE + 'jquery-ui/themes/blitzer/jquery-ui.min.css');
-      IMG_NO = '/img/noimage.png';
-      localStorage.theme = 'light';
+      head?.classList.add('light')
+      document.body.style.backgroundColor = '#F0F0F0'
+      document.body.classList.remove('dark')
+      document.documentElement.classList.remove('dark')
+      document
+        .getElementById('jqui-stylesheet')
+        .setAttribute('href', BASE + 'jquery-ui/themes/blitzer/jquery-ui.min.css')
+      IMG_NO = '/img/noimage.png'
+      localStorage.theme = 'light'
     }
-  });
+  })
 }
 
 onMounted(async () => {
-  await loadScriptJQueryUI();
-  await loadScriptJQueryUIDatepickerJa();
-  await loadScriptVectormap();
+  await loadScriptJQueryUI()
+  await loadScriptJQueryUIDatepickerJa()
+  await loadScriptVectormap()
 
   mm.loadAllData().then(() => {
-    isDark.value = isDarkLs; // trigger watch
-    onDocumentReady();
+    isDark.value = isDarkLs // trigger watch
+    onDocumentReady()
 
-    mm.isLoadAllData = true;
+    mm.isLoadAllData = true
 
-    mm.parseURLParams();
+    mm.parseURLParams()
 
     if (gg.dt === DT_DEF && pnl.city.orderUI && !mm.opt.chartCity.orderYmd) {
-      pnl.city.orderCnt = true;
+      pnl.city.orderCnt = true
     }
     if (pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow) {
-      $('#panel_name,#panel_city').css('height', '500px');
+      $('#panel_name,#panel_city').css('height', '500px')
     }
 
-    if (mm.get?.layout) onClickStyleLoad(mm.get?.layout);
+    if (mm.get?.layout) onClickStyleLoad(mm.get?.layout)
 
     if (gg.isPrefTable) {
-      gg.isShowPrefTable = true;
+      gg.isShowPrefTable = true
     }
     if (G_IS_LOCAL) {
-      mm.local.onLoadAllDataAfter();
+      mm.local.onLoadAllDataAfter()
     }
 
-    mm.setPanelFromDataOptionsAfterLoad();
+    mm.setPanelFromDataOptionsAfterLoad()
 
-    if (!isSp) setupToolbarWatch();
+    if (!isSp) setupToolbarWatch()
 
-    setupPanelWatch();
+    setupPanelWatch()
 
     if (mm.is_trigger_search) {
-      $('#input-search').trigger('input-search-update');
+      $('#input-search').trigger('input-search-update')
       if (!pnl.tube.vidAutoChange) {
         // 1番目の再生ボタンを押す。btn_searchのdetail取得はリクエストがあるので遅延実行
-        _.delay(() => $('.detail:last .detail-tube-play:eq(0)').trigger('click'), 600);
+        _.delay(() => $('.detail:last .detail-tube-play:eq(0)').trigger('click'), 600)
       }
     }
-  });
-});
+  })
+})
 
 const mm = {
   config: {
-    urlParamDataReplace: true, mouseLongClickDuration: 300, //マウスの長押しクリックと判定する時の長押し時間
+    urlParamDataReplace: true,
+    mouseLongClickDuration: 300, //マウスの長押しクリックと判定する時の長押し時間
     panelDraggable: !isSp,
     panelDragSnapThreshold: 10,
     panelResizable: !isSp,
-    defaultMargins: {top: 0, right: 0, bottom: 20, left: 40},
+    defaultMargins: { top: 0, right: 0, bottom: 20, left: 40 },
     cName: {
       itemHeight: 29,
     },
     cCity: {
       itemHeight: 29,
-      preMatch: 0,  // 1:前方一致(word*) 0:部分一致(*word*)
+      preMatch: 0, // 1:前方一致(word*) 0:部分一致(*word*)
     },
     cDate: {
       width: 200,
@@ -1902,158 +2467,158 @@ const mm = {
     },
     cAge: {
       barWidth: 45,
-      scaledSuffix: '代'
+      scaledSuffix: '代',
     },
     cCond: {
       barWidth: 40,
       colors: COL_CND,
-      ordinalColors : d3.schemeDark2
+      ordinalColors: d3.schemeDark2,
     },
     cJob: {
-      TD: 750,       //transitionDuration
+      TD: 750, //transitionDuration
       barWidth: 40,
-      keyLabel: (key) => {
-        if (typeof key !== 'string') return key;
+      keyLabel: key => {
+        if (typeof key !== 'string') return key
 
-        let ret = key;
+        let ret = key
         switch (key) {
           //case '看護師': ret = '🏥看護師';break;
           case '医師':
-            ret = '🏥👨🏻‍⚕医師';
-            break;
+            ret = '🏥👨🏻‍⚕医師'
+            break
           case '自営業':
-            ret = '👨‍🌾' + key;
-            break;
+            ret = '👨‍🌾' + key
+            break
           case '製造業':
-            ret = '🧑‍🔧' + key;
-            break;
+            ret = '🧑‍🔧' + key
+            break
           case '公務員':
-            ret = '🧑‍💼' + key;
-            break;
+            ret = '🧑‍💼' + key
+            break
           case '会社員':
           case '経営者・役員':
-            ret = '🧑🏻‍💼' + key;
-            break;
+            ret = '🧑🏻‍💼' + key
+            break
           case '教職員':
-            ret = '🏫🧑‍🏫' + key;
-            break;
+            ret = '🏫🧑‍🏫' + key
+            break
           case 'パート・アルバイト':
-            ret = '💁‍' + key;
-            break;
+            ret = '💁‍' + key
+            break
           case '無職':
-            ret = '🧓' + key;
-            break;
+            ret = '🧓' + key
+            break
           case '入所者':
-            ret = '🧓' + key;
-            break;
+            ret = '🧓' + key
+            break
           default:
             if (key.indexOf('医療') !== -1) {
-              ret = '🏥' + key;
-              break;
+              ret = '🏥' + key
+              break
             }
             if (key.indexOf('看護') !== -1) {
-              ret = '🏥👩‍⚕' + key;
-              break;
+              ret = '🏥👩‍⚕' + key
+              break
             }
             if (key.indexOf('医者') !== -1) {
-              ret = '🏥' + key;
-              break;
+              ret = '🏥' + key
+              break
             }
             if (key.indexOf('教師') !== -1) {
-              ret = '🏫🧑‍🏫' + key;
-              break;
+              ret = '🏫🧑‍🏫' + key
+              break
             }
             if (key.indexOf('大学生') !== -1) {
-              ret = '🏫🧑‍🎓' + key;
-              break;
+              ret = '🏫🧑‍🎓' + key
+              break
             }
             if (key.indexOf('中学生') !== -1) {
-              ret = '🏫👦' + key;
-              break;
+              ret = '🏫👦' + key
+              break
             }
             if (key.indexOf('小学生') !== -1) {
-              ret = '🏫👧' + key;
-              break;
+              ret = '🏫👧' + key
+              break
             }
             if (key.indexOf('学生') !== -1) {
-              ret = '🏫🧑‍🎓' + key;
-              break;
+              ret = '🏫🧑‍🎓' + key
+              break
             }
             if (key.indexOf('保育') !== -1) {
-              ret = '🏫🤱' + key;
-              break;
+              ret = '🏫🤱' + key
+              break
             }
             if (key.indexOf('職員') !== -1) {
-              ret = '👩‍💼' + key;
-              break;
+              ret = '👩‍💼' + key
+              break
             }
             if (key.indexOf('福祉') !== -1) {
-              ret = '👩‍💼' + key;
-              break;
+              ret = '👩‍💼' + key
+              break
             }
             if (key.indexOf('公務員') !== -1) {
-              ret = '🧑‍💼' + key;
-              break;
+              ret = '🧑‍💼' + key
+              break
             }
             if (key.indexOf('飲食') !== -1) {
-              ret = '👩‍🍳‍' + key;
-              break;
+              ret = '👩‍🍳‍' + key
+              break
             }
             if (key.indexOf('接客') !== -1) {
-              ret = '💁‍♀️‍' + key;
-              break;
+              ret = '💁‍♀️‍' + key
+              break
             }
             if (key.indexOf('サービス') !== -1) {
-              ret = '💁‍♀️‍' + key;
-              break;
+              ret = '💁‍♀️‍' + key
+              break
             }
             if (key.indexOf('パート') !== -1) {
-              ret = '👩‍🌾️‍' + key;
-              break;
+              ret = '👩‍🌾️‍' + key
+              break
             }
             if (key.indexOf('アルバイト') !== -1) {
-              ret = '💁‍♀️‍' + key;
-              break;
+              ret = '💁‍♀️‍' + key
+              break
             }
             if (key.indexOf('警察') !== -1) {
-              ret = '👮' + key;
-              break;
+              ret = '👮' + key
+              break
             }
             if (key.indexOf('自衛') !== -1) {
-              ret = '🧑‍🚒' + key;
-              break;
+              ret = '🧑‍🚒' + key
+              break
             }
             if (key.indexOf('消防') !== -1) {
-              ret = '🧑‍🚒' + key;
-              break;
+              ret = '🧑‍🚒' + key
+              break
             }
             if (key.indexOf('園児') !== -1) {
-              ret = '👼‍' + key;
-              break;
+              ret = '👼‍' + key
+              break
             }
             if (key.indexOf('運送') !== -1) {
-              ret = '🚚‍' + key;
-              break;
+              ret = '🚚‍' + key
+              break
             }
             if (key.indexOf('運転手') !== -1) {
-              ret = '🚚‍' + key;
-              break;
+              ret = '🚚‍' + key
+              break
             }
             if (key.indexOf('タクシー') !== -1) {
-              ret = '🚕‍' + key;
-              break;
+              ret = '🚕‍' + key
+              break
             }
             if (key.indexOf('土木') !== -1) {
-              ret = '🧑‍🏭‍' + key;
-              break;
+              ret = '🧑‍🏭‍' + key
+              break
             }
             if (key.indexOf('建築') !== -1) {
-              ret = '👩‍🏭‍' + key;
-              break;
+              ret = '👩‍🏭‍' + key
+              break
             }
-            break;
+            break
         }
-        return ret;
+        return ret
       },
     },
     cEx: {
@@ -2064,10 +2629,10 @@ const mm = {
   isLoadAllData: false,
   is_trigger_search: false,
   url_data: {
-    'path': props.dataPath,
-    'assets': 'covid19-assets.json',
-    'data': props.data,
-    'filer_files': props.selectableData
+    path: props.dataPath,
+    assets: 'covid19-assets.json',
+    data: props.data,
+    filer_files: props.selectableData,
   },
   chartGMap: {
     center: undefined,
@@ -2111,7 +2676,7 @@ const mm = {
     dataType: DT_DEF, // DT_DEF|DT_COVID,
     common: {
       unit: '',
-      unitPrefix: ''
+      unitPrefix: '',
     },
     chartGMap: {},
     chartSView: {},
@@ -2123,16 +2688,16 @@ const mm = {
       elasticY: true,
       isRangeChart: false,
       isFilterMissingCorrect: false,
-      labelType: 0            // 0:非表示 1:全て 2:min/maxのみ
+      labelType: 0, // 0:非表示 1:全て 2:min/maxのみ
     },
     chartDate2: {
-      chartType: "lines",     // lines|stacks
-      elasticY: true,　　　    // y軸の表示範囲を、0~yAxisMax()に動的に変化させる
-      elasticYMinMax: false,　// y軸の表示範囲を、yAxisMin()(not zero)~yAxisMax()に動的に変化させる
+      chartType: 'lines', // lines|stacks
+      elasticY: true, // y軸の表示範囲を、0~yAxisMax()に動的に変化させる
+      elasticYMinMax: false, // y軸の表示範囲を、yAxisMin()(not zero)~yAxisMax()に動的に変化させる
       //yDomain: [min,max],   // y軸の表示範囲を、min~maxに制限する。elasticY:falseになる
       isRangeChart: false,
       isFilterMissingCorrect: true,
-      labelType: 0            // 0:非表示 1:全て 2:min/maxのみ
+      labelType: 0, // 0:非表示 1:全て 2:min/maxのみ
     },
     chartYear: {},
     chartSeason: {},
@@ -2144,7 +2709,7 @@ const mm = {
     chartJobCat: {},
     chartEx: [],
     chartDetail: {},
-    assets: {}
+    assets: {},
   },
   dataOptionsChartKeys: [
     // [optionKey, pnlKey]
@@ -2170,44 +2735,44 @@ const mm = {
   // @out : mm.opt
   parseCsvOptions: function (urlQueryString) {
     if (urlQueryString) {
-      php_parse_str(urlQueryString, mm.opt);
-      gg.dt = parseInt(mm.opt.dataType);
+      php_parse_str(urlQueryString, mm.opt)
+      gg.dt = parseInt(mm.opt.dataType)
 
-      mm.opt.dataType = parseInt(mm.opt.dataType);
+      mm.opt.dataType = parseInt(mm.opt.dataType)
 
       if (mm.opt.searchPrefixDataIndex) {
-        mm.opt.searchPrefixDataIndex = parseInt(mm.opt.searchPrefixDataIndex);
+        mm.opt.searchPrefixDataIndex = parseInt(mm.opt.searchPrefixDataIndex)
       }
 
       if (mm.opt.isMakeAutocompleteData) {
-        mm.opt.isMakeAutocompleteData = Boolean(parseInt(mm.opt.isMakeAutocompleteData));
+        mm.opt.isMakeAutocompleteData = Boolean(parseInt(mm.opt.isMakeAutocompleteData))
       }
 
       // chart{xxx} 共通
       mm.dataOptionsChartKeys.forEach(keys => {
-        const key = keys[0];
+        const key = keys[0]
         if (mm.opt[key] === undefined) {
-          mm.opt[key] = {};
+          mm.opt[key] = {}
         }
         if (mm.opt[key]?.isHidden) {
-          mm.opt[key].isHidden = Boolean(parseInt(mm.opt[key].isHidden));
+          mm.opt[key].isHidden = Boolean(parseInt(mm.opt[key].isHidden))
         }
         if (mm.opt[key]?.isShow) {
-          mm.opt[key].isShow = Boolean(parseInt(mm.opt[key].isShow));
+          mm.opt[key].isShow = Boolean(parseInt(mm.opt[key].isShow))
         }
         if (mm.opt[key].isHidden) {
-          mm.opt[key].isShow = false;
+          mm.opt[key].isShow = false
         }
-      });
+      })
 
       // chartGMap
-      if (gg.dt === DT_COVID) mm.opt.chartGMap.isShow = false;
+      if (gg.dt === DT_COVID) mm.opt.chartGMap.isShow = false
       if (mm.opt.chartGMap.center) {
-        mm.opt.chartGMap.center.lat = parseFloat(mm.opt.chartGMap.center.lat);
-        mm.opt.chartGMap.center.lng = parseFloat(mm.opt.chartGMap.center.lng);
+        mm.opt.chartGMap.center.lat = parseFloat(mm.opt.chartGMap.center.lat)
+        mm.opt.chartGMap.center.lng = parseFloat(mm.opt.chartGMap.center.lng)
       }
       if (mm.opt.chartGMap.colorThreshold) {
-        mm.opt.chartGMap.colorThreshold = parseFloat(mm.opt.chartGMap.colorThreshold);
+        mm.opt.chartGMap.colorThreshold = parseFloat(mm.opt.chartGMap.colorThreshold)
       }
 
       // chartSView
@@ -2215,39 +2780,41 @@ const mm = {
       // chartTube
 
       // chartMap
-      if (gg.dt === DT_COVID) mm.opt.chartMap.isShow = true;
+      if (gg.dt === DT_COVID) mm.opt.chartMap.isShow = true
       if (mm.opt.chartMap.colors) {
-        mm.opt.chartMap.colors = JSON.parse(mm.opt.chartMap.colors);
+        mm.opt.chartMap.colors = JSON.parse(mm.opt.chartMap.colors)
       }
 
       // chartName
       if (mm.opt.chartName.isLabelAlphabet) {
-        mm.opt.chartName.isLabelAlphabet = Boolean(parseInt(mm.opt.chartName.isLabelAlphabet));
+        mm.opt.chartName.isLabelAlphabet = Boolean(parseInt(mm.opt.chartName.isLabelAlphabet))
       }
 
       // chartCity
       if (mm.opt.chartCity.orderYmd) {
-        mm.opt.chartCity.orderYmd = Boolean(parseInt(mm.opt.chartCity.orderYmd));
+        mm.opt.chartCity.orderYmd = Boolean(parseInt(mm.opt.chartCity.orderYmd))
         if (mm.opt.chartCity.orderUI) {
-          mm.opt.chartCity.orderUI = Boolean(parseInt(mm.opt.chartCity.orderUI));
+          mm.opt.chartCity.orderUI = Boolean(parseInt(mm.opt.chartCity.orderUI))
         }
       }
 
       // chartDate
-      mm.opt.chartDate.elasticY = Boolean(parseInt(mm.opt.chartDate.elasticY ?? 1));
-      mm.opt.chartDate.width = isNaN(mm.opt.chartDate.width) ? undefined : parseInt(mm.opt.chartDate.width);
+      mm.opt.chartDate.elasticY = Boolean(parseInt(mm.opt.chartDate.elasticY ?? 1))
+      mm.opt.chartDate.width = isNaN(mm.opt.chartDate.width)
+        ? undefined
+        : parseInt(mm.opt.chartDate.width)
 
       // chartDate2
-      mm.opt.chartDate2.elasticY = Boolean(parseInt(mm.opt.chartDate2.elasticY ?? 1));
+      mm.opt.chartDate2.elasticY = Boolean(parseInt(mm.opt.chartDate2.elasticY ?? 1))
       if (mm.opt.chartDate2 === undefined) {
-        mm.opt.chartDate2 = {chartType: mm.config.cDate2.chartType};
+        mm.opt.chartDate2 = { chartType: mm.config.cDate2.chartType }
       }
 
       // chartYear
       if (mm.opt.chartYear.isLegend) {
-        mm.opt.chartYear.isLegend = (parseInt(mm.opt.chartYear.isLegend) ? true : false)
+        mm.opt.chartYear.isLegend = parseInt(mm.opt.chartYear.isLegend) ? true : false
       } else {
-        mm.opt.chartYear.isLegend = true;
+        mm.opt.chartYear.isLegend = true
       }
       // chartSeason
 
@@ -2255,235 +2822,235 @@ const mm = {
 
       // chartSex
       if (mm.opt.chartSex.unit) {
-        mm.opt.chartSex.unit = JSON.parse(mm.opt.chartSex.unit);
+        mm.opt.chartSex.unit = JSON.parse(mm.opt.chartSex.unit)
         // COL_SEX = mm.opt.chartSex.unit;
         if (mm.opt.chartSex.unit !== null) {
-          SEX_LABEL = mm.opt.chartSex.unit;
+          SEX_LABEL = mm.opt.chartSex.unit
         }
       }
       if (mm.opt.chartSex.scale) {
-        const s = parseInt(mm.opt.chartSex.scale);
-        if (!isNaN(s)) mm.opt.chartSex.scale = s;
+        const s = parseInt(mm.opt.chartSex.scale)
+        if (!isNaN(s)) mm.opt.chartSex.scale = s
       }
       if (mm.opt.chartSex.isLegend) {
-        mm.opt.chartSex.isLegend = (parseInt(mm.opt.chartSex.isLegend) ? true : false)
+        mm.opt.chartSex.isLegend = parseInt(mm.opt.chartSex.isLegend) ? true : false
       }
 
       // chartAge
       if (mm.opt.chartAge.unit) {
-        mm.opt.chartAge.unit = JSON.parse(mm.opt.chartAge.unit);
+        mm.opt.chartAge.unit = JSON.parse(mm.opt.chartAge.unit)
         if (mm.opt.chartAge.unit !== null) {
-          mm.chartStack[STACK_AGE] = mm.opt.chartAge.unit;
+          mm.chartStack[STACK_AGE] = mm.opt.chartAge.unit
         }
       } else {
-        mm.opt.chartAge.unit = null;
+        mm.opt.chartAge.unit = null
       }
       if (mm.opt.chartAge.scale) {
-        const s = parseInt(mm.opt.chartAge.scale);
-        if (!isNaN(s)) mm.opt.chartAge.scale = s;
+        const s = parseInt(mm.opt.chartAge.scale)
+        if (!isNaN(s)) mm.opt.chartAge.scale = s
       }
-
 
       // chartCond
 
       // chartJob
-      mm.is_job_cate = !mm.opt.chartJobCat.isHidden;
+      mm.is_job_cate = !mm.opt.chartJobCat.isHidden
 
       // chartEx[]
-      if (mm.opt.chartEx === undefined) mm.opt.chartEx = [];
+      if (mm.opt.chartEx === undefined) mm.opt.chartEx = []
       for (let k = 0; k < pnl.ex.length; k++) {
-        if (mm.opt.chartEx[k] === undefined) mm.opt.chartEx[k] = {};
+        if (mm.opt.chartEx[k] === undefined) mm.opt.chartEx[k] = {}
         if (mm.opt.chartEx[k]?.scale) {
-          const s = parseInt(mm.opt.chartEx[k].scale);
-          if (!isNaN(s)) mm.opt.chartEx[k].scale = s;
+          const s = parseInt(mm.opt.chartEx[k].scale)
+          if (!isNaN(s)) mm.opt.chartEx[k].scale = s
         } else {
-          mm.opt.chartEx[k].scale = false;
+          mm.opt.chartEx[k].scale = false
         }
-        mm.opt.chartEx[k].isLegend = mm.opt.chartEx[k].isLegend ? parseInt(mm.opt.chartEx[k].isLegend) : false;
+        mm.opt.chartEx[k].isLegend = mm.opt.chartEx[k].isLegend
+          ? parseInt(mm.opt.chartEx[k].isLegend)
+          : false
       }
 
       // chartDetail
-
     } else {
-      gg.dt = DT_DEF;
+      gg.dt = DT_DEF
     }
   },
   // 呼順1:データオプション(mm.opt)系をpnlに反映
   setPanelFromDataOptions: () => {
     if (mm.opt.dataType === DT_COVID) {
-      pnl.common.unit = '名';
+      pnl.common.unit = '名'
     }
     if (mm.opt.common.unit) {
-      pnl.common.unit = mm.opt.common.unit;
+      pnl.common.unit = mm.opt.common.unit
     }
     if (mm.opt.common.unitPrefix) {
-      pnl.common.unitPrefix = mm.opt.common.unitPrefix;
+      pnl.common.unitPrefix = mm.opt.common.unitPrefix
     }
     if (mm.opt.dataReference) {
-      pnl.common.dataReference = mm.opt.dataReference;
+      pnl.common.dataReference = mm.opt.dataReference
     }
 
     // chart{xxx} 共通
     mm.dataOptionsChartKeys.forEach(keys => {
-      const key = keys[0];
-      const panelKey = keys[1];
-      if (pnl[panelKey] === undefined) return;
+      const key = keys[0]
+      const panelKey = keys[1]
+      if (pnl[panelKey] === undefined) return
       if (mm.opt[key]?.isHidden) {
-        pnl[panelKey].isHidden = mm.opt[key].isHidden;
+        pnl[panelKey].isHidden = mm.opt[key].isHidden
       }
       if (mm.opt[key]?.isShow) {
-        pnl[panelKey].isShow = mm.opt[key].isShow;
+        pnl[panelKey].isShow = mm.opt[key].isShow
       }
       if (mm.opt[key].isHidden) {
-        pnl[panelKey].isShow = false;
+        pnl[panelKey].isShow = false
       }
-    });
+    })
 
     // chartGMap
     if (mm.opt.chartGMap?.prefecture) {
-      pnl.gmap.chartGMap.prefecture = mm.opt.chartGMap.prefecture;
+      pnl.gmap.chartGMap.prefecture = mm.opt.chartGMap.prefecture
     }
-    pnl.gmap.chartGMap.colorThreshold = mm.opt.chartGMap?.colorThreshold ?? undefined;
-    pnl.gmap.chartGMap.center = mm.opt.chartGMap?.center;
+    pnl.gmap.chartGMap.colorThreshold = mm.opt.chartGMap?.colorThreshold ?? undefined
+    pnl.gmap.chartGMap.center = mm.opt.chartGMap?.center
 
     if (mm.opt.chartMap?.colors) {
-      pnl.map.colors = mm.opt.chartMap.colors;
+      pnl.map.colors = mm.opt.chartMap.colors
     }
 
     // chartMap
     if (mm.opt.chartMap.mapType === 'world') {
-      mm.map.isMapJapan = false;
-      pnl.map.title = '<i class="fa fa-map"></i>世界地図';
+      mm.map.isMapJapan = false
+      pnl.map.title = '<i class="fa fa-map"></i>世界地図'
 
-      jQuery.fn.vectorMap('addMap', 'world_mill', jvectormapWorldData);
+      jQuery.fn.vectorMap('addMap', 'world_mill', jvectormapWorldData)
     } else {
-      jQuery.fn.vectorMap('addMap', 'jp_merc', jvectormapJpData);
+      jQuery.fn.vectorMap('addMap', 'jp_merc', jvectormapJpData)
     }
 
     // chartDate2
     if (mm.opt.chartDate2 === undefined) {
-      mm.opt.chartDate2 = {chartType: mm.config.cDate2.chartType};
+      mm.opt.chartDate2 = { chartType: mm.config.cDate2.chartType }
     }
 
     // chartYear,chartSeason,chartWeek
     if (mm.opt.chartDate.isHidden) {
       pnl.year.isHidden = true
-      pnl.year.isShow = false;
+      pnl.year.isShow = false
       pnl.season.isHidden = true
-      pnl.season.isShow = false;
+      pnl.season.isShow = false
       pnl.week.isHidden = true
-      pnl.week.isShow = false;
+      pnl.week.isShow = false
     }
 
     // chartSex
     if (mm.opt.chartSex?.chartType) {
-      pnl.sex.chartType = mm.opt.chartSex.chartType;
+      pnl.sex.chartType = mm.opt.chartSex.chartType
     }
 
     // chartAge
     if (mm.opt.chartAge.unit !== undefined && mm.opt.chartAge.unit !== null) {
-      mm.chartStack[STACK_AGE] = mm.opt.chartAge.unit;
+      mm.chartStack[STACK_AGE] = mm.opt.chartAge.unit
     }
 
     // chartCity
     if (mm.opt.chartCity?.orderYmd) {
       if (mm.opt.chartCity.orderUI) {
-        pnl.city.orderUI = mm.opt.chartCity.orderUI;
+        pnl.city.orderUI = mm.opt.chartCity.orderUI
         if (pnl.city.orderUI) {
           if (pnl.city.orderCnt) {
-            pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix;
-            pnl.common.unit = mm.opt.chartCity.orderUIUnit;
+            pnl.common.unitPrefix = mm.opt.chartCity.orderUIUnitPrefix
+            pnl.common.unit = mm.opt.chartCity.orderUIUnit
           } else {
-            pnl.common.unitPrefix = mm.opt.common.unitPrefix;
-            pnl.common.unit = mm.opt.common.unit;
+            pnl.common.unitPrefix = mm.opt.common.unitPrefix
+            pnl.common.unit = mm.opt.common.unit
           }
         }
       }
     } else {
-      mm.opt.chartCity.orderYmd = false;
+      mm.opt.chartCity.orderYmd = false
     }
   },
   // 呼順2:データオプション(mm.opt)系をpnlに反映 - localStorage に設定ない場合のディフォルト値を設定
   setPanelFromDataOptionsAfterLocalStorageNone: () => {
     // chart{xxx} 共通
     mm.dataOptionsChartKeys.forEach(keys => {
-      const key = keys[0];
-      const panelKey = keys[1];
+      const key = keys[0]
+      const panelKey = keys[1]
       if (mm.opt[key].isShow !== undefined) {
         if (pnl[panelKey] !== undefined) {
-          pnl[panelKey].isShow = mm.opt[key].isShow;
+          pnl[panelKey].isShow = mm.opt[key].isShow
         }
       }
-    });
+    })
 
     // chartGMap
-    if (gg.dt === DT_COVID) pnl.gmap.isShow = false;
+    if (gg.dt === DT_COVID) pnl.gmap.isShow = false
 
     // chartMap
     if (mm.opt.chartMap.isShow === undefined) {
-      pnl.map.isShow = gg.dt === DT_COVID;
+      pnl.map.isShow = gg.dt === DT_COVID
     }
 
     // chartDate2
-    pnl.date.chart2.isShow = mm.opt.chartDate2?.isShow ?? false;
+    pnl.date.chart2.isShow = mm.opt.chartDate2?.isShow ?? false
 
     // chartEx
     pnl.ex.forEach((panel, index) => {
-      if (panel.isHidden) return;
-      panel.isShow = mm.opt.chartEx[index]?.isShow ? true : false;
-    });
+      if (panel.isHidden) return
+      panel.isShow = mm.opt.chartEx[index]?.isShow ? true : false
+    })
   },
   // 呼順3:データオプション(mm.opt)系をpnlに反映 - データロード後
   setPanelFromDataOptionsAfterLoad: () => {
-    if (isSp) pnl.common.toolbar.isShow = true;
-    pnl.common.toolbar.isDivShow = pnl.common.toolbar.isShow;
+    if (isSp) pnl.common.toolbar.isShow = true
+    pnl.common.toolbar.isDivShow = pnl.common.toolbar.isShow
 
-    if(gg.dt === DT_COVID) {
-      pnl.ana.href = location.origin + location.pathname + `?data=${mm.url_data.data}`;
+    if (gg.dt === DT_COVID) {
+      pnl.ana.href = location.origin + location.pathname + `?data=${mm.url_data.data}`
     }
     // chartEx
     pnl.ex.forEach((panel, index) => {
-      if (panel.isHidden) return;
+      if (panel.isHidden) return
 
       if (panel.isDcSunburstChart) {
-        mm.setPanelSunburstChartStyle(panel, index);
-        return;
+        mm.setPanelSunburstChartStyle(panel, index)
+        return
       }
 
-      panel.elasticX = mm.opt.chartEx[index]?.orderDesc ?? false;
-    });
+      panel.elasticX = mm.opt.chartEx[index]?.orderDesc ?? false
+    })
 
-    pnl.ana.isHidden = gg.dt !== DT_COVID;
+    pnl.ana.isHidden = gg.dt !== DT_COVID
   },
 
   // サンバーストチャートのスタイル設定
   setPanelSunburstChartStyle: (panel, index) => {
     // サイズは、localStorage の設定がなければ、Jsonオプションの設定を利用
-    if (panel.style !== '') return;
+    if (panel.style !== '') return
 
-    const chartConfig = mm.opt.chartEx[index]?.dcSunburstChart;
-    if (!chartConfig) return;
+    const chartConfig = mm.opt.chartEx[index]?.dcSunburstChart
+    if (!chartConfig) return
 
-    const styles = [];
+    const styles = []
 
     // 幅の設定
     if (chartConfig.width) {
-      const marginLeft = chartConfig.margins?.left ?? 0;
-      const totalWidth = chartConfig.width + marginLeft;
-      styles.push(`width:${totalWidth}px`);
+      const marginLeft = chartConfig.margins?.left ?? 0
+      const totalWidth = chartConfig.width + marginLeft
+      styles.push(`width:${totalWidth}px`)
     }
 
     // 高さの設定
     if (chartConfig.height) {
-      styles.push(`height:${chartConfig.height}px`);
+      styles.push(`height:${chartConfig.height}px`)
     }
 
-    panel.style += styles.join(';') + (styles.length > 0 ? ';' : '');
+    panel.style += styles.join(';') + (styles.length > 0 ? ';' : '')
   },
   data_hdr: [],
 
   data: [], // ※mm.ndx().all() Pointer
-  data3: [],         //(感染・PCR・死亡・病床)のデータ
+  data3: [], //(感染・PCR・死亡・病床)のデータ
 
   names: [],
   namesCount: {},
@@ -2546,7 +3113,7 @@ const mm = {
   map: {
     doDraw: true,
     isSelectedRegions: false,
-    isMapJapan: true
+    isMapJapan: true,
   },
   d3fmt: v => d3.format(v < 1000 ? 'd' : '.2s')(v),
   util: {
@@ -2554,543 +3121,624 @@ const mm = {
     // @pathColExt:<path>:<imageNameColumIndex>:<extension>
     // 例: @pathColExt:/im/photozou/thumb:7:jpg
     parseOptionImagePath: (imagePath, d) => {
-      let ret = null;
-      const pathColExt = imagePath.split(':');
+      let ret = null
+      const pathColExt = imagePath.split(':')
       if (pathColExt.length === 4) {
-        ret = `${pathColExt[1]}/${d[pathColExt[2]]}.${pathColExt[3]}`;
+        ret = `${pathColExt[1]}/${d[pathColExt[2]]}.${pathColExt[3]}`
       }
-      return ret;
+      return ret
     },
     // [scale]オプションを解釈
     // @round:<precision>
     // 例 @round:2
-    parseOptionScale: (scale) => {
-      let s = typeof (scale) === 'string' ? scale.split('@round:') : [];
+    parseOptionScale: scale => {
+      let s = typeof scale === 'string' ? scale.split('@round:') : []
       if (s.length > 1) {
-        return parseInt(s[1]);
+        return parseInt(s[1])
       } else {
-        return null;
+        return null
       }
     },
-    getFileNameParts: (filename) => {
-      const base = filename.split('?')[0];  // パラメータ部分を除去
-      const lastDotIndex = base.lastIndexOf('.');
-      if (lastDotIndex === -1) return {name: base, ext: ''};
+    getFileNameParts: filename => {
+      const base = filename.split('?')[0] // パラメータ部分を除去
+      const lastDotIndex = base.lastIndexOf('.')
+      if (lastDotIndex === -1) return { name: base, ext: '' }
 
       return {
         name: base.slice(0, lastDotIndex),
-        ext: base.slice(lastDotIndex + 1)
-      };
+        ext: base.slice(lastDotIndex + 1),
+      }
     },
     // 全角を2、半角を1として文字列サイズを取得
-    getStrLen: (str) => {
-      return stringWidth(str);
+    getStrLen: str => {
+      return stringWidth(str)
     },
     // 文字列配列中の最大文字サイズを取得
-    arrStrMaxLen: (arrStr) => {
-      return _.max(_.map(arrStr, d => mm.util.getStrLen(d)));
+    arrStrMaxLen: arrStr => {
+      return _.max(_.map(arrStr, d => mm.util.getStrLen(d)))
     },
-    isHankaku: (str) => {
+    isHankaku: str => {
       // string-widthを使用してより正確な半角判定
       // 文字列全体の幅が文字数と等しければ半角のみ
-      return stringWidth(str) === str.length;
+      return stringWidth(str) === str.length
     },
-    toZenkaku: (str) => {
-      return str.replace(/[A-Za-z0-9]/g, (s) =>
-        String.fromCharCode(s.charCodeAt(0) + 0xFEE0)
-      );
+    toZenkaku: str => {
+      return str.replace(/[A-Za-z0-9]/g, s => String.fromCharCode(s.charCodeAt(0) + 0xfee0))
     },
     // 名前に付加されたタグ系情報の削除
     removeLabelSuffix: function (d) {
-      let name = d;
+      let name = d
       // case: <Label>(<XXX>) -> <Label>
       if (d.indexOf('(') !== -1) {
-        name = d.split('(')[0];
+        name = d.split('(')[0]
       }
-      name = name.replace(new RegExp(`[ ♂♀]|${TAGICON_DS}|${TAGICON_CD}`, 'g'), '');
+      name = name.replace(new RegExp(`[ ♂♀]|${TAGICON_DS}|${TAGICON_CD}`, 'g'), '')
       if (mm.opt?.removeLabelSuffixType === 'c') {
         // nameの後ろのアルファベット記号を除去。 ex) プレイヤーC -> プレイヤー プレイヤーC+ -> プレイヤー
         // ただし、数字の場合は除去しない。 ex) プレイヤー2 -> プレイヤー2
         // ただし、nameがすべてアルファベットの場合は除去しない ex) Player2 -> Player2
-        const isAlpha = /^[A-Za-z]+$/.test(name);
+        const isAlpha = /^[A-Za-z]+$/.test(name)
         if (!isAlpha) {
-          name = name.replace(/[A-Za-z]+$/, '');
+          name = name.replace(/[A-Za-z]+$/, '')
         }
       }
       return name
     },
     initPanelsWH: function () {
-      const pos = mm.util.relToAbsPos('#panels');
-      const h = parseInt(window.innerHeight - pos.top + 20);
-      $('#panels').css('height', h + 'px');
+      const pos = mm.util.relToAbsPos('#panels')
+      const h = parseInt(window.innerHeight - pos.top + 20)
+      $('#panels').css('height', h + 'px')
 
       if (!isSp) {
-        if (pnl.year.style === '') $('#panel_year').width(mm.chartYear.width());
-        if (pnl.week.style === '') $('#panel_week').width(mm.chartWeek.width());
-        if (pnl.age.style === '') $('#panel_age').width(mm.chartAge.width());
+        if (pnl.year.style === '') $('#panel_year').width(mm.chartYear.width())
+        if (pnl.week.style === '') $('#panel_week').width(mm.chartWeek.width())
+        if (pnl.age.style === '') $('#panel_age').width(mm.chartAge.width())
         if (pnl.cond.style === '') {
-          const w = mm.opt.chartCond.hasWindRoseChart ? 800 : mm.chartCond.width();
-          $('#panel_cond').width(w);
+          const w = mm.opt.chartCond.hasWindRoseChart ? 800 : mm.chartCond.width()
+          $('#panel_cond').width(w)
         }
         for (let k = 0; k < pnl.ex.length; k++) {
-          const ex = pnl.ex[k];
+          const ex = pnl.ex[k]
           if (ex.isHidden || ex.isDcSunburstChart) continue
-          if (ex.style !== '') continue;
-          $(`#panel_ex_${k}`).width(mm.chartEx[k].width());
+          if (ex.style !== '') continue
+          $(`#panel_ex_${k}`).width(mm.chartEx[k].width())
         }
       }
     },
     relToAbsPos: selector => {
-      const o = $(selector);
-      const isNone = o.css('display') === 'none'; // display:noneの時positionが取得できない対策
-      if (isNone) o.css('display', '');
-      const relativeOffset = o.position();
-      if (isNone) o.css('display', 'none');
-      const parentOffset = o.offsetParent().offset();
-      return {top: relativeOffset.top + parentOffset.top, left: relativeOffset.left + parentOffset.left}
+      const o = $(selector)
+      const isNone = o.css('display') === 'none' // display:noneの時positionが取得できない対策
+      if (isNone) o.css('display', '')
+      const relativeOffset = o.position()
+      if (isNone) o.css('display', 'none')
+      const parentOffset = o.offsetParent().offset()
+      return {
+        top: relativeOffset.top + parentOffset.top,
+        left: relativeOffset.left + parentOffset.left,
+      }
     },
     pxToPer: (left, top, width, height, selector = null) => {
       // 画面サイズの取得
-      let screenWidth, screenHeight;
+      let screenWidth, screenHeight
       if (selector === null) {
-        screenWidth = window.innerWidth;
-        screenHeight = window.innerHeight;
+        screenWidth = window.innerWidth
+        screenHeight = window.innerHeight
       } else {
-        screenWidth = $(selector).width();
-        screenHeight = $(selector).height();
+        screenWidth = $(selector).width()
+        screenHeight = $(selector).height()
       }
 
       // パーセント変換
-      const leftPercent = (left / screenWidth) * 100;
-      const topPercent = (top / screenHeight) * 100;
-      const widthPercent = (width / screenWidth) * 100;
-      const heightPercent = (height / screenHeight) * 100;
+      const leftPercent = (left / screenWidth) * 100
+      const topPercent = (top / screenHeight) * 100
+      const widthPercent = (width / screenWidth) * 100
+      const heightPercent = (height / screenHeight) * 100
 
       // 結果をオブジェクトで返す
       return {
         left: `${leftPercent.toFixed(6)}%`,
         top: `${topPercent.toFixed(6)}%`,
         width: `${widthPercent.toFixed(6)}%`,
-        height: `${heightPercent.toFixed(6)}%`
-      };
+        height: `${heightPercent.toFixed(6)}%`,
+      }
     },
     // 住所から都道府県名を抽出
-    getPref: (address) => {
+    getPref: address => {
       for (const prefecture of PREFECTURES) {
         if (address.startsWith(prefecture)) {
-          return prefecture;
+          return prefecture
         }
       }
-      return address;
+      return address
     },
     isMatchRegexI: (word, keyword) => {
       try {
         // 半角・全角スペース（連続も含む）は '|'に置換してOR検索も可能とする
-        const keywordOR = keyword.replace(/\s+/g, '|');
-        const regex = new RegExp(keywordOR, 'i');
-        return regex.test(word);
+        const keywordOR = keyword.replace(/\s+/g, '|')
+        const regex = new RegExp(keywordOR, 'i')
+        return regex.test(word)
       } catch (error) {
         return word.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
       }
     },
     // 1行のCSVをパースする関数
-    parseCSVLine: (line) => {
-      const result = [];
-      let current = '';
-      let inQuotes = false;
+    parseCSVLine: line => {
+      const result = []
+      let current = ''
+      let inQuotes = false
 
       for (let i = 0; i < line.length; i++) {
-        const char = line[i];
+        const char = line[i]
         if (char === '"') {
-          inQuotes = !inQuotes;
+          inQuotes = !inQuotes
         } else if (char === ',' && !inQuotes) {
-          result.push(current.trim());
-          current = '';
+          result.push(current.trim())
+          current = ''
         } else {
-          current += char;
+          current += char
         }
       }
 
       if (current) {
-        result.push(current.trim());
+        result.push(current.trim())
       }
 
-      return result;
+      return result
     },
-    loadJSON: async (filePath) => {
+    loadJSON: async filePath => {
       try {
-        const response = await fetch(filePath);
+        const response = await fetch(filePath)
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          throw new Error(`HTTP error! Status: ${response.status}`)
         }
-        return await response.json();
+        return await response.json()
       } catch (error) {
-        throw error;
+        throw error
       }
     },
     // Option付CSVファイルをパース
     parseOptionsCSV: (url, doParseOptions = false) => {
       return fetch(url)
-        .then((response) => {
+        .then(response => {
           if (response.ok) {
-            return response.text();
+            return response.text()
           } else {
-            const msg = 'エラー\nURLにデータが存在しません。\nURL: ' + response.url;
-            window.alert(msg);
-            window.history.back();
+            const msg = 'エラー\nURLにデータが存在しません。\nURL: ' + response.url
+            window.alert(msg)
+            window.history.back()
             // throw new Error('Fetch failed: ' + msg);
           }
         })
         .then(text => {
-          const lines = text.split('\n');
-          let header = [];
-          let data = [];
-          let urlQueryString = '';
-          let dataStartIndex = 1;
-          let optionsStartIndex = null;
+          const lines = text.split('\n')
+          let header = []
+          let data = []
+          let urlQueryString = ''
+          let dataStartIndex = 1
+          let optionsStartIndex = null
 
           // ヘッダーをパース
-          header = mm.util.parseCSVLine(lines[0]);
+          header = mm.util.parseCSVLine(lines[0])
 
           // オプションを探してパースする
           for (let i = lines.length - 1; i >= 0; i--) {
-            const line = lines[i].trim();
+            const line = lines[i].trim()
             if (line.indexOf('@CsvOptions:') === 0) {
-              optionsStartIndex = i;
-              break;
+              optionsStartIndex = i
+              break
             }
           }
           if (optionsStartIndex !== null) {
             function trimCommasAndQuotes(str) {
               // 前後のカンマとダブルクォートをトリム && ""を"に変換
-              return str.replace(/^[,"]+|[,"]+$/g, '').replace(/""/g, '"');
+              return str.replace(/^[,"]+|[,"]+$/g, '').replace(/""/g, '"')
             }
 
             for (let i = optionsStartIndex + 1; i < lines.length; i++) {
-              const line = trimCommasAndQuotes(lines[i].trim());
-              urlQueryString += `&${line}`;
+              const line = trimCommasAndQuotes(lines[i].trim())
+              urlQueryString += `&${line}`
             }
-            lines.splice(optionsStartIndex); // オプション以降の行を削除
-            if (doParseOptions) mm.parseCsvOptions(urlQueryString);
+            lines.splice(optionsStartIndex) // オプション以降の行を削除
+            if (doParseOptions) mm.parseCsvOptions(urlQueryString)
           }
 
           // DT_COVID以外の場合のhiddenなインデックスをキャッシュ
-          let hiddenExIndicesSet = null;
+          let hiddenExIndicesSet = null
           if (gg.dt !== DT_COVID) {
-            hiddenExIndicesSet = new Set();
+            hiddenExIndicesSet = new Set()
             for (let j = 0; j < mm.opt.chartEx.length; j++) {
               if (mm.opt.chartEx[j] !== undefined && mm.opt.chartEx[j].isHidden) {
-                hiddenExIndicesSet.add(D_EX0 + j);
+                hiddenExIndicesSet.add(D_EX0 + j)
               }
             }
           }
 
           // データをパース
           for (let i = dataStartIndex; i < lines.length; i++) {
-            const line = lines[i].trim();
+            const line = lines[i].trim()
             if (line) {
               let row = line.indexOf('"') === -1 ? line.split(',') : mm.util.parseCSVLine(line)
               if (gg.dt === DT_COVID) {
-                row[D_SEX] = parseInt(row[D_SEX]);
-                row[D_AGE] = parseInt(row[D_AGE]);
-                row[D_JOBCAT] = parseInt(row[D_JOBCAT]);
+                row[D_SEX] = parseInt(row[D_SEX])
+                row[D_AGE] = parseInt(row[D_AGE])
+                row[D_JOBCAT] = parseInt(row[D_JOBCAT])
               } else {
                 if (mm.opt.chartSex.unit !== undefined && mm.opt.chartSex.unit !== null) {
-                  row[D_SEX] = parseInt(row[D_SEX]);
+                  row[D_SEX] = parseInt(row[D_SEX])
                 }
                 if (mm.opt.chartAge.unit !== undefined && mm.opt.chartAge.unit !== null) {
-                  row[D_AGE] = parseInt(row[D_AGE]);
+                  row[D_AGE] = parseInt(row[D_AGE])
                 }
                 if (mm.opt.chartCity.orderYmd) {
-                  row[D_CND] = row[D_CND] === DN_KEY2 ? '?' : row[D_CND];
+                  row[D_CND] = row[D_CND] === DN_KEY2 ? '?' : row[D_CND]
                 }
 
                 // 効率的なメモリ使用：hidden要素のnull化（DT_COVID以外のみ）
                 if (hiddenExIndicesSet.size > 0) {
                   // より効率的な配列作成とhidden要素のnull化
-                  const newRow = new Array(row.length);
+                  const newRow = new Array(row.length)
                   for (let k = 0; k < row.length; k++) {
-                    newRow[k] = hiddenExIndicesSet.has(k) ? null : row[k];
+                    newRow[k] = hiddenExIndicesSet.has(k) ? null : row[k]
                   }
-                  row = newRow;
+                  row = newRow
                 }
               }
-              if (row[D_CNT] !== undefined) row[D_CNT] = parseInt(row[D_CNT]);
+              if (row[D_CNT] !== undefined) row[D_CNT] = parseInt(row[D_CNT])
 
-              data.push(row);
+              data.push(row)
             }
           }
 
-          return {header, data, options: mm.opt};
+          return { header, data, options: mm.opt }
         })
         .catch(error => {
-          console.error('Error parsing CSV:', error);
-          throw error;
-        });
+          console.error('Error parsing CSV:', error)
+          throw error
+        })
     },
-    randWeights: (weights) => {
-      const total = Object.values(weights).reduce((sum, weight) => sum + weight, 0);
-      const random = Math.floor(Math.random() * total) + 1;
-      let current = 0;
+    randWeights: weights => {
+      const total = Object.values(weights).reduce((sum, weight) => sum + weight, 0)
+      const random = Math.floor(Math.random() * total) + 1
+      let current = 0
       for (const key in weights) {
-        current += weights[key];
+        current += weights[key]
         if (random <= current) {
-          return key;
+          return key
         }
       }
     },
     stackedTitle: (d, keyFormat = null, unit = '名') => {
       // unit = ' ' + unit;
-      const isBar = isNaN(d.value);
-      const keyStr = keyFormat ? keyFormat(d.key) : d.key;
+      const isBar = isNaN(d.value)
+      const keyStr = keyFormat ? keyFormat(d.key) : d.key
 
       if (!isBar) {
         //N日 移動平均
-        return keyStr + '\n週間移動平均: ' + php_number_format(d.value) + unit;
+        return keyStr + '\n週間移動平均: ' + php_number_format(d.value) + unit
       }
 
-      let flt = mm.chartName.filters();
-      let prefMode = flt.length > 1 && flt.length <= mm.chartStack[STACK_PL1].length;
+      let flt = mm.chartName.filters()
+      let prefMode = flt.length > 1 && flt.length <= mm.chartStack[STACK_PL1].length
 
-      let suffix = '';
+      let suffix = ''
       if (gg.dt === DT_COVID) {
-        let ymd = moment(d.key).format('YYYY-MM-DD');
+        let ymd = moment(d.key).format('YYYY-MM-DD')
         const msgMap = mm.opt.assets.chartDateLineYmdMsg.reduce((map, [key, value]) => {
-          map[key] = value;
-          return map;
-        }, {});
-        suffix = msgMap[ymd] || '';
+          map[key] = value
+          return map
+        }, {})
+        suffix = msgMap[ymd] || ''
       }
 
       // case chatDate2
       if (gg.dt === DT_COVID && d.value.pre) {
         if (prefMode) {
           let s = ''
-          let nmcnt = d.value.pre[mm.chartDate2Mode];
-          let total = 0;
+          let nmcnt = d.value.pre[mm.chartDate2Mode]
+          let total = 0
           for (let f of flt) {
-            s += nmcnt[f] ? (f + ': ' + php_number_format(nmcnt[f]) + unit + '\n') : '';
-            total += nmcnt[f];
+            s += nmcnt[f] ? f + ': ' + php_number_format(nmcnt[f]) + unit + '\n' : ''
+            total += nmcnt[f]
           }
-          return keyStr + '\n────────\n' + s + (flt.length > 1 ? '────────\n計: ' + php_number_format(total) + unit : '') + '\n' + suffix;
+          return (
+            keyStr +
+            '\n────────\n' +
+            s +
+            (flt.length > 1 ? '────────\n計: ' + php_number_format(total) + unit : '') +
+            '\n' +
+            suffix
+          )
         } else {
-          return keyStr + '\n────────\n' +
-            '計: ' + (d.value.all[mm.chartDate2Mode] === 0 ? '' : php_number_format(d.value.all[mm.chartDate2Mode]) + unit + '\n') + suffix;
+          return (
+            keyStr +
+            '\n────────\n' +
+            '計: ' +
+            (d.value.all[mm.chartDate2Mode] === 0
+              ? ''
+              : php_number_format(d.value.all[mm.chartDate2Mode]) + unit + '\n') +
+            suffix
+          )
         }
       }
 
       if (prefMode) {
-        let s = '';
+        let s = ''
         for (let f of flt) {
           if (d.value.nmcnt[f]) {
-            const itemValue = d.value.nmcnt[f];
-            const itemPercent = _.round(100 * itemValue / d.value.total, 1);
-            s += f + ': ' + itemValue + unit +
-              (itemPercent !== 100 ? (' (' + itemPercent + '%)') : '') + '\n';
+            const itemValue = d.value.nmcnt[f]
+            const itemPercent = _.round((100 * itemValue) / d.value.total, 1)
+            s +=
+              f +
+              ': ' +
+              itemValue +
+              unit +
+              (itemPercent !== 100 ? ' (' + itemPercent + '%)' : '') +
+              '\n'
           }
         }
-        return keyStr + '\n────────\n' + s + (flt.length > 1 ? '────────\n計: ' + d.value.total + unit : '') + '\n' + suffix;
+        return (
+          keyStr +
+          '\n────────\n' +
+          s +
+          (flt.length > 1 ? '────────\n計: ' + d.value.total + unit : '') +
+          '\n' +
+          suffix
+        )
       } else if (pnl.date.stack_type === STACK_AGE) {
-        let s = '';
-        let per = 0;
+        let s = ''
+        let per = 0
         for (var i = 0; i < d.value.agcnt.length; i++) {
           if (d.value.agcnt[i] === 0) continue
-          per = _.round(100 * d.value.agcnt[i] / d.value.total, 1);
-          let nm = mm.chartStack[STACK_AGE][i];
-          s += php_sprintf("%' -8s", nm) + ': ' + php_sprintf("%' 3s", php_number_format(d.value.agcnt[i])) + unit +
-            (per !== 100 ? (' (' + per + '%)') : '') + '\n';
+          per = _.round((100 * d.value.agcnt[i]) / d.value.total, 1)
+          let nm = mm.chartStack[STACK_AGE][i]
+          s +=
+            php_sprintf("%' -8s", nm) +
+            ': ' +
+            php_sprintf("%' 3s", php_number_format(d.value.agcnt[i])) +
+            unit +
+            (per !== 100 ? ' (' + per + '%)' : '') +
+            '\n'
         }
-        return keyStr + '\n──────────\n' + s + (per === 100 ? '' : ('──────────\n計: ' + php_number_format(d.value.total) + unit)) + '\n' + suffix;
-      } else { // stack_type==='con'
+        return (
+          keyStr +
+          '\n──────────\n' +
+          s +
+          (per === 100 ? '' : '──────────\n計: ' + php_number_format(d.value.total) + unit) +
+          '\n' +
+          suffix
+        )
+      } else {
+        // stack_type==='con'
         if (gg.dt === DT_COVID) {
-          return keyStr + '\n────────\n' +
+          return (
+            keyStr +
+            '\n────────\n' +
             (d.value.lv_a === 0 ? '' : CND_LV_A + ': ' + d.value.lv_a + unit + '\n') +
             (d.value.lv_b === 0 ? '' : CND_LV_B + ': ' + d.value.lv_b + unit + '\n') +
             (d.value.lv_c === 0 ? '' : CND_LV_C + ': ' + d.value.lv_c + unit + '\n') +
             (d.value.lv_d === 0 ? '' : CND_LV_D + ': ' + d.value.lv_d + unit + '\n') +
             (d.value.lv_e === 0 ? '' : CND_LV_E + ': ' + d.value.lv_e + unit + '\n') +
-            '────────\n計: ' + php_number_format(d.value.total) + unit + '\n' + suffix;
+            '────────\n計: ' +
+            php_number_format(d.value.total) +
+            unit +
+            '\n' +
+            suffix
+          )
         } else {
-          let s = '';
-          let per = 0;
+          let s = ''
+          let per = 0
           for (var i = 0; i < d.value.cdcnt.length; i++) {
             if (d.value.cdcnt[i] === 0) continue
-            per = _.round(100 * d.value.cdcnt[i] / d.value.total, 1);
-            let nm = mm.chartStack[STACK_CND][i];
-            s += php_sprintf("%' -8s", nm) + ': ' + php_sprintf("%' 3s", php_number_format(d.value.cdcnt[i])) + unit +
-              (per !== 100 ? (' (' + per + '%)') : '') + '\n';
+            per = _.round((100 * d.value.cdcnt[i]) / d.value.total, 1)
+            let nm = mm.chartStack[STACK_CND][i]
+            s +=
+              php_sprintf("%' -8s", nm) +
+              ': ' +
+              php_sprintf("%' 3s", php_number_format(d.value.cdcnt[i])) +
+              unit +
+              (per !== 100 ? ' (' + per + '%)' : '') +
+              '\n'
           }
-          return keyStr + '\n──────────\n' + s + (per === 100 ? '' : ('──────────\n計: ' + php_number_format(d.value.total) + unit)) + '\n' + suffix;
+          return (
+            keyStr +
+            '\n──────────\n' +
+            s +
+            (per === 100 ? '' : '──────────\n計: ' + php_number_format(d.value.total) + unit) +
+            '\n' +
+            suffix
+          )
         }
       }
     },
-    getStackName: (name) => {
-      let ret = name;
+    getStackName: name => {
+      let ret = name
       switch (pnl.date.stack_type) {
         case STACK_CND:
-          ret = name;
-          break;
+          ret = name
+          break
         case STACK_PL1:
-          ret = mm.chartName.filters()[+name.split(':')[1]];
-          break;
+          ret = mm.chartName.filters()[+name.split(':')[1]]
+          break
         case STACK_AGE:
-          ret = mm.opt.chartAge.unit ? mm.opt.chartAge.unit.findIndex(o => o === name) : name;
-          break;
+          ret = mm.opt.chartAge.unit ? mm.opt.chartAge.unit.findIndex(o => o === name) : name
+          break
       }
-      return ret;
+      return ret
     },
     // Unit単位でまるめる
     // 例: 10単位: 75=>70 83=>80 / 5単位: 72.5=>70 78.5=>75 / 2単位: 77.5=>76 78.2=78
     roundDownToScale: (value, unit) => {
-      return value - (value % unit);
+      return value - (value % unit)
     },
     // 少数第Nで四捨五入
     roundDownToScaleRound: (value, precision) => {
       return _.round(value, precision)
     },
     getScaledDimension: (dataIndex, scale, labelSuffix = '') => {
-      let dim;
+      let dim
       if (scale) {
         // 少数第Nで四捨五入書式:(@round:<precision>)の時
-        const precision = mm.util.parseOptionScale(scale);
+        const precision = mm.util.parseOptionScale(scale)
         if (precision !== null) {
           dim = mm.ndx.dimension(function (d) {
-            return mm.util.roundDownToScaleRound(d[dataIndex], precision) + labelSuffix;
-          });
+            return mm.util.roundDownToScaleRound(d[dataIndex], precision) + labelSuffix
+          })
         } else {
           dim = mm.ndx.dimension(function (d) {
-            return mm.util.roundDownToScale(d[dataIndex], scale) + labelSuffix;
-          });
+            return mm.util.roundDownToScale(d[dataIndex], scale) + labelSuffix
+          })
         }
       } else {
         dim = mm.ndx.dimension(function (d) {
-          return d[dataIndex] + labelSuffix;
-        });
+          return d[dataIndex] + labelSuffix
+        })
       }
-      return dim;
+      return dim
     },
     getLabelSuffixSex: () => {
-      return mm.opt.chartSex.labelSuffix ?? '';
+      return mm.opt.chartSex.labelSuffix ?? ''
     },
-    getScaledDimensionPref: (dataIndex) => {
+    getScaledDimensionPref: dataIndex => {
       return mm.ndx.dimension(function (d) {
-        let ret = d[dataIndex];
+        let ret = d[dataIndex]
         PREFECTURES.forEach(function (pre, i) {
           // preから 都と府と県の文字を取り除く
-          const pre2 = pre.replace(/[都府県]/g, '');
+          const pre2 = pre.replace(/[都府県]/g, '')
           // 都道府県＋市区町村名(d[dataIndex]) が pre を含む場合
           if (d[dataIndex].indexOf(pre2) !== -1) {
-            ret = pre;
-            return false;
+            ret = pre
+            return false
           }
         })
-        return ret;
-      });
+        return ret
+      })
     },
     getScaledDimensionSex: () => {
-      return mm.util.getScaledDimension(D_SEX, mm.opt.chartSex.scale, mm.util.getLabelSuffixSex());
+      return mm.util.getScaledDimension(D_SEX, mm.opt.chartSex.scale, mm.util.getLabelSuffixSex())
     },
     getLabelSuffixAge: () => {
-      return mm.opt.chartAge.labelSuffix ?? '';
+      return mm.opt.chartAge.labelSuffix ?? ''
     },
     getScaledDimensionAge: () => {
-      return mm.util.getScaledDimension(D_AGE, mm.opt.chartAge.scale, mm.util.getLabelSuffixAge());
+      return mm.util.getScaledDimension(D_AGE, mm.opt.chartAge.scale, mm.util.getLabelSuffixAge())
     },
     getLabelSuffixCond: () => {
-      return mm.opt.chartCond.labelSuffix ?? '';
+      return mm.opt.chartCond.labelSuffix ?? ''
     },
     getScaledDimensionCond: () => {
-      return mm.util.getScaledDimension(D_CND, mm.opt.chartCond.scale, mm.util.getLabelSuffixCond());
+      return mm.util.getScaledDimension(D_CND, mm.opt.chartCond.scale, mm.util.getLabelSuffixCond())
     },
     getChartDetailsHtml: (d, detailType, titleHref = '') => {
-      return `<tr><td>${pnl.name.title}</td><td>: <a target="_blank" href="${titleHref}">${d[D_PL1]}</a></td></tr>` +
-        (detailType !== 'name_light' && !pnl.city.isHidden ? `<tr><td>${pnl.city.title}</td><td>: ${d[D_PL2]}</td></tr>` : '') +
-        (pnl.date.isHidden ? '' : `<tr><td>${pnl.date.title}</td><td>: ${moment(d[D_YMD]).format('YYYY-MM-DD(ddd)')}</td></tr>`) +
-        (pnl.sex.isHidden ? '' : `<tr><td>${pnl.sex.title}</td><td>: ${mm.getLabelSex(d[D_SEX])}</td></tr>`) +
-        (pnl.age.isHidden ? '' : `<tr><td>${pnl.age.title}</td><td>: ${mm.getLabelAge(d[D_AGE])}</td></tr>`) +
-        (pnl.cond.isHidden ? '' : `<tr><td>${pnl.cond.title}</td><td>: ${mm.getLabelCond(d[D_CND])}</td></tr>`) +
-        (pnl.job.isHidden ? '' : `<tr><td>${pnl.job.title}</td><td>: ${d[D_JOB]}</td></tr>`);
+      return (
+        `<tr><td>${pnl.name.title}</td><td>: <a target="_blank" href="${titleHref}">${d[D_PL1]}</a></td></tr>` +
+        (detailType !== 'name_light' && !pnl.city.isHidden
+          ? `<tr><td>${pnl.city.title}</td><td>: ${d[D_PL2]}</td></tr>`
+          : '') +
+        (pnl.date.isHidden
+          ? ''
+          : `<tr><td>${pnl.date.title}</td><td>: ${moment(d[D_YMD]).format('YYYY-MM-DD(ddd)')}</td></tr>`) +
+        (pnl.sex.isHidden
+          ? ''
+          : `<tr><td>${pnl.sex.title}</td><td>: ${mm.getLabelSex(d[D_SEX])}</td></tr>`) +
+        (pnl.age.isHidden
+          ? ''
+          : `<tr><td>${pnl.age.title}</td><td>: ${mm.getLabelAge(d[D_AGE])}</td></tr>`) +
+        (pnl.cond.isHidden
+          ? ''
+          : `<tr><td>${pnl.cond.title}</td><td>: ${mm.getLabelCond(d[D_CND])}</td></tr>`) +
+        (pnl.job.isHidden ? '' : `<tr><td>${pnl.job.title}</td><td>: ${d[D_JOB]}</td></tr>`)
+      )
     },
-    getExChartDetailsHtml: (d) => {
-      let ret = '';
+    getExChartDetailsHtml: d => {
+      let ret = ''
       for (let k = 0; k < pnl.ex.length; k++) {
-        const ex = pnl.ex[k];
-        if (ex.isHidden) continue;
-        const v = mm.getLabelEx(d[D_EX0 + k], k);
-        ret += `<tr><td>${ex.title}</td><td>: ${v}</td></tr>`;
+        const ex = pnl.ex[k]
+        if (ex.isHidden) continue
+        const v = mm.getLabelEx(d[D_EX0 + k], k)
+        ret += `<tr><td>${ex.title}</td><td>: ${v}</td></tr>`
       }
-      return ret;
+      return ret
     },
     shortTitle: (text, maxLength = 8) => {
-      if (isSp) return text;
+      if (isSp) return text
 
       // string-widthを使用してより正確な文字幅計算
-      let currentLength = 0;
-      let cutIndex = 0;
+      let currentLength = 0
+      let cutIndex = 0
 
       for (const char of text) {
-        const charWidth = stringWidth(char);
+        const charWidth = stringWidth(char)
         if (currentLength + charWidth > maxLength) {
-          break;
+          break
         }
-        currentLength += charWidth;
-        cutIndex += char.length; // サロゲートペアの場合はlengthが2になる
+        currentLength += charWidth
+        cutIndex += char.length // サロゲートペアの場合はlengthが2になる
       }
 
-      const truncated = text.substring(0, cutIndex);
-      return truncated + (cutIndex < text.length ? '…' : '');
+      const truncated = text.substring(0, cutIndex)
+      return truncated + (cutIndex < text.length ? '…' : '')
     },
-    chartDateXAxisTickFormat: (s) => {
+    chartDateXAxisTickFormat: s => {
       // 設定 || データのレンジで ミクロ/マクロ を切り替える
-      const format = mm.opt.chartDate.format ?? (mm.data.length < 3000 ? 'M/Dddd' : 'YYYY/MM');
-      return moment(s).format(format);
-    }
+      const format = mm.opt.chartDate.format ?? (mm.data.length < 3000 ? 'M/Dddd' : 'YYYY/MM')
+      return moment(s).format(format)
+    },
   },
   // group_reduce function set (CND,PL1,AGE)
   group_reduce: {
     base: d => {
-      return (d[D_CNT] || 1);
+      return d[D_CNT] || 1
     },
     baseZero: d => {
-      return (d[D_CNT] || 0);
+      return d[D_CNT] || 0
     },
     add: (p, v, dir) => {
-      const c = dir * mm.group_reduce.base(v);
+      const c = dir * mm.group_reduce.base(v)
 
       // CND
       if (gg.dt === DT_COVID) {
-        p = mm.group_reduce_cnd_set(p, v[D_CND], c);
+        p = mm.group_reduce_cnd_set(p, v[D_CND], c)
       } else {
-        const cond = mm.opt.chartCond.scale ?
-          mm.util.roundDownToScale(v[D_CND], mm.opt.chartCond.scale) : v[D_CND];
-        p = mm.group_reduce_cnd_set_custom(p, mm.chartStackIdxCnd[cond + mm.util.getLabelSuffixCond()], c);
+        const cond = mm.opt.chartCond.scale
+          ? mm.util.roundDownToScale(v[D_CND], mm.opt.chartCond.scale)
+          : v[D_CND]
+        p = mm.group_reduce_cnd_set_custom(
+          p,
+          mm.chartStackIdxCnd[cond + mm.util.getLabelSuffixCond()],
+          c
+        )
       }
 
       // PL1
       let nm = v[D_PL1]
-      if (p.nmcnt[nm] === undefined) p.nmcnt[nm] = 0;
-      p.nmcnt[nm] += c;
+      if (p.nmcnt[nm] === undefined) p.nmcnt[nm] = 0
+      p.nmcnt[nm] += c
 
       // AGE
       if (mm.opt.chartAge.unit) {
-        p = mm.group_reduce_age_set_custom(p, v[D_AGE], c);
+        p = mm.group_reduce_age_set_custom(p, v[D_AGE], c)
       } else if (mm.opt.chartAge.unit === null) {
-        let age;
+        let age
         if (mm.opt.chartAge.scale) {
-          const precision = mm.util.parseOptionScale(mm.opt.chartAge.scale);
-          age = precision === null
-            ? mm.util.roundDownToScale(v[D_AGE], mm.opt.chartAge.scale)
-            : mm.util.roundDownToScaleRound(v[D_AGE], mm.opt.chartAge.scale);
+          const precision = mm.util.parseOptionScale(mm.opt.chartAge.scale)
+          age =
+            precision === null
+              ? mm.util.roundDownToScale(v[D_AGE], mm.opt.chartAge.scale)
+              : mm.util.roundDownToScaleRound(v[D_AGE], mm.opt.chartAge.scale)
         } else {
-          age = v[D_AGE];
+          age = v[D_AGE]
         }
-        p = mm.group_reduce_age_set_custom(p, mm.chartStackIdxAge[age + mm.util.getLabelSuffixAge()], c);
+        p = mm.group_reduce_age_set_custom(
+          p,
+          mm.chartStackIdxAge[age + mm.util.getLabelSuffixAge()],
+          c
+        )
       } else {
-        p = mm.group_reduce_age_set(p, v[D_AGE], c);
+        p = mm.group_reduce_age_set(p, v[D_AGE], c)
       }
 
-      p.total += c;
-      return p;
+      p.total += c
+      return p
     },
     append: (p, v) => mm.group_reduce.add(p, v, 1),
     remove: (p, v) => mm.group_reduce.add(p, v, -1),
@@ -3098,38 +3746,38 @@ const mm = {
       const o = {
         nmcnt: {},
         agcnt: new Int32Array(mm.chartStack[STACK_AGE].length),
-        total: 0
-      };
-      if (gg.dt === DT_COVID) {
-        o.lv_a = 0;
-        o.lv_b = 0;
-        o.lv_c = 0;
-        o.lv_d = 0;
-        o.lv_e = 0;
-      } else {
-        o.cdcnt = new Int32Array(mm.chartStack[STACK_CND].length);
+        total: 0,
       }
-      return o;
-    }
+      if (gg.dt === DT_COVID) {
+        o.lv_a = 0
+        o.lv_b = 0
+        o.lv_c = 0
+        o.lv_d = 0
+        o.lv_e = 0
+      } else {
+        o.cdcnt = new Int32Array(mm.chartStack[STACK_CND].length)
+      }
+      return o
+    },
   },
   // group_reduce light function set (CND)
   group_reduce_light: {
     add: (p, v, dir) => {
-      const c = dir * mm.group_reduce.base(v);
-      const l = v[D_CND];
-      p = mm.group_reduce_cnd_set(p, l, c);
-      p.total += c;
-      return p;
+      const c = dir * mm.group_reduce.base(v)
+      const l = v[D_CND]
+      p = mm.group_reduce_cnd_set(p, l, c)
+      p.total += c
+      return p
     },
     append: (p, v) => mm.group_reduce_light.add(p, v, 1),
     remove: (p, v) => mm.group_reduce_light.add(p, v, -1),
     init: (/*p, v*/) => {
-      return {lv_a: 0, lv_b: 0, lv_c: 0, lv_d: 0, lv_e: 0, total: 0};
-    }
+      return { lv_a: 0, lv_b: 0, lv_c: 0, lv_d: 0, lv_e: 0, total: 0 }
+    },
   },
   // 並び順 - 時間昇順。(制約:dimensionのgroupデータが1件のデータである事)
   orderYmd: d => {
-    return mm.ndx.all().find(d2 => d2[D_PL2] === d.key)[D_YMD];
+    return mm.ndx.all().find(d2 => d2[D_PL2] === d.key)[D_YMD]
   },
   dateStackPl1Names: [],
 
@@ -3137,135 +3785,184 @@ const mm = {
   chartStack: [
     [CND_LV_A, CND_LV_B, CND_LV_C, CND_LV_D, CND_LV_E],
     ['S:0', 'S:1', 'S:2', 'S:3', 'S:4'],
-    ['幼児', '10歳未満', '10代', '20代', '30代', '40代', '50代', '60代', '70代', '80代', '90代', '100代', DN_LABEL_DEF]
+    [
+      '幼児',
+      '10歳未満',
+      '10代',
+      '20代',
+      '30代',
+      '40代',
+      '50代',
+      '60代',
+      '70代',
+      '80代',
+      '90代',
+      '100代',
+      DN_LABEL_DEF,
+    ],
   ],
   chartStackIdxCnd: {},
   chartStackIdxAge: {},
 
   // datePickerのActive色にする日付を作成
   dateCntCreate: function () {
-    mm.dateCnt = {};
-    mm.dateCntMax = -1;
-    mm.dateCntTo = '00000000';
-    _.forEach(mm.gpDate.all(), (d) => {
-      let ymd = moment(d.key).format('YYYYMMDD');
-      mm.dateCnt[ymd] = d.value;
-      if (d.value > mm.dateCntMax) mm.dateCntMax = d.value;
-      if (d.value > 0 && ymd > mm.dateCntTo) mm.dateCntTo = ymd;
-    });
+    mm.dateCnt = {}
+    mm.dateCntMax = -1
+    mm.dateCntTo = '00000000'
+    _.forEach(mm.gpDate.all(), d => {
+      let ymd = moment(d.key).format('YYYYMMDD')
+      mm.dateCnt[ymd] = d.value
+      if (d.value > mm.dateCntMax) mm.dateCntMax = d.value
+      if (d.value > 0 && ymd > mm.dateCntTo) mm.dateCntTo = ymd
+    })
   },
   getLegendItemMaxInfo: function () {
     //文字列配列の中で一番大きい文字列のからLegendItemのWを決定
-    const calcLegendItemWidth = (strArray) => {
-      const maxLength = mm.util.arrStrMaxLen(strArray);
-      if (maxLength < 7) return 70;
-      if (maxLength < 15) return 80;
-      if (maxLength < 20) return 90;
-      if (maxLength < 25) return 110;
-      if (maxLength < 32) return 120;
-      return 130;
+    const calcLegendItemWidth = strArray => {
+      const maxLength = mm.util.arrStrMaxLen(strArray)
+      if (maxLength < 7) return 70
+      if (maxLength < 15) return 80
+      if (maxLength < 20) return 90
+      if (maxLength < 25) return 110
+      if (maxLength < 32) return 120
+      return 130
     }
     const legendItemMaxN = _.max([
       //mm.names.length,
       mm.ages.length,
-      mm.conds.length]);
+      mm.conds.length,
+    ])
     const legendItemMaxW = _.max([
       //calcLegendItemWidth(mm.names),
       calcLegendItemWidth(mm.ages),
-      calcLegendItemWidth(mm.conds)]);
-    return {legendItemMaxN, legendItemMaxW};
+      calcLegendItemWidth(mm.conds),
+    ])
+    return { legendItemMaxN, legendItemMaxW }
   },
   detals: [],
   getDetailInfo: async function (keyword) {
-    keyword = keyword.replace(TAGICON_DS, ' ディスクシステム');
-    const url = `https://ja.wikipedia.org/w/api.php?action=query&list=search&srsearch=${keyword}&format=json&origin=*`;
-    let ret = '';
-    const response = await fetch(url, {method: 'GET', cache: 'force-cache'});
+    keyword = keyword.replace(TAGICON_DS, ' ディスクシステム')
+    const url = `https://ja.wikipedia.org/w/api.php?action=query&list=search&srsearch=${keyword}&format=json&origin=*`
+    let ret = ''
+    const response = await fetch(url, { method: 'GET', cache: 'force-cache' })
     if (response.ok) {
-      const data = await response.json();
-      ret = data.query.search.length ? data.query.search[0].snippet : '';
+      const data = await response.json()
+      ret = data.query.search.length ? data.query.search[0].snippet : ''
     }
-    return ret;
+    return ret
   },
   getLabelSeason: s => MONTH_2_SEASON[parseInt(s)],
   getLabelWeek: s => WEEK_LABEL[s],
   getLabelSex: function (s) {
-    let ret;
+    let ret
     if (mm.opt.chartSex.unit) {
-      ret = mm.opt.chartSex.unit[s] ?? DN_LABEL_DEF;
+      ret = mm.opt.chartSex.unit[s] ?? DN_LABEL_DEF
     } else if (mm.opt.chartSex.unit !== null) {
-      const is = parseFloat(s);
-      ret = isNaN(is) ? s : SEX_LABEL[is];
+      const is = parseFloat(s)
+      ret = isNaN(is) ? s : SEX_LABEL[is]
     } else {
-      ret = s + (mm.opt.chartSex.labelSuffix ?? '');
+      ret = s + (mm.opt.chartSex.labelSuffix ?? '')
     }
-    return ret;
+    return ret
   },
   getLabelAge: function (s) {
-    let ret = s;
+    let ret = s
     if (gg.dt === DT_COVID) {
       switch (s) {
         case DN_AGE:
         case DN_AGE2:
-          ret = DN_LABEL_DEF;
-          break;
+          ret = DN_LABEL_DEF
+          break
         case DI_AGE_INFA:
-          ret = mm.chartStack[STACK_AGE][0]; //幼児
-          break;
+          ret = mm.chartStack[STACK_AGE][0] //幼児
+          break
         case DI_AGE_LT10:
-          ret = mm.chartStack[STACK_AGE][1]; //10歳未満
-          break;
+          ret = mm.chartStack[STACK_AGE][1] //10歳未満
+          break
         default:
-          ret = s + mm.config.cAge.scaledSuffix;
-          break;
+          ret = s + mm.config.cAge.scaledSuffix
+          break
       }
     } else {
       if (mm.opt.chartAge.unit) {
-        ret = mm.opt.chartAge.unit[s] ?? DN_LABEL_DEF;
+        ret = mm.opt.chartAge.unit[s] ?? DN_LABEL_DEF
       } else {
-        ret = s + (mm.opt.chartAge.labelSuffix ?? '');
+        ret = s + (mm.opt.chartAge.labelSuffix ?? '')
       }
     }
-    return ret;
+    return ret
   },
   getLabelCond: function (s) {
     return s === DN_CND ? DN_LABEL_DEF : s + (mm.opt.chartCond.labelSuffix ?? '')
   },
   getLabelEx: function (s, i) {
-    let ret;
+    let ret
     if (mm.opt.chartEx[i].unit) {
-      ret = mm.opt.chartEx[i].unit[s] ? mm.opt.chartEx[i].unit[s] : DN_LABEL_DEF;
+      ret = mm.opt.chartEx[i].unit[s] ? mm.opt.chartEx[i].unit[s] : DN_LABEL_DEF
     } else {
       ret = s + (mm.opt.chartEx[i].labelSuffix ?? '')
     }
-    return ret;
+    return ret
   },
   getChartMapTooltip: function (name) {
     if (mm.opt.chartMap.isDetailTooltip) {
-      const dataIndex = mm.opt.chartMap.refData === 'city' ? D_PL2 : D_PL1;
-      const d = mm.data.find(d2 => d2[dataIndex] === name);
+      const dataIndex = mm.opt.chartMap.refData === 'city' ? D_PL2 : D_PL1
+      const d = mm.data.find(d2 => d2[dataIndex] === name)
 
-      return d ? mm.util.getChartDetailsHtml(d, mm.opt.detailType) + mm.util.getExChartDetailsHtml(d) : '';
+      return d
+        ? mm.util.getChartDetailsHtml(d, mm.opt.detailType) + mm.util.getExChartDetailsHtml(d)
+        : ''
     } else {
-      return (name + ' : ' + php_number_format(mm.getPrefCntTbl()[name] ?? 0));
+      return name + ' : ' + php_number_format(mm.getPrefCntTbl()[name] ?? 0)
     }
   },
   getChartNameCovid19Title: function (pre_name, br) {
-    let p = mm.opt.assets.pref_tbl_last_m1[pre_name];
-    if (p === undefined) return '';
-    let n = mm.namesCount[pre_name] ?? 0;
+    let p = mm.opt.assets.pref_tbl_last_m1[pre_name]
+    if (p === undefined) return ''
+    let n = mm.namesCount[pre_name] ?? 0
     // let patient=n-p.discharged-p.deaths;//現患者数=感染者数-退院者数-死亡者数
-    let patient = p.carriers - p.discharged - p.deaths;//現患者数=感染者数-退院者数-死亡者数
-    let ret = pre_name + br +
-      '総人口　: ' + php_number_format(p.n) + '名' + br +
-      '感染者数: ' + php_number_format(n) + '名 (' + (_.round(100 * n / p.n, 3)) + '%)' + br +
-      '患者数　: ' + php_number_format(patient) + '名' + br +
-      'PCR検査: ' + php_number_format(p.pcrtested) + '名 (' + p.pcrtested_p + '%)' + br +
-      '死亡者数: ' + p.deaths + '名' + br +
-      '退院者数: ' + php_number_format(p.discharged) + '名' + br +
-      '対策病床数: ' + php_number_format(p.bed) + '床 (' + (_.round(100 * patient / p.bed, 2)) + '%)' + br +
-      br + '※バーは長押しで単一選択となります。' + br;
-    return ret;
+    let patient = p.carriers - p.discharged - p.deaths //現患者数=感染者数-退院者数-死亡者数
+    let ret =
+      pre_name +
+      br +
+      '総人口　: ' +
+      php_number_format(p.n) +
+      '名' +
+      br +
+      '感染者数: ' +
+      php_number_format(n) +
+      '名 (' +
+      _.round((100 * n) / p.n, 3) +
+      '%)' +
+      br +
+      '患者数　: ' +
+      php_number_format(patient) +
+      '名' +
+      br +
+      'PCR検査: ' +
+      php_number_format(p.pcrtested) +
+      '名 (' +
+      p.pcrtested_p +
+      '%)' +
+      br +
+      '死亡者数: ' +
+      p.deaths +
+      '名' +
+      br +
+      '退院者数: ' +
+      php_number_format(p.discharged) +
+      '名' +
+      br +
+      '対策病床数: ' +
+      php_number_format(p.bed) +
+      '床 (' +
+      _.round((100 * patient) / p.bed, 2) +
+      '%)' +
+      br +
+      br +
+      '※バーは長押しで単一選択となります。' +
+      br
+    return ret
   },
 
   // Keyboard
@@ -3274,20 +3971,20 @@ const mm = {
   keyboardInputName: '#name_search',
   keyboardInputCity: '#city_search',
 
-
   keyboardOptions: {
     // layout: 'qwerty'
     layout: 'custom',
     display: {
-      'cmd_search': '&nbsp;<span class="ui-icon ui-icon-search"></span>検索&nbsp;',
-      'cmd_clear': '&nbsp;<span class="ui-icon ui-icon-closethick"></span>クリア&nbsp;',
-      'cmd_close': '&nbsp;&nbsp;&nbsp;<span class="ui-icon ui-icon-circle-close"></span>&nbsp;&nbsp;&nbsp;',
-      'shift': '&nbsp;かな英数&nbsp;',
-      'alt': '&nbsp;小&nbsp;',
-      'accept': '&nbsp;&nbsp;閉じる&nbsp;&nbsp;'
+      cmd_search: '&nbsp;<span class="ui-icon ui-icon-search"></span>検索&nbsp;',
+      cmd_clear: '&nbsp;<span class="ui-icon ui-icon-closethick"></span>クリア&nbsp;',
+      cmd_close:
+        '&nbsp;&nbsp;&nbsp;<span class="ui-icon ui-icon-circle-close"></span>&nbsp;&nbsp;&nbsp;',
+      shift: '&nbsp;かな英数&nbsp;',
+      alt: '&nbsp;小&nbsp;',
+      accept: '&nbsp;&nbsp;閉じる&nbsp;&nbsp;',
     },
     customLayout: {
-      'normal': [
+      normal: [
         '{sp:15} {cmd_close}',
         'ア カ ガ サ ザ タ ダ ナ ハ バ マ ヤ ラ ワ {b}',
         'イ キ ギ シ ジ チ ヂ ニ ヒ ビ ミ イ リ ン {b}',
@@ -3296,7 +3993,7 @@ const mm = {
         'オ コ ゴ ソ ゾ ト ド ノ ホ ボ モ ヨ ロ ー {b}',
         '{b} {shift} {alt} {space} {cmd_clear} {cmd_search}',
       ],
-      'alt': [
+      alt: [
         '{sp:15} {cmd_close}',
         'ァ ヵ ヵ サ ザ タ ダ ナ ハ バ マ ャ ラ ヮ {b}',
         'ィ キ ギ シ ジ チ ヂ ニ ヒ ビ ミ ィ ㇼ ン {b}',
@@ -3305,7 +4002,7 @@ const mm = {
         'ォ コ ゴ ソ ゾ ト ド ノ ホ ボ モ ョ ㇿ ー {b}',
         '{b} {shift} {alt} {space} {cmd_clear} {cmd_search}',
       ],
-      'shift': [
+      shift: [
         '{sp:15} {cmd_close}',
         'あ か が さ ざ た だ な は ば ま や ら わ {b}',
         'い き ぎ し じ ち じ に ひ び み い り ん {b}',
@@ -3334,12 +4031,12 @@ const mm = {
         '{b} q w e r t y u i o p @ { } {b}',
         '{b} a s d f g h j k l ; : [ ] {b}',
         '{shift} z x c v b n m , . < > ? /',
-      ]
+      ],
     },
     //language: 'ja',
     //initialFocus : true,　//フォーカスでOPEN
-    openOn: null,    //null:イベントクリックで開かない
-    stayOpen: true,  //開いたまま
+    openOn: null, //null:イベントクリックで開かない
+    stayOpen: true, //開いたまま
     noFocus: true,
     //appendLocally: true,
     usePreview: false, //INPUTの表示
@@ -3349,496 +4046,527 @@ const mm = {
         .css({
           // 'position':'fixed'
           // ,'top': window.innerHeight-$('.ui-keyboard').height()
-          'cursor': 'move',
-          'padding': '2px',
+          cursor: 'move',
+          padding: '2px',
         })
-        .draggable();
+        .draggable()
     },
     beforeClose: function (e, keyboard, el) {
-      const o = $(el);
+      const o = $(el)
       // 複数キーボード使用時、フォーカスが切り替わった時に他方がクリアされるのを防ぐ
-      o.val(o.data('keyboard_Input_val')).trigger('change');
+      o.val(o.data('keyboard_Input_val')).trigger('change')
     },
   },
   chartFilterInit: function (inputSelector, autocompleteData) {
-    $(inputSelector).on('change keyup input', function (e) {
-      //　キーワードで SVG内のrowの表示をフィルタリング
-      const o = $(this);
-      const w = o.val().trim();
-      const chartSvgDiv = o.data('filter_svg_div');
-      const items = $(chartSvgDiv + ' g.row');
-      let n = 0;
+    $(inputSelector)
+      .on('change keyup input', function (e) {
+        //　キーワードで SVG内のrowの表示をフィルタリング
+        const o = $(this)
+        const w = o.val().trim()
+        const chartSvgDiv = o.data('filter_svg_div')
+        const items = $(chartSvgDiv + ' g.row')
+        let n = 0
 
-      // フィルタの設定をURLに反映
-      switch ('#' + o.attr('id')) {
-        case mm.keyboardInputName:
-          mm.onChangeURL('name_filter', w);
-          break;
-        case mm.keyboardInputCity:
-          mm.onChangeURL('name2_filter', w);
-          break;
-      }
-      // チャートのSVG内の項目の表示をフィルタ
-      for (var i = 0; i < items.length; i++) {
-        const it = items.eq(i)
-        const name = it.find('text:eq(0)').text();
-        if (mm.util.isMatchRegexI(name, w)) {
-          it.show();
-          it.attr('transform', `translate(0,${5 + (n * (IMG_THUMBNAIL_W + 1))})`);
-          n++;
-        } else {
-          it.hide();
+        // フィルタの設定をURLに反映
+        switch ('#' + o.attr('id')) {
+          case mm.keyboardInputName:
+            mm.onChangeURL('name_filter', w)
+            break
+          case mm.keyboardInputCity:
+            mm.onChangeURL('name2_filter', w)
+            break
         }
-      }
-      const filterCnt = $(o.data('filter_cnt'));
-      if (w === '') {
-        filterCnt.text('').hide();
-      } else {
-        filterCnt.text(n).show();
-      }
-      document.querySelector(chartSvgDiv).scrollTop = 0;
-      if (w !== '') o.data('keyboard_Input_val', w);
-    })
+        // チャートのSVG内の項目の表示をフィルタ
+        for (var i = 0; i < items.length; i++) {
+          const it = items.eq(i)
+          const name = it.find('text:eq(0)').text()
+          if (mm.util.isMatchRegexI(name, w)) {
+            it.show()
+            it.attr('transform', `translate(0,${5 + n * (IMG_THUMBNAIL_W + 1)})`)
+            n++
+          } else {
+            it.hide()
+          }
+        }
+        const filterCnt = $(o.data('filter_cnt'))
+        if (w === '') {
+          filterCnt.text('').hide()
+        } else {
+          filterCnt.text(n).show()
+        }
+        document.querySelector(chartSvgDiv).scrollTop = 0
+        if (w !== '') o.data('keyboard_Input_val', w)
+      })
       .autocomplete({
         source: function (request, response) {
-          const results = $.ui.autocomplete.filter(autocompleteData, request.term);
-          response(results.slice(0, 5));  // 最大N件まで表示
+          const results = $.ui.autocomplete.filter(autocompleteData, request.term)
+          response(results.slice(0, 5)) // 最大N件まで表示
         },
         select: function (event, ui) {
-          $(this).val(ui.item.label).trigger('change');
-          $(this).autocomplete("close");
+          $(this).val(ui.item.label).trigger('change')
+          $(this).autocomplete('close')
         },
         position: {
-          my: "left+20 top",
-          at: "right top",
-          collision: "flipfit flipfit"
-        }
-      });
+          my: 'left+20 top',
+          at: 'right top',
+          collision: 'flipfit flipfit',
+        },
+      })
   },
   keyboardInit: function () {
     // キーボードカスタムボタン定義
     $.extend($.keyboard.keyaction, {
       cmd_search: function (base) {
-        const id = base.$el.attr('id');
+        const id = base.$el.attr('id')
         if (id === 'input-search') {
-          $('#input-search').trigger('input-search-update');
+          $('#input-search').trigger('input-search-update')
         }
       },
       cmd_clear: function (base) {
-        base.$preview.val('').data('keyboard_Input_val', '');
+        base.$preview.val('').data('keyboard_Input_val', '')
       },
       cmd_close: function (base, a, b) {
-        $('.ui-keyboard-keyset').hide();
-      }
-    });
+        $('.ui-keyboard-keyset').hide()
+      },
+    })
 
     $(mm.keyboardInputName).keyboard({
       ...mm.keyboardOptions,
       change: function (e, keyboard, el) {
-        $(el).trigger('input');
+        $(el).trigger('input')
       },
       position: {
         of: '#div_name',
         //at: 'left bottom+30',
         at2: 'right bottom',
         my: 'right bottom',
-        collision: 'fit fit'
+        collision: 'fit fit',
       },
-    });
+    })
 
     $(mm.keyboardInputCity).keyboard({
       ...mm.keyboardOptions,
       change: function (e, keyboard, el) {
-        $(el).trigger('input');
+        $(el).trigger('input')
       },
       position: {
         of: '#div_city',
         //at: 'left bottom+30',
         at2: 'right bottom',
         my: 'right bottom',
-        collision: 'fit fit'
+        collision: 'fit fit',
       },
-    });
+    })
   },
   getFilterTxt: function () {
-    let name = $('#panel_name .filter_txt').val();
-    let city = $('#panel_city .filter_txt').val();
-    let date = $('#panel_date .filter_txt').val();
-    let year = mm.chartYear.filters().join(',');
-    let season = mm.chartSeason.filters().join(',');
-    const weekFilters = mm.chartWeek.filters().map(v => mm.getLabelWeek(v));
-    const sexFilters = mm.chartSex.filters();
-    const ageFilters = mm.chartAge.filters();
-    const condFilters = mm.chartCond.filters();
-    let job = mm.chartJob.filters().join(',');
-    let txt = _.fill(Array(8), '');
-    const PL = 'と';
+    let name = $('#panel_name .filter_txt').val()
+    let city = $('#panel_city .filter_txt').val()
+    let date = $('#panel_date .filter_txt').val()
+    let year = mm.chartYear.filters().join(',')
+    let season = mm.chartSeason.filters().join(',')
+    const weekFilters = mm.chartWeek.filters().map(v => mm.getLabelWeek(v))
+    const sexFilters = mm.chartSex.filters()
+    const ageFilters = mm.chartAge.filters()
+    const condFilters = mm.chartCond.filters()
+    let job = mm.chartJob.filters().join(',')
+    let txt = _.fill(Array(8), '')
+    const PL = 'と'
 
     if (name !== '') {
-      let t = '', sp = name.split(',');
+      let t = '',
+        sp = name.split(',')
       for (let i of sp) {
-        t += i.trim() + PL;
+        t += i.trim() + PL
       }
-      txt[1] = (sp.length === 1 ? '' : '【') + php_trim(t, PL) + (sp.length === 1 ? '' : '】');
+      txt[1] = (sp.length === 1 ? '' : '【') + php_trim(t, PL) + (sp.length === 1 ? '' : '】')
     }
 
     if (city !== '') {
-      let is = city.indexOf(',') !== -1;
-      txt[2] = (is ? '【' : '') + city + (is ? '】' : '');
+      let is = city.indexOf(',') !== -1
+      txt[2] = (is ? '【' : '') + city + (is ? '】' : '')
     }
 
     if (date !== '') {
       if (mm.chartDate.filters().length) {
         if (mm.chartDate.brushOn()) {
-          txt.push(date);
+          txt.push(date)
         } else {
-          let t = '', sp = date.split(',');
+          let t = '',
+            sp = date.split(',')
           for (let i of sp) {
-            t += i + PL;
+            t += i + PL
           }
-          txt[0] = (sp.length === 1 ? '' : '【') + php_trim(t, PL) + (sp.length === 1 ? '' : '】');
+          txt[0] = (sp.length === 1 ? '' : '【') + php_trim(t, PL) + (sp.length === 1 ? '' : '】')
         }
       }
     }
     if (year !== '') {
-      const isMulti = year.indexOf(',') !== -1;
-      txt[3] = isMulti ? `年:【${year}】` : `${year}年`;
+      const isMulti = year.indexOf(',') !== -1
+      txt[3] = isMulti ? `年:【${year}】` : `${year}年`
     }
     if (season !== '') {
-      const isMulti = season.indexOf(',') !== -1;
-      txt[4] = isMulti ? `季節:【${season}】` : season;
+      const isMulti = season.indexOf(',') !== -1
+      txt[4] = isMulti ? `季節:【${season}】` : season
     }
     if (weekFilters.length) {
       const isMulti = weekFilters.length > 1
       const weekStr = weekFilters.join(',')
-      txt[5] = isMulti ? `曜日:【${weekStr}】` : `${weekStr}曜日`;
+      txt[5] = isMulti ? `曜日:【${weekStr}】` : `${weekStr}曜日`
     }
     if (sexFilters.length) {
       const isMulti = sexFilters.length > 1
       const str = sexFilters.join(',')
-      txt[6] = isMulti ? `${pnl.sex.title}:【${str}】` : `${pnl.sex.title}:${str}`;
+      txt[6] = isMulti ? `${pnl.sex.title}:【${str}】` : `${pnl.sex.title}:${str}`
     }
     if (ageFilters.length) {
       const isMulti = ageFilters.length > 1
       const str = ageFilters.join(',')
-      txt[7] = isMulti ? `${pnl.age.title}:【${str}】` : `${pnl.age.title}:${str}`;
+      txt[7] = isMulti ? `${pnl.age.title}:【${str}】` : `${pnl.age.title}:${str}`
     }
     if (condFilters.length) {
       const isMulti = condFilters.length > 1
       const str = condFilters.join(',')
-      txt[8] = isMulti ? `${pnl.cond.title}:【${str}】` : `${pnl.cond.title}:${str}`;
+      txt[8] = isMulti ? `${pnl.cond.title}:【${str}】` : `${pnl.cond.title}:${str}`
     }
     if (job !== '') {
-      let isOne = job.indexOf(',') === -1;
-      let jobs = '';
+      let isOne = job.indexOf(',') === -1
+      let jobs = ''
       job.split(',').forEach((v, j) => {
-        jobs += (j === 0 ? '' : ',') + mm.config.cJob.keyLabel(v);
-      });
-      txt[9] = pnl.job.title + ':' + (isOne ? mm.config.cJob.keyLabel(job) : '【' + jobs + '】');
+        jobs += (j === 0 ? '' : ',') + mm.config.cJob.keyLabel(v)
+      })
+      txt[9] = pnl.job.title + ':' + (isOne ? mm.config.cJob.keyLabel(job) : '【' + jobs + '】')
     }
 
     for (let k = 0; k < pnl.ex.length; k++) {
-      const ex = pnl.ex[k];
-      if (ex.isHidden || ex.isDcSunburstChart) continue;
-      const exFilters = mm.chartEx[k].filters().map(v => mm.getLabelEx(v, k));
+      const ex = pnl.ex[k]
+      if (ex.isHidden || ex.isDcSunburstChart) continue
+      const exFilters = mm.chartEx[k].filters().map(v => mm.getLabelEx(v, k))
       if (exFilters.length) {
         const isMulti = exFilters.length > 1
         const str = exFilters.join(',')
-        txt[9 + k] = isMulti ? `${ex.title}:【${str}】` : `${ex.title}:${str}`;
+        txt[9 + k] = isMulti ? `${ex.title}:【${str}】` : `${ex.title}:${str}`
       }
     }
 
-    return txt;
+    return txt
   },
   filterPrefChart: function (prefs) {
-    const chart = mm.opt.chartMap.refData === 'city' ? mm.chartCity : mm.chartName;
-    const names = mm.opt.chartMap.refData === 'city' ? mm.citys : mm.names;
-    let pre = [];
+    const chart = mm.opt.chartMap.refData === 'city' ? mm.chartCity : mm.chartName
+    const names = mm.opt.chartMap.refData === 'city' ? mm.citys : mm.names
+    let pre = []
     for (const i of prefs) {
-      if (_.indexOf(names, i) !== -1) pre.push(i);
+      if (_.indexOf(names, i) !== -1) pre.push(i)
     }
     if (pre.length === 0) {
-      chart.filterAll();
-      mm.renderAllChart();
-      return;
+      chart.filterAll()
+      mm.renderAllChart()
+      return
     }
 
-    const f = chart.filters();
-    const diff = pre.length > f.length ? _.difference(pre, f) : _.difference(f, pre);
-    chart.filter(diff[0]);//差分をadd
+    const f = chart.filters()
+    const diff = pre.length > f.length ? _.difference(pre, f) : _.difference(f, pre)
+    chart.filter(diff[0]) //差分をadd
 
-    mm.renderAllChart();
+    mm.renderAllChart()
   },
   renderAllChartFilterByKW: function (kw) {
-    const AC_SPLIT_WD = /\s+/;
-    let fnd = [];
+    const AC_SPLIT_WD = /\s+/
+    let fnd = []
 
     // date
     if (!isNaN(kw[0])) {
-      let d = moment(kw);
+      let d = moment(kw)
       if (d.isValid()) {
-        let a = d.format('YYYY-MM-DD');
+        let a = d.format('YYYY-MM-DD')
         if (a.indexOf('2001') !== -1) {
-          let s = a.split('-');
-          d = moment('2020-' + s[1] + '-' + s[2]);
+          let s = a.split('-')
+          d = moment('2020-' + s[1] + '-' + s[2])
         }
-        mm.composite.filterAll().filter(d.toDate());
-        mm.renderAllChart();
-        mm.barChartRedrawGroup(mm.chartDate);
-        return 1;
+        mm.composite.filterAll().filter(d.toDate())
+        mm.renderAllChart()
+        mm.barChartRedrawGroup(mm.chartDate)
+        return 1
       }
     }
 
     // job
-    fnd = [];
-    let words, jobs;
+    fnd = []
+    let words, jobs
     if (mm.isSexAgeSuffixWord(kw)) {
-      const pre0S = kw.replace(/\s+/g, '');
-      words = [pre0S];
-      jobs = mm.jobs.map(v => v.replace(/\s+/g, ''));// mm.jobjs 内の全ての文字列のスペースを削除
+      const pre0S = kw.replace(/\s+/g, '')
+      words = [pre0S]
+      jobs = mm.jobs.map(v => v.replace(/\s+/g, '')) // mm.jobjs 内の全ての文字列のスペースを削除
     } else {
-      words = kw.split(AC_SPLIT_WD);
-      jobs = mm.jobs;
+      words = kw.split(AC_SPLIT_WD)
+      jobs = mm.jobs
     }
-    for (const pre1 of words) { // スペース区切りの複数ワード対応
-      const list = mm.is_job_cate ? mm.opt.assets.jobcates : jobs;
-      if (_.indexOf(list, pre1) !== -1) { // 完全一致
-        fnd.push(kw);
+    for (const pre1 of words) {
+      // スペース区切りの複数ワード対応
+      const list = mm.is_job_cate ? mm.opt.assets.jobcates : jobs
+      if (_.indexOf(list, pre1) !== -1) {
+        // 完全一致
+        fnd.push(kw)
       }
     }
     if (fnd.length) {
-      mm.chartJob.filterAll().filter([fnd]);
-      mm.renderAllChart();
-      return 1;
+      mm.chartJob.filterAll().filter([fnd])
+      mm.renderAllChart()
+      return 1
     }
 
     // cond
-    fnd = [];
-    for (const pre1 of kw.split(AC_SPLIT_WD)) { // スペース区切りの複数ワード対応
-      if (_.indexOf(mm.conds, pre1) !== -1) {　// 完全一致
-        fnd.push(pre1);
+    fnd = []
+    for (const pre1 of kw.split(AC_SPLIT_WD)) {
+      // スペース区切りの複数ワード対応
+      if (_.indexOf(mm.conds, pre1) !== -1) {
+        // 完全一致
+        fnd.push(pre1)
       }
     }
     if (fnd.length) {
-      mm.chartCond.filterAll().filter([fnd]);
-      mm.renderAllChart();
-      return 1;
+      mm.chartCond.filterAll().filter([fnd])
+      mm.renderAllChart()
+      return 1
     }
 
     //mm.chartNameにない物は除外 前方一致
-    let pre_names = mm.names, city = '', is_pre_find = 0;
-    let names = [];
-    for (const pre1 of kw.split(AC_SPLIT_WD)) { // スペース区切りの複数ワード対応
+    let pre_names = mm.names,
+      city = '',
+      is_pre_find = 0
+    let names = []
+    for (const pre1 of kw.split(AC_SPLIT_WD)) {
+      // スペース区切りの複数ワード対応
       for (const nm of pre_names) {
         if (nm.indexOf(pre1) !== -1) {
-          if (names.length === 0) city = pre1.replace(nm, '');
-          names.push(nm);
-          is_pre_find = 1;
+          if (names.length === 0) city = pre1.replace(nm, '')
+          names.push(nm)
+          is_pre_find = 1
         }
       }
     }
 
     // name
     if (is_pre_find) {
-      const uniqNames = [...new Set(names)];
-      mm.chartName.filterAll().filter(uniqNames.length === 1 ? uniqNames[0] : [uniqNames]);
-      mm.chartCity.filterAll();
-      mm.renderAllChart();
-      mm.chartScroll('#div_name', names[0], 300);
-      return 1;
+      const uniqNames = [...new Set(names)]
+      mm.chartName.filterAll().filter(uniqNames.length === 1 ? uniqNames[0] : [uniqNames])
+      mm.chartCity.filterAll()
+      mm.renderAllChart()
+      mm.chartScroll('#div_name', names[0], 300)
+      return 1
     }
 
     const isFind = (a, b, preMatch) => {
       return preMatch
-        ? a.indexOf(b) === 0  // 前方一致の方式
+        ? a.indexOf(b) === 0 // 前方一致の方式
         : a.indexOf(b) !== -1 // 部分一致の方式
     }
-    city = kw;
+    city = kw
     if (gg.dt === DT_COVID) {
       // 前方に都道府県を含む場合は都道府県を取り除く 例:鹿児島県霧島市 -> 霧島市
       for (const nm of pre_names) {
         if (kw.indexOf(nm) === 0) {
-          city = kw.replace(nm, '');
+          city = kw.replace(nm, '')
         }
       }
     }
-    if (city === '') return 0;
+    if (city === '') return 0
 
     //市区町村
     //mm.chartCity.filterAll().filter(city);//single
-    let citys = _.filter(mm.citys, (d) => isFind(d, city, mm.config.cCity.preMatch)); // multi
+    let citys = _.filter(mm.citys, d => isFind(d, city, mm.config.cCity.preMatch)) // multi
     if (citys.length) {
-      mm.chartName.filterAll();
-      mm.chartCity.filterAll().filter([citys]);
-      mm.renderAllChart();
-      $('#ch_pnl_city').prop('checked', true).trigger('ch_pnl_update');
-      mm.chartScroll('#div_city', city, 300);
-      return 1;
+      mm.chartName.filterAll()
+      mm.chartCity.filterAll().filter([citys])
+      mm.renderAllChart()
+      $('#ch_pnl_city').prop('checked', true).trigger('ch_pnl_update')
+      mm.chartScroll('#div_city', city, 300)
+      return 1
     }
-    return 0;
+    return 0
   },
   parseURLParams: function () {
-    let isRedraw = false;
+    let isRedraw = false
     // chartName
-    isRedraw = mm.chart.filterFromGetParam(mm.chartName, 'name', isRedraw);
+    isRedraw = mm.chart.filterFromGetParam(mm.chartName, 'name', isRedraw)
 
     if (mm.get.name_filter) {
-      $(mm.keyboardInputName).data('keyboard_Input_val', mm.get.name_filter);
+      $(mm.keyboardInputName).data('keyboard_Input_val', mm.get.name_filter)
       _.delay(() => {
-        $('.chart-filter-toggle.name').trigger('click', {doFocus: 0, doKeyboardOpen: 0});
-      }, 10);
+        $('.chart-filter-toggle.name').trigger('click', { doFocus: 0, doKeyboardOpen: 0 })
+      }, 10)
     }
 
     // chartCity
-    isRedraw = mm.chart.filterFromGetParam(mm.chartCity, 'name2', isRedraw);
+    isRedraw = mm.chart.filterFromGetParam(mm.chartCity, 'name2', isRedraw)
     if (pnl.city.orderUI) {
-      if (mm.get.name2_order === '1') pnl.city.orderCnt = true;
+      if (mm.get.name2_order === '1') pnl.city.orderCnt = true
     }
 
     if (mm.get.name2_filter) {
-      $(mm.keyboardInputCity).val(mm.get.name2_filter).data('keyboard_Input_val', mm.get.name2_filter);
+      $(mm.keyboardInputCity)
+        .val(mm.get.name2_filter)
+        .data('keyboard_Input_val', mm.get.name2_filter)
       _.delay(() => {
-        $('.chart-filter-toggle.city').trigger('click', {doFocus: 0, doKeyboardOpen: 0});
-      }, 10);
+        $('.chart-filter-toggle.city').trigger('click', { doFocus: 0, doKeyboardOpen: 0 })
+      }, 10)
     }
 
     // chartYear
     // 　- yearを指定。例:2020 複数は+で連結
-    isRedraw = mm.chart.filterFromGetParam(mm.chartYear, 'year', isRedraw);
+    isRedraw = mm.chart.filterFromGetParam(mm.chartYear, 'year', isRedraw)
 
     // chartSeason
     // 　- seasonMonthを指定。1~12　複数は+で連結
     if (mm.get.season) {
-      let seasons = mm.get.season.split(' ').map(v => mm.getLabelSeason(v)).filter(v => v !== undefined);
-      seasons = [...new Set(seasons)];
+      let seasons = mm.get.season
+        .split(' ')
+        .map(v => mm.getLabelSeason(v))
+        .filter(v => v !== undefined)
+      seasons = [...new Set(seasons)]
       if (seasons.length > 0) {
-        const flt = seasons.length === 1 ? seasons[0] : [seasons];
-        mm.chartSeason.filterAll().filter(flt);
-        isRedraw = true;
+        const flt = seasons.length === 1 ? seasons[0] : [seasons]
+        mm.chartSeason.filterAll().filter(flt)
+        isRedraw = true
       }
     }
 
     // chartWeek
-    // 　- weekIdを指定。(0:日 1:月 2:火 3:水 4:木 5:金 6:土)　
+    // 　- weekIdを指定。(0:日 1:月 2:火 3:水 4:木 5:金 6:土)
     if (mm.get.week) {
-      const weeks = mm.get.week.split(' ').map(v => parseInt(v)).filter(v => v >= 0 && v <= 6);
+      const weeks = mm.get.week
+        .split(' ')
+        .map(v => parseInt(v))
+        .filter(v => v >= 0 && v <= 6)
       if (weeks.length > 0) {
-        const flt = weeks.length === 1 ? weeks[0] : [weeks];
-        mm.chartWeek.filterAll().filter(flt);
-        isRedraw = true;
+        const flt = weeks.length === 1 ? weeks[0] : [weeks]
+        mm.chartWeek.filterAll().filter(flt)
+        isRedraw = true
       }
     }
 
     // chartSex
     if (mm.get.name3) {
-      const name3s = mm.get.name3.split(' ');
+      const name3s = mm.get.name3.split(' ')
       const flt = name3s.length === 1 ? name3s[0] : [name3s]
-      mm.chartSex.filterAll().filter(flt);
-      isRedraw = true;
+      mm.chartSex.filterAll().filter(flt)
+      isRedraw = true
     }
 
     // chartAge
-    isRedraw = mm.chart.filterFromGetParam(mm.chartAge, 'name4', isRedraw);
+    isRedraw = mm.chart.filterFromGetParam(mm.chartAge, 'name4', isRedraw)
     // chartCond
-    isRedraw = mm.chart.filterFromGetParam(mm.chartCond, 'name5', isRedraw);
+    isRedraw = mm.chart.filterFromGetParam(mm.chartCond, 'name5', isRedraw)
     // chartJob
-    isRedraw = mm.chart.filterFromGetParam(mm.chartJob, 'name6', isRedraw);
+    isRedraw = mm.chart.filterFromGetParam(mm.chartJob, 'name6', isRedraw)
     // chartEx[0~N]
-    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[0], 'name7', isRedraw);
-    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[1], 'name8', isRedraw);
-    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[2], 'name9', isRedraw);
-    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[3], 'name10', isRedraw);
-    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[4], 'name11', isRedraw);
-    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[5], 'name12', isRedraw);
-    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[6], 'name13', isRedraw);
-    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[7], 'name14', isRedraw);
+    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[0], 'name7', isRedraw)
+    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[1], 'name8', isRedraw)
+    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[2], 'name9', isRedraw)
+    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[3], 'name10', isRedraw)
+    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[4], 'name11', isRedraw)
+    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[5], 'name12', isRedraw)
+    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[6], 'name13', isRedraw)
+    isRedraw = mm.chart.filterFromGetParam(mm.chartEx[7], 'name14', isRedraw)
 
     // Chart order parameters
     nextTick(() => {
       // chartSex, chartAge, chartCond, chartJob order parameters
-      if (mm.get.name3_order === '1') pnl.sex.elasticX = true;
-      if (mm.get.name4_order === '1') pnl.age.elasticX = true;
-      if (mm.get.name5_order === '1') pnl.cond.elasticX = true;
-      if (mm.get.name6_order === '1') pnl.job.elasticX = true;
+      if (mm.get.name3_order === '1') pnl.sex.elasticX = true
+      if (mm.get.name4_order === '1') pnl.age.elasticX = true
+      if (mm.get.name5_order === '1') pnl.cond.elasticX = true
+      if (mm.get.name6_order === '1') pnl.job.elasticX = true
 
       // chartEx order parameters
-      if (mm.get.name7_order === '1') pnl.ex[0].elasticX = true;
-      if (mm.get.name8_order === '1') pnl.ex[1].elasticX = true;
-      if (mm.get.name9_order === '1') pnl.ex[2].elasticX = true;
-      if (mm.get.name10_order === '1') pnl.ex[3].elasticX = true;
-      if (mm.get.name11_order === '1') pnl.ex[4].elasticX = true;
-      if (mm.get.name12_order === '1') pnl.ex[5].elasticX = true;
-      if (mm.get.name13_order === '1') pnl.ex[6].elasticX = true;
-      if (mm.get.name14_order === '1') pnl.ex[7].elasticX = true;
-    });
+      if (mm.get.name7_order === '1') pnl.ex[0].elasticX = true
+      if (mm.get.name8_order === '1') pnl.ex[1].elasticX = true
+      if (mm.get.name9_order === '1') pnl.ex[2].elasticX = true
+      if (mm.get.name10_order === '1') pnl.ex[3].elasticX = true
+      if (mm.get.name11_order === '1') pnl.ex[4].elasticX = true
+      if (mm.get.name12_order === '1') pnl.ex[5].elasticX = true
+      if (mm.get.name13_order === '1') pnl.ex[6].elasticX = true
+      if (mm.get.name14_order === '1') pnl.ex[7].elasticX = true
+    })
 
     // 検索INPUT
     if (mm.get.q) {
-      $('#input-search').val(mm.get.q.trim());
-      mm.is_trigger_search = 1;
+      $('#input-search').val(mm.get.q.trim())
+      mm.is_trigger_search = 1
     }
     // chartDate
     // date=3-4      //単一日 4月4日
     // date=3-4+3-8  //範囲日 4月4日~4月8日
     // date=3-4+3    //範囲日 4月4日 + 3day
     if (mm.get.date) {
-      const date_get = (s) => {//[YYYY]-MM-DD
-        let ret;
-        let s2 = s.split('-');
+      const date_get = s => {
+        //[YYYY]-MM-DD
+        let ret
+        let s2 = s.split('-')
         switch (s2.length) {
           case 3:
-            ret = moment(s2[0] + '-' + php_printf02d(parseInt(s2[1])) + '-' + php_printf02d(parseInt(s2[2])));
-            break;
+            ret = moment(
+              s2[0] + '-' + php_printf02d(parseInt(s2[1])) + '-' + php_printf02d(parseInt(s2[2]))
+            )
+            break
           case 2:
-            ret = moment(moment().format('YYYY') + '-' + php_printf02d(s2[0]) + '-' + php_printf02d(s2[1]));
-            break;
+            ret = moment(
+              moment().format('YYYY') + '-' + php_printf02d(s2[0]) + '-' + php_printf02d(s2[1])
+            )
+            break
           case 1:
-            ret = s;
-            break;
+            ret = s
+            break
         }
-        return ret;
+        return ret
       }
-      let from_to = mm.get.date.split(' '), from, to;
-      let range = 0;
+      let from_to = mm.get.date.split(' '),
+        from,
+        to
+      let range = 0
       switch (from_to.length) {
-        case 1://4-4 => 単一日 4月4日
-          from = date_get(from_to[0]);
-          if (from === '') break;
+        case 1: //4-4 => 単一日 4月4日
+          from = date_get(from_to[0])
+          if (from === '') break
           if (isNaN(parseInt(from))) {
-            range = dc.filters.RangedFilter(from.toDate(), from.add(1, 'days').toDate());
+            range = dc.filters.RangedFilter(from.toDate(), from.add(1, 'days').toDate())
           }
-          break;
+          break
         case 2:
-          from = date_get(from_to[0]);
-          to = date_get(from_to[1]);
-          if (from === '' || to === '') break;
-          if (isNaN(parseInt(to)) && to !== '') {//4-4+4-8 => 範囲日 4月4日~4月8日
-            range = dc.filters.RangedFilter(from.toDate(), to.toDate());
-          } else {//4-4+3 => 範囲日 4月4日 + 3day; 4-4+ => 範囲日 4月4日 + tommorow
-            range = dc.filters.RangedFilter(from.toDate(), (to === '' ? moment().add(1, 'days') : from.add(to, 'days')).toDate());
+          from = date_get(from_to[0])
+          to = date_get(from_to[1])
+          if (from === '' || to === '') break
+          if (isNaN(parseInt(to)) && to !== '') {
+            //4-4+4-8 => 範囲日 4月4日~4月8日
+            range = dc.filters.RangedFilter(from.toDate(), to.toDate())
+          } else {
+            //4-4+3 => 範囲日 4月4日 + 3day; 4-4+ => 範囲日 4月4日 + tommorow
+            range = dc.filters.RangedFilter(
+              from.toDate(),
+              (to === '' ? moment().add(1, 'days') : from.add(to, 'days')).toDate()
+            )
           }
-          break;
+          break
       }
       if (range) {
-        mm.composite.replaceFilter(range);
-        mm.chartDate.replaceFilter(range);
+        mm.composite.replaceFilter(range)
+        mm.chartDate.replaceFilter(range)
         nextTick(() => {
-          pnl.date.isBrushOn = true;
-        });
+          pnl.date.isBrushOn = true
+        })
       }
     }
-    if (!mm.is_trigger_search && isRedraw) mm.renderAllChart();
+    if (!mm.is_trigger_search && isRedraw) mm.renderAllChart()
   },
   onChangeURL: function (type, arg) {
-    let url = '', filters;
+    let url = '',
+      filters
     switch (type) {
-      case 'name':  // chartName
+      case 'name': // chartName
       case 'name2': // chatCity
       case 'name3': // chartSex
       case 'name4': // chartAge
-      case 'year':  // chartYear
-      case 'season':// chartSeason
-      case 'week':  // chartWeek
+      case 'year': // chartYear
+      case 'season': // chartSeason
+      case 'week': // chartWeek
       case 'name5': // chartCond
       case 'name6': // chartJob
       case 'name7': // chartEx[0]
@@ -3858,24 +4586,24 @@ const mm = {
       case 'name21': // chartEx[14]
       case 'name22': // chartEx[15]
         if (type !== 'name' && type !== 'name2') {
-          mm.lastFilteredChart = arg;
+          mm.lastFilteredChart = arg
         }
-        filters = arg.filters(); // chart
+        filters = arg.filters() // chart
         if (filters.length > 0) {
           let setFilters
           if (type === 'season') {
-            setFilters = filters.map(v => SEASON_IDX2_MONTH[v]).join('+');
+            setFilters = filters.map(v => SEASON_IDX2_MONTH[v]).join('+')
           } else {
-            setFilters = filters.join('+');
+            setFilters = filters.join('+')
           }
-          url = url_append_param(location.href, {[type]: setFilters});
-          window.history.replaceState({}, '', url);
+          url = url_append_param(location.href, { [type]: setFilters })
+          window.history.replaceState({}, '', url)
         } else {
           // clear
-          const url = url_remove_param(location.href, [type]);
-          window.history.replaceState({}, '', url);
+          const url = url_remove_param(location.href, [type])
+          window.history.replaceState({}, '', url)
         }
-        break;
+        break
       case 'name_filter':
       case 'name2_filter':
       case 'name2_order':
@@ -3891,240 +4619,253 @@ const mm = {
       case 'name12_order':
       case 'name13_order':
       case 'name14_order':
-        url = url_append_param(location.href, {[type]: arg});
-        window.history.replaceState({}, '', url);
-        break;
+        url = url_append_param(location.href, { [type]: arg })
+        window.history.replaceState({}, '', url)
+        break
       case 'date':
-        filters = arg.filters(); // chart
+        filters = arg.filters() // chart
         if (filters.length === 1) {
-          let from, to;
-          if (filters[0].length === 2) { // Range(from-to)指定; date=2021-07-01+2024-07-07
-            from = moment(filters[0][0]).format('YYYY-MM-DD');
-            to = moment(filters[0][1]).format('YYYY-MM-DD');
-            url = url_append_param(location.href, {'date': from + '+' + to});
-          } else { // 単一指定; date=2021-07-01
-            from = moment(filters[0]).format('YYYY-MM-DD');
-            url = url_append_param(location.href, {'date': from});
+          let from, to
+          if (filters[0].length === 2) {
+            // Range(from-to)指定; date=2021-07-01+2024-07-07
+            from = moment(filters[0][0]).format('YYYY-MM-DD')
+            to = moment(filters[0][1]).format('YYYY-MM-DD')
+            url = url_append_param(location.href, { date: from + '+' + to })
+          } else {
+            // 単一指定; date=2021-07-01
+            from = moment(filters[0]).format('YYYY-MM-DD')
+            url = url_append_param(location.href, { date: from })
           }
-          if (url !== '') window.history.replaceState({}, '', url);
+          if (url !== '') window.history.replaceState({}, '', url)
         } else if (filters.length === 0) {
           // clear
-          const url = url_remove_param(location.href, ['date']);
-          window.history.replaceState({}, '', url);
+          const url = url_remove_param(location.href, ['date'])
+          window.history.replaceState({}, '', url)
         }
         //else{  } // 複数指定は実装しない
-        break;
+        break
       case 'q':
-        const q = arg; // string
-        url = url_append_param(location.href, {'q': q.replaceAll('/', '-')}); // 日付の/は+へ
-        window.history.replaceState({}, '', url);
-        break;
+        const q = arg // string
+        url = url_append_param(location.href, { q: q.replaceAll('/', '-') }) // 日付の/は+へ
+        window.history.replaceState({}, '', url)
+        break
       case 'layout':
-        url = url_append_param(location.href, {'layout': arg});
-        window.history.replaceState({}, '', url);
-        break;
+        url = url_append_param(location.href, { layout: arg })
+        window.history.replaceState({}, '', url)
+        break
       case 'data':
-        url = url_append_param(location.href, {'data': arg});
-        window.history.replaceState({}, '', url);
-        break;
+        url = url_append_param(location.href, { data: arg })
+        window.history.replaceState({}, '', url)
+        break
       case 'clear':
-        url = url_remove_param(location.href, [[arg]]);
-        window.history.replaceState({}, '', url);
-        break;
+        url = url_remove_param(location.href, [[arg]])
+        window.history.replaceState({}, '', url)
+        break
       case 'clear_all':
         url = url_remove_param(location.href, [
-            'name',
-            'name_filter',
-            'name2',
-            'name2_filter',
-            'name2_order',
-            'name3',
-            'name3_order',
-            'name4',
-            'name4_order',
-            'name5',
-            'name5_order',
-            'name6',
-            'name6_order',
-            'name7',
-            'name7_order',
-            'name8',
-            'name8_order',
-            'name9',
-            'name9_order',
-            'name10',
-            'name10_order',
-            'name11',
-            'name11_order',
-            'name12',
-            'name12_order',
-            'name13',
-            'name13_order',
-            'name14',
-            'name14_order',
-            'name15',
-            'name16',
-            'name17',
-            'name18',
-            'name19',
-            'name20',
-            'name21',
-            'name22',
-            'date',
-            'year',
-            'season',
-            'week',
-            'q'
-          ]
-        );
-        window.history.replaceState({}, '', url);
-        break;
+          'name',
+          'name_filter',
+          'name2',
+          'name2_filter',
+          'name2_order',
+          'name3',
+          'name3_order',
+          'name4',
+          'name4_order',
+          'name5',
+          'name5_order',
+          'name6',
+          'name6_order',
+          'name7',
+          'name7_order',
+          'name8',
+          'name8_order',
+          'name9',
+          'name9_order',
+          'name10',
+          'name10_order',
+          'name11',
+          'name11_order',
+          'name12',
+          'name12_order',
+          'name13',
+          'name13_order',
+          'name14',
+          'name14_order',
+          'name15',
+          'name16',
+          'name17',
+          'name18',
+          'name19',
+          'name20',
+          'name21',
+          'name22',
+          'date',
+          'year',
+          'season',
+          'week',
+          'q',
+        ])
+        window.history.replaceState({}, '', url)
+        break
       case 'clear_layout':
-        url = url_remove_param(location.href, ['layout']);
-        window.history.replaceState({}, '', url);
-        break;
+        url = url_remove_param(location.href, ['layout'])
+        window.history.replaceState({}, '', url)
+        break
     }
   },
   makeAutocompleteData2Dim: function (ndx, dimension1, dimension2, value) {
-    const dim = ndx.dimension(d => d[dimension1]);
+    const dim = ndx.dimension(d => d[dimension1])
     const group = dim.group().reduce(
-      (p, v) => { // add
-        p.push(v[dimension2]);
-        return p;
+      (p, v) => {
+        // add
+        p.push(v[dimension2])
+        return p
       },
-      (p, v) => { // remove
-        const index = p.indexOf(v[dimension2]);
+      (p, v) => {
+        // remove
+        const index = p.indexOf(v[dimension2])
         if (index > -1) {
-          p.splice(index, 1);
+          p.splice(index, 1)
         }
-        return p;
+        return p
       },
       () => [] // init
-    );
+    )
 
-    const ret = [];
+    const ret = []
     group.all().forEach(item => {
       for (const itemElement of item.value) {
         // retに同じものがないようにする
-        const index = ret.findIndex(v => v[0] === item.key && v[1] === itemElement);
-        if (index > -1) continue;
+        const index = ret.findIndex(v => v[0] === item.key && v[1] === itemElement)
+        if (index > -1) continue
         ret.push([
           item.key,
           itemElement,
           toRomaji(itemElement),
-          value ?? item.value.length // dimension1に属する dimension2の数
-        ]);
+          value ?? item.value.length, // dimension1に属する dimension2の数
+        ])
       }
-    });
-    return ret;
+    })
+    return ret
   },
   makeAutocompleteData1Dim: function (group, name) {
-    return group.all().map((v) => {
-      const s = v.key.toString();
-      const roma = mm.util.isHankaku(s) ? s.toLowerCase() : toRomaji(s);
-      return [name, s, roma, v.value];
-    });
+    return group.all().map(v => {
+      const s = v.key.toString()
+      const roma = mm.util.isHankaku(s) ? s.toLowerCase() : toRomaji(s)
+      return [name, s, roma, v.value]
+    })
   },
   showFilterUi: function (panel_sel, chart, valueFormat) {
-    let flt = chart.filters();
-    let pnl = $(panel_sel);
+    let flt = chart.filters()
+    let pnl = $(panel_sel)
     if (flt.length) {
-      let is_range = $.isArray(flt[0]);
+      let is_range = $.isArray(flt[0])
       if (is_range) {
-        let t = valueFormat(flt[0][0]) + '～' + valueFormat(flt[0][1]);
-        pnl.find('.filter_txt').show().val(t).attr('title', t);
-        pnl.find('.filter_txt_diff').text((moment(flt[0][1]).diff(flt[0][0], 'days') + 1) + '日間');
+        let t = valueFormat(flt[0][0]) + '～' + valueFormat(flt[0][1])
+        pnl.find('.filter_txt').show().val(t).attr('title', t)
+        pnl.find('.filter_txt_diff').text(moment(flt[0][1]).diff(flt[0][0], 'days') + 1 + '日間')
       } else {
-        let flt2 = [];
+        let flt2 = []
         for (let f of flt) {
-          if (valueFormat) f = valueFormat(f);
-          flt2.push(f);
+          if (valueFormat) f = valueFormat(f)
+          flt2.push(f)
         }
-        let t = flt2.join(',');
-        pnl.find('.filter_txt').show().val(t).attr('title', t);
-        pnl.find('.filter_txt_diff').text('');
+        let t = flt2.join(',')
+        pnl.find('.filter_txt').show().val(t).attr('title', t)
+        pnl.find('.filter_txt_diff').text('')
       }
-      pnl.find('.btn_reset').show();
+      pnl.find('.btn_reset').show()
     } else {
-      pnl.find('.filter_txt').val('').hide();
-      pnl.find('.filter_txt_diff').text('');
-      pnl.find('.btn_reset').hide();
+      pnl.find('.filter_txt').val('').hide()
+      pnl.find('.filter_txt_diff').text('')
+      pnl.find('.btn_reset').hide()
     }
   },
   // "性　名[♂♀]"の文字列の場合
   isSexAgeSuffixWord: function (d) {
-    return d.indexOf(' ') !== -1 && (d.indexOf('♂') !== -1 || d.indexOf('♀') !== -1);
+    return d.indexOf(' ') !== -1 && (d.indexOf('♂') !== -1 || d.indexOf('♀') !== -1)
   },
   tube: {
     isSearch: G_IS_TUBE_SEARCH,
     search: async function (query, maxResults = 3) {
-      let ret = [];
-      if (!mm.tube.isSearch) return ret;
+      let ret = []
+      if (!mm.tube.isSearch) return ret
 
       try {
-        const url = `https://www.googleapis.com/youtube/v3/search?part=id&q=${encodeURIComponent(query)}&type=video&maxResults=${maxResults}&key=AIzaSyCI_4NUN-TJkQBHalkRrEqR5Br67gBbarI`;
-        const response = await fetch(url, {method: 'GET', cache: 'force-cache'});
+        const url = `https://www.googleapis.com/youtube/v3/search?part=id&q=${encodeURIComponent(query)}&type=video&maxResults=${maxResults}&key=AIzaSyCI_4NUN-TJkQBHalkRrEqR5Br67gBbarI`
+        const response = await fetch(url, { method: 'GET', cache: 'force-cache' })
         if (!response.ok) {
-          throw new Error('API request failed');
+          throw new Error('API request failed')
         }
-        const data = await response.json();
+        const data = await response.json()
         data.items.forEach(item => {
           if (item?.id?.kind === 'youtube#video') {
-            ret.push(item.id.videoId);
+            ret.push(item.id.videoId)
           }
-        });
-
+        })
       } catch (error) {
-        console.log('API youtube/v3/search error');
+        console.log('API youtube/v3/search error')
         // YoutubeAPIが失敗するようになったらCallしないように
-        mm.tube.isSearch = false;
+        mm.tube.isSearch = false
       }
-      return ret;
+      return ret
     },
     setPlayEvent: function () {
       $(document)
         .on('click', '.detail-tube-play', function (e) {
-          if (!pnl.tube.isShow) return;
-          e.preventDefault();
-          pnl.tube.vid = $(this).attr('vid');
+          if (!pnl.tube.isShow) return
+          e.preventDefault()
+          pnl.tube.vid = $(this).attr('vid')
           //tubePlayer.playVideo(); // TODO:
         })
         .on('click', '.detail-tube-wopen', function (e) {
-          e.preventDefault();
-          const h = parseInt(screen.height);
-          const w2 = parseInt(screen.width / 2);
-          window.open($(this).attr('href'), '', `left=${w2 + 20},top=0,height=${h},width=${w2 - 20}`);
-        });
+          e.preventDefault()
+          const h = parseInt(screen.height)
+          const w2 = parseInt(screen.width / 2)
+          window.open(
+            $(this).attr('href'),
+            '',
+            `left=${w2 + 20},top=0,height=${h},width=${w2 - 20}`
+          )
+        })
     },
   },
   chart: {
     renderVLine: function (chart, hz) {
-      chart.g().select('g.chart-body')
-        .selectAll('path.line').data(hz).enter()
-        .append('path').attr('class', function (d) {
-        return d.cls.concat(['line']).join(' ');
-      })
+      chart
+        .g()
+        .select('g.chart-body')
+        .selectAll('path.line')
+        .data(hz)
+        .enter()
+        .append('path')
+        .attr('class', function (d) {
+          return d.cls.concat(['line']).join(' ')
+        })
         .attr('d', function (d) {
-          let x = chart.x()(d.x);
-          return mm.line([[x, chart.y().range()[0]], [x, chart.y().range()[1]]]);
-        });
+          let x = chart.x()(d.x)
+          return mm.line([
+            [x, chart.y().range()[0]],
+            [x, chart.y().range()[1]],
+          ])
+        })
     },
     barChartRedrawGroup: function (chart) {
-
-      let b = chart.selectAll("rect.bar");
-      if (b.size() === 0) return;
-      let filters = chart.filters();
+      let b = chart.selectAll('rect.bar')
+      if (b.size() === 0) return
+      let filters = chart.filters()
       if (filters.length === 0) {
-        b.classed('deselected', false).classed('selected', true);
+        b.classed('deselected', false).classed('selected', true)
       } else {
-        b.classed('deselected', true).classed('selected', false);
+        b.classed('deselected', true).classed('selected', false)
         b.each(function (val) {
           for (var j = 0; j < filters.length; j++) {
             if (moment(val.x).isSame(filters[j])) {
-              $(this).removeClass('deselected').addClass('selected');
+              $(this).removeClass('deselected').addClass('selected')
             }
           }
-        });
+        })
       }
     },
     // xAxisのラベルが長い場合見えるように斜め表示にする
@@ -4132,35 +4873,36 @@ const mm = {
       switch (1) {
         default:
           if (maxLabelLen > 10) {
-            $(chart._anchor).addClass('label-x-rot');
-            chart.margins().bottom = 100;
-            break;
+            $(chart._anchor).addClass('label-x-rot')
+            chart.margins().bottom = 100
+            break
           }
           if (maxLabelLen > 6) {
-            $(chart._anchor).addClass('label-x-rot');
-            chart.margins().bottom = 70;
-            break;
+            $(chart._anchor).addClass('label-x-rot')
+            chart.margins().bottom = 70
+            break
           }
-          chart.margins().bottom = 20;
-          break;
+          chart.margins().bottom = 20
+          break
       }
     },
     getImagePath: function (chart) {
-      let ret;
+      let ret
 
       if (chart.chartID() === mm.chartName.chartID()) {
-        ret = mm.opt?.chartName.imagePath ?? '/img/japan';
+        ret = mm.opt?.chartName.imagePath ?? '/img/japan'
       }
       if (chart.chartID() === mm.chartCity.chartID()) {
-        ret = mm.opt?.chartCity.imagePath ?? '/img/japan/city';
+        ret = mm.opt?.chartCity.imagePath ?? '/img/japan/city'
       }
-      return ret;
+      return ret
     },
     setImageLink: function (chart, dataType, ttFmt, lazyLoadDomId = null) {
-      const useLazy = !isSp;
-      chart.selectAll("text.row").attr('x', IMG_THUMBNAIL_W + 4);
-      chart.selectAll("rect").attr('x', IMG_THUMBNAIL_W);
-      chart.selectAll("g.row")
+      const useLazy = !isSp
+      chart.selectAll('text.row').attr('x', IMG_THUMBNAIL_W + 4)
+      chart.selectAll('rect').attr('x', IMG_THUMBNAIL_W)
+      chart
+        .selectAll('g.row')
         .append('svg:image')
         .attr('onerror', "this.onerror=null;this.setAttribute('href','" + IMG_NO + "')")
         .attr('width', IMG_THUMBNAIL_W)
@@ -4169,211 +4911,227 @@ const mm = {
         .attr('tt-fmt', ttFmt)
         .attr('ci', chart.chartID())
         .attr('name', function (d) {
-          return d.key;
+          return d.key
         })
         .attr(useLazy ? 's' : 'href', function (d) {
-          let ret = null;
-          const imagePath = mm.chart.getImagePath(chart);
+          let ret = null
+          const imagePath = mm.chart.getImagePath(chart)
           if (imagePath) {
             // imagePathがpathと別カラムのデータ指定の場合
             if (imagePath.indexOf('@pathColExt') === 0) {
               const dataType = parseInt(this.getAttribute('type'))
               const d2 = mm.data.find(d2 => d2[dataType] === d.key)
-              ret = mm.util.parseOptionImagePath(imagePath, d2);
+              ret = mm.util.parseOptionImagePath(imagePath, d2)
             }
             if (ret === null) {
-              const name = mm.util.removeLabelSuffix(d.key);
-              ret = imagePath + '/' + name + '.jpg';
+              const name = mm.util.removeLabelSuffix(d.key)
+              ret = imagePath + '/' + name + '.jpg'
             }
           } else {
             if (chart.chartID() === mm.chartName.chartID()) {
-              ret = PREFECTURES_EN[d.key] ? '/img/japan/' + PREFECTURES_EN[d.key] + '.gif' : IMG_NO;
+              ret = PREFECTURES_EN[d.key] ? '/img/japan/' + PREFECTURES_EN[d.key] + '.gif' : IMG_NO
             } else {
-              ret = '/img/japan/city/' + d.key + '.png';
+              ret = '/img/japan/city/' + d.key + '.png'
             }
           }
-          return ret;
+          return ret
         })
         .on('touchstart', function (e, d) {
-          d.t = e.timeStamp;
+          d.t = e.timeStamp
         })
         .on(isSp ? 'touchend' : 'click', function (e, d) {
           // sp:長押しopen pc:clickでopen
-          const SP_PRESS_MS = 300;
-          let isOpen = true;
+          const SP_PRESS_MS = 300
+          let isOpen = true
           if (isSp) {
-            isOpen = e.timeStamp - d.t > SP_PRESS_MS;
+            isOpen = e.timeStamp - d.t > SP_PRESS_MS
           }
           if (isOpen) {
-            const chartId = parseInt(this.getAttribute('ci'));
-            const openUrl = mm.chart.getItemLink(chartId, d);
-            window.open(openUrl);
+            const chartId = parseInt(this.getAttribute('ci'))
+            const openUrl = mm.chart.getItemLink(chartId, d)
+            window.open(openUrl)
           }
-        });
+        })
 
       // 遅延Imageロード
       if (useLazy && lazyLoadDomId !== null) {
-        const rootDiv = document.getElementById(lazyLoadDomId);
-        const observer = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const image = entry.target;
-              image.setAttribute('href', image.getAttribute('s'));
-              observer.unobserve(image); // 監視を解除
-            }
-          });
-        }, {
-          root: rootDiv,
-          rootMargin: '100px', // 監視領域を 100px 上下に拡張
-          threshold: 0.5 // 要素の50%がビューポートに入ったらトリガー
-        });
+        const rootDiv = document.getElementById(lazyLoadDomId)
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const image = entry.target
+                image.setAttribute('href', image.getAttribute('s'))
+                observer.unobserve(image) // 監視を解除
+              }
+            })
+          },
+          {
+            root: rootDiv,
+            rootMargin: '100px', // 監視領域を 100px 上下に拡張
+            threshold: 0.5, // 要素の50%がビューポートに入ったらトリガー
+          }
+        )
 
         // 監視対象の要素を指定
-        const lazyImages = rootDiv?.querySelectorAll('.pl');
+        const lazyImages = rootDiv?.querySelectorAll('.pl')
         lazyImages?.forEach(image => {
-          observer.observe(image);
-        });
+          observer.observe(image)
+        })
       }
     },
     // フィルタに選択した項目を選択状態のクラスにする
     setFilterTextSel: function (chart) {
       let filters = chart.filters()
-      const id = chart.chartID();
+      const id = chart.chartID()
       switch (true) {
         case id === mm.chartWeek.chartID():
-          filters = filters.map(v => WEEK_LABEL[parseInt(v)]);
-          break;
+          filters = filters.map(v => WEEK_LABEL[parseInt(v)])
+          break
         case id === mm.chartSex.chartID() && mm.opt.chartSex.unit !== null:
-          filters = filters.map(v => mm.opt.chartSex.unit[parseInt(v)]);
-          break;
+          filters = filters.map(v => mm.opt.chartSex.unit[parseInt(v)])
+          break
         case id === mm.chartAge.chartID() && mm.opt.chartAge.unit !== null:
-          filters = filters.map(v => mm.getLabelAge(v));
-          break;
+          filters = filters.map(v => mm.getLabelAge(v))
+          break
       }
-      filters = filters.map(v => String(v));
+      filters = filters.map(v => String(v))
       chart.selectAll('g.tick text').each(function () {
-        filters.includes(this.textContent) ?
-          this.classList.add('sel') : this.classList.remove('sel')
-      });
+        filters.includes(this.textContent)
+          ? this.classList.add('sel')
+          : this.classList.remove('sel')
+      })
     },
     updateLegend: function (chart) {
-      let item = chart.legendables();
-      const _legend = chart.legend();
-      let o2 = $(chart.anchor()).find('g.dc-legend-item');
+      let item = chart.legendables()
+      const _legend = chart.legend()
+      let o2 = $(chart.anchor()).find('g.dc-legend-item')
       //o2=o2.filter(':not(:contains("週間"))')
 
       //@see src/charts/legend.js:333
-      let cumulativeLegendTextWidth = 0;
-      let row = 0;
+      let cumulativeLegendTextWidth = 0
+      let row = 0
       item.forEach((d, i) => {
-        if (d.name === '0') return; // 0件のデータのLegendは表示しない
+        if (d.name === '0') return // 0件のデータのLegendは表示しない
 
         o2.eq(i)
           .attr('transform', function () {
             // 非表示のlegendは表示しないレイアウトに調整
             if (_legend._horizontal) {
-              const itemWidth = _legend._autoItemWidth === true ? this.getBBox().width + _legend._gap : _legend._itemWidth;
+              const itemWidth =
+                _legend._autoItemWidth === true
+                  ? this.getBBox().width + _legend._gap
+                  : _legend._itemWidth
               if (!d.hidden) {
-                if ((cumulativeLegendTextWidth + itemWidth) > _legend._legendWidth && cumulativeLegendTextWidth > 0) {
-                  ++row;
-                  cumulativeLegendTextWidth = 0;
+                if (
+                  cumulativeLegendTextWidth + itemWidth > _legend._legendWidth &&
+                  cumulativeLegendTextWidth > 0
+                ) {
+                  ++row
+                  cumulativeLegendTextWidth = 0
                 }
               }
               const height = row * _legend._legendItemHeight()
-              const translateBy = `translate(${cumulativeLegendTextWidth},${height})`;
-              if (!d.hidden) cumulativeLegendTextWidth += itemWidth;
-              return translateBy;
+              const translateBy = `translate(${cumulativeLegendTextWidth},${height})`
+              if (!d.hidden) cumulativeLegendTextWidth += itemWidth
+              return translateBy
             } else {
-              return `translate(0,${i * _legend._legendItemHeight()})`;
+              return `translate(0,${i * _legend._legendItemHeight()})`
             }
           })
           .addClass(function () {
             // フィルタされているlegendは選択状態にする
-            let ret = '';
-            const name = mm.util.getStackName(d.name);
+            let ret = ''
+            const name = mm.util.getStackName(d.name)
             switch (pnl.date.stack_type) {
               case STACK_CND:
-                ret = name && mm.chartCond.filters().includes(name) ? 'sel' : '';
-                break;
+                ret = name && mm.chartCond.filters().includes(name) ? 'sel' : ''
+                break
               case STACK_PL1:
-                ret = name && mm.chartName.filters().includes(name) ? 'sel' : '';
-                break;
+                ret = name && mm.chartName.filters().includes(name) ? 'sel' : ''
+                break
               case STACK_AGE:
-                ret = name && mm.chartAge.filters().includes(name) ? 'sel' : '';
-                break;
+                ret = name && mm.chartAge.filters().includes(name) ? 'sel' : ''
+                break
             }
-            return ret;
-          });
-      });
+            return ret
+          })
+      })
     },
     setDetails: async function (chart, filters, dataIndex, detailType = false) {
-      const imagePath = mm.chart.getImagePath(chart) ?? '';
+      const imagePath = mm.chart.getImagePath(chart) ?? ''
 
       for (let i = 0; i < filters.length; i++) {
-        if (pnl.detail.details.length >= pnl.detail.maxDetails) break;
+        if (pnl.detail.details.length >= pnl.detail.maxDetails) break
 
-        const TUBE_THUMBNAIL_MAX = 2; // YouTubeのサムネイル画像を表示するDetail数
-        const isTube = i < TUBE_THUMBNAIL_MAX;
-        let youtubePlayHtml = '', imgSrc;
-        const name = filters[i];
+        const TUBE_THUMBNAIL_MAX = 2 // YouTubeのサムネイル画像を表示するDetail数
+        const isTube = i < TUBE_THUMBNAIL_MAX
+        let youtubePlayHtml = '',
+          imgSrc
+        const name = filters[i]
         // すで詳細リストに同じ物があったら表示しない
-        if (mm.detals.includes(name)) continue;
-        mm.detals.push(name);
+        if (mm.detals.includes(name)) continue
+        mm.detals.push(name)
 
         // 1件目のデータを取得。制約:dimensionのgroupデータが1件のデータである事)
-        const d = mm.data.find(d2 => d2[dataIndex] === name);
-        if (d === undefined) continue;
-        const name2 = mm.util.removeLabelSuffix(name);
-        const n = chart.group().all().find(d => d.key === name)?.value ?? 0;
-        const dt = await mm.getDetailInfo(`${name2}`);
+        const d = mm.data.find(d2 => d2[dataIndex] === name)
+        if (d === undefined) continue
+        const name2 = mm.util.removeLabelSuffix(name)
+        const n =
+          chart
+            .group()
+            .all()
+            .find(d => d.key === name)?.value ?? 0
+        const dt = await mm.getDetailInfo(`${name2}`)
 
         // 検索API用Keywords
-        const searchQueryWords = mm.opt?.searchPrefix ? [mm.opt?.searchPrefix] : [];
+        const searchQueryWords = mm.opt?.searchPrefix ? [mm.opt?.searchPrefix] : []
         if (isTube) {
           // 検索API用KeywordPrefix取得 (dataより取得)
           if (mm.opt.searchPrefixDataIndex) {
-            const isCityChart = chart.chartID() === mm.chartCity.chartID();
-            if (isCityChart) searchQueryWords.push(d[mm.opt.searchPrefixDataIndex]);
-            else searchQueryWords.push(name2);
+            const isCityChart = chart.chartID() === mm.chartCity.chartID()
+            if (isCityChart) searchQueryWords.push(d[mm.opt.searchPrefixDataIndex])
+            else searchQueryWords.push(name2)
           } else {
-            searchQueryWords.push(name2);
+            searchQueryWords.push(name2)
           }
 
-          pnl.tube.searchQuery = searchQueryWords.join('+');
-          pnl.tube.vids = await mm.tube.search(pnl.tube.searchQuery);
-          youtubePlayHtml = '';
+          pnl.tube.searchQuery = searchQueryWords.join('+')
+          pnl.tube.vids = await mm.tube.search(pnl.tube.searchQuery)
+          youtubePlayHtml = ''
           for (let j = 1; j <= pnl.tube.vids.length; j++) {
-            const id = pnl.tube.vids[j - 1];
+            const id = pnl.tube.vids[j - 1]
             // YouTube link
             youtubePlayHtml +=
               `&nbsp;<a class="detail-tube-wopen tt_img" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" ` +
               `target="_blank" href="https://www.youtube.com/watch?v=${id}" ` +
               `title="YouTubeで「${searchQueryWords.join(' ')}」の動画${j}を開く">` +
-              `<i class="fa fa-video"></i>${j}</a>`;
+              `<i class="fa fa-video"></i>${j}</a>`
           }
-          youtubePlayHtml += pnl.tube.vids.length ? '&nbsp;' : '';
+          youtubePlayHtml += pnl.tube.vids.length ? '&nbsp;' : ''
         }
 
         switch (true) {
           // Youtubeのthumbnailを使用の時
           case isTube && imagePath === '@tube':
-            imgSrc = `https://img.youtube.com/vi/${pnl.tube.vids[0]}/hqdefault.jpg`;
-            break;
+            imgSrc = `https://img.youtube.com/vi/${pnl.tube.vids[0]}/hqdefault.jpg`
+            break
           default:
             // imagePathがpathと別カラムのデータ指定の場合
             if (imagePath.indexOf('@pathColExt') === 0) {
-              imgSrc = mm.util.parseOptionImagePath(imagePath, d);
+              imgSrc = mm.util.parseOptionImagePath(imagePath, d)
             }
             if (imgSrc === null) {
-              imgSrc = imagePath + '/' + name2 + '.jpg';
+              imgSrc = imagePath + '/' + name2 + '.jpg'
             }
-            break;
+            break
         }
 
-        const titleHref = mm.chart.getItemLink(chart.chartID(), {key: name2});
+        const titleHref = mm.chart.getItemLink(chart.chartID(), { key: name2 })
 
         // 詳細表示(left)
-        let ret = `<div>\
+        let ret =
+          `<div>\
 							<a target="_blank" title="「${name}」の詳細情報を開く" href="${titleHref}">\
 								<div>${name}</div>\
 								<div class="detail-img"><img src="${imgSrc}" onerror="this.src='${IMG_NO}'"></div>\
@@ -4385,169 +5143,230 @@ const mm = {
 								一覧<span class="ui-icon ui-icon-extlink" style="font-size: 0.9em"></span>\
 							</a>\
 							<table><tbody>` +
-          (detailType ? mm.util.getChartDetailsHtml(d, detailType, titleHref) + mm.util.getExChartDetailsHtml(d) : '') +
+          (detailType
+            ? mm.util.getChartDetailsHtml(d, detailType, titleHref) +
+              mm.util.getExChartDetailsHtml(d)
+            : '') +
           (n === 1
-              ? '<tr><td colspan="2">　</td></tr>'
-              : '<tr class="text-theme-col"><td>合計</td><td>: ' + php_number_format(n) + '</td></tr>'
-          ) +
+            ? '<tr><td colspan="2">　</td></tr>'
+            : '<tr class="text-theme-col"><td>合計</td><td>: ' +
+              php_number_format(n) +
+              '</td></tr>') +
           `<tr><td colspan="2"><div class="detail-info text-theme-col2 tt_text scrollbar-thin">${dt}</div></td></tr>` +
-          '</tbody></table></div>';
+          '</tbody></table></div>'
 
         // 詳細表示(right) サムネイル画像
-        if ((isSp ? pnl.detail.details.length < TUBE_THUMBNAIL_MAX : pnl.detail.details.length === 0) && pnl.tube.vids.length > 1) {
+        if (
+          (isSp
+            ? pnl.detail.details.length < TUBE_THUMBNAIL_MAX
+            : pnl.detail.details.length === 0) &&
+          pnl.tube.vids.length > 1
+        ) {
           ret = `<div style="display: flex">\
 								<div class="detail-left">${ret}</div>\
-								<div class="detail-right"><br/>`;
+								<div class="detail-right"><br/>`
           for (let j = 0; j < pnl.tube.vids.length; j++) {
-            const vid = pnl.tube.vids[j];
-            ret +=
-              `<div class="detail-img">\
+            const vid = pnl.tube.vids[j]
+            ret += `<div class="detail-img">\
 										<a class="detail-tube-wopen" target="_blank" \
 											href="https://www.youtube.com/watch?v=${vid}"\
 											title="YouTubeで「${searchQueryWords.join(' ')}」の動画${j + 1}を開く">\
 											<img src="https://img.youtube.com/vi/${vid}/hqdefault.jpg" onerror="this.src='${IMG_NO}'">\
 										</a>\
-									</div>`;
+									</div>`
           }
-          ret += '</div></div>';
+          ret += '</div></div>'
         }
 
-        pnl.detail.details.push(ret);
+        pnl.detail.details.push(ret)
       }
       if (gg.dt !== DT_COVID && pnl.tube.isShow) {
         if (pnl.tube.vidAutoChange) {
           // 1番目の再生ボタンを押す。btn_searchのdetail取得はリクエストがあるので遅延実行
-          _.delay(() => $('#chart_tube .detail-tube-play:eq(0)').trigger('click'), 600);
+          _.delay(() => $('#chart_tube .detail-tube-play:eq(0)').trigger('click'), 600)
         }
       }
     },
     showDetailPanel: async function (chart) {
-      const chartID = chart.chartID();
-      const chartNameID = mm.chartName.chartID();
-      const chartCityID = mm.chartCity.chartID();
-      const chartJobID = mm.chartJob.chartID();
+      const chartID = chart.chartID()
+      const chartNameID = mm.chartName.chartID()
+      const chartCityID = mm.chartCity.chartID()
+      const chartJobID = mm.chartJob.chartID()
       if (gg.dt !== DT_COVID) {
         // chartName
         if (chartID === chartNameID) {
-          pnl.gmap.chartGMap.panToMarkerType = 0;
-          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartName.isPanGmapMarker ? 1 : 0;
+          pnl.gmap.chartGMap.panToMarkerType = 0
+          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartName.isPanGmapMarker ? 1 : 0
         }
         // chartCity
         if (chartID === chartCityID) {
-          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartCity.isPanGmapMarker ? 1 : 0;
+          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartCity.isPanGmapMarker ? 1 : 0
         }
         // chartJob
         if (chartID === chartJobID) {
-          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartJob.isPanGmapMarker ? 1 : 0;
+          pnl.gmap.chartGMap.panToMarkerType = mm.opt.chartJob.isPanGmapMarker ? 1 : 0
         }
       }
 
-      if (!(pnl.detail.isShow || pnl.tube.isShow)) return;
+      if (!(pnl.detail.isShow || pnl.tube.isShow)) return
 
-      const filters = chart.filters();
+      const filters = chart.filters()
       //詳細パネル
       if (gg.dt === DT_COVID) {
         if (chartID === chartNameID) {
-          mm.detals = [];
-          pnl.detail.details = [];
+          mm.detals = []
+          pnl.detail.details = []
 
-          const p_max = mm.namesCount['東京都']; //== _.max(_.values(mm.names));
+          const p_max = mm.namesCount['東京都'] //== _.max(_.values(mm.names));
           for (var i = 0; i < filters.length; i++) {
-            let name = filters[i];
-            let p = mm.opt.assets.pref_tbl_last_m1[name];
-            if (p === undefined) continue;
+            let name = filters[i]
+            let p = mm.opt.assets.pref_tbl_last_m1[name]
+            if (p === undefined) continue
 
-            let n = mm.namesCount[name] ?? 0;
+            let n = mm.namesCount[name] ?? 0
             // let patient=n-p.discharged-p.deaths;//患者数=感染者数-退院者数-死亡者数
-            let patient = p.carriers - p.discharged - p.deaths;//現患者数=感染者数-退院者数-死亡者数
-            let icon = '<img src="/img/japan/' + PREFECTURES_EN[name] + '.gif">';
-            let per = parseInt(100 * n / p_max);
-            let bar_style = "background: linear-gradient(to right, rgb(31, 119, 180, 0.3) " + per + "%, #fffacd " + per + "%, #fffacd " + (100 - per) + "%) center center / 100% 100% no-repeat;";
-            let ret = '<b>' + icon + '<a target="_blank" title="' + name + 'の wikipediaへ" href="' + URL_WIKI + '/' + name + '">' + name + '</a></b><br />' +
-              '<img style="width:180px;height:120px;object-fit: cover;object-position:0% 0%;" src="/img/japan/pref/' + name + '.jpg"><br />' +
-              (p === undefined ? 'なし<br />' : (
-                '<table><tbody>' +
-                '<tr><td>総人口　:</td><td>' + php_number_format(p.n) + '名</tr>' +
-                '<tr><td>感染者数:</td><td style="' + bar_style + '"> ' + php_number_format(n) + '名 <a title="人口に対する感染者率。感染者数 ÷ 総人口。">(' + (_.round(100 * n / p.n, 3)) + '%)</a></td></tr>' +
-                '<tr><td>患者数　:</td><td> ' + php_number_format(patient) + '名</td></tr>' +
-                '<tr><td>PCR検査:</td><td> ' + php_number_format(p.pcrtested) + '名 <a title="人口に対するPCR検査率。PCR検査数 ÷ 総人口。">(' + p.pcrtested_p + '%)</a></td></tr>' +
-                '<tr><td>死亡者数:</td><td> ' + p.deaths + '名</td></tr>' +
-                '<tr><td>退院者数:</td><td> ' + php_number_format(p.discharged) + '名<br />' +
-                '<tr><td>対策病床数:</td><td> ' + php_number_format(p.bed) + '床 <a title="対策病床使用率。患者数/対策病床数。">(' + (_.round(100 * patient / p.bed, 2)) + '%)</a></td></tr>' +
-                '</tbody></table>'
-              )) +
-              '<a target="_blank" href="https://hazard.yahoo.co.jp/article/covid19' + PREFECTURES_EN[name] + '">' + name + 'コロナまとめサイト</a>'
-            ;
-            if (pnl.detail.details.length < pnl.detail.maxDetails) pnl.detail.details.push(ret);
+            let patient = p.carriers - p.discharged - p.deaths //現患者数=感染者数-退院者数-死亡者数
+            let icon = '<img src="/img/japan/' + PREFECTURES_EN[name] + '.gif">'
+            let per = parseInt((100 * n) / p_max)
+            let bar_style =
+              'background: linear-gradient(to right, rgb(31, 119, 180, 0.3) ' +
+              per +
+              '%, #fffacd ' +
+              per +
+              '%, #fffacd ' +
+              (100 - per) +
+              '%) center center / 100% 100% no-repeat;'
+            let ret =
+              '<b>' +
+              icon +
+              '<a target="_blank" title="' +
+              name +
+              'の wikipediaへ" href="' +
+              URL_WIKI +
+              '/' +
+              name +
+              '">' +
+              name +
+              '</a></b><br />' +
+              '<img style="width:180px;height:120px;object-fit: cover;object-position:0% 0%;" src="/img/japan/pref/' +
+              name +
+              '.jpg"><br />' +
+              (p === undefined
+                ? 'なし<br />'
+                : '<table><tbody>' +
+                  '<tr><td>総人口　:</td><td>' +
+                  php_number_format(p.n) +
+                  '名</tr>' +
+                  '<tr><td>感染者数:</td><td style="' +
+                  bar_style +
+                  '"> ' +
+                  php_number_format(n) +
+                  '名 <a title="人口に対する感染者率。感染者数 ÷ 総人口。">(' +
+                  _.round((100 * n) / p.n, 3) +
+                  '%)</a></td></tr>' +
+                  '<tr><td>患者数　:</td><td> ' +
+                  php_number_format(patient) +
+                  '名</td></tr>' +
+                  '<tr><td>PCR検査:</td><td> ' +
+                  php_number_format(p.pcrtested) +
+                  '名 <a title="人口に対するPCR検査率。PCR検査数 ÷ 総人口。">(' +
+                  p.pcrtested_p +
+                  '%)</a></td></tr>' +
+                  '<tr><td>死亡者数:</td><td> ' +
+                  p.deaths +
+                  '名</td></tr>' +
+                  '<tr><td>退院者数:</td><td> ' +
+                  php_number_format(p.discharged) +
+                  '名<br />' +
+                  '<tr><td>対策病床数:</td><td> ' +
+                  php_number_format(p.bed) +
+                  '床 <a title="対策病床使用率。患者数/対策病床数。">(' +
+                  _.round((100 * patient) / p.bed, 2) +
+                  '%)</a></td></tr>' +
+                  '</tbody></table>') +
+              '<a target="_blank" href="https://hazard.yahoo.co.jp/article/covid19' +
+              PREFECTURES_EN[name] +
+              '">' +
+              name +
+              'コロナまとめサイト</a>'
+            if (pnl.detail.details.length < pnl.detail.maxDetails) pnl.detail.details.push(ret)
           }
         }
       } else {
         // chartName
         if (chartID === chartNameID) {
-          mm.detals = [];
-          pnl.detail.details = [];
-          await mm.chart.setDetails(chart, filters, D_PL1, mm.opt.detailType);
-          return;
+          mm.detals = []
+          pnl.detail.details = []
+          await mm.chart.setDetails(chart, filters, D_PL1, mm.opt.detailType)
+          return
         }
         // chartCity
         if (chartID === chartCityID) {
-          mm.detals = [];
-          pnl.detail.details = [];
-          await mm.chart.setDetails(chart, filters, D_PL2, mm.opt.detailType === 'city');
-          return;
+          mm.detals = []
+          pnl.detail.details = []
+          await mm.chart.setDetails(chart, filters, D_PL2, mm.opt.detailType === 'city')
+          return
         }
         // chartJob
         if (chartID === chartJobID) {
           if (mm.opt.chartJob.isDetail) {
-            mm.detals = [];
-            pnl.detail.details = [];
-            await mm.chart.setDetails(chart, filters, D_JOB, false);
+            mm.detals = []
+            pnl.detail.details = []
+            await mm.chart.setDetails(chart, filters, D_JOB, false)
           }
         }
       }
     },
     getItemLink: function (chartId, d) {
-      let ret;
-      const link = chartId === mm.chartName.chartID() ? mm.opt?.chartName.link : mm.opt?.chartCity.link;
+      let ret
+      const link =
+        chartId === mm.chartName.chartID() ? mm.opt?.chartName.link : mm.opt?.chartCity.link
       if (link) {
         // テンプレートリテラル内の変数を展開。例:`/player.php?&id=${d.key}`で変数d.keyを展開
-        ret = new Function('d', `return \`${link}\`;`)(d);
+        ret = new Function('d', `return \`${link}\`;`)(d)
       } else {
-        ret = URL_WIKI + '/' + mm.util.removeLabelSuffix(d.key);
+        ret = URL_WIKI + '/' + mm.util.removeLabelSuffix(d.key)
       }
-      return ret;
+      return ret
     },
     createGridLegend: (x = 45) => {
-      const legend = dc.legend()
-        .x(x).y(10)
-        .legendText((d) => {
-          let sel_no = d.name.split(':');
-          return sel_no.length === 2 ? mm.dateStackPl1Names[sel_no[1]] : d.name;
-        });
+      const legend = dc
+        .legend()
+        .x(x)
+        .y(10)
+        .legendText(d => {
+          let sel_no = d.name.split(':')
+          return sel_no.length === 2 ? mm.dateStackPl1Names[sel_no[1]] : d.name
+        })
 
       // legendの数が多いのをgrid配置で対応
-      const {legendItemMaxN, legendItemMaxW} = mm.getLegendItemMaxInfo();
-      const legendItemNW = legendItemMaxN < 9 ? 1 : 3;
-      legend.itemHeight(13).gap(5).horizontal(1).legendWidth(legendItemMaxW * legendItemNW).itemWidth(legendItemMaxW)
+      const { legendItemMaxN, legendItemMaxW } = mm.getLegendItemMaxInfo()
+      const legendItemNW = legendItemMaxN < 9 ? 1 : 3
+      legend
+        .itemHeight(13)
+        .gap(5)
+        .horizontal(1)
+        .legendWidth(legendItemMaxW * legendItemNW)
+        .itemWidth(legendItemMaxW)
 
-      return legend;
+      return legend
     },
     // StackMixin の yAxisMin メソッドのゼロ除外バージョン
     // @see src/base/stack-mixin.js:188
-    yAxisMin: (chart) => {
-      const data = chart._flattenStack();
-      const filteredData = data.filter(v => v.y !== 0); // フィルタ欠損値(0)を除外
-      if (filteredData.length === 0) return 0;
-      return _.minBy(filteredData, p => p.y).y;
+    yAxisMin: chart => {
+      const data = chart._flattenStack()
+      const filteredData = data.filter(v => v.y !== 0) // フィルタ欠損値(0)を除外
+      if (filteredData.length === 0) return 0
+      return _.minBy(filteredData, p => p.y).y
     },
-    yAxisMax: (chart) => {
-      const data = chart._flattenStack();
-      const filteredData = data.filter(v => v.y !== 0); // フィルタ欠損値(0)を除外
-      if (filteredData.length === 0) return 0;
-      return _.maxBy(filteredData, p => p.y).y;
+    yAxisMax: chart => {
+      const data = chart._flattenStack()
+      const filteredData = data.filter(v => v.y !== 0) // フィルタ欠損値(0)を除外
+      if (filteredData.length === 0) return 0
+      return _.maxBy(filteredData, p => p.y).y
     },
     setStacks: (chart, group) => {
-      let i;
+      let i
       // スタック登録 - CHART_DATE_STACK_GRP[STACK_CND]
       if (gg.dt === DT_COVID) {
         chart
@@ -4555,112 +5374,128 @@ const mm = {
           .stack(group, CND_LV_B, d => d.value.lv_b)
           .stack(group, CND_LV_C, d => d.value.lv_c)
           .stack(group, CND_LV_D, d => d.value.lv_d)
-          .stack(group, CND_LV_E, d => d.value.lv_e);
+          .stack(group, CND_LV_E, d => d.value.lv_e)
       } else {
         for (i = 0; i < mm.chartStack[STACK_CND].length; i++) {
           if (i === 0) {
-            chart.group(group, mm.chartStack[STACK_CND][i], mm.dateStackCndAccessor(i, mm.opt.chartDate.isFilterMissingCorrect));
+            chart.group(
+              group,
+              mm.chartStack[STACK_CND][i],
+              mm.dateStackCndAccessor(i, mm.opt.chartDate.isFilterMissingCorrect)
+            )
           } else {
-            chart.stack(group, mm.chartStack[STACK_CND][i], mm.dateStackCndAccessor(i, mm.opt.chartDate.isFilterMissingCorrect));
+            chart.stack(
+              group,
+              mm.chartStack[STACK_CND][i],
+              mm.dateStackCndAccessor(i, mm.opt.chartDate.isFilterMissingCorrect)
+            )
           }
         }
       }
       // スタック登録 - CHART_DATE_STACK_GRP[STACK_PL1]
       for (i = 0; i < mm.chartStack[STACK_PL1].length; i++) {
-        chart.stack(group, mm.chartStack[STACK_PL1][i], mm.dateStackPl1Accessor(i, mm.opt.chartDate.isFilterMissingCorrect));
+        chart.stack(
+          group,
+          mm.chartStack[STACK_PL1][i],
+          mm.dateStackPl1Accessor(i, mm.opt.chartDate.isFilterMissingCorrect)
+        )
       }
       // スタック登録 - CHART_DATE_STACK_GRP[STACK_AGE]
       for (i = 0; i < mm.chartStack[STACK_AGE].length; i++) {
-        chart.stack(group, mm.chartStack[STACK_AGE][i], mm.dateStackAgeAccessor(i, mm.opt.chartDate.isFilterMissingCorrect));
+        chart.stack(
+          group,
+          mm.chartStack[STACK_AGE][i],
+          mm.dateStackAgeAccessor(i, mm.opt.chartDate.isFilterMissingCorrect)
+        )
       }
-      return chart;
+      return chart
     },
     stackOn: (chart, stackOn) => {
       // StackMixin の data メソッドをオーバーバードする
       // @see src/base/stack-mixin.js:24
-      chart.data(function () {
-        const layers = this._stack.filter(this._visibility);
-        if (!layers.length) {
-          return [];
-        }
-        layers.forEach((l, i) => this._prepareValues(l, i));
-        const v4data = layers[0].values.map((v, i) => {
-          const col = {x: v.x};
-          layers.forEach(layer => {
-            col[layer.name] = layer.values[i].y;
-          });
-          return col;
-        });
-        const keys = layers.map(layer => layer.name);
-        const v4result = this.stackLayout().keys(keys)(v4data);
-        v4result.forEach((series, i) => {
-          series.forEach((ys, j) => {
-            // 0の場合やスタックをつまない
-            layers[i].values[j].y0 = stackOn ? ys[0] : 0;
-            layers[i].values[j].y1 = stackOn ? ys[1] : 0;
-          });
-        });
-        return layers;
-      }.bind(chart));
+      chart.data(
+        function () {
+          const layers = this._stack.filter(this._visibility)
+          if (!layers.length) {
+            return []
+          }
+          layers.forEach((l, i) => this._prepareValues(l, i))
+          const v4data = layers[0].values.map((v, i) => {
+            const col = { x: v.x }
+            layers.forEach(layer => {
+              col[layer.name] = layer.values[i].y
+            })
+            return col
+          })
+          const keys = layers.map(layer => layer.name)
+          const v4result = this.stackLayout().keys(keys)(v4data)
+          v4result.forEach((series, i) => {
+            series.forEach((ys, j) => {
+              // 0の場合やスタックをつまない
+              layers[i].values[j].y0 = stackOn ? ys[0] : 0
+              layers[i].values[j].y1 = stackOn ? ys[1] : 0
+            })
+          })
+          return layers
+        }.bind(chart)
+      )
 
-      return chart;
+      return chart
     },
-    filterByStackName: (d) => {
-      const name = mm.util.getStackName(d.name);
+    filterByStackName: d => {
+      const name = mm.util.getStackName(d.name)
       switch (pnl.date.stack_type) {
         case STACK_CND:
-          mm.chartCond.filter(name);
-          dc.redrawAll(CGRP_SHOW);
-          break;
+          mm.chartCond.filter(name)
+          dc.redrawAll(CGRP_SHOW)
+          break
         case STACK_PL1:
           if (name !== undefined) {
-            mm.chartName.filter(name);
-            dc.redrawAll(CGRP_SHOW);
+            mm.chartName.filter(name)
+            dc.redrawAll(CGRP_SHOW)
           }
-          break;
+          break
         case STACK_AGE:
-          mm.chartAge.filter(name);
-          dc.redrawAll(CGRP_SHOW);
-          break;
+          mm.chartAge.filter(name)
+          dc.redrawAll(CGRP_SHOW)
+          break
       }
     },
     filterFromGetParam: (chart, filterKey, isRedraw) => {
       if (mm.get[filterKey]) {
         if (chart?.isDcSunburstChart) {
-          chart.filters = mm.get[filterKey].split(' ').map(v => v.split(','));
-          return chart.filters.length > 0;
+          chart.filters = mm.get[filterKey].split(' ').map(v => v.split(','))
+          return chart.filters.length > 0
         } else {
-          const filters = mm.get[filterKey].split(' ');
+          const filters = mm.get[filterKey].split(' ')
           if (filters.length > 0) {
-            const flt = filters.length === 1 ? filters[0] : [filters];
-            chart.filterAll().filter(flt);
-            return true;
+            const flt = filters.length === 1 ? filters[0] : [filters]
+            chart.filterAll().filter(flt)
+            return true
           }
         }
       }
-      return isRedraw;
+      return isRedraw
     },
     setupLabel: (chart, labelType, isTotalTypeY = true) => {
       switch (labelType) {
         case 1:
-          chart
-            .renderLabel(true)
-            .label((d) => {
-              const total = isTotalTypeY ? d.y : d.data.value.total;
-              if (total === 0) return '';
-              return php_number_format(total);
-            });
-          break;
+          chart.renderLabel(true).label(d => {
+            const total = isTotalTypeY ? d.y : d.data.value.total
+            if (total === 0) return ''
+            return php_number_format(total)
+          })
+          break
         case 2:
           chart
             .renderLabel(true)
             .on('pretransition', function () {
-              chart.__labelCache = null; // 初期化
+              chart.__labelCache = null // 初期化
             })
-            .label((d) => {
-              const total = isTotalTypeY ? d.y : d.data.value.total;
+            .label(d => {
+              const total = isTotalTypeY ? d.y : d.data.value.total
 
-              if (total === 0) return '';
+              if (total === 0) return ''
 
               // 静的変数として管理（1回だけ計算）
               if (!chart.__labelCache) {
@@ -4668,125 +5503,122 @@ const mm = {
                   yAxisMax: mm.chart.yAxisMax(chart),
                   yAxisMin: mm.chart.yAxisMin(chart),
                   maxShown: false,
-                  minShown: false
-                };
+                  minShown: false,
+                }
               }
 
-              const cache = chart.__labelCache;
-              const isMax = total === cache.yAxisMax;
-              const isMin = total === cache.yAxisMin;
+              const cache = chart.__labelCache
+              const isMax = total === cache.yAxisMax
+              const isMin = total === cache.yAxisMin
 
               // 1度表示したMax/Minは表示しない
               if (isMax && !cache.maxShown) {
-                cache.maxShown = true;
-                return php_number_format(total);
+                cache.maxShown = true
+                return php_number_format(total)
               }
               if (isMin && !cache.minShown) {
-                cache.minShown = true;
-                return php_number_format(total);
+                cache.minShown = true
+                return php_number_format(total)
               }
 
-              return '';
-            });
-          chart.__labelCache = null; // 初期化
-          break;
+              return ''
+            })
+          chart.__labelCache = null // 初期化
+          break
       }
-
-    }
+    },
   },
   //MAPの選択Nameのエリア枠を描画
   mapSetSelectedRegions: function () {
-    const f = mm.opt.chartMap.refData === 'city'
-      ? mm.chartCity.filters()
-      : mm.chartName.filters();
+    const f = mm.opt.chartMap.refData === 'city' ? mm.chartCity.filters() : mm.chartName.filters()
     if (f.length && map) {
-      mm.map.isSelectedRegions = 1;
-      map.clearSelectedRegions();
-      let sels = [];
+      mm.map.isSelectedRegions = 1
+      map.clearSelectedRegions()
+      let sels = []
       if (mm.map.isMapJapan) {
         for (let i = 0; i < f.length; i++) {
-          const s = PREFECTURES_EN[f[i]] ?? PREFECTURES_EN[mm.util.getPref(f[i])];
+          const s = PREFECTURES_EN[f[i]] ?? PREFECTURES_EN[mm.util.getPref(f[i])]
           if (s) {
-            sels.push(_.capitalize(s));
+            sels.push(_.capitalize(s))
           }
         }
       } else {
         for (let i = 0; i < f.length; i++) {
-          const s = WORLD_CODE[f[i]] ?? '';
+          const s = WORLD_CODE[f[i]] ?? ''
           if (s !== '') {
-            sels.push(s);
+            sels.push(s)
           }
         }
       }
       if (sels.length) {
         map.setSelectedRegions(sels)
-        map.setFocus({regions: sels, animate: mm.opt.chartMap?.animate ?? false});
-        mm.map.isSelectedRegions = 0;
-        mm.map.doDraw = 0;
+        map.setFocus({ regions: sels, animate: mm.opt.chartMap?.animate ?? false })
+        mm.map.isSelectedRegions = 0
+        mm.map.doDraw = 0
       }
     }
   },
   isMouseLongClick: false,
   watchMouseEvent: function () {
-    let pressTimer;
+    let pressTimer
 
     function handleMouseDown(event) {
       pressTimer = setTimeout(() => {
-        mm.isMouseLongClick = true;
-      }, mm.config.mouseLongClickDuration);
+        mm.isMouseLongClick = true
+      }, mm.config.mouseLongClickDuration)
     }
 
     function handleMouseUp(event) {
       //mm.isLongPress = false;
-      clearTimeout(pressTimer);
+      clearTimeout(pressTimer)
     }
 
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('touchstart', handleMouseDown);
-    document.addEventListener('touchend', handleMouseUp);
+    document.addEventListener('mousedown', handleMouseDown)
+    document.addEventListener('mouseup', handleMouseUp)
+    document.addEventListener('touchstart', handleMouseDown)
+    document.addEventListener('touchend', handleMouseUp)
   },
   addFilterHandler: function (filters, filter) {
-    let ret;
+    let ret
     if (mm.isMouseLongClick || (window.event && (window.event.ctrlKey || window.event.shiftKey))) {
-      ret = [filter]; //single select
+      ret = [filter] //single select
     } else {
-      filters.push(filter);
-      ret = filters; //add select
+      filters.push(filter)
+      ret = filters //add select
     }
-    mm.isMouseLongClick = false;
-    return ret;
+    mm.isMouseLongClick = false
+    return ret
   },
   onChartDatePretransition: function (chart) {
-    let ci = chart.chartID();
+    let ci = chart.chartID()
 
     if (mm.opt.chartDate2?.elasticYMinMax) {
       if (mm.composite2) {
-        const max = mm.chartDate2.yAxisMax();
-        const min = mm.chart.yAxisMin(mm.chartDate2);
-        const div = parseInt((max - min) * 0.1);
-        const range = [min - div, max + div];
-        mm.composite2.elasticY(false).y(d3.scaleLinear().domain(range));
+        const max = mm.chartDate2.yAxisMax()
+        const min = mm.chart.yAxisMin(mm.chartDate2)
+        const div = parseInt((max - min) * 0.1)
+        const range = [min - div, max + div]
+        mm.composite2.elasticY(false).y(d3.scaleLinear().domain(range))
       }
     }
 
-    let is_comp = mm.composite.chartID() === ci;
-    let flt = mm.chartName.filters();
-    let pref_mode = flt.length > 1;
+    let is_comp = mm.composite.chartID() === ci
+    let flt = mm.chartName.filters()
+    let pref_mode = flt.length > 1
     if (is_comp) {
-      mm.chart.updateLegend(chart);
-      let o = $('#chart_date g.dc-legend-item');
-      o.filter(':contains("週間")').show().attr('transform', 'translate(300,0)');
+      mm.chart.updateLegend(chart)
+      let o = $('#chart_date g.dc-legend-item')
+      o.filter(':contains("週間")').show().attr('transform', 'translate(300,0)')
     } else {
-      let o2 = $('#chart_date2 g.dc-legend-item');
+      let o2 = $('#chart_date2 g.dc-legend-item')
       if (pref_mode) {
         for (var i = 0; i < flt.length; i++) {
-          o2.filter(':contains("' + flt[i] + '")').show();
+          o2.filter(':contains("' + flt[i] + '")').show()
         }
       } else {
         //chart_date2 の県名表示
         for (var i = 0; i < flt.length; i++) {
-          o2.filter(':contains("' + flt[i] + '")').show();
+          o2.filter(':contains("' + flt[i] + '")').show()
         }
       }
     }
@@ -4794,133 +5626,152 @@ const mm = {
     if (gg.dt === DT_COVID) {
       //緊急事態宣言 縦ライン表示
       mm.chart.renderVLine(chart, [
-        {cls: ['s1'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[0][0])},
-        {cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[1][0])},
-        {cls: ['s4'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[2][0])},
-        {cls: ['s4'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[3][0])},
-        {cls: ['s3'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[4][0])},
+        { cls: ['s1'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[0][0]) },
+        { cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[1][0]) },
+        { cls: ['s4'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[2][0]) },
+        { cls: ['s4'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[3][0]) },
+        { cls: ['s3'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[4][0]) },
 
-        {cls: ['campaign'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[5][0])},
-        {cls: ['campaign'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[6][0])},
+        { cls: ['campaign'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[5][0]) },
+        { cls: ['campaign'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[6][0]) },
 
-        {cls: ['s1'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[7][0])},
-        {cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[8][0])},
-        {cls: ['s4'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[9][0])},
-        {cls: ['s3'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[10][0])},
+        { cls: ['s1'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[7][0]) },
+        { cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[8][0]) },
+        { cls: ['s4'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[9][0]) },
+        { cls: ['s3'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[10][0]) },
 
-        {cls: ['s1'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[11][0])},
-        {cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[12][0])},
-        {cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[13][0])},
-        {cls: ['s4'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[14][0])},
+        { cls: ['s1'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[11][0]) },
+        { cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[12][0]) },
+        { cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[13][0]) },
+        { cls: ['s4'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[14][0]) },
 
-        {cls: ['s1'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[15][0])},
-        {cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[16][0])},
-        {cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[17][0])},
-        {cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[18][0])},
-        {cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[19][0])},
-        {cls: ['s3'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[20][0])},
-      ]);
+        { cls: ['s1'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[15][0]) },
+        { cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[16][0]) },
+        { cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[17][0]) },
+        { cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[18][0]) },
+        { cls: ['s2'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[19][0]) },
+        { cls: ['s3'], x: new Date(mm.opt.assets.chartDateLineYmdMsg[20][0]) },
+      ])
     }
 
-    if (!is_comp) return;
+    if (!is_comp) return
 
     //StackBarチャートを選択したらフィルタがかかるようにする
-    chart.selectAll("rect.bar").on("click", dc.d3compat.eventHandler(function (d) {
-      //chart.filter(null).filter(d.data.key).redrawGroup();//単一選択
-      chart.filter(d.data.key).redrawGroup();//追加選択
-      //chart.filter(multikey(d.x, d.layer));//子供項目選択
-      mm.chart.barChartRedrawGroup(chart);
-    }));
+    chart.selectAll('rect.bar').on(
+      'click',
+      dc.d3compat.eventHandler(function (d) {
+        //chart.filter(null).filter(d.data.key).redrawGroup();//単一選択
+        chart.filter(d.data.key).redrawGroup() //追加選択
+        //chart.filter(multikey(d.x, d.layer));//子供項目選択
+        mm.chart.barChartRedrawGroup(chart)
+      })
+    )
 
-    if (mm.map.doDraw) drawJapanMap();
-    mm.map.doDraw = 1;
+    if (mm.map.doDraw) drawJapanMap()
+    mm.map.doDraw = 1
 
-    let ft = mm.getFilterTxt();
+    let ft = mm.getFilterTxt()
 
-    let fth = ft.join(' ').trim();
+    let fth = ft.join(' ').trim()
     if (gg.dt === DT_COVID) {
-      $('.hdr_flt').show().text((fth === '' ? '全国' : fth) + ' の状況');
+      $('.hdr_flt')
+        .show()
+        .text((fth === '' ? '全国' : fth) + ' の状況')
     } else {
-      $('.hdr_flt').show().text(fth === '' ? '　' : fth + ' の場合'); // ※レイアウトがずれないように空でも空文字を入れる
+      $('.hdr_flt')
+        .show()
+        .text(fth === '' ? '　' : fth + ' の場合') // ※レイアウトがずれないように空でも空文字を入れる
     }
     if (mm.sel_tab === 'tabs_c') {
-      ft[1] = '';
+      ft[1] = ''
     }
 
-    ft[2] = '';
-    ft[0] = '';
-    fth = ft.join(' ').trim();
+    ft[2] = ''
+    ft[0] = ''
+    fth = ft.join(' ').trim()
     if (fth !== '') {
       if (mm.last_fth !== fth) {
         $('#chk_tbl_spkflt')
-          .checkboxradio({label: '<i class="fa fa-filter"></i>[' + fth + ' ]' + (isSp ? '<br />' : '') + 'でフィルタ'})
+          .checkboxradio({
+            label:
+              '<i class="fa fa-filter"></i>[' + fth + ' ]' + (isSp ? '<br />' : '') + 'でフィルタ',
+          })
           //.checkboxradio('refresh')
-          .prop('checked', true).trigger('click') //off
-        ;
+          .prop('checked', true)
+          .trigger('click') //off
       }
-      $('#chk_tbl_spkflt_l').show();
+      $('#chk_tbl_spkflt_l').show()
     } else {
-      $('#chk_tbl_spkflt_l').hide();
+      $('#chk_tbl_spkflt_l').hide()
     }
-    mm.last_fth = fth;
+    mm.last_fth = fth
 
-    pnl.date.cnt = php_number_format(mm.ndx.groupAll().reduceSum(d => {
-      return mm.group_reduce.base(d);
-    }).value());
+    pnl.date.cnt = php_number_format(
+      mm.ndx
+        .groupAll()
+        .reduceSum(d => {
+          return mm.group_reduce.base(d)
+        })
+        .value()
+    )
 
-    let all = mm.gpDate.all();
+    let all = mm.gpDate.all()
     if (all.length >= 1) {
-      let d, d1;
+      let d, d1
       if (1) {
-        for (i = all.length - 1; i >= 0; i--) if (all[i].value !== 0) break; //最終更新日付の場合
-        d = all[i];
-        d1 = all[i - 1];
+        for (i = all.length - 1; i >= 0; i--) if (all[i].value !== 0) break //最終更新日付の場合
+        d = all[i]
+        d1 = all[i - 1]
       } else {
-        d = all[all.length - 1];//最終日
-        d1 = all[all.length - 2];//最終日-1
+        d = all[all.length - 1] //最終日
+        d1 = all[all.length - 2] //最終日-1
       }
       if (d) {
-        pnl.date.cnt_day = moment(d.key).format('YYYY/M/D(ddd)') + '時点';
+        pnl.date.cnt_day = moment(d.key).format('YYYY/M/D(ddd)') + '時点'
         if (d1) {
-          const h = d.value - d1.value;
-          pnl.date.cnt_one = (h >= 0 ? '+' : '') + php_number_format(h);//前日比：日別
+          const h = d.value - d1.value
+          pnl.date.cnt_one = (h >= 0 ? '+' : '') + php_number_format(h) //前日比：日別
         }
       }
     } else {
-      pnl.date.cnt_one = '';
-      pnl.date.cnt_day = '';
+      pnl.date.cnt_one = ''
+      pnl.date.cnt_day = ''
     }
     //mm.gpDateYMMax=_.maxBy(all, function(o) { return o.value; });
   },
   onChartFiltered: function (chart) {
-    const ci = chart.chartID();
+    const ci = chart.chartID()
     // mm.local.logChart(chart);
 
-    $('.usage').hide();
+    $('.usage').hide()
 
     // カレンダー表示中もフィルタ可能にする
     if (chart.filters().length && $('#ui-datepicker-div').is(':visible')) {
-      mm.datePick?.datepicker('show');
+      mm.datePick?.datepicker('show')
     }
 
     //職業チャートの(カテゴリ表示|詳細表示)の切り替え
     if (gg.dt === DT_COVID) {
-      if (ci === mm.chartName.chartID() || ci === mm.chartCity.chartID() || ci === mm.chartDate.chartID()) {
+      if (
+        ci === mm.chartName.chartID() ||
+        ci === mm.chartCity.chartID() ||
+        ci === mm.chartDate.chartID()
+      ) {
         if (mm.is_job_cate) {
-          let fn = mm.chartName.filters();
-          let fc = mm.chartCity.filters();
-          let fd = mm.chartDate.filters();
+          let fn = mm.chartName.filters()
+          let fc = mm.chartCity.filters()
+          let fd = mm.chartDate.filters()
           if (fn.length || fc.length || fd.length) {
-            let o = $('#chart_job_title_sub');
+            let o = $('#chart_job_title_sub')
             if (o.text() === '') {
-              $('#chart_job_title_sub').text('(詳細)');
-              mm.chartJob.dimension(mm.dimJob).group(mm.gpJob).render();
+              $('#chart_job_title_sub').text('(詳細)')
+              mm.chartJob.dimension(mm.dimJob).group(mm.gpJob).render()
             }
           } else {
-            let o = $('#chart_job_title_sub');
+            let o = $('#chart_job_title_sub')
             if (o.text() === '(詳細)') {
-              $('#chart_job_title_sub').text('');
-              mm.chartJob.dimension(mm.dimJobCat).group(mm.gpJobCat).render();
+              $('#chart_job_title_sub').text('')
+              mm.chartJob.dimension(mm.dimJobCat).group(mm.gpJobCat).render()
             }
           }
         }
@@ -4928,144 +5779,152 @@ const mm = {
     }
 
     if (ci === mm.chartName.chartID()) {
-      mm.chartCity.filterAll();
-      mm.mapSetSelectedRegions();
+      mm.chartCity.filterAll()
+      mm.mapSetSelectedRegions()
     }
-    $('.jvectormap-tip').hide();
+    $('.jvectormap-tip').hide()
 
     if (pnl.gmap.isShow || pnl.sview.isShow) {
-      if (ci === mm.chartName.chartID()
-        || ci === mm.chartCity.chartID()
-        || (ci === mm.chartJob.chartID() && mm.opt.chartJob.isPanGmap)
+      if (
+        ci === mm.chartName.chartID() ||
+        ci === mm.chartCity.chartID() ||
+        (ci === mm.chartJob.chartID() && mm.opt.chartJob.isPanGmap)
       ) {
-        const f = chart.filters();
+        const f = chart.filters()
         if (f.length) {
-          pnl.gmap.chartGMap.center = pnl.gmap.chartGMap.center ? _.last(f) : _.first(f); // 初回のみfirst
+          pnl.gmap.chartGMap.center = pnl.gmap.chartGMap.center ? _.last(f) : _.first(f) // 初回のみfirst
         }
       }
     }
-
   },
   chartDateLegendUpdate2: function () {
-    let flt_len = mm.chartName.filters().length;
-    let pref_mode = flt_len !== 0;
-    mm.composite2.legend().y(pref_mode ? -30 : 0);
+    let flt_len = mm.chartName.filters().length
+    let pref_mode = flt_len !== 0
+    mm.composite2.legend().y(pref_mode ? -30 : 0)
   },
   renderAllChart: function () {
-    dc.renderAll(CGRP_SHOW);
+    dc.renderAll(CGRP_SHOW)
   },
   updateGMap: function () {
     // Focus
     // filters:['xxx','yyy'] => {'xxx':1,'yyy':1}
-    const cityFilters = mm.chartCity.filters();
-    pnl.gmap.chartGMap.focus = {};
-    pnl.gmap.chartGMap.focus[pnl.gmap.chartGMap.prefecture] = Object.fromEntries(cityFilters.map(item => [item, 1]));
+    const cityFilters = mm.chartCity.filters()
+    pnl.gmap.chartGMap.focus = {}
+    pnl.gmap.chartGMap.focus[pnl.gmap.chartGMap.prefecture] = Object.fromEntries(
+      cityFilters.map(item => [item, 1])
+    )
 
     //Layer
-    pnl.gmap.chartGMap.layer = mm.getCityCntTbl();
+    pnl.gmap.chartGMap.layer = mm.getCityCntTbl()
   },
   // groupのallメソッドを0件や空キーは表示しないようにオーバーライド
   groupRemoveEmpty: function (group) {
     return {
       all: function () {
         return group.all().filter(function (d) {
-          return d.key !== DN_KEY1 && d.key !== DN_KEY2 && d.value !== 0;
-        });
-      }
-    };
+          return d.key !== DN_KEY1 && d.key !== DN_KEY2 && d.value !== 0
+        })
+      },
+    }
   },
   // groupのallメソッドを空キーは表示しないようにオーバーライド
   groupRemoveKey: function (group, emptyKey) {
     return {
       all: function () {
         return group.all().filter(function (d) {
-          return d.key !== emptyKey && d.key !== DN_KEY1;
-        });
-      }
-    };
+          return d.key !== emptyKey && d.key !== DN_KEY1
+        })
+      },
+    }
   },
   group_reduce_age_set(p, age, c) {
     switch (age) {
       case DN_AGE:
-        p.agcnt[DI_AGE_NONE] += c;
-        break;
+        p.agcnt[DI_AGE_NONE] += c
+        break
       case 1:
-        p.agcnt[DI_AGE_INFA] += c;
-        break;
+        p.agcnt[DI_AGE_INFA] += c
+        break
       case 0:
-        p.agcnt[DI_AGE_LT10] += c;
-        break;
+        p.agcnt[DI_AGE_LT10] += c
+        break
       default:
-        p.agcnt[(age / 10) + 1] += c;
-        break;
+        p.agcnt[age / 10 + 1] += c
+        break
     }
-    return p;
+    return p
   },
   group_reduce_age_set_custom(p, age, c) {
-    p.agcnt[age] += c;
-    return p;
+    p.agcnt[age] += c
+    return p
   },
   group_reduce_cnd_set(p, cnd, c) {
     switch (1) {
       default:
         if (cnd.indexOf('死亡') !== -1) {
-          p.lv_e += c;
-          break;
+          p.lv_e += c
+          break
         }
         if (cnd.indexOf('酸投') !== -1 || cnd.indexOf('重症') !== -1) {
-          p.lv_d += c;
-          break;
+          p.lv_d += c
+          break
         }
-        if (cnd.indexOf('入院') !== -1 || cnd.indexOf('肺炎') !== -1 || cnd.indexOf('中等') !== -1) {
-          p.lv_c += c;
-          break;
+        if (
+          cnd.indexOf('入院') !== -1 ||
+          cnd.indexOf('肺炎') !== -1 ||
+          cnd.indexOf('中等') !== -1
+        ) {
+          p.lv_c += c
+          break
         }
         if (cnd.indexOf('無症状') !== -1 || cnd.indexOf('退院') !== -1) {
-          p.lv_a += c;
-          break;
+          p.lv_a += c
+          break
         }
-        p.lv_b += c;
-        break;
+        p.lv_b += c
+        break
     }
-    return p;
+    return p
   },
   group_reduce_cnd_set_custom(p, cnd, c) {
-    p.cdcnt[cnd] += c;
-    return p;
+    p.cdcnt[cnd] += c
+    return p
   },
   // hideStack()したlegendは表示しない(translate()で配置対象としない)
   dateStackShow: function (no) {
-    const isChart2Stack = pnl.date.chart2.type === CHART_DATE2_TYPE_LINES || pnl.date.chart2.type === CHART_DATE2_TYPE_STACKS;
+    const isChart2Stack =
+      pnl.date.chart2.type === CHART_DATE2_TYPE_LINES ||
+      pnl.date.chart2.type === CHART_DATE2_TYPE_STACKS
     for (var i = 0; i < mm.chartStack.length; i++) {
       for (var j = 0; j < mm.chartStack[i].length; j++) {
-        const stackName = mm.chartStack[i][j] === '' ? '0' : mm.chartStack[i][j];
+        const stackName = mm.chartStack[i][j] === '' ? '0' : mm.chartStack[i][j]
         if (i === no) {
-          mm.chartDate.showStack(stackName);
-          mm.chartYear.showStack(stackName);
+          mm.chartDate.showStack(stackName)
+          mm.chartYear.showStack(stackName)
           if (pnl.sex.chartType === 'bar') {
-            mm.chartSex.showStack(stackName);
+            mm.chartSex.showStack(stackName)
           }
           if (isChart2Stack) {
-            mm.chartDate2?.showStack(stackName);
+            mm.chartDate2?.showStack(stackName)
           }
           for (let k = 0; k < pnl.ex.length; k++) {
-            const ex = pnl.ex[k];
-            if (ex.isHidden || ex.isDcSunburstChart) continue;
-            mm.chartEx[k].showStack(stackName);
+            const ex = pnl.ex[k]
+            if (ex.isHidden || ex.isDcSunburstChart) continue
+            mm.chartEx[k].showStack(stackName)
           }
         } else {
-          mm.chartDate.hideStack(stackName);
-          mm.chartYear.hideStack(stackName);
+          mm.chartDate.hideStack(stackName)
+          mm.chartYear.hideStack(stackName)
           if (pnl.sex.chartType === 'bar') {
-            mm.chartSex.hideStack(stackName);
+            mm.chartSex.hideStack(stackName)
           }
           if (isChart2Stack) {
-            mm.chartDate2?.hideStack(stackName);
+            mm.chartDate2?.hideStack(stackName)
           }
           for (let k = 0; k < pnl.ex.length; k++) {
-            const ex = pnl.ex[k];
-            if (ex.isHidden || ex.isDcSunburstChart) continue;
-            mm.chartEx[k].hideStack(stackName);
+            const ex = pnl.ex[k]
+            if (ex.isHidden || ex.isDcSunburstChart) continue
+            mm.chartEx[k].hideStack(stackName)
           }
         }
       }
@@ -5074,224 +5933,239 @@ const mm = {
   dateStackPrevValue: 0,
   dateStackPrevName: '',
   getPreviousValue(stackName, v) {
-    const isZero = v === 0;
+    const isZero = v === 0
     if (this.dateStackPrevName !== stackName) {
-      this.dateStackPrevValue = 0;
+      this.dateStackPrevValue = 0
     }
-    this.dateStackPrevName = stackName;
+    this.dateStackPrevName = stackName
 
     if (isZero) {
-      return this.dateStackPrevValue;
+      return this.dateStackPrevValue
     } else {
-      this.dateStackPrevValue = v;
-      return v;
+      this.dateStackPrevValue = v
+      return v
     }
   },
-  dateStackCndAccessor: (stackName, isFilterMissingCorrect = false) => (d) => {
-    let v = d.value.cdcnt[stackName];
-    if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v);
-    return v;
-  },
-  dateStackPl1Accessor: (stackName, isFilterMissingCorrect = false) => (d) => {
-    let flt = mm.chartName.filters();
-    let pref_mode = flt.length > 1 && flt.length <= mm.chartStack[1].length
-    if (pref_mode) {
-      mm.dateStackPl1Names[stackName] = flt[stackName];
-      let v = d.value.nmcnt[flt[stackName]] === undefined ? 0 : d.value.nmcnt[flt[stackName]];
-      if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v);
-      return v;
-    } else {
-      mm.dateStackPl1Names[stackName] = '(選択' + (stackName + 1) + ')';
-      return 0;
-    }
-  },
-  dateStackAgeAccessor: (stackName, isFilterMissingCorrect = false) => (d) => {
-    let v = d.value.agcnt[stackName];
-    if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v);
-    return v;
-  },
+  dateStackCndAccessor:
+    (stackName, isFilterMissingCorrect = false) =>
+    d => {
+      let v = d.value.cdcnt[stackName]
+      if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v)
+      return v
+    },
+  dateStackPl1Accessor:
+    (stackName, isFilterMissingCorrect = false) =>
+    d => {
+      let flt = mm.chartName.filters()
+      let pref_mode = flt.length > 1 && flt.length <= mm.chartStack[1].length
+      if (pref_mode) {
+        mm.dateStackPl1Names[stackName] = flt[stackName]
+        let v = d.value.nmcnt[flt[stackName]] === undefined ? 0 : d.value.nmcnt[flt[stackName]]
+        if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v)
+        return v
+      } else {
+        mm.dateStackPl1Names[stackName] = '(選択' + (stackName + 1) + ')'
+        return 0
+      }
+    },
+  dateStackAgeAccessor:
+    (stackName, isFilterMissingCorrect = false) =>
+    d => {
+      let v = d.value.agcnt[stackName]
+      if (isFilterMissingCorrect) v = mm.getPreviousValue(stackName, v)
+      return v
+    },
   chartScroll: function (sel, name = '', duration = 300) {
-    name = name || '';
-    let o = $(sel);
+    name = name || ''
+    let o = $(sel)
     if (name === '') {
-      o.scrollTop(0);
-      return;
+      o.scrollTop(0)
+      return
     }
-    let pl = o.find('g.row:contains("' + name + '")');
+    let pl = o.find('g.row:contains("' + name + '")')
     if (pl.length) {
-      let top;
+      let top
       if (isSp) {
-        top = pl.attr('transform').replace(')', '').split(',')[1] - 40;
+        top = pl.attr('transform').replace(')', '').split(',')[1] - 40
       } else {
         //not work iOS Safari
-        let p0 = o.find('g.row:eq(0)').position();
-        let p1 = pl.position();
-        top = p1.top - p0.top - 40;
+        let p0 = o.find('g.row:eq(0)').position()
+        let p1 = pl.position()
+        top = p1.top - p0.top - 40
       }
-      if (duration === 0) o.scrollTop(top);
-      else o.animate({scrollTop: top}, duration, 'swing');
+      if (duration === 0) o.scrollTop(top)
+      else o.animate({ scrollTop: top }, duration, 'swing')
     }
   },
   createFilteredBarStacksData: function () {
-    let prefs = _.keys(PREFECTURES_EN);
+    let prefs = _.keys(PREFECTURES_EN)
     let dimName = mm.chartName.dimension()
     //stacks[]の日付ドメインを合わせる
-    mm.chartDate.x(d3.scaleTime().domain([moment(mm.opt.assets.spk.min_ymd).toDate(), moment(mm.opt.assets.spk.max_ymd).toDate()]));
+    mm.chartDate.x(
+      d3
+        .scaleTime()
+        .domain([
+          moment(mm.opt.assets.spk.min_ymd).toDate(),
+          moment(mm.opt.assets.spk.max_ymd).toDate(),
+        ])
+    )
 
-
-    let stacks = [];//stacks[pref][ymd]
-    let grp = mm.chartDate.group();
+    let stacks = [] //stacks[pref][ymd]
+    let grp = mm.chartDate.group()
     for (var i = 0; i < prefs.length; i++) {
-      dimName.filter(prefs[i]);
-      stacks[i] = [];
-      _.forEach(grp.all(), (d) => {
-        let ymd = moment(d.key).format('YYMD');
-        stacks[i][ymd] = [d.value.lv_a, d.value.lv_b, d.value.lv_c, d.value.lv_d, d.value.lv_e];
-      });
+      dimName.filter(prefs[i])
+      stacks[i] = []
+      _.forEach(grp.all(), d => {
+        let ymd = moment(d.key).format('YYMD')
+        stacks[i][ymd] = [d.value.lv_a, d.value.lv_b, d.value.lv_c, d.value.lv_d, d.value.lv_e]
+      })
     }
 
-    let stacks2 = [];
-    let from = moment(mm.opt.assets.spk.min_ymd), to = moment(mm.opt.assets.spk.max_ymd);
+    let stacks2 = []
+    let from = moment(mm.opt.assets.spk.min_ymd),
+      to = moment(mm.opt.assets.spk.max_ymd)
     let nday = to.diff(from, 'days')
     for (var i = 0; i < prefs.length; i++) {
-      stacks2[i] = [];
-      from = moment(mm.opt.assets.spk.min_ymd);
+      stacks2[i] = []
+      from = moment(mm.opt.assets.spk.min_ymd)
       for (var j = 0; j <= nday; j++) {
-        let ymd = j === 0 ? from.format('YYMD') : from.add(1, 'days').format('YYMD');
+        let ymd = j === 0 ? from.format('YYMD') : from.add(1, 'days').format('YYMD')
         if (stacks[i][ymd] !== undefined) {
-          stacks2[i][j] = stacks[i][ymd];
+          stacks2[i][j] = stacks[i][ymd]
         } else {
-          stacks2[i][j] = [0, 0, 0, 0, 0];
+          stacks2[i][j] = [0, 0, 0, 0, 0]
         }
       }
-      stacks2[i] = stacks2[i].slice(mm.SPARK_SX);
+      stacks2[i] = stacks2[i].slice(mm.SPARK_SX)
     }
 
     //rollback
-    dimName.filterAll();
-    if (mm.domainDate) mm.chartDate.x(d3.scaleTime().domain(mm.domainDate));
+    dimName.filterAll()
+    if (mm.domainDate) mm.chartDate.x(d3.scaleTime().domain(mm.domainDate))
 
-    return stacks2;
+    return stacks2
   },
   getPrefCntTbl: function () {
-    let pref_cnt_tbl = {};
+    let pref_cnt_tbl = {}
     switch (mm.sel_tab) {
-      case 'tabs_c'://感染者数(crossfilterの影響受ける)
-        const pref_cnt = mm.opt.chartMap.refData === 'city'
-          ? mm.gpCity.all()
-          : mm.gpName.all();
+      case 'tabs_c': //感染者数(crossfilterの影響受ける)
+        const pref_cnt = mm.opt.chartMap.refData === 'city' ? mm.gpCity.all() : mm.gpName.all()
 
         for (var i = 0; i < pref_cnt.length; i++) {
-          const pref = PREFECTURES_EN[pref_cnt[i].key] ? pref_cnt[i].key : mm.util.getPref(pref_cnt[i].key);
+          const pref = PREFECTURES_EN[pref_cnt[i].key]
+            ? pref_cnt[i].key
+            : mm.util.getPref(pref_cnt[i].key)
           if (pref_cnt_tbl[pref] === undefined) {
-            pref_cnt_tbl[pref] = pref_cnt[i].value;
+            pref_cnt_tbl[pref] = pref_cnt[i].value
           } else {
-            pref_cnt_tbl[pref] += pref_cnt[i].value;
+            pref_cnt_tbl[pref] += pref_cnt[i].value
           }
         }
-        break;
-      case 'tabs_p'://現患者数
+        break
+      case 'tabs_p': //現患者数
         _.forEach(mm.opt.assets.pref_tbl_last_m1, (p, pre_name) => {
-          let n = mm.namesCount ?? 0;//感染者数
-          let patient = n - p.discharged - p.deaths;//患者数=感染者数-退院者数-死亡者数
-          pref_cnt_tbl[pre_name] = patient;
-        });
-        break;
+          let n = mm.namesCount ?? 0 //感染者数
+          let patient = n - p.discharged - p.deaths //患者数=感染者数-退院者数-死亡者数
+          pref_cnt_tbl[pre_name] = patient
+        })
+        break
       case 'tabs_pc': //PCR検査
         _.forEach(mm.opt.assets.pref_tbl_last_m1, (p, pre_name) => {
-          pref_cnt_tbl[pre_name] = p.pcrtested;
+          pref_cnt_tbl[pre_name] = p.pcrtested
           //PCR検査% (PCR検査数/総人口)
-          pref_cnt_tbl[pre_name] = 2500 * p.pcrtested_p;// ave:_.sum(_.map(mm.opt.assets.pref_tbl_last_m1,'pcrtested_p'))/47=0.2002127659574468% like 500 ;0.2*x=500
-        });
-        break;
+          pref_cnt_tbl[pre_name] = 2500 * p.pcrtested_p // ave:_.sum(_.map(mm.opt.assets.pref_tbl_last_m1,'pcrtested_p'))/47=0.2002127659574468% like 500 ;0.2*x=500
+        })
+        break
       case 'tabs_d':
         _.forEach(mm.opt.assets.pref_tbl_last_m1, (p, pre_name) => {
-          pref_cnt_tbl[pre_name] = p.deaths;
-        });
-        break;//死亡者数
+          pref_cnt_tbl[pre_name] = p.deaths
+        })
+        break //死亡者数
       case 'tabs_b':
         _.forEach(mm.opt.assets.pref_tbl_last_m1, (p, pre_name) => {
-          pref_cnt_tbl[pre_name] = p.bed;
-        });
-        break;//対策病床数
+          pref_cnt_tbl[pre_name] = p.bed
+        })
+        break //対策病床数
     }
-    return pref_cnt_tbl;
+    return pref_cnt_tbl
   },
   getCityCntTbl: function () {
-    const pref_cnt_tbl = {};
-    const pref_cnt = mm.gpCity.all();
+    const pref_cnt_tbl = {}
+    const pref_cnt = mm.gpCity.all()
     for (var i = 0; i < pref_cnt.length; i++) {
-      pref_cnt_tbl[pref_cnt[i].key] = pref_cnt[i].value;
+      pref_cnt_tbl[pref_cnt[i].key] = pref_cnt[i].value
     }
-    const ret = {};
-    ret[pnl.gmap.chartGMap.prefecture] = pref_cnt_tbl;
-    return ret;
+    const ret = {}
+    ret[pnl.gmap.chartGMap.prefecture] = pref_cnt_tbl
+    return ret
   },
-  loadDcData: (name) => {
+  loadDcData: name => {
     mm.get.data = name
     // dataファイルのイメージ画像の設定
-    mm.url_data.data = mm.get.data;
-    const imgName = Object.keys(mm.url_data.filer_files).find(key => mm.url_data.filer_files[key].indexOf(mm.url_data.data) === 0);
-    dataImgSrc.value = mm.url_data.path + (imgName ?? 'covid19-japan.png');
-    $('#loading').css('background-image', 'url(' + dataImgSrc.value + ')').show();
+    mm.url_data.data = mm.get.data
+    const imgName = Object.keys(mm.url_data.filer_files).find(
+      key => mm.url_data.filer_files[key].indexOf(mm.url_data.data) === 0
+    )
+    dataImgSrc.value = mm.url_data.path + (imgName ?? 'covid19-japan.png')
+    $('#loading')
+      .css('background-image', 'url(' + dataImgSrc.value + ')')
+      .show()
 
     const initDcAfter = () => {
       if (mm.config.urlParamDataReplace) {
-        mm.onChangeURL('data', mm.get.data);
+        mm.onChangeURL('data', mm.get.data)
       }
-      $('#loading').fadeOut(500);
+      $('#loading').fadeOut(500)
     }
 
     // URLのdataパラメタはすべて CSVとして処理する
     // (data=<name>.json or data=<name> => <name>.csv をロード)
-    const {name: fileName} = mm.util.getFileNameParts(mm.get.data);
+    const { name: fileName } = mm.util.getFileNameParts(mm.get.data)
     mm.get.data = fileName
-    const path = mm.url_data.path + fileName + '.csv';
-    const pathOptionsJson = mm.url_data.path + fileName + '.options.json';
+    const path = mm.url_data.path + fileName + '.csv'
+    const pathOptionsJson = mm.url_data.path + fileName + '.options.json'
 
-    let doParseOptions = 1;
+    let doParseOptions = 1
     // CSVファイルのオプションが外部JSONファイルである場合それを読み込む
-    return mm.util.loadJSON(pathOptionsJson)
-      .then((d) => {
-        mm.opt = _.merge({}, mm.opt || {}, d);
+    return mm.util
+      .loadJSON(pathOptionsJson)
+      .then(d => {
+        mm.opt = _.merge({}, mm.opt || {}, d)
 
-        gg.dt = parseInt(mm.opt.dataType);
-        gg.isPrefTable = gg.dt === DT_COVID;
-        doParseOptions = 0;
+        gg.dt = parseInt(mm.opt.dataType)
+        gg.isPrefTable = gg.dt === DT_COVID
+        doParseOptions = 0
         if (G_IS_LOCAL) {
-          console.info(`INFO:Use Chart Options JSON:${location.origin + pathOptionsJson}`);
+          console.info(`INFO:Use Chart Options JSON:${location.origin + pathOptionsJson}`)
         }
-        return mm.util.parseOptionsCSV(path, doParseOptions);
+        return mm.util.parseOptionsCSV(path, doParseOptions)
       })
-      .catch((error) => {
+      .catch(error => {
         // const msg = `'fetching JSON エラー\n: ${error}。\nURL: ${pathOptionsJson}`;
         // console.log(msg);
         // CSVファイルのオプションがCSVファイル内にある場合それを読み込む
-        doParseOptions = 1;
-        return mm.util.parseOptionsCSV(path, doParseOptions);
+        doParseOptions = 1
+        return mm.util.parseOptionsCSV(path, doParseOptions)
       })
-      .then((result) => {
-        gg.isPrefTable = gg.dt === DT_COVID;
-        mm.data_hdr = result.header;
-        result.data.unshift(result.header);
-        mm.setPanelFromDataOptions();
-        return initDc(result.data);
+      .then(result => {
+        gg.isPrefTable = gg.dt === DT_COVID
+        mm.data_hdr = result.header
+        result.data.unshift(result.header)
+        mm.setPanelFromDataOptions()
+        return initDc(result.data)
       })
-      .then(initDcAfter);
-
+      .then(initDcAfter)
   },
   loadAllData: () => {
-    mm.get = php_location_get_query();
-    const name = mm.get?.viewMode === 'story' ? mm.url_data.data : (mm.get.data || mm.url_data.data);
-    return mm.loadDcData(name)
-      .then(() => {
-        mm.init();
-      });
+    mm.get = php_location_get_query()
+    const name = mm.get?.viewMode === 'story' ? mm.url_data.data : mm.get.data || mm.url_data.data
+    return mm.loadDcData(name).then(() => {
+      mm.init()
+    })
   },
   init: function () {
-    const option = mm.opt.chartName.imagePath ? {imagePath: mm.opt.chartName.imagePath} : {};
-    initAutoComplete(option);
-
+    const option = mm.opt.chartName.imagePath ? { imagePath: mm.opt.chartName.imagePath } : {}
+    initAutoComplete(option)
 
     $('#input-search').autocomplete_ex({
       user_opt: {
@@ -5302,25 +6176,25 @@ const mm = {
             ? ui.item[0] === 'ジャンル'
             : ui.item[0] === '職業' || ui.item[0] === '状態'
           if (cond) {
-            $('#input-search').val(ui.item[1]).trigger('input-search-update');
+            $('#input-search').val(ui.item[1]).trigger('input-search-update')
           } else {
-            let o = $('#input-search');
-            const AC_SPLIT_WD = /\s+/;
-            const wd = o.val().trim().split(AC_SPLIT_WD);
+            let o = $('#input-search')
+            const AC_SPLIT_WD = /\s+/
+            const wd = o.val().trim().split(AC_SPLIT_WD)
             if (wd.length === 1) {
-              const is_pref = ui.item[0] === ui.item[1];
+              const is_pref = ui.item[0] === ui.item[1]
               const val = is_pref
                 ? ui.item[0]
-                : (mm.opt.isMakeAutocompleteData ? '' : ui.item[0]) + ui.item[1];
-              o.val(val + ' ');
+                : (mm.opt.isMakeAutocompleteData ? '' : ui.item[0]) + ui.item[1]
+              o.val(val + ' ')
             }
-            o.trigger('input-search-update');
+            o.trigger('input-search-update')
           }
-        }
-      }
-    });
-  }
-};
+        },
+      },
+    })
+  },
+}
 if (G_IS_LOCAL) {
   mm.local = {
     onLoadAllDataAfter: function () {
@@ -5328,21 +6202,23 @@ if (G_IS_LOCAL) {
       // <データ名>.json を出力 例: /data/game-fc.json
       // mm.local.apiOutJson();
 
-      $('#btn_edit_csv').attr('disabled', false).on('click', function () {
-        // const url = mm.opt.editUrl || mm.local.urlSpreadsheet[mm.url_data.data]; //editUrlは、URLに '='があるのでNG
-        const url = mm.local.urlSpreadsheet[mm.url_data.data];
-        window.open(url, '_blank');
-      });
+      $('#btn_edit_csv')
+        .attr('disabled', false)
+        .on('click', function () {
+          // const url = mm.opt.editUrl || mm.local.urlSpreadsheet[mm.url_data.data]; //editUrlは、URLに '='があるのでNG
+          const url = mm.local.urlSpreadsheet[mm.url_data.data]
+          window.open(url, '_blank')
+        })
     },
     apiOutJson: function () {
-      const file = mm.url_data.data + '.options.json';
-      const jsonString = JSON.stringify(mm.opt);
-      $.post(`/api/outJson?file=${file}`, {jsonString}).then(res => {
-        console.info('INFO:オプションのJSONファイルを出力しました', res);
+      const file = mm.url_data.data + '.options.json'
+      const jsonString = JSON.stringify(mm.opt)
+      $.post(`/api/outJson?file=${file}`, { jsonString }).then(res => {
+        console.info('INFO:オプションのJSONファイルを出力しました', res)
       })
     },
     logChart: function (chart) {
-      const ci = chart.chartID();
+      const ci = chart.chartID()
       const chartNames = {
         [mm.chartName.chartID()]: 'name',
         [mm.chartCity.chartID()]: 'city',
@@ -5358,57 +6234,90 @@ if (G_IS_LOCAL) {
         [mm.chartWeek.chartID()]: 'week',
         [mm.chartSeason.chartID()]: 'season',
         [mm.chartCond.chartID()]: 'cond',
-        [mm.chartJob.chartID()]: 'job'
-      };
-      console.log('onChartFiltered() id:' + ci + ':' + chartNames[ci]);
+        [mm.chartJob.chartID()]: 'job',
+      }
+      console.log('onChartFiltered() id:' + ci + ':' + chartNames[ci])
     },
     urlSpreadsheet: {
-      "covid19-japan": "covid19-data?20221030-321001234567",
-      "covid19-japan-data-2021-02-28": "covid19-data-2021-02-28?20221030-321001234567",
-      "food-ramen": "https:\/\/docs.google.com\/spreadsheets\/d\/186UHvNBXlavGoJ19eBIPhbFRvqPnO6y9SWUAzMsvoL8\/edit?gid=1781238052#gid=1781238052",
-      "ja-quake-noto-safety": "https:\/\/docs.google.com\/spreadsheets\/d\/1vzcw2b8F3wmdC-qaofFaCI-7F948Ke_-rBSvuNfV8ic\/edit?gid=366568963#gid=366568963",
-      "ja-tokyo-gubernatorial-election.csv": "https:\/\/docs.google.com\/spreadsheets\/d\/1gqFfn4uaQJhA7X-uwSyous1O6nvZR5jriNg6JZwBTsM\/edit?gid=14801973#gid=14801973",
-      "resas-agriculture": "resas-agriculture.csv?20221030-321001234567",
-      "resas-product-sales": "resas-product-sales.csv?20221030-321001234567",
-      "resas-tourism-foreigners": "https:\/\/docs.google.com\/spreadsheets\/d\/1aO1soXHdC58cX43DIwsN025MPhTsrKzbq51R1O2KLHw\/edit?gid=366568963#gid=366568963",
-      "resas-municipality-company": "resas-municipality-company.csv?20221030-321001234567",
-      "resas-municipality-taxes": "resas-municipality-taxes.csv?20221030-321001234567",
-      "resas-municipality-manufacture.csv": "resas-municipality-manufacture.csv?20221030-321001234567",
-      "game-msx": "https:\/\/docs.google.com\/spreadsheets\/d\/1bY57j7jjEaGNWkZMPd0jIN00-h2WCtrifVJVp82LQzM\/edit?gid=366568963#gid=366568963",
-      "game-fc": "https:\/\/docs.google.com\/spreadsheets\/d\/1fO1UOe2w3LeIkx5PTV6EDk_Nnt9c7ouv\/r\/edit\/edit?gid=1233932795#gid=1233932795",
-      "game-pce": "https:\/\/docs.google.com\/spreadsheets\/d\/1ArIXd3wp29bvmzHbJxomKAq5_haQDSYiquPpttZjA9s\/edit?gid=1831747219#gid=1831747219",
-      "game-smd": "https:\/\/docs.google.com\/spreadsheets\/d\/19vonUZ1oQfIaY48K_nGzozskF-O7u6Wd10SfDsOSBZ0\/edit?gid=1252037126#gid=1252037126",
-      "game-gb": "https:\/\/docs.google.com\/spreadsheets\/d\/1FimoIC_mOp46aICiz3XClFvZomNDjTAQhHzHdbLR3iE",
-      "game-smc": "https:\/\/docs.google.com\/spreadsheets\/d\/1v7r5cQU_zPPv_tOJoPAEp9gsbYzjD7IduCogj51qBaM\/edit?gid=365793977#gid=365793977",
-      "game-gen4": "https:\/\/docs.google.com\/spreadsheets\/d\/15HWefrVChKM9QuScO5X59qOT8Iv5vAt8sMMen3PizXY\/edit?gid=1347857449#gid=1347857449",
-      "game-ps1": "https:\/\/docs.google.com\/spreadsheets\/d\/1-laGdi-zlVaPpyJm3EaVAWdtWX7KS2kGDtRX46-20eg\/edit?gid=35119188#gid=35119188",
-      "game-ss": "https:\/\/docs.google.com\/spreadsheets\/d\/1kr79M3Ms3ZBhC94DifqvYd5RF078F8o8Y7DPEGbLq0g\/edit?gid=876331871#gid=876331871",
-      "game-n64": "https:\/\/docs.google.com\/spreadsheets\/d\/17GLwimysInib7t18Bgj3OmpH9ApflEP9i_61m4IMVJI",
-      "game-gba": "https:\/\/docs.google.com\/spreadsheets\/d\/1P3J3yVB_wKhT_bLwGjvdb11rXYmwapne5RZtqNKL-ws",
-      "game-gen3": "https:\/\/docs.google.com\/spreadsheets\/d\/1zl_t39t46GXZ-zR0EtzqRroD18T9jZPg-mEPAz_P1NQ\/edit?gid=1062660194#gid=1062660194",
-      "game-ac": "https:\/\/docs.google.com\/spreadsheets\/d\/1LDojW4sK_WeHPfnyghVSY3mUSTs55STtofQTRpJlfbQ\/edit?gid=1400908547#gid=1400908547",
-      "test-article-like": "test-article-like.csv",
-      "test-drink": "test-drink.csv",
-      "test-lunch": "test-lunch.csv",
-      "test-agr-kikurage": "https:\/\/docs.google.com\/spreadsheets\/d\/1jN2ytZjUNUadnJbsYDqkKQgjXI6Bed1e57qIy7CXjsA\/edit?gid=1414939433#gid=1414939433",
-      "sports-hsb": "https:\/\/docs.google.com\/spreadsheets\/d\/1W4lWWn1LUPuacq2erSOz2awtVFptaKVq2zhbGDMScQA\/edit?gid=362801428#gid=362801428",
-      "store-cnt": "https:\/\/docs.google.com\/spreadsheets\/d\/1dg9_nG8NWGVQbt92CemQqwXzRDeT_x8Clw-OJOquNK8\/edit?gid=1551926412#gid=1551926412",
-      "store-di": "https:\/\/docs.google.com\/spreadsheets\/d\/1kt3TyZR2gsVUSyIAkl-6Yy6-L7ZOzYhpgXyIUiDztfI\/edit?gid=362450162#gid=362450162",
-      "kaggle-heart-disease": "https:\/\/docs.google.com\/spreadsheets\/d\/167QtjdMsXKraXdVokVFvhCfUVjgM4jAexp1RAsTrODU\/edit?gid=821196376#gid=821196376"
+      'covid19-japan': 'covid19-data?20221030-321001234567',
+      'covid19-japan-data-2021-02-28': 'covid19-data-2021-02-28?20221030-321001234567',
+      'food-ramen':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/186UHvNBXlavGoJ19eBIPhbFRvqPnO6y9SWUAzMsvoL8\/edit?gid=1781238052#gid=1781238052',
+      'ja-quake-noto-safety':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1vzcw2b8F3wmdC-qaofFaCI-7F948Ke_-rBSvuNfV8ic\/edit?gid=366568963#gid=366568963',
+      'ja-tokyo-gubernatorial-election.csv':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1gqFfn4uaQJhA7X-uwSyous1O6nvZR5jriNg6JZwBTsM\/edit?gid=14801973#gid=14801973',
+      'resas-agriculture': 'resas-agriculture.csv?20221030-321001234567',
+      'resas-product-sales': 'resas-product-sales.csv?20221030-321001234567',
+      'resas-tourism-foreigners':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1aO1soXHdC58cX43DIwsN025MPhTsrKzbq51R1O2KLHw\/edit?gid=366568963#gid=366568963',
+      'resas-municipality-company': 'resas-municipality-company.csv?20221030-321001234567',
+      'resas-municipality-taxes': 'resas-municipality-taxes.csv?20221030-321001234567',
+      'resas-municipality-manufacture.csv':
+        'resas-municipality-manufacture.csv?20221030-321001234567',
+      'game-msx':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1bY57j7jjEaGNWkZMPd0jIN00-h2WCtrifVJVp82LQzM\/edit?gid=366568963#gid=366568963',
+      'game-fc':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1fO1UOe2w3LeIkx5PTV6EDk_Nnt9c7ouv\/r\/edit\/edit?gid=1233932795#gid=1233932795',
+      'game-pce':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1ArIXd3wp29bvmzHbJxomKAq5_haQDSYiquPpttZjA9s\/edit?gid=1831747219#gid=1831747219',
+      'game-smd':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/19vonUZ1oQfIaY48K_nGzozskF-O7u6Wd10SfDsOSBZ0\/edit?gid=1252037126#gid=1252037126',
+      'game-gb':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1FimoIC_mOp46aICiz3XClFvZomNDjTAQhHzHdbLR3iE',
+      'game-smc':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1v7r5cQU_zPPv_tOJoPAEp9gsbYzjD7IduCogj51qBaM\/edit?gid=365793977#gid=365793977',
+      'game-gen4':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/15HWefrVChKM9QuScO5X59qOT8Iv5vAt8sMMen3PizXY\/edit?gid=1347857449#gid=1347857449',
+      'game-ps1':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1-laGdi-zlVaPpyJm3EaVAWdtWX7KS2kGDtRX46-20eg\/edit?gid=35119188#gid=35119188',
+      'game-ss':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1kr79M3Ms3ZBhC94DifqvYd5RF078F8o8Y7DPEGbLq0g\/edit?gid=876331871#gid=876331871',
+      'game-n64':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/17GLwimysInib7t18Bgj3OmpH9ApflEP9i_61m4IMVJI',
+      'game-gba':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1P3J3yVB_wKhT_bLwGjvdb11rXYmwapne5RZtqNKL-ws',
+      'game-gen3':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1zl_t39t46GXZ-zR0EtzqRroD18T9jZPg-mEPAz_P1NQ\/edit?gid=1062660194#gid=1062660194',
+      'game-ac':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1LDojW4sK_WeHPfnyghVSY3mUSTs55STtofQTRpJlfbQ\/edit?gid=1400908547#gid=1400908547',
+      'test-article-like': 'test-article-like.csv',
+      'test-drink': 'test-drink.csv',
+      'test-lunch': 'test-lunch.csv',
+      'test-agr-kikurage':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1jN2ytZjUNUadnJbsYDqkKQgjXI6Bed1e57qIy7CXjsA\/edit?gid=1414939433#gid=1414939433',
+      'sports-hsb':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1W4lWWn1LUPuacq2erSOz2awtVFptaKVq2zhbGDMScQA\/edit?gid=362801428#gid=362801428',
+      'store-cnt':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1dg9_nG8NWGVQbt92CemQqwXzRDeT_x8Clw-OJOquNK8\/edit?gid=1551926412#gid=1551926412',
+      'store-di':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/1kt3TyZR2gsVUSyIAkl-6Yy6-L7ZOzYhpgXyIUiDztfI\/edit?gid=362450162#gid=362450162',
+      'kaggle-heart-disease':
+        'https:\/\/docs.google.com\/spreadsheets\/d\/167QtjdMsXKraXdVokVFvhCfUVjgM4jAexp1RAsTrODU\/edit?gid=821196376#gid=821196376',
     },
-  };
+  }
 }
-const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, isLegend,
-                               chartOptions = {}, keyFormat = null) => {
-  let group = dimension.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
-  group = mm.groupRemoveKey(group, DN_EX);
-  const groupAll = group.all();
-  const isSetCalcChartW = 1;
+const createStackedBarChart = (
+  dimension,
+  parent,
+  height,
+  barWidth,
+  onFiltered,
+  isLegend,
+  chartOptions = {},
+  keyFormat = null
+) => {
+  let group = dimension
+    .group()
+    .reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init)
+  group = mm.groupRemoveKey(group, DN_EX)
+  const groupAll = group.all()
+  const isSetCalcChartW = 1
 
   // 幅調整
-  const margins = _.merge({}, mm.config.defaultMargins, chartOptions?.margins || {});
+  const margins = _.merge({}, mm.config.defaultMargins, chartOptions?.margins || {})
 
-  const chart = new dc.BarChart(parent, CGRP_SHOW);
+  const chart = new dc.BarChart(parent, CGRP_SHOW)
   chart
     .height(height)
     .useViewBoxResizing(mm.config.panelResizable)
@@ -5424,312 +6333,328 @@ const createStackedBarChart = (dimension, parent, height, barWidth, onFiltered, 
     .elasticY(true)
     .yAxisPadding('25%')
     .on('renderlet', function (chart) {
-      mm.chart.setFilterTextSel(chart);
+      mm.chart.setFilterTextSel(chart)
     })
     .on('filtered', onFiltered)
-    .on('pretransition', (chart) => {
-      mm.chart.updateLegend(chart);
+    .on('pretransition', chart => {
+      mm.chart.updateLegend(chart)
     })
     //.mouseZoomable(true)
     //.ordering(function(t){return -t.value.count;})//desc
     .renderHorizontalGridLines(true)
     .renderLabel(true)
     .label(function (d) {
-      return mm.d3fmt(d.data.value.total);
+      return mm.d3fmt(d.data.value.total)
     })
-    .title(v => mm.util.stackedTitle(v, keyFormat, mm.opt.common.unit));
+    .title(v => mm.util.stackedTitle(v, keyFormat, mm.opt.common.unit))
 
-  const n = groupAll.length;
-  const barW = n > 16 ? parseInt(0.75 * barWidth) : barWidth;
+  const n = groupAll.length
+  const barW = n > 16 ? parseInt(0.75 * barWidth) : barWidth
 
   // チャートの幅を計算して調整
   if (isSetCalcChartW) {
-    const chartW = (n + 1) * barW + margins.right + margins.left;
-    chart.width(chartW);
+    const chartW = (n + 1) * barW + margins.right + margins.left
+    chart.width(chartW)
   }
 
   // chart.xAxis().ticks(4);
-  chart.yAxis().tickFormat(d3.format(".2s")).ticks(4);
+  chart.yAxis().tickFormat(d3.format('.2s')).ticks(4)
 
   // スタック登録
-  mm.chart.setStacks(chart, group);
+  mm.chart.setStacks(chart, group)
 
   if (isLegend) {
-    const legend = mm.chart.createGridLegend(margins.left === mm.config.defaultMargins.left ? 45 : 0);
+    const legend = mm.chart.createGridLegend(
+      margins.left === mm.config.defaultMargins.left ? 45 : 0
+    )
     chart.legend(legend)
-    chart.legendToggle = mm.chart.filterByStackName;
+    chart.legendToggle = mm.chart.filterByStackName
   }
-  chart.ordinalColors(mm.config.cDate.colors);
+  chart.ordinalColors(mm.config.cDate.colors)
 
   // xAxisのラベルが長い場合見えるように斜め表示にする
-  let keys;
+  let keys
   if (keyFormat === null) {
-    keys = groupAll.map(v => v.key);
+    keys = groupAll.map(v => v.key)
   } else {
-    keys = groupAll.map(v => keyFormat(v.key));
+    keys = groupAll.map(v => keyFormat(v.key))
   }
-  const isMinBar = barW < barWidth;
-  mm.chart.adjustXAxisLabel(chart, mm.util.arrStrMaxLen(keys) + (isMinBar ? 2 : 0));
+  const isMinBar = barW < barWidth
+  mm.chart.adjustXAxisLabel(chart, mm.util.arrStrMaxLen(keys) + (isMinBar ? 2 : 0))
 
-  return chart;
+  return chart
 }
 /**
  * CHART chartName 都道府県 rowChart Init
  */
 const initChartName = () => {
   if (mm.opt.chartName.isScalePref) {
-    mm.dimName = mm.util.getScaledDimensionPref(D_PL1);
+    mm.dimName = mm.util.getScaledDimensionPref(D_PL1)
   } else {
     mm.dimName = mm.ndx.dimension(function (d) {
-      return d[D_PL1];
-    });
+      return d[D_PL1]
+    })
   }
 
   mm.gpName = mm.dimName.group().reduceSum(function (d) {
     return d[D_PL1] === DN_PL1 ? 0 : mm.group_reduce.base(d)
-  });
-  mm.gpName.all().forEach(v => mm.gpName_all[v.key] = v.value);
+  })
+  mm.gpName.all().forEach(v => (mm.gpName_all[v.key] = v.value))
 
   // 高さ調整
-  const height = 24 + (mm.names.length * mm.config.cName.itemHeight);
+  const height = 24 + mm.names.length * mm.config.cName.itemHeight
   if (!isSp) {
     if (height < window.innerHeight) {
-      $('#panel_name').height(height + 8);
+      $('#panel_name').height(height + 8)
     }
   }
 
-  mm.chartName = new dc.RowChart("#chart_name", CGRP_SHOW);
-  mm.chartName.dataIndex = D_PL1;
+  mm.chartName = new dc.RowChart('#chart_name', CGRP_SHOW)
+  mm.chartName.dataIndex = D_PL1
   mm.chartName
     .width(isSp ? parseInt(window.innerWidth / 2) + 15 : 205)
     .titleLabelOffsetX(50)
     .height(height)
     .useViewBoxResizing(mm.config.panelResizable)
     .fixedBarHeight(24)
-    .margins({top: 0, left: 4, right: 4, bottom: 10})
+    .margins({ top: 0, left: 4, right: 4, bottom: 10 })
     .transitionDuration(750)
     .dimension(mm.dimName)
     //.group(mm.gpName)
     .group(mm.groupRemoveEmpty(mm.gpName)) //yAxis0件は表示しない
     .addFilterHandler(mm.addFilterHandler)
     .on('filtered', function (chart, v) {
-      const filters = chart.filters();
+      const filters = chart.filters()
 
       //都道府県複数選択時に、表示スタックを`都道府県`にするか？
       const go_pref_mode =
         // コロナデータお場合は、ageの場合は変化させない
-        (gg.dt === DT_COVID && pnl.date.stack_type !== STACK_AGE)
+        (gg.dt === DT_COVID && pnl.date.stack_type !== STACK_AGE) ||
         // それ以外のデータの場合、常に変化
-        || gg.dt !== DT_COVID;
+        gg.dt !== DT_COVID
 
       if (go_pref_mode) {
-        let pref_mode = filters.length > 1 && filters.length <= mm.chartStack[1].length;
+        let pref_mode = filters.length > 1 && filters.length <= mm.chartStack[1].length
         if (pref_mode) {
-          pnl.date.stack_type = STACK_PL1;
+          pnl.date.stack_type = STACK_PL1
         } else {
-          pnl.date.stack_type = STACK_CND;
+          pnl.date.stack_type = STACK_CND
         }
-        mm.dateStackShow(pnl.date.stack_type);
+        mm.dateStackShow(pnl.date.stack_type)
       }
 
-      mm.chart.showDetailPanel(chart);
+      mm.chart.showDetailPanel(chart)
 
       // 都道府県一覧テーブルのフィルタにも適応
-      $('#tbl_flt').val(filters.join(' ')).trigger('input');
+      $('#tbl_flt').val(filters.join(' ')).trigger('input')
 
-      mm.showFilterUi('#panel_name', chart);
-      mm.onChartFiltered(chart, v);
+      mm.showFilterUi('#panel_name', chart)
+      mm.onChartFiltered(chart, v)
 
-      const input = $(mm.keyboardInputName);
+      const input = $(mm.keyboardInputName)
       if (input.is(':visible')) {
         if (input.val().trim() !== '') {
           _.delay(() => {
-            input.trigger('change');
-          }, 5);
+            input.trigger('change')
+          }, 5)
         }
       }
-      mm.onChangeURL('name', chart);
-      mm.chartScroll('#div_city');
+      mm.onChangeURL('name', chart)
+      mm.chartScroll('#div_city')
     })
     .on('pretransition', function (chart) {
-      mm.chart.setImageLink(chart,
+      mm.chart.setImageLink(
+        chart,
         mm.opt.chartName.imageTooltip ? D_PL1 : -1,
         mm.opt.chartName.imageTooltip,
         'div_name'
-      );
+      )
     })
     .ordinalColors(d3.schemePaired)
     //.gap(10) //default:5
     .renderLabel(true) //LeftLabel & tooltip
     .label(function (d) {
-      let zenkakuName = d.key;
+      let zenkakuName = d.key
       if (!mm.opt.chartName.isLabelAlphabet) {
         if (mm.util.isHankaku(d.key)) {
-          zenkakuName = mm.util.toZenkaku(d.key);
+          zenkakuName = mm.util.toZenkaku(d.key)
         }
       }
-      let s = zenkakuName;
-      const wordNum = gg.dt === DT_COVID ? 4 : (isSp ? 6 : 8); // 何文字目から数字を表示するか？都道府県名は4文字
-      for (var i = 0; i < wordNum - zenkakuName.length; i++) s += '　';
-      s += ' ';
-      const is_filtered = mm.gpName_all[d.key] !== d.value;
+      let s = zenkakuName
+      const wordNum = gg.dt === DT_COVID ? 4 : isSp ? 6 : 8 // 何文字目から数字を表示するか？都道府県名は4文字
+      for (var i = 0; i < wordNum - zenkakuName.length; i++) s += '　'
+      s += ' '
+      const is_filtered = mm.gpName_all[d.key] !== d.value
       // let p=mm.opt.assets.pref_tbl_last_m1[d.key];
       //       'PCR検査: '+php_number_format(p.pcrtested)+'名 ('+p.pcrtested_p+'%)<br />'+
       //       '死亡者数: '+p.deaths+'名<br />'+
       //       '退院者数: '+php_number_format(p.discharged)+'名<br />'+
       //       '対策病床数: '+php_number_format(p.bed)+'床 ('+(_.round(100*patient/p.bed,2)) + '%)<br />'
-      return s
-        + (mm.opt.chartName.isHideLabelValue ? '' : (d.value < (1000 * 1000 * 10) ? php_number_format(d.value) : mm.d3fmt(d.value)))
-        + (is_filtered || mm.chartDate.data.length < 2 ? '' : (mm.pref_tbl_last_cnt[d.key] ? '▲' + mm.pref_tbl_last_cnt[d.key] : ''));
+      return (
+        s +
+        (mm.opt.chartName.isHideLabelValue
+          ? ''
+          : d.value < 1000 * 1000 * 10
+            ? php_number_format(d.value)
+            : mm.d3fmt(d.value)) +
+        (is_filtered || mm.chartDate.data.length < 2
+          ? ''
+          : mm.pref_tbl_last_cnt[d.key]
+            ? '▲' + mm.pref_tbl_last_cnt[d.key]
+            : '')
+      )
     })
     .renderTitleLabel(false) //RightLabel & tooltip
     .title(function (d) {
-      const ret = gg.dt === DT_COVID ? mm.getChartNameCovid19Title(d.key, '\n') : '';
-      return ret === '' ? (d.key + ' ： ' + php_number_format(d.value)) : ret;
+      const ret = gg.dt === DT_COVID ? mm.getChartNameCovid19Title(d.key, '\n') : ''
+      return ret === '' ? d.key + ' ： ' + php_number_format(d.value) : ret
     })
     .elasticX(true)
-  ;
-  mm.chartName.xAxis().ticks(0);//.tickFormat(d3.format("s"));
+  mm.chartName.xAxis().ticks(0) //.tickFormat(d3.format("s"));
 }
 
 /**
  * CHART chartCity 市区町村 rowChart Init
  */
 const initChartCity = () => {
-  let dimCity;
+  let dimCity
   if (mm.opt.chartCity.isScalePref) {
-    dimCity = mm.util.getScaledDimensionPref(D_PL2);
+    dimCity = mm.util.getScaledDimensionPref(D_PL2)
   } else {
     dimCity = mm.ndx.dimension(function (d) {
-      return d[D_PL2];
-    });
+      return d[D_PL2]
+    })
   }
 
   if (pnl.city.orderUI) {
     // ここだけ、Sum(cnt)　(例: 売り上げ本数合計)へ、
-    mm.gpCity = dimCity.group()
-      .reduceSum(d => (d[D_CNT] || 1));
+    mm.gpCity = dimCity.group().reduceSum(d => d[D_CNT] || 1)
   } else {
-    mm.gpCity = dimCity.group()
-      .reduceSum(d => d[D_PL2] === DN_PL2 ? 0 : mm.group_reduce.base(d));
+    mm.gpCity = dimCity.group().reduceSum(d => (d[D_PL2] === DN_PL2 ? 0 : mm.group_reduce.base(d)))
   }
 
   // 高さ調整
-  const height = 24 + (Object.keys(mm.gpCity.all()).length * mm.config.cCity.itemHeight);
+  const height = 24 + Object.keys(mm.gpCity.all()).length * mm.config.cCity.itemHeight
   if (!isSp) {
     if (height < window.innerHeight) {
-      $('#panel_city').height(height + 8);
+      $('#panel_city').height(height + 8)
     }
   }
 
-  mm.chartCity = new dc.RowChart("#chart_city", CGRP_SHOW);
-  mm.chartCity.dataIndex = D_PL2;
+  mm.chartCity = new dc.RowChart('#chart_city', CGRP_SHOW)
+  mm.chartCity.dataIndex = D_PL2
   mm.chartCity
     .width(isSp ? parseInt(window.innerWidth / 2) - 30 : 230)
     .height(height)
     .useViewBoxResizing(mm.config.panelResizable)
     .fixedBarHeight(24)
-    .margins({top: 0, left: 4, right: 4, bottom: 10})
+    .margins({ top: 0, left: 4, right: 4, bottom: 10 })
     .transitionDuration(750)
     .dimension(dimCity)
     .group(mm.groupRemoveEmpty(mm.gpCity)) //yAxis0件は表示しない
     //.group(mm.gpCity) //yAxisすべて表示
     .addFilterHandler(mm.addFilterHandler)
     .on('pretransition', function (chart) {
-      mm.chart.setImageLink(chart,
+      mm.chart.setImageLink(
+        chart,
         mm.opt.chartCity.imageTooltip ? D_PL2 : -1,
         mm.opt.chartCity.imageTooltip,
         'div_city'
-      );
+      )
     })
     .on('filtered', function (chart, v) {
-      mm.chart.showDetailPanel(chart);
-      mm.showFilterUi('#panel_city', chart);//,(f)=>moment(f).format('M/D(ddd)'));
-      mm.onChartFiltered(chart, v);
+      mm.chart.showDetailPanel(chart)
+      mm.showFilterUi('#panel_city', chart) //,(f)=>moment(f).format('M/D(ddd)'));
+      mm.onChartFiltered(chart, v)
 
-      const input = $(mm.keyboardInputCity);
+      const input = $(mm.keyboardInputCity)
       if (input.is(':visible')) {
         if (input.val().trim() !== '') {
           _.delay(() => {
-            input.trigger('change');
-          }, 5);
+            input.trigger('change')
+          }, 5)
         }
       }
-      mm.onChangeURL('name2', chart);
+      mm.onChangeURL('name2', chart)
     })
     .renderLabel(true) //LeftLabel
     .label(function (d) {
-      let s = d.key;
-      const wordNum = (isSp ? 6 : 8); // 何文字目から数字を表示するか？都道府県名は4文字
-      for (var i = 0; i < wordNum - d.key.length; i++) s += '　';
-      s += ' ';
-      return s
-        + (mm.opt.chartCity.isHideLabelValue ? '' :
-            (d.value === 1 && mm.opt.chartCity.orderYmd
-                ? ''
-                : (d.value < (1000 * 1000 * 10) ? php_number_format(d.value) : mm.d3fmt(d.value))
-            )
-        );
+      let s = d.key
+      const wordNum = isSp ? 6 : 8 // 何文字目から数字を表示するか？都道府県名は4文字
+      for (var i = 0; i < wordNum - d.key.length; i++) s += '　'
+      s += ' '
+      return (
+        s +
+        (mm.opt.chartCity.isHideLabelValue
+          ? ''
+          : d.value === 1 && mm.opt.chartCity.orderYmd
+            ? ''
+            : d.value < 1000 * 1000 * 10
+              ? php_number_format(d.value)
+              : mm.d3fmt(d.value))
+      )
     })
     .renderTitleLabel(false) //RightLabel & tooltip
     .titleLabelOffsetX(20)
     .title(function (d) {
-      return d.key + ' : ' + php_number_format(d.value);
+      return d.key + ' : ' + php_number_format(d.value)
     })
-    .elasticX(true);
+    .elasticX(true)
 
-    mm.chartCity.xAxis().ticks(0);
-    if (mm.opt.chartCity.orderYmd) {
-      mm.chartCity.ordering(mm.orderYmd);
-    }
-
-    // color
-    if (mm.opt.chartCity.orderYmd) {
-      mm.chartCity
-        .colors(d => {
-          let c;
-          switch (pnl.date.stack_type) {
-            case STACK_PL1:
-              let i = mm.chartName.filters().indexOf(d[D_PL1])
-              c = COL_NAME[i];
-              break;
-            case STACK_CND:
-              c = mm.config.cCond.colorsTable[d[D_CND]];
-              break;
-            case STACK_AGE:
-              c = mm.config.cAge.colorsTable[d[D_AGE]];
-              break;
-          }
-          return c;
-        })
-        .colorAccessor(d => {
-          return mm.data[mm.citys.indexOf(d.key)];
-        })
-    } else {
-      mm.chartCity.ordinalColors(mm.config.cCond.ordinalColors)
-    }
+  mm.chartCity.xAxis().ticks(0)
+  if (mm.opt.chartCity.orderYmd) {
+    mm.chartCity.ordering(mm.orderYmd)
   }
+
+  // color
+  if (mm.opt.chartCity.orderYmd) {
+    mm.chartCity
+      .colors(d => {
+        let c
+        switch (pnl.date.stack_type) {
+          case STACK_PL1:
+            let i = mm.chartName.filters().indexOf(d[D_PL1])
+            c = COL_NAME[i]
+            break
+          case STACK_CND:
+            c = mm.config.cCond.colorsTable[d[D_CND]]
+            break
+          case STACK_AGE:
+            c = mm.config.cAge.colorsTable[d[D_AGE]]
+            break
+        }
+        return c
+      })
+      .colorAccessor(d => {
+        return mm.data[mm.citys.indexOf(d.key)]
+      })
+  } else {
+    mm.chartCity.ordinalColors(mm.config.cCond.ordinalColors)
+  }
+}
 
 /**
  * CHART chartDate 感染者数(YYYY-MM-DD) barChart Init
  */
-const initChartDate = (chartDateW) => {
-  let no;
+const initChartDate = chartDateW => {
+  let no
   const dimDate = mm.ndx.dimension(function (d) {
-    return d3.timeDay(new Date(d[D_YMD]));
-  });
+    return d3.timeDay(new Date(d[D_YMD]))
+  })
   mm.gpDate = dimDate.group().reduceSum(function (d) {
-    return mm.group_reduce.base(d);
-  });
+    return mm.group_reduce.base(d)
+  })
 
-  const gpDateStk = dimDate.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
+  const gpDateStk = dimDate
+    .group()
+    .reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init)
   //.order(function(d) {return d.total;});
 
-  mm.composite = new dc.CompositeChart("#chart_date", CGRP_SHOW);
-  mm.composite.dataIndex = D_YMD;
+  mm.composite = new dc.CompositeChart('#chart_date', CGRP_SHOW)
+  mm.composite.dataIndex = D_YMD
 
-  mm.chartDate = new dc.BarChart(mm.composite);
-  mm.chartDate.dataIndex = D_YMD;
+  mm.chartDate = new dc.BarChart(mm.composite)
+  mm.chartDate.dataIndex = D_YMD
   mm.chartDate
     .centerBar(false)
     .transitionDuration(750)
@@ -5741,62 +6666,79 @@ const initChartDate = (chartDateW) => {
     // .xAxisPaddingUnit()
     .on('filtered', function (chart, v) {
       //mm.showFilterUi('#panel_date',chart,(f)=>moment(f).format('M/D(ddd)'));
-      mm.onChartFiltered(chart, v);
+      mm.onChartFiltered(chart, v)
     })
-  ;
 
-  mm.chart.setupLabel(mm.chartDate, mm.opt.chartDate.labelType, false);
+  mm.chart.setupLabel(mm.chartDate, mm.opt.chartDate.labelType, false)
 
-  mm.chartDate.yAxis().tickFormat(d3.format(".2s")).ticks(5); //tickFormat(d3.format("s"));
+  mm.chartDate.yAxis().tickFormat(d3.format('.2s')).ticks(5) //tickFormat(d3.format("s"));
 
   //
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_CND]
   //
 
-  const colCondTbl = [], colAgeTbl = [];
+  const colCondTbl = [],
+    colAgeTbl = []
   if (gg.dt === DT_COVID) {
     mm.chartDate
-      .group(gpDateStk, CND_LV_A, (d) => d.value.lv_a)
-      .stack(gpDateStk, CND_LV_B, (d) => d.value.lv_b)
-      .stack(gpDateStk, CND_LV_C, (d) => d.value.lv_c)
-      .stack(gpDateStk, CND_LV_D, (d) => d.value.lv_d)
-      .stack(gpDateStk, CND_LV_E, (d) => d.value.lv_e);
+      .group(gpDateStk, CND_LV_A, d => d.value.lv_a)
+      .stack(gpDateStk, CND_LV_B, d => d.value.lv_b)
+      .stack(gpDateStk, CND_LV_C, d => d.value.lv_c)
+      .stack(gpDateStk, CND_LV_D, d => d.value.lv_d)
+      .stack(gpDateStk, CND_LV_E, d => d.value.lv_e)
   } else {
-    mm.chartStack[STACK_CND] = mm.util.getScaledDimensionCond().group().all().sort((a, b) => b.value - a.value)
-      .map(v => v.key);
+    mm.chartStack[STACK_CND] = mm.util
+      .getScaledDimensionCond()
+      .group()
+      .all()
+      .sort((a, b) => b.value - a.value)
+      .map(v => v.key)
 
     for (no = 0; no < mm.chartStack[STACK_CND].length; no++) {
       if (no === 0) {
-        mm.chartDate.group(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate.isFilterMissingCorrect));
+        mm.chartDate.group(
+          gpDateStk,
+          mm.chartStack[STACK_CND][no],
+          mm.dateStackCndAccessor(no, mm.opt.chartDate.isFilterMissingCorrect)
+        )
       } else {
-        mm.chartDate.stack(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate.isFilterMissingCorrect));
+        mm.chartDate.stack(
+          gpDateStk,
+          mm.chartStack[STACK_CND][no],
+          mm.dateStackCndAccessor(no, mm.opt.chartDate.isFilterMissingCorrect)
+        )
       }
-      mm.chartStackIdxCnd[mm.chartStack[STACK_CND][no]] = no;
+      mm.chartStackIdxCnd[mm.chartStack[STACK_CND][no]] = no
     }
 
-    mm.config.cCond.colors = Array(mm.chartStack[STACK_CND].length);
+    mm.config.cCond.colors = Array(mm.chartStack[STACK_CND].length)
     for (let i = 0; i < mm.config.cCond.colors.length; i++) {
-      mm.config.cCond.colors[i] = mm.config.cCond.ordinalColors[i % mm.config.cCond.ordinalColors.length];
+      mm.config.cCond.colors[i] =
+        mm.config.cCond.ordinalColors[i % mm.config.cCond.ordinalColors.length]
     }
 
-    const cndAll = mm.util.getScaledDimensionCond().group().all();
+    const cndAll = mm.util.getScaledDimensionCond().group().all()
     for (let i = 0; i < cndAll.length; i++) {
-      colCondTbl[i] = mm.chartStack[STACK_CND].findIndex(o => o === cndAll[i].key);
+      colCondTbl[i] = mm.chartStack[STACK_CND].findIndex(o => o === cndAll[i].key)
     }
 
     if (mm.opt.chartCity.orderYmd) {
       mm.config.cCond.colorsTable = mm.conds.reduce((table, cond, i) => {
-        table[cond] = mm.config.cCond.colors[colCondTbl[i]];
-        return table;
-      }, {});
+        table[cond] = mm.config.cCond.colors[colCondTbl[i]]
+        return table
+      }, {})
     }
   }
   //
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_PL1]
   //
   for (no = 0; no < mm.chartStack[STACK_PL1].length; no++) {
-    mm.dateStackPl1Names[no] = '(選択' + (no + 1) + ')';
-    mm.chartDate.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(no, mm.opt.chartDate.isFilterMissingCorrect));
+    mm.dateStackPl1Names[no] = '(選択' + (no + 1) + ')'
+    mm.chartDate.stack(
+      gpDateStk,
+      mm.chartStack[STACK_PL1][no],
+      mm.dateStackPl1Accessor(no, mm.opt.chartDate.isFilterMissingCorrect)
+    )
   }
 
   //
@@ -5804,49 +6746,59 @@ const initChartDate = (chartDateW) => {
   //
   if (gg.dt !== DT_COVID) {
     if (mm.opt.chartAge.unit === null) {
-      mm.chartStack[STACK_AGE] = mm.util.getScaledDimensionAge().group().all()
+      mm.chartStack[STACK_AGE] = mm.util
+        .getScaledDimensionAge()
+        .group()
+        .all()
         .sort((a, b) => b.value - a.value)
-        .map(v => v.key);
+        .map(v => v.key)
 
       for (no = 0; no < mm.chartStack[STACK_AGE].length; no++) {
-        mm.chartStackIdxAge[mm.chartStack[STACK_AGE][no]] = no;
+        mm.chartStackIdxAge[mm.chartStack[STACK_AGE][no]] = no
       }
 
-      const ageAll = mm.util.getScaledDimensionAge().group().all();
+      const ageAll = mm.util.getScaledDimensionAge().group().all()
       for (let i = 0; i < ageAll.length; i++) {
-        colAgeTbl[i] = mm.chartStack[STACK_AGE].findIndex(o => o === ageAll[i].key);
+        colAgeTbl[i] = mm.chartStack[STACK_AGE].findIndex(o => o === ageAll[i].key)
       }
-
     } else {
       for (no = 0; no < mm.chartStack[STACK_AGE].length; no++) {
-        mm.chartStackIdxAge[mm.chartStack[STACK_AGE][no]] = no;
+        mm.chartStackIdxAge[mm.chartStack[STACK_AGE][no]] = no
       }
-      const ageAll = mm.util.getScaledDimensionAge().group().all().map(v => parseInt(v.key));
+      const ageAll = mm.util
+        .getScaledDimensionAge()
+        .group()
+        .all()
+        .map(v => parseInt(v.key))
       for (let i = 0; i < ageAll.length; i++) {
-        colAgeTbl[i] = mm.chartStack[STACK_AGE].findIndex(o => mm.chartStackIdxAge[o] === ageAll[i]);
+        colAgeTbl[i] = mm.chartStack[STACK_AGE].findIndex(o => mm.chartStackIdxAge[o] === ageAll[i])
       }
     }
 
     if (mm.opt.chartCity.orderYmd) {
-      mm.config.cAge.colors = Array(mm.chartStack[STACK_AGE].length);
+      mm.config.cAge.colors = Array(mm.chartStack[STACK_AGE].length)
       for (let i = 0; i < mm.config.cAge.colors.length; i++) {
-        mm.config.cAge.colors[i] = COL_AGE[i % COL_AGE.length];
+        mm.config.cAge.colors[i] = COL_AGE[i % COL_AGE.length]
       }
       mm.config.cAge.colorsTable = mm.ages.reduce((table, age, i) => {
-        age = mm.opt.chartAge.unit === null ? age : mm.chartStackIdxAge[age];
-        table[age] = mm.config.cAge.colors[colAgeTbl[i]];
-        return table;
-      }, {});
+        age = mm.opt.chartAge.unit === null ? age : mm.chartStackIdxAge[age]
+        table[age] = mm.config.cAge.colors[colAgeTbl[i]]
+        return table
+      }, {})
     }
   }
 
   for (no = 0; no < mm.chartStack[STACK_AGE].length; no++) {
-    mm.chartDate.stack(gpDateStk, mm.chartStack[STACK_AGE][no], mm.dateStackAgeAccessor(no, mm.opt.chartDate.isFilterMissingCorrect));
+    mm.chartDate.stack(
+      gpDateStk,
+      mm.chartStack[STACK_AGE][no],
+      mm.dateStackAgeAccessor(no, mm.opt.chartDate.isFilterMissingCorrect)
+    )
   }
 
-  mm.config.cDate.colors = mm.config.cCond.colors.concat(COL_NAME).concat(COL_AGE);
-  mm.chartDate.ordinalColors(mm.config.cDate.colors);
-  mm.pref_tbl_last_cnt = _.last(mm.chartDate.group().all()).value.nmcnt;
+  mm.config.cDate.colors = mm.config.cCond.colors.concat(COL_NAME).concat(COL_AGE)
+  mm.chartDate.ordinalColors(mm.config.cDate.colors)
+  mm.pref_tbl_last_cnt = _.last(mm.chartDate.group().all()).value.nmcnt
 
   //
   // 別チャートが色が同じになるように対応
@@ -5854,27 +6806,27 @@ const initChartDate = (chartDateW) => {
   if (gg.dt !== DT_COVID) {
     mm.chartAge
       .colorAccessor(function (d, i) {
-        return colAgeTbl[i];
+        return colAgeTbl[i]
       })
       .colors(function (i) {
-        return COL_AGE[i];
-      });
+        return COL_AGE[i]
+      })
 
     mm.chartCond
       .colorAccessor(function (d, i) {
-        return colCondTbl[i];
+        return colCondTbl[i]
       })
       .colors(function (i) {
-        return mm.config.cCond.colors[i];
-      });
+        return mm.config.cCond.colors[i]
+      })
   }
-  mm.chartDate.legendToggle = mm.chart.filterByStackName;
+  mm.chartDate.legendToggle = mm.chart.filterByStackName
 
   //===========================================================================
   // CHART lineChart chartLine_init
   //===========================================================================
   if (gg.dt === DT_COVID) {
-    mm.chartLine = new dc.LineChart(mm.composite);
+    mm.chartLine = new dc.LineChart(mm.composite)
     mm.chartLine
       .dimension(dimDate)
       .colors('red')
@@ -5882,26 +6834,25 @@ const initChartDate = (chartDateW) => {
       //.useRightYAxis(IS_SP)
       //.yAxisPadding('40%')
       .valueAccessor(function (d, no) {
-        const N = 7;// N日 移動平均
+        const N = 7 // N日 移動平均
         if (no === 0) {
-          mm.work = _.values(_.mapValues(mm.gpDate.all(), d => d.value));
+          mm.work = _.values(_.mapValues(mm.gpDate.all(), d => d.value))
         }
-        let i = no - N + 1;
-        let v = mm.work.slice(i < 0 ? 0 : i, i + N);
-        let ave = Math.round(_.sum(v) / N);
-        return ave;
+        let i = no - N + 1
+        let v = mm.work.slice(i < 0 ? 0 : i, i + N)
+        let ave = Math.round(_.sum(v) / N)
+        return ave
       })
     //.dashStyle([2,2])
-    ;
     //mm.chartLine.yAxis().ticks(5);
   }
 
   //===========================================================================
   // CHART composite_init
   //===========================================================================
-  const margins = _.merge({}, mm.config.defaultMargins, mm.opt.chartDate?.margins || {});
-  const legend = mm.chart.createGridLegend(margins.left === mm.config.defaultMargins.left ? 45 : 0);
-  const valueFormat = (f) => moment(f).format('YYYY/M/D(ddd)');
+  const margins = _.merge({}, mm.config.defaultMargins, mm.opt.chartDate?.margins || {})
+  const legend = mm.chart.createGridLegend(margins.left === mm.config.defaultMargins.left ? 45 : 0)
+  const valueFormat = f => moment(f).format('YYYY/M/D(ddd)')
   mm.composite
     .width(chartDateW)
     .height(200)
@@ -5922,81 +6873,84 @@ const initChartDate = (chartDateW) => {
     .on('pretransition', mm.onChartDatePretransition)
     .addFilterHandler(mm.addFilterHandler)
     .on('preRedraw', function (chart) {
-      mm.chartDate.filterAll().filter([mm.composite.filters()]);
+      mm.chartDate.filterAll().filter([mm.composite.filters()])
     })
     .on('filtered', function (chart, v) {
-      mm.showFilterUi('#panel_date', chart, valueFormat);
-      mm.onChartFiltered(chart, v);
-      mm.chartScroll('#div_name');
-      mm.chartScroll('#div_city');
-      mm.onChangeURL('date', chart);
+      mm.showFilterUi('#panel_date', chart, valueFormat)
+      mm.onChartFiltered(chart, v)
+      mm.chartScroll('#div_name')
+      mm.chartScroll('#div_city')
+      mm.onChangeURL('date', chart)
     })
     .compose(gg.dt === DT_COVID ? [mm.chartDate, mm.chartLine] : [mm.chartDate])
-  ;
-  const nTick = gg.dt === DT_COVID ? 7 : (mm.gpDate.all().length < 3 ? 2 : 14);
-  mm.composite.xAxis().ticks(nTick).tickFormat(mm.util.chartDateXAxisTickFormat);
-  mm.composite.yAxis().tickFormat(d3.format(".2s")).ticks(5);
+  const nTick = gg.dt === DT_COVID ? 7 : mm.gpDate.all().length < 3 ? 2 : 14
+  mm.composite.xAxis().ticks(nTick).tickFormat(mm.util.chartDateXAxisTickFormat)
+  mm.composite.yAxis().tickFormat(d3.format('.2s')).ticks(5)
 
   if (mm.opt.chartDate.yDomain) {
-    mm.composite.elasticY(false).y(d3.scaleLinear().domain(mm.opt.chartDate.yDomain));
+    mm.composite.elasticY(false).y(d3.scaleLinear().domain(mm.opt.chartDate.yDomain))
   }
 }
 const initChartDate2 = () => {
   switch (true) {
     default:
     case mm.opt.chartDate2.chartType === 'lines':
-      pnl.date.chart2.type = CHART_DATE2_TYPE_LINES;
-      initChartDate2Stacks(mm.config.cDate.width, false);
-      applyRangeChartSettings();
-      break;
+      pnl.date.chart2.type = CHART_DATE2_TYPE_LINES
+      initChartDate2Stacks(mm.config.cDate.width, false)
+      applyRangeChartSettings()
+      break
     case gg.dt === DT_COVID:
-      pnl.date.chart2.type = CHART_DATE2_TYPE_COVID;
-      initChartDate2Covid(mm.config.cDate.width);
-      break;
+      pnl.date.chart2.type = CHART_DATE2_TYPE_COVID
+      initChartDate2Covid(mm.config.cDate.width)
+      break
     case mm.opt.chartDate2.chartType === 'stacks':
-      pnl.date.chart2.type = CHART_DATE2_TYPE_STACKS;
-      initChartDate2Stacks(mm.config.cDate.width, true);
-      applyRangeChartSettings();
-      break;
+      pnl.date.chart2.type = CHART_DATE2_TYPE_STACKS
+      initChartDate2Stacks(mm.config.cDate.width, true)
+      applyRangeChartSettings()
+      break
   }
-};
+}
 /**
  * CHART chartDate2 患者・PCR・死亡(YYYY-MM-DD) barChart Init
  */
-const initChartDate2Covid = (chartDateW) => {
-  let ndx3 = crossfilter(mm.opt.assets.data3);
+const initChartDate2Covid = chartDateW => {
+  let ndx3 = crossfilter(mm.opt.assets.data3)
   mm.dimName2 = ndx3.dimension(function (d) {
-    return d[D3_PL1];
-  });
+    return d[D3_PL1]
+  })
 
   let dimDate2 = ndx3.dimension(function (d) {
-    return d3.timeDay(new Date(d[D3_YMD]));
-  });
+    return d3.timeDay(new Date(d[D3_YMD]))
+  })
   mm.gpDate2 = dimDate2.group().reduceSum(function (d) {
-    return d[D3_CNT];
-  });
+    return d[D3_CNT]
+  })
 
   let gpDateStk2 = dimDate2.group().reduce(
     function date2_grp_add(p, v) {
-      let pl = v[D3_PL1], cnt = v[D3_CNT], type = v[D3_TYP];
-      p.all[type] += cnt;
-      p.pre[type][pl] = (p.pre[type][pl] || 0) + cnt;
-      return p;
+      let pl = v[D3_PL1],
+        cnt = v[D3_CNT],
+        type = v[D3_TYP]
+      p.all[type] += cnt
+      p.pre[type][pl] = (p.pre[type][pl] || 0) + cnt
+      return p
     },
     function date2_grp_remove(p, v) {
-      let pl = v[D3_PL1], cnt = v[D3_CNT], type = v[D3_TYP];
-      p.all[type] -= cnt;
-      p.pre[type][pl] = (p.pre[type][pl] || 0) - cnt;
-      return p;
+      let pl = v[D3_PL1],
+        cnt = v[D3_CNT],
+        type = v[D3_TYP]
+      p.all[type] -= cnt
+      p.pre[type][pl] = (p.pre[type][pl] || 0) - cnt
+      return p
     },
     function date2_grp_init(p, v) {
-      return {all: [0, 0, 0], pre: [{}, {}, {}]};
+      return { all: [0, 0, 0], pre: [{}, {}, {}] }
     }
-  );
+  )
 
-  mm.composite2 = new dc.CompositeChart("#chart_date2", CGRP_SHOW);
-  mm.chartDate2 = new dc.BarChart(mm.composite2);
-  mm.chartLine2 = new dc.LineChart(mm.composite2);
+  mm.composite2 = new dc.CompositeChart('#chart_date2', CGRP_SHOW)
+  mm.chartDate2 = new dc.BarChart(mm.composite2)
+  mm.chartLine2 = new dc.LineChart(mm.composite2)
 
   mm.chartDate2
     .centerBar(false)
@@ -6004,60 +6958,60 @@ const initChartDate2Covid = (chartDateW) => {
     .dimension(dimDate2)
     .elasticY(true)
     .group(gpDateStk2, 'PCR', function (d) {
-      let flt_len = mm.chartName.filters().length;
-      return (flt_len === 0 && mm.chartDate2Mode === MD_PCR) ? d.value.all[MD_PCR] : 0;
+      let flt_len = mm.chartName.filters().length
+      return flt_len === 0 && mm.chartDate2Mode === MD_PCR ? d.value.all[MD_PCR] : 0
     })
     .stack(gpDateStk2, '死亡', function (d) {
-      let flt_len = mm.chartName.filters().length;
-      return (flt_len === 0 && mm.chartDate2Mode === MD_DEA) ? d.value.all[MD_DEA] : 0;
+      let flt_len = mm.chartName.filters().length
+      return flt_len === 0 && mm.chartDate2Mode === MD_DEA ? d.value.all[MD_DEA] : 0
     })
     .stack(gpDateStk2, '患者', function (d) {
-      let flt_len = mm.chartName.filters().length;
-      return (flt_len === 0 && mm.chartDate2Mode === MD_PAT) ? d.value.all[MD_PAT] : 0;
+      let flt_len = mm.chartName.filters().length
+      return flt_len === 0 && mm.chartDate2Mode === MD_PAT ? d.value.all[MD_PAT] : 0
     })
     .hidableStacks(false) // stackNameLegend click でタックを非表示または表示
     .yAxisPadding('12%')
     .renderLabel(true)
     .label(function (d, i) {
-      let ymd = moment(d.x).format('YYYYMMDD');
-      let flt = mm.chartName.filters();
-      let total;
+      let ymd = moment(d.x).format('YYYYMMDD')
+      let flt = mm.chartName.filters()
+      let total
       if (flt.length) {
-        let f = _.filter(d.data.value.pre[mm.chartDate2Mode], (k, v) => flt.includes(v));//mm.chartNameフィルタでされた物だけ抽出
-        total = _.sum(f);
+        let f = _.filter(d.data.value.pre[mm.chartDate2Mode], (k, v) => flt.includes(v)) //mm.chartNameフィルタでされた物だけ抽出
+        total = _.sum(f)
       } else {
-        total = d.data.value.all[mm.chartDate2Mode];
+        total = d.data.value.all[mm.chartDate2Mode]
       }
-      if (total === 0) return '';
+      if (total === 0) return ''
       //最大                     最新日付
-      return (mm.dateCntMax2Ymd.includes(ymd) || ymd === mm.dateCntTo2) ? php_number_format(total) : '';
-
+      return mm.dateCntMax2Ymd.includes(ymd) || ymd === mm.dateCntTo2
+        ? php_number_format(total)
+        : ''
     })
     .ordinalColors(_.concat(COL_DATE2, _.concat(colorbrewer.Set1[3], colorbrewer.Set1[6])))
     .on('filtered', function (chart, v) {
       //mm.showFilterUi('#panel_date',chart,(f)=>moment(f).format('M/D(ddd)'));
-      mm.onChartFiltered(chart, v);
+      mm.onChartFiltered(chart, v)
     })
-  ;
-  mm.chartDate2.yAxis().tickFormat(d3.format(".2s")).ticks(5); //tickFormat(d3.format("s"));
+  mm.chartDate2.yAxis().tickFormat(d3.format('.2s')).ticks(5) //tickFormat(d3.format("s"));
 
   function date2_sel_stack(chart, no) {
     return function (d, i) {
-      let flt = mm.chartName.filters();
-      let pref_mode = flt.length > 0;
+      let flt = mm.chartName.filters()
+      let pref_mode = flt.length > 0
       if (pref_mode) {
-        let flt_name = flt[no - 1];
-        chart.stack()[CHART_DATE2_STACK1_N + no - 1].name = flt_name;
-        return (d.value.pre[mm.chartDate2Mode][flt_name] || 0);
+        let flt_name = flt[no - 1]
+        chart.stack()[CHART_DATE2_STACK1_N + no - 1].name = flt_name
+        return d.value.pre[mm.chartDate2Mode][flt_name] || 0
       } else {
-        chart.stack()[CHART_DATE2_STACK1_N + no - 1].name = '(選択' + no + ')';
-        return 0;
+        chart.stack()[CHART_DATE2_STACK1_N + no - 1].name = '(選択' + no + ')'
+        return 0
       }
     }
   }
 
   for (var no = 1; no < CHART_DATE2_STACK2_N; no++) {
-    mm.chartDate2.stack(gpDateStk2, '(選択' + no + ')', date2_sel_stack(mm.chartDate2, no));
+    mm.chartDate2.stack(gpDateStk2, '(選択' + no + ')', date2_sel_stack(mm.chartDate2, no))
   }
 
   //===========================================================================
@@ -6066,58 +7020,63 @@ const initChartDate2Covid = (chartDateW) => {
   mm.chartLine2
     .dimension(dimDate2)
     .colors('red')
-    .group(mm.gpDate2, "週間移動平均")
+    .group(mm.gpDate2, '週間移動平均')
     //.useRightYAxis(IS_SP)
     //.yAxisPadding('40%')
     .valueAccessor(function (d, no) {
-      const N = 7;// N日 移動平均
+      const N = 7 // N日 移動平均
       if (no === 0) {
-        let flt = mm.chartName.filters();
-        mm.work = [];
-        mm.dateCntTo2 = '00000000';
-        mm.dateCntMax2Ymd = [];
+        let flt = mm.chartName.filters()
+        mm.work = []
+        mm.dateCntTo2 = '00000000'
+        mm.dateCntMax2Ymd = []
 
         if (flt.length) {
-          mm.chartDate2.group().all().forEach((v) => {
-            let f = _.filter(v.value.pre[mm.chartDate2Mode], (k, v) => flt.includes(v));//mm.chartNameフィルタでされた物だけ抽出
-            let s = _.sum(f);
-            mm.work.push(s);
+          mm.chartDate2
+            .group()
+            .all()
+            .forEach(v => {
+              let f = _.filter(v.value.pre[mm.chartDate2Mode], (k, v) => flt.includes(v)) //mm.chartNameフィルタでされた物だけ抽出
+              let s = _.sum(f)
+              mm.work.push(s)
 
-            let ymd = moment(v.key).format('YYYYMMDD');
-            if (s > 0 && ymd > mm.dateCntTo2) mm.dateCntTo2 = ymd;
+              let ymd = moment(v.key).format('YYYYMMDD')
+              if (s > 0 && ymd > mm.dateCntTo2) mm.dateCntTo2 = ymd
 
-            if (s === mm.dateCntMax2) {
-              mm.dateCntMax2Ymd.push(ymd);
-            }
-          });
+              if (s === mm.dateCntMax2) {
+                mm.dateCntMax2Ymd.push(ymd)
+              }
+            })
         } else {
-          mm.chartDate2.group().all().forEach((v) => {
-            let s = v.value.all[mm.chartDate2Mode];
-            mm.work.push(s);
-            let ymd = moment(v.key).format('YYYYMMDD');
-            if (s > 0 && ymd > mm.dateCntTo2) mm.dateCntTo2 = ymd;
-          });
+          mm.chartDate2
+            .group()
+            .all()
+            .forEach(v => {
+              let s = v.value.all[mm.chartDate2Mode]
+              mm.work.push(s)
+              let ymd = moment(v.key).format('YYYYMMDD')
+              if (s > 0 && ymd > mm.dateCntTo2) mm.dateCntTo2 = ymd
+            })
         }
         if (mm.chartDate2Mode === MD_PAT) {
-          pnl.date.chart2.cnt = php_number_format(_.last(mm.work));
+          pnl.date.chart2.cnt = php_number_format(_.last(mm.work))
         } else {
-          pnl.date.chart2.cnt = php_number_format(_.sum(mm.work));
+          pnl.date.chart2.cnt = php_number_format(_.sum(mm.work))
         }
-        mm.dateCntMax2 = _.max(mm.work);
+        mm.dateCntMax2 = _.max(mm.work)
       }
-      let i = no - N + 1;
-      let v = mm.work.slice(i < 0 ? 0 : i, i + N);
-      let ave = Math.round(_.sum(v) / N);
-      return ave;
+      let i = no - N + 1
+      let v = mm.work.slice(i < 0 ? 0 : i, i + N)
+      let ave = Math.round(_.sum(v) / N)
+      return ave
     })
   //.dashStyle([2,2])
-  ;
   //mm.chartLine.yAxis().ticks(5);
 
   //===========================================================================
   // CHART composite2_init
   //===========================================================================
-  const valueFormat = (f) => moment(f).format('YYYY/M/D(ddd)');
+  const valueFormat = f => moment(f).format('YYYY/M/D(ddd)')
   mm.composite2
     .width(chartDateW)
     .height(160)
@@ -6126,9 +7085,14 @@ const initChartDate2Covid = (chartDateW) => {
       top: 0,
       right: 0,
       bottom: 20,
-      left: 50
+      left: 50,
     })
-    .legend(dc.legend().x(isSp ? chartDateW - 350 : 60).y(0))
+    .legend(
+      dc
+        .legend()
+        .x(isSp ? chartDateW - 350 : 60)
+        .y(0)
+    )
     .x(mm.domainDate ? d3.scaleTime().domain(mm.domainDate) : d3.scaleTime())
     .elasticX(false)
     .mouseZoomable(false)
@@ -6139,13 +7103,15 @@ const initChartDate2Covid = (chartDateW) => {
     .title(v => mm.util.stackedTitle(v, valueFormat, mm.opt.common.unit))
     .on('pretransition', mm.onChartDatePretransition)
     .compose([mm.chartDate2, mm.chartLine2])
-  ;
-  mm.composite2.xAxis().ticks(7).tickFormat(function (s) {
-    // データのレンジで ミクロ/マクロ を切り替える
-    const format = mm.opt.chartDate.format ?? (mm.data.length < 3000 ? 'M/Dddd' : 'YYYY/MM');
-    return moment(s).format(format);
-  });
-  mm.composite2.yAxis().ticks(5).tickFormat(d3.format("~s"));//1.5k
+  mm.composite2
+    .xAxis()
+    .ticks(7)
+    .tickFormat(function (s) {
+      // データのレンジで ミクロ/マクロ を切り替える
+      const format = mm.opt.chartDate.format ?? (mm.data.length < 3000 ? 'M/Dddd' : 'YYYY/MM')
+      return moment(s).format(format)
+    })
+  mm.composite2.yAxis().ticks(5).tickFormat(d3.format('~s')) //1.5k
 }
 
 /**
@@ -6153,17 +7119,19 @@ const initChartDate2Covid = (chartDateW) => {
  */
 const initChartDate2Stacks = (chartDateW, stackOn) => {
   const dimDate = mm.ndx.dimension(function (d) {
-    return d3.timeDay(new Date(d[D_YMD]));
-  });
+    return d3.timeDay(new Date(d[D_YMD]))
+  })
   const gpDate = dimDate.group().reduceSum(function (d) {
-    return mm.group_reduce.base(d);
-  });
-  mm.gpDate2 = gpDate;
-  const gpDateStk = dimDate.group().reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init);
+    return mm.group_reduce.base(d)
+  })
+  mm.gpDate2 = gpDate
+  const gpDateStk = dimDate
+    .group()
+    .reduce(mm.group_reduce.append, mm.group_reduce.remove, mm.group_reduce.init)
 
-  mm.composite2 = new dc.CompositeChart("#chart_date2", CGRP_SHOW);
+  mm.composite2 = new dc.CompositeChart('#chart_date2', CGRP_SHOW)
 
-  mm.chartDate2 = new dc.LineChart(mm.composite2);
+  mm.chartDate2 = new dc.LineChart(mm.composite2)
 
   mm.chartDate2
     //.centerBar(false) BarChart_method
@@ -6173,39 +7141,55 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     .transitionDuration(750)
     .dimension(dimDate)
     .hidableStacks(false) // stackNameLegend click でタックを非表示または表示
-    .yAxisPadding('12%');
-    // .useRightYAxis(IS_SP)
-    // .elasticX(true)
-    // .xAxisPadding(2)
-    // .xAxisPaddingUnit()
+    .yAxisPadding('12%')
+  // .useRightYAxis(IS_SP)
+  // .elasticX(true)
+  // .xAxisPadding(2)
+  // .xAxisPaddingUnit()
 
-  mm.chart.setupLabel(mm.chartDate2, mm.opt.chartDate2.labelType, true);
+  mm.chart.setupLabel(mm.chartDate2, mm.opt.chartDate2.labelType, true)
 
-  mm.chartDate2.yAxis().tickFormat(d3.format(".2s"));
-  mm.chart.stackOn(mm.chartDate2, stackOn);
+  mm.chartDate2.yAxis().tickFormat(d3.format('.2s'))
+  mm.chart.stackOn(mm.chartDate2, stackOn)
 
   // スタック登録 - CHART_DATE_STACK_GRP[0]
   for (let no = 0; no < mm.chartStack[STACK_CND].length; no++) {
     if (no === 0) {
-      mm.chartDate2.group(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
+      mm.chartDate2.group(
+        gpDateStk,
+        mm.chartStack[STACK_CND][no],
+        mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect)
+      )
     } else {
-      mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_CND][no], mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
+      mm.chartDate2.stack(
+        gpDateStk,
+        mm.chartStack[STACK_CND][no],
+        mm.dateStackCndAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect)
+      )
     }
   }
 
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_PL1]
   for (let no = 0; no < mm.chartStack[STACK_PL1].length; no++) {
-    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_PL1][no], mm.dateStackPl1Accessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
+    mm.chartDate2.stack(
+      gpDateStk,
+      mm.chartStack[STACK_PL1][no],
+      mm.dateStackPl1Accessor(no, mm.opt.chartDate2.isFilterMissingCorrect)
+    )
   }
 
   // スタック登録 - CHART_DATE_STACK_GRP[STACK_AGE]
   for (let no = 0; no < mm.chartStack[STACK_AGE].length; no++) {
-    mm.chartDate2.stack(gpDateStk, mm.chartStack[STACK_AGE][no], mm.dateStackAgeAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect));
+    mm.chartDate2.stack(
+      gpDateStk,
+      mm.chartStack[STACK_AGE][no],
+      mm.dateStackAgeAccessor(no, mm.opt.chartDate2.isFilterMissingCorrect)
+    )
   }
 
-  mm.chartDate2.ordinalColors(mm.config.cDate.colors);
+  mm.chartDate2.ordinalColors(mm.config.cDate.colors)
 
-  const margins = _.merge({}, mm.config.defaultMargins, mm.opt.chartDate?.margins || {});
+  const margins = _.merge({}, mm.config.defaultMargins, mm.opt.chartDate?.margins || {})
   mm.composite2
     .width(chartDateW)
     .height(200)
@@ -6218,39 +7202,45 @@ const initChartDate2Stacks = (chartDateW, stackOn) => {
     .renderHorizontalGridLines(true)
     .renderVerticalGridLines(true)
     .brushOn(false)
-    .title((d) => {
-      return `${mm.util.chartDateXAxisTickFormat(d.key)} : ${php_number_format(d.value.total)} ${mm.opt.common.unit}`;
+    .title(d => {
+      return `${mm.util.chartDateXAxisTickFormat(d.key)} : ${php_number_format(d.value.total)} ${mm.opt.common.unit}`
     })
     .elasticY(mm.opt.chartDate2.elasticY)
-    .compose([mm.chartDate2]);
+    .compose([mm.chartDate2])
 
-  const nTick = gg.dt === DT_COVID ? 7 : (gpDate.all().length < 3 ? 2 : 14);
-  mm.composite2.xAxis().ticks(nTick).tickFormat(mm.util.chartDateXAxisTickFormat);
-  mm.composite2.yAxis().tickFormat(d3.format(".2s")).ticks(5);
+  const nTick = gg.dt === DT_COVID ? 7 : gpDate.all().length < 3 ? 2 : 14
+  mm.composite2.xAxis().ticks(nTick).tickFormat(mm.util.chartDateXAxisTickFormat)
+  mm.composite2.yAxis().tickFormat(d3.format('.2s')).ticks(5)
 
   if (mm.opt.chartDate2.yDomain) {
-    mm.composite2.elasticY(false).y(d3.scaleLinear().domain(mm.opt.chartDate2.yDomain));
+    mm.composite2.elasticY(false).y(d3.scaleLinear().domain(mm.opt.chartDate2.yDomain))
   }
 }
 
 /**
  * CHART chartYear 年度 barChart
  */
-const initChartYear = (height) => {
+const initChartYear = height => {
   const dimYear = mm.ndx.dimension(function (d) {
-    return +(d[D_YMD].split('-')[0]); // year
-  });
+    return +d[D_YMD].split('-')[0] // year
+  })
   const onFiltered = (chart, v) => {
-    mm.showFilterUi('#panel_year', chart);
-    mm.onChartFiltered(chart, v);
-    mm.onChangeURL('year', chart);
-    mm.chartScroll('#div_name');
-    mm.chartScroll('#div_city');
+    mm.showFilterUi('#panel_year', chart)
+    mm.onChartFiltered(chart, v)
+    mm.onChangeURL('year', chart)
+    mm.chartScroll('#div_name')
+    mm.chartScroll('#div_city')
   }
 
   mm.chartYear = createStackedBarChart(
-    dimYear, '#chart_year', height, mm.config.cYear.barWidth,
-    onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartYear);
+    dimYear,
+    '#chart_year',
+    height,
+    mm.config.cYear.barWidth,
+    onFiltered,
+    mm.opt.chartYear.isLegend,
+    mm.opt.chartYear
+  )
 }
 
 /**
@@ -6258,15 +7248,15 @@ const initChartYear = (height) => {
  */
 const initChartSeason = (chartSexW, chartSexH) => {
   const dimSeason = mm.ndx.dimension(function (d) {
-    const month = +d[D_YMD].split('-')[1];
-    return MONTH_2_SEASON[month];
-  });
+    const month = +d[D_YMD].split('-')[1]
+    return MONTH_2_SEASON[month]
+  })
   const gpSeason = dimSeason.group().reduceSum(function (d) {
-    return mm.group_reduce.base(d);
-  });
+    return mm.group_reduce.base(d)
+  })
 
-  mm.chartSeason = new dc.PieChart('#chart_season', CGRP_SHOW);
-  mm.chartSeason.dataIndex = D_YMD;
+  mm.chartSeason = new dc.PieChart('#chart_season', CGRP_SHOW)
+  mm.chartSeason.dataIndex = D_YMD
   mm.chartSeason
     .width(chartSexW)
     .height(chartSexH)
@@ -6280,26 +7270,26 @@ const initChartSeason = (chartSexW, chartSexH) => {
     .group(gpSeason)
     .addFilterHandler(mm.addFilterHandler)
     .on('filtered', function (chart, v) {
-      mm.showFilterUi('#panel_season', chart);
-      mm.onChartFiltered(chart, v);
-      mm.onChangeURL('season', chart);
-      mm.chartScroll('#div_name');
-      mm.chartScroll('#div_city');
+      mm.showFilterUi('#panel_season', chart)
+      mm.onChartFiltered(chart, v)
+      mm.onChangeURL('season', chart)
+      mm.chartScroll('#div_name')
+      mm.chartScroll('#div_city')
     })
     .ordering(function (t) {
-      return -t.value; //昇順
+      return -t.value //昇順
     })
     .colorAccessor(function (d, i) {
-      return SEASON_IDX[d.key];
+      return SEASON_IDX[d.key]
     })
     .colors(d3.scaleLinear().domain([0, 1, 2, 3]).range(SEASON_COL))
     .renderLabel(true)
     .label(function (d) {
-      return d.key + ' : ' + mm.d3fmt(d.value);
+      return d.key + ' : ' + mm.d3fmt(d.value)
     })
     .title(function (d) {
-      return d.key + ' : ' + php_number_format(d.value);
-    });
+      return d.key + ' : ' + php_number_format(d.value)
+    })
 }
 
 /**
@@ -6307,25 +7297,28 @@ const initChartSeason = (chartSexW, chartSexH) => {
  */
 const initChartWeek = (chartSexW, chartSexH) => {
   const dimWeek = mm.ndx.dimension(function (d) {
-    return new Date(d[D_YMD]).getDay(); //0~6 日~
-  });
-  const gpWeek = dimWeek.group().reduce(mm.group_reduce_light.append, mm.group_reduce_light.remove, mm.group_reduce_light.init).order(function (d) {
-    return d.total;
-  });
+    return new Date(d[D_YMD]).getDay() //0~6 日~
+  })
+  const gpWeek = dimWeek
+    .group()
+    .reduce(mm.group_reduce_light.append, mm.group_reduce_light.remove, mm.group_reduce_light.init)
+    .order(function (d) {
+      return d.total
+    })
 
-  let chartWeekW = 350;
+  let chartWeekW = 350
   if (isSp) {
-    chartWeekW = window.innerWidth - $('#chart_sex').width() - 40;
-    $('#chart_week').css('width', (chartWeekW + 5) + 'px');
+    chartWeekW = window.innerWidth - $('#chart_sex').width() - 40
+    $('#chart_week').css('width', chartWeekW + 5 + 'px')
   }
 
-  mm.chartWeek = new dc.BarChart("#chart_week", CGRP_SHOW);
-  mm.chartWeek.dataIndex = D_YMD;
+  mm.chartWeek = new dc.BarChart('#chart_week', CGRP_SHOW)
+  mm.chartWeek.dataIndex = D_YMD
   mm.chartWeek
     .width(chartWeekW)
     .height(chartSexH)
     .useViewBoxResizing(mm.config.panelResizable)
-    .margins({top: 0, right: 0, bottom: 20, left: 40})
+    .margins({ top: 0, right: 0, bottom: 20, left: 40 })
     .gap(6)
     .transitionDuration(750)
     .dimension(dimWeek)
@@ -6338,111 +7331,122 @@ const initChartWeek = (chartSexW, chartSexH) => {
     .xUnits(dc.units.ordinal)
     .elasticX(true)
     .filterPrinter(function (filters) {
-      return filters.map(function (f) {
-        return WEEK_LABEL[f];
-      }).join(', ');
+      return filters
+        .map(function (f) {
+          return WEEK_LABEL[f]
+        })
+        .join(', ')
     })
     .x(d3.scaleBand())
     .y(d3.scaleLinear())
     .elasticY(true)
     .yAxisPadding('25%')
     .on('renderlet', function (chart) {
-      mm.chart.setFilterTextSel(chart);
+      mm.chart.setFilterTextSel(chart)
     })
     .on('filtered', function (chart, v) {
-      mm.showFilterUi('#panel_week', chart, v => mm.getLabelWeek(v));
-      mm.onChartFiltered(chart, v);
-      mm.onChangeURL('week', chart);
-      mm.chartScroll('#div_name');
-      mm.chartScroll('#div_city');
+      mm.showFilterUi('#panel_week', chart, v => mm.getLabelWeek(v))
+      mm.onChartFiltered(chart, v)
+      mm.onChangeURL('week', chart)
+      mm.chartScroll('#div_name')
+      mm.chartScroll('#div_city')
     })
     //.mouseZoomable(true)
     //.ordering(function(t){return -t.value.count;})//desc
     .renderHorizontalGridLines(true)
     .renderLabel(true)
     .label(function (d) {
-      return mm.d3fmt(d.data.value.total);
+      return mm.d3fmt(d.data.value.total)
     })
-    .title(function (d) {//mouseホバーしたときの表示される文字
-      let ret = '';
+    .title(function (d) {
+      //mouseホバーしたときの表示される文字
+      let ret = ''
       if (gg.dt === DT_COVID) {
-        ret = WEEK_LABEL[d.key] + '\n────────\n' +
+        ret =
+          WEEK_LABEL[d.key] +
+          '\n────────\n' +
           (d.value.lv_a === 0 ? '' : CND_LV_A + ': ' + d.value.lv_a + '名\n') +
           (d.value.lv_b === 0 ? '' : CND_LV_B + ': ' + d.value.lv_b + '名\n') +
           (d.value.lv_c === 0 ? '' : CND_LV_C + ': ' + d.value.lv_c + '名\n') +
-          (d.value.lv_d === 0 ? '' : (CND_LV_D + ': ' + d.value.lv_d + '名\n')) +
-          (d.value.lv_e === 0 ? '' : (CND_LV_E + ': ' + d.value.lv_e + '名\n')) +
-          '────────\n計: ' + php_number_format(d.value.total) + '名';
+          (d.value.lv_d === 0 ? '' : CND_LV_D + ': ' + d.value.lv_d + '名\n') +
+          (d.value.lv_e === 0 ? '' : CND_LV_E + ': ' + d.value.lv_e + '名\n') +
+          '────────\n計: ' +
+          php_number_format(d.value.total) +
+          '名'
       } else {
-        ret = WEEK_LABEL[d.key] + ' : ' + php_number_format(d.value.total);
+        ret = WEEK_LABEL[d.key] + ' : ' + php_number_format(d.value.total)
       }
-      return ret;
+      return ret
     })
   //.legend(dc.legend())
-  ;
-  mm.chartWeek.xAxis().tickFormat((d) => WEEK_LABEL[d]);
-  mm.chartWeek.yAxis().tickFormat(d3.format(".2s")).ticks(4);
+  mm.chartWeek.xAxis().tickFormat(d => WEEK_LABEL[d])
+  mm.chartWeek.yAxis().tickFormat(d3.format('.2s')).ticks(4)
   if (gg.dt === DT_COVID) {
     mm.chartWeek.ordinalColors(mm.config.cCond.colors)
   } else {
-    mm.chartWeek
-      .ordinalColors(COL_WEEK)
-      .colorAccessor(function (d, i) {
-        return d.key;
-      });
+    mm.chartWeek.ordinalColors(COL_WEEK).colorAccessor(function (d, i) {
+      return d.key
+    })
   }
-
 }
 
 /**
  * CHART chartSex 性別 pieChart|barChart|rowChart*
  */
 const initChartSex = (chartSexW, chartSexH) => {
-  const panelDomId = '#panel_sex';
-  const chartDomId = '#chart_sex';
-  const dimSex = mm.util.getScaledDimensionSex();
+  const panelDomId = '#panel_sex'
+  const chartDomId = '#chart_sex'
+  const dimSex = mm.util.getScaledDimensionSex()
   const onFiltered = (chart, v) => {
-    mm.showFilterUi(panelDomId, chart);
-    mm.onChartFiltered(chart, v);
-    mm.onChangeURL('name3', chart);
-    mm.chartScroll('#div_name');
-    mm.chartScroll('#div_city');
+    mm.showFilterUi(panelDomId, chart)
+    mm.onChartFiltered(chart, v)
+    mm.onChangeURL('name3', chart)
+    mm.chartScroll('#div_name')
+    mm.chartScroll('#div_city')
   }
 
   // create bar chart
   if (pnl.sex.chartType === 'bar') {
-    if (mm.opt.chartSex.unit === undefined) mm.opt.chartSex.unit = null;
-
+    if (mm.opt.chartSex.unit === undefined) mm.opt.chartSex.unit = null
 
     mm.chartSex = createStackedBarChart(
-      dimSex, chartDomId, chartSexH, mm.config.cSex.barWidth,
-      onFiltered, mm.opt.chartYear.isLegend, mm.opt.chartSex,
-      v => mm.getLabelSex(v));
+      dimSex,
+      chartDomId,
+      chartSexH,
+      mm.config.cSex.barWidth,
+      onFiltered,
+      mm.opt.chartYear.isLegend,
+      mm.opt.chartSex,
+      v => mm.getLabelSex(v)
+    )
 
-    mm.chartSex.dataIndex = D_SEX;
+    mm.chartSex.dataIndex = D_SEX
 
-    if (isSp) $(panelDomId).css('width', '100%');
-    $(chartDomId).css('width', '100%');
+    if (isSp) $(panelDomId).css('width', '100%')
+    $(chartDomId).css('width', '100%')
 
     if (mm.opt.chartSex.unit !== null) {
       mm.chartSex
         .filterPrinter(function (filters) {
-          return filters.map(function (f) {
-            return mm.getLabelSex(f);
-          }).join(', ');
+          return filters
+            .map(function (f) {
+              return mm.getLabelSex(f)
+            })
+            .join(', ')
         })
-        .xAxis().tickFormat(mm.getLabelSex);
+        .xAxis()
+        .tickFormat(mm.getLabelSex)
     }
-    return;
+    return
   }
 
   // create pie chart
   const gpSex = dimSex.group().reduceSum(function (d) {
-    return mm.group_reduce.base(d);
-  });
+    return mm.group_reduce.base(d)
+  })
 
-  mm.chartSex = new dc.PieChart(chartDomId, CGRP_SHOW);
-  mm.chartSex.dataIndex = D_SEX;
+  mm.chartSex = new dc.PieChart(chartDomId, CGRP_SHOW)
+  mm.chartSex.dataIndex = D_SEX
   mm.chartSex
     .width(chartSexW)
     .height(chartSexH)
@@ -6457,81 +7461,91 @@ const initChartSex = (chartSexW, chartSexH) => {
     .addFilterHandler(mm.addFilterHandler)
     .on('filtered', onFiltered)
     .ordering(function (t) {
-      return -t.value; //昇順
+      return -t.value //昇順
     })
-    .renderLabel(true);
+    .renderLabel(true)
 
   if (mm.opt.chartSex.unit === null) {
     mm.chartSex
       .ordinalColors(colorbrewer.Set2[8])
       .label(function (d) {
-        return mm.getLabelSex(d.key) + ':' + mm.d3fmt(d.value);
+        return mm.getLabelSex(d.key) + ':' + mm.d3fmt(d.value)
       })
       .title(function (d) {
-        return mm.getLabelSex(d.key) + ':' + php_number_format(d.value);
-      });
+        return mm.getLabelSex(d.key) + ':' + php_number_format(d.value)
+      })
   } else {
     mm.chartSex
       .colors(function (d) {
-        return COL_SEX[d];
+        return COL_SEX[d]
       })
       .filterPrinter(function (filters) {
-        return filters.map(function (f) {
-          return mm.getLabelSex(f);
-        }).join(', ');
+        return filters
+          .map(function (f) {
+            return mm.getLabelSex(f)
+          })
+          .join(', ')
       })
       .label(function (d) {
-        if (d.key === 'empty') return '';
-        if (d.key === 'Others') return 'その他'; // 表示できないので d.othersに集約されている場合
-        return mm.getLabelSex(d.key) + ':' + mm.d3fmt(d.value);
+        if (d.key === 'empty') return ''
+        if (d.key === 'Others') return 'その他' // 表示できないので d.othersに集約されている場合
+        return mm.getLabelSex(d.key) + ':' + mm.d3fmt(d.value)
       })
       .title(function (d) {
-        if (d.key === 'empty') return '';
-        if (d.key === 'Others') { // 表示できないので d.othersに集約されている場合
-          let ret = '';
+        if (d.key === 'empty') return ''
+        if (d.key === 'Others') {
+          // 表示できないので d.othersに集約されている場合
+          let ret = ''
           for (let i = 0; i < d.others.length; i++) {
-            ret += mm.getLabelSex(d.others[i]) + ',';
+            ret += mm.getLabelSex(d.others[i]) + ','
           }
-          return ret + ': ' + php_number_format(d.value);
+          return ret + ': ' + php_number_format(d.value)
         }
-        return mm.getLabelSex(d.key) + ': ' + php_number_format(d.value);
+        return mm.getLabelSex(d.key) + ': ' + php_number_format(d.value)
       })
   }
 }
 
-const initChartAgeReduce = (dimAge) => {
-  let gpAge;
+const initChartAgeReduce = dimAge => {
+  let gpAge
   if (gg.dt === DT_COVID) {
-    gpAge = dimAge.group()
+    gpAge = dimAge
+      .group()
       .reduce(
         mm.group_reduce_light.append,
         mm.group_reduce_light.remove,
         mm.group_reduce_light.init
-      );
+      )
   } else {
     gpAge = dimAge.group().reduceSum(function (d) {
-      return mm.group_reduce.base(d);
-    });
+      return mm.group_reduce.base(d)
+    })
   }
-  return gpAge;
+  return gpAge
 }
 
 /**
  * CHART chartAge 年齢 barChart
  */
 const initChartAge = (chartSexW, chartSexH) => {
-  const dimAge = mm.util.getScaledDimensionAge();
+  const dimAge = mm.util.getScaledDimensionAge()
   if (mm.opt.chartAge.unit === null || mm.opt.chartAge.unit === undefined) {
-    mm.ages = dimAge.group().all().map(v => v.key);
+    mm.ages = dimAge
+      .group()
+      .all()
+      .map(v => v.key)
   } else {
-    mm.ages = dimAge.group().all().map(v => mm.opt.chartAge.unit[v.key]);
+    mm.ages = dimAge
+      .group()
+      .all()
+      .map(v => mm.opt.chartAge.unit[v.key])
   }
 
   // 幅調整
-  const n = mm.ages.length;
+  const n = mm.ages.length
   const barW = n > 16 ? parseInt(0.75 * mm.config.cAge.barWidth) : mm.config.cAge.barWidth
-  const chartW = (n + 1) * barW;
-  if (!isSp) $('#panel_age').width(chartW);
+  const chartW = (n + 1) * barW
+  if (!isSp) $('#panel_age').width(chartW)
 
   mm.chartAge
     .width(chartW)
@@ -6540,23 +7554,23 @@ const initChartAge = (chartSexW, chartSexH) => {
     .transitionDuration(750)
     .dimension(dimAge)
     .on('renderlet', function (chart) {
-      mm.chart.setFilterTextSel(chart);
+      mm.chart.setFilterTextSel(chart)
     })
     .on('filtered', function (chart, v) {
       //自身のチャートのフィルタが選択されたらDateChartの表示スタックを自分に切り替える
       if (mm.chartAge.filters().length !== 0) {
-        pnl.date.stack_type = STACK_AGE;
+        pnl.date.stack_type = STACK_AGE
       }
-      mm.showFilterUi('#panel_age', chart);
-      mm.onChartFiltered(chart, v);
-      mm.onChangeURL('name4', chart);
-      mm.chartScroll('#div_name');
-      mm.chartScroll('#div_city');
+      mm.showFilterUi('#panel_age', chart)
+      mm.onChartFiltered(chart, v)
+      mm.onChangeURL('name4', chart)
+      mm.chartScroll('#div_name')
+      mm.chartScroll('#div_city')
     })
     .addFilterHandler(mm.addFilterHandler)
     .renderLabel(true)
     .label(function (d) {
-      return mm.d3fmt(gg.dt === DT_COVID ? d.data.value.total : d.data.value);
+      return mm.d3fmt(gg.dt === DT_COVID ? d.data.value.total : d.data.value)
     })
     //.centerBar(true)
     .brushOn(false)
@@ -6568,94 +7582,101 @@ const initChartAge = (chartSexW, chartSexH) => {
     .yAxisPadding('20%')
     .renderHorizontalGridLines(true)
     .addFilterHandler(mm.addFilterHandler)
-  ;
 
-  mm.chart.adjustXAxisLabel(mm.chartAge, mm.util.arrStrMaxLen(mm.ages));
+  mm.chart.adjustXAxisLabel(mm.chartAge, mm.util.arrStrMaxLen(mm.ages))
 
   if (gg.dt === DT_COVID) {
-    mm.chartAge
-      .title(function (d) {
-        return mm.getLabelAge(d.key) + '\n────────\n' +
-          (d.value.lv_a === 0 ? '' : CND_LV_A + ': ' + d.value.lv_a + '名\n') +
-          (d.value.lv_b === 0 ? '' : CND_LV_B + ': ' + d.value.lv_b + '名\n') +
-          (d.value.lv_c === 0 ? '' : CND_LV_C + ': ' + d.value.lv_c + '名\n') +
-          (d.value.lv_d === 0 ? '' : (CND_LV_D + ': ' + d.value.lv_d + '名\n')) +
-          (d.value.lv_e === 0 ? '' : (CND_LV_E + ': ' + d.value.lv_e + '名\n')) +
-          '────────\n計: ' + php_number_format(d.value.total) + '名';
-      });
+    mm.chartAge.title(function (d) {
+      return (
+        mm.getLabelAge(d.key) +
+        '\n────────\n' +
+        (d.value.lv_a === 0 ? '' : CND_LV_A + ': ' + d.value.lv_a + '名\n') +
+        (d.value.lv_b === 0 ? '' : CND_LV_B + ': ' + d.value.lv_b + '名\n') +
+        (d.value.lv_c === 0 ? '' : CND_LV_C + ': ' + d.value.lv_c + '名\n') +
+        (d.value.lv_d === 0 ? '' : CND_LV_D + ': ' + d.value.lv_d + '名\n') +
+        (d.value.lv_e === 0 ? '' : CND_LV_E + ': ' + d.value.lv_e + '名\n') +
+        '────────\n計: ' +
+        php_number_format(d.value.total) +
+        '名'
+      )
+    })
   } else {
     if (mm.opt.chartAge.unit === null) {
-      mm.chartAge
-        .title(function (d) {
-          return d.key + ' : ' + php_number_format(d.value);
-        });
+      mm.chartAge.title(function (d) {
+        return d.key + ' : ' + php_number_format(d.value)
+      })
     } else {
-      mm.chartAge
-        .title(function (d) {
-          return mm.getLabelAge(d.key) + ' : ' + php_number_format(d.value);
-        });
+      mm.chartAge.title(function (d) {
+        return mm.getLabelAge(d.key) + ' : ' + php_number_format(d.value)
+      })
     }
   }
 
-  const gpAge = initChartAgeReduce(dimAge);
+  const gpAge = initChartAgeReduce(dimAge)
 
   //
   // スタック登録
   //
   if (gg.dt === DT_COVID) {
     mm.chartAge
-      .group(gpAge, CND_LV_A, (d) => d.value.lv_a)
-      .stack(gpAge, CND_LV_B, (d) => d.value.lv_b)
-      .stack(gpAge, CND_LV_C, (d) => d.value.lv_c)
-      .stack(gpAge, CND_LV_D, (d) => d.value.lv_d)
-      .stack(gpAge, CND_LV_E, (d) => d.value.lv_e)
+      .group(gpAge, CND_LV_A, d => d.value.lv_a)
+      .stack(gpAge, CND_LV_B, d => d.value.lv_b)
+      .stack(gpAge, CND_LV_C, d => d.value.lv_c)
+      .stack(gpAge, CND_LV_D, d => d.value.lv_d)
+      .stack(gpAge, CND_LV_E, d => d.value.lv_e)
       .legend(dc.legend().x(85).y(10)) //左
       .elasticX(pnl.age.elasticX)
-      .ordinalColors(mm.config.cCond.colors);
+      .ordinalColors(mm.config.cCond.colors)
   } else {
     mm.chartAge
       .group(mm.groupRemoveEmpty(gpAge))
       .ordering(function (t) {
-        return -t.value;
+        return -t.value
       })
-      .elasticX(pnl.age.elasticX);
+      .elasticX(pnl.age.elasticX)
   }
   if (mm.opt.chartAge.unit !== null) {
     mm.chartAge
       .filterPrinter(function (filters) {
-        return filters.map(function (f) {
-          return mm.getLabelAge(f);
-        }).join(', ');
+        return filters
+          .map(function (f) {
+            return mm.getLabelAge(f)
+          })
+          .join(', ')
       })
-      .xAxis().tickFormat(mm.getLabelAge);
+      .xAxis()
+      .tickFormat(mm.getLabelAge)
   }
 
-  mm.chartAge.yAxis().tickFormat(d3.format(".2s")).ticks(5);
+  mm.chartAge.yAxis().tickFormat(d3.format('.2s')).ticks(5)
 }
 
-const initChartCondReduce = (dimCond) => {
-  const gpCond = gg.dt === DT_COVID
-    ? dimCond.group().reduceSum(function (d) {
-      return (d[D_CND] === DN_CND || d[D_CND] === DN_CND2) ? 0 : mm.group_reduce.base(d);
-    })
-    : dimCond.group().reduceSum(function (d) {
-      return d[D_CND] === DN_CND ? 0 : mm.group_reduce.base(d);
-    })
-  ;
-  return gpCond;
+const initChartCondReduce = dimCond => {
+  const gpCond =
+    gg.dt === DT_COVID
+      ? dimCond.group().reduceSum(function (d) {
+          return d[D_CND] === DN_CND || d[D_CND] === DN_CND2 ? 0 : mm.group_reduce.base(d)
+        })
+      : dimCond.group().reduceSum(function (d) {
+          return d[D_CND] === DN_CND ? 0 : mm.group_reduce.base(d)
+        })
+  return gpCond
 }
 /**
  * CHART chartCond 状態 barChart
  */
 const initChartCond = (chartSexW, chartSexH, colCondTbl) => {
-  const dimCond = mm.util.getScaledDimensionCond();
-  mm.conds = dimCond.group().all().map(v => v.key);
-  const gpCond = initChartCondReduce(dimCond);
+  const dimCond = mm.util.getScaledDimensionCond()
+  mm.conds = dimCond
+    .group()
+    .all()
+    .map(v => v.key)
+  const gpCond = initChartCondReduce(dimCond)
 
-  const n = mm.conds.length;
+  const n = mm.conds.length
   const barW = n > 16 ? parseInt(0.75 * mm.config.cCond.barWidth) : mm.config.cCond.barWidth
-  const chartW = (n + 1) * barW;
-  if (!isSp) $('#panel_cond').width(chartW);
+  const chartW = (n + 1) * barW
+  if (!isSp) $('#panel_cond').width(chartW)
 
   mm.chartCond
     .width(chartW)
@@ -6673,121 +7694,120 @@ const initChartCond = (chartSexW, chartSexH, colCondTbl) => {
     .elasticY(true)
     .yAxisPadding('18%')
     .on('renderlet', function (chart) {
-      mm.chart.setFilterTextSel(chart);
+      mm.chart.setFilterTextSel(chart)
     })
     // .on('postRender', function(chart, filter){console.log('postRender');})
     // .on('preRedraw', function(chart){console.log('postRender')})
     .on('filtered', function (chart, v) {
-      mm.showFilterUi('#panel_cond', chart);
-      mm.onChartFiltered(chart, v);
-      mm.onChangeURL('name5', chart);
-      mm.chartScroll('#div_name');
-      mm.chartScroll('#div_city');
+      mm.showFilterUi('#panel_cond', chart)
+      mm.onChartFiltered(chart, v)
+      mm.onChangeURL('name5', chart)
+      mm.chartScroll('#div_name')
+      mm.chartScroll('#div_city')
     })
     // .on('zoomed', function(chart, filter){console.log('zoomed');})
     //.mouseZoomable(true)
     .ordering(function (t) {
-      return -t.value;
+      return -t.value
     })
     .renderHorizontalGridLines(true)
     .renderLabel(true)
     .label(function (d) {
-      return mm.d3fmt(d.data.value);
+      return mm.d3fmt(d.data.value)
     })
-    .title(function (d) {//mouseホバーしたときの表示される文字
-      return d.key + ' : ' + php_number_format(d.value);
+    .title(function (d) {
+      //mouseホバーしたときの表示される文字
+      return d.key + ' : ' + php_number_format(d.value)
     })
   //.legend(dc.legend())
-  ;
 
-  mm.chart.adjustXAxisLabel(mm.chartCond, mm.util.arrStrMaxLen(mm.conds));
+  mm.chart.adjustXAxisLabel(mm.chartCond, mm.util.arrStrMaxLen(mm.conds))
 
   if (gg.dt === DT_COVID) {
     mm.chartCond
       .colorAccessor(function (d) {
-        let is1 = d.key.indexOf('無症状') !== -1;
-        let is2 = d.key.indexOf('退院') !== -1;
-        let is3 = d.key.indexOf('入院') !== -1;
-        let is4 = d.key.indexOf('肺炎') !== -1;
-        let is41 = d.key.indexOf('中等') !== -1;
-        let is5 = d.key.indexOf('酸投') !== -1;
-        let is6 = d.key.indexOf('重症') !== -1;
-        let is7 = d.key.indexOf('死亡') !== -1;
-        let lv;
+        let is1 = d.key.indexOf('無症状') !== -1
+        let is2 = d.key.indexOf('退院') !== -1
+        let is3 = d.key.indexOf('入院') !== -1
+        let is4 = d.key.indexOf('肺炎') !== -1
+        let is41 = d.key.indexOf('中等') !== -1
+        let is5 = d.key.indexOf('酸投') !== -1
+        let is6 = d.key.indexOf('重症') !== -1
+        let is7 = d.key.indexOf('死亡') !== -1
+        let lv
         switch (1) {
           default:
             if (is7) {
-              lv = 4;
-              break;
+              lv = 4
+              break
             }
             if (is5 || is6) {
-              lv = 3;
-              break;
+              lv = 3
+              break
             }
             if (is4 || is3 || is41) {
-              lv = 2;
-              break;
+              lv = 2
+              break
             }
             if (is2 || is1) {
-              lv = 0;
-              break;
+              lv = 0
+              break
             }
-            lv = 1;
-            break;
+            lv = 1
+            break
         }
-        return lv;
+        return lv
       })
       .colors(function (i) {
-        return mm.config.cCond.colors[i];
-      });
+        return mm.config.cCond.colors[i]
+      })
   }
   // mm.chartCond.xAxis().tickFormat(mm.getLabelCond);
-  mm.chartCond.yAxis().tickFormat(d3.format(".2s")).ticks(4);
-
+  mm.chartCond.yAxis().tickFormat(d3.format('.2s')).ticks(4)
 }
 
 const initChartJobReduce = () => {
   // 職業
   mm.gpJob = mm.dimJob.group().reduceSum(function (d) {
-    return d[D_JOB] === DN_JOB ? 0 : mm.group_reduce.base(d);
-  });
-  mm.gpJob = mm.groupRemoveEmpty(mm.gpJob);
+    return d[D_JOB] === DN_JOB ? 0 : mm.group_reduce.base(d)
+  })
+  mm.gpJob = mm.groupRemoveEmpty(mm.gpJob)
   // 職業カテゴリ
   if (mm.is_job_cate) {
     mm.gpJobCat = mm.dimJobCat.group().reduceSum(function (d) {
-      return d[D_JOBCAT] === DN_JOBCAT ? 0 : mm.group_reduce.base(d);
-    });
-    mm.gpJobCat = mm.groupRemoveEmpty(mm.gpJobCat);
+      return d[D_JOBCAT] === DN_JOBCAT ? 0 : mm.group_reduce.base(d)
+    })
+    mm.gpJobCat = mm.groupRemoveEmpty(mm.gpJobCat)
   }
 }
 /**
  * CHART chartJob 職業|職業カテゴリ barChart
  */
 const initChartJob = (chartSexW, chartSexH) => {
-  const j = _.uniq(_.map(mm.data, D_JOBCAT));
-  mm.is_job_cate = mm.opt.chartJobCat.isHidden ? false : !(j.length === 1 && j[0] == DN_JOBCAT);
+  const j = _.uniq(_.map(mm.data, D_JOBCAT))
+  mm.is_job_cate = mm.opt.chartJobCat.isHidden ? false : !(j.length === 1 && j[0] == DN_JOBCAT)
 
   // 職業
   mm.dimJob = mm.ndx.dimension(function (d) {
-    return d[D_JOB];
-  });
+    return d[D_JOB]
+  })
   // 職業カテゴリ
   if (mm.is_job_cate) {
     mm.dimJobCat = mm.ndx.dimension(function (d) {
-      return gg.dt === DT_COVID ? mm.opt.assets.jobcates[d[D_JOBCAT]] : d[D_JOBCAT];
-    });
+      return gg.dt === DT_COVID ? mm.opt.assets.jobcates[d[D_JOBCAT]] : d[D_JOBCAT]
+    })
   }
 
-  initChartJobReduce();
+  initChartJobReduce()
 
   // 幅調整
-  const n = mm.is_job_cate ? mm.gpJobCat.all().length : mm.gpJob.all().length;
+  const n = mm.is_job_cate ? mm.gpJobCat.all().length : mm.gpJob.all().length
   const barW = n > 16 ? parseInt(0.75 * mm.config.cJob.barWidth) : mm.config.cJob.barWidth
-  const chartW = (n + 1) * barW;
-  if (!isSp) $('#panel_job').width(chartW);
+  const chartW = (n + 1) * barW
+  if (!isSp) $('#panel_job').width(chartW)
 
-  mm.chartJob = new dc.BarChart('#chart_job', CGRP_SHOW);
-  mm.chartJob.dataIndex = D_JOB;
+  mm.chartJob = new dc.BarChart('#chart_job', CGRP_SHOW)
+  mm.chartJob.dataIndex = D_JOB
   mm.chartJob
     .width(chartW)
     .height(chartSexH)
@@ -6804,55 +7824,54 @@ const initChartJob = (chartSexW, chartSexH) => {
     .yAxisPadding('15%')
     .controlsUseVisibility(false)
     .on('renderlet', function (chart) {
-      mm.chart.setFilterTextSel(chart);
+      mm.chart.setFilterTextSel(chart)
       if (gg.dt === DT_COVID) {
         // ラベルの置換
         _.delay(() => {
           chart.selectAll('g.x g.tick text').each(function (d) {
-            this.textContent = mm.config.cJob.keyLabel(d);
-          });
-        }, 100);
+            this.textContent = mm.config.cJob.keyLabel(d)
+          })
+        }, 100)
       }
     })
     .on('filtered', function (chart, v) {
-      mm.chart.showDetailPanel(chart);
-      mm.showFilterUi('#panel_job', chart);
-      mm.onChartFiltered(chart, v);
-      mm.onChangeURL('name6', chart);
-      mm.chartScroll('#div_name');
-      mm.chartScroll('#div_city');
+      mm.chart.showDetailPanel(chart)
+      mm.showFilterUi('#panel_job', chart)
+      mm.onChartFiltered(chart, v)
+      mm.onChangeURL('name6', chart)
+      mm.chartScroll('#div_name')
+      mm.chartScroll('#div_city')
     })
     //.mouseZoomable(true)
     .ordering(function (t) {
-      return -t.value;
+      return -t.value
     })
     .renderHorizontalGridLines(true)
     .renderLabel(true)
     .colorAccessor(function (d, i) {
-      return i;
+      return i
     })
     .colors(function (d) {
-      return colorbrewer.Set3[9][d % 9];
+      return colorbrewer.Set3[9][d % 9]
     })
-    .title(function (d) {//mouseホバーしたときの表示される文字
-      return mm.config.cJob.keyLabel(d.key) + ' : ' + php_number_format(d.value);
+    .title(function (d) {
+      //mouseホバーしたときの表示される文字
+      return mm.config.cJob.keyLabel(d.key) + ' : ' + php_number_format(d.value)
     })
     .label(function (d) {
-      return mm.d3fmt(d.data.value);
-
+      return mm.d3fmt(d.data.value)
     })
     // .filterPrinter(function (filters) {
     //     return filters.map(function(f) { return mm.config.cJob.keyLabel(f) })
     // })
     .addFilterHandler(mm.addFilterHandler)
-  ;
 
-  mm.chart.adjustXAxisLabel(mm.chartJob, mm.util.arrStrMaxLen(mm.jobs));
+  mm.chart.adjustXAxisLabel(mm.chartJob, mm.util.arrStrMaxLen(mm.jobs))
 
-  mm.chartJob.xAxis().tickFormat((d) => {
+  mm.chartJob.xAxis().tickFormat(d => {
     return d === DN_JOB ? DN_LABEL_DEF : d
-  });
-  mm.chartJob.yAxis().tickFormat(d3.format(".2s")).ticks(3);
+  })
+  mm.chartJob.yAxis().tickFormat(d3.format('.2s')).ticks(3)
 }
 
 /**
@@ -6860,271 +7879,280 @@ const initChartJob = (chartSexW, chartSexH) => {
  */
 const initChartEx = (chartIndex, dataIndex, title, height) => {
   // パネル設定を更新
-  pnl.ex[chartIndex] = pnl.ex[chartIndex] || {};
-  pnl.ex[chartIndex].chartType = mm.opt.chartEx[chartIndex].chartType;
-  pnl.ex[chartIndex].isHidden = false;
-  pnl.ex[chartIndex].title = title;
+  pnl.ex[chartIndex] = pnl.ex[chartIndex] || {}
+  pnl.ex[chartIndex].chartType = mm.opt.chartEx[chartIndex].chartType
+  pnl.ex[chartIndex].isHidden = false
+  pnl.ex[chartIndex].title = title
 
   // ディメンションの作成
-  const dim = mm.util.getScaledDimension(dataIndex, mm.opt.chartEx[chartIndex].scale);
+  const dim = mm.util.getScaledDimension(dataIndex, mm.opt.chartEx[chartIndex].scale)
 
   // フィルタリング時の共通処理
   const onFiltered = (chart, v) => {
-    const valueFormat = v => mm.getLabelEx(v, chartIndex);
-    mm.showFilterUi(`#panel_ex_${chartIndex}`, chart, valueFormat);
-    mm.onChartFiltered(chart, v);
-    mm.onChangeURL(`name${7 + chartIndex}`, chart);
-    mm.chartScroll('#div_name');
-    mm.chartScroll('#div_city');
+    const valueFormat = v => mm.getLabelEx(v, chartIndex)
+    mm.showFilterUi(`#panel_ex_${chartIndex}`, chart, valueFormat)
+    mm.onChartFiltered(chart, v)
+    mm.onChangeURL(`name${7 + chartIndex}`, chart)
+    mm.chartScroll('#div_name')
+    mm.chartScroll('#div_city')
   }
 
   // サンバーストチャートかどうか
-  const isDcSunburstChart = mm.opt.chartEx[chartIndex].isDcSunburstChart ?? false;
+  const isDcSunburstChart = mm.opt.chartEx[chartIndex].isDcSunburstChart ?? false
 
   if (isDcSunburstChart) {
     // サンバーストチャートの初期化(DcSunburstChart使用の定義)
-    pnl.ex[chartIndex].isDcSunburstChart = isDcSunburstChart;
+    pnl.ex[chartIndex].isDcSunburstChart = isDcSunburstChart
     mm.chartEx[chartIndex] = {
       isDcSunburstChart: true,
       chartGroup: 'hide',
-      filters: []
-    };
+      filters: [],
+    }
   } else {
     // 標準チャート (stackedBarChart) の作成
-    mm.chartEx[chartIndex] =
-      createStackedBarChart(
-        dim, `#chart_ex_${chartIndex}`, height, mm.config.cEx.barWidth,
-        onFiltered, mm.opt.chartEx[chartIndex].isLegend, mm.opt.chartEx[chartIndex],
-        v => mm.getLabelEx(v, chartIndex));
+    mm.chartEx[chartIndex] = createStackedBarChart(
+      dim,
+      `#chart_ex_${chartIndex}`,
+      height,
+      mm.config.cEx.barWidth,
+      onFiltered,
+      mm.opt.chartEx[chartIndex].isLegend,
+      mm.opt.chartEx[chartIndex],
+      v => mm.getLabelEx(v, chartIndex)
+    )
 
-    mm.chartEx[chartIndex].dataIndex = dataIndex;
-    mm.chartEx[chartIndex].xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex));
+    mm.chartEx[chartIndex].dataIndex = dataIndex
+    mm.chartEx[chartIndex].xAxis().tickFormat(v => mm.getLabelEx(v, chartIndex))
   }
 }
-const initAllChartEx = (height) => {
+const initAllChartEx = height => {
   for (let i = D_EX0; i < mm.data_hdr.length; i++) {
-    let ii = i - D_EX0;
-    if(mm.opt.chartEx[ii]===undefined) {
+    let ii = i - D_EX0
+    if (mm.opt.chartEx[ii] === undefined) {
       // オプションが未定義の場合は初期化
       mm.opt.chartEx[ii] = {
-        isHidden: true
-      };
+        isHidden: true,
+      }
       continue
     }
-    if(mm.opt.chartEx[ii]?.isHidden)
-      continue
-    initChartEx(ii, i, mm.data_hdr[i], height);
+    if (mm.opt.chartEx[ii]?.isHidden) continue
+    initChartEx(ii, i, mm.data_hdr[i], height)
   }
 }
-const initDc = (data) => {
-  mm.data_hdr = data.shift();
-  mm.data = data;
+const initDc = data => {
+  mm.data_hdr = data.shift()
+  mm.data = data
 
   // ローカルストレージより設定をロード
   if (settingsLoad() === null) {
     // 設定がない場合のディフォルト値を設定
-    mm.setPanelFromDataOptionsAfterLocalStorageNone();
+    mm.setPanelFromDataOptionsAfterLocalStorageNone()
   }
 
   if (gg.dt === DT_COVID) {
-    mm.domainDate = [moment('2020-03-30').subtract(1, 'days').toDate(), moment(mm.opt.assets.spk.max_ymd).add(3, 'days').toDate()];
-    $('.tab-data').show();
-    $('h4.hdr').html('<i class="fa fa-thermometer-half"></i>&nbsp;新型コロナウイルス 日本国内 感染状況');
+    mm.domainDate = [
+      moment('2020-03-30').subtract(1, 'days').toDate(),
+      moment(mm.opt.assets.spk.max_ymd).add(3, 'days').toDate(),
+    ]
+    $('.tab-data').show()
+    $('h4.hdr').html(
+      '<i class="fa fa-thermometer-half"></i>&nbsp;新型コロナウイルス 日本国内 感染状況'
+    )
   } else {
     // 左右のバーがみえなくなるのでデータの単位に合わせてPadding
-    const ymds = _.uniq(_.map(mm.data, D_YMD));
-    const minYmd = moment(_.min(ymds));
-    const maxYmd = moment(_.max(ymds));
-    const isBigRange = maxYmd.diff(minYmd, 'years') > 2; // minYmdからmaxYmdの範囲が2年以上の場合
-    const padDays = isBigRange
-      ? (mm.opt?.chartDate.format?.indexOf('DD') !== -1 ? 30 : 30 * 12)
-      : 2;
-    mm.domainDate = [minYmd.subtract(padDays, 'days').toDate(), maxYmd.add(padDays, 'days').toDate()];
+    const ymds = _.uniq(_.map(mm.data, D_YMD))
+    const minYmd = moment(_.min(ymds))
+    const maxYmd = moment(_.max(ymds))
+    const isBigRange = maxYmd.diff(minYmd, 'years') > 2 // minYmdからmaxYmdの範囲が2年以上の場合
+    const padDays = isBigRange ? (mm.opt?.chartDate.format?.indexOf('DD') !== -1 ? 30 : 30 * 12) : 2
+    mm.domainDate = [
+      minYmd.subtract(padDays, 'days').toDate(),
+      maxYmd.add(padDays, 'days').toDate(),
+    ]
 
-    $('.tab-data').hide();
+    $('.tab-data').hide()
     if (mm.opt.title) {
-      document.title = mm.opt.title;
-      $('h4.hdr').html(mm.opt.title);
-      $('#data_img_img').attr('title', mm.opt.title);
+      document.title = mm.opt.title
+      $('h4.hdr').html(mm.opt.title)
+      $('#data_img_img').attr('title', mm.opt.title)
     }
-    $('.container_tbl_pref').hide();
-    $('#tbl_pref').hide();
+    $('.container_tbl_pref').hide()
+    $('#tbl_pref').hide()
   }
 
   // data computed cache
-  const names = _.map(mm.data, D_PL1);
-  mm.names = _.uniq(names);
-  mm.namesCount = _.countBy(names);
+  const names = _.map(mm.data, D_PL1)
+  mm.names = _.uniq(names)
+  mm.namesCount = _.countBy(names)
   if (mm.opt.chartCity.orderYmd) {
-    mm.citys = _.map(mm.data, D_PL2);
+    mm.citys = _.map(mm.data, D_PL2)
   } else {
-    mm.citys = _.uniq(_.map(mm.data, D_PL2));
+    mm.citys = _.uniq(_.map(mm.data, D_PL2))
   }
   // mm.conds = _.uniq(_.map(mm.data, D_CND)).map(mm.getLabelCond);
   // mm.ages = _.uniq(_.map(mm.data, D_AGE)).map(mm.getLabelAge);
-  mm.jobs = _.uniq(_.map(mm.data, D_JOB));
+  mm.jobs = _.uniq(_.map(mm.data, D_JOB))
   if (gg.dt !== DT_COVID) {
-    mm.opt.assets.jobcates = mm.is_job_cate ? _.uniq(_.map(mm.data, D_JOBCAT)) : [];
+    mm.opt.assets.jobcates = mm.is_job_cate ? _.uniq(_.map(mm.data, D_JOBCAT)) : []
   }
 
-  mm.ndx = crossfilter(mm.data);
+  mm.ndx = crossfilter(mm.data)
 
   // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
-  mm.group_reduce.base = !pnl.city.orderUI ? d => (d[D_CNT] || 1) : d => 1
+  mm.group_reduce.base = !pnl.city.orderUI ? d => d[D_CNT] || 1 : d => 1
 
-  let chartSexW = 148;
-  let chartSexH = 158;
+  let chartSexW = 148
+  let chartSexH = 158
 
-  mm.chartAge = new dc.BarChart("#chart_age", CGRP_SHOW);
-  mm.chartAge.dataIndex = D_AGE;
-  initChartAge(chartSexW, chartSexH);
+  mm.chartAge = new dc.BarChart('#chart_age', CGRP_SHOW)
+  mm.chartAge.dataIndex = D_AGE
+  initChartAge(chartSexW, chartSexH)
 
-  mm.chartCond = new dc.BarChart('#chart_cond', CGRP_SHOW);
-  mm.chartCond.dataIndex = D_CND;
-  initChartCond(chartSexW, chartSexH);
+  mm.chartCond = new dc.BarChart('#chart_cond', CGRP_SHOW)
+  mm.chartCond.dataIndex = D_CND
+  initChartCond(chartSexW, chartSexH)
 
-  initChartName();
+  initChartName()
 
-  initChartCity();
+  initChartCity()
 
+  mm.config.cDate.width = mm.opt.chartDate.width ?? 1180
+  if (isSp) mm.config.cDate.width = window.innerWidth + 800
 
-  mm.config.cDate.width = mm.opt.chartDate.width ?? 1180;
-  if (isSp) mm.config.cDate.width = window.innerWidth + 800;
+  initChartDate(mm.config.cDate.width)
 
-  initChartDate(mm.config.cDate.width);
-
-  pnl.date.chart2.type = gg.dt === DT_COVID ? CHART_DATE2_TYPE_COVID : CHART_DATE2_TYPE_HIDE;
+  pnl.date.chart2.type = gg.dt === DT_COVID ? CHART_DATE2_TYPE_COVID : CHART_DATE2_TYPE_HIDE
   if (pnl.date.chart2.type === CHART_DATE2_TYPE_COVID) {
-    initChartDate2Covid(mm.config.cDate.width);
+    initChartDate2Covid(mm.config.cDate.width)
   } else {
     if (mm.opt.chartDate2.isShow) {
-      initChartDate2();
+      initChartDate2()
     }
   }
 
-  initChartYear(chartSexH);
+  initChartYear(chartSexH)
 
-  initChartSeason(chartSexW, chartSexH);
+  initChartSeason(chartSexW, chartSexH)
 
-  initChartWeek(chartSexW, chartSexH);
+  initChartWeek(chartSexW, chartSexH)
 
-  initChartSex(chartSexW, chartSexH);
+  initChartSex(chartSexW, chartSexH)
 
-  initChartJob(chartSexW, chartSexH);
+  initChartJob(chartSexW, chartSexH)
 
-  initAllChartEx(chartSexH);
+  initAllChartEx(chartSexH)
 
-  mm.dateStackShow(STACK_CND);
+  mm.dateStackShow(STACK_CND)
 
   //
   //data_typeによる UI制御
   //
   if (gg.dt === DT_COVID) {
-    pnl.map.tabs.isShow = 1;
-    mm.chartCity.addFilterHandler(mm.addFilterHandler);
+    pnl.map.tabs.isShow = 1
+    mm.chartCity.addFilterHandler(mm.addFilterHandler)
     mm.chartCond.addFilterHandler(mm.addFilterHandler)
   } else {
-    mm.sel_tab = 'tabs_c';
-    if (pnl.date.chart2.type !== CHART_DATE2_TYPE_COVID) pnl.date.chart2.title = '';
-    pnl.map.tabs.isShow = 0;
+    mm.sel_tab = 'tabs_c'
+    if (pnl.date.chart2.type !== CHART_DATE2_TYPE_COVID) pnl.date.chart2.title = ''
+    pnl.map.tabs.isShow = 0
   }
 
   //タイトル変更
-  pnl.name.title = mm.data_hdr[D_PL1];
-  pnl.city.title = mm.data_hdr[D_PL2];
+  pnl.name.title = mm.data_hdr[D_PL1]
+  pnl.city.title = mm.data_hdr[D_PL2]
 
-  pnl.date.title = gg.dt === DT_COVID ? '感染者数' : mm.data_hdr[D_YMD];
-  pnl.sex.title = gg.dt === DT_COVID ? '性別' : mm.data_hdr[D_SEX];
-  pnl.age.title = gg.dt === DT_COVID ? '年齢' : mm.data_hdr[D_AGE];
+  pnl.date.title = gg.dt === DT_COVID ? '感染者数' : mm.data_hdr[D_YMD]
+  pnl.sex.title = gg.dt === DT_COVID ? '性別' : mm.data_hdr[D_SEX]
+  pnl.age.title = gg.dt === DT_COVID ? '年齢' : mm.data_hdr[D_AGE]
 
-  const INFO_PUBLIC = '※公開自治体のみ';
-  pnl.cond.title = gg.dt === DT_COVID ? '状態' : mm.data_hdr[D_CND];
-  pnl.cond.info = gg.dt === DT_COVID ? INFO_PUBLIC : '';
+  const INFO_PUBLIC = '※公開自治体のみ'
+  pnl.cond.title = gg.dt === DT_COVID ? '状態' : mm.data_hdr[D_CND]
+  pnl.cond.info = gg.dt === DT_COVID ? INFO_PUBLIC : ''
 
-  pnl.job.title = gg.dt === DT_COVID ? '職業' : mm.data_hdr[D_JOB];
-  pnl.job.info = gg.dt === DT_COVID ? INFO_PUBLIC : '';
+  pnl.job.title = gg.dt === DT_COVID ? '職業' : mm.data_hdr[D_JOB]
+  pnl.job.info = gg.dt === DT_COVID ? INFO_PUBLIC : ''
 
   if (gg.dt !== DT_COVID) {
-    let gap = -1;
-    const n = mm.gpDate.all().length;
+    let gap = -1
+    const n = mm.gpDate.all().length
     // Gapはデータ数に応じて調整
     switch (1) {
       default:
         if (n < 10) {
-          gap = -55;
-          break;
+          gap = -55
+          break
         }
         if (n < 30) {
-          gap = -40;
-          break;
+          gap = -40
+          break
         }
         if (n < 40) {
-          gap = -14;
-          break;
+          gap = -14
+          break
         }
         if (n < 50) {
-          gap = -30;
-          break;
+          gap = -30
+          break
         }
         if (n < 100) {
-          gap = -8;
-          break;
+          gap = -8
+          break
         }
         if (n < 500) {
-          gap = -4;
-          break;
+          gap = -4
+          break
         }
         if (n < 1000) {
-          gap = -2;
-          break;
+          gap = -2
+          break
         }
-        break;
+        break
     }
     // console.log(n,gap);
-    if (gap !== -1) mm.chartDate.gap(gap);
+    if (gap !== -1) mm.chartDate.gap(gap)
   }
-  pnl.date.stack_type = STACK_CND;
+  pnl.date.stack_type = STACK_CND
 
   if (!isSp && mm.opt.chartDate.width && localStorage.getItem(settingsName()) === null) {
-    const w = mm.opt.chartDate.width + 20;
-    $('#panel_date').css('width', w + 'px');
-    pnl.date.style = 'width:' + w + 'px';
+    const w = mm.opt.chartDate.width + 20
+    $('#panel_date').css('width', w + 'px')
+    pnl.date.style = 'width:' + w + 'px'
   }
 
   // make Autocomplete data
   if (mm.opt.isMakeAutocompleteData) {
-    const ac0 = mm.makeAutocompleteData1Dim(mm.chartName.group(), pnl.name.title);
-    const ac1 = mm.makeAutocompleteData2Dim(mm.ndx, D_PL1, D_PL2, 0);
-    const ac2 = mm.makeAutocompleteData1Dim(mm.chartCond.group(), pnl.cond.title);
-    const ac3 = mm.makeAutocompleteData1Dim(mm.is_job_cate ? mm.gpJobCat : mm.gpJob, pnl.job.title);
-    mm.opt.assets.ac_data = ac0.concat(ac1).concat(ac2).concat(ac3);
+    const ac0 = mm.makeAutocompleteData1Dim(mm.chartName.group(), pnl.name.title)
+    const ac1 = mm.makeAutocompleteData2Dim(mm.ndx, D_PL1, D_PL2, 0)
+    const ac2 = mm.makeAutocompleteData1Dim(mm.chartCond.group(), pnl.cond.title)
+    const ac3 = mm.makeAutocompleteData1Dim(mm.is_job_cate ? mm.gpJobCat : mm.gpJob, pnl.job.title)
+    mm.opt.assets.ac_data = ac0.concat(ac1).concat(ac2).concat(ac3)
   }
 
-  mm.renderAllChart();
+  mm.renderAllChart()
 }
 
 const initTabs = () => {
-  const TAB_NO = {'c': 1, 'p': 2, 'pc': 3, 'd': 4, 'b': 5};
+  const TAB_NO = { c: 1, p: 2, pc: 3, d: 4, b: 5 }
 
   mm.tab = $('#chart_map').tabs({
     active: mm.get['tab'] ? TAB_NO[mm.get['tab']] : 0,
-    activate: function (event, ui, sel_tab/*<=user_opt*/) {
-      mm.sel_tab = sel_tab ? sel_tab : ui.newPanel.attr('id');
+    activate: function (event, ui, sel_tab /*<=user_opt*/) {
+      mm.sel_tab = sel_tab ? sel_tab : ui.newPanel.attr('id')
       switch (mm.sel_tab) {
         case 'tabs_c':
-          pnlShowsLoadStore(1); // パネルの表示状態を[感染]モードに復元
+          pnlShowsLoadStore(1) // パネルの表示状態を[感染]モードに復元
 
-          mm.chartName.group(mm.gpName).render();
-          pnl.name.title = '都道府県';
-          pnl.date.chart2.isShow = false;
-          pnl.date.chart2.title2 = '';
-          $('#japan-map').show();
-          drawJapanMap();
-          let ft = mm.getFilterTxt();
-          ft[1] = ''; // city
-          $('#legend_n').show();
-          $('#legend_p').hide();
-          break;
+          mm.chartName.group(mm.gpName).render()
+          pnl.name.title = '都道府県'
+          pnl.date.chart2.isShow = false
+          pnl.date.chart2.title2 = ''
+          $('#japan-map').show()
+          drawJapanMap()
+          let ft = mm.getFilterTxt()
+          ft[1] = '' // city
+          $('#legend_n').show()
+          $('#legend_p').hide()
+          break
 
         default:
           // case 'tabs_p':
@@ -7132,1418 +8160,1543 @@ const initTabs = () => {
           // case 'tabs_d':
 
           // パネルの表示状態を[PCR・死亡]モードにする
-          pnlShowsLoadStore(0);
-          pnl.name.isShow = 1;
-          pnl.city.isShow = 0;
-          pnl.sex.isShow = 0;
-          pnl.year.isShow = 0;
-          pnl.week.isShow = 0;
-          pnl.season.isShow = 0;
-          pnl.age.isShow = 0;
-          pnl.cond.isShow = 0;
-          pnl.job.isShow = 0;
+          pnlShowsLoadStore(0)
+          pnl.name.isShow = 1
+          pnl.city.isShow = 0
+          pnl.sex.isShow = 0
+          pnl.year.isShow = 0
+          pnl.week.isShow = 0
+          pnl.season.isShow = 0
+          pnl.age.isShow = 0
+          pnl.cond.isShow = 0
+          pnl.job.isShow = 0
 
-          if (mm.sel_tab === 'tabs_b') {//病床
-            pnl.date.isShow = 0;
-            pnl.date.chart2.isShow = false;
+          if (mm.sel_tab === 'tabs_b') {
+            //病床
+            pnl.date.isShow = 0
+            pnl.date.chart2.isShow = false
 
-            let gpName2 = mm.dimName2.group().reduce((p, v) => mm.opt.assets.pref_tbl_last_m1[v[D3_PL1]].bed, (p, v) => mm.opt.assets.pref_tbl_last_m1[v[D3_PL1]].bed, (p, v) => 0);
-            mm.chartName.group(gpName2).render();
+            let gpName2 = mm.dimName2.group().reduce(
+              (p, v) => mm.opt.assets.pref_tbl_last_m1[v[D3_PL1]].bed,
+              (p, v) => mm.opt.assets.pref_tbl_last_m1[v[D3_PL1]].bed,
+              (p, v) => 0
+            )
+            mm.chartName.group(gpName2).render()
           } else {
-            pnl.date.isShow = 1;
-            let gpName2;
+            pnl.date.isShow = 1
+            let gpName2
             switch (mm.sel_tab) {
               case 'tabs_p':
-                mm.chartDate2Mode = MD_PAT;
-                gpName2 = mm.dimName2.group().reduce((p, v) => v[D3_CNT], (p, v) => v[D3_CNT], (p, v) => 0);
-                pnl.name.title = '都道府県(患者)';
-                pnl.date.chart2.title = '<i class="fa fa-procedures"></i>患者数(累計)';
-                pnl.date.chart2.title2 = '※入院治療等を要する患者数。(感染者数から無症状、退院、死亡者数を引いた値)';
-                break;
+                mm.chartDate2Mode = MD_PAT
+                gpName2 = mm.dimName2.group().reduce(
+                  (p, v) => v[D3_CNT],
+                  (p, v) => v[D3_CNT],
+                  (p, v) => 0
+                )
+                pnl.name.title = '都道府県(患者)'
+                pnl.date.chart2.title = '<i class="fa fa-procedures"></i>患者数(累計)'
+                pnl.date.chart2.title2 =
+                  '※入院治療等を要する患者数。(感染者数から無症状、退院、死亡者数を引いた値)'
+                break
               case 'tabs_pc':
-                mm.chartDate2Mode = MD_PCR;
+                mm.chartDate2Mode = MD_PCR
                 gpName2 = mm.dimName2.group().reduceSum(function (d) {
-                  return d[D3_TYP] === MD_PCR ? d[D3_CNT] : 0;
+                  return d[D3_TYP] === MD_PCR ? d[D3_CNT] : 0
                 })
-                pnl.name.title = '都道府県(PCR)';
-                pnl.date.chart2.title = '<i class="fa fa-vials"></i>PCR検査人数';
-                pnl.date.chart2.title2 = '';
-                break;
+                pnl.name.title = '都道府県(PCR)'
+                pnl.date.chart2.title = '<i class="fa fa-vials"></i>PCR検査人数'
+                pnl.date.chart2.title2 = ''
+                break
               case 'tabs_d':
-                mm.chartDate2Mode = MD_DEA;
+                mm.chartDate2Mode = MD_DEA
                 gpName2 = mm.dimName2.group().reduceSum(function (d) {
-                  return d[D3_TYP] === MD_DEA ? d[D3_CNT] : 0;
+                  return d[D3_TYP] === MD_DEA ? d[D3_CNT] : 0
                 })
-                pnl.name.title = '都道府県(死亡)';
-                pnl.date.chart2.title = '死亡者数';
-                pnl.date.chart2.title2 = '';
-                break;
+                pnl.name.title = '都道府県(死亡)'
+                pnl.date.chart2.title = '死亡者数'
+                pnl.date.chart2.title2 = ''
+                break
             }
-            pnl.date.chart2.isShow = true;
-            $('#div_date2').scrollLeft($('#div_date').scrollLeft());
+            pnl.date.chart2.isShow = true
+            $('#div_date2').scrollLeft($('#div_date').scrollLeft())
 
-            mm.chartName.group(gpName2);
+            mm.chartName.group(gpName2)
 
             //市区町村フィルタのみの場合,都道府県フィルタないので表示より取得し設定
-            let flt = mm.chartName.filters();
-            let flta = mm.chartCity.filters();
+            let flt = mm.chartName.filters()
+            let flta = mm.chartCity.filters()
             if (flt.length === 0 && flta.length) {
-              let flt_from_city = [];
+              let flt_from_city = []
               $('#chart_name g.row text').each(function (index, el) {
-                let ken_cnt = this.textContent.replace(/[　\s]+/, ',').split(','); //["福島県", "0"]
-                if (ken_cnt[1] != 0) flt_from_city.push(ken_cnt[0]);
-              });
-              mm.chartName.filter([flt_from_city]);
+                let ken_cnt = this.textContent.replace(/[　\s]+/, ',').split(',') //["福島県", "0"]
+                if (ken_cnt[1] != 0) flt_from_city.push(ken_cnt[0])
+              })
+              mm.chartName.filter([flt_from_city])
             }
 
-            mm.chartName.render();
-            mm.composite2.render();
+            mm.chartName.render()
+            mm.composite2.render()
           }
 
-          $('#japan-map').show();
-          drawJapanMap();
+          $('#japan-map').show()
+          drawJapanMap()
           if (mm.sel_tab === 'tabs_pc') {
-            $('#legend_n').hide();
-            $('#legend_p').show();
+            $('#legend_n').hide()
+            $('#legend_p').show()
           } else {
-            $('#legend_n').show();
-            $('#legend_p').hide();
+            $('#legend_n').show()
+            $('#legend_p').hide()
           }
-          break;
+          break
         case 'tabs_w':
-          location.href = 'covid19-world.html';
-          break;
+          location.href = 'covid19-world.html'
+          break
       }
-      if (!isSp) $('#input-search').focus().select();
-    }
-  });
+      if (!isSp) $('#input-search').focus().select()
+    },
+  })
 }
 
 const initAutoComplete = (options = {}) => {
   /**
    * class $.ui.autocomplete_ex extends $.ui.autocomplete
    */
-  $.widget("ui.autocomplete_ex", $.ui.autocomplete, {
+  $.widget('ui.autocomplete_ex', $.ui.autocomplete, {
     //デフォルトオプション
     options: {
       itemMax: 16,
       minLength: 1,
       delay: 500,
-      position: {my: "left top", at: "left bottom+12", collision: "none"},
+      position: { my: 'left top', at: 'left bottom+12', collision: 'none' },
 
       _usr: {
-        AC_SPLIT_WD: /\s+/
+        AC_SPLIT_WD: /\s+/,
       },
-      ...options
+      ...options,
     },
 
     _create: function () {
-      this._super();
-      this.widget().menu("option", "items", "> :not(.ac_ex-cate)");
+      this._super()
+      this.widget().menu('option', 'items', '> :not(.ac_ex-cate)')
     },
     _init: function () {
       //var o=$(this.element);
-      var _this = this;
+      var _this = this
       //一覧取得
       _this.source = _this.options.source = function (request, response) {
-        let itemMax = this.option('itemMax');
+        let itemMax = this.option('itemMax')
 
-        let kw;
+        let kw
         if (_this.options.user_opt.multiple) {
-          kw = request.term.split(_this.options._usr.AC_SPLIT_WD).pop();
+          kw = request.term.split(_this.options._usr.AC_SPLIT_WD).pop()
         } else {
-          kw = request.term;
+          kw = request.term
         }
 
         ////$.post('/api/get_pref_auto_src', request, function (d){response(d);},'json');
         //全部表示されるのでここでfilter&slice roma考慮
-        if (!kw.length) return;
+        if (!kw.length) return
 
-        response(_.filter(_this.options.user_opt.data, (d) => {
-          const isAlpha = kw[0].match(/[a-z]/i) ? 1 : 0;
-          const chartTitle = d[0];
-          let hira = ''
-          // ひらがな入力でもAutocomplete候補になるようにする
-          switch (chartTitle) {
-            case '職業':
-              hira = HIRAGANA.JOB[d[1]] || '';
-              break;
-            case '状態':
-              hira = HIRAGANA.COND[d[1]] || '';
-              break;
-            default:
-              hira = HIRAGANA.PREF[d[0] === '' ? d[1] : d[0]] || '';
-              break;
-          }
-          return isAlpha
-            ? (PREFECTURES_EN[d[0]] !== undefined && PREFECTURES_EN[d[0]].indexOf(kw) !== -1) || d[2].indexOf(kw) !== -1
-            : (d[0] + hira).indexOf(kw) !== -1 || d[1].indexOf(kw) !== -1;
-        }).slice(0, itemMax));
-
+        response(
+          _.filter(_this.options.user_opt.data, d => {
+            const isAlpha = kw[0].match(/[a-z]/i) ? 1 : 0
+            const chartTitle = d[0]
+            let hira = ''
+            // ひらがな入力でもAutocomplete候補になるようにする
+            switch (chartTitle) {
+              case '職業':
+                hira = HIRAGANA.JOB[d[1]] || ''
+                break
+              case '状態':
+                hira = HIRAGANA.COND[d[1]] || ''
+                break
+              default:
+                hira = HIRAGANA.PREF[d[0] === '' ? d[1] : d[0]] || ''
+                break
+            }
+            return isAlpha
+              ? (PREFECTURES_EN[d[0]] !== undefined && PREFECTURES_EN[d[0]].indexOf(kw) !== -1) ||
+                  d[2].indexOf(kw) !== -1
+              : (d[0] + hira).indexOf(kw) !== -1 || d[1].indexOf(kw) !== -1
+          }).slice(0, itemMax)
+        )
       }
 
       _this.options.focus = function (event, ui) {
         if (_this.options.user_opt.multiple) {
           let terms = this.value.trim().split(_this.options._usr.AC_SPLIT_WD)
-          terms.pop();
-          terms.push(ui.item[1]);
-          terms.push("");
-          this.value = terms.join(" ");
+          terms.pop()
+          terms.push(ui.item[1])
+          terms.push('')
+          this.value = terms.join(' ')
         } else {
-          this.value = ui.item[1];
+          this.value = ui.item[1]
         }
-        return false;
+        return false
       }
 
       //選択
       _this.options.select = function (event, ui) {
-        event.preventDefault();
-        let ret = '';
-        if (_this.options.user_opt.select) ret = _this.options.user_opt.select(event, ui);
+        event.preventDefault()
+        let ret = ''
+        if (_this.options.user_opt.select) ret = _this.options.user_opt.select(event, ui)
         //$('.ui-menu').hide();
-        return ret;
-      };
-
+        return ret
+      }
     },
     _renderMenu: function (ul, items) {
-      let that = this, currentType = "";
+      let that = this,
+        currentType = ''
       $.each(items, function (index, item) {
-        let li;
+        let li
         if (item[0] != currentType) {
-          let icon = '';
+          let icon = ''
           switch (item[0]) {
             case '職業':
-              icon = '<i class="fa fa-id-card-o" style="padding:4px"></i>';
-              break;
+              icon = '<i class="fa fa-id-card-o" style="padding:4px"></i>'
+              break
             case '状態':
-              icon = '<i class="fa fa-medkit" style="padding:4px"></i>';
-              break;
+              icon = '<i class="fa fa-medkit" style="padding:4px"></i>'
+              break
             default:
               const src = that?.options?.imagePath
                 ? that.options.imagePath + '/' + item[0] + '.jpg'
-                : '/img/japan/' + PREFECTURES_EN[item[0]] + '.gif';
-              icon = '<img width="40" height="40" src="' + src + '" onerror="this.src=\'' + IMG_NO + '\'" />';
-              break;
+                : '/img/japan/' + PREFECTURES_EN[item[0]] + '.gif'
+              icon =
+                '<img width="40" height="40" src="' +
+                src +
+                '" onerror="this.src=\'' +
+                IMG_NO +
+                '\'" />'
+              break
           }
-          ul.append("<li class='ac_ex-cate'>" + icon + item[0] + "</li>");
-          currentType = item[0];
+          ul.append("<li class='ac_ex-cate'>" + icon + item[0] + '</li>')
+          currentType = item[0]
         }
-        li = that._renderItemData(ul, item);
+        li = that._renderItemData(ul, item)
         //if (item[0]) {li.attr("aria-label", item[0] + " : " + item.label);}
-      });
+      })
     },
     _renderItem: function (ul, row) {
       //var o = $(this.element);
-      let v = this.element.val().trim();
-      if (this.options.user_opt.multiple) v = _.last(v.split(this.options._usr.AC_SPLIT_WD));
-      let is_cate_none = row[0] === '';
-      let html = row[1];
-      let bv = '<span class="ac_ex-kwd">' + v.toUpperCase() + '</span>';
-      html = html.replace(new RegExp(v, 'gi'), bv);
+      let v = this.element.val().trim()
+      if (this.options.user_opt.multiple) v = _.last(v.split(this.options._usr.AC_SPLIT_WD))
+      let is_cate_none = row[0] === ''
+      let html = row[1]
+      let bv = '<span class="ac_ex-kwd">' + v.toUpperCase() + '</span>'
+      html = html.replace(new RegExp(v, 'gi'), bv)
       if (is_cate_none) {
-        let src = '/img/japan/' + PREFECTURES_EN[row[1]] + '.gif';
-        const icon = '<img width="40" height="40" src="' + src + '" onerror="this.src=\'' + IMG_NO + '\'" />';
-        html = icon + html;
+        let src = '/img/japan/' + PREFECTURES_EN[row[1]] + '.gif'
+        const icon =
+          '<img width="40" height="40" src="' + src + '" onerror="this.src=\'' + IMG_NO + '\'" />'
+        html = icon + html
       }
-      let is_pref = row[0] === row[1];
+      let is_pref = row[0] === row[1]
       return $("<li class='ac_ex-item'>")
-        .append($('<div' + (is_pref ? ' class="ac_ex-bld"' : '') + '>')
-          .html(html + (row[3] === 0 ? '' : '(' + mm.d3fmt(row[3]) + ')')))
-        .appendTo(ul);
-    }
-  });
+        .append(
+          $('<div' + (is_pref ? ' class="ac_ex-bld"' : '') + '>').html(
+            html + (row[3] === 0 ? '' : '(' + mm.d3fmt(row[3]) + ')')
+          )
+        )
+        .appendTo(ul)
+    },
+  })
 }
 
-var map;
+var map
 
 //vectorMap for pc
 const drawJapanMap = () => {
-  if (pnl.gmap.isShow) mm.updateGMap();
-  if (!pnl.map.isShow) return;
-  $("#japan-map").empty();
+  if (pnl.gmap.isShow) mm.updateGMap()
+  if (!pnl.map.isShow) return
+  $('#japan-map').empty()
 
-  let series_scale = mm.sel_tab === 'tabs_pc'
-    ? {
-      "0.4%以上": "#8c0a00",
-      "0.2%以上": "#ea5432",
-      "0.1%以上": "#ff781d",
-      "0.05%以上": "#ff9d57",
-      "0.01%以上": "#ffceab",
-      "0%以上": "#ffffe0",
-      "0%": "#dadada",
-      "選択中": "#ffffff"
-    } : Object.fromEntries(pnl.map.colors)
+  let series_scale =
+    mm.sel_tab === 'tabs_pc'
+      ? {
+          '0.4%以上': '#8c0a00',
+          '0.2%以上': '#ea5432',
+          '0.1%以上': '#ff781d',
+          '0.05%以上': '#ff9d57',
+          '0.01%以上': '#ffceab',
+          '0%以上': '#ffffe0',
+          '0%': '#dadada',
+          選択中: '#ffffff',
+        }
+      : Object.fromEntries(pnl.map.colors)
 
-  let cntTbl;
+  let cntTbl
   if (mm.map.isMapJapan) {
-    cntTbl = mm.getPrefCntTbl();
+    cntTbl = mm.getPrefCntTbl()
   } else {
     // getWorldCntTbl();
-    const dataIndex = mm.lastFilteredChart.dataIndex ?? D_JOBCAT;
-    pnl.map.subTitle = '　' + mm.data_hdr[dataIndex];
+    const dataIndex = mm.lastFilteredChart.dataIndex ?? D_JOBCAT
+    pnl.map.subTitle = '　' + mm.data_hdr[dataIndex]
 
-    const keyIndex = mm.opt.chartMap.refData === 'city' ? D_PL2 : D_PL1;
-    let sum = 0, min = Number.MAX_SAFE_INTEGER, max = -1;
+    const keyIndex = mm.opt.chartMap.refData === 'city' ? D_PL2 : D_PL1
+    let sum = 0,
+      min = Number.MAX_SAFE_INTEGER,
+      max = -1
     cntTbl = mm.data.reduce((acc, row) => {
-      const v = parseInt(row[dataIndex]);
-      acc[row[keyIndex]] = v;
-      sum += v;
-      if (v < min) min = v;
-      if (v > max) max = v;
-      return acc;
-    }, {});
+      const v = parseInt(row[dataIndex])
+      acc[row[keyIndex]] = v
+      sum += v
+      if (v < min) min = v
+      if (v > max) max = v
+      return acc
+    }, {})
     // min-max を 0~highColorValue(def:1000) にする
-    const highColorValue = pnl.map.colors[0][2];
+    const highColorValue = pnl.map.colors[0][2]
     cntTbl = _.mapValues(cntTbl, v => {
-      return parseInt(highColorValue * 1.2 * v / max);
-    });
+      return parseInt((highColorValue * 1.2 * v) / max)
+    })
   }
-  let colors = {};
-  const names = mm.map.isMapJapan ? PREFECTURES : Object.keys(WORLD_CODE);
+  let colors = {}
+  const names = mm.map.isMapJapan ? PREFECTURES : Object.keys(WORLD_CODE)
   names.forEach(function (pre) {
-    let col, v = cntTbl[pre] ?? 0;
+    let col,
+      v = cntTbl[pre] ?? 0
     while (1) {
-      col = pnl.map.colors[pnl.map.colors.length - 2][1];
+      col = pnl.map.colors[pnl.map.colors.length - 2][1]
       for (const c of pnl.map.colors) {
         if (v > c[2]) {
-          col = c[1];
-          break;
+          col = c[1]
+          break
         }
       }
-      break;
+      break
     }
     if (mm.map.isMapJapan) {
-      colors[_.capitalize(PREFECTURES_EN[pre])] = col;
+      colors[_.capitalize(PREFECTURES_EN[pre])] = col
     } else {
-      colors[WORLD_CODE[pre]] = col;
+      colors[WORLD_CODE[pre]] = col
     }
-  });
-
-  map = $('#japan-map').vectorMap({
-    map: mm.map.isMapJapan ? 'jp_merc' : 'world_mill',
-    panOnDrag: !isSp,
-    focusOn: mm.map.isMapJapan ? {
-        x: 0.45, y: 0.48,
-        scale: !isSp ? 1.7 : 1,
-        animate: false
-      }
-      : {
-        x: 0.5,
-        y: 0.5,
-        scale: 1,
-        animate: false
-      },
-    backgroundColor: null,
-    zoomEnable: mm.opt.chartMap?.zoomEnable ?? true,
-    zoomOnScroll: false,
-    zoomOnScrollSpeed: 1, //def:3
-    zoomStep: 1.4,
-    regionsSelectable: true,
-    //markersSelectable: true,
-    hoverOpacity: 0.7,
-    regionStyle: {
-      selected: {
-        //fill: '#0000FF',
-        //'fill-opacity':0,
-        //'fill-rule':'evenodd',
-        stroke: '#1a75ff',
-        'stroke-width': 2
-      }
-    },
-    series: {
-      //case linearColor
-      // regions: [{
-      //   values: sample_dataJ,
-      //   scale: ["#c8eeff", "#0071a4"],//blue
-      //   //normalizeFunction: "polynomial" //linear|polynomial
-      // }],
-      //case OriginalColor
-      regions: [{
-        //values: sample_dataJ,
-        attribute: 'fill'
-      }
-        //legend
-        , {
-          scale: series_scale,
-          attribute: 'fill',
-          //values: {},
-          legend: {
-            //horizontal: true,
-            vertical: true
-            //title: 'Color'
-          }
-        }
-
-      ]
-
-    },
-
-    onRegionTipShow:
-      !isSp ? (e, el, code) => { //hover
-        let name = map.mapData.paths[code].name;
-        let html = gg.dt === DT_COVID
-          ? mm.getChartNameCovid19Title(name, '<br />')
-          : mm.getChartMapTooltip(name);
-        el.html(html);
-      } : false,
-
-    onRegionSelected: (e, name, isSelected) => {
-      if (mm.map.isSelectedRegions) return;
-      //選択を取得
-      let xs = map.getSelectedRegions();
-      let prefs = xs.map(x => map.mapData.paths[x].name);
-      let prefsSel = map.mapData.paths[name].name;
-      //名前チャートフィルタ
-      mm.filterPrefChart(prefs);
-      mm.map.doDraw = 0;
-
-      const target = mm.opt.chartMap.refData === 'city' ? '#div_city' : '#div_name';
-      mm.chartScroll(target, isSelected ? prefsSel : prefs[0], 300);
-
-      if (mm.chartName.filters().length && $('#ui-datepicker-div').is(':visible')) {
-        mm.datePick.datepicker('hide');
-        mm.datePick.datepicker('show');
-      }
-    }
-    //onMarkerTipShow:(e, el, code) =>{},
-    //onMarkerClick: (e, code) => {}
   })
-    .vectorMap('get', 'mapObject');
 
-  map.series.regions[0].setValues(colors);
-  $('.jvectormap-legend-tick-sample:last').css({'border': '3px solid #1a75ff'});
+  map = $('#japan-map')
+    .vectorMap({
+      map: mm.map.isMapJapan ? 'jp_merc' : 'world_mill',
+      panOnDrag: !isSp,
+      focusOn: mm.map.isMapJapan
+        ? {
+            x: 0.45,
+            y: 0.48,
+            scale: !isSp ? 1.7 : 1,
+            animate: false,
+          }
+        : {
+            x: 0.5,
+            y: 0.5,
+            scale: 1,
+            animate: false,
+          },
+      backgroundColor: null,
+      zoomEnable: mm.opt.chartMap?.zoomEnable ?? true,
+      zoomOnScroll: false,
+      zoomOnScrollSpeed: 1, //def:3
+      zoomStep: 1.4,
+      regionsSelectable: true,
+      //markersSelectable: true,
+      hoverOpacity: 0.7,
+      regionStyle: {
+        selected: {
+          //fill: '#0000FF',
+          //'fill-opacity':0,
+          //'fill-rule':'evenodd',
+          stroke: '#1a75ff',
+          'stroke-width': 2,
+        },
+      },
+      series: {
+        //case linearColor
+        // regions: [{
+        //   values: sample_dataJ,
+        //   scale: ["#c8eeff", "#0071a4"],//blue
+        //   //normalizeFunction: "polynomial" //linear|polynomial
+        // }],
+        //case OriginalColor
+        regions: [
+          {
+            //values: sample_dataJ,
+            attribute: 'fill',
+          },
+          //legend
+          {
+            scale: series_scale,
+            attribute: 'fill',
+            //values: {},
+            legend: {
+              //horizontal: true,
+              vertical: true,
+              //title: 'Color'
+            },
+          },
+        ],
+      },
+
+      onRegionTipShow: !isSp
+        ? (e, el, code) => {
+            //hover
+            let name = map.mapData.paths[code].name
+            let html =
+              gg.dt === DT_COVID
+                ? mm.getChartNameCovid19Title(name, '<br />')
+                : mm.getChartMapTooltip(name)
+            el.html(html)
+          }
+        : false,
+
+      onRegionSelected: (e, name, isSelected) => {
+        if (mm.map.isSelectedRegions) return
+        //選択を取得
+        let xs = map.getSelectedRegions()
+        let prefs = xs.map(x => map.mapData.paths[x].name)
+        let prefsSel = map.mapData.paths[name].name
+        //名前チャートフィルタ
+        mm.filterPrefChart(prefs)
+        mm.map.doDraw = 0
+
+        const target = mm.opt.chartMap.refData === 'city' ? '#div_city' : '#div_name'
+        mm.chartScroll(target, isSelected ? prefsSel : prefs[0], 300)
+
+        if (mm.chartName.filters().length && $('#ui-datepicker-div').is(':visible')) {
+          mm.datePick.datepicker('hide')
+          mm.datePick.datepicker('show')
+        }
+      },
+      //onMarkerTipShow:(e, el, code) =>{},
+      //onMarkerClick: (e, code) => {}
+    })
+    .vectorMap('get', 'mapObject')
+
+  map.series.regions[0].setValues(colors)
+  $('.jvectormap-legend-tick-sample:last').css({ border: '3px solid #1a75ff' })
   // d3.selectAll("path").call(mapTip);
   // d3.selectAll("path").on('mouseover', mapTip.show).on('mouseout', mapTip.hide);
 
-  mm.mapSetSelectedRegions();
+  mm.mapSetSelectedRegions()
 }
 
-const setBgWindowZIndex = (id) => {
+const setBgWindowZIndex = id => {
   switch (id) {
     case 'chart_gmap':
       _.delay(() => {
-        $("#chart_gmap").css('z-index', '100');
-      }, 10);
-      break;
+        $('#chart_gmap').css('z-index', '100')
+      }, 10)
+      break
     case 'chart_sview':
       _.delay(() => {
-        $("#chart_sview").css('z-index', '100');
-      }, 10);
-      break;
+        $('#chart_sview').css('z-index', '100')
+      }, 10)
+      break
     case 'chart_tube':
       _.delay(() => {
-        $("#chart_tube").css('z-index', '100');
-      }, 10);
-      break;
+        $('#chart_tube').css('z-index', '100')
+      }, 10)
+      break
   }
 }
 
-const onFilteredSunburstChart = (i, {chart}) => {
-    // v-modelによりmm.chartEx[i].filtersは自動同期されるため手動設定不要
-    mm.onChartFiltered(chart);
-    mm.onChangeURL(`name${7 + i}`, chart);
-    mm.chartScroll('#div_name');
-    mm.chartScroll('#div_city');
-};
+const onFilteredSunburstChart = (i, { chart }) => {
+  // v-modelによりmm.chartEx[i].filtersは自動同期されるため手動設定不要
+  mm.onChartFiltered(chart)
+  mm.onChangeURL(`name${7 + i}`, chart)
+  mm.chartScroll('#div_name')
+  mm.chartScroll('#div_city')
+}
 
 const onDocumentReady = () => {
-
   if (isSp) {
-    $('#toolbar_win_toggle').insertAfter('#panels');
+    $('#toolbar_win_toggle').insertAfter('#panels')
   }
   $('#data_img').on('change', function (event) {
-    event.preventDefault();
-    let src = $(this).val();
-    src = _.last(src.split('/'));
-    const f = mm.url_data.filer_files[src];
+    event.preventDefault()
+    let src = $(this).val()
+    src = _.last(src.split('/'))
+    const f = mm.url_data.filer_files[src]
     if (f) {
       if (0) {
         // データのみリロード
         // mm.reLoadDcData(f);
       } else {
         //新しいデータファイルでページリロード。
-        location.href = location.pathname + '?data=' + f;
+        location.href = location.pathname + '?data=' + f
       }
     } else {
-      ch_alert('このデータはありません', {'title': '新型コロナウイルス感染状況', 'dialog_class': 'alert'});
+      ch_alert('このデータはありません', {
+        title: '新型コロナウイルス感染状況',
+        dialog_class: 'alert',
+      })
     }
-  });
+  })
 
   if (gg.dt === DT_COVID) {
-    initTabs();
+    initTabs()
   }
-  if (gg.dt !== DT_COVID) $('.div_cnt').hide();
-  $('.hdr_flt').hide();
+  if (gg.dt !== DT_COVID) $('.div_cnt').hide()
+  $('.hdr_flt').hide()
 
   //
   //　検索（フィルタ）ボタン
   //
-  $('#input-search')
-    .on('keyup input-search-update', function (e) {
-      e.preventDefault();
-      if (e.type === 'input-search-update' || e.keyCode === $.ui.keyCode.ENTER) {
-        //TODO:multiple
-        let t = this.value.trim();
-        if (t !== '') {
-          mm.renderAllChartFilterByKW(t);
-          _.delay(() => $('.ui-menu').hide(), 200);
-          mm.onChangeURL('q', t);
-        }
+  $('#input-search').on('keyup input-search-update', function (e) {
+    e.preventDefault()
+    if (e.type === 'input-search-update' || e.keyCode === $.ui.keyCode.ENTER) {
+      //TODO:multiple
+      let t = this.value.trim()
+      if (t !== '') {
+        mm.renderAllChartFilterByKW(t)
+        _.delay(() => $('.ui-menu').hide(), 200)
+        mm.onChangeURL('q', t)
       }
-    });
+    }
+  })
 
   if (isSp) {
     $('#input-search')
       .attr({
         placeholder: 'フィルタ',
-        title: '県名、職業、状態、日付。'
+        title: '県名、職業、状態、日付。',
       })
       .on('focus', function (event) {
-        event.preventDefault();
-        $(this).css('width', '11em');
+        event.preventDefault()
+        $(this).css('width', '11em')
       })
       .on('blur', function (event) {
-        event.preventDefault();
-        $(this).css('width', '6em');
-      });
+        event.preventDefault()
+        $(this).css('width', '6em')
+      })
   } else {
     $('#input-search').attr({
       // placeholder:'県名、職業、状態、日付',
-      placeholder:
-        `${pnl.name.isHidden ? '' : pnl.name.title + ' '}${pnl.cond.isHidden ? '' : pnl.cond.title + ' '}${pnl.job.isHidden ? '' : pnl.job.title + ' '}${pnl.date.isHidden ? '' : '日付'}`,
-      title: pnl.name.title + 'や'
-        + (pnl.city.isHidden ? '' : pnl.city.title + '、')
-        + (pnl.job.isHidden ? '' : pnl.job.title + '、')
-        + (pnl.cond.isHidden ? '' : pnl.cond.title + '、') + '日付等の入力でグラフのフィルタリングが行えます'
-        + '\nスペース区切りの複数ワードの指定も可能'
-        + '\nショートカットキー\n　フォーカス : Ctrl+Shift+F\n　全クリア : Ctrl+Shift+L'
-    });
+      placeholder: `${pnl.name.isHidden ? '' : pnl.name.title + ' '}${pnl.cond.isHidden ? '' : pnl.cond.title + ' '}${pnl.job.isHidden ? '' : pnl.job.title + ' '}${pnl.date.isHidden ? '' : '日付'}`,
+      title:
+        pnl.name.title +
+        'や' +
+        (pnl.city.isHidden ? '' : pnl.city.title + '、') +
+        (pnl.job.isHidden ? '' : pnl.job.title + '、') +
+        (pnl.cond.isHidden ? '' : pnl.cond.title + '、') +
+        '日付等の入力でグラフのフィルタリングが行えます' +
+        '\nスペース区切りの複数ワードの指定も可能' +
+        '\nショートカットキー\n　フォーカス : Ctrl+Shift+F\n　全クリア : Ctrl+Shift+L',
+    })
   }
   $('#input-search').on('focus', function (e) {
-    _.delay(() => $(this).select(), 7);
-  });
-  if (!isSp) $('#input-search').focus(); //.select();
+    _.delay(() => $(this).select(), 7)
+  })
+  if (!isSp) $('#input-search').focus() //.select();
 
   //
   // クリアボタン
   //
   $('.btn_clear_all').on('click', function (e) {
-    e.preventDefault();
+    e.preventDefault()
 
     //DEBUG_LOG_LSET:
     // setPanelXYWH(null, 1);// absolute化
     // console.log(JSON.stringify(getPanelSettings()));
 
-    $('#input-search').val('');
-    $('.filter_txt').val('');
+    $('#input-search').val('')
+    $('.filter_txt').val('')
     // $('.btn_brush').trigger('my_update', 1);//off
-    pnl.date.isBrushOn = false;
+    pnl.date.isBrushOn = false
 
-    mm.dimJob.filterAll();
-    dc.filterAll(CGRP_SHOW);
+    mm.dimJob.filterAll()
+    dc.filterAll(CGRP_SHOW)
 
-    mm.map.doDraw = 1;
-    mm.renderAllChart();
+    mm.map.doDraw = 1
+    mm.renderAllChart()
 
-    document.querySelector('#div_name').scrollTop = 0;
+    document.querySelector('#div_name').scrollTop = 0
 
     // name の chart-filterを閉じる
-    const inputName = $(mm.keyboardInputName);
+    const inputName = $(mm.keyboardInputName)
     if (inputName.is(':visible')) {
-      $('.chart-filter-toggle.name').trigger('click');
+      $('.chart-filter-toggle.name').trigger('click')
     }
 
     // city の chart-filterを閉じる
-    const inputCity = $(mm.keyboardInputCity);
+    const inputCity = $(mm.keyboardInputCity)
     if (inputCity.is(':visible')) {
-      $('.chart-filter-toggle.city').trigger('click');
+      $('.chart-filter-toggle.city').trigger('click')
     }
 
-    document.querySelector('#div_city').scrollTop = 0;
+    document.querySelector('#div_city').scrollTop = 0
 
-    if ($('#ui-datepicker-div').is(':visible')) mm.datePick.datepicker('show');
-    if (!isSp) $('#input-search').focus();
-    chartDatePlayStop();
-    pnl.date.play.from = null;
+    if ($('#ui-datepicker-div').is(':visible')) mm.datePick.datepicker('show')
+    if (!isSp) $('#input-search').focus()
+    chartDatePlayStop()
+    pnl.date.play.from = null
 
-    mm.onChangeURL('clear_all');
-  });
+    mm.onChangeURL('clear_all')
+  })
 
   //
   // カレンダー入力
   //
-  mm.datePick = $("#btn_date").val('2020/01/01').datepicker({
-    showOn: "button",
-    buttonText: '<i class="ui-icon ui-icon-calendar-day ui-icon-big"></i>',
-    //showAnim:'fadeIn',
-    // showOptions: {effect: "show",duration:3000,easing:'easeOutQuart'},
-    duration: mm.config.mouseLongClickDuration + 100,
-    showOtherMonths: true,
-    numberOfMonths: isSp ? [10, 1] : [3, 8],
-    showCurrentAtPos: isSp ? 2 : 0,
-    stepMonths: isSp ? 3 : (4 * 8),
-    position: { //左
-      of: $(window)
-      , my: "center"
-      , at: "center"
-      , collision: 'fit fit'
-    },
-    onSelect: function (dateText, inst) {
-      $('#input-search').val(dateText).trigger('input-search-update');
-    },
-    beforeShowDay: function (date) {
-      let ret = [];
-      let y = date.getFullYear();
-      let m = php_printf02d(date.getMonth() + 1);
-      let d = php_printf02d(date.getDate());
-      let ymd = y + m + d;
+  mm.datePick = $('#btn_date')
+    .val('2020/01/01')
+    .datepicker({
+      showOn: 'button',
+      buttonText: '<i class="ui-icon ui-icon-calendar-day ui-icon-big"></i>',
+      //showAnim:'fadeIn',
+      // showOptions: {effect: "show",duration:3000,easing:'easeOutQuart'},
+      duration: mm.config.mouseLongClickDuration + 100,
+      showOtherMonths: true,
+      numberOfMonths: isSp ? [10, 1] : [3, 8],
+      showCurrentAtPos: isSp ? 2 : 0,
+      stepMonths: isSp ? 3 : 4 * 8,
+      position: {
+        //左
+        of: $(window),
+        my: 'center',
+        at: 'center',
+        collision: 'fit fit',
+      },
+      onSelect: function (dateText, inst) {
+        $('#input-search').val(dateText).trigger('input-search-update')
+      },
+      beforeShowDay: function (date) {
+        let ret = []
+        let y = date.getFullYear()
+        let m = php_printf02d(date.getMonth() + 1)
+        let d = php_printf02d(date.getDate())
+        let ymd = y + m + d
 
-      ret[0] = 1;//is_selectable
+        ret[0] = 1 //is_selectable
 
-      //休日であれば休日のスタイルにする
-      ret[1] = ($.datepicker.regional['ja'] && $.datepicker.regional["ja"].holidays[ymd] !== undefined) ? 'holiday' : '';
-      let n = mm.dateCnt[ymd] || 0;
-      switch (1) {
-        default:
-          if (n > 999) {
-            ret[1] += ' c1000';
-            break;
-          }
-          if (n > 499) {
-            ret[1] += ' c500';
-            break;
-          }
-          if (n > 99) {
-            ret[1] += ' c100';
-            break;
-          }
-          if (n > 49) {
-            ret[1] += ' c50';
-            break;
-          }
-          if (n > 9) {
-            ret[1] += ' c10';
-            break;
-          }
-          if (n > 0) {
-            ret[1] += ' c1';
-            break;
-          }
-          break;
-      }
-      if (n !== 0) {
-        ret[2] = mm.dateCnt[ymd] + '件';
-      } //tooltip
-      return ret;
-    },
-    beforeShow: function (input, inst) {
-      mm.dateCntCreate();
-      //位置を調整
-      var dpDiv = inst.dpDiv;
-      setTimeout(function () {
-        if (isSp) {
-          dpDiv.position({my: 'left top', at: 'left bottom', collision: 'fit none', of: $('#input-search')});
-          return;
-        }
-
-        dpDiv.css({'width': '', 'z-index': 99});
-        // 前回の位置に表示
-        const position = pnl.common.datepicker.position;
-        if (position) {
-          dpDiv.css({top: position.top + 'px', left: position.left + 'px'});
-        }
-
-        // ドラッグ＆リサイズ可能へ
-        dpDiv
-          .draggable({
-            handle: ".ui-datepicker-header",
-            cursor: "move",
-            stop: function (event, ui) {
-              // ドラッグ終了時の位置を保存
-              pnl.common.datepicker.position = {
-                top: ui.position.top,
-                left: ui.position.left
-              };
+        //休日であれば休日のスタイルにする
+        ret[1] =
+          $.datepicker.regional['ja'] && $.datepicker.regional['ja'].holidays[ymd] !== undefined
+            ? 'holiday'
+            : ''
+        let n = mm.dateCnt[ymd] || 0
+        switch (1) {
+          default:
+            if (n > 999) {
+              ret[1] += ' c1000'
+              break
             }
-          })
-          .resizable();
-      }, 5);
-    }
-  });
-  $('.ui-datepicker-trigger').addClass('ui-button ui-corner-all ui-widget');
+            if (n > 499) {
+              ret[1] += ' c500'
+              break
+            }
+            if (n > 99) {
+              ret[1] += ' c100'
+              break
+            }
+            if (n > 49) {
+              ret[1] += ' c50'
+              break
+            }
+            if (n > 9) {
+              ret[1] += ' c10'
+              break
+            }
+            if (n > 0) {
+              ret[1] += ' c1'
+              break
+            }
+            break
+        }
+        if (n !== 0) {
+          ret[2] = mm.dateCnt[ymd] + '件'
+        } //tooltip
+        return ret
+      },
+      beforeShow: function (input, inst) {
+        mm.dateCntCreate()
+        //位置を調整
+        var dpDiv = inst.dpDiv
+        setTimeout(function () {
+          if (isSp) {
+            dpDiv.position({
+              my: 'left top',
+              at: 'left bottom',
+              collision: 'fit none',
+              of: $('#input-search'),
+            })
+            return
+          }
+
+          dpDiv.css({ width: '', 'z-index': 99 })
+          // 前回の位置に表示
+          const position = pnl.common.datepicker.position
+          if (position) {
+            dpDiv.css({ top: position.top + 'px', left: position.left + 'px' })
+          }
+
+          // ドラッグ＆リサイズ可能へ
+          dpDiv
+            .draggable({
+              handle: '.ui-datepicker-header',
+              cursor: 'move',
+              stop: function (event, ui) {
+                // ドラッグ終了時の位置を保存
+                pnl.common.datepicker.position = {
+                  top: ui.position.top,
+                  left: ui.position.left,
+                }
+              },
+            })
+            .resizable()
+        }, 5)
+      },
+    })
+  $('.ui-datepicker-trigger').addClass('ui-button ui-corner-all ui-widget')
   mm.datePick.val(mm.data[0][D_YMD].slice(0, 4) + '/01/01')
 
   $('.btn_reset').on('click', function (event) {
-    const id = $(this).attr('id');
+    const id = $(this).attr('id')
     switch (id) {
-      case 'btn_reset_name' :
-        mm.chartName.filterAll();
-        $('#panel_name .filter_txt').text('');
-        if (mm.opt.chartMap.refData !== 'city') mm.map.doDraw = 1;
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', 'name');
-        break;
-      case 'btn_reset_city' :
-        mm.chartCity.filterAll();
-        $('#panel_city .filter_txt').text('');
-        if (mm.opt.chartMap.refData === 'city') mm.map.doDraw = 1;
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', 'name2');
-        break;
-      case 'btn_reset_date' :
+      case 'btn_reset_name':
+        mm.chartName.filterAll()
+        $('#panel_name .filter_txt').text('')
+        if (mm.opt.chartMap.refData !== 'city') mm.map.doDraw = 1
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', 'name')
+        break
+      case 'btn_reset_city':
+        mm.chartCity.filterAll()
+        $('#panel_city .filter_txt').text('')
+        if (mm.opt.chartMap.refData === 'city') mm.map.doDraw = 1
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', 'name2')
+        break
+      case 'btn_reset_date':
         if (pnl.date.isBrushOn) {
-          pnl.date.isBrushOn = false;
+          pnl.date.isBrushOn = false
         } else {
-          mm.composite.brushOn(false).filterAll();
-          mm.chartDate.brushOn(false).filterAll();
-          mm.renderAllChart();
+          mm.composite.brushOn(false).filterAll()
+          mm.chartDate.brushOn(false).filterAll()
+          mm.renderAllChart()
         }
-        break;
-      case 'btn_reset_sex'  :
-        mm.chartSex.filterAll();
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', 'name3');
-        break;
-      case 'btn_reset_age'  :
-        mm.chartAge.filterAll();
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', 'name4');
-        break;
-      case 'btn_reset_year' :
-        mm.chartYear.filterAll();
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', 'year');
-        break;
-      case 'btn_reset_season' :
-        mm.chartSeason.filterAll();
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', 'season');
-        break;
-      case 'btn_reset_week' :
-        mm.chartWeek.filterAll();
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', 'week');
-        break;
-      case 'btn_reset_cond' :
-        mm.chartCond.filterAll();
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', 'name5');
-        break;
-      case 'btn_reset_job'  :
-        mm.chartJob.filterAll();
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', 'name6');
-        break;
-      case 'btn_reset_ex_0' :
-      case 'btn_reset_ex_1' :
-      case 'btn_reset_ex_2' :
-      case 'btn_reset_ex_3' :
-      case 'btn_reset_ex_4' :
-      case 'btn_reset_ex_5' :
-      case 'btn_reset_ex_6' :
-      case 'btn_reset_ex_7' :
-      case 'btn_reset_ex_8' :
-      case 'btn_reset_ex_9' :
-      case 'btn_reset_ex_10' :
-      case 'btn_reset_ex_11' :
-      case 'btn_reset_ex_12' :
-      case 'btn_reset_ex_13' :
-      case 'btn_reset_ex_14' :
-      case 'btn_reset_ex_15' :
+        break
+      case 'btn_reset_sex':
+        mm.chartSex.filterAll()
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', 'name3')
+        break
+      case 'btn_reset_age':
+        mm.chartAge.filterAll()
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', 'name4')
+        break
+      case 'btn_reset_year':
+        mm.chartYear.filterAll()
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', 'year')
+        break
+      case 'btn_reset_season':
+        mm.chartSeason.filterAll()
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', 'season')
+        break
+      case 'btn_reset_week':
+        mm.chartWeek.filterAll()
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', 'week')
+        break
+      case 'btn_reset_cond':
+        mm.chartCond.filterAll()
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', 'name5')
+        break
+      case 'btn_reset_job':
+        mm.chartJob.filterAll()
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', 'name6')
+        break
+      case 'btn_reset_ex_0':
+      case 'btn_reset_ex_1':
+      case 'btn_reset_ex_2':
+      case 'btn_reset_ex_3':
+      case 'btn_reset_ex_4':
+      case 'btn_reset_ex_5':
+      case 'btn_reset_ex_6':
+      case 'btn_reset_ex_7':
+      case 'btn_reset_ex_8':
+      case 'btn_reset_ex_9':
+      case 'btn_reset_ex_10':
+      case 'btn_reset_ex_11':
+      case 'btn_reset_ex_12':
+      case 'btn_reset_ex_13':
+      case 'btn_reset_ex_14':
+      case 'btn_reset_ex_15':
         // 接尾辞の数値部分を抽出（btn_reset_ex_XX の XX 部分）
-        const n = parseInt(id.match(/btn_reset_ex_(\d+)/)[1]);
-        mm.chartEx[n].filterAll();
-        dc.redrawAll(CGRP_SHOW);
-        mm.onChangeURL('clear', `name${n + 7}`);
-        break;
+        const n = parseInt(id.match(/btn_reset_ex_(\d+)/)[1])
+        mm.chartEx[n].filterAll()
+        dc.redrawAll(CGRP_SHOW)
+        mm.onChangeURL('clear', `name${n + 7}`)
+        break
     }
-  });
+  })
 
-  $('.btn_close,.btn_winsize').button();
-  if (isSp) $('#toolbar_win_toggle label').button();
+  $('.btn_close,.btn_winsize').button()
+  if (isSp) $('#toolbar_win_toggle label').button()
 
   if (mm.config.panelDraggable) {
-    const $parent = $('#panels');
-    let originalSize, originalPosition;
-    let newSize, newPosition;
+    const $parent = $('#panels')
+    let originalSize, originalPosition
+    let newSize, newPosition
 
     $('.drag').draggable({
       snap: true,
       snapTolerance: 4,
-      cursor: "move",
-      handle: ".chart-title-wrap",
+      cursor: 'move',
+      handle: '.chart-title-wrap',
       containment: '#panels',
       // helper: 'clone',
       start: function (event) {
-        const $this = $(event.target);
+        const $this = $(event.target)
         originalSize = {
           width: $this.width(),
-          height: $this.height()
-        };
-        originalPosition = $this.position();
-        newSize = null;
-        newPosition = null;
+          height: $this.height(),
+        }
+        originalPosition = $this.position()
+        newSize = null
+        newPosition = null
       },
       drag: function (event, ui) {
-        if (ui.helper.css('position') !== 'absolute') return;
+        if (ui.helper.css('position') !== 'absolute') return
 
-        const parentWidth = $parent.width();
-        const parentHeight = $parent.height();
-        const mouseX = event.pageX - $parent.offset().left;
-        const mouseY = event.pageY - $parent.offset().top;
+        const parentWidth = $parent.width()
+        const parentHeight = $parent.height()
+        const mouseX = event.pageX - $parent.offset().left
+        const mouseY = event.pageY - $parent.offset().top
 
         // 初期サイズにリセット
-        ui.helper.css(originalSize);
+        ui.helper.css(originalSize)
 
         // 位置を取得
-        let left, top, right, bottom;
-        left = mouseX <= mm.config.panelDragSnapThreshold;
-        top = mouseY <= mm.config.panelDragSnapThreshold;
-        right = mouseX >= parentWidth - mm.config.panelDragSnapThreshold;
-        bottom = mouseY >= parentHeight - mm.config.panelDragSnapThreshold;
+        let left, top, right, bottom
+        left = mouseX <= mm.config.panelDragSnapThreshold
+        top = mouseY <= mm.config.panelDragSnapThreshold
+        right = mouseX >= parentWidth - mm.config.panelDragSnapThreshold
+        bottom = mouseY >= parentHeight - mm.config.panelDragSnapThreshold
 
         // Snapping logic
         switch (true) {
           case left && top:
-            newSize = {width: parentWidth * 0.2, height: parentHeight * 0.2};
-            newPosition = {left: 0, top: 0};
-            break;
+            newSize = { width: parentWidth * 0.2, height: parentHeight * 0.2 }
+            newPosition = { left: 0, top: 0 }
+            break
           case right && top:
-            newSize = {width: parentWidth * 0.2, height: parentHeight * 0.2};
-            newPosition = {left: parentWidth * 0.8, top: 0};
-            break;
+            newSize = { width: parentWidth * 0.2, height: parentHeight * 0.2 }
+            newPosition = { left: parentWidth * 0.8, top: 0 }
+            break
           case left && bottom:
-            newSize = {width: parentWidth * 0.2, height: parentHeight * 0.2};
-            newPosition = {left: 0, top: parentHeight * 0.8};
-            break;
+            newSize = { width: parentWidth * 0.2, height: parentHeight * 0.2 }
+            newPosition = { left: 0, top: parentHeight * 0.8 }
+            break
           case right && bottom:
-            newSize = {width: parentWidth * 0.2, height: parentHeight * 0.2};
-            newPosition = {left: parentWidth * 0.8, top: parentHeight * 0.8};
-            break;
+            newSize = { width: parentWidth * 0.2, height: parentHeight * 0.2 }
+            newPosition = { left: parentWidth * 0.8, top: parentHeight * 0.8 }
+            break
           case left:
-            newSize = {width: parentWidth * 0.1, height: parentHeight};
-            newPosition = {left: 0, top: 0};
-            break;
+            newSize = { width: parentWidth * 0.1, height: parentHeight }
+            newPosition = { left: 0, top: 0 }
+            break
           case right:
-            newSize = {width: parentWidth * 0.2, height: parentHeight};
-            newPosition = {left: parentWidth * 0.8, top: 0};
-            break;
+            newSize = { width: parentWidth * 0.2, height: parentHeight }
+            newPosition = { left: parentWidth * 0.8, top: 0 }
+            break
           case top:
-            newSize = {width: parentWidth, height: parentHeight * 0.2};
-            newPosition = {left: 0, top: 0};
-            break;
+            newSize = { width: parentWidth, height: parentHeight * 0.2 }
+            newPosition = { left: 0, top: 0 }
+            break
           case bottom:
-            newSize = {width: parentWidth, height: parentHeight * 0.2};
-            newPosition = {left: 0, top: parentHeight * 0.8};
-            break;
+            newSize = { width: parentWidth, height: parentHeight * 0.2 }
+            newPosition = { left: 0, top: parentHeight * 0.8 }
+            break
           default:
-            newSize = null;
-            newPosition = null;
+            newSize = null
+            newPosition = null
         }
 
         if (newSize && newPosition) {
-          ui.helper.css({...newSize, ...newPosition});
+          ui.helper.css({ ...newSize, ...newPosition })
         }
       },
       stop: function (e, ui) {
-        const $this = $(e.target);
+        const $this = $(e.target)
         if (newSize && newPosition) {
-          $this.css({...newSize, ...newPosition});
+          $this.css({ ...newSize, ...newPosition })
         } else {
           $this.css({
             left: ui.position.left,
-            top: ui.position.top
-          });
+            top: ui.position.top,
+          })
         }
 
         const id = e.target.getAttribute('id')
         if (setPanelXYWH(id)) {
-          settingsSave();
-          setBgWindowZIndex(id);
+          settingsSave()
+          setBgWindowZIndex(id)
         }
-      }
-    });
+      },
+    })
 
-    mm.util.initPanelsWH();
+    mm.util.initPanelsWH()
   }
 
   if (mm.config.panelResizable) {
     const panelJobScrollbarHide = () => {
-      const isHide = parseInt($('#chart_job svg').css('width'), 10) < parseInt($('#panel_job').css('width'), 10);
+      const isHide =
+        parseInt($('#chart_job svg').css('width'), 10) < parseInt($('#panel_job').css('width'), 10)
       _.delay(() => {
-        $('#panel_job').css('overflow-x', isHide ? 'hidden' : 'auto');
-      }, 10);
+        $('#panel_job').css('overflow-x', isHide ? 'hidden' : 'auto')
+      }, 10)
     }
     const options = {
       handles: 'n,e,w,s,ne,se,sw,nw',
       stop: function (e) {
-        const id = e.target.getAttribute('id');
+        const id = e.target.getAttribute('id')
         if (setPanelXYWH(id)) {
-          settingsSave();
+          settingsSave()
           // スクロール不要なスクロールバーの場合hideする (スクロール可能なdivのresize対応)
-          if (id === 'panel_job') panelJobScrollbarHide();
-          setBgWindowZIndex(id);
+          if (id === 'panel_job') panelJobScrollbarHide()
+          setBgWindowZIndex(id)
         }
-      }
-    };
+      },
+    }
     $('#chart_gmap').resizable({
       ...options,
       minWidth: 80,
       minHeight: 40,
-    });
+    })
     $('#chart_sview').resizable({
       ...options,
       minWidth: 80,
       minHeight: 40,
-
-    });
+    })
     $('#chart_tube').resizable({
       ...options,
       minWidth: 80,
       minHeight: 40,
       // aspectRatio: true,
-
-    });
+    })
     $('#chart_map').resizable({
       ...options,
       minWidth: 80,
       minHeight: 40,
-    });
+    })
     $('#panel_name').resizable({
       ...options,
       // aspectRatio: true,
       minWidth: 80,
-    });
+    })
     $('#panel_city').resizable({
       ...options,
       // aspectRatio: true,
       minWidth: 80,
-    });
+    })
     $('#panel_date').resizable({
       ...options,
       aspectRatio: true,
       minWidth: 100,
-    });
+    })
     $('#panel_year').resizable({
       ...options,
       aspectRatio: true,
       minWidth: 100,
-    });
+    })
     $('#panel_season').resizable({
       ...options,
       aspectRatio: true,
       minWidth: 100,
-    });
+    })
     $('#panel_week').resizable({
       ...options,
       aspectRatio: true,
       minWidth: 100,
-    });
+    })
     $('#panel_sex').resizable({
       ...options,
       aspectRatio: true,
       minWidth: 100,
-    });
+    })
     $('#panel_age').resizable({
       ...options,
       aspectRatio: true,
       minWidth: 200,
-    });
+    })
     $('#panel_cond').resizable({
       ...options,
       aspectRatio: true,
       minWidth: 200,
-    });
+    })
     $('#panel_job').resizable({
       ...options,
       // aspectRatio: true,
       minWidth: 200,
-    });
+    })
     $('.panel_ex').resizable({
       ...options,
       // aspectRatio: true,
       minWidth: 100,
-    });
+    })
 
-    panelJobScrollbarHide();
+    panelJobScrollbarHide()
 
-    drawJapanMap();
+    drawJapanMap()
   }
 
-  mm.keyboardInit();
+  mm.keyboardInit()
 
-  mm.chartFilterInit(mm.keyboardInputName, mm.names);
-  mm.chartFilterInit(mm.keyboardInputCity, mm.citys);
+  mm.chartFilterInit(mm.keyboardInputName, mm.names)
+  mm.chartFilterInit(mm.keyboardInputCity, mm.citys)
 
   // chart-filter Toggleボタン
-  $('.chart-filter-toggle').on('click', function (e, opt = {doFocus: 1, doKeyboardOpen: 1}) {
-    const input = $($(this).data('toggle_target'));
+  $('.chart-filter-toggle').on('click', function (e, opt = { doFocus: 1, doKeyboardOpen: 1 }) {
+    const input = $($(this).data('toggle_target'))
     if (input.is(':visible')) {
-      if (!isSp) input.getkeyboard()?.close();
-      input.val('').trigger('change').hide();
+      if (!isSp) input.getkeyboard()?.close()
+      input.val('').trigger('change').hide()
     } else {
-      if (!isSp && opt.doKeyboardOpen) input.getkeyboard()?.reveal();
-      input.val(input.data('keyboard_Input_val')).show().trigger('change');
-      if (opt.doFocus) input.focus();
+      if (!isSp && opt.doKeyboardOpen) input.getkeyboard()?.reveal()
+      input.val(input.data('keyboard_Input_val')).show().trigger('change')
+      if (opt.doFocus) input.focus()
     }
-  });
-
+  })
 
   mm.keyboardSearch = $('#input-search').keyboard({
     ...mm.keyboardOptions,
     change: function (e, keyboard, el) {
-      $('#input-search').autocomplete_ex('search', $(keyboard.preview).val());
+      $('#input-search').autocomplete_ex('search', $(keyboard.preview).val())
     },
     position: {
       of: $('#btn_search_keyboard'),
       my: 'left top-80',
       at: 'left top',
-      collision: 'flipfit flipfit'
-    }
-  });
+      collision: 'flipfit flipfit',
+    },
+  })
   // キーボード表示ボタン
   $('#btn_search_keyboard').on('click', function () {
-    const kb = mm.keyboardSearch.getkeyboard();
-    kb.isOpen ? kb.close() : kb.reveal();
-  });
+    const kb = mm.keyboardSearch.getkeyboard()
+    kb.isOpen ? kb.close() : kb.reveal()
+  })
 
   // GoogleMap 最大化
-  watch(() => pnl.gmap.styleBak, v => {
-    const isMaximize = v !== null;
-    if (mm.config.panelDraggable) {
-      $("#chart_gmap")
-        .draggable({'disabled': isMaximize})
-        .find('.chart-title-wrap').css('cursor', isMaximize ? 'auto' : 'move');
-    }
-    // if (mm.config.panelResizable) {
-    // 	$("#chart_gmap").resizable({'disabled': isMaximize})
-    // }
-    if (isMaximize) {
-      $("#chart_sview,#chart_tube").css('z-index', '100');
-      $('.dc_panel:not(#chart_gmap,#chart_sview,#chart_tube)').css('z-index', '100').addClass('opacity-80');
-      _.delay(() => $('#chart_gmap').css('z-index', '0'), 20); // ※setBgWindowZIndexのdelayより長く
-    } else {
-      if (pnl.sview.styleBak === null) $('.dc_panel').css('z-index', '99').removeClass('opacity-80');
-    }
-  }, {immediate: true});
+  watch(
+    () => pnl.gmap.styleBak,
+    v => {
+      const isMaximize = v !== null
+      if (mm.config.panelDraggable) {
+        $('#chart_gmap')
+          .draggable({ disabled: isMaximize })
+          .find('.chart-title-wrap')
+          .css('cursor', isMaximize ? 'auto' : 'move')
+      }
+      // if (mm.config.panelResizable) {
+      // 	$("#chart_gmap").resizable({'disabled': isMaximize})
+      // }
+      if (isMaximize) {
+        $('#chart_sview,#chart_tube').css('z-index', '100')
+        $('.dc_panel:not(#chart_gmap,#chart_sview,#chart_tube)')
+          .css('z-index', '100')
+          .addClass('opacity-80')
+        _.delay(() => $('#chart_gmap').css('z-index', '0'), 20) // ※setBgWindowZIndexのdelayより長く
+      } else {
+        if (pnl.sview.styleBak === null)
+          $('.dc_panel').css('z-index', '99').removeClass('opacity-80')
+      }
+    },
+    { immediate: true }
+  )
 
   // StreetView 最大化
-  watch(() => pnl.sview.styleBak, v => {
-    const isMaximize = v !== null;
-    if (mm.config.panelDraggable) {
-      $("#chart_sview")
-        .draggable({'disabled': isMaximize})
-        .find('.chart-title-wrap').css('cursor', isMaximize ? 'auto' : 'move');
-    }
-    // if (mm.config.panelResizable) {
-    // 	$("#chart_sview").resizable({'disabled': isMaximize});
-    // }
-    if (isMaximize) {
-      $("#chart_gmap,#chart_tube").css('z-index', '100');
-      $('.dc_panel:not(#chart_gmap,#chart_sview,#chart_tube)').css('z-index', '100').addClass('opacity-80');
-      _.delay(() => $('#chart_sview').css('z-index', '0'), 20); // ※setBgWindowZIndexのdelayより長く
-    } else {
-      if (pnl.gmap.styleBak === null) $('.dc_panel').css('z-index', '99').removeClass('opacity-80');
-    }
-  }, {immediate: true});
+  watch(
+    () => pnl.sview.styleBak,
+    v => {
+      const isMaximize = v !== null
+      if (mm.config.panelDraggable) {
+        $('#chart_sview')
+          .draggable({ disabled: isMaximize })
+          .find('.chart-title-wrap')
+          .css('cursor', isMaximize ? 'auto' : 'move')
+      }
+      // if (mm.config.panelResizable) {
+      // 	$("#chart_sview").resizable({'disabled': isMaximize});
+      // }
+      if (isMaximize) {
+        $('#chart_gmap,#chart_tube').css('z-index', '100')
+        $('.dc_panel:not(#chart_gmap,#chart_sview,#chart_tube)')
+          .css('z-index', '100')
+          .addClass('opacity-80')
+        _.delay(() => $('#chart_sview').css('z-index', '0'), 20) // ※setBgWindowZIndexのdelayより長く
+      } else {
+        if (pnl.gmap.styleBak === null)
+          $('.dc_panel').css('z-index', '99').removeClass('opacity-80')
+      }
+    },
+    { immediate: true }
+  )
 
   // YouTube 最大化
-  watch(() => pnl.tube.styleBak, v => {
-    const isMaximize = v !== null;
-    if (mm.config.panelDraggable) {
-      $("#chart_tube")
-        .draggable({'disabled': isMaximize})
-        .find('.chart-title-wrap').css('cursor', isMaximize ? 'auto' : 'move');
-    }
-    // if (mm.config.panelResizable) {
-    // 	$("#chart_tube").resizable({'disabled': isMaximize});
-    // }
-    if (isMaximize) {
-      $("#chart_gmap,#chart_sview").css('z-index', '100');
-      $('.dc_panel:not(#chart_gmap,#chart_tube,#chart_tube)').css('z-index', '100').addClass('opacity-80');
-      _.delay(() => $('#chart_tube').css('z-index', '0'), 20); // ※setBgWindowZIndexのdelayより長く
-    } else {
-      if (pnl.gmap.styleBak === null) $('.dc_panel').css('z-index', '99').removeClass('opacity-80');
-    }
-  }, {immediate: true});
+  watch(
+    () => pnl.tube.styleBak,
+    v => {
+      const isMaximize = v !== null
+      if (mm.config.panelDraggable) {
+        $('#chart_tube')
+          .draggable({ disabled: isMaximize })
+          .find('.chart-title-wrap')
+          .css('cursor', isMaximize ? 'auto' : 'move')
+      }
+      // if (mm.config.panelResizable) {
+      // 	$("#chart_tube").resizable({'disabled': isMaximize});
+      // }
+      if (isMaximize) {
+        $('#chart_gmap,#chart_sview').css('z-index', '100')
+        $('.dc_panel:not(#chart_gmap,#chart_tube,#chart_tube)')
+          .css('z-index', '100')
+          .addClass('opacity-80')
+        _.delay(() => $('#chart_tube').css('z-index', '0'), 20) // ※setBgWindowZIndexのdelayより長く
+      } else {
+        if (pnl.gmap.styleBak === null)
+          $('.dc_panel').css('z-index', '99').removeClass('opacity-80')
+      }
+    },
+    { immediate: true }
+  )
 
   // chartSex ソートボタン
   if (pnl.sex.chartType === 'bar') {
-    watch(() => pnl.sex.elasticX, v => {
-      mm.chartSex
-        .ordering(v ? t => -t.value.total : dc.pluck('key'))
-        .elasticX(true)
-        .render();
-      // URL parameter update
-      mm.onChangeURL('name3_order', v ? 1 : 0);
-    });
+    watch(
+      () => pnl.sex.elasticX,
+      v => {
+        mm.chartSex
+          .ordering(v ? t => -t.value.total : dc.pluck('key'))
+          .elasticX(true)
+          .render()
+        // URL parameter update
+        mm.onChangeURL('name3_order', v ? 1 : 0)
+      }
+    )
   }
 
   // chartEx ソートボタン
   for (let k = 0; k < pnl.ex.length; k++) {
-    if (pnl.ex[k].isHidden) continue;
-    watch(() => pnl.ex[k].elasticX, v => {
-      mm.chartEx[k]
-        .ordering(v ? t => -t.value.total : dc.pluck('key'))
-        .elasticX(true)
-        .render();
+    if (pnl.ex[k].isHidden) continue
+    watch(
+      () => pnl.ex[k].elasticX,
+      v => {
+        mm.chartEx[k]
+          .ordering(v ? t => -t.value.total : dc.pluck('key'))
+          .elasticX(true)
+          .render()
 
-      // URL parameter update
-      const paramName = `name${k + 7}_order`;
-      mm.onChangeURL(paramName, v ? 1 : 0);
-    });
+        // URL parameter update
+        const paramName = `name${k + 7}_order`
+        mm.onChangeURL(paramName, v ? 1 : 0)
+      }
+    )
   }
   watch([() => props.data, () => props.dataPath], async ([newData, newDataPath]) => {
     //新しいデータファイルでページリロード。
     if (mm.get.viewMode === 'story') {
-      const url = url_append_param(location.href, {'args': `data:${newData}`});
-      location.href = location.origin + url;
+      const url = url_append_param(location.href, { args: `data:${newData}` })
+      location.href = location.origin + url
     } else {
-      location.href = location.pathname + '?data=' + newData;
+      location.href = location.pathname + '?data=' + newData
     }
-  });
+  })
 
-  $('#div_date').scrollLeft(1000);
+  $('#div_date').scrollLeft(1000)
 
-  $('#btn_download_csv').button().on('click', function (event) {
-    event.preventDefault();
+  $('#btn_download_csv')
+    .button()
+    .on('click', function (event) {
+      event.preventDefault()
 
-    let dt = mm.ndx.allFiltered();//order by pref
-    //let dt=_.sortBy(mm.ndx.allFiltered(),d=>d[D_YMD]);//order by date
-    let csv = mm.data_hdr.join(',') + '\n';
-    let ni = mm.data_hdr.findIndex(d => d === '年齢')
-    let si = mm.data_hdr.findIndex(d => d === '性別')
+      let dt = mm.ndx.allFiltered() //order by pref
+      //let dt=_.sortBy(mm.ndx.allFiltered(),d=>d[D_YMD]);//order by date
+      let csv = mm.data_hdr.join(',') + '\n'
+      let ni = mm.data_hdr.findIndex(d => d === '年齢')
+      let si = mm.data_hdr.findIndex(d => d === '性別')
 
-    for (var i = 0; i < dt.length; i++) {
-      //          0    1   2   3         4       5     6        7:jobcates 8:cnt(optional)
-      //["2020-03-27", 2, 60, "退院", "東京都", "都内", "会社員", 0, 10]
-      for (var j = 0; j < dt[i].length; j++) {
-        csv += (j === 0 ? '' : ',');
-        switch (1) {
-          default:
-            if (j === ni) {
-              csv += dt[i][j] === DN_AGE ? DN_LABEL_DEF : dt[i][1];
-              break;
-            }
-            if (j === si) {
-              csv += SEX_LABEL[dt[i][j]];
-              break;
-            }
-            csv += dt[i][j];
-            break;
+      for (var i = 0; i < dt.length; i++) {
+        //          0    1   2   3         4       5     6        7:jobcates 8:cnt(optional)
+        //["2020-03-27", 2, 60, "退院", "東京都", "都内", "会社員", 0, 10]
+        for (var j = 0; j < dt[i].length; j++) {
+          csv += j === 0 ? '' : ','
+          switch (1) {
+            default:
+              if (j === ni) {
+                csv += dt[i][j] === DN_AGE ? DN_LABEL_DEF : dt[i][1]
+                break
+              }
+              if (j === si) {
+                csv += SEX_LABEL[dt[i][j]]
+                break
+              }
+              csv += dt[i][j]
+              break
+          }
         }
+        if (dt[i].length === 8) csv += ',1'
+        csv += '\n'
       }
-      if (dt[i].length === 8) csv += ',1';
-      csv += '\n';
-    }
 
-    let flt_name = $('.hdr_flt').text().replace('の状況', '');
-    const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
-    const filename = (gg.dt === DT_COVID ? "covid19" : "data") + " - [" + flt_name + "].csv";
-    const blob = new Blob([bom, csv], {type: "text/csv"});
+      let flt_name = $('.hdr_flt').text().replace('の状況', '')
+      const bom = new Uint8Array([0xef, 0xbb, 0xbf])
+      const filename = (gg.dt === DT_COVID ? 'covid19' : 'data') + ' - [' + flt_name + '].csv'
+      const blob = new Blob([bom, csv], { type: 'text/csv' })
 
-    //IE10/11用
-    if (window.navigator.msSaveBlob) {
-      window.navigator.msSaveBlob(blob, filename);
-      //その他ブラウザ
-    } else {
-      const url = (window.URL || window.webkitURL).createObjectURL(blob);
-      const download = document.createElement("a");
-      download.href = url;
-      download.download = filename;
-      download.click();
-      (window.URL || window.webkitURL).revokeObjectURL(url);//開放
-    }
-  });
+      //IE10/11用
+      if (window.navigator.msSaveBlob) {
+        window.navigator.msSaveBlob(blob, filename)
+        //その他ブラウザ
+      } else {
+        const url = (window.URL || window.webkitURL).createObjectURL(blob)
+        const download = document.createElement('a')
+        download.href = url
+        download.download = filename
+        download.click()
+        ;(window.URL || window.webkitURL).revokeObjectURL(url) //開放
+      }
+    })
 
   //スクロール同期
   if (isSp) {
-    let wL = '#div_date';
-    let wR = '#div_date2';
-    $(wL).on('scroll', function (event) {//wL wR sync scroll
-      let wl = $(wL);
-      $(wR).scrollLeft(wl.scrollLeft());
-    });
-    $(wR).on('scroll', function (event) {//wL wR sync scroll
-      let wr = $(wR);
-      $(wL).scrollLeft(wr.scrollLeft());
-    });
+    let wL = '#div_date'
+    let wR = '#div_date2'
+    $(wL).on('scroll', function (event) {
+      //wL wR sync scroll
+      let wl = $(wL)
+      $(wR).scrollLeft(wl.scrollLeft())
+    })
+    $(wR).on('scroll', function (event) {
+      //wL wR sync scroll
+      let wr = $(wR)
+      $(wL).scrollLeft(wr.scrollLeft())
+    })
   }
 
   $('.filter_txt').on('focus', function (event) {
-    event.preventDefault();
-    $(this).select();
-  });
+    event.preventDefault()
+    $(this).select()
+  })
 
   $('#btn_ana').on('click', function (event) {
-    event.preventDefault();
-    $('#ana_diff_ls').hide().fadeIn();
-  });
-  $('.wopen').button().on('click', function (event) {
-    event.preventDefault();
-    let o = $(this);
-    let w2 = parseInt(screen.width / 2) - 20;
-    const top = 50;//for parent title bar
-    if (o.find('span').hasClass('ui-icon-arrow-2-e-w')) {
-      let td = o.closest('td');
-      let a = td.prev().find('a');
-      let b = td.next().find('a');
-      let wL = window.open(a.attr('href'), 1, 'top=' + top + ',left=0,height=' + (screen.height - top * 4) + ',width=' + w2);
-      let wR = window.open(b.attr('href'), 2, 'top=' + top + ',left=' + (w2 + 20) + ',height=' + (screen.height - top * 4) + ',width=' + w2);
-      $(wL).on('scroll', function (event) {//wL wR sync scroll
-        let wl = $(wL);
-        $(wR).scrollTop(wl.scrollTop()).scrollLeft(wl.scrollLeft());
-      });
-      $(wR).on('scroll', function (event) {//wL wR sync scroll
-        let wr = $(wR);
-        $(wL).scrollTop(wr.scrollTop()).scrollLeft(wr.scrollLeft());
-      });
-    } else if (o.find('span').hasClass('ui-icon-arrow-2-n-s')) {
-      let idx = o.closest('td').index();
-      let tr = o.closest('tr');
-      let a = tr.prev().find('td').eq(idx).find('a');
-      let b = tr.next().find('td').eq(idx).find('a');
-      let wL = window.open(a.attr('href'), 1, 'top=' + top + ',left=0,height=' + (screen.height - top * 4) + ',width=' + w2);
-      let wR = window.open(b.attr('href'), 2, 'top=' + top + ',left=' + (w2 + 20) + ',height=' + (screen.height - top * 4) + ',width=' + w2);
-      $(wL).on('scroll', function (event) {//wL wR sync scroll
-        let wl = $(wL);
-        $(wR).scrollTop(wl.scrollTop()).scrollLeft(wl.scrollLeft());
-      });
-      $(wR).on('scroll', function (event) {//wL wR sync scroll
-        let wr = $(wR);
-        $(wL).scrollTop(wr.scrollTop()).scrollLeft(wr.scrollLeft());
-      });
-    } else {
-      let idx = o.closest('td').index();
-      window.open(o.attr('href'), (idx === 0 ? 1 : 2), 'left=' + (idx === 0 ? 0 : w2 + 20) + ',top=' + top + ',height=' + (screen.height - top * 4) + ',width=' + w2);
-    }
-
-  });
-
+    event.preventDefault()
+    $('#ana_diff_ls').hide().fadeIn()
+  })
+  $('.wopen')
+    .button()
+    .on('click', function (event) {
+      event.preventDefault()
+      let o = $(this)
+      let w2 = parseInt(screen.width / 2) - 20
+      const top = 50 //for parent title bar
+      if (o.find('span').hasClass('ui-icon-arrow-2-e-w')) {
+        let td = o.closest('td')
+        let a = td.prev().find('a')
+        let b = td.next().find('a')
+        let wL = window.open(
+          a.attr('href'),
+          1,
+          'top=' + top + ',left=0,height=' + (screen.height - top * 4) + ',width=' + w2
+        )
+        let wR = window.open(
+          b.attr('href'),
+          2,
+          'top=' +
+            top +
+            ',left=' +
+            (w2 + 20) +
+            ',height=' +
+            (screen.height - top * 4) +
+            ',width=' +
+            w2
+        )
+        $(wL).on('scroll', function (event) {
+          //wL wR sync scroll
+          let wl = $(wL)
+          $(wR).scrollTop(wl.scrollTop()).scrollLeft(wl.scrollLeft())
+        })
+        $(wR).on('scroll', function (event) {
+          //wL wR sync scroll
+          let wr = $(wR)
+          $(wL).scrollTop(wr.scrollTop()).scrollLeft(wr.scrollLeft())
+        })
+      } else if (o.find('span').hasClass('ui-icon-arrow-2-n-s')) {
+        let idx = o.closest('td').index()
+        let tr = o.closest('tr')
+        let a = tr.prev().find('td').eq(idx).find('a')
+        let b = tr.next().find('td').eq(idx).find('a')
+        let wL = window.open(
+          a.attr('href'),
+          1,
+          'top=' + top + ',left=0,height=' + (screen.height - top * 4) + ',width=' + w2
+        )
+        let wR = window.open(
+          b.attr('href'),
+          2,
+          'top=' +
+            top +
+            ',left=' +
+            (w2 + 20) +
+            ',height=' +
+            (screen.height - top * 4) +
+            ',width=' +
+            w2
+        )
+        $(wL).on('scroll', function (event) {
+          //wL wR sync scroll
+          let wl = $(wL)
+          $(wR).scrollTop(wl.scrollTop()).scrollLeft(wl.scrollLeft())
+        })
+        $(wR).on('scroll', function (event) {
+          //wL wR sync scroll
+          let wr = $(wR)
+          $(wL).scrollTop(wr.scrollTop()).scrollLeft(wr.scrollLeft())
+        })
+      } else {
+        let idx = o.closest('td').index()
+        window.open(
+          o.attr('href'),
+          idx === 0 ? 1 : 2,
+          'left=' +
+            (idx === 0 ? 0 : w2 + 20) +
+            ',top=' +
+            top +
+            ',height=' +
+            (screen.height - top * 4) +
+            ',width=' +
+            w2
+        )
+      }
+    })
 
   //ShortCutKey
-  $(document)
-    .keyup(function (e) {
-      switch (e.keyCode) {
-        // case $.ui.keyCode.LEFT:
-        // case $.ui.keyCode.RIGHT:
-        //      break;
-        case 76://Ctrl+Shift+L
-          if (e.ctrlKey && e.shiftKey) {
-            if (document.activeElement && document.activeElement.id === 'tbl_flt') {
-              $(id).val('').trigger('change');
-            } else {
-              $('.btn_clear_all').trigger('click');
-            }
+  $(document).keyup(function (e) {
+    switch (e.keyCode) {
+      // case $.ui.keyCode.LEFT:
+      // case $.ui.keyCode.RIGHT:
+      //      break;
+      case 76: //Ctrl+Shift+L
+        if (e.ctrlKey && e.shiftKey) {
+          if (document.activeElement && document.activeElement.id === 'tbl_flt') {
+            $(id).val('').trigger('change')
+          } else {
+            $('.btn_clear_all').trigger('click')
           }
-          break;
-        case 70://Ctrl+Shift+F
-          if (e.ctrlKey && e.shiftKey) {
-            let id = document.activeElement && document.activeElement.id === 'tbl_flt' ? '#tbl_flt' : '#input-search'
-            $(id).focus().select();
-          }
-          break;
-      }
-    });
-
-  $('body')
-    .tooltip({
-      items: '[tt_title],.tt_filter,.tt_img',
-      show: {effect: 'show', delay: 300},
-      position: {collision: 'flipfit'},
-      hide: 0,
-      tooltipClass: 'emj',
-      content: function () {
-        let o = $(this);
-        // 動画のサムネイル画像を全て表示する場合
-        // if (o.is('.detail-tube-play.tt_img')) {
-        // 	let imgHtml = `<div><div>「${pnl.tube.searchQuery.replaceAll('+', ' ')}」</div><div style="display: flex;flex-wrap: wrap;">`;
-        // 	for (let j = 1; j <= pnl.tube.vids.length; j++) {
-        // 		const id = pnl.tube.vids[j - 1];
-        // 		imgHtml +=
-        // 			`<div>動画${j}<br><img width="240" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" style="margin: 5px;"></div>`;
-        // 	}
-        // 	imgHtml += '</div>';
-        // 	return imgHtml;
-        // }
-        if (o.is('.tt_filter')) {
-          return o.val();
         }
-        if (o.is('.tt_img')) {
-          return (o.attr('title') ? o.attr('title') + '<br>' : '') + '<img src="' + o.attr('src') + '"/>';
+        break
+      case 70: //Ctrl+Shift+F
+        if (e.ctrlKey && e.shiftKey) {
+          let id =
+            document.activeElement && document.activeElement.id === 'tbl_flt'
+              ? '#tbl_flt'
+              : '#input-search'
+          $(id).focus().select()
         }
-        return o.attr('tt_title');
-      }
-    });
+        break
+    }
+  })
 
-  $('#panel_detail')
-    .tooltip({
-      items: '.tt_text',
-      show: {effect: 'show', delay: 20},
-      position: {my: isSp ? 'left top+1200' : 'left+200 top', at: 'left top', collision: 'flipfit'},
-      hide: 0,
-      // track: true
-      tooltipClass: 'tt_text-tooltip',
-      content: function () {
-        return this.textContent;
+  $('body').tooltip({
+    items: '[tt_title],.tt_filter,.tt_img',
+    show: { effect: 'show', delay: 300 },
+    position: { collision: 'flipfit' },
+    hide: 0,
+    tooltipClass: 'emj',
+    content: function () {
+      let o = $(this)
+      // 動画のサムネイル画像を全て表示する場合
+      // if (o.is('.detail-tube-play.tt_img')) {
+      // 	let imgHtml = `<div><div>「${pnl.tube.searchQuery.replaceAll('+', ' ')}」</div><div style="display: flex;flex-wrap: wrap;">`;
+      // 	for (let j = 1; j <= pnl.tube.vids.length; j++) {
+      // 		const id = pnl.tube.vids[j - 1];
+      // 		imgHtml +=
+      // 			`<div>動画${j}<br><img width="240" src="https://img.youtube.com/vi/${id}/hqdefault.jpg" style="margin: 5px;"></div>`;
+      // 	}
+      // 	imgHtml += '</div>';
+      // 	return imgHtml;
+      // }
+      if (o.is('.tt_filter')) {
+        return o.val()
       }
-    });
+      if (o.is('.tt_img')) {
+        return (
+          (o.attr('title') ? o.attr('title') + '<br>' : '') + '<img src="' + o.attr('src') + '"/>'
+        )
+      }
+      return o.attr('tt_title')
+    },
+  })
+
+  $('#panel_detail').tooltip({
+    items: '.tt_text',
+    show: { effect: 'show', delay: 20 },
+    position: { my: isSp ? 'left top+1200' : 'left+200 top', at: 'left top', collision: 'flipfit' },
+    hide: 0,
+    // track: true
+    tooltipClass: 'tt_text-tooltip',
+    content: function () {
+      return this.textContent
+    },
+  })
 
   if (isSp) {
-    $('.jFiler-theme-dragdropbox')
-      .tooltip({
-        items: '.fs_popup_none',
-        show: {effect: 'show', delay: 300},
-        position: {collision: 'flipfit'},
-        hide: 0,
-        tooltipClass: 'emj',
-        content: function () {
-          const element = $(this);
-          if (element.is("img")) {
-            return '<img src="' + element.attr("src") + '">';
-          } else {
-            var im = element.find('img');
-            if (im) {
-              return '<img src="' + im.attr("src") + '">';
-            }
-          }
-        }
-      });
-  }
-
-  $(document)
-    .tooltip({
-      items: '.tt_image',
-      show: {effect: 'show', delay: 20},
-      position: {my: isSp ? 'left top+1200' : 'left+240 top', at: 'left top', collision: 'flipfit'},
+    $('.jFiler-theme-dragdropbox').tooltip({
+      items: '.fs_popup_none',
+      show: { effect: 'show', delay: 300 },
+      position: { collision: 'flipfit' },
       hide: 0,
       tooltipClass: 'emj',
       content: function () {
-        const type = parseInt(this.getAttribute('type') ?? D_PL1);
-        if (type === -1) return;
-        const src = this.getAttribute('href');
-        const name = this.getAttribute('name');
-        let ret = `<b>${name}</b><br /><img width="240" src="${src}" />`;
-        const ttFmt = this.getAttribute('tt-fmt');
-
-        if (ttFmt === 'img') return ret;
-
-        // 1件目のデータを取得。制約:dimensionのgroupデータが1件のデータである事)
-        const d = mm.data.find(d2 => d2[type] === name);
-        if (d !== undefined) {
-          const n = this?.__data__?.value ?? d[D_CNT];
-          const chartDetails = mm.util.getChartDetailsHtml(d, mm.opt.detailType);
-          const exChartDetails = mm.util.getExChartDetailsHtml(d);
-
-          ret +=
-            '<table><tbody>' +
-            chartDetails +
-            exChartDetails +
-            (n > 1 ? `<tr><td>計</td><td>: ${php_number_format(n)}</td></tr>` : '') +
-            '</tbody></table>' +
-            '</div>';
+        const element = $(this)
+        if (element.is('img')) {
+          return '<img src="' + element.attr('src') + '">'
+        } else {
+          var im = element.find('img')
+          if (im) {
+            return '<img src="' + im.attr('src') + '">'
+          }
         }
-        return '<div>' + ret + '</div>';
-      }
-    });
+      },
+    })
+  }
 
-  if (gg.dt !== DT_COVID) mm.tube.setPlayEvent();
+  $(document).tooltip({
+    items: '.tt_image',
+    show: { effect: 'show', delay: 20 },
+    position: { my: isSp ? 'left top+1200' : 'left+240 top', at: 'left top', collision: 'flipfit' },
+    hide: 0,
+    tooltipClass: 'emj',
+    content: function () {
+      const type = parseInt(this.getAttribute('type') ?? D_PL1)
+      if (type === -1) return
+      const src = this.getAttribute('href')
+      const name = this.getAttribute('name')
+      let ret = `<b>${name}</b><br /><img width="240" src="${src}" />`
+      const ttFmt = this.getAttribute('tt-fmt')
+
+      if (ttFmt === 'img') return ret
+
+      // 1件目のデータを取得。制約:dimensionのgroupデータが1件のデータである事)
+      const d = mm.data.find(d2 => d2[type] === name)
+      if (d !== undefined) {
+        const n = this?.__data__?.value ?? d[D_CNT]
+        const chartDetails = mm.util.getChartDetailsHtml(d, mm.opt.detailType)
+        const exChartDetails = mm.util.getExChartDetailsHtml(d)
+
+        ret +=
+          '<table><tbody>' +
+          chartDetails +
+          exChartDetails +
+          (n > 1 ? `<tr><td>計</td><td>: ${php_number_format(n)}</td></tr>` : '') +
+          '</tbody></table>' +
+          '</div>'
+      }
+      return '<div>' + ret + '</div>'
+    },
+  })
+
+  if (gg.dt !== DT_COVID) mm.tube.setPlayEvent()
 
   if (mm.is_trigger_search) {
-    $('#input-search').trigger('input-search-update');
+    $('#input-search').trigger('input-search-update')
     if (!pnl.tube.vidAutoChange) {
       // 1番目の再生ボタンを押す。btn_searchのdetail取得はリクエストがあるので遅延実行
-      _.delay(() => $('.detail:last .detail-tube-play:eq(0)').trigger('click'), 600);
+      _.delay(() => $('.detail:last .detail-tube-play:eq(0)').trigger('click'), 600)
     }
   }
 
-  mm.watchMouseEvent();
+  mm.watchMouseEvent()
 }
 
 const chartDatePlayStop = () => {
-  pnl.date.play.label = '▶';
-  clearTimeout(pnl.date.play.timer);
-  pnl.date.play.timer = null;
+  pnl.date.play.label = '▶'
+  clearTimeout(pnl.date.play.timer)
+  pnl.date.play.timer = null
 }
 
 // 再生ボタンの処理
 const onClickChartDatePlay = () => {
-  pnl.date.play.from = pnl.date.play.from ?? moment(mm.domainDate[0]);
+  pnl.date.play.from = pnl.date.play.from ?? moment(mm.domainDate[0])
   const END = moment(mm.domainDate[1])
-  const diffDays = moment(mm.domainDate[1]).diff(mm.domainDate[0], 'days');
-  let range, addDays;
+  const diffDays = moment(mm.domainDate[1]).diff(mm.domainDate[0], 'days')
+  let range, addDays
   switch (true) {
     case diffDays < 30:
-      range = 2;
-      addDays = 1;
-      break;
+      range = 2
+      addDays = 1
+      break
     case diffDays <= 90:
-      range = 10;
-      addDays = 2;
-      break;
+      range = 10
+      addDays = 2
+      break
     case diffDays < 360:
-      range = 30;
-      addDays = 10;
-      break;
-    case diffDays < (360 * 2):
-      range = 120;
-      addDays = 60;
-      break;
-    case diffDays < (360 * 15):
-      range = 360 * 2;
-      addDays = 20;
-      break;
-    case diffDays < (360 * 20):
-      range = 360 * 2;
-      addDays = 40;
-      break;
+      range = 30
+      addDays = 10
+      break
+    case diffDays < 360 * 2:
+      range = 120
+      addDays = 60
+      break
+    case diffDays < 360 * 15:
+      range = 360 * 2
+      addDays = 20
+      break
+    case diffDays < 360 * 20:
+      range = 360 * 2
+      addDays = 40
+      break
     default:
-      range = 360 * 4;
-      addDays = 360;
-      break;
+      range = 360 * 4
+      addDays = 360
+      break
   }
   // console.log(diffDays, range, addDays);
 
   const play = () => {
     const to = moment(pnl.date.play.from).add(range, 'days')
-    if (to.isAfter(END)) { // to が endを超えたらタイマー終了
-      chartDatePlayStop();
-      pnl.date.play.from = null;
-      const url = url_remove_param(location.href, ['date']);
-      window.history.replaceState({}, '', url);
-      mm.composite.filterAll();
+    if (to.isAfter(END)) {
+      // to が endを超えたらタイマー終了
+      chartDatePlayStop()
+      pnl.date.play.from = null
+      const url = url_remove_param(location.href, ['date'])
+      window.history.replaceState({}, '', url)
+      mm.composite.filterAll()
       mm.chartDate.filterAll()
-      return;
+      return
     }
 
-    const url = url_append_param(location.href, {'date': pnl.date.play.from.format('YYYY-MM-DD') + '+' + to.format('YYYY-MM-DD')});
-    window.history.replaceState({}, '', url);
-    mm.get = php_location_get_query();
-    mm.parseURLParams();
-    dc.redrawAll(CGRP_SHOW);
+    const url = url_append_param(location.href, {
+      date: pnl.date.play.from.format('YYYY-MM-DD') + '+' + to.format('YYYY-MM-DD'),
+    })
+    window.history.replaceState({}, '', url)
+    mm.get = php_location_get_query()
+    mm.parseURLParams()
+    dc.redrawAll(CGRP_SHOW)
 
-    pnl.date.play.from = moment(pnl.date.play.from).add(addDays, 'days'); // next
+    pnl.date.play.from = moment(pnl.date.play.from).add(addDays, 'days') // next
   }
 
   if (pnl.date.play.timer) {
-    chartDatePlayStop();
+    chartDatePlayStop()
   } else {
-    pnl.date.play.label = '⏸';
-    play();
+    pnl.date.play.label = '⏸'
+    play()
     // 再生タイマー
     pnl.date.play.timer = setInterval(function () {
-      play();
-    }, 70);
+      play()
+    }, 70)
   }
 }
 
 const onClickChartDateBrushBtn = () => {
-  pnl.date.isBrushOn = !pnl.date.isBrushOn;
+  pnl.date.isBrushOn = !pnl.date.isBrushOn
 }
 const getPanelMaximizeStyle = () => {
   // const pos = mm.util.relToAbsPos('#panels');
   // return `position: absolute;left:${pos.left}px;top:${pos.top}px;width:calc(100% - 20px);height:calc(100% - ${pos.top + 10}px);`;
-  return `position:absolute;left:0;top:0;width:100%;height:100%;`;
+  return `position:absolute;left:0;top:0;width:100%;height:100%;`
 }
 
 const onClickPanelMaximize = (id, isSettingsSave = true) => {
@@ -8551,190 +9704,206 @@ const onClickPanelMaximize = (id, isSettingsSave = true) => {
     case 'chart_gmap':
       if (pnl.gmap.styleBak === null) {
         // maximize
-        pnl.gmap.styleBak = pnl.gmap.style;
-        pnl.gmap.style = getPanelMaximizeStyle() + 'z-index:0';
+        pnl.gmap.styleBak = pnl.gmap.style
+        pnl.gmap.style = getPanelMaximizeStyle() + 'z-index:0'
 
         if (pnl.sview.styleBak !== null) {
-          pnl.sview.style = pnl.sview.styleBak;
-          pnl.sview.styleBak = null;
+          pnl.sview.style = pnl.sview.styleBak
+          pnl.sview.styleBak = null
         }
         if (pnl.tube.styleBak != null) {
-          pnl.tube.style = pnl.tube.styleBak;
-          pnl.tube.styleBak = null;
+          pnl.tube.style = pnl.tube.styleBak
+          pnl.tube.styleBak = null
         }
       } else {
         // restore
-        pnl.gmap.style = pnl.gmap.styleBak;
-        pnl.gmap.styleBak = null;
+        pnl.gmap.style = pnl.gmap.styleBak
+        pnl.gmap.styleBak = null
       }
-      break;
+      break
     case 'chart_sview':
       if (pnl.sview.styleBak === null) {
         // maximize
-        pnl.sview.styleBak = pnl.sview.style;
-        pnl.sview.style = getPanelMaximizeStyle() + 'z-index:0';
+        pnl.sview.styleBak = pnl.sview.style
+        pnl.sview.style = getPanelMaximizeStyle() + 'z-index:0'
 
         if (pnl.gmap.styleBak !== null) {
-          pnl.gmap.style = pnl.gmap.styleBak;
-          pnl.gmap.styleBak = null;
+          pnl.gmap.style = pnl.gmap.styleBak
+          pnl.gmap.styleBak = null
         }
         if (pnl.tube.styleBak != null) {
-          pnl.tube.style = pnl.tube.styleBak;
-          pnl.tube.styleBak = null;
+          pnl.tube.style = pnl.tube.styleBak
+          pnl.tube.styleBak = null
         }
       } else {
         // restore
-        pnl.sview.style = pnl.sview.styleBak;
-        pnl.sview.styleBak = null;
+        pnl.sview.style = pnl.sview.styleBak
+        pnl.sview.styleBak = null
       }
-      break;
+      break
     case 'chart_tube':
       if (pnl.tube.styleBak === null) {
         // maximize
-        pnl.tube.styleBak = pnl.tube.style;
-        pnl.tube.style = getPanelMaximizeStyle() + 'z-index:0';
+        pnl.tube.styleBak = pnl.tube.style
+        pnl.tube.style = getPanelMaximizeStyle() + 'z-index:0'
 
         if (pnl.gmap.styleBak !== null) {
-          pnl.gmap.style = pnl.gmap.styleBak;
-          pnl.gmap.styleBak = null;
+          pnl.gmap.style = pnl.gmap.styleBak
+          pnl.gmap.styleBak = null
         }
         if (pnl.sview.styleBak != null) {
-          pnl.sview.style = pnl.sview.styleBak;
-          pnl.sview.styleBak = null;
+          pnl.sview.style = pnl.sview.styleBak
+          pnl.sview.styleBak = null
         }
       } else {
         // restore
-        pnl.tube.style = pnl.tube.styleBak;
-        pnl.tube.styleBak = null;
+        pnl.tube.style = pnl.tube.styleBak
+        pnl.tube.styleBak = null
       }
-      break;
+      break
   }
   if (isSettingsSave === true) {
-    settingsSave();
+    settingsSave()
   }
 }
 
-const onClickStyleLoad = (type) => {
-  const sDefMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.046321%;top:26.596859%;width:20.056882%;height:35.078534%"},"sview":{"isShow":false,"style":"position:absolute;left:0.138962%;top:62.303665%;width:19.223108%;height:32.879581%"},"tube":{"isShow":true,"style":"position:absolute;left:67.211399%;top:52.565445%;width:31.822351%;height:46.806283%","vidAutoChange":true},"map":{"isShow":false,"style":"position:absolute;left:76.707151%;top:0.000000%;width:20.612731%;height:29.424084%"},"name":{"isShow":true,"style":"position:absolute;left:0.046321%;top:0.000000%;width:9.403111%;height:100.000000%"},"city":{"isShow":true,"style":"position:absolute;left:9.681035%;top:0.000000%;width:10.792733%;height:100.000000%"},"date":{"isShow":true,"style":"position:absolute;left:20.751693%;top:0.000000%;width:55.492251%;"},"sex":{"isShow":true,"style":"position:absolute;left:20.705372%;top:53.089005%;width:18.481977%;"},"year":{"isShow":true,"style":"position:absolute;left:20.751693%;top:30.261780%;width:27.699805%;"},"season":{"isShow":true,"style":"position:absolute;left:91.020261%;top:0.000000%;width:6.901791%;"},"week":{"isShow":0,"style":"position:absolute;left:3.520376%;top:0.000000%;width:14.220468%;"},"age":{"isShow":true,"style":"position:absolute;left:41.040179%;top:53.403141%;width:25.708013%;"},"cond":{"isShow":true,"style":"position:absolute;left:49.007346%;top:29.738220%;width:34.462633%;"},"job":{"isShow":true,"style":"position:absolute;left:20.798014%;top:76.858639%;width:33.397256%;height:19.371728%"},"ex":[{"isShow":true,"style":"position:absolute;left:84.118470%;top:22.303665%;width:4.863678%;"},{"isShow":true,"style":"position:absolute;left:54.473194%;top:76.858639%;width:8.152451%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"},{"isShow":false},{"isShow":false},{"isShow":false},{"isShow":false}],"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.418848%;width:2.408679%;height:3.036649%"},"ana":{"isShow":false}}';
-  const sDefSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:44.790668%;height:50.000000%"},"sview":{"isShow":false,"style":"position:absolute;left:NaN%;top:NaN%;width:44.790668%;height:50.000000%"},"tube":{"isShow":true,"style":"position:absolute;left:65.172033%;top:72.500000%;width:34.398589%;height:23.500000%"},"map":{"isShow":false,"style":"position:absolute;left:NaN%;top:NaN%;width:42.857258%;height:44.916667%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:14.178341%;height:95.583333%"},"city":{"isShow":true,"style":"position:absolute;left:14.420017%;top:0.000000%;width:17.884044%;height:95.333333%"},"date":{"isShow":true,"style":"position:absolute;left:33.029090%;top:0.000000%;width:65.333151%;"},"sex":{"isShow":true,"style":"position:absolute;left:33.431884%;top:31.416667%;width:11.036550%;"},"year":{"isShow":true,"style":"position:absolute;left:33.029090%;top:17.250000%;width:34.076354%;"},"season":{"isShow":true,"style":"position:absolute;left:67.508237%;top:17.250000%;width:8.942022%;"},"week":{"isShow":true,"style":"position:absolute;left:76.611377%;top:17.000000%;width:22.959245%;"},"age":{"isShow":true,"style":"position:absolute;left:45.435138%;top:31.500000%;width:51.074251%;"},"cond":{"isShow":true,"style":"position:absolute;left:32.867972%;top:52.333333%;width:64.930357%;"},"job":{"isShow":true,"style":"position:absolute;left:33.029090%;top:73.583333%;width:64.285887%;height:18.000000%"},"detail":{"isShow":true,"style":"position:absolute;left:0.402794%;top:60.333333%;width:15.950634%;height:35.000000%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sDefMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:17.184996%;height:37.172775%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:38.010471%;width:17.046034%;height:30.157068%"},"tube":{"isShow":true,"style":"position:absolute;left:17.277637%;top:38.010471%;width:16.860751%;height:30.366492%","vidAutoChange":true},"map":{"isShow":true,"style":"position:absolute;left:17.323958%;top:0.000000%;width:16.536505%;height:37.172775%"},"name":{"isShow":true,"style":"position:absolute;left:34.231029%;top:0.000000%;width:7.596602%;height:80.418848%"},"city":{"isShow":true,"style":"position:absolute;left:42.059235%;top:0.000000%;width:8.384055%;height:80.628272%"},"date":{"isShow":true,"style":"position:absolute;left:50.952818%;top:0.000000%;width:48.127252%;"},"sex":{"isShow":true,"style":"position:absolute;left:50.813855%;top:46.910995%;width:13.294053%;"},"year":{"isShow":true,"style":"position:absolute;left:50.906497%;top:27.015707%;width:22.326598%;"},"season":{"isShow":true,"style":"position:absolute;left:90.973940%;top:26.806283%;width:7.318677%;"},"week":{"isShow":true,"style":"position:absolute;left:73.881586%;top:26.596859%;width:16.675468%;"},"age":{"isShow":true,"style":"position:absolute;left:64.941682%;top:47.539267%;width:19.454712%;"},"cond":{"isShow":true,"style":"position:absolute;left:50.674893%;top:64.816754%;width:22.789806%;"},"job":{"isShow":true,"style":"position:absolute;left:34.092067%;top:81.151832%;width:39.187349%;height:19.895288%"},"ex":[{"isShow":true,"style":"position:absolute;left:74.483755%;top:65.235602%;width:6.762829%;"},{"isShow":true,"style":"position:absolute;left:83.423659%;top:65.026178%;width:13.803582%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"},{"isShow":false},{"isShow":false},{"isShow":false},{"isShow":false}],"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:7.120419%;width:2.408679%;height:3.036649%"},"ana":{"isShow":false}}'
-  const sDefMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:24.433076%;height:30.455408%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:31.593928%;width:24.602750%;height:18.026565%"},"tube":{"isShow":true,"style":"position:absolute;left:0.000000%;top:50.189753%;width:24.433076%;height:16.603416%"},"map":{"isShow":true,"style":"position:absolute;left:25.026936%;top:0.000000%;width:28.929441%;height:30.834915%"},"name":{"isShow":true,"style":"position:absolute;left:54.295725%;top:0.000000%;width:14.422302%;height:31.309298%"},"city":{"isShow":true,"style":"position:absolute;left:69.142212%;top:0.000000%;width:16.543229%;height:31.119545%"},"date":{"isShow":true,"style":"position:absolute;left:25.026936%;top:31.783681%;width:73.808251%;"},"sex":{"isShow":true,"style":"position:absolute;left:25.875306%;top:49.905123%;width:10.604634%;"},"year":{"isShow":false,"style":"position:absolute;left:16.967414%;top:36.242884%;width:26.723677%;"},"season":{"isShow":false,"style":"position:absolute;left:69.142212%;top:36.053131%;width:8.738218%;"},"week":{"isShow":false,"style":"position:absolute;left:78.134942%;top:36.337761%;width:19.512526%;"},"age":{"isShow":true,"style":"position:absolute;left:37.497985%;top:49.715370%;width:15.270673%;"},"cond":{"isShow":true,"style":"position:absolute;left:25.026936%;top:67.457306%;width:45.896855%;"},"job":{"isShow":true,"style":"position:absolute;left:25.026936%;top:82.163188%;width:73.808251%;height:14.990512%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:67.077799%;width:16.797740%;height:30.740038%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sDefCovidMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:56.205674%;width:20.805840%;height:42.287234%"},"sview":{"isShow":true,"style":"position:absolute;left:20.964361%;top:56.560284%;width:17.595796%;height:42.287234%"},"tube":{"isShow":0,"style":"position:absolute;left:NaN%;top:NaN%;width:NaN%;height:NaN%"},"map":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.088652%;width:20.805840%;height:55.230496%"},"name":{"isShow":true,"style":"position:absolute;left:21.083251%;top:0.354610%;width:8.203445%;height:54.787234%"},"city":{"isShow":true,"style":"position:absolute;left:29.564108%;top:0.000000%;width:8.996049%;height:55.673759%"},"date":{"isShow":true,"style":"position:absolute;left:38.956458%;top:0.709220%;width:60.911573%;"},"sex":{"isShow":true,"style":"position:absolute;left:38.916828%;top:31.205674%;width:7.727883%;"},"year":{"isShow":false,"style":"position:absolute;left:1.981509%;top:0.354610%;width:5.270813%;"},"season":{"isShow":true,"style":"position:absolute;left:63.408274%;top:6.028369%;width:4.914141%;"},"week":{"isShow":true,"style":"position:absolute;left:68.758347%;top:4.875887%;width:13.196847%;"},"age":{"isShow":true,"style":"position:absolute;left:47.199534%;top:31.205674%;width:32.694891%;"},"cond":{"isShow":true,"style":"position:absolute;left:39.114979%;top:52.925532%;width:43.593188%;"},"job":{"isShow":true,"style":"position:absolute;left:38.956458%;top:72.074468%;width:60.356751%;height:27.216312%"},"detail":{"isShow":true,"style":"position:absolute;left:75.693627%;top:69.060284%;width:7.846774%;height:29.609929%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sDefCovidSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:20.784159%;height:42.236025%"},"sview":{"isShow":0,"style":"position:absolute;left:0.000000%;top:0.000000%;width:17.481250%;height:40.905058%"},"tube":{"isShow":0,"style":"position:absolute;left:NaN%;top:NaN%;width:NaN%;height:NaN%"},"map":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:43.018375%;height:42.590949%"},"name":{"isShow":true,"style":"position:absolute;left:42.776699%;top:0.000000%;width:25.778802%;height:42.147294%"},"city":{"isShow":true,"style":"position:absolute;left:68.877736%;top:0.443656%;width:25.939919%;height:41.703638%"},"date":{"isShow":true,"style":"position:absolute;left:0.000000%;top:43.034605%;width:99.328946%;"},"sex":{"isShow":true,"style":"position:absolute;left:0.161118%;top:67.968057%;width:8.055876%;"},"year":{"isShow":0,"style":"position:absolute;left:0.080559%;top:0.266193%;width:8.458669%;"},"season":{"isShow":true,"style":"position:absolute;left:44.468433%;top:43.566992%;width:10.472638%;"},"week":{"isShow":true,"style":"position:absolute;left:55.504983%;top:43.478261%;width:24.570420%;"},"age":{"isShow":true,"style":"position:absolute;left:8.619787%;top:68.234250%;width:34.076354%;"},"cond":{"isShow":true,"style":"position:absolute;left:43.582287%;top:68.411713%;width:55.102189%;"},"job":{"isShow":true,"style":"position:absolute;left:0.000000%;top:81.543922%;width:98.684476%;height:14.729370%"},"detail":{"isShow":true,"style":"position:absolute;left:74.355731%;top:68.411713%;width:15.950634%;height:29.636202%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+const onClickStyleLoad = type => {
+  const sDefMdAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.046321%;top:26.596859%;width:20.056882%;height:35.078534%"},"sview":{"isShow":false,"style":"position:absolute;left:0.138962%;top:62.303665%;width:19.223108%;height:32.879581%"},"tube":{"isShow":true,"style":"position:absolute;left:67.211399%;top:52.565445%;width:31.822351%;height:46.806283%","vidAutoChange":true},"map":{"isShow":false,"style":"position:absolute;left:76.707151%;top:0.000000%;width:20.612731%;height:29.424084%"},"name":{"isShow":true,"style":"position:absolute;left:0.046321%;top:0.000000%;width:9.403111%;height:100.000000%"},"city":{"isShow":true,"style":"position:absolute;left:9.681035%;top:0.000000%;width:10.792733%;height:100.000000%"},"date":{"isShow":true,"style":"position:absolute;left:20.751693%;top:0.000000%;width:55.492251%;"},"sex":{"isShow":true,"style":"position:absolute;left:20.705372%;top:53.089005%;width:18.481977%;"},"year":{"isShow":true,"style":"position:absolute;left:20.751693%;top:30.261780%;width:27.699805%;"},"season":{"isShow":true,"style":"position:absolute;left:91.020261%;top:0.000000%;width:6.901791%;"},"week":{"isShow":0,"style":"position:absolute;left:3.520376%;top:0.000000%;width:14.220468%;"},"age":{"isShow":true,"style":"position:absolute;left:41.040179%;top:53.403141%;width:25.708013%;"},"cond":{"isShow":true,"style":"position:absolute;left:49.007346%;top:29.738220%;width:34.462633%;"},"job":{"isShow":true,"style":"position:absolute;left:20.798014%;top:76.858639%;width:33.397256%;height:19.371728%"},"ex":[{"isShow":true,"style":"position:absolute;left:84.118470%;top:22.303665%;width:4.863678%;"},{"isShow":true,"style":"position:absolute;left:54.473194%;top:76.858639%;width:8.152451%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"},{"isShow":false},{"isShow":false},{"isShow":false},{"isShow":false}],"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.418848%;width:2.408679%;height:3.036649%"},"ana":{"isShow":false}}'
+  const sDefSmAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:44.790668%;height:50.000000%"},"sview":{"isShow":false,"style":"position:absolute;left:NaN%;top:NaN%;width:44.790668%;height:50.000000%"},"tube":{"isShow":true,"style":"position:absolute;left:65.172033%;top:72.500000%;width:34.398589%;height:23.500000%"},"map":{"isShow":false,"style":"position:absolute;left:NaN%;top:NaN%;width:42.857258%;height:44.916667%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:14.178341%;height:95.583333%"},"city":{"isShow":true,"style":"position:absolute;left:14.420017%;top:0.000000%;width:17.884044%;height:95.333333%"},"date":{"isShow":true,"style":"position:absolute;left:33.029090%;top:0.000000%;width:65.333151%;"},"sex":{"isShow":true,"style":"position:absolute;left:33.431884%;top:31.416667%;width:11.036550%;"},"year":{"isShow":true,"style":"position:absolute;left:33.029090%;top:17.250000%;width:34.076354%;"},"season":{"isShow":true,"style":"position:absolute;left:67.508237%;top:17.250000%;width:8.942022%;"},"week":{"isShow":true,"style":"position:absolute;left:76.611377%;top:17.000000%;width:22.959245%;"},"age":{"isShow":true,"style":"position:absolute;left:45.435138%;top:31.500000%;width:51.074251%;"},"cond":{"isShow":true,"style":"position:absolute;left:32.867972%;top:52.333333%;width:64.930357%;"},"job":{"isShow":true,"style":"position:absolute;left:33.029090%;top:73.583333%;width:64.285887%;height:18.000000%"},"detail":{"isShow":true,"style":"position:absolute;left:0.402794%;top:60.333333%;width:15.950634%;height:35.000000%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
+  const sDefMapMdAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:17.184996%;height:37.172775%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:38.010471%;width:17.046034%;height:30.157068%"},"tube":{"isShow":true,"style":"position:absolute;left:17.277637%;top:38.010471%;width:16.860751%;height:30.366492%","vidAutoChange":true},"map":{"isShow":true,"style":"position:absolute;left:17.323958%;top:0.000000%;width:16.536505%;height:37.172775%"},"name":{"isShow":true,"style":"position:absolute;left:34.231029%;top:0.000000%;width:7.596602%;height:80.418848%"},"city":{"isShow":true,"style":"position:absolute;left:42.059235%;top:0.000000%;width:8.384055%;height:80.628272%"},"date":{"isShow":true,"style":"position:absolute;left:50.952818%;top:0.000000%;width:48.127252%;"},"sex":{"isShow":true,"style":"position:absolute;left:50.813855%;top:46.910995%;width:13.294053%;"},"year":{"isShow":true,"style":"position:absolute;left:50.906497%;top:27.015707%;width:22.326598%;"},"season":{"isShow":true,"style":"position:absolute;left:90.973940%;top:26.806283%;width:7.318677%;"},"week":{"isShow":true,"style":"position:absolute;left:73.881586%;top:26.596859%;width:16.675468%;"},"age":{"isShow":true,"style":"position:absolute;left:64.941682%;top:47.539267%;width:19.454712%;"},"cond":{"isShow":true,"style":"position:absolute;left:50.674893%;top:64.816754%;width:22.789806%;"},"job":{"isShow":true,"style":"position:absolute;left:34.092067%;top:81.151832%;width:39.187349%;height:19.895288%"},"ex":[{"isShow":true,"style":"position:absolute;left:74.483755%;top:65.235602%;width:6.762829%;"},{"isShow":true,"style":"position:absolute;left:83.423659%;top:65.026178%;width:13.803582%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"},{"isShow":false},{"isShow":false},{"isShow":false},{"isShow":false}],"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:7.120419%;width:2.408679%;height:3.036649%"},"ana":{"isShow":false}}'
+  const sDefMapSmAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:24.433076%;height:30.455408%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:31.593928%;width:24.602750%;height:18.026565%"},"tube":{"isShow":true,"style":"position:absolute;left:0.000000%;top:50.189753%;width:24.433076%;height:16.603416%"},"map":{"isShow":true,"style":"position:absolute;left:25.026936%;top:0.000000%;width:28.929441%;height:30.834915%"},"name":{"isShow":true,"style":"position:absolute;left:54.295725%;top:0.000000%;width:14.422302%;height:31.309298%"},"city":{"isShow":true,"style":"position:absolute;left:69.142212%;top:0.000000%;width:16.543229%;height:31.119545%"},"date":{"isShow":true,"style":"position:absolute;left:25.026936%;top:31.783681%;width:73.808251%;"},"sex":{"isShow":true,"style":"position:absolute;left:25.875306%;top:49.905123%;width:10.604634%;"},"year":{"isShow":false,"style":"position:absolute;left:16.967414%;top:36.242884%;width:26.723677%;"},"season":{"isShow":false,"style":"position:absolute;left:69.142212%;top:36.053131%;width:8.738218%;"},"week":{"isShow":false,"style":"position:absolute;left:78.134942%;top:36.337761%;width:19.512526%;"},"age":{"isShow":true,"style":"position:absolute;left:37.497985%;top:49.715370%;width:15.270673%;"},"cond":{"isShow":true,"style":"position:absolute;left:25.026936%;top:67.457306%;width:45.896855%;"},"job":{"isShow":true,"style":"position:absolute;left:25.026936%;top:82.163188%;width:73.808251%;height:14.990512%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:67.077799%;width:16.797740%;height:30.740038%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
+  const sDefCovidMdAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:56.205674%;width:20.805840%;height:42.287234%"},"sview":{"isShow":true,"style":"position:absolute;left:20.964361%;top:56.560284%;width:17.595796%;height:42.287234%"},"tube":{"isShow":0,"style":"position:absolute;left:NaN%;top:NaN%;width:NaN%;height:NaN%"},"map":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.088652%;width:20.805840%;height:55.230496%"},"name":{"isShow":true,"style":"position:absolute;left:21.083251%;top:0.354610%;width:8.203445%;height:54.787234%"},"city":{"isShow":true,"style":"position:absolute;left:29.564108%;top:0.000000%;width:8.996049%;height:55.673759%"},"date":{"isShow":true,"style":"position:absolute;left:38.956458%;top:0.709220%;width:60.911573%;"},"sex":{"isShow":true,"style":"position:absolute;left:38.916828%;top:31.205674%;width:7.727883%;"},"year":{"isShow":false,"style":"position:absolute;left:1.981509%;top:0.354610%;width:5.270813%;"},"season":{"isShow":true,"style":"position:absolute;left:63.408274%;top:6.028369%;width:4.914141%;"},"week":{"isShow":true,"style":"position:absolute;left:68.758347%;top:4.875887%;width:13.196847%;"},"age":{"isShow":true,"style":"position:absolute;left:47.199534%;top:31.205674%;width:32.694891%;"},"cond":{"isShow":true,"style":"position:absolute;left:39.114979%;top:52.925532%;width:43.593188%;"},"job":{"isShow":true,"style":"position:absolute;left:38.956458%;top:72.074468%;width:60.356751%;height:27.216312%"},"detail":{"isShow":true,"style":"position:absolute;left:75.693627%;top:69.060284%;width:7.846774%;height:29.609929%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
+  const sDefCovidSmAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:20.784159%;height:42.236025%"},"sview":{"isShow":0,"style":"position:absolute;left:0.000000%;top:0.000000%;width:17.481250%;height:40.905058%"},"tube":{"isShow":0,"style":"position:absolute;left:NaN%;top:NaN%;width:NaN%;height:NaN%"},"map":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:43.018375%;height:42.590949%"},"name":{"isShow":true,"style":"position:absolute;left:42.776699%;top:0.000000%;width:25.778802%;height:42.147294%"},"city":{"isShow":true,"style":"position:absolute;left:68.877736%;top:0.443656%;width:25.939919%;height:41.703638%"},"date":{"isShow":true,"style":"position:absolute;left:0.000000%;top:43.034605%;width:99.328946%;"},"sex":{"isShow":true,"style":"position:absolute;left:0.161118%;top:67.968057%;width:8.055876%;"},"year":{"isShow":0,"style":"position:absolute;left:0.080559%;top:0.266193%;width:8.458669%;"},"season":{"isShow":true,"style":"position:absolute;left:44.468433%;top:43.566992%;width:10.472638%;"},"week":{"isShow":true,"style":"position:absolute;left:55.504983%;top:43.478261%;width:24.570420%;"},"age":{"isShow":true,"style":"position:absolute;left:8.619787%;top:68.234250%;width:34.076354%;"},"cond":{"isShow":true,"style":"position:absolute;left:43.582287%;top:68.411713%;width:55.102189%;"},"job":{"isShow":true,"style":"position:absolute;left:0.000000%;top:81.543922%;width:98.684476%;height:14.729370%"},"detail":{"isShow":true,"style":"position:absolute;left:74.355731%;top:68.411713%;width:15.950634%;height:29.636202%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
 
-  const sGMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.947292%;height:100.000000%","styleBak":""},"sview":{"isShow":true,"style":"position:absolute;left:0.475562%;top:50.374688%;width:19.537674%;height:28.642798%"},"tube":{"isShow":false,"style":"position:absolute;left:76.525861%;top:75.353872%;width:21.003991%;height:23.980017%"},"map":{"isShow":true,"style":"position:absolute;left:79.062192%;top:6.744380%;width:20.132127%;height:33.888426%"},"name":{"isShow":true,"style":"position:absolute;left:0.475562%;top:6.994172%;width:9.075309%;height:42.381349%"},"city":{"isShow":true,"style":"position:absolute;left:9.828282%;top:6.994172%;width:10.303845%;height:42.381349%"},"date":{"isShow":false,"style":"position:absolute;left:24.214035%;top:0.000000%;width:36.023826%;"},"sex":{"isShow":false,"style":"position:absolute;left:73.593228%;top:27.560366%;width:5.072662%;"},"year":{"isShow":false,"style":"position:absolute;left:60.634162%;top:0.000000%;width:18.031728%;"},"season":{"isShow":false,"style":"position:absolute;left:62.417520%;top:14.404663%;width:4.953771%;"},"week":{"isShow":false,"style":"position:absolute;left:67.529812%;top:14.487927%;width:11.175708%;"},"age":{"isShow":false,"style":"position:absolute;left:76.763642%;top:43.213988%;width:20.964361%;"},"cond":{"isShow":false,"style":"position:absolute;left:76.724012%;top:60.116570%;width:20.647319%;"},"job":{"isShow":true,"style":"position:absolute;left:0.356672%;top:79.517069%;width:25.244419%;height:19.233972%"},"detail":{"isShow":false,"style":"position:absolute;left:0.079260%;top:0.416320%;width:2.060769%;height:2.414654%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sGMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.918781%;height:100.000000%","styleBak":""},"sview":{"isShow":true,"style":"position:absolute;left:1.038853%;top:43.373494%;width:30.976711%;height:25.903614%"},"tube":{"isShow":false},"map":{"isShow":0,"style":"position:absolute;left:6.327560%;top:2.108434%;width:23.610298%;height:23.594378%"},"name":{"isShow":true,"style":"position:absolute;left:0.755530%;top:8.534137%;width:14.260620%;height:33.835341%"},"city":{"isShow":true,"style":"position:absolute;left:15.393914%;top:8.232932%;width:17.093856%;height:34.136546%"},"date":{"isShow":0,"style":"position:absolute;left:2.644353%;top:5.120482%;width:63.086716%;"},"sex":{"isShow":0,"style":"position:absolute;left:5.949795%;top:6.726908%;width:10.010766%;"},"season":{"isShow":0,"style":"position:absolute;left:2.644353%;top:6.726908%;width:11.049619%;"},"week":{"isShow":0,"style":"position:absolute;left:3.777648%;top:6.726908%;width:23.799180%;"},"age":{"isShow":0,"style":"position:absolute;left:7.271972%;top:6.626506%;width:14.260620%;"},"cond":{"isShow":0,"style":"position:absolute;left:4.533177%;top:8.232932%;width:44.765125%;"},"job":{"isShow":true,"style":"position:absolute;left:1.038853%;top:69.979920%;width:38.248683%;height:20.883534%"},"detail":{"isShow":false,"style":"position:absolute;left:4.438736%;top:6.325301%;width:5.288707%;height:2.911647%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sGMapMdAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.947292%;height:100.000000%","styleBak":""},"sview":{"isShow":true,"style":"position:absolute;left:0.475562%;top:50.374688%;width:19.537674%;height:28.642798%"},"tube":{"isShow":false,"style":"position:absolute;left:76.525861%;top:75.353872%;width:21.003991%;height:23.980017%"},"map":{"isShow":true,"style":"position:absolute;left:79.062192%;top:6.744380%;width:20.132127%;height:33.888426%"},"name":{"isShow":true,"style":"position:absolute;left:0.475562%;top:6.994172%;width:9.075309%;height:42.381349%"},"city":{"isShow":true,"style":"position:absolute;left:9.828282%;top:6.994172%;width:10.303845%;height:42.381349%"},"date":{"isShow":false,"style":"position:absolute;left:24.214035%;top:0.000000%;width:36.023826%;"},"sex":{"isShow":false,"style":"position:absolute;left:73.593228%;top:27.560366%;width:5.072662%;"},"year":{"isShow":false,"style":"position:absolute;left:60.634162%;top:0.000000%;width:18.031728%;"},"season":{"isShow":false,"style":"position:absolute;left:62.417520%;top:14.404663%;width:4.953771%;"},"week":{"isShow":false,"style":"position:absolute;left:67.529812%;top:14.487927%;width:11.175708%;"},"age":{"isShow":false,"style":"position:absolute;left:76.763642%;top:43.213988%;width:20.964361%;"},"cond":{"isShow":false,"style":"position:absolute;left:76.724012%;top:60.116570%;width:20.647319%;"},"job":{"isShow":true,"style":"position:absolute;left:0.356672%;top:79.517069%;width:25.244419%;height:19.233972%"},"detail":{"isShow":false,"style":"position:absolute;left:0.079260%;top:0.416320%;width:2.060769%;height:2.414654%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
+  const sGMapSmAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.918781%;height:100.000000%","styleBak":""},"sview":{"isShow":true,"style":"position:absolute;left:1.038853%;top:43.373494%;width:30.976711%;height:25.903614%"},"tube":{"isShow":false},"map":{"isShow":0,"style":"position:absolute;left:6.327560%;top:2.108434%;width:23.610298%;height:23.594378%"},"name":{"isShow":true,"style":"position:absolute;left:0.755530%;top:8.534137%;width:14.260620%;height:33.835341%"},"city":{"isShow":true,"style":"position:absolute;left:15.393914%;top:8.232932%;width:17.093856%;height:34.136546%"},"date":{"isShow":0,"style":"position:absolute;left:2.644353%;top:5.120482%;width:63.086716%;"},"sex":{"isShow":0,"style":"position:absolute;left:5.949795%;top:6.726908%;width:10.010766%;"},"season":{"isShow":0,"style":"position:absolute;left:2.644353%;top:6.726908%;width:11.049619%;"},"week":{"isShow":0,"style":"position:absolute;left:3.777648%;top:6.726908%;width:23.799180%;"},"age":{"isShow":0,"style":"position:absolute;left:7.271972%;top:6.626506%;width:14.260620%;"},"cond":{"isShow":0,"style":"position:absolute;left:4.533177%;top:8.232932%;width:44.765125%;"},"job":{"isShow":true,"style":"position:absolute;left:1.038853%;top:69.979920%;width:38.248683%;height:20.883534%"},"detail":{"isShow":false,"style":"position:absolute;left:4.438736%;top:6.325301%;width:5.288707%;height:2.911647%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
 
-  const sSViewMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.435932%;top:46.960866%;width:18.784701%;height:31.640300%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.947292%;height:100.000000%","styleBak":""},"tube":{"isShow":false,"style":"position:absolute;left:77.397724%;top:71.940050%;width:19.577305%;height:26.311407%"},"map":{"isShow":true,"style":"position:absolute;left:79.181082%;top:6.661116%;width:20.092497%;height:31.140716%"},"name":{"isShow":true,"style":"position:absolute;left:0.317041%;top:8.076603%;width:9.669762%;height:38.134888%"},"city":{"isShow":true,"style":"position:absolute;left:10.303845%;top:8.159867%;width:8.718638%;height:38.467943%"},"date":{"isShow":false,"style":"position:absolute;left:24.134774%;top:0.416320%;width:36.657908%;"},"sex":{"isShow":false,"style":"position:absolute;left:74.425462%;top:26.228143%;width:4.161168%;"},"year":{"isShow":false,"style":"position:absolute;left:61.188984%;top:0.749376%;width:17.318385%;"},"season":{"isShow":false,"style":"position:absolute;left:63.685685%;top:13.905079%;width:4.359319%;"},"week":{"isShow":false,"style":"position:absolute;left:68.282785%;top:13.905079%;width:10.343475%;"},"age":{"isShow":false,"style":"position:absolute;left:77.358094%;top:39.883430%;width:20.528429%;"},"cond":{"isShow":false,"style":"position:absolute;left:77.358094%;top:57.368859%;width:20.488799%;"},"job":{"isShow":true,"style":"position:absolute;left:0.277411%;top:79.184013%;width:25.442570%;height:19.900083%"},"detail":{"isShow":false,"style":"position:absolute;left:0.079260%;top:0.416320%;width:2.060769%;height:2.414654%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sSViewSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.566647%;top:42.068273%;width:35.132123%;height:26.004016%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.918781%;height:100.000000%","styleBak":""},"tube":{"isShow":false},"map":{"isShow":0,"style":"position:absolute;left:6.516442%;top:1.405622%;width:24.082504%;height:25.200803%"},"name":{"isShow":true,"style":"position:absolute;left:0.472206%;top:9.538153%;width:16.243885%;height:31.927711%"},"city":{"isShow":true,"style":"position:absolute;left:16.999414%;top:10.040161%;width:18.227150%;height:31.927711%"},"date":{"isShow":0,"style":"position:absolute;left:3.399883%;top:4.618474%;width:56.759156%;"},"sex":{"isShow":0,"style":"position:absolute;left:4.249854%;top:7.128514%;width:8.688590%;"},"season":{"isShow":0,"style":"position:absolute;left:3.399883%;top:6.124498%;width:9.255237%;"},"week":{"isShow":0,"style":"position:absolute;left:4.438736%;top:6.024096%;width:16.621650%;"},"age":{"isShow":0,"style":"position:absolute;left:6.044236%;top:6.024096%;width:17.377179%;"},"cond":{"isShow":0,"style":"position:absolute;left:3.966530%;top:8.232932%;width:52.792626%;"},"job":{"isShow":true,"style":"position:absolute;left:0.566647%;top:68.674699%;width:40.515271%;height:21.987952%"},"detail":{"isShow":false,"style":"position:absolute;left:5.005383%;top:8.433735%;width:5.288707%;height:2.911647%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sSViewMdAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.435932%;top:46.960866%;width:18.784701%;height:31.640300%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.947292%;height:100.000000%","styleBak":""},"tube":{"isShow":false,"style":"position:absolute;left:77.397724%;top:71.940050%;width:19.577305%;height:26.311407%"},"map":{"isShow":true,"style":"position:absolute;left:79.181082%;top:6.661116%;width:20.092497%;height:31.140716%"},"name":{"isShow":true,"style":"position:absolute;left:0.317041%;top:8.076603%;width:9.669762%;height:38.134888%"},"city":{"isShow":true,"style":"position:absolute;left:10.303845%;top:8.159867%;width:8.718638%;height:38.467943%"},"date":{"isShow":false,"style":"position:absolute;left:24.134774%;top:0.416320%;width:36.657908%;"},"sex":{"isShow":false,"style":"position:absolute;left:74.425462%;top:26.228143%;width:4.161168%;"},"year":{"isShow":false,"style":"position:absolute;left:61.188984%;top:0.749376%;width:17.318385%;"},"season":{"isShow":false,"style":"position:absolute;left:63.685685%;top:13.905079%;width:4.359319%;"},"week":{"isShow":false,"style":"position:absolute;left:68.282785%;top:13.905079%;width:10.343475%;"},"age":{"isShow":false,"style":"position:absolute;left:77.358094%;top:39.883430%;width:20.528429%;"},"cond":{"isShow":false,"style":"position:absolute;left:77.358094%;top:57.368859%;width:20.488799%;"},"job":{"isShow":true,"style":"position:absolute;left:0.277411%;top:79.184013%;width:25.442570%;height:19.900083%"},"detail":{"isShow":false,"style":"position:absolute;left:0.079260%;top:0.416320%;width:2.060769%;height:2.414654%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
+  const sSViewSmAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.566647%;top:42.068273%;width:35.132123%;height:26.004016%"},"sview":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:99.918781%;height:100.000000%","styleBak":""},"tube":{"isShow":false},"map":{"isShow":0,"style":"position:absolute;left:6.516442%;top:1.405622%;width:24.082504%;height:25.200803%"},"name":{"isShow":true,"style":"position:absolute;left:0.472206%;top:9.538153%;width:16.243885%;height:31.927711%"},"city":{"isShow":true,"style":"position:absolute;left:16.999414%;top:10.040161%;width:18.227150%;height:31.927711%"},"date":{"isShow":0,"style":"position:absolute;left:3.399883%;top:4.618474%;width:56.759156%;"},"sex":{"isShow":0,"style":"position:absolute;left:4.249854%;top:7.128514%;width:8.688590%;"},"season":{"isShow":0,"style":"position:absolute;left:3.399883%;top:6.124498%;width:9.255237%;"},"week":{"isShow":0,"style":"position:absolute;left:4.438736%;top:6.024096%;width:16.621650%;"},"age":{"isShow":0,"style":"position:absolute;left:6.044236%;top:6.024096%;width:17.377179%;"},"cond":{"isShow":0,"style":"position:absolute;left:3.966530%;top:8.232932%;width:52.792626%;"},"job":{"isShow":true,"style":"position:absolute;left:0.566647%;top:68.674699%;width:40.515271%;height:21.987952%"},"detail":{"isShow":false,"style":"position:absolute;left:5.005383%;top:8.433735%;width:5.288707%;height:2.911647%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
 
-  const sTubeMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:63.316993%;width:16.089837%;height:34.885621%"},"sview":{"isShow":false,"style":"position:absolute;left:16.274777%;top:63.643791%;width:16.681647%;height:34.150327%"},"tube":{"isShow":true,"style":"position:absolute;left:34.805831%;top:0.000000%;width:64.322359%;height:100.408497%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.081699%;width:16.829599%;height:36.928105%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:26%;width:11.725237%;height:73.529412%"},"city":{"isShow":true,"style":"position:absolute;left:12.021142%;top:26%;width:22.562760%;height:73.611111%"},"date":{"isShow":false,"style":"position:absolute;left:50.118917%;top:0.000000%;width:49.342166%;"},"sex":{"isShow":false,"style":"position:absolute;left:86.182344%;top:22.630719%;width:13.389703%;"},"year":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:34.583902%;"},"season":{"isShow":false,"style":"position:absolute;left:82.483531%;top:0.653595%;width:4.808457%;"},"week":{"isShow":false,"style":"position:absolute;left:69.870579%;top:0.408497%;width:12.206083%;"},"age":{"isShow":false,"style":"position:absolute;left:35.027760%;top:80.473856%;width:23.376498%;"},"cond":{"isShow":false,"style":"position:absolute;left:68.982863%;top:79.575163%;width:29.775445%;"},"job":{"isShow":false,"style":"position:absolute;left:34.768843%;top:78.022876%;width:34.029080%;height:21.977124%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:70%;width:1.923383%;height:2.287582%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sTubeSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:15.488355%;height:37.673426%"},"sview":{"isShow":false,"style":"position:absolute;left:0.000000%;top:37.886873%;width:15.205032%;height:27.641409%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:33.148858%;top:27.961580%;width:65.919952%;height:68.943436%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:15.771679%;top:0.000000%;width:17.566062%;height:38.633938%"},"name":{"isShow":true,"style":"position:absolute;left:0.094441%;top:0.000000%;width:15.960561%;height:97.545358%"},"city":{"isShow":true,"style":"position:absolute;left:16.055003%;top:0.000000%;width:16.810532%;height:97.118463%"},"date":{"isShow":false,"style":"position:absolute;left:50.148273%;top:0.000000%;width:49.298302%;"},"sex":{"isShow":true,"style":"position:absolute;left:67.808775%;top:13.127001%;width:8.688590%;"},"year":{"isShow":true,"style":"position:absolute;left:33.054417%;top:0.000000%;width:33.998829%;"},"season":{"isShow":false,"style":"position:absolute;left:91.041309%;top:13.340448%;width:9.349678%;"},"week":{"isShow":true,"style":"position:absolute;left:77.536218%;top:13.127001%;width:20.210415%;"},"age":{"isShow":true,"style":"position:absolute;left:67.714334%;top:0.106724%;width:26.821298%;"},"cond":{"isShow":true,"style":"position:absolute;left:33.054417%;top:14.514408%;width:33.904388%;"},"job":{"isShow":false,"style":"position:absolute;left:34.187711%;top:78.121665%;width:65.069981%;height:20.277481%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:70%;width:18.699356%;height:43.649947%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sTubeMapMdAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.046321%;top:69.278997%;width:14.915279%;height:30.825496%"},"sview":{"isShow":true,"style":"position:absolute;left:15.239525%;top:69.070010%;width:17.926128%;height:31.138976%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:33.489897%;top:0.000000%;width:66.238663%;height:100.313480%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:0.185283%;top:42.006270%;width:14.683676%;height:26.541275%"},"name":{"isShow":true,"style":"position:absolute;left:0.046321%;top:0.000000%;width:15.007921%;height:68.861024%"},"city":{"isShow":true,"style":"position:absolute;left:15.239525%;top:0.000000%;width:17.833486%;height:68.234065%"},"date":{"isShow":false,"style":"position:absolute;left:50.072724%;top:0.000000%;width:49.285271%;"},"sex":{"isShow":false,"style":"position:absolute;left:86.156583%;top:22.570533%;width:13.340374%;"},"year":{"isShow":false,"style":"position:absolute;left:50.072724%;top:22.570533%;width:17.277637%;"},"season":{"isShow":false,"style":"position:absolute;left:80.644414%;top:22.570533%;width:5.141603%;"},"week":{"isShow":false,"style":"position:absolute;left:67.767248%;top:22.570533%;width:12.506601%;"},"age":{"isShow":false,"style":"position:absolute;left:50.072724%;top:38.453501%;width:8.615658%;"},"cond":{"isShow":false,"style":"position:absolute;left:62.671966%;top:57.053292%;width:36.547067%;"},"job":{"isShow":false,"style":"position:absolute;left:34.184709%;top:78.160920%;width:65.034324%;height:20.167189%"},"detail":{"isShow":true,"style":"position:absolute;left:0.138962%;top:34.587252%;width:9.171507%;height:33.855799%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
-  const sTubeMapSmAbs = '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:33.148858%;top:54.331551%;width:32.015564%;height:29.411765%"},"sview":{"isShow":true,"style":"position:absolute;left:65.164422%;top:54.331551%;width:33.809947%;height:29.197861%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:32.959976%;top:0.000000%;width:66.864364%;height:53.903743%","vidAutoChange":true,"styleBak":"position:absolute;left:32.959976%;top:0.000000%;width:66.486599%;height:53.796791%"},"map":{"isShow":false,"style":"position:absolute;left:51.659332%;top:54.331551%;width:23.326974%;height:29.625668%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:14.921708%;height:53.475936%"},"city":{"isShow":true,"style":"position:absolute;left:15.110591%;top:0.000000%;width:17.471620%;height:53.582888%"},"date":{"isShow":true,"style":"position:absolute;left:0.188882%;top:84.812834%;width:41.931889%;"},"sex":{"isShow":true,"style":"position:absolute;left:0.000000%;top:67.058824%;width:10.766296%;"},"year":{"isShow":true,"style":"position:absolute;left:0.000000%;top:54.010695%;width:24.082504%;"},"season":{"isShow":true,"style":"position:absolute;left:24.082504%;top:53.903743%;width:9.349678%;"},"week":{"isShow":false,"style":"position:absolute;left:0.283324%;top:67.058824%;width:23.988063%;"},"age":{"isShow":true,"style":"position:absolute;left:11.616267%;top:65.668449%;width:17.849385%;"},"cond":{"isShow":false,"style":"position:absolute;left:0.188882%;top:73.262032%;width:33.621064%;"},"job":{"isShow":true,"style":"position:absolute;left:42.404095%;top:84.385027%;width:55.248097%;height:21.604278%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:60.636364%;width:18.699356%;height:34.652406%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}';
+  const sTubeMdAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:63.316993%;width:16.089837%;height:34.885621%"},"sview":{"isShow":false,"style":"position:absolute;left:16.274777%;top:63.643791%;width:16.681647%;height:34.150327%"},"tube":{"isShow":true,"style":"position:absolute;left:34.805831%;top:0.000000%;width:64.322359%;height:100.408497%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.081699%;width:16.829599%;height:36.928105%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:26%;width:11.725237%;height:73.529412%"},"city":{"isShow":true,"style":"position:absolute;left:12.021142%;top:26%;width:22.562760%;height:73.611111%"},"date":{"isShow":false,"style":"position:absolute;left:50.118917%;top:0.000000%;width:49.342166%;"},"sex":{"isShow":false,"style":"position:absolute;left:86.182344%;top:22.630719%;width:13.389703%;"},"year":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:34.583902%;"},"season":{"isShow":false,"style":"position:absolute;left:82.483531%;top:0.653595%;width:4.808457%;"},"week":{"isShow":false,"style":"position:absolute;left:69.870579%;top:0.408497%;width:12.206083%;"},"age":{"isShow":false,"style":"position:absolute;left:35.027760%;top:80.473856%;width:23.376498%;"},"cond":{"isShow":false,"style":"position:absolute;left:68.982863%;top:79.575163%;width:29.775445%;"},"job":{"isShow":false,"style":"position:absolute;left:34.768843%;top:78.022876%;width:34.029080%;height:21.977124%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:70%;width:1.923383%;height:2.287582%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
+  const sTubeSmAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":false,"style":"position:absolute;left:0.000000%;top:0.000000%;width:15.488355%;height:37.673426%"},"sview":{"isShow":false,"style":"position:absolute;left:0.000000%;top:37.886873%;width:15.205032%;height:27.641409%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:33.148858%;top:27.961580%;width:65.919952%;height:68.943436%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:15.771679%;top:0.000000%;width:17.566062%;height:38.633938%"},"name":{"isShow":true,"style":"position:absolute;left:0.094441%;top:0.000000%;width:15.960561%;height:97.545358%"},"city":{"isShow":true,"style":"position:absolute;left:16.055003%;top:0.000000%;width:16.810532%;height:97.118463%"},"date":{"isShow":false,"style":"position:absolute;left:50.148273%;top:0.000000%;width:49.298302%;"},"sex":{"isShow":true,"style":"position:absolute;left:67.808775%;top:13.127001%;width:8.688590%;"},"year":{"isShow":true,"style":"position:absolute;left:33.054417%;top:0.000000%;width:33.998829%;"},"season":{"isShow":false,"style":"position:absolute;left:91.041309%;top:13.340448%;width:9.349678%;"},"week":{"isShow":true,"style":"position:absolute;left:77.536218%;top:13.127001%;width:20.210415%;"},"age":{"isShow":true,"style":"position:absolute;left:67.714334%;top:0.106724%;width:26.821298%;"},"cond":{"isShow":true,"style":"position:absolute;left:33.054417%;top:14.514408%;width:33.904388%;"},"job":{"isShow":false,"style":"position:absolute;left:34.187711%;top:78.121665%;width:65.069981%;height:20.277481%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:70%;width:18.699356%;height:43.649947%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
+  const sTubeMapMdAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:0.046321%;top:69.278997%;width:14.915279%;height:30.825496%"},"sview":{"isShow":true,"style":"position:absolute;left:15.239525%;top:69.070010%;width:17.926128%;height:31.138976%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:33.489897%;top:0.000000%;width:66.238663%;height:100.313480%","vidAutoChange":true,"styleBak":"position:absolute;left:17.284825%;top:38.069063%;width:16.868323%;height:30.455250%"},"map":{"isShow":false,"style":"position:absolute;left:0.185283%;top:42.006270%;width:14.683676%;height:26.541275%"},"name":{"isShow":true,"style":"position:absolute;left:0.046321%;top:0.000000%;width:15.007921%;height:68.861024%"},"city":{"isShow":true,"style":"position:absolute;left:15.239525%;top:0.000000%;width:17.833486%;height:68.234065%"},"date":{"isShow":false,"style":"position:absolute;left:50.072724%;top:0.000000%;width:49.285271%;"},"sex":{"isShow":false,"style":"position:absolute;left:86.156583%;top:22.570533%;width:13.340374%;"},"year":{"isShow":false,"style":"position:absolute;left:50.072724%;top:22.570533%;width:17.277637%;"},"season":{"isShow":false,"style":"position:absolute;left:80.644414%;top:22.570533%;width:5.141603%;"},"week":{"isShow":false,"style":"position:absolute;left:67.767248%;top:22.570533%;width:12.506601%;"},"age":{"isShow":false,"style":"position:absolute;left:50.072724%;top:38.453501%;width:8.615658%;"},"cond":{"isShow":false,"style":"position:absolute;left:62.671966%;top:57.053292%;width:36.547067%;"},"job":{"isShow":false,"style":"position:absolute;left:34.184709%;top:78.160920%;width:65.034324%;height:20.167189%"},"detail":{"isShow":true,"style":"position:absolute;left:0.138962%;top:34.587252%;width:9.171507%;height:33.855799%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
+  const sTubeMapSmAbs =
+    '{"common":{"datepicker":{"position":{}}},"gmap":{"isShow":true,"style":"position:absolute;left:33.148858%;top:54.331551%;width:32.015564%;height:29.411765%"},"sview":{"isShow":true,"style":"position:absolute;left:65.164422%;top:54.331551%;width:33.809947%;height:29.197861%"},"tube":{"isShow":true,"style":"z-index:0;position:absolute;left:32.959976%;top:0.000000%;width:66.864364%;height:53.903743%","vidAutoChange":true,"styleBak":"position:absolute;left:32.959976%;top:0.000000%;width:66.486599%;height:53.796791%"},"map":{"isShow":false,"style":"position:absolute;left:51.659332%;top:54.331551%;width:23.326974%;height:29.625668%"},"name":{"isShow":true,"style":"position:absolute;left:0.000000%;top:0.000000%;width:14.921708%;height:53.475936%"},"city":{"isShow":true,"style":"position:absolute;left:15.110591%;top:0.000000%;width:17.471620%;height:53.582888%"},"date":{"isShow":true,"style":"position:absolute;left:0.188882%;top:84.812834%;width:41.931889%;"},"sex":{"isShow":true,"style":"position:absolute;left:0.000000%;top:67.058824%;width:10.766296%;"},"year":{"isShow":true,"style":"position:absolute;left:0.000000%;top:54.010695%;width:24.082504%;"},"season":{"isShow":true,"style":"position:absolute;left:24.082504%;top:53.903743%;width:9.349678%;"},"week":{"isShow":false,"style":"position:absolute;left:0.283324%;top:67.058824%;width:23.988063%;"},"age":{"isShow":true,"style":"position:absolute;left:11.616267%;top:65.668449%;width:17.849385%;"},"cond":{"isShow":false,"style":"position:absolute;left:0.188882%;top:73.262032%;width:33.621064%;"},"job":{"isShow":true,"style":"position:absolute;left:42.404095%;top:84.385027%;width:55.248097%;height:21.604278%"},"detail":{"isShow":true,"style":"position:absolute;left:0.000000%;top:60.636364%;width:18.699356%;height:34.652406%"},"ana":{"isShow":false},"ex":[{"isShow":false,"style":"position:absolute;left:0%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:25%;top:80%;"},{"isShow":false,"style":"position:absolute;;left:50%;top:80%;"},{"isShow":false,"style":"position:absolute;left:75%;top:80%;"}]}'
 
-  const isSm = window.innerWidth < 1400;
+  const isSm = window.innerWidth < 1400
 
   if (type === 'random') {
     type = mm.util.randWeights({
-      'gmap': 2,
-      'tube': 2,
-      'default': 2,
+      gmap: 2,
+      tube: 2,
+      default: 2,
       '': 1,
-    });
+    })
   }
 
   switch (type) {
     case 'default':
       if (gg.dt === DT_COVID || mm.get.data.indexOf('checkin') === 0) {
-        settingsLoad(isSm ? sDefCovidSmAbs : sDefCovidMdAbs);
+        settingsLoad(isSm ? sDefCovidSmAbs : sDefCovidMdAbs)
       } else if (pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow) {
-        settingsLoad(isSm ? sDefMapSmAbs : sDefMapMdAbs);
+        settingsLoad(isSm ? sDefMapSmAbs : sDefMapMdAbs)
       } else {
-        settingsLoad(isSm ? sDefSmAbs : sDefMdAbs);
+        settingsLoad(isSm ? sDefSmAbs : sDefMdAbs)
       }
-      pnl.gmap.styleBak = null;　// normalモードへ,
-      pnl.sview.styleBak = null; // normalモードへ
-      pnl.tube.styleBak = null; // normalモードへ
-      settingsSave();
-      break;
+      pnl.gmap.styleBak = null // normalモードへ,
+      pnl.sview.styleBak = null // normalモードへ
+      pnl.tube.styleBak = null // normalモードへ
+      settingsSave()
+      break
     case 'gmap':
-      settingsLoad(isSm ? sGMapSmAbs : sGMapMdAbs);
-      pnl.sview.styleBak = null; // normalモードへ
-      pnl.tube.styleBak = null; // normalモードへ
-      settingsSave();
-      break;
+      settingsLoad(isSm ? sGMapSmAbs : sGMapMdAbs)
+      pnl.sview.styleBak = null // normalモードへ
+      pnl.tube.styleBak = null // normalモードへ
+      settingsSave()
+      break
     case 'sview':
-      settingsLoad(isSm ? sSViewSmAbs : sSViewMdAbs);
-      pnl.gmap.styleBak = null;　// normalモードへ,
-      pnl.tube.styleBak = null;　// normalモードへ,
-      settingsSave();
-      break;
+      settingsLoad(isSm ? sSViewSmAbs : sSViewMdAbs)
+      pnl.gmap.styleBak = null // normalモードへ,
+      pnl.tube.styleBak = null // normalモードへ,
+      settingsSave()
+      break
     case 'tube':
       if (isSp) {
-        settingsLoad(isSm ? sTubeSmAbs : sTubeMdAbs);
+        settingsLoad(isSm ? sTubeSmAbs : sTubeMdAbs)
       } else {
         if (pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow) {
-          settingsLoad(isSm ? sTubeMapSmAbs : sTubeMapMdAbs);
+          settingsLoad(isSm ? sTubeMapSmAbs : sTubeMapMdAbs)
         } else {
-          settingsLoad(isSm ? sTubeSmAbs : sTubeMdAbs);
+          settingsLoad(isSm ? sTubeSmAbs : sTubeMdAbs)
         }
       }
-      pnl.gmap.styleBak = null;　// normalモードへ,
-      pnl.sview.styleBak = null;　// normalモードへ,
-      settingsSave();
-      break;
+      pnl.gmap.styleBak = null // normalモードへ,
+      pnl.sview.styleBak = null // normalモードへ,
+      settingsSave()
+      break
   }
   //_.delay(() => mm.onChangeURL('layout', type), 10);
 }
 const onClickStyleReset = () => {
-  const isSm = window.innerWidth < 1400;
-  const isMap = pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow;
-  setPanelXYWH(null, 2);// absolute化
+  const isSm = window.innerWidth < 1400
+  const isMap = pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow
+  setPanelXYWH(null, 2) // absolute化
   _.forEach(pnl, (v, k) => {
     if (v.style) {
       if (k === 'name' || k === 'city') {
         if (isSm || isMap) {
-          v.style = 'height:50%';
+          v.style = 'height:50%'
         } else {
-          v.style = '';
+          v.style = ''
         }
       } else {
-        v.style = v.isShow ? '' : 'display:none';
+        v.style = v.isShow ? '' : 'display:none'
       }
     }
-    if (v?.styleBak !== null) v.styleBak = null;
-  });
+    if (v?.styleBak !== null) v.styleBak = null
+  })
   _.forEach(pnl.ex, (v, k) => {
-    if (v.style) v.style = '';
-    if (v?.styleBak !== null) v.styleBak = null;
-  });
-  if (1) { // absoluteで保存の場合
+    if (v.style) v.style = ''
+    if (v?.styleBak !== null) v.styleBak = null
+  })
+  if (1) {
+    // absoluteで保存の場合
     _.delay(() => {
-      mm.util.initPanelsWH();
-      const maxBottomInfo = setPanelXYWH(null, 2);// absolute化
+      mm.util.initPanelsWH()
+      const maxBottomInfo = setPanelXYWH(null, 2) // absolute化
       // panelsの高さを一番下のChildが収まるように修正
-      const h = parseInt(maxBottomInfo.top) + parseInt(maxBottomInfo.height) + 20;
-      $('#panels').css('height', h + 'px');
-      settingsSave();
-    }, 10);
+      const h = parseInt(maxBottomInfo.top) + parseInt(maxBottomInfo.height) + 20
+      $('#panels').css('height', h + 'px')
+      settingsSave()
+    }, 10)
   } else {
-    settingsSave();
+    settingsSave()
   }
-  $('.dc_panel').removeClass('opacity-80');
+  $('.dc_panel').removeClass('opacity-80')
 }
-
 </script>
 
 <style>
-body, .content-wrapper {
-  font-family: "メイリオ", "ヒラギノ角ゴシックW3", "ＭＳ Ｐゴシック", "Osaka", sans-serif;
+body,
+.content-wrapper {
+  font-family: 'メイリオ', 'ヒラギノ角ゴシックW3', 'ＭＳ Ｐゴシック', 'Osaka', sans-serif;
 }
 
 body {
   font-size: 14px;
 
-  td, th {
+  td,
+  th {
     padding: 0;
   }
 }
@@ -8776,19 +9945,22 @@ body {
 }
 
 .tab-data li {
-  border: 1px solid #AAA;
-  background: #D1D1D1;
+  border: 1px solid #aaa;
+  background: #d1d1d1;
   display: inline-block;
   position: relative;
   z-index: 0;
   border-top-left-radius: 8px;
   border-top-right-radius: 6px;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+  box-shadow:
+    0 3px 3px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 #fff;
   margin: 0 -5px;
   padding: 4px 18px;
 }
 
-.tab-data a, .tab-data a b {
+.tab-data a,
+.tab-data a b {
   text-decoration: none;
 }
 
@@ -8807,44 +9979,44 @@ body {
 
 .tab-data:before {
   position: absolute;
-  content: " ";
+  content: ' ';
   width: 100%;
   bottom: 0;
   left: 0;
-  border-bottom: 1px solid #AAA;
+  border-bottom: 1px solid #aaa;
   z-index: 1;
 }
 
 .tab-data li:before,
 .tab-data li:after {
-  border: 1px solid #AAA;
+  border: 1px solid #aaa;
   position: absolute;
   bottom: -1px;
   width: 5px;
   height: 5px;
-  content: " ";
+  content: ' ';
 }
 
 .tab-data li:before {
   left: -6px;
   border-bottom-right-radius: 6px;
   border-width: 0 1px 1px 0;
-  box-shadow: 2px 2px 0 #D1D1D1;
+  box-shadow: 2px 2px 0 #d1d1d1;
 }
 
 .tab-data li:after {
   right: -6px;
   border-bottom-left-radius: 6px;
   border-width: 0 0 1px 1px;
-  box-shadow: -2px 2px 0 #D1D1D1;
+  box-shadow: -2px 2px 0 #d1d1d1;
 }
 
 .tab-data li.selected:before {
-  box-shadow: 2px 2px 0 #FFF;
+  box-shadow: 2px 2px 0 #fff;
 }
 
 .tab-data li.selected:after {
-  box-shadow: -2px 2px 0 #FFF;
+  box-shadow: -2px 2px 0 #fff;
 }
 
 #loading {
@@ -8900,13 +10072,13 @@ i.fa {
   /*background: #FF8;*/
 }
 
-
 /*jquery-jvectormap*/
 .jvectormap-container svg {
-  background: #EEEEFF;
+  background: #eeeeff;
 }
 
-.jvectormap-zoomout, .jvectormap-zoomin {
+.jvectormap-zoomout,
+.jvectormap-zoomin {
   width: 2em;
   height: 2em;
   line-height: 2em;
@@ -8973,7 +10145,8 @@ i.fa {
   pointer-events: none; /* クロスヘアがマップの操作に影響を与えないように */
 }
 
-.crosshair::before, .crosshair::after {
+.crosshair::before,
+.crosshair::after {
   content: '';
   position: absolute;
   background-color: blue;
@@ -9043,8 +10216,8 @@ i.fa {
 }
 
 #chart_map .ui-widget-header.light {
-  border: 0px solid #FFFFFF;
-  background: #F0F0F0;
+  border: 0px solid #ffffff;
+  background: #f0f0f0;
 }
 
 #chart_map .ui-widget-content {
@@ -9054,13 +10227,12 @@ i.fa {
 }
 
 h4.hdr {
-  color: #EEE;
+  color: #eee;
   margin: 0 0 5px 0;
   background-color: #337ab7;
   /*background-color: #B0B0B0;*/
   padding: 5px 0 5px 15px;
   border-radius: 4px;
-
 }
 
 .hdr_flt {
@@ -9075,8 +10247,9 @@ h4.hdr {
   font-weight: bold;
 }
 
-.filter, .filter_txt {
-  border: 1px solid #AAA;
+.filter,
+.filter_txt {
+  border: 1px solid #aaa;
   padding: 2px;
   padding-top: 1px;
   background-color: yellow;
@@ -9122,7 +10295,7 @@ h4.hdr {
 }
 
 .dc-chart#chart_world g.row text {
-  font-family: "Osaka－等幅", "ＭＳ ゴシック", sans-serif;
+  font-family: 'Osaka－等幅', 'ＭＳ ゴシック', sans-serif;
 }
 
 .dc-chart rect.selected + text {
@@ -9160,7 +10333,7 @@ h4.hdr {
 
 .ui-draggable-dragging {
   background-color: #ffffe0;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -9246,7 +10419,7 @@ image.pl {
 
 .btn_on {
   color: white !important;
-  background: #0075FF !important;
+  background: #0075ff !important;
   box-shadow: 0 -1px #a2a2a2;
   padding: 0 1px 0 1px;
 }
@@ -9258,11 +10431,11 @@ image.pl {
 /* jQueryUI ----------------------------------*/
 
 table.ui-datepicker-calendar tbody td.ui-datepicker-week-end a.ui-state-default {
-  color: #4040FF;
+  color: #4040ff;
 }
 
 table.ui-datepicker-calendar tbody td:first-child a.ui-state-default {
-  color: #FF4040;
+  color: #ff4040;
   font-weight: bold;
 }
 
@@ -9275,7 +10448,7 @@ table.ui-datepicker-calendar tbody td.holiday a.ui-state-default {
 }
 
 .ui-button {
-  padding: .4em .5em !important;
+  padding: 0.4em 0.5em !important;
 }
 
 .ui-button-min {
@@ -9304,15 +10477,15 @@ table.ui-datepicker-calendar tbody td.holiday a.ui-state-default {
 
 .ui-datepicker table {
   /*width: 100%;*/
-  font-size: .7em;
+  font-size: 0.7em;
   /*border-collapse: collapse;*/
-  margin: 0 0 0
+  margin: 0 0 0;
 }
 
 .ui-tooltip {
-  font-family: "メイリオ", "ヒラギノ角ゴシックW3", "ＭＳ Ｐゴシック", "Osaka", sans-serif;
+  font-family: 'メイリオ', 'ヒラギノ角ゴシックW3', 'ＭＳ Ｐゴシック', 'Osaka', sans-serif;
   /*font-size: medium;*/
-  color: #D0D0D0;
+  color: #d0d0d0;
   background: #202020;
   padding: 10px;
   position: absolute;
@@ -9322,7 +10495,8 @@ table.ui-datepicker-calendar tbody td.holiday a.ui-state-default {
   max-width: none;
 }
 
-.ui-icon-big, .fa-icon {
+.ui-icon-big,
+.fa-icon {
   font-size: 1.5em !important;
 }
 
@@ -9333,7 +10507,6 @@ table.ui-datepicker-calendar tbody td.holiday a.ui-state-default {
 a[tt_title] {
   cursor: pointer;
 }
-
 
 path.s1 {
   stroke: #ff0000;
@@ -9422,7 +10595,8 @@ path.campaign {
   border-bottom: 1px solid #202020;
 }
 
-.uicm { /* ui_sortable_col_move */
+.uicm {
+  /* ui_sortable_col_move */
   cursor: move;
 }
 
@@ -9432,7 +10606,7 @@ path.campaign {
   height: 1em;
   margin-right: 1px;
   margin-bottom: -1px;
-  border: 1px solid #F0F0F0;
+  border: 1px solid #f0f0f0;
 }
 
 /**
@@ -9440,7 +10614,7 @@ path.campaign {
  */
 .ui-autocomplete.ui-widget-content {
   /*padding: 10px 20px 15px;*/
-  border: 1px solid #DEDEDE;
+  border: 1px solid #dedede;
   border-radius: 3px;
   box-shadow: 0 10px 10px 2px rgba(0, 0, 0, 0.1);
   z-index: 1000;
@@ -9468,7 +10642,7 @@ path.campaign {
 }
 
 .ac_ex-item .ac_ex-kwd {
-  color: #0000FF;
+  color: #0000ff;
   font-weight: bold;
 }
 
@@ -9478,14 +10652,13 @@ path.campaign {
 
 /* リスト hover 時のカラー */
 .ui-menu-item-wrapper.ui-state-active {
-  border: 1px solid #4B8519;
+  border: 1px solid #4b8519;
   background: rgba(0, 0, 255, 0.5);
   font-weight: normal;
   color: #ffffff;
 }
 
 .data-reference {
-
 }
 
 /* tailwindcss 対応 */
@@ -9499,12 +10672,12 @@ path.campaign {
     border: 1px solid rgb(118, 118, 118);
   }
 
-  a:not(.ui-button,.ui-tabs-anchor) {
+  a:not(.ui-button, .ui-tabs-anchor) {
     text-decoration: none;
     color: blue;
   }
 
-  a:visited:not(.ui-button,.ui-tabs-anchor) {
+  a:visited:not(.ui-button, .ui-tabs-anchor) {
     color: purple;
   }
 }
@@ -9520,9 +10693,9 @@ path.campaign {
     color: mediumpurple;
   }
 
-  input[type="text"],
-  .dt-search input[type="search"],
-  .ui-dialog input[type="search"],
+  input[type='text'],
+  .dt-search input[type='search'],
+  .ui-dialog input[type='search'],
   select {
     color: var(--text-theme-col);
     background: var(--bg-theme-col2);
@@ -9544,7 +10717,8 @@ path.campaign {
     color: cyan;
   }
 
-  .filter, .filter_txt {
+  .filter,
+  .filter_txt {
     color: #1f2937;
   }
 
@@ -9570,8 +10744,8 @@ path.campaign {
     /*fill: #F0F0F0;*/
     /*mix-blend-mode: difference;*/
 
-    color: #F0F0F0;
-    fill: #F0F0F0;
+    color: #f0f0f0;
+    fill: #f0f0f0;
   }
 
   .dc-chart g.dc-legend g.sel text {
@@ -9583,8 +10757,8 @@ path.campaign {
     /*fill: #E0E0E0;*/
     /*mix-blend-mode: difference;*/
 
-    color: #F0F0F0;
-    fill: #F0F0F0;
+    color: #f0f0f0;
+    fill: #f0f0f0;
   }
 
   .dc-chart rect.selected + text {
@@ -9597,8 +10771,8 @@ path.campaign {
 
   .dc-chart text,
   .dc-chart .axis text {
-    fill: #F0F0F0;
-    color: #F0F0F0;
+    fill: #f0f0f0;
+    color: #f0f0f0;
   }
 
   .dc-chart rect.deselected {
@@ -9623,7 +10797,7 @@ path.campaign {
 
   .ui-draggable-dragging {
     background-color: #1f78b4;
-    border: 1px solid #CCC;
+    border: 1px solid #ccc;
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.8);
   }
 
@@ -9671,9 +10845,22 @@ path.campaign {
 /*===========================================================================*/
 @media screen and (min-width: 768px) {
   /* md: 768px以上 */
-  .dc-chart text, .dc-chart .axis text {
-    font-family: apple color emoji, segoe ui emoji, noto color emoji, android emoji, emojisymbols, emojione mozilla, twemoji mozilla, segoe ui symbol,
-    "メイリオ", "ヒラギノ角ゴシックW3", "ＭＳ Ｐゴシック", "Osaka", sans-serif;
+  .dc-chart text,
+  .dc-chart .axis text {
+    font-family:
+      apple color emoji,
+      segoe ui emoji,
+      noto color emoji,
+      android emoji,
+      emojisymbols,
+      emojione mozilla,
+      twemoji mozilla,
+      segoe ui symbol,
+      'メイリオ',
+      'ヒラギノ角ゴシックW3',
+      'ＭＳ Ｐゴシック',
+      'Osaka',
+      sans-serif;
   }
 
   #loading i {
@@ -9776,7 +10963,6 @@ path.campaign {
   }
 
   #chart_year {
-
   }
 
   #chart_week {
@@ -9784,11 +10970,9 @@ path.campaign {
   }
 
   #chart_age {
-
   }
 
   #panel_cond {
-
   }
 
   #panel_job {
@@ -9797,7 +10981,6 @@ path.campaign {
   }
 
   #panel_detail {
-
   }
 
   #panel_ana {
@@ -9850,7 +11033,15 @@ path.campaign {
   }
 
   .emj {
-    font-family: apple color emoji, segoe ui emoji, noto color emoji, android emoji, emojisymbols, emojione mozilla, twemoji mozilla, segoe ui symbol !important;
+    font-family:
+      apple color emoji,
+      segoe ui emoji,
+      noto color emoji,
+      android emoji,
+      emojisymbols,
+      emojione mozilla,
+      twemoji mozilla,
+      segoe ui symbol !important;
   }
 }
 
@@ -9858,7 +11049,7 @@ path.campaign {
 
 /*===========================================================================*/
 @media screen and (max-width: 768px) {
-  　 /* sm: 768px未満 */
+  /* sm: 768px未満 */
   .sp_icon {
     font-size: 1em !important;
   }
@@ -9992,7 +11183,8 @@ path.campaign {
     width: 100%;
   }
 
-  .filter, .filter_txt {
+  .filter,
+  .filter_txt {
     max-width: 4em;
   }
 
