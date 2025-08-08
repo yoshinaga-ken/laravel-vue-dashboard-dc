@@ -1,19 +1,38 @@
 {
     "compilerOptions": {
+        "target": "ES2020",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "strict": true,
+        "jsx": "preserve",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "useDefineForClassFields": true,
+        "skipLibCheck": true,
         "baseUrl": ".",
         "paths": {
             "@/*": ["resources/js/*"]
         },
         "typeRoots": [
-          "./node_modules/@types"
-        ],
-        "types": [
-          "google.maps"
+            "./node_modules/@types"
         ],
         "lib": [
-            "dom",
+            "DOM",
+            "DOM.Iterable",
             "ES2020"
         ]
     },
-    "exclude": ["node_modules", "public"]
+    "include": [
+        "resources/js/**/*.ts",
+        "resources/js/**/*.vue",
+        "vite.config.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "public",
+        "vendor",
+        "storage",
+        "storybook-static"
+    ]
 }

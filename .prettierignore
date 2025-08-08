@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+public/build/
+storybook-static/
+dist/
+coverage/
+
+# Cache
+bootstrap/cache/
+storage/
+
+# Generated files
+resources/js/Types/types-graphql.d.ts
+
+# Compiled assets
+public/js/
+public/css/
+public/mix-manifest.json
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Other
+*.min.js
+*.min.css
