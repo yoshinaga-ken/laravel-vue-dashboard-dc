@@ -1,0 +1,8 @@
+---
+description: ""
+applyTo: "**"
+---
+
+# Laravel + Vue3 + Inertia.js + Jetstream プロジェクト構造ガイド
+
+(Write your rules here)

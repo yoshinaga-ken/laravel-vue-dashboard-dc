@@ -18,7 +18,8 @@
     "lint:fix": "eslint 'resources/js/Composables/*.ts' 'resources/js/Types/*.ts' 'resources/js/Components/*.vue' 'resources/js/Pages/Articles/**/*.vue' 'resources/js/Pages/Users/**/*.vue' --fix",
     "format": "prettier --write resources/js/",
     "lint-staged": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "rulesync": "npx rulesync generate --cursor && npx rulesync generate --copilot && npx rulesync generate --claudecode"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.0",
