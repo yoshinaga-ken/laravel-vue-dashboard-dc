@@ -1,12 +1,12 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test'
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-import dotenv from 'dotenv';
-import path from 'path';
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+import dotenv from 'dotenv'
+import path from 'path'
+dotenv.config({ path: path.resolve(__dirname, '../.env') })
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -20,7 +20,11 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : (process.env.E2E_WORKERS ? parseInt(process.env.E2E_WORKERS) : undefined),
+  workers: process.env.CI
+    ? 1
+    : process.env.E2E_WORKERS
+      ? parseInt(process.env.E2E_WORKERS)
+      : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'line',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -35,14 +39,18 @@ export default defineConfig({
     /* Capture screenshot when retrying the failed test. See https://playwright.dev/docs/trace-viewer#screenshots */
     screenshot: process.env.APP_ENV === 'local' ? 'only-on-failure' : 'off',
     /* Record video when retrying the failed test. */
-    video: process.env.PWVIDEO ? 'on' : (process.env.APP_ENV === 'local' ? 'retain-on-failure' : 'off'),
+    video: process.env.PWVIDEO
+      ? 'on'
+      : process.env.APP_ENV === 'local'
+        ? 'retain-on-failure'
+        : 'off',
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      testMatch: ['articles/*.spec.ts'],
+      testMatch: ['articles/*.spec.ts', 'teams/*.spec.ts'],
       use: { ...devices['Desktop Chrome'] },
     },
 
@@ -74,6 +82,7 @@ export default defineConfig({
     {
       name: 'Mobile Safari',
       use: { ...devices['iPhone 12'] },
+      testMatch: ['articles/*.spec.ts', 'teams/*.spec.ts'],
     },
 
     /* Test against branded browsers. */
@@ -93,4 +102,4 @@ export default defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
+})

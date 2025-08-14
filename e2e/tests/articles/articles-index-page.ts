@@ -32,7 +32,7 @@ export class ArticlesIndexPage extends BasePage {
     await this.clickCreateArticle();
 
     await this.page.locator('input#title').fill(title);
-    await this.page.locator('input#body').fill(body);
+    await this.page.locator('#body').fill(body);
 
     await this.page.getByRole('button', { name: 'Create' }).click();
 
@@ -47,7 +47,7 @@ export class ArticlesIndexPage extends BasePage {
     await this.goto(`/articles/${id}/edit`);
 
     await this.page.locator('input#title').fill(title);
-    await this.page.locator('input#body').fill(body);
+    await this.page.locator('#body').fill(body);
 
     await this.page.getByRole('button', { name: 'Save' }).click();
 
