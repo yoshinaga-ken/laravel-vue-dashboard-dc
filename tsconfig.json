@@ -1,38 +1,27 @@
 {
-    "compilerOptions": {
-        "target": "ES2020",
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "strict": true,
-        "jsx": "preserve",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "forceConsistentCasingInFileNames": true,
-        "useDefineForClassFields": true,
-        "skipLibCheck": true,
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["resources/js/*"]
-        },
-        "typeRoots": [
-            "./node_modules/@types"
-        ],
-        "lib": [
-            "DOM",
-            "DOM.Iterable",
-            "ES2020"
-        ]
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["resources/js/*"]
     },
-    "include": [
-        "resources/js/**/*.ts",
-        "resources/js/**/*.vue",
-        "vite.config.js"
-    ],
-    "exclude": [
-        "node_modules",
-        "public",
-        "vendor",
-        "storage",
-        "storybook-static"
-    ]
+    "typeRoots": ["./node_modules/@types"],
+    "lib": ["DOM", "DOM.Iterable", "ES2020"]
+  },
+  "include": [
+    "resources/js/**/*.ts",
+    "resources/js/**/*.d.ts",
+    "resources/js/**/*.vue",
+    "vite.config.js"
+  ],
+  "exclude": ["node_modules", "public", "vendor", "storage", "storybook-static"]
 }

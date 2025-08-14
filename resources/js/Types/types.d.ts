@@ -9,6 +9,13 @@ export interface User {
   is_followed_by: boolean
   followers: Array<User>
   following: Array<User>
+
+  // Jetstream チーム関連フィールド
+  current_team?: {
+    id: number
+    name: string
+    personal_team: boolean
+  }
 }
 
 export interface Tag {
