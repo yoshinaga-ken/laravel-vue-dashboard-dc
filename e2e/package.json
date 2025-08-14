@@ -8,6 +8,8 @@
     "test:mobile": "npx playwright test --project=\"Mobile Safari\"",
     "test:chrome:video": "cross-env PWVIDEO=1 npx playwright test --project=chromium",
     "test:mobile:video": "cross-env PWVIDEO=1 npx playwright test --project=\"Mobile Safari\"",
+    "test:chrome:video:grep": "cross-env PWVIDEO=1 npx playwright test --project=chromium --grep",
+    "test:mobile:video:grep": "cross-env PWVIDEO=1 npx playwright test --project=\"Mobile Safari\" --grep",
     "test:storybook": "npx playwright test --project=storybook-chromium",
     "test:storybook:video": "cross-env PWVIDEO=1 npx playwright test --project=storybook-chromium",
     "test:storybook:interaction:video": "cross-env PWVIDEO=1 npx playwright test --project=storybook-chromium --grep \"InteractionTest\"",
