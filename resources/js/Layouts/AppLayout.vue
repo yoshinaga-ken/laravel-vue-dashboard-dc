@@ -138,6 +138,9 @@ const onclickGraphQL = () => {
                         Team Settings
                       </DropdownLink>
 
+                      <!-- Team List -->
+                      <DropdownLink :href="route('teams.index')"> 👥 View All Teams </DropdownLink>
+
                       <DropdownLink
                         v-if="$page.props.jetstream.canCreateTeams"
                         :href="route('teams.create')"
@@ -395,6 +398,14 @@ const onclickGraphQL = () => {
                   :active="route().current('teams.show')"
                 >
                   Team Settings
+                </ResponsiveNavLink>
+
+                <!-- Team List -->
+                <ResponsiveNavLink
+                  :href="route('teams.index')"
+                  :active="route().current('teams.index')"
+                >
+                  👥 View All Teams
                 </ResponsiveNavLink>
 
                 <ResponsiveNavLink
