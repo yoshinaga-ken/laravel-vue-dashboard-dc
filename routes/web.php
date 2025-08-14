@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -41,4 +42,7 @@ Route::middleware([
     Route::get('/dashboard-dc', function () {
         return Inertia::render('DashboardDc');
     })->name('dashboard-dc');
+
+    // チーム一覧
+    Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
 });
