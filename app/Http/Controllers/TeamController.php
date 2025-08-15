@@ -153,23 +153,23 @@ class TeamController extends Controller
                     'email' => $team->owner->email,
                 ],
             ];
-            
+
             // オーナーかどうか
             $teamData['is_owner'] = $team->user_id === $user->id;
-            
+
             // 現在のチームかどうか
             $teamData['is_current'] = $user->currentTeam && $user->currentTeam->id === $team->id;
-            
+
             // ユーザーの役割
             $teamData['user_role'] = $team->user_id === $user->id ? 'owner' : 'member';
-            
+
             // 権限情報
             $teamData['permissions'] = [
                 'canView' => Gate::check('view', $team),
                 'canUpdate' => Gate::check('update', $team),
                 'canDelete' => Gate::check('delete', $team) && !$team->personal_team,
             ];
-            
+
             return $teamData;
         })->toArray();
 
@@ -198,6 +198,7 @@ class TeamController extends Controller
                 'to' => $teams->lastItem(),
             ],
             'jetstream' => [
+                'hasTeamFeatures' => Jetstream::userHasTeamFeatures($user),
                 'canCreateTeams' => Jetstream::userHasTeamFeatures($user) && Gate::check('create', Jetstream::newTeamModel()),
             ],
         ]);
