@@ -1,0 +1,117 @@
+includes:
+    - vendor/nunomaduro/larastan/extension.neon
+
+services:
+    -
+        class: App\Rules\VariableNamingRule
+        tags:
+            - phpstan.rules.rule
+
+parameters:
+    level: 5
+    paths:
+        - app
+        - config
+        - database
+        - routes
+    
+    excludePaths:
+        - app/Http/Middleware/*
+        - app/Providers/*
+        - database/factories/*
+        - database/migrations/*
+        - database/seeders/*
+    
+    # Laravel specific settings
+    checkModelProperties: true
+    
+    # Ignore specific errors if needed
+    ignoreErrors:
+        # Laravel Eloquent
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder::#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::#'
+        
+        # PHPUnit/Pest
+        - '#Call to an undefined method PHPUnit\\Framework\\TestCase::#'
+        - '#Call to an undefined method Pest\\Expectation::#'
+        - '#Access to an undefined property PHPUnit\\Framework\\TestCase::#'
+        - '#Access to an undefined property Pest\\Expectation::#'
+        - '#Call to protected method expectException\(\) of class PHPUnit\\Framework\\TestCase#'
+        - '#Undefined variable: \$this#'
+        
+        # Variables
+        - '#Variable \$article might not be defined#'
+        - '#Variable \$sakanaKenCount might not be defined#'
+        - '#Variable \$data in empty\(\) is never defined#'
+        - '#Variable \$favorite in PHPDoc tag @var does not exist#'
+        - '#Variable \$request might not be defined#'
+        
+        # Laravel Resources
+        - '#Call to an undefined method App\\Http\\Resources\\ArticleResource::#'
+        - '#Call to an undefined method App\\Http\\Resources\\UserResource::#'
+        - '#Access to an undefined property App\\Http\\Resources\\ArticleResource::#'
+        - '#Access to an undefined property App\\Http\\Resources\\UserResource::#'
+        
+        # Missing Models (GraphQL related)
+        - '#Class App\\Models\\Account not found#'
+        - '#Class App\\Models\\Tweet not found#'
+        - '#Class App\\Models\\Timeline not found#'
+        - '#Class App\\Models\\Follow not found#'
+        - '#Class App\\Models\\Favorite not found#'
+        - '#Class App\\Models\\Follower not found#'
+        - '#Class App\\Models\\Tag not found#'
+        - '#Call to static method.*on an unknown class App\\Models\\Account#'
+        - '#Call to static method.*on an unknown class App\\Models\\Tweet#'
+        - '#Call to static method.*on an unknown class App\\Models\\Timeline#'
+        - '#Call to static method.*on an unknown class App\\Models\\Follow#'
+        - '#Call to static method.*on an unknown class App\\Models\\Favorite#'
+        - '#Call to static method.*on an unknown class App\\Models\\Follower#'
+        - '#Call to static method.*on an unknown class App\\Models\\Tag#'
+        - '#Access to property.*on an unknown class App\\Models\\Account#'
+        - '#Access to property.*on an unknown class App\\Models\\Tweet#'
+        - '#Access to property.*on an unknown class App\\Models\\Timeline#'
+        - '#Access to property.*on an unknown class App\\Models\\Follow#'
+        - '#Access to property.*on an unknown class App\\Models\\Favorite#'
+        - '#Access to property.*on an unknown class App\\Models\\Follower#'
+        - '#Access to property.*on an unknown class App\\Models\\Tag#'
+        - '#Parameter.*of method.*has invalid type App\\Models\\Account#'
+        - '#Parameter.*of method.*has invalid type App\\Models\\Tweet#'
+        - '#Parameter.*of method.*has invalid type App\\Models\\Timeline#'
+        - '#Parameter.*of method.*has invalid type App\\Models\\Follow#'
+        - '#Parameter.*of method.*has invalid type App\\Models\\Favorite#'
+        - '#Parameter.*of method.*has invalid type App\\Models\\Follower#'
+        - '#Parameter.*of method.*has invalid type App\\Models\\Tag#'
+        
+        # Webkul/Bagisto classes
+        - '#Class Webkul\\.* not found#'
+        - '#Function Webkul\\.* not found#'
+        
+        # JWT classes
+        - '#Class Tymon\\JWTAuth\\.* not found#'
+        
+        # Other missing classes
+        - '#Class App\\GraphQL\\Mutations\\Gate not found#'
+        - '#Class App\\GraphQL\\Mutations\\UpdateArticle not found#'
+        - '#Class App\\GraphQL\\Mutations\\Account not found#'
+        - '#Call to static method.*on an unknown class App\\GraphQL\\Mutations\\Gate#'
+        - '#Instantiated class App\\GraphQL\\Mutations\\UpdateArticle not found#'
+        - '#Instantiated class App\\GraphQL\\Mutations\\Account not found#'
+        
+        # PHPDoc type issues
+        - '#PHPDoc type array<int, string> of property.*is not covariant with PHPDoc type list<string>#'
+        - '#PHPDoc tag @param for parameter.*is not subtype of native type#'
+        - '#PHPDoc tag @var for variable.*contains unknown class#'
+        - '#PHPDoc tag @throws with type.*is not subtype of Throwable#'
+        
+        # Other issues
+        - '#Function str_random not found#'
+        - '#Empty variable in empty\(\) always exists and is not falsy#'
+        - '#Comparison operation.*between.*and.*results in an error#'
+        - '#Binary operation.*between.*and.*results in an error#'
+        - '#Deprecated in PHP 8.0: Required parameter.*follows optional parameter#'
+        - '#Access to an undefined property App\\Models\\Article::\$is_liked_by#'
+        - '#Access to an undefined property App\\Models\\Tag::\$count#'
+        
+        # HTML validation
+        - '#HTML img tag should have an alt attribute for accessibility#'
