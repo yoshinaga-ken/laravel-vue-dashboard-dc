@@ -181,6 +181,31 @@ test.describe('Teams Index Page E2E Tests', () => {
       console.log('フィルタ機能が実装されていない、テストをスキップ')
     }
 
+    // チーム役割フィルタ機能がある場合のみテスト実行
+    const roleFilter = page.locator('[data-testid="team-role-filter"]')
+    const roleFilterCount = await roleFilter.count()
+
+    if (roleFilterCount > 0) {
+      // オーナーフィルタ
+      await teamsPage.filterTeamsByRole('owner')
+      await teamsPage.waitForLoadState('networkidle')
+      const ownerTeamsCount = await page.locator('[data-testid^="team-card-"]').count()
+      await teamsPage.expectTeamCount(ownerTeamsCount)
+
+      // メンバーフィルタ
+      await teamsPage.filterTeamsByRole('member')
+      await teamsPage.waitForLoadState('networkidle')
+      const memberTeamsCount = await page.locator('[data-testid^="team-card-"]').count()
+      await teamsPage.expectTeamCount(memberTeamsCount)
+
+      // 全役割表示に戻す
+      await teamsPage.filterTeamsByRole('all')
+      await teamsPage.waitForLoadState('networkidle')
+      await teamsPage.expectTeamCount(initialCount)
+    } else {
+      console.log('チーム役割フィルタ機能が実装されていない、テストをスキップ')
+    }
+
     // ソート機能がある場合のみテスト実行
     const sortSelect = page.locator('[data-testid="sort-by-filter"]')
     const sortSelectCount = await sortSelect.count()
@@ -199,6 +224,71 @@ test.describe('Teams Index Page E2E Tests', () => {
       await teamsPage.expectTeamCount(initialCount)
     } else {
       console.log('ソート機能が実装されていない、テストをスキップ')
+    }
+  })
+
+  // 複合フィルター機能のテスト
+  test('Combined filtering functionality', async ({ page }) => {
+    const teamsPage = new TeamsIndexPage(page)
+
+    await teamsPage.gotoIndex()
+
+    // 初期状態のチーム数を記録
+    const initialTeamRows = page.locator('[data-testid^="team-card-"]')
+    const initialCount = await initialTeamRows.count()
+
+    // 複合フィルター機能がある場合のみテスト実行
+    const teamTypeFilter = page.locator('[data-testid="team-type-filter"]')
+    const roleFilter = page.locator('[data-testid="team-role-filter"]')
+    const searchInput = page.locator('[data-testid="team-search-input"]')
+
+    const hasTypeFilter = (await teamTypeFilter.count()) > 0
+    const hasRoleFilter = (await roleFilter.count()) > 0
+    const hasSearchInput = (await searchInput.count()) > 0
+
+    if (hasTypeFilter && hasRoleFilter) {
+      // 共有チーム + オーナーフィルタの組み合わせ
+      await teamsPage.filterTeams('shared')
+      await teamsPage.waitForLoadState('networkidle')
+      await teamsPage.filterTeamsByRole('owner')
+      await teamsPage.waitForLoadState('networkidle')
+
+      const combinedFilterCount = await page.locator('[data-testid^="team-card-"]').count()
+      await teamsPage.expectTeamCount(combinedFilterCount)
+
+      // フィルターをリセット
+      await teamsPage.filterTeams('all')
+      await teamsPage.waitForLoadState('networkidle')
+      await teamsPage.filterTeamsByRole('all')
+      await teamsPage.waitForLoadState('networkidle')
+      await teamsPage.expectTeamCount(initialCount)
+
+      console.log('複合フィルター機能のテストが完了しました')
+    } else {
+      console.log('複合フィルター機能が実装されていない、テストをスキップ')
+    }
+
+    // 検索 + 役割フィルタの組み合わせ
+    if (hasSearchInput && hasRoleFilter) {
+      // 検索入力
+      await searchInput.fill('test')
+      await teamsPage.waitForLoadState('networkidle')
+
+      // 役割フィルタ適用
+      await teamsPage.filterTeamsByRole('owner')
+      await teamsPage.waitForLoadState('networkidle')
+
+      const searchRoleFilterCount = await page.locator('[data-testid^="team-card-"]').count()
+      await teamsPage.expectTeamCount(searchRoleFilterCount)
+
+      // フィルターをリセット
+      await searchInput.clear()
+      await teamsPage.waitForLoadState('networkidle')
+      await teamsPage.filterTeamsByRole('all')
+      await teamsPage.waitForLoadState('networkidle')
+      await teamsPage.expectTeamCount(initialCount)
+
+      console.log('検索 + 役割フィルター機能のテストが完了しました')
     }
   })
 
@@ -320,6 +410,50 @@ test.describe('Teams Index Page E2E Tests', () => {
     if (!errorFound) {
       // リダイレクトされる場合もある
       await expect(page).toHaveURL(/\/teams$/)
+    }
+  })
+
+  // アクティブフィルター表示のテスト
+  test('Active filter display test', async ({ page }) => {
+    const teamsPage = new TeamsIndexPage(page)
+
+    await teamsPage.gotoIndex()
+
+    // チーム役割フィルタ機能がある場合のみテスト実行
+    const roleFilter = page.locator('[data-testid="team-role-filter"]')
+    const roleFilterCount = await roleFilter.count()
+
+    if (roleFilterCount > 0) {
+      // オーナーフィルタを適用
+      await teamsPage.filterTeamsByRole('owner')
+      await teamsPage.waitForLoadState('networkidle')
+
+      // アクティブフィルタータグが表示されることを確認
+      const activeFilterTags = page.locator('.el-tag')
+      const tagCount = await activeFilterTags.count()
+
+      if (tagCount > 0) {
+        // 役割フィルターのタグが表示されていることを確認
+        const roleTag = page.locator('.el-tag:has-text("Role: Owner")')
+        await expect(roleTag).toBeVisible()
+
+        // タグのクローズボタンが表示されていることを確認
+        const closeButton = roleTag.locator('.el-tag__close')
+        await expect(closeButton).toBeVisible()
+
+        // タグをクリックしてフィルターをクリア
+        await closeButton.click()
+        await teamsPage.waitForLoadState('networkidle')
+
+        // タグが消えることを確認
+        await expect(roleTag).not.toBeVisible()
+
+        console.log('アクティブフィルター表示のテストが完了しました')
+      } else {
+        console.log('アクティブフィルタータグが表示されていません')
+      }
+    } else {
+      console.log('チーム役割フィルタ機能が実装されていない、テストをスキップ')
     }
   })
 

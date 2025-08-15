@@ -120,6 +120,61 @@ test('teams can be filtered by type', function () {
         );
 });
 
+test('teams can be filtered by role', function () {
+    // チーム役割によるフィルターが機能する
+    $owner = User::factory()->withPersonalTeam()->create();
+    $member = User::factory()->create();
+
+    // オーナーが所有するチームを作成
+    $ownedTeam = Jetstream::newTeamModel()->forceFill([
+        'name' => 'Owned Team',
+        'user_id' => $owner->id,
+        'personal_team' => false,
+    ]);
+    $ownedTeam->save();
+
+    // メンバーが参加するチームを作成
+    $memberTeam = Jetstream::newTeamModel()->forceFill([
+        'name' => 'Member Team',
+        'user_id' => $member->id,
+        'personal_team' => false,
+    ]);
+    $memberTeam->save();
+
+    // メンバーをチームに追加
+    $memberTeam->users()->attach($owner->id);
+
+    // オーナーフィルター - オーナーが所有するチームのみ表示
+    $this->actingAs($owner)
+        ->get('/teams?role_filter=owner')
+        ->assertInertia(fn ($page) => $page
+            ->where('teams', fn ($teams) =>
+                collect($teams)->every(fn ($team) => $team['is_owner'] === true)
+            )
+            ->where('filters.role_filter', 'owner')
+        );
+
+    // メンバーフィルター - メンバーとして参加しているチームのみ表示
+    $this->actingAs($owner)
+        ->get('/teams?role_filter=member')
+        ->assertInertia(fn ($page) => $page
+            ->where('teams', fn ($teams) =>
+                collect($teams)->every(fn ($team) => $team['is_owner'] === false)
+            )
+            ->where('filters.role_filter', 'member')
+        );
+
+    // 全役割フィルター - 全てのチームを表示
+    $this->actingAs($owner)
+        ->get('/teams?role_filter=all')
+        ->assertInertia(fn ($page) => $page
+            ->where('teams', fn ($teams) =>
+                collect($teams)->count() >= 3 // personal + owned + member team
+            )
+            ->where('filters.role_filter', 'all')
+        );
+});
+
 test('teams list supports pagination', function () {
     // ページネーション機能が正常に動作する
     $user = User::factory()->withPersonalTeam()->create();
@@ -258,6 +313,70 @@ test('teams index provides correct statistics', function () {
             ->where('stats.filtered', 5) // shared teams only
             ->where('stats.showing', 5)
         );
+
+    // 役割フィルター適用時の統計
+    $this->actingAs($user)
+        ->get('/teams?role_filter=owner')
+        ->assertInertia(fn ($page) => $page
+            ->where('stats.total', 6)
+            ->where('stats.filtered', 6) // all teams (personal + 5 owned)
+            ->where('stats.showing', 6)
+        );
+});
+
+test('teams can be filtered by multiple criteria', function () {
+    // 複数のフィルター条件を組み合わせたフィルタリングが機能する
+    $owner = User::factory()->withPersonalTeam()->create();
+    $member = User::factory()->create();
+
+    // オーナーが所有する共有チームを作成
+    $ownedSharedTeam = Jetstream::newTeamModel()->forceFill([
+        'name' => 'Owned Shared Team',
+        'user_id' => $owner->id,
+        'personal_team' => false,
+    ]);
+    $ownedSharedTeam->save();
+
+    // メンバーが所有する共有チームを作成
+    $memberOwnedTeam = Jetstream::newTeamModel()->forceFill([
+        'name' => 'Member Owned Team',
+        'user_id' => $member->id,
+        'personal_team' => false,
+    ]);
+    $memberOwnedTeam->save();
+
+    // オーナーをメンバーが所有するチームに追加
+    $memberOwnedTeam->users()->attach($owner->id);
+
+    // 検索 + タイプ + 役割フィルターの組み合わせ
+    $this->actingAs($owner)
+        ->get('/teams?search=Owned&type=shared&role_filter=owner')
+        ->assertInertia(fn ($page) => $page
+            ->where('teams', fn ($teams) =>
+                collect($teams)->every(fn ($team) => 
+                    str_contains($team['name'], 'Owned') &&
+                    $team['personal_team'] === false &&
+                    $team['is_owner'] === true
+                )
+            )
+            ->where('filters.search', 'Owned')
+            ->where('filters.type', 'shared')
+            ->where('filters.role_filter', 'owner')
+        );
+
+    // 検索 + 役割フィルターの組み合わせ
+    $this->actingAs($owner)
+        ->get('/teams?search=Member&role_filter=member')
+        ->assertInertia(fn ($page) => $page
+            ->where('teams', fn ($teams) =>
+                collect($teams)->every(fn ($team) => 
+                    str_contains($team['name'], 'Member') &&
+                    $team['is_owner'] === false
+                )
+            )
+            ->where('filters.search', 'Member')
+            ->where('filters.role_filter', 'member')
+        );
 });
 
 test('teams index handles large datasets efficiently', function () {
@@ -285,4 +404,75 @@ test('teams index handles large datasets efficiently', function () {
 
     // 2秒以内で応答することを確認
     expect($executionTime)->toBeLessThan(2.0);
+});
+
+test('role filter handles edge cases correctly', function () {
+    // 役割フィルターのエッジケースを正しく処理する
+    $user = User::factory()->withPersonalTeam()->create();
+
+    // 無効な役割フィルター値
+    $this->actingAs($user)
+        ->get('/teams?role_filter=invalid')
+        ->assertInertia(fn ($page) => $page
+            ->where('filters.role_filter', 'invalid') // 無効な値でもフィルターとして保持
+        );
+
+    // 空の役割フィルター値
+    $response = $this->actingAs($user)->get('/teams?role_filter=');
+    $response->assertInertia(fn ($page) => $page
+        ->where('filters.role_filter', null) // 空文字列はnullに変換される
+    );
+
+    // 役割フィルターなし（デフォルト値）
+    $this->actingAs($user)
+        ->get('/teams')
+        ->assertInertia(fn ($page) => $page
+            ->where('filters.role_filter', 'all') // デフォルト値
+        );
+});
+
+test('role filter works with member count filter', function () {
+    // 役割フィルターとメンバー数フィルターの組み合わせが機能する
+    $owner = User::factory()->withPersonalTeam()->create();
+    $member1 = User::factory()->create();
+    $member2 = User::factory()->create();
+
+    // オーナーが所有する1人チーム（personal team）
+    // オーナーが所有する複数人チーム
+    $multiMemberTeam = Jetstream::newTeamModel()->forceFill([
+        'name' => 'Multi Member Team',
+        'user_id' => $owner->id,
+        'personal_team' => false,
+    ]);
+    $multiMemberTeam->save();
+    $multiMemberTeam->users()->attach([$member1->id, $member2->id]);
+
+    // 役割フィルター + メンバー数フィルターの組み合わせ
+    $this->actingAs($owner)
+        ->get('/teams?role_filter=owner&member_count=1')
+        ->assertInertia(fn ($page) => $page
+            ->where('teams', fn ($teams) =>
+                collect($teams)->every(fn ($team) => 
+                    $team['is_owner'] === true &&
+                    $team['members_count'] === 1
+                )
+            )
+            ->where('filters.role_filter', 'owner')
+            ->where('filters.member_count', '1')
+        );
+
+    // 役割フィルター + メンバー数フィルター（複数人）
+    $this->actingAs($owner)
+        ->get('/teams?role_filter=owner&member_count=2-5')
+        ->assertInertia(fn ($page) => $page
+            ->where('teams', fn ($teams) =>
+                collect($teams)->every(fn ($team) => 
+                    $team['is_owner'] === true &&
+                    $team['members_count'] >= 2 &&
+                    $team['members_count'] <= 5
+                )
+            )
+            ->where('filters.role_filter', 'owner')
+            ->where('filters.member_count', '2-5')
+        );
 });

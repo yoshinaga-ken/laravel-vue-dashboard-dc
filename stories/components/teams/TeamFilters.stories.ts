@@ -26,6 +26,7 @@ const meta = {
 
 - **検索入力**: チーム名による文字列検索（300ms デバウンス処理）
 - **チームタイプフィルター**: 個人チーム、共有チーム、現在チームでの絞り込み
+- **チーム役割フィルター**: オーナー、メンバーでの絞り込み
 - **メンバー数フィルター**: メンバー数範囲による絞り込み
 - **並び替え**: 名前、作成日、メンバー数での並び替え
 - **アクティブフィルター表示**: 現在適用中のフィルターをタグ形式で表示
@@ -39,6 +40,11 @@ const meta = {
 - **Personal Teams**: 個人チーム
 - **Shared Teams**: 共有チーム
 - **Current Team**: 現在選択中のチーム
+
+### チーム役割
+- **All Roles**: 全ての役割
+- **Owner**: オーナーのチームのみ
+- **Member**: メンバーとして参加しているチームのみ
 
 ### メンバー数
 - **1 member**: 1名のみ
@@ -71,6 +77,7 @@ type Story = StoryObj<typeof meta>
 const createMockFilters = (overrides = {}) => ({
   search: '',
   type: 'all',
+  roleFilter: 'all',
   memberCount: '',
   sortBy: 'created_desc',
   ...overrides,
@@ -91,6 +98,7 @@ function renderFilterState() {
       <div class="text-xs text-gray-600 space-y-1">
         <div><strong>Search:</strong> "{{ currentFilters.search || '(なし)' }}"</div>
         <div><strong>Type:</strong> {{ currentFilters.type }}</div>
+        <div><strong>Role:</strong> {{ currentFilters.roleFilter }}</div>
         <div><strong>Member Count:</strong> {{ currentFilters.memberCount || '(なし)' }}</div>
         <div><strong>Sort By:</strong> {{ currentFilters.sortBy }}</div>
         <div><strong>変更回数:</strong> {{ changeCount }}</div>
@@ -109,7 +117,7 @@ const descriptions = {
   withInitialFilters: `
 ### 初期フィルター設定
 
-検索キーワードとタイプフィルターが初期設定されている状態です。
+検索キーワード、タイプフィルター、役割フィルターが初期設定されている状態です。
   `,
   withSearchResults: `
 ### 検索結果表示
@@ -188,6 +196,7 @@ export const WithInitialFilters: Story = {
     filters: createMockFilters({
       search: 'development',
       type: 'shared',
+      roleFilter: 'owner',
     }),
     resultStats: createMockResultStats({
       showing: 8,
@@ -301,6 +310,7 @@ export const AllFiltersActive: Story = {
     filters: createMockFilters({
       search: 'project alpha',
       type: 'shared',
+      roleFilter: 'member',
       memberCount: '6-10',
       sortBy: 'members_desc',
     }),
@@ -410,6 +420,7 @@ export const FilteredResults: Story = {
     filters: createMockFilters({
       search: 'backend',
       type: 'shared',
+      roleFilter: 'owner',
     }),
     resultStats: createMockResultStats({
       showing: 12,
@@ -423,6 +434,66 @@ export const FilteredResults: Story = {
     docs: {
       description: {
         story: descriptions.filteredResults,
+      },
+    },
+  },
+  render: args => ({
+    components: { TeamFilters },
+    setup() {
+      const currentFilters = ref(args.filters)
+      const changeCount = ref(0)
+
+      const handleUpdateFilters = (filters: any) => {
+        currentFilters.value = { ...filters }
+        changeCount.value++
+        args['onUpdate:filters']?.(filters)
+      }
+
+      const handleFiltersChanged = (filters: any) => {
+        args.onFiltersChanged?.(filters)
+      }
+
+      return {
+        args,
+        currentFilters,
+        changeCount,
+        handleUpdateFilters,
+        handleFiltersChanged,
+      }
+    },
+    template: `
+      <TeamFilters
+        :filters="currentFilters"
+        :result-stats="args.resultStats"
+        @update:filters="handleUpdateFilters"
+        @filters-changed="handleFiltersChanged"
+      />
+      ${renderFilterState()}
+    `,
+  }),
+}
+
+export const RoleFilterOnly: Story = {
+  args: {
+    filters: createMockFilters({
+      roleFilter: 'member',
+    }),
+    resultStats: createMockResultStats({
+      showing: 8,
+      total: 60,
+      filtered: 15,
+    }),
+    'onUpdate:filters': fn(),
+    onFiltersChanged: fn(),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+### チーム役割フィルターのみ
+
+チーム役割フィルターのみが設定されている状態です。メンバーとして参加しているチームのみが表示されます。
+        `,
       },
     },
   },
@@ -485,12 +556,13 @@ Storybook環境では以下の制限があるため、一部機能を調整し�
 #### 実行される操作
 1. **検索入力テスト** ✅ - テキスト入力とデバウンス処理の確認
 2. **チームタイプフィルター選択** ✅ - ドロップダウンからの選択
-3. ~~**メンバー数フィルター選択**~~ - Element Plus セレクトの競合
-4. **並び替え選択** ✅ - ソート条件の変更
-5. **アクティブフィルタータグ表示確認** ✅ - フィルター状態の可視化
-6. ~~**個別フィルタークリア操作**~~ - 複数要素検出の競合
-7. ~~**全フィルタークリア操作**~~ - UI要素の検索競合
-8. ~~**フィルター状態検証**~~ - 複数 "Search:" 要素の競合
+3. **チーム役割フィルター選択** ✅ - 役割フィルターの選択
+4. ~~**メンバー数フィルター選択**~~ - Element Plus セレクトの競合
+5. **並び替え選択** ✅ - ソート条件の変更
+6. **アクティブフィルタータグ表示確認** ✅ - フィルター状態の可視化
+7. ~~**個別フィルタークリア操作**~~ - 複数要素検出の競合
+8. ~~**全フィルタークリア操作**~~ - UI要素の検索競合
+9. ~~**フィルター状態検証**~~ - 複数 "Search:" 要素の競合
 
 #### Storybook環境の制限事項
 - **複数要素検出**: 同一テキストを持つ要素が複数存在する場合の競合
@@ -502,6 +574,7 @@ Storybook環境では以下の制限があるため、一部機能を調整し�
 - ✅ Element Plus UIコンポーネントの基本動作
 - ✅ ユーザー入力に対するデバウンス処理
 - ✅ フィルター変更イベントの emit 動作
+- ✅ チーム役割フィルターの動作確認
 
 このテストは**基本的なフィルター操作の動作検証**に特化しており、
 複雑なUI操作については実際のE2Eテストで検証する必要があります。
@@ -560,7 +633,7 @@ Storybook環境では以下の制限があるため、一部機能を調整し�
     }
 
     // ===== 実行制御設定 =====
-    const currentRun = [1, 2, 4, 5] // 問題のないステップのみ実行（Step 3,6,7,8は除外）
+    const currentRun = [1, 2, 3, 5, 6] // 問題のないステップのみ実行（Step 4,7,8,9は除外）
 
     // ===== ヘルパー関数群 =====
 
@@ -646,6 +719,10 @@ Storybook環境では以下の制限があるため、一部機能を調整し�
         logFilterState('Step:2 : チームタイプフィルター選択')
       },
       3: async () => {
+        await selectFromDropdown('team-role-filter', 'Owner')
+        logFilterState('Step:3 : チーム役割フィルター選択')
+      },
+      4: async () => {
         try {
           // メンバー数フィルターを直接要素を探して選択
           const allSelects = canvas.getAllByRole('combobox')
@@ -665,27 +742,27 @@ Storybook環境では以下の制限があるため、一部機能を調整し�
         } catch (error) {
           console.warn('メンバー数フィルター選択に失敗:', error.message)
         }
-        logFilterState('Step:3 : メンバー数フィルター選択')
-      },
-      4: async () => {
-        await selectFromDropdown('sort-by-filter', 'Name (A-Z)')
-        logFilterState('Step:4 : 並び替え選択')
+        logFilterState('Step:4 : メンバー数フィルター選択')
       },
       5: async () => {
+        await selectFromDropdown('sort-by-filter', 'Name (A-Z)')
+        logFilterState('Step:5 : 並び替え選択')
+      },
+      6: async () => {
         // アクティブフィルタータグの表示確認
         const activeFiltersText = canvas.queryByText('Active filters:')
         expect(activeFiltersText).toBeTruthy()
-        logFilterState('Step:5 : アクティブフィルタータグ表示確認')
-      },
-      6: async () => {
-        await clearActiveFilter('Search: "development"')
-        logFilterState('Step:6 : 個別フィルタークリア操作')
+        logFilterState('Step:6 : アクティブフィルタータグ表示確認')
       },
       7: async () => {
-        await clearAllFilters()
-        logFilterState('Step:7 : 全フィルタークリア操作')
+        await clearActiveFilter('Search: "development"')
+        logFilterState('Step:7 : 個別フィルタークリア操作')
       },
       8: async () => {
+        await clearAllFilters()
+        logFilterState('Step:8 : 全フィルタークリア操作')
+      },
+      9: async () => {
         try {
           // 最終的なフィルター状態の検証（より安全な方法）
           const stateDisplays = canvas.getAllByText(/(なし)|none/i)
@@ -693,7 +770,7 @@ Storybook環境では以下の制限があるため、一部機能を調整し�
         } catch (error) {
           console.warn('フィルター状態検証に失敗:', error.message)
         }
-        logFilterState('Step:8 : フィルター状態検証')
+        logFilterState('Step:9 : フィルター状態検証')
       },
     }
 
@@ -701,6 +778,7 @@ Storybook環境では以下の制限があるため、一部機能を調整し�
     try {
       console.log(`実行ステップ: [${currentRun.join(', ')}] (Storybook環境向け調整済み)`)
       console.log('⚠️ Note: 複数の"Search:"要素による競合を回避するため、一部ステップを調整')
+      console.log('✅ チーム役割フィルター機能が追加されました')
 
       for (const stepNum of currentRun) {
         if (stepFunctions[stepNum]) {

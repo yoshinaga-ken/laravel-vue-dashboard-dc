@@ -76,6 +76,28 @@ export class TeamsIndexPage extends BasePage {
   }
 
   /**
+   * チーム役割フィルタリング操作
+   */
+  @step()
+  async filterTeamsByRole(role: 'all' | 'owner' | 'member'): Promise<void> {
+    // TeamFiltersComponentのチーム役割フィルターを使用
+    const roleFilter = this.page.locator('[data-testid="team-role-filter"]')
+    await roleFilter.click()
+
+    // フィルターオプションを選択（Element PlusのElOptionはテキストで選択）
+    const optionLabels = {
+      all: 'All Roles',
+      owner: 'Owner',
+      member: 'Member',
+    }
+    const label = optionLabels[role]
+    await this.page.locator(`.el-select-dropdown__item:has-text("${label}")`).click()
+
+    // フィルター適用を待機
+    await this.waitForLoadState('networkidle')
+  }
+
+  /**
    * ソート操作
    */
   @step()
