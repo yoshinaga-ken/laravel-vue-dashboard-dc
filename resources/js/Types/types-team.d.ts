@@ -68,6 +68,7 @@ export interface TeamFilters {
   search: string | null
   type: TeamType
   member_count: string | null
+  role_filter: TeamRoleFilter
   sort_by: TeamSortBy
 }
 
@@ -75,6 +76,11 @@ export interface TeamFilters {
  * チームタイプの列挙型
  */
 export type TeamType = 'all' | 'personal' | 'shared' | 'current'
+
+/**
+ * チーム役割フィルターの列挙型
+ */
+export type TeamRoleFilter = 'all' | 'owner' | 'member'
 
 /**
  * チーム並び替えオプションの列挙型

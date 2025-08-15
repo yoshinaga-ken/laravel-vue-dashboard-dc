@@ -28,26 +28,26 @@ TeamFilters.vueは、チーム一覧画面で高度な検索・フィルタリ�
 </template>
 
 <script lang="ts" setup>
-import TeamFilters from '@/Components/Teams/TeamFilters.vue'
+  import TeamFilters from '@/Components/Teams/TeamFilters.vue'
 
-const teamFilters = ref<TeamFilters>({
-  search: '',
-  type: 'all',
-  memberCount: 'all',
-  sortBy: 'name',
-  sortOrder: 'asc',
-})
+  const teamFilters = ref<TeamFilters>({
+    search: '',
+    type: 'all',
+    memberCount: 'all',
+    sortBy: 'name',
+    sortOrder: 'asc',
+  })
 
-const searchStats = ref<ResultStats>({
-  total: 25,
-  filtered: 8,
-  showing: 8,
-})
+  const searchStats = ref<ResultStats>({
+    total: 25,
+    filtered: 8,
+    showing: 8,
+  })
 
-const handleFiltersChanged = (filters: TeamFilters) => {
-  console.log('Filters updated:', filters)
-  // API call or local filtering logic
-}
+  const handleFiltersChanged = (filters: TeamFilters) => {
+    console.log('Filters updated:', filters)
+    // API call or local filtering logic
+  }
 </script>
 ```
 
@@ -66,15 +66,15 @@ const handleFiltersChanged = (filters: TeamFilters) => {
 </template>
 
 <script lang="ts" setup>
-const advancedFilters = ref<TeamFilters>({
-  search: 'Development',
-  type: 'shared',
-  memberCount: '2-5',
-  sortBy: 'members',
-  sortOrder: 'desc',
-  createdAfter: '2024-01-01',
-  hasInvitations: true,
-})
+  const advancedFilters = ref<TeamFilters>({
+    search: 'Development',
+    type: 'shared',
+    memberCount: '2-5',
+    sortBy: 'members',
+    sortOrder: 'desc',
+    createdAfter: '2024-01-01',
+    hasInvitations: true,
+  })
 </script>
 ```
 
@@ -96,6 +96,8 @@ interface TeamFilters {
   search: string
   /** チームタイプフィルター */
   type: 'all' | 'personal' | 'shared' | 'current'
+  /** チーム役割フィルター */
+  roleFilter: 'all' | 'owner' | 'member'
   /** メンバー数フィルター */
   memberCount: 'all' | '1' | '2-5' | '6-10' | '11+'
   /** ソート基準 */
@@ -148,6 +150,7 @@ interface ResultStats {
 ### 🏷️ フィルター機能
 
 - **チームタイプ**: All / Personal / Shared / Current
+- **チーム役割**: All Roles / Owner / Member
 - **メンバー数**: 1人 / 2-5人 / 6-10人 / 11人以上
 - **権限レベル**: Owner / Member / Guest
 - **活動状況**: Active / Inactive / Recent
@@ -185,6 +188,7 @@ interface ResultStats {
 ✅ Element Plus UI コンポーネント統合
 ✅ デバウンス機能付きリアルタイム検索
 ✅ 複数条件フィルタリング
+✅ チーム役割フィルター機能
 ✅ 柔軟なソート機能
 ✅ アクティブフィルター視覚化
 ✅ レスポンシブデザイン
@@ -206,6 +210,7 @@ TeamFilters
 │   └── クリアボタン
 ├── フィルターパネル
 │   ├── チームタイプ選択
+│   ├── チーム役割選択
 │   ├── メンバー数選択
 │   ├── 権限レベル選択
 │   └── 活動状況選択
@@ -266,6 +271,7 @@ const clearAllFilters = () => {
   activeFilters.value = {
     search: '',
     type: 'all',
+    roleFilter: 'all',
     memberCount: 'all',
     sortBy: 'name',
     sortOrder: 'asc',
@@ -301,6 +307,7 @@ const clearAllFilters = () => {
 - `team-filters-container`: フィルターコンテナ全体
 - `search-input`: 検索入力欄
 - `filter-type-{type}`: チームタイプフィルター
+- `filter-role-{role}`: チーム役割フィルター
 - `filter-members-{count}`: メンバー数フィルター
 - `sort-by-{field}`: ソート基準選択
 - `clear-all-filters`: 全フィルタークリアボタン

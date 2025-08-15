@@ -26,8 +26,14 @@ class TeamController extends Controller
         // フィルター・検索パラメータ取得
         $search = $request->get('search');
         $type = $request->get('type', 'all');
+        $roleFilter = $request->get('role_filter', 'all');
         $memberCount = $request->get('member_count');
         $sortBy = $request->get('sort_by', 'created_desc');
+
+        // 空文字列の場合はnullに変換（フロントエンドとの整合性のため）
+        if ($search === '') $search = null;
+        if ($roleFilter === '') $roleFilter = null;
+        if ($memberCount === '') $memberCount = null;
 
         // ベースクエリ - ユーザーが所属するすべてのチーム
         // ユーザーが所有するチーム + ユーザーが所属するチーム
@@ -57,6 +63,19 @@ class TeamController extends Controller
                 break;
             case 'current':
                 $query->where('id', $user->currentTeam->id);
+                break;
+        }
+
+        // 役割フィルター
+        switch ($roleFilter) {
+            case 'owner':
+                $query->where('user_id', $user->id);
+                break;
+            case 'member':
+                $query->where('user_id', '!=', $user->id)
+                    ->whereHas('users', function ($q) use ($user) {
+                        $q->where('user_id', $user->id);
+                    });
                 break;
         }
 
@@ -187,6 +206,7 @@ class TeamController extends Controller
             'filters' => [
                 'search' => $search,
                 'type' => $type,
+                'role_filter' => $roleFilter,
                 'member_count' => $memberCount,
                 'sort_by' => $sortBy,
             ],

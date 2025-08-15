@@ -2,7 +2,7 @@
   <div
     class="mb-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800"
   >
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5">
       <!-- 検索入力 -->
       <div>
         <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -37,6 +37,24 @@
           <ElOption value="personal" label="Personal Teams" />
           <ElOption value="shared" label="Shared Teams" />
           <ElOption value="current" label="Current Team" />
+        </ElSelect>
+      </div>
+
+      <!-- チーム役割フィルター -->
+      <div>
+        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+          My Role
+        </label>
+        <ElSelect
+          v-model="localFilters.roleFilter"
+          placeholder="All Roles"
+          clearable
+          data-testid="team-role-filter"
+          @change="handleFilterChange"
+        >
+          <ElOption value="all" label="All Roles" />
+          <ElOption value="owner" label="Owner" />
+          <ElOption value="member" label="Member" />
         </ElSelect>
       </div>
 
@@ -96,6 +114,15 @@
       </ElTag>
 
       <ElTag
+        v-if="localFilters.roleFilter && localFilters.roleFilter !== 'all'"
+        type="primary"
+        closable
+        @close="clearFilter('roleFilter')"
+      >
+        Role: {{ getRoleLabel(localFilters.roleFilter) }}
+      </ElTag>
+
+      <ElTag
         v-if="localFilters.memberCount"
         type="warning"
         closable
@@ -125,114 +152,132 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch } from 'vue'
-import { useDebounceFn } from '@vueuse/core'
-import { ElInput, ElSelect, ElOption, ElTag, ElButton, ElIcon } from 'element-plus'
-import { Search } from '@element-plus/icons-vue'
-import type { TeamFilters as ITeamFilters } from '@/Types/types-team'
+  import { ref, computed, watch } from 'vue'
+  import { useDebounceFn } from '@vueuse/core'
+  import { ElInput, ElSelect, ElOption, ElTag, ElButton, ElIcon } from 'element-plus'
+  import { Search } from '@element-plus/icons-vue'
+  import type { TeamFilters as ITeamFilters } from '@/Types/types-team'
 
-// Types for backward compatibility
-interface TeamFilters {
-  search: string
-  type: string
-  memberCount: string
-  sortBy: string
-}
-
-interface ResultStats {
-  showing: number
-  total: number
-  filtered: number
-}
-
-// Props
-const props = defineProps<{
-  filters: TeamFilters
-  resultStats?: ResultStats
-}>()
-
-// Emits
-const emit = defineEmits<{
-  'update:filters': [filters: TeamFilters]
-  filtersChanged: [filters: ITeamFilters] // 正しい型を返す
-}>()
-
-// Local state
-const localFilters = ref<TeamFilters>({ ...props.filters })
-
-// 型変換ヘルパー
-const convertToStandardFilters = (filters: TeamFilters): ITeamFilters => {
-  return {
-    search: filters.search || null,
-    type: filters.type as any,
-    member_count: filters.memberCount || null,
-    sort_by: filters.sortBy as any,
+  // Types for backward compatibility
+  interface TeamFilters {
+    search: string
+    type: string
+    roleFilter: string
+    memberCount: string
+    sortBy: string
   }
-}
 
-// Computed
-const hasActiveFilters = computed(() => {
-  return !!(
-    localFilters.value.search ||
-    (localFilters.value.type && localFilters.value.type !== 'all') ||
-    localFilters.value.memberCount ||
-    (localFilters.value.sortBy && localFilters.value.sortBy !== 'created_desc')
+  interface ResultStats {
+    showing: number
+    total: number
+    filtered: number
+  }
+
+  // Props
+  const props = defineProps<{
+    filters: TeamFilters
+    resultStats?: ResultStats
+  }>()
+
+  // Emits
+  const emit = defineEmits<{
+    'update:filters': [filters: TeamFilters]
+    filtersChanged: [filters: ITeamFilters] // 正しい型を返す
+  }>()
+
+  // Local state
+  const localFilters = ref<TeamFilters>({
+    ...props.filters,
+    roleFilter: props.filters.roleFilter || 'all',
+  })
+
+  // 型変換ヘルパー
+  const convertToStandardFilters = (filters: TeamFilters): ITeamFilters => {
+    return {
+      search: filters.search || null,
+      type: filters.type as any,
+      member_count: filters.memberCount || null,
+      role_filter: filters.roleFilter as any,
+      sort_by: filters.sortBy as any,
+    }
+  }
+
+  // Computed
+  const hasActiveFilters = computed(() => {
+    return !!(
+      localFilters.value.search ||
+      (localFilters.value.type && localFilters.value.type !== 'all') ||
+      (localFilters.value.roleFilter && localFilters.value.roleFilter !== 'all') ||
+      localFilters.value.memberCount ||
+      (localFilters.value.sortBy && localFilters.value.sortBy !== 'created_desc')
+    )
+  })
+
+  // Methods
+  const debouncedSearch = useDebounceFn(() => {
+    handleFilterChange()
+  }, 300)
+
+  const handleFilterChange = () => {
+    emit('update:filters', { ...localFilters.value })
+    emit('filtersChanged', convertToStandardFilters(localFilters.value))
+  }
+
+  const clearFilter = (filterKey: keyof TeamFilters) => {
+    switch (filterKey) {
+      case 'search':
+        localFilters.value.search = ''
+        break
+      case 'type':
+        localFilters.value.type = 'all'
+        break
+      case 'roleFilter':
+        localFilters.value.roleFilter = 'all'
+        break
+      case 'memberCount':
+        localFilters.value.memberCount = ''
+        break
+      case 'sortBy':
+        localFilters.value.sortBy = 'created_desc'
+        break
+    }
+    handleFilterChange()
+  }
+
+  const clearAllFilters = () => {
+    localFilters.value = {
+      search: '',
+      type: 'all',
+      roleFilter: 'all',
+      memberCount: '',
+      sortBy: 'created_desc',
+    }
+    handleFilterChange()
+  }
+
+  const getTypeLabel = (type: string): string => {
+    const labels: Record<string, string> = {
+      personal: 'Personal',
+      shared: 'Shared',
+      current: 'Current',
+    }
+    return labels[type] || type
+  }
+
+  const getRoleLabel = (role: string): string => {
+    const labels: Record<string, string> = {
+      owner: 'Owner',
+      member: 'Member',
+    }
+    return labels[role] || role
+  }
+
+  // Watchers
+  watch(
+    () => props.filters,
+    newFilters => {
+      localFilters.value = { ...newFilters }
+    },
+    { deep: true }
   )
-})
-
-// Methods
-const debouncedSearch = useDebounceFn(() => {
-  handleFilterChange()
-}, 300)
-
-const handleFilterChange = () => {
-  emit('update:filters', { ...localFilters.value })
-  emit('filtersChanged', convertToStandardFilters(localFilters.value))
-}
-
-const clearFilter = (filterKey: keyof TeamFilters) => {
-  switch (filterKey) {
-    case 'search':
-      localFilters.value.search = ''
-      break
-    case 'type':
-      localFilters.value.type = 'all'
-      break
-    case 'memberCount':
-      localFilters.value.memberCount = ''
-      break
-    case 'sortBy':
-      localFilters.value.sortBy = 'created_desc'
-      break
-  }
-  handleFilterChange()
-}
-
-const clearAllFilters = () => {
-  localFilters.value = {
-    search: '',
-    type: 'all',
-    memberCount: '',
-    sortBy: 'created_desc',
-  }
-  handleFilterChange()
-}
-
-const getTypeLabel = (type: string): string => {
-  const labels: Record<string, string> = {
-    personal: 'Personal',
-    shared: 'Shared',
-    current: 'Current',
-  }
-  return labels[type] || type
-}
-
-// Watchers
-watch(
-  () => props.filters,
-  newFilters => {
-    localFilters.value = { ...newFilters }
-  },
-  { deep: true }
-)
 </script>

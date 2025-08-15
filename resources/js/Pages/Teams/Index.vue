@@ -16,7 +16,6 @@
           <div class="px-6 pt-6 sm:px-8" data-testid="teams-filters-section">
             <TeamFiltersComponent
               v-model:filters="currentFilters"
-              :result-stats="stats"
               @filters-changed="handleFiltersChanged"
             />
           </div>
@@ -125,258 +124,277 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
-import { router, usePage } from '@inertiajs/vue3'
-import { route } from '../../../../vendor/tightenco/ziggy'
-import AppLayout from '@/Layouts/AppLayout.vue'
-import TeamCard from '@/Components/Teams/TeamCard.vue'
-import TeamFiltersComponent from '@/Components/Teams/TeamFilters.vue'
-import TeamResultsInfo from '@/Components/Teams/TeamResultsInfo.vue'
-import TeamPagination from '@/Components/Teams/TeamPagination.vue'
-import { ElInput, ElIcon, ElButton, ElAvatar, ElTag } from 'element-plus'
-import {
-  Search,
-  Loading,
-  Plus,
-  Check,
-  User,
-  Clock,
-  UserFilled,
-  Star,
-} from '@element-plus/icons-vue'
+  import { ref, computed, onMounted } from 'vue'
+  import { router, usePage } from '@inertiajs/vue3'
+  import { route } from '../../../../vendor/tightenco/ziggy'
+  import AppLayout from '@/Layouts/AppLayout.vue'
+  import TeamCard from '@/Components/Teams/TeamCard.vue'
+  import TeamFiltersComponent from '@/Components/Teams/TeamFilters.vue'
+  import TeamResultsInfo from '@/Components/Teams/TeamResultsInfo.vue'
+  import TeamPagination from '@/Components/Teams/TeamPagination.vue'
+  import { ElInput, ElIcon, ElButton, ElAvatar, ElTag } from 'element-plus'
+  import {
+    Search,
+    Loading,
+    Plus,
+    Check,
+    User,
+    Clock,
+    UserFilled,
+    Star,
+  } from '@element-plus/icons-vue'
 
-// 型定義のインポート
-import type { Team, PaginationMeta, TeamFilters, TeamStatsWithPagination } from '@/Types/types-team'
+  // 型定義のインポート
+  import type {
+    Team,
+    PaginationMeta,
+    TeamFilters,
+    TeamStatsWithPagination,
+  } from '@/Types/types-team'
 
-// Props定義
-const props = defineProps<{
-  teams: Team[]
-  pagination: PaginationMeta
-  filters: TeamFilters
-  stats: TeamStatsWithPagination
-}>()
+  // Props定義
+  const props = defineProps<{
+    teams: Team[]
+    pagination: PaginationMeta
+    filters: TeamFilters
+    stats: TeamStatsWithPagination
+  }>()
 
-// リアクティブデータ
-const isLoading = ref(false)
+  // リアクティブデータ
+  const isLoading = ref(false)
 
-// TeamFiltersコンポーネント用の型変換
-const currentFilters = ref({
-  search: props.filters.search || '',
-  type: props.filters.type || 'all',
-  memberCount: props.filters.member_count || '',
-  sortBy: props.filters.sort_by || 'created_desc',
-})
+  // TeamFiltersコンポーネント用の型変換
+  const currentFilters = ref({
+    search: props.filters.search || '',
+    type: props.filters.type || 'all',
+    roleFilter: props.filters.role_filter || 'all',
+    memberCount: props.filters.member_count || '',
+    sortBy: props.filters.sort_by || 'created_desc',
+  })
 
-// アクティブフィルターがあるかどうか
-const hasActiveFilters = computed(() => {
-  return !!(
-    currentFilters.value.search ||
-    (currentFilters.value.type && currentFilters.value.type !== 'all') ||
-    currentFilters.value.memberCount ||
-    (currentFilters.value.sortBy && currentFilters.value.sortBy !== 'created_desc')
-  )
-})
+  // アクティブフィルターがあるかどうか
+  const hasActiveFilters = computed(() => {
+    return !!(
+      currentFilters.value.search ||
+      (currentFilters.value.type && currentFilters.value.type !== 'all') ||
+      (currentFilters.value.roleFilter && currentFilters.value.roleFilter !== 'all') ||
+      currentFilters.value.memberCount ||
+      (currentFilters.value.sortBy && currentFilters.value.sortBy !== 'created_desc')
+    )
+  })
 
-// 計算プロパティ
-const teams = computed(() => props.teams || [])
-const stats = computed(() => props.stats)
-const pagination = computed(() => props.pagination)
+  // 計算プロパティ
+  const teams = computed(() => props.teams || [])
+  const stats = computed(() => props.stats)
+  const pagination = computed(() => props.pagination)
 
-// Inertia ページプロパティへのアクセス（型安全）
-const page = usePage<{
-  auth: {
-    user: {
-      id: number
-      current_team_id: number
+  // Inertia ページプロパティへのアクセス（型安全）
+  const page = usePage<{
+    auth: {
+      user: {
+        id: number
+        current_team_id: number
+      }
+    }
+    jetstream: {
+      canCreateTeams: boolean
+    }
+  }>()
+
+  // 現在のチームかどうかを判定
+  const isCurrentTeam = (team: Team): boolean => {
+    return team.id === page.props.auth.user.current_team_id
+  }
+
+  // 日付フォーマット
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('ja-JP')
+  }
+
+  // TeamResultsInfo用のフィルター変換
+  const convertFiltersForResultsInfo = (filters: any): TeamFilters => {
+    return {
+      search: filters.search || null,
+      type: filters.type || 'all',
+      role_filter: filters.roleFilter || 'all',
+      member_count: filters.memberCount || null,
+      sort_by: filters.sortBy || 'created_desc',
     }
   }
-  jetstream: {
-    canCreateTeams: boolean
-  }
-}>()
 
-// 現在のチームかどうかを判定
-const isCurrentTeam = (team: Team): boolean => {
-  return team.id === page.props.auth.user.current_team_id
-}
+  // フィルター変更処理
+  const handleFiltersChanged = (filters: TeamFilters) => {
+    isLoading.value = true
 
-// 日付フォーマット
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('ja-JP')
-}
+    // URL パラメータ更新
+    const params: Record<string, string> = {}
 
-// TeamResultsInfo用のフィルター変換
-const convertFiltersForResultsInfo = (filters: any): TeamFilters => {
-  return {
-    search: filters.search || null,
-    type: filters.type || 'all',
-    member_count: filters.memberCount || null,
-    sort_by: filters.sortBy || 'created_desc',
-  }
-}
+    if (filters.search) params.search = filters.search
+    if (filters.type !== 'all') params.type = filters.type
+    if (filters.role_filter !== 'all') params.role_filter = filters.role_filter
+    if (filters.member_count) params.member_count = filters.member_count
+    if (filters.sort_by !== 'created_desc') params.sort_by = filters.sort_by
 
-// フィルター変更処理
-const handleFiltersChanged = (filters: TeamFilters) => {
-  isLoading.value = true
-
-  // URL パラメータ更新
-  const params: Record<string, string> = {}
-
-  if (filters.search) params.search = filters.search
-  if (filters.type !== 'all') params.type = filters.type
-  if (filters.member_count) params.member_count = filters.member_count
-  if (filters.sort_by !== 'created_desc') params.sort_by = filters.sort_by
-
-  router.get(route('teams.index'), params, {
-    preserveState: true,
-    preserveScroll: true,
-    onSuccess: () => {
-      isLoading.value = false
-    },
-    onError: () => {
-      isLoading.value = false
-    },
-  })
-}
-
-// ページ変更処理
-const handlePageChange = (page: number) => {
-  isLoading.value = true
-
-  const params: Record<string, string | number> = {}
-
-  if (currentFilters.value.search) params.search = currentFilters.value.search
-  if (currentFilters.value.type !== 'all') params.type = currentFilters.value.type
-  if (currentFilters.value.memberCount) params.member_count = currentFilters.value.memberCount
-  if (currentFilters.value.sortBy !== 'created_desc') params.sort_by = currentFilters.value.sortBy
-
-  params.page = page
-  params.per_page = pagination.value.per_page
-
-  router.visit(route('teams.index'), {
-    data: params,
-    preserveState: true,
-    preserveScroll: true,
-    onSuccess: () => {
-      isLoading.value = false
-    },
-    onError: () => {
-      isLoading.value = false
-    },
-  })
-}
-
-// 件数変更処理
-const handlePerPageChange = (perPage: number) => {
-  isLoading.value = true
-
-  const params: Record<string, string | number> = {}
-
-  if (currentFilters.value.search) params.search = currentFilters.value.search
-  if (currentFilters.value.type !== 'all') params.type = currentFilters.value.type
-  if (currentFilters.value.memberCount) params.member_count = currentFilters.value.memberCount
-  if (currentFilters.value.sortBy !== 'created_desc') params.sort_by = currentFilters.value.sortBy
-
-  params.page = 1 // ページを1にリセット
-  params.per_page = perPage
-
-  router.visit(route('teams.index'), {
-    data: params,
-    preserveState: true,
-    onSuccess: () => {
-      isLoading.value = false
-    },
-    onError: () => {
-      isLoading.value = false
-    },
-  })
-}
-
-// フィルター削除処理
-const handleFilterRemove = (filterKey: string) => {
-  const newFilters = { ...currentFilters.value }
-
-  switch (filterKey) {
-    case 'search':
-      newFilters.search = ''
-      break
-    case 'type':
-      newFilters.type = 'all'
-      break
-    case 'member_count':
-      newFilters.memberCount = ''
-      break
-    case 'sort_by':
-      newFilters.sortBy = 'created_desc'
-      break
+    router.get(route('teams.index'), params, {
+      preserveState: true,
+      preserveScroll: true,
+      onSuccess: () => {
+        isLoading.value = false
+      },
+      onError: () => {
+        isLoading.value = false
+      },
+    })
   }
 
-  currentFilters.value = newFilters
+  // ページ変更処理
+  const handlePageChange = (page: number) => {
+    isLoading.value = true
 
-  // 標準形式に変換してAPI呼び出し
-  const standardFilters: TeamFilters = {
-    search: newFilters.search || null,
-    type: newFilters.type as any,
-    member_count: newFilters.memberCount || null,
-    sort_by: newFilters.sortBy as any,
+    const params: Record<string, string | number> = {}
+
+    if (currentFilters.value.search) params.search = currentFilters.value.search
+    if (currentFilters.value.type !== 'all') params.type = currentFilters.value.type
+    if (currentFilters.value.roleFilter !== 'all')
+      params.role_filter = currentFilters.value.roleFilter
+    if (currentFilters.value.memberCount) params.member_count = currentFilters.value.memberCount
+    if (currentFilters.value.sortBy !== 'created_desc') params.sort_by = currentFilters.value.sortBy
+
+    params.page = page
+    params.per_page = pagination.value.per_page
+
+    router.visit(route('teams.index'), {
+      data: params,
+      preserveState: true,
+      preserveScroll: true,
+      onSuccess: () => {
+        isLoading.value = false
+      },
+      onError: () => {
+        isLoading.value = false
+      },
+    })
   }
-  handleFiltersChanged(standardFilters)
-}
 
-// 全フィルタークリア
-const clearAllFilters = () => {
-  currentFilters.value = {
-    search: '',
-    type: 'all',
-    memberCount: '',
-    sortBy: 'created_desc',
+  // 件数変更処理
+  const handlePerPageChange = (perPage: number) => {
+    isLoading.value = true
+
+    const params: Record<string, string | number> = {}
+
+    if (currentFilters.value.search) params.search = currentFilters.value.search
+    if (currentFilters.value.type !== 'all') params.type = currentFilters.value.type
+    if (currentFilters.value.roleFilter !== 'all')
+      params.role_filter = currentFilters.value.roleFilter
+    if (currentFilters.value.memberCount) params.member_count = currentFilters.value.memberCount
+    if (currentFilters.value.sortBy !== 'created_desc') params.sort_by = currentFilters.value.sortBy
+
+    params.page = 1 // ページを1にリセット
+    params.per_page = perPage
+
+    router.visit(route('teams.index'), {
+      data: params,
+      preserveState: true,
+      onSuccess: () => {
+        isLoading.value = false
+      },
+      onError: () => {
+        isLoading.value = false
+      },
+    })
   }
 
-  const standardFilters: TeamFilters = {
-    search: null,
-    type: 'all',
-    member_count: null,
-    sort_by: 'created_desc',
-  }
-  handleFiltersChanged(standardFilters)
-}
+  // フィルター削除処理
+  const handleFilterRemove = (filterKey: string) => {
+    const newFilters = { ...currentFilters.value }
 
-// チーム切り替え
-const switchToTeam = (team: Team): void => {
-  router.put(
-    route('current-team.update'),
-    {
-      team_id: team.id,
-    },
-    {
-      preserveState: false,
+    switch (filterKey) {
+      case 'search':
+        newFilters.search = ''
+        break
+      case 'type':
+        newFilters.type = 'all'
+        break
+      case 'role_filter':
+        newFilters.roleFilter = 'all'
+        break
+      case 'member_count':
+        newFilters.memberCount = ''
+        break
+      case 'sort_by':
+        newFilters.sortBy = 'created_desc'
+        break
     }
-  )
-}
 
-// 新しいイベントハンドラー
-const handleShowMembers = (team: Team) => {
-  // 将来の実装: メンバー詳細モーダル表示
-  console.log('Show members for team:', team.id)
-}
+    currentFilters.value = newFilters
 
-const handleShowDetails = (team: Team) => {
-  // 将来の実装: チーム詳細モーダル表示
-  console.log('Show details for team:', team.id)
-}
+    // 標準形式に変換してAPI呼び出し
+    const standardFilters: TeamFilters = {
+      search: newFilters.search || null,
+      type: newFilters.type as any,
+      role_filter: newFilters.roleFilter || 'all',
+      member_count: newFilters.memberCount || null,
+      sort_by: newFilters.sortBy as any,
+    }
+    handleFiltersChanged(standardFilters)
+  }
 
-const handleTeamSwitched = (team: Team) => {
-  // チーム切り替え後の処理
-  router.reload()
-}
+  // 全フィルタークリア
+  const clearAllFilters = () => {
+    currentFilters.value = {
+      search: '',
+      type: 'all',
+      roleFilter: 'all',
+      memberCount: '',
+      sortBy: 'created_desc',
+    }
 
-// マウント時の処理
-onMounted(() => {
-  // 必要に応じて初期化処理を追加
-})
+    const standardFilters: TeamFilters = {
+      search: null,
+      type: 'all',
+      role_filter: 'all',
+      member_count: null,
+      sort_by: 'created_desc',
+    }
+    handleFiltersChanged(standardFilters)
+  }
+
+  // チーム切り替え
+  const switchToTeam = (team: Team): void => {
+    router.put(
+      route('current-team.update'),
+      {
+        team_id: team.id,
+      },
+      {
+        preserveState: false,
+      }
+    )
+  }
+
+  // 新しいイベントハンドラー
+  const handleShowMembers = (team: Team) => {
+    // 将来の実装: メンバー詳細モーダル表示
+    console.log('Show members for team:', team.id)
+  }
+
+  const handleShowDetails = (team: Team) => {
+    // 将来の実装: チーム詳細モーダル表示
+    console.log('Show details for team:', team.id)
+  }
+
+  const handleTeamSwitched = (team: Team) => {
+    // チーム切り替え後の処理
+    router.reload()
+  }
+
+  // マウント時の処理
+  onMounted(() => {
+    // 必要に応じて初期化処理を追加
+  })
 </script>
 
 <style scoped>
-/* 必要に応じてスタイルを追加 */
+  /* 必要に応じてスタイルを追加 */
 </style>
