@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,7 +19,7 @@ class User extends Authenticatable
 {
     use HasApiTokens;
 
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
     use HasTeams;
@@ -90,14 +91,14 @@ class User extends Authenticatable
 
     /**
      * ユーザーがフォローしているかどうか
-     * @param int|null $user_id
+     * @param int|null $userId
      * @return bool
      */
-    public function isFollowedBy(int $user_id = null): bool
+    public function isFollowedBy(int $userId = null): bool
     {
-        $user_id = $user_id ?? Auth::id();
+        $userId = $userId ?? Auth::id();
         // followersはリレーションでキャッシュされているので、loadが必要
-        return (bool)$this->load('followers')->followers->where('id', $user_id)->count();
+        return (bool)$this->load('followers')->followers->where('id', $userId)->count();
     }
 
     /**
@@ -106,9 +107,9 @@ class User extends Authenticatable
      */
     public function followedBy(User $user): void
     {
-        $user_id = $user->id;
-        $this->followers()->detach($user_id);
-        $this->followers()->attach($user_id);
+        $userId = $user->id;
+        $this->followers()->detach($userId);
+        $this->followers()->attach($userId);
     }
 
     /**
@@ -117,8 +118,8 @@ class User extends Authenticatable
      */
     public function unfollowedBy(User $user): void
     {
-        $user_id = $user->id;
-        $this->followers()->detach($user_id);
+        $userId = $user->id;
+        $this->followers()->detach($userId);
     }
 
     /**

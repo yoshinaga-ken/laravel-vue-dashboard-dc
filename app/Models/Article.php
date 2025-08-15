@@ -51,13 +51,13 @@ class Article extends Model
     /**
      * ユーザーによっていいねされているか？
      *
-     * @param int|null $user_id ユーザーID
+     * @param int|null $userId ユーザーID
      * @return bool
      */
-    public function isLikedBy(int $user_id = null): bool
+    public function isLikedBy(int $userId = null): bool
     {
-        $user_id = $user_id ?? Auth::id();
-        return $user_id && (bool)$this->load('likes')->likes->where('id', $user_id)->count();
+        $userId = $userId ?? Auth::id();
+        return $userId && $this->load('likes')->likes->where('id', $userId)->count();
     }
 
     /**
@@ -68,9 +68,9 @@ class Article extends Model
      */
     public function likedBy(User $user): void
     {
-        $user_id = $user->id;
-        $this->likes()->detach($user_id);
-        $this->likes()->attach($user_id);
+        $userId = $user->id;
+        $this->likes()->detach($userId);
+        $this->likes()->attach($userId);
     }
 
     /**
@@ -81,8 +81,8 @@ class Article extends Model
      */
     public function dislikedBy(User $user): void
     {
-        $user_id = $user->id;
-        $this->likes()->detach($user_id);
+        $userId = $user->id;
+        $this->likes()->detach($userId);
     }
 
     public function scopeSearch(Builder $query, array $search = [], bool $isTagsAnd = true): Builder
@@ -90,11 +90,11 @@ class Article extends Model
         $title = $search['title'] ?? null;
         $tags = $search['tags'] ?? null;
         $users = $search['users'] ?? null;
-        $date_value = $search['date_value'] ?? null;
-        $date_operator = $search['date_operator'] ?? null;
-        $likes_count = $search['likes_count'] ?? null;
-        $likes_operator = $search['likes_operator'] ?? null;
-        $date_range_value = $search['date_range_value'] ?? null; // 追加：日付範囲検索パラメータ
+        $dateValue = $search['date_value'] ?? null;
+        $dateOperator = $search['date_operator'] ?? null;
+        $likesCount = $search['likes_count'] ?? null;
+        $likesOperator = $search['likes_operator'] ?? null;
+        $dateRangeValue = $search['date_range_value'] ?? null; // 追加：日付範囲検索パラメータ
 
         if ($isTagsAnd) {
             $query->when($tags, function ($query) use ($tags) {
@@ -119,8 +119,8 @@ class Article extends Model
         });
 
         // 日付範囲検索の実装
-        $query->when(!empty($date_range_value), function ($query) use ($date_range_value) {
-            $dates = explode(',', $date_range_value);
+        $query->when(!empty($dateRangeValue), function ($query) use ($dateRangeValue) {
+            $dates = explode(',', $dateRangeValue);
             if (count($dates) === 2) {
                 $fromDate = $dates[0];
                 $toDate = $dates[1];
@@ -129,21 +129,21 @@ class Article extends Model
         });
 
         // 単一日付検索の条件（既存）
-        $query->when(!empty($date_value) && !empty($date_operator), function ($query) use ($date_value, $date_operator) {
-            $query->where('updated_at', $date_operator, $date_value);
+        $query->when(!empty($dateValue) && !empty($dateOperator), function ($query) use ($dateValue, $dateOperator) {
+            $query->where('updated_at', $dateOperator, $dateValue);
         });
 
-        $query->when(!empty($likes_count) && !empty($likes_operator), function ($query) use ($likes_count, $likes_operator) {
+        $query->when(!empty($likesCount) && !empty($likesOperator), function ($query) use ($likesCount, $likesOperator) {
             $query->withCount('likes')
-                  ->having('likes_count', $likes_operator, $likes_count);
+                  ->having('likes_count', $likesOperator, $likesCount);
         });
 
         return $query->when($title, function ($query) use ($title) {
-            $query->where('title', 'like', "%{$title}%");
+            $query->where('title', 'like', "%$title%");
         });
     }
 
-    public function syncTagsByName(array $tags)
+    public function syncTagsByName(array $tags): void
     {
         $tagIds = array_map(function ($tagName) {
             return Tag::firstOrCreate(['name' => $tagName])->id;

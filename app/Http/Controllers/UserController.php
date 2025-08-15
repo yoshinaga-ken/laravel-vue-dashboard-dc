@@ -28,7 +28,7 @@ class UserController extends Controller
 
         return $isWantsJson
             ? response()->json($user->only(['id', 'name']))
-            : Redirect::back()->with('success', __('User followed', ['followed_id' => $followedUser->id, 'following_id' => $user_id]));
+            : Redirect::back()->with('success', __('User followed', ['followed_id' => $followedUser->id, 'following_id' => $user->id]));
     }
 
     public function unfollow(Request $request, User $user)
@@ -43,6 +43,6 @@ class UserController extends Controller
 
         return $isWantsJson
             ? response()->json($user->only(['id', 'name']))
-            : Redirect::back()->with('success', __('User unfollowed', ['followed_id' => $followedUser->id, 'following_id' => $user_id]));
+            : Redirect::back()->with('success', __('User unfollowed', ['followed_id' => $followedUser->id, 'following_id' => $user->id]));
     }
 }
