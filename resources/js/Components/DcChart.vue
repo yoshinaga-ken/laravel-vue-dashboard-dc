@@ -1151,10 +1151,7 @@
                     <template v-if="chart.filters().length > 0">
                       <a
                         href="javascript:void(0);"
-                        @click="
-                          chart.filterAll()
-                          dc.redrawAll(CGRP_SHOW)
-                        "
+                        @click="(chart.filterAll(), dc.redrawAll(CGRP_SHOW))"
                       >
                         <span class="ui-icon ui-icon-closethick"></span>
                       </a>
