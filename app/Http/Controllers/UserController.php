@@ -16,6 +16,13 @@ class UserController extends Controller
         ]);
     }
 
+    public function edit(Request $request, int $userId)
+    {
+        return Inertia::render('Users/Edit', [
+            'userId' => $userId,
+        ]);
+    }
+
     public function follow(Request $request, User $user)
     {
         $isWantsJson = $request->wantsJson();
