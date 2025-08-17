@@ -118,21 +118,21 @@
 
 #### 対象チーム
 
-- **所有チーム**: `$user->ownedTeams` - 自分がオーナーのチーム
-- **所属チーム**: `$user->teams` - メンバーとして所属するチーム
-- **統合取得**: `$user->allTeams()` - 重複除去済み統合リスト
+- **全チーム表示**: システム内の全チーム（管理者向け機能）
+- **フィルター適用**: 役割フィルターで所有・所属チームに絞り込み可能
+- **統合取得**: `Jetstream::newTeamModel()::query()` - 全チーム対象
 
 #### チーム情報項目
 
-| 項目         | 説明              | データソース                 |
-| ------------ | ----------------- | ---------------------------- |
-| チーム名     | team.name         | 基本カラム                   |
-| チームタイプ | 個人/通常         | personal_team フラグ         |
-| 所有者関係   | オーナー/メンバー | $user->ownsTeam($team)       |
-| 現在チーム   | 選択中チーム      | $user->current_team_id       |
-| メンバー数   | チームメンバー数  | withCount('users')           |
-| 招待数       | 承認待ち数        | withCount('teamInvitations') |
-| 権限情報     | 操作可能権限      | Gate::check()                |
+| 項目         | 説明                       | データソース                 |
+| ------------ | -------------------------- | ---------------------------- |
+| チーム名     | team.name                  | 基本カラム                   |
+| チームタイプ | 個人/通常                  | personal_team フラグ         |
+| ユーザー関係 | オーナー/メンバー/関与なし | user_role判定ロジック        |
+| 現在チーム   | 選択中チーム               | $user->current_team_id       |
+| メンバー数   | チームメンバー数           | withCount('users')           |
+| 招待数       | 承認待ち数                 | withCount('teamInvitations') |
+| 権限情報     | 操作可能権限               | Gate::check()                |
 
 ### フィルタリング・検索機能
 
@@ -140,13 +140,14 @@
 
 - **テキスト検索**: チーム名による部分一致検索
 - **チームタイプ**: All / Personal / Shared / Current
+- **役割フィルター**: All / Owner（所有チーム） / Member（所属チーム）
 - **メンバー数**: 1人 / 2-5人 / 6-10人 / 11人以上
 - **並び替え**: 名前・作成日・メンバー数（昇順・降順）
 
 #### ページネーション
 
-- **デフォルト件数**: 12件/ページ
-- **選択可能件数**: 6, 12, 24, 48件
+- **デフォルト件数**: 32件/ページ
+- **選択可能件数**: 32, 128, 全件
 - **ページ切り替え**: Element Plus Pagination コンポーネント
 
 ### UI設計
@@ -206,21 +207,28 @@
 public function index(Request $request): \Inertia\Response
 ```
 
+#### 重要な設計変更
+
+- **2025年8月17日更新**: 全チーム表示に変更（従来の所属チームのみ表示から変更）
+- **ページネーション**: 32件/128件/全件対応
+- **役割判定**: `'owner'|'member'|'none'` の3段階判定
+- **統計情報**: システム全体のチーム数を表示
+
 **処理フロー**:
 
 1. 認可チェック（`Gate::authorize('viewAny', Team)`）
 2. フィルター・検索パラメータ取得
-3. ユーザー所属チーム特定（所有 + 所属）
-4. 検索・フィルタリング実行
-5. ページネーション処理
-6. 権限情報付与
+3. 全チーム対象ベースクエリ構築
+4. 検索・フィルタリング実行（役割フィルターを含む）
+5. ページネーション処理（32件/128件/全件対応）
+6. ユーザー関係性判定・権限情報付与
 7. Inertia.js レスポンス返却
 
 **最適化機能**:
 
-- Eager Loading による N+1 問題回避
+- Eager Loading による N+1 問題回避（usersリレーション含む）
 - withCount() による集計クエリ最適化
-- 重複除去による不要データ削減
+- 全件表示時の効率的データハンドリング
 
 ### ルーティング
 
@@ -317,17 +325,18 @@ Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
 
 ### データ保護
 
-- **アクセス制御**: 所属/所有チームのみ表示
-- **権限制御**: チーム毎のアクション可否制御
+- **アクセス制御**: 全チーム表示（管理者機能）+ 役割フィルターによる絞り込み
+- **権限制御**: チーム毎のアクション可否制御（関与なしチームは制限）
 - **個人チーム保護**: 削除不可制御
 
 ## パフォーマンス仕様
 
 ### データベース最適化
 
-- **Eager Loading**: N+1問題回避（with, withCount）
+- **Eager Loading**: N+1問題回避（with, withCount, ユーザーリレーション含む）
 - **インデックス活用**: 検索性能向上
-- **ページネーション**: 大量データ対応
+- **ページネーション**: 大量データ対応（全件表示時の効率化）
+- **クエリ最適化**: 全チーム取得時のパフォーマンス考慮
 
 ### フロントエンド最適化
 
@@ -339,24 +348,71 @@ Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
 
 ### バックエンドテスト（Pest PHP）
 
-- **Feature Test**: `tests/Feature/TeamControllerTest.php`
-- **Policy Test**: `tests/Feature/TeamPolicyTest.php`
-- **Integration Test**: `tests/Integration/TeamTest.php`
+- **Feature Test**: `tests/Feature/TeamTest.php`
+  - 全チーム表示機能のテスト
+  - 役割フィルター（all/owner/member）のテスト
+  - ページネーション（32件/128件/全件）のテスト
+  - 検索・フィルタリング機能のテスト
+  - ユーザー関係性判定（owner/member/none）のテスト
+- **Integration Test**: `tests/Integration/Models/TeamTest.php`
+  - Teamモデルのリレーション・スコープテスト
+- **API Test**: `tests/Integration/Api/TeamTest.php`
+  - API経由でのチーム操作テスト
 
 ### フロントエンドテスト（Vitest）
 
 - **Component Test**: `resources/js/Components/Teams/__tests__/`
+  - `TeamCard.test.ts`: チーム表示カード ✅
+  - `TeamFilters.test.ts`: 検索・フィルタリングUI ✅
+  - `TeamPagination.test.ts`: ページネーション
+  - `TeamResultsInfo.test.ts`: 結果情報表示
 - **Page Test**: `resources/js/Pages/Teams/__tests__/`
+  - `Index.test.ts`: メインページコンポーネント
 
 ### E2Eテスト（Playwright）
 
 - **User Flow Test**: `e2e/tests/teams/`
-- **Interaction Test**: チーム操作フロー全体
+  - `team.spec.ts`: チーム管理機能の統合E2Eテスト ✅
+
+- **主要テスト機能**:
+
+- ✅ チーム一覧の基本表示・ナビゲーション
+- ✅ チーム切り替えフロー（現在チーム → 他チーム）
+- ✅ チーム詳細画面・作成画面への遷移
+- ✅ フィルタリング機能（個人/共有、役割フィルター、複合条件）
+- ✅ アクティブフィルター表示・クリア機能
+- ✅ 権限に応じたUI制御（個人チーム、オーナー/メンバー）
+- ✅ レスポンシブデザイン対応
+- ✅ エラーハンドリング（404等）
+- ✅ チームカード詳細内容の表示確認
 
 ### Storybook
 
 - **Component Stories**: `stories/components/Teams/`
+  - `TeamCard.stories.js`: チームカード表示パターン
+  - `TeamFilters.stories.js`: フィルター操作パターン
+  - `TeamPagination.stories.js`: ページネーション操作パターン
+  - `TeamResultsInfo.stories.js`: 結果情報表示パターン
 - **Interaction Tests**: ユーザー操作シミュレーション
+
+### テスト移行計画
+
+#### Phase 1: 既存テストの修正
+
+- `tests/Feature/TeamTest.php` の全チーム表示対応
+- 役割フィルター関連テストの追加
+- ページネーション仕様変更の反映
+
+#### Phase 2: 新規テストの追加
+
+- ユーザー関係性判定（none）のテスト
+- 統計情報（システム全体）のテスト
+- パフォーマンステスト（大量データ）
+
+#### Phase 3: E2E・Storybook更新
+
+- 新しいUIフローのE2Eテスト
+- 更新されたコンポーネントのStorybook
 
 ## 運用・監視
 
@@ -380,12 +436,14 @@ Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
 - メンバー詳細管理
 - チーム設定カスタマイズ
 - 通知システム統合
+- **管理者権限管理**: 全チーム表示権限の細分化
 
 ### 技術改善
 
 - リアルタイム更新（WebSocket）
 - 検索機能強化
 - パフォーマンス最適化
+- **権限システム強化**: 役割ベースアクセス制御の拡張
 
 ## 関連ドキュメント
 

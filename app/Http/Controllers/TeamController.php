@@ -35,14 +35,11 @@ class TeamController extends Controller
         if ($roleFilter === '') $roleFilter = null;
         if ($memberCount === '') $memberCount = null;
 
-        // ベースクエリ - ユーザーが所属するすべてのチーム
-        // ユーザーが所有するチーム + ユーザーが所属するチーム
-        $ownedTeamIds = $user->ownedTeams()->pluck('teams.id');
-        $memberTeamIds = $user->teams()->pluck('teams.id');
-        $allTeamIds = $ownedTeamIds->merge($memberTeamIds)->unique();
-
-        $query = Jetstream::newTeamModel()::whereIn('id', $allTeamIds)
-            ->with(['owner', 'teamInvitations'])
+        // ベースクエリ - 全チームを対象とする
+        $query = Jetstream::newTeamModel()::query()
+            ->with(['owner', 'teamInvitations', 'users' => function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            }])
             ->withCount([
                 'users as members_count',
                 'teamInvitations as invitations_count'
@@ -72,10 +69,13 @@ class TeamController extends Controller
                 $query->where('user_id', $user->id);
                 break;
             case 'member':
-                $query->where('user_id', '!=', $user->id)
-                    ->whereHas('users', function ($q) use ($user) {
-                        $q->where('user_id', $user->id);
-                    });
+                $query->whereHas('users', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                })->where('user_id', '!=', $user->id);
+                break;
+            case 'all':
+            default:
+                // 全チーム表示（フィルターなし）
                 break;
         }
 
@@ -124,12 +124,17 @@ class TeamController extends Controller
         }
 
         // パラメータバリデーション
-        $perPage = $request->get('per_page', 12);
+        $perPage = $request->get('per_page', 32);
         $page = $request->get('page', 1);
 
-        // per_page バリデーション
-        if (!in_array($perPage, [5, 6, 12, 24, 48])) {
-            $perPage = 12;
+        // per_page バリデーション（32件、128件、全件）
+        if (!in_array($perPage, [32, 128, 9999])) {
+            $perPage = 32;
+        }
+
+        // 全件の場合は実際の総数に設定
+        if ($perPage === 9999) {
+            $perPage = Jetstream::newTeamModel()::count() ?: 32;
         }
 
         // page バリデーション
@@ -145,9 +150,8 @@ class TeamController extends Controller
             $page
         );
 
-        // 統計情報 - フィルター適用前の総数を取得
-        $totalQuery = Jetstream::newTeamModel()::whereIn('id', $allTeamIds);
-        $totalTeams = $totalQuery->count();
+        // 統計情報 - システム全体のチーム数を取得
+        $totalTeams = Jetstream::newTeamModel()::count();
 
         // チームデータに追加情報を付与
         $teamsData = collect($teams->items())->map(function ($team) use ($user) {
@@ -179,8 +183,14 @@ class TeamController extends Controller
             // 現在のチームかどうか
             $teamData['is_current'] = $user->currentTeam && $user->currentTeam->id === $team->id;
 
-            // ユーザーの役割
-            $teamData['user_role'] = $team->user_id === $user->id ? 'owner' : 'member';
+            // ユーザーの役割を判定
+            if ($team->user_id === $user->id) {
+                $teamData['user_role'] = 'owner';
+            } else {
+                // Eager Loadingした結果を使用してメンバーかどうかを確認
+                $isMember = $team->users->isNotEmpty();
+                $teamData['user_role'] = $isMember ? 'member' : 'none';
+            }
 
             // 権限情報
             $teamData['permissions'] = [

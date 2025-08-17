@@ -2,17 +2,16 @@
 
 ## 概要
 
-TeamResultsInfo.vueは、チーム一覧の検索結果情報とアクティブフィルターの管理を行う包括的なコンポーネントです。検索結果の統計情報表示、適用中フィルターの視覚的管理、表示設定のコントロールを一元化し、ユーザーが現在の検索状況を直感的に把握できる情報ダッシュボードとして機能します。
+TeamResultsInfo.vueは、チーム一覧の検索結果情報とアクティブフィルターの管理を行うコンポーネントです。検索結果の統計情報表示、適用中フィルターの視覚的管理、表示件数設定のコントロールを提供し、ユーザーが現在の検索状況を直感的に把握できる情報表示として機能します。
 
 ### 主な特徴
 
-- 📊 **結果統計表示**: 総件数、フィルター結果、表示範囲の包括的表示
+- 📊 **結果統計表示**: 総件数、フィルター結果、表示範囲の表示
 - 🏷️ **フィルター管理**: アクティブフィルターの視覚化と個別削除
-- ⚙️ **表示制御**: 柔軟な表示件数選択とレイアウト調整
+- ⚙️ **表示制御**: 32件/128件/全件の表示件数選択
 - 🔍 **検索状況**: 現在の検索・フィルター状況の明確な表示
 - 📱 **レスポンシブ**: 全デバイスで最適化されたUI
-- ⚡ **高速レスポンス**: リアルタイムな結果更新表示
-- ♿ **アクセシブル**: 完全なキーボード操作・スクリーンリーダー対応
+- ♿ **アクセシブル**: キーボード操作・スクリーンリーダー対応
 
 ## 使用例
 
@@ -35,27 +34,26 @@ import TeamResultsInfo from '@/Components/Teams/TeamResultsInfo.vue'
 
 const paginationData = ref<PaginationMeta>({
   current_page: 1,
-  per_page: 12,
+  per_page: 32,
   total: 125,
-  last_page: 11,
+  last_page: 4,
   from: 1,
-  to: 12,
+  to: 32,
 })
 
 const currentFilters = ref<TeamFilters>({
   search: 'Development',
   type: 'shared',
-  memberCount: '2-5',
-  sortBy: 'name',
-  sortOrder: 'asc',
+  member_count: '2-5',
+  sort_by: 'name_asc',
 })
 
 const searchStats = ref<TeamStatsWithPagination>({
-  totalTeams: 125,
-  filteredTeams: 18,
-  currentPageTeams: 12,
-  searchTime: 45,
-  lastUpdated: new Date(),
+  total: 125,
+  filtered: 18,
+  showing: 18,
+  from: 1,
+  to: 18,
 })
 
 const handlePerPageChange = (perPage: number) => {
@@ -83,13 +81,9 @@ const handleAllFiltersCleared = () => {
     :pagination="advancedPagination"
     :filters="complexFilters"
     :stats="detailedStats"
-    :show-export="true"
-    :show-refresh="true"
     @per-page-changed="handleAdvancedPerPageChange"
     @filter-removed="handleAdvancedFilterRemove"
     @all-filters-cleared="handleAdvancedClearAll"
-    @export-results="handleExportResults"
-    @refresh-data="handleRefreshData"
   />
 </template>
 
@@ -97,98 +91,68 @@ const handleAllFiltersCleared = () => {
 const complexFilters = ref<TeamFilters>({
   search: 'Development Team',
   type: 'shared',
-  memberCount: '6-10',
-  sortBy: 'last_activity',
-  sortOrder: 'desc',
-  createdAfter: '2024-01-01',
-  hasInvitations: true,
-  ownedByMe: false,
+  member_count: '6-10',
+  sort_by: 'members_desc',
 })
 
 const detailedStats = ref<TeamStatsWithPagination>({
-  totalTeams: 500,
-  filteredTeams: 25,
-  currentPageTeams: 12,
-  searchTime: 89,
-  lastUpdated: new Date(),
-  cacheHitRate: 0.85,
-  indexUsage: ['name_idx', 'type_idx', 'members_count_idx'],
+  total: 500,
+  filtered: 25,
+  showing: 25,
+  from: 1,
+  to: 25,
 })
 </script>
 ```
 
 ## Props
 
-| プロパティ    | 型                        | デフォルト値 | 必須 | 説明                             |
-| ------------- | ------------------------- | ------------ | ---- | -------------------------------- |
-| `pagination`  | `PaginationMeta`          | -            | ✅   | ページネーション情報オブジェクト |
-| `filters`     | `TeamFilters`             | -            | ✅   | 現在適用中のフィルター           |
-| `stats`       | `TeamStatsWithPagination` | -            | ✅   | 検索結果統計情報                 |
-| `loading`     | `boolean`                 | `false`      | ❌   | データ読み込み中フラグ           |
-| `showExport`  | `boolean`                 | `false`      | ❌   | エクスポート機能表示フラグ       |
-| `showRefresh` | `boolean`                 | `false`      | ❌   | リフレッシュボタン表示フラグ     |
-| `compactMode` | `boolean`                 | `false`      | ❌   | コンパクト表示モード             |
+| プロパティ   | 型                        | デフォルト値 | 必須 | 説明                             |
+| ------------ | ------------------------- | ------------ | ---- | -------------------------------- |
+| `pagination` | `PaginationMeta`          | -            | ✅   | ページネーション情報オブジェクト |
+| `filters`    | `TeamFilters`             | -            | ✅   | 現在適用中のフィルター           |
+| `stats`      | `TeamStatsWithPagination` | -            | ✅   | 検索結果統計情報                 |
+| `loading`    | `boolean`                 | `false`      | ❌   | データ読み込み中フラグ           |
 
 ### TeamStatsWithPagination 型定義
 
 ```typescript
 interface TeamStatsWithPagination {
   /** 総チーム数 */
-  totalTeams: number
+  total: number
   /** フィルター適用後チーム数 */
-  filteredTeams: number
+  filtered: number
   /** 現在ページ表示チーム数 */
-  currentPageTeams: number
-  /** 検索実行時間（ミリ秒） */
-  searchTime: number
-  /** 最終更新日時 */
-  lastUpdated: Date
-  /** キャッシュヒット率（パフォーマンス監視用） */
-  cacheHitRate?: number
-  /** 使用されたインデックス（デバッグ用） */
-  indexUsage?: string[]
-  /** フィルター適用前の初期件数 */
-  originalTotal?: number
+  showing: number
+  /** 表示開始番号 */
+  from: number
+  /** 表示終了番号 */
+  to: number
 }
 ```
 
-### TeamFilters 型定義（拡張版）
+### TeamFilters 型定義
 
 ```typescript
 interface TeamFilters {
   /** 検索キーワード */
-  search: string
+  search?: string
   /** チームタイプフィルター */
-  type: 'all' | 'personal' | 'shared' | 'current'
+  type?: string
   /** メンバー数フィルター */
-  memberCount: 'all' | '1' | '2-5' | '6-10' | '11+'
+  member_count?: string
   /** ソート基準 */
-  sortBy: 'name' | 'created_at' | 'members' | 'last_activity'
-  /** ソート順序 */
-  sortOrder: 'asc' | 'desc'
-  /** 作成日以降フィルター */
-  createdAfter?: string
-  /** 招待有無フィルター */
-  hasInvitations?: boolean
-  /** 自分がオーナーのチームのみ */
-  ownedByMe?: boolean
-  /** 最終活動日フィルター */
-  lastActivityAfter?: string
-  /** タグフィルター */
-  tags?: string[]
+  sort_by?: string
 }
 ```
 
 ## Events
 
-| イベント名          | ペイロード型                               | 説明                                                |
-| ------------------- | ------------------------------------------ | --------------------------------------------------- |
-| `perPageChanged`    | `number`                                   | 表示件数変更時の発火                                |
-| `filterRemoved`     | `string`                                   | 個別フィルター削除時の発火                          |
-| `allFiltersCleared` | `void`                                     | 全フィルタークリア時の発火                          |
-| `exportResults`     | `{ format: string, filters: TeamFilters }` | 結果エクスポート時の発火                            |
-| `refreshData`       | `void`                                     | データリフレッシュ時の発火                          |
-| `viewModeChanged`   | `string`                                   | 表示モード変更時の発火（'grid', 'list', 'compact'） |
+| イベント名          | ペイロード型 | 説明                       |
+| ------------------- | ------------ | -------------------------- |
+| `perPageChanged`    | `number`     | 表示件数変更時の発火       |
+| `filterRemoved`     | `string`     | 個別フィルター削除時の発火 |
+| `allFiltersCleared` | `void`       | 全フィルタークリア時の発火 |
 
 ## 機能
 
@@ -196,8 +160,7 @@ interface TeamFilters {
 
 - **総件数表示**: 全チーム数の表示
 - **フィルター結果**: 絞り込み後の件数表示
-- **表示範囲**: 現在ページの表示範囲 "1-12 of 125"
-- **検索時間**: パフォーマンス情報の表示
+- **表示範囲**: 現在ページの表示範囲 "1-32 of 125"
 
 ### 🏷️ アクティブフィルター管理
 
@@ -343,7 +306,7 @@ const handleViewModeChange = (mode: 'grid' | 'list' | 'compact') => {
 
 ## レスポンシブ対応
 
-### デスクトップ（1024px+）
+### デスクトップ（1024px以上）
 
 - フル機能結果情報表示
 - 全統計情報・コントロール表示
@@ -370,34 +333,8 @@ const handleViewModeChange = (mode: 'grid' | 'list' | 'compact') => {
 - `filter-tag-{key}`: 各フィルタータグ
 - `clear-all-filters`: 全フィルタークリアボタン
 - `per-page-select`: 表示件数選択
-- `view-mode-{mode}`: 表示モード切り替えボタン
-- `export-button-{format}`: エクスポートボタン
-- `refresh-button`: リフレッシュボタン
 
 ## 基本仕様
 
 - **ファイルパス**: `resources/js/Components/Teams/TeamResultsInfo.vue`
-- **Storybookファイル**: `stories/components/teams/TeamResultsInfo.stories.ts`
-- **StorybookのURL**: <http://localhost:6006/?path=/docs/teams-teamresultsinfo--docs>
 - **技術スタック**: Vue 3 + TypeScript + Element Plus + Tailwind CSS
-
-## 今後の改善点
-
-### 機能拡張
-
-- [ ] 高度統計: フィルタリング効果・検索パフォーマンス分析
-- [ ] 保存済み検索: よく使う検索条件の保存・復元
-- [ ] 検索履歴: 過去の検索条件履歴管理
-- [ ] カスタムビュー: ユーザー定義の表示レイアウト
-
-### パフォーマンス最適化
-
-- [ ] 遅延統計更新: 大量データでの段階的統計計算
-- [ ] キャッシュ統計: 統計情報の効率的キャッシュ
-- [ ] バックグラウンド更新: 非同期での統計情報更新
-
-### UX向上
-
-- [ ] 統計チャート: 視覚的な結果分析表示
-- [ ] フィルター提案: AI による最適フィルター提案
-- [ ] ショートカット: キーボードによる高速操作

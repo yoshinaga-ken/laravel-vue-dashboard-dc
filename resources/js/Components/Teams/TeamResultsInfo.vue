@@ -3,10 +3,10 @@
     <div class="flex items-center justify-between">
       <!-- 結果表示情報 -->
       <div class="text-sm text-gray-700 dark:text-gray-300">
-        <span v-if="pagination.total === 0" class="text-gray-500"> チームが見つかりません </span>
+        <span v-if="stats.filtered === 0" class="text-gray-500"> チームが見つかりません </span>
         <span v-else-if="hasActiveFilters" class="space-x-1">
-          <span class="font-medium">{{ pagination.total }}件中</span>
-          <span v-if="stats.filtered !== stats.total" class="text-blue-600 dark:text-blue-400">
+          <span class="font-medium">全{{ stats.total }}件中</span>
+          <span class="text-blue-600 dark:text-blue-400">
             （フィルター結果: {{ stats.filtered }}件）
           </span>
           <span v-if="pagination.from && pagination.to">
@@ -15,7 +15,7 @@
           <span v-else> {{ stats.showing }}件表示 </span>
         </span>
         <span v-else>
-          <span class="font-medium">{{ pagination.total }}件中</span>
+          <span class="font-medium">全{{ stats.total }}件中</span>
           <span v-if="pagination.from && pagination.to">
             {{ pagination.from }}-{{ pagination.to }}件表示
           </span>
@@ -36,7 +36,7 @@
           <ElOption
             v-for="option in perPageOptions"
             :key="option"
-            :label="`${option}件`"
+            :label="option === 9999 ? '全件' : `${option}件`"
             :value="option"
           />
         </ElSelect>
@@ -88,8 +88,8 @@ const emit = defineEmits<{
   allFiltersCleared: []
 }>()
 
-// 件数選択オプション
-const perPageOptions = [6, 12, 24, 48]
+// 件数選択オプション（32件、128件、全件）
+const perPageOptions = [32, 128, 9999]
 
 // アクティブフィルターの判定
 const hasActiveFilters = computed(() => {
