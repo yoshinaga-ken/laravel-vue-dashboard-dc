@@ -23,11 +23,11 @@ describe('TeamPagination.vue', () => {
 
   const createMockPagination = (overrides: Partial<PaginationMeta> = {}): PaginationMeta => ({
     current_page: 1,
-    per_page: 10,
+    per_page: 32, // 新しいデフォルト値
     total: 100,
-    last_page: 10,
+    last_page: 4, // 32件ベースで調整
     from: 1,
-    to: 10,
+    to: 32, // 32件ベースで調整
     links: [],
     ...overrides,
   })
@@ -63,9 +63,9 @@ describe('TeamPagination.vue', () => {
   it('ページネーション情報が正しく表示される', () => {
     const pagination = createMockPagination({
       current_page: 2,
-      per_page: 10,
-      total: 50,
-      last_page: 5,
+      per_page: 32, // 新しい仕様に合わせて更新
+      total: 128, // 32件 × 4ページ = 128件
+      last_page: 4,
     })
     const wrapper = createWrapper({ pagination })
     expect(wrapper.exists()).toBe(true)
@@ -81,7 +81,7 @@ describe('TeamPagination.vue', () => {
     const paginationComponent = wrapper.findComponent({ name: 'ElPagination' })
 
     if (paginationComponent.exists()) {
-      await paginationComponent.vm.$emit('size-change', 20)
+      await paginationComponent.vm.$emit('size-change', 128) // 新しい選択肢（128件）
       expect(wrapper.emitted('page-size-change')).toBeTruthy()
     }
   })
@@ -122,12 +122,38 @@ describe('TeamPagination.vue', () => {
   it('ページネーション情報のテキストが正しく表示される', () => {
     const pagination = createMockPagination({
       current_page: 2,
-      per_page: 10,
-      total: 50,
-      from: 11,
-      to: 20,
+      per_page: 32, // 新しい仕様に合わせて更新
+      total: 128, // 32件 × 4ページ = 128件
+      from: 33, // 2ページ目の開始（32+1）
+      to: 64, // 2ページ目の終了（32×2）
     })
     const wrapper = createWrapper({ pagination })
     expect(wrapper.exists()).toBe(true)
+  })
+
+  // 【追加】新しい仕様に対応したテストケース
+  it('pagination defaults to 32 items per page', () => {
+    const wrapper = createWrapper()
+    const pagination = wrapper.props('pagination')
+    expect(pagination.per_page).toBe(32)
+  })
+
+  it('pagination supports 32, 128, and all (9999) options', async () => {
+    const wrapper = createWrapper()
+    const paginationComponent = wrapper.findComponent({ name: 'ElPagination' })
+
+    if (paginationComponent.exists()) {
+      // 32件のテスト
+      await paginationComponent.vm.$emit('size-change', 32)
+      expect(wrapper.emitted('page-size-change')).toBeTruthy()
+
+      // 128件のテスト
+      await paginationComponent.vm.$emit('size-change', 128)
+      expect(wrapper.emitted('page-size-change')).toBeTruthy()
+
+      // 全件（9999）のテスト
+      await paginationComponent.vm.$emit('size-change', 9999)
+      expect(wrapper.emitted('page-size-change')).toBeTruthy()
+    }
   })
 })

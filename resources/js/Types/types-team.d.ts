@@ -24,6 +24,9 @@ export interface Team {
   members_count: number
   pending_invitations_count: number
 
+  // ユーザー関係性
+  user_role?: 'owner' | 'member' | 'none'
+
   // 追加フィールド（将来対応）
   profile_photo_url?: string
   description?: string

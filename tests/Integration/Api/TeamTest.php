@@ -63,6 +63,7 @@ test('teams index returns correct data structure', function () {
         ->has('filters', fn ($filters) => $filters
             ->has('search')
             ->has('type')
+            ->has('role_filter')
             ->has('member_count')
             ->has('sort_by')
         )
@@ -74,6 +75,7 @@ test('teams index returns correct data structure', function () {
             ->has('to')
         )
         ->has('jetstream', fn ($jetstream) => $jetstream
+            ->has('hasTeamFeatures')
             ->has('canCreateTeams')
         )
     );
@@ -237,15 +239,15 @@ test('pagination metadata is correctly structured', function () {
         $team->save();
     }
 
-    $response = $this->actingAs($user)->get('/teams?per_page=5&page=2');
+    $response = $this->actingAs($user)->get('/teams?per_page=32&page=1');
 
     $response->assertInertia(fn ($page) => $page
-        ->where('pagination.current_page', 2)
-        ->where('pagination.per_page', 5)
+        ->where('pagination.current_page', 1)
+        ->where('pagination.per_page', 32)
         ->where('pagination.total', 16) // personal + 15 regular
-        ->where('pagination.last_page', 4) // ceil(16/5) = 4
-        ->where('pagination.from', 6)
-        ->where('pagination.to', 10)
+        ->where('pagination.last_page', 1) // ceil(16/32) = 1
+        ->where('pagination.from', 1)
+        ->where('pagination.to', 16)
         ->has('pagination.links')
     );
 });
@@ -278,13 +280,13 @@ test('statistics are accurately calculated and provided', function () {
         $team->save();
     }
 
-    $response = $this->actingAs($user)->get('/teams?type=shared&per_page=5');
+    $response = $this->actingAs($user)->get('/teams?type=shared&per_page=32');
 
     $response->assertInertia(fn ($page) => $page
         ->where('stats.total', 11) // personal + 10 regular
         ->where('stats.filtered', 10) // only shared teams
-        ->where('stats.showing', 5) // per_page limit
+        ->where('stats.showing', 10) // all shared teams fit in one page
         ->where('stats.from', 1)
-        ->where('stats.to', 5)
+        ->where('stats.to', 10)
     );
 });

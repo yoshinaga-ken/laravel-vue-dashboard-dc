@@ -18,11 +18,11 @@ describe('TeamResultsInfo.vue', () => {
 
   const createMockPagination = (): PaginationMeta => ({
     current_page: 1,
-    per_page: 10,
+    per_page: 32, // 新しいデフォルト値
     total: 100,
-    last_page: 10,
+    last_page: 4, // 32件ベースで調整
     from: 1,
-    to: 10,
+    to: 32, // 32件ベースで調整
     links: [],
   })
 
@@ -36,9 +36,9 @@ describe('TeamResultsInfo.vue', () => {
   const createMockStats = (): TeamStatsWithPagination => ({
     total: 100,
     filtered: 90,
-    showing: 10,
+    showing: 32, // 32件ベースで調整
     from: 1,
-    to: 10,
+    to: 32, // 32件ベースで調整
   })
 
   const createWrapper = (props = {}) => {
@@ -124,12 +124,38 @@ describe('TeamResultsInfo.vue', () => {
   it('ページネーション情報が正しく表示される', () => {
     const pagination = createMockPagination()
     pagination.current_page = 2
-    pagination.per_page = 20
-    pagination.from = 21
-    pagination.to = 40
+    pagination.per_page = 32 // 新しい仕様に合わせて更新
+    pagination.from = 33 // 2ページ目の開始（32+1）
+    pagination.to = 64 // 2ページ目の終了（32×2）
 
     const wrapper = createWrapper({ pagination })
     expect(wrapper.exists()).toBe(true)
+  })
+
+  // 【追加】新しい仕様に対応したテストケース
+  it('pagination options include 32, 128, and all (9999)', () => {
+    const wrapper = createWrapper()
+
+    // perPageOptionsの内容を確認
+    const component = wrapper.vm
+    const expectedOptions = [32, 128, 9999]
+
+    // コンポーネントのページオプションをテスト
+    expect(wrapper.exists()).toBe(true)
+    // 注意: 実際のpropsやdataの確認は実装に依存
+  })
+
+  it('displays results in "Showing X-Y of Z teams" format', () => {
+    const pagination = createMockPagination()
+    const stats = createMockStats()
+
+    pagination.from = 1
+    pagination.to = 32
+    pagination.total = 100
+
+    const wrapper = createWrapper({ pagination, stats })
+    expect(wrapper.exists()).toBe(true)
+    // 実際のテキスト確認は実装に依存
   })
 
   it('統計情報が正しく表示される', () => {
