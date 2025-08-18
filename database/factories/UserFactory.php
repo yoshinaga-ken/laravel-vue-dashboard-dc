@@ -69,4 +69,40 @@ class UserFactory extends Factory
             'ownedTeams'
         );
     }
+
+    /**
+     * フォロワー付きユーザーの作成
+     */
+    public function withFollowers(int $count = 5): static
+    {
+        return $this->afterCreating(function (User $user) use ($count) {
+            $followers = User::factory($count)->create();
+            foreach ($followers as $follower) {
+                $user->followedBy($follower);
+            }
+        });
+    }
+
+    /**
+     * フォロー中ユーザー付きの作成
+     */
+    public function withFollowing(int $count = 3): static
+    {
+        return $this->afterCreating(function (User $user) use ($count) {
+            $following = User::factory($count)->create();
+            foreach ($following as $followedUser) {
+                $followedUser->followedBy($user);
+            }
+        });
+    }
+
+    /**
+     * 記事付きユーザーの作成
+     */
+    public function withArticles(int $count = 10): static
+    {
+        return $this->afterCreating(function (User $user) use ($count) {
+            \App\Models\Article::factory($count)->create(['user_id' => $user->id]);
+        });
+    }
 }

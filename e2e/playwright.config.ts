@@ -50,7 +50,7 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      testMatch: ['articles/*.spec.ts', 'teams/*.spec.ts'],
+      testMatch: ['articles/*.spec.ts', 'teams/*.spec.ts', 'users/*.spec.ts'],
       use: { ...devices['Desktop Chrome'] },
     },
 
@@ -82,7 +82,7 @@ export default defineConfig({
     {
       name: 'Mobile Safari',
       use: { ...devices['iPhone 12'] },
-      testMatch: ['articles/*.spec.ts', 'teams/*.spec.ts'],
+      testMatch: ['articles/*.spec.ts', 'teams/*.spec.ts', 'users/*.spec.ts'],
     },
 
     /* Test against branded browsers. */
