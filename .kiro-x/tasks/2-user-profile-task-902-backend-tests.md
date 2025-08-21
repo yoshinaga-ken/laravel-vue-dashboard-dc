@@ -18,157 +18,117 @@
 ```php
 <?php
 
-namespace Tests\Feature\Http\Controllers;
-
 use App\Models\User;
 use App\Models\Article;
 use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 
-class UserControllerTest extends TestCase
-{
-    use RefreshDatabase, WithFaker;
+uses(RefreshDatabase::class);
 
-    protected User $user;
-    protected User $targetUser;
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    $this->targetUser = User::factory()->create();
+});
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+// ユーザー詳細画面の表示テスト
+test('authenticated user can view user profile', function () {
+    // 認証済みユーザーでアクセス
+    Sanctum::actingAs($this->user);
 
-        $this->user = User::factory()->create();
-        $this->targetUser = User::factory()->create();
-    }
+    $response = $this->get(route('users.show', $this->targetUser));
 
-    /**
-     * ユーザー詳細画面の表示テスト
-     */
-    public function test_show_returns_user_view(): void
-    {
-        // 認証済みユーザーでアクセス
-        Sanctum::actingAs($this->user);
+    $response->assertStatus(200);
+    $response->assertViewIs('app');
+    $response->assertViewHas('page.props.userId', $this->targetUser->id);
+});
 
-        $response = $this->get(route('users.show', $this->targetUser));
+// 未認証でのユーザー詳細画面アクセステスト
+test('unauthenticated user is redirected to login', function () {
+    $response = $this->get(route('users.show', $this->targetUser));
 
-        $response->assertStatus(200);
-        $response->assertViewIs('app');
-        $response->assertViewHas('page.props.userId', $this->targetUser->id);
-    }
+    $response->assertRedirect(route('login'));
+});
 
-    /**
-     * 未認証でのユーザー詳細画面アクセステスト
-     */
-    public function test_show_redirects_when_unauthenticated(): void
-    {
-        $response = $this->get(route('users.show', $this->targetUser));
+// 存在しないユーザーへのアクセステスト
+test('returns 404 for nonexistent user', function () {
+    Sanctum::actingAs($this->user);
 
-        $response->assertRedirect(route('login'));
-    }
+    $response = $this->get(route('users.show', 99999));
 
-    /**
-     * 存在しないユーザーへのアクセステスト
-     */
-    public function test_show_returns_404_for_nonexistent_user(): void
-    {
-        Sanctum::actingAs($this->user);
+    $response->assertStatus(404);
+});
 
-        $response = $this->get(route('users.show', 99999));
+// ユーザーフォローAPIテスト
+test('can follow user successfully', function () {
+    Sanctum::actingAs($this->user, ['*']);
 
-        $response->assertStatus(404);
-    }
+    $response = $this->putJson(route('api.users.follow', $this->targetUser));
 
-    /**
-     * ユーザーフォローAPIテスト
-     */
-    public function test_follow_user_success(): void
-    {
-        Sanctum::actingAs($this->user, ['*']);
+    $response->assertStatus(200);
+    $response->assertJsonStructure([
+        'id', 'name', 'email', 'profile_photo_url',
+        'followers_count', 'following_count'
+    ]);
 
-        $response = $this->putJson(route('api.users.follow', $this->targetUser));
+    // データベースでフォロー関係を確認
+    expect($this->user->following()->where('followed_id', $this->targetUser->id)->exists())->toBeTrue();
+});
 
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'id', 'name', 'email', 'profile_photo_url',
-            'followers_count', 'following_count'
-        ]);
+// 自分自身をフォローしようとした場合のテスト
+test('cannot follow self', function () {
+    Sanctum::actingAs($this->user, ['*']);
 
-        // データベースでフォロー関係を確認
-        $this->assertTrue($this->user->following()->where('followed_id', $this->targetUser->id)->exists());
-    }
+    $response = $this->putJson(route('api.users.follow', $this->user));
 
-    /**
-     * 自分自身をフォローしようとした場合のテスト
-     */
-    public function test_cannot_follow_self(): void
-    {
-        Sanctum::actingAs($this->user, ['*']);
+    $response->assertStatus(422);
+    $response->assertJsonValidationErrors(['user']);
+});
 
-        $response = $this->putJson(route('api.users.follow', $this->user));
+// 既にフォロー済みのユーザーをフォローしようとした場合のテスト
+test('cannot follow already followed user', function () {
+    // 事前にフォロー関係を作成
+    $this->user->following()->attach($this->targetUser->id);
 
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['user']);
-    }
+    Sanctum::actingAs($this->user, ['*']);
 
-    /**
-     * 既にフォロー済みのユーザーをフォローしようとした場合のテスト
-     */
-    public function test_cannot_follow_already_followed_user(): void
-    {
-        // 事前にフォロー関係を作成
-        $this->user->following()->attach($this->targetUser->id);
+    $response = $this->putJson(route('api.users.follow', $this->targetUser));
 
-        Sanctum::actingAs($this->user, ['*']);
+    $response->assertStatus(422);
+    $response->assertJsonValidationErrors(['user']);
+});
 
-        $response = $this->putJson(route('api.users.follow', $this->targetUser));
+// ユーザーアンフォローAPIテスト
+test('can unfollow user successfully', function () {
+    // 事前にフォロー関係を作成
+    $this->user->following()->attach($this->targetUser->id);
 
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['user']);
-    }
+    Sanctum::actingAs($this->user, ['*']);
 
-    /**
-     * ユーザーアンフォローAPIテスト
-     */
-    public function test_unfollow_user_success(): void
-    {
-        // 事前にフォロー関係を作成
-        $this->user->following()->attach($this->targetUser->id);
+    $response = $this->deleteJson(route('api.users.unfollow', $this->targetUser));
 
-        Sanctum::actingAs($this->user, ['*']);
+    $response->assertStatus(200);
 
-        $response = $this->deleteJson(route('api.users.unfollow', $this->targetUser));
+    // データベースでフォロー関係の削除を確認
+    expect($this->user->following()->where('followed_id', $this->targetUser->id)->exists())->toBeFalse();
+});
 
-        $response->assertStatus(200);
+// フォローしていないユーザーをアンフォローしようとした場合のテスト
+test('cannot unfollow not followed user', function () {
+    Sanctum::actingAs($this->user, ['*']);
 
-        // データベースでフォロー関係の削除を確認
-        $this->assertFalse($this->user->following()->where('followed_id', $this->targetUser->id)->exists());
-    }
+    $response = $this->deleteJson(route('api.users.unfollow', $this->targetUser));
 
-    /**
-     * フォローしていないユーザーをアンフォローしようとした場合のテスト
-     */
-    public function test_cannot_unfollow_not_followed_user(): void
-    {
-        Sanctum::actingAs($this->user, ['*']);
+    $response->assertStatus(422);
+    $response->assertJsonValidationErrors(['user']);
+});
 
-        $response = $this->deleteJson(route('api.users.unfollow', $this->targetUser));
+// 無効なトークンでのAPIアクセステスト
+test('api requires valid token', function () {
+    $response = $this->putJson(route('api.users.follow', $this->targetUser));
 
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['user']);
-    }
-
-    /**
-     * 無効なトークンでのAPIアクセステスト
-     */
-    public function test_api_requires_valid_token(): void
-    {
-        $response = $this->putJson(route('api.users.follow', $this->targetUser));
-
-        $response->assertStatus(401);
-    }
-}
+    $response->assertStatus(401);
+});
 ```
 
 ### 2. GraphQLクエリのテスト
@@ -178,504 +138,428 @@ class UserControllerTest extends TestCase
 ```php
 <?php
 
-namespace Tests\Feature\GraphQL;
-
 use App\Models\User;
 use App\Models\Article;
 use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 
-class UserQueryTest extends TestCase
-{
-    use RefreshDatabase;
+uses(RefreshDatabase::class);
 
-    protected User $user;
-    protected User $targetUser;
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    $this->targetUser = User::factory()->create();
+});
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+// ユーザークエリの基本テスト
+test('user query returns basic information', function () {
+    Sanctum::actingAs($this->user);
 
-        $this->user = User::factory()->create();
-        $this->targetUser = User::factory()->create();
-    }
-
-    /**
-     * ユーザークエリの基本テスト
-     */
-    public function test_user_query_returns_basic_information(): void
-    {
-        Sanctum::actingAs($this->user);
-
-        $query = '
-            query GetUser($id: ID!) {
-                user(id: $id) {
-                    id
-                    name
-                    email
-                    profile_photo_url
-                    created_at
-                    updated_at
-                }
+    $query = '
+        query GetUser($id: ID!) {
+            user(id: $id) {
+                id
+                name
+                email
+                profile_photo_url
+                created_at
+                updated_at
             }
-        ';
-
-        $response = $this->postJson('/graphql', [
-            'query' => $query,
-            'variables' => ['id' => (string)$this->targetUser->id]
-        ]);
-
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'user' => [
-                    'id', 'name', 'email', 'profile_photo_url',
-                    'created_at', 'updated_at'
-                ]
-            ]
-        ]);
-
-        $userData = $response->json('data.user');
-        $this->assertEquals($this->targetUser->id, $userData['id']);
-        $this->assertEquals($this->targetUser->name, $userData['name']);
-        $this->assertEquals($this->targetUser->email, $userData['email']);
-    }
-
-    /**
-     * ユーザーの記事一覧クエリテスト
-     */
-    public function test_user_query_returns_articles_with_pagination(): void
-    {
-        // テスト用記事を作成
-        Article::factory(15)->create(['user_id' => $this->targetUser->id]);
-
-        Sanctum::actingAs($this->user);
-
-        $query = '
-            query GetUserWithArticles($id: ID!, $first: Int!, $page: Int!) {
-                user(id: $id) {
-                    id
-                    name
-                    articles(first: $first, page: $page) {
-                        data {
-                            id
-                            title
-                            created_at
-                        }
-                        paginatorInfo {
-                            count
-                            currentPage
-                            total
-                            lastPage
-                        }
-                    }
-                }
-            }
-        ';
-
-        $response = $this->postJson('/graphql', [
-            'query' => $query,
-            'variables' => [
-                'id' => (string)$this->targetUser->id,
-                'first' => 10,
-                'page' => 1
-            ]
-        ]);
-
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'user' => [
-                    'articles' => [
-                        'data' => [
-                            '*' => ['id', 'title', 'created_at']
-                        ],
-                        'paginatorInfo' => [
-                            'count', 'currentPage', 'total', 'lastPage'
-                        ]
-                    ]
-                ]
-            ]
-        ]);
-
-        $articlesData = $response->json('data.user.articles');
-        $this->assertCount(10, $articlesData['data']); // ページサイズ確認
-        $this->assertEquals(15, $articlesData['paginatorInfo']['total']); // 総数確認
-    }
-
-    /**
-     * ユーザーのフォロワー一覧クエリテスト
-     */
-    public function test_user_query_returns_followers_list(): void
-    {
-        // フォロワーを作成
-        $followers = User::factory(5)->create();
-        foreach ($followers as $follower) {
-            $follower->following()->attach($this->targetUser->id);
         }
+    ';
 
-        Sanctum::actingAs($this->user);
+    $response = $this->postJson('/graphql', [
+        'query' => $query,
+        'variables' => ['id' => (string)$this->targetUser->id]
+    ]);
 
-        $query = '
-            query GetUserWithFollowers($id: ID!) {
-                user(id: $id) {
-                    id
-                    followers(first: 10) {
-                        data {
-                            id
-                            name
-                            profile_photo_url
-                        }
-                        paginatorInfo {
-                            total
-                        }
+    $response->assertStatus(200);
+    $response->assertJsonStructure([
+        'data' => [
+            'user' => [
+                'id', 'name', 'email', 'profile_photo_url',
+                'created_at', 'updated_at'
+            ]
+        ]
+    ]);
+
+    $userData = $response->json('data.user');
+    expect($userData['id'])->toBe($this->targetUser->id);
+    expect($userData['name'])->toBe($this->targetUser->name);
+    expect($userData['email'])->toBe($this->targetUser->email);
+});
+
+// ユーザーの記事一覧クエリテスト
+test('user query returns articles with pagination', function () {
+    // テスト用記事を作成
+    Article::factory(15)->create(['user_id' => $this->targetUser->id]);
+
+    Sanctum::actingAs($this->user);
+
+    $query = '
+        query GetUserWithArticles($id: ID!, $first: Int!, $page: Int!) {
+            user(id: $id) {
+                id
+                name
+                articles(first: $first, page: $page) {
+                    data {
+                        id
+                        title
+                        created_at
+                    }
+                    paginatorInfo {
+                        count
+                        currentPage
+                        total
+                        lastPage
                     }
                 }
             }
-        ';
-
-        $response = $this->postJson('/graphql', [
-            'query' => $query,
-            'variables' => ['id' => (string)$this->targetUser->id]
-        ]);
-
-        $response->assertStatus(200);
-        $followersData = $response->json('data.user.followers');
-        $this->assertCount(5, $followersData['data']);
-        $this->assertEquals(5, $followersData['paginatorInfo']['total']);
-    }
-
-    /**
-     * ユーザーのフォロー中一覧クエリテスト
-     */
-    public function test_user_query_returns_following_list(): void
-    {
-        // フォロー中のユーザーを作成
-        $followingUsers = User::factory(3)->create();
-        foreach ($followingUsers as $followingUser) {
-            $this->targetUser->following()->attach($followingUser->id);
         }
+    ';
 
-        Sanctum::actingAs($this->user);
+    $response = $this->postJson('/graphql', [
+        'query' => $query,
+        'variables' => [
+            'id' => (string)$this->targetUser->id,
+            'first' => 10,
+            'page' => 1
+        ]
+    ]);
 
-        $query = '
-            query GetUserWithFollowing($id: ID!) {
-                user(id: $id) {
-                    id
-                    following(first: 10) {
-                        data {
-                            id
-                            name
-                            profile_photo_url
-                        }
-                        paginatorInfo {
-                            total
-                        }
-                    }
-                }
-            }
-        ';
-
-        $response = $this->postJson('/graphql', [
-            'query' => $query,
-            'variables' => ['id' => (string)$this->targetUser->id]
-        ]);
-
-        $response->assertStatus(200);
-        $followingData = $response->json('data.user.following');
-        $this->assertCount(3, $followingData['data']);
-        $this->assertEquals(3, $followingData['paginatorInfo']['total']);
-    }
-
-    /**
-     * ユーザーのチーム情報クエリテスト
-     */
-    public function test_user_query_returns_teams_information(): void
-    {
-        // 所有チームと参加チームを作成
-        $ownedTeam = Team::factory()->create(['user_id' => $this->targetUser->id]);
-        $memberTeam = Team::factory()->create();
-        $memberTeam->users()->attach($this->targetUser->id);
-
-        Sanctum::actingAs($this->user);
-
-        $query = '
-            query GetUserWithTeams($id: ID!) {
-                user(id: $id) {
-                    id
-                    ownedTeams {
-                        id
-                        name
-                    }
-                    teams {
-                        id
-                        name
-                    }
-                }
-            }
-        ';
-
-        $response = $this->postJson('/graphql', [
-            'query' => $query,
-            'variables' => ['id' => (string)$this->targetUser->id]
-        ]);
-
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'user' => [
-                    'ownedTeams' => [
-                        '*' => ['id', 'name']
+    $response->assertStatus(200);
+    $response->assertJsonStructure([
+        'data' => [
+            'user' => [
+                'articles' => [
+                    'data' => [
+                        '*' => ['id', 'title', 'created_at']
                     ],
-                    'teams' => [
-                        '*' => ['id', 'name']
+                    'paginatorInfo' => [
+                        'count', 'currentPage', 'total', 'lastPage'
                     ]
                 ]
             ]
-        ]);
+        ]
+    ]);
 
-        $userData = $response->json('data.user');
-        $this->assertCount(1, $userData['ownedTeams']);
-        $this->assertCount(1, $userData['teams']);
+    $articlesData = $response->json('data.user.articles');
+    expect($articlesData['data'])->toHaveCount(10); // ページサイズ確認
+    expect($articlesData['paginatorInfo']['total'])->toBe(15); // 総数確認
+});
+
+// ユーザーのフォロワー一覧クエリテスト
+test('user query returns followers list', function () {
+    // フォロワーを作成
+    $followers = User::factory(5)->create();
+    foreach ($followers as $follower) {
+        $follower->following()->attach($this->targetUser->id);
     }
 
-    /**
-     * 未認証でのクエリアクセステスト
-     */
-    public function test_user_query_requires_authentication(): void
-    {
-        $query = '
-            query GetUser($id: ID!) {
-                user(id: $id) {
+    Sanctum::actingAs($this->user);
+
+    $query = '
+        query GetUserWithFollowers($id: ID!) {
+            user(id: $id) {
+                id
+                followers(first: 10) {
+                    data {
+                        id
+                        name
+                        profile_photo_url
+                    }
+                    paginatorInfo {
+                        total
+                    }
+                }
+            }
+        }
+    ';
+
+    $response = $this->postJson('/graphql', [
+        'query' => $query,
+        'variables' => ['id' => (string)$this->targetUser->id]
+    ]);
+
+    $response->assertStatus(200);
+    $followersData = $response->json('data.user.followers');
+    expect($followersData['data'])->toHaveCount(5);
+    expect($followersData['paginatorInfo']['total'])->toBe(5);
+});
+
+// ユーザーのフォロー中一覧クエリテスト
+test('user query returns following list', function () {
+    // フォロー中のユーザーを作成
+    $followingUsers = User::factory(3)->create();
+    foreach ($followingUsers as $followingUser) {
+        $this->targetUser->following()->attach($followingUser->id);
+    }
+
+    Sanctum::actingAs($this->user);
+
+    $query = '
+        query GetUserWithFollowing($id: ID!) {
+            user(id: $id) {
+                id
+                following(first: 10) {
+                    data {
+                        id
+                        name
+                        profile_photo_url
+                    }
+                    paginatorInfo {
+                        total
+                    }
+                }
+            }
+        }
+    ';
+
+    $response = $this->postJson('/graphql', [
+        'query' => $query,
+        'variables' => ['id' => (string)$this->targetUser->id]
+    ]);
+
+    $response->assertStatus(200);
+    $followingData = $response->json('data.user.following');
+    expect($followingData['data'])->toHaveCount(3);
+    expect($followingData['paginatorInfo']['total'])->toBe(3);
+});
+
+// ユーザーのチーム情報クエリテスト
+test('user query returns teams information', function () {
+    // 所有チームと参加チームを作成
+    $ownedTeam = Team::factory()->create(['user_id' => $this->targetUser->id]);
+    $memberTeam = Team::factory()->create();
+    $memberTeam->users()->attach($this->targetUser->id);
+
+    Sanctum::actingAs($this->user);
+
+    $query = '
+        query GetUserWithTeams($id: ID!) {
+            user(id: $id) {
+                id
+                ownedTeams {
+                    id
+                    name
+                }
+                teams {
                     id
                     name
                 }
             }
-        ';
+        }
+    ';
 
-        $response = $this->postJson('/graphql', [
-            'query' => $query,
-            'variables' => ['id' => (string)$this->targetUser->id]
-        ]);
+    $response = $this->postJson('/graphql', [
+        'query' => $query,
+        'variables' => ['id' => (string)$this->targetUser->id]
+    ]);
 
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'errors' => [
-                '*' => ['message']
+    $response->assertStatus(200);
+    $response->assertJsonStructure([
+        'data' => [
+            'user' => [
+                'ownedTeams' => [
+                    '*' => ['id', 'name']
+                ],
+                'teams' => [
+                    '*' => ['id', 'name']
+                ]
             ]
-        ]);
-    }
+        ]
+    ]);
 
-    /**
-     * 存在しないユーザーのクエリテスト
-     */
-    public function test_user_query_returns_null_for_nonexistent_user(): void
-    {
-        Sanctum::actingAs($this->user);
+    $userData = $response->json('data.user');
+    expect($userData['ownedTeams'])->toHaveCount(1);
+    expect($userData['teams'])->toHaveCount(1);
+});
 
-        $query = '
-            query GetUser($id: ID!) {
-                user(id: $id) {
-                    id
-                    name
-                }
+// 未認証でのクエリアクセステスト
+test('user query requires authentication', function () {
+    $query = '
+        query GetUser($id: ID!) {
+            user(id: $id) {
+                id
+                name
             }
-        ';
+        }
+    ';
 
-        $response = $this->postJson('/graphql', [
-            'query' => $query,
-            'variables' => ['id' => '99999']
-        ]);
+    $response = $this->postJson('/graphql', [
+        'query' => $query,
+        'variables' => ['id' => (string)$this->targetUser->id]
+    ]);
 
-        $response->assertStatus(200);
-        $this->assertNull($response->json('data.user'));
-    }
-}
+    $response->assertStatus(200);
+    $response->assertJsonStructure([
+        'errors' => [
+            '*' => ['message']
+        ]
+    ]);
+});
+
+// 存在しないユーザーのクエリテスト
+test('user query returns null for nonexistent user', function () {
+    Sanctum::actingAs($this->user);
+
+    $query = '
+        query GetUser($id: ID!) {
+            user(id: $id) {
+                id
+                name
+            }
+        }
+    ';
+
+    $response = $this->postJson('/graphql', [
+        'query' => $query,
+        'variables' => ['id' => '99999']
+    ]);
+
+    $response->assertStatus(200);
+    expect($response->json('data.user'))->toBeNull();
+});
 ```
 
 ### 3. ユーザーモデルのテスト
 
-#### ファイル: `tests/Unit/Models/UserTest.php`
+#### ファイル: `tests/Integration/Models/UserTest.php`
 
 ```php
 <?php
-
-namespace Tests\Unit\Models;
 
 use App\Models\User;
 use App\Models\Article;
 use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class UserTest extends TestCase
-{
-    use RefreshDatabase;
+uses(RefreshDatabase::class);
 
-    protected User $user;
+beforeEach(function () {
+    $this->user = User::factory()->create();
+});
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->user = User::factory()->create();
-    }
+// ユーザーのフォロワー関係テスト
+test('user can have followers', function () {
+    $follower = User::factory()->create();
 
-    /**
-     * ユーザーのフォロワー関係テスト
-     */
-    public function test_user_can_have_followers(): void
-    {
-        $follower = User::factory()->create();
+    // フォロー関係を作成
+    $follower->following()->attach($this->user->id);
 
-        // フォロー関係を作成
-        $follower->following()->attach($this->user->id);
+    // フォロワー関係の確認
+    expect($this->user->followers->contains($follower))->toBeTrue();
+    expect($this->user->followers()->count())->toBe(1);
+});
 
-        // フォロワー関係の確認
-        $this->assertTrue($this->user->followers->contains($follower));
-        $this->assertEquals(1, $this->user->followers()->count());
-    }
+// ユーザーのフォロー中関係テスト
+test('user can follow others', function () {
+    $targetUser = User::factory()->create();
 
-    /**
-     * ユーザーのフォロー中関係テスト
-     */
-    public function test_user_can_follow_others(): void
-    {
-        $targetUser = User::factory()->create();
+    // フォロー関係を作成
+    $this->user->following()->attach($targetUser->id);
 
-        // フォロー関係を作成
-        $this->user->following()->attach($targetUser->id);
+    // フォロー関係の確認
+    expect($this->user->following->contains($targetUser))->toBeTrue();
+    expect($this->user->following()->count())->toBe(1);
+});
 
-        // フォロー関係の確認
-        $this->assertTrue($this->user->following->contains($targetUser));
-        $this->assertEquals(1, $this->user->following()->count());
-    }
+// isFollowedBy メソッドのテスト
+test('is followed by method works correctly', function () {
+    $follower = User::factory()->create();
 
-    /**
-     * isFollowedBy メソッドのテスト
-     */
-    public function test_is_followed_by_method(): void
-    {
-        $follower = User::factory()->create();
+    // フォロー前の確認
+    expect($this->user->isFollowedBy($follower))->toBeFalse();
 
-        // フォロー前の確認
-        $this->assertFalse($this->user->isFollowedBy($follower));
+    // フォロー関係を作成
+    $follower->following()->attach($this->user->id);
 
-        // フォロー関係を作成
-        $follower->following()->attach($this->user->id);
+    // フォロー後の確認
+    expect($this->user->isFollowedBy($follower))->toBeTrue();
+});
 
-        // フォロー後の確認
-        $this->assertTrue($this->user->isFollowedBy($follower));
-    }
+// followedBy メソッドのテスト
+test('followed by method works correctly', function () {
+    $follower = User::factory()->create();
 
-    /**
-     * followedBy メソッドのテスト
-     */
-    public function test_followed_by_method(): void
-    {
-        $follower = User::factory()->create();
+    // フォロー実行
+    $result = $this->user->followedBy($follower);
 
-        // フォロー実行
-        $result = $this->user->followedBy($follower);
+    expect($result)->toBeTrue();
+    expect($this->user->isFollowedBy($follower))->toBeTrue();
+});
 
-        $this->assertTrue($result);
-        $this->assertTrue($this->user->isFollowedBy($follower));
-    }
+// unfollowedBy メソッドのテスト
+test('unfollowed by method works correctly', function () {
+    $follower = User::factory()->create();
 
-    /**
-     * unfollowedBy メソッドのテスト
-     */
-    public function test_unfollowed_by_method(): void
-    {
-        $follower = User::factory()->create();
+    // 事前にフォロー関係を作成
+    $follower->following()->attach($this->user->id);
 
-        // 事前にフォロー関係を作成
-        $follower->following()->attach($this->user->id);
+    // アンフォロー実行
+    $result = $this->user->unfollowedBy($follower);
 
-        // アンフォロー実行
-        $result = $this->user->unfollowedBy($follower);
+    expect($result)->toBeTrue();
+    expect($this->user->isFollowedBy($follower))->toBeFalse();
+});
 
-        $this->assertTrue($result);
-        $this->assertFalse($this->user->isFollowedBy($follower));
-    }
+// 既にフォロー済みの場合のfollowedByテスト
+test('followed by already following user returns false', function () {
+    $follower = User::factory()->create();
 
-    /**
-     * 既にフォロー済みの場合のfollowedByテスト
-     */
-    public function test_followed_by_already_following_user(): void
-    {
-        $follower = User::factory()->create();
+    // 事前にフォロー関係を作成
+    $follower->following()->attach($this->user->id);
 
-        // 事前にフォロー関係を作成
-        $follower->following()->attach($this->user->id);
+    // 重複フォローの確認
+    $result = $this->user->followedBy($follower);
 
-        // 重複フォローの確認
-        $result = $this->user->followedBy($follower);
+    expect($result)->toBeFalse();
+    expect($this->user->followers()->count())->toBe(1);
+});
 
-        $this->assertFalse($result);
-        $this->assertEquals(1, $this->user->followers()->count());
-    }
+// フォローしていない場合のunfollowedByテスト
+test('unfollowed by not following user returns false', function () {
+    $notFollower = User::factory()->create();
 
-    /**
-     * フォローしていない場合のunfollowedByテスト
-     */
-    public function test_unfollowed_by_not_following_user(): void
-    {
-        $notFollower = User::factory()->create();
+    // 未フォロー状態でのアンフォロー試行
+    $result = $this->user->unfollowedBy($notFollower);
 
-        // 未フォロー状態でのアンフォロー試行
-        $result = $this->user->unfollowedBy($notFollower);
+    expect($result)->toBeFalse();
+    expect($this->user->followers()->count())->toBe(0);
+});
 
-        $this->assertFalse($result);
-        $this->assertEquals(0, $this->user->followers()->count());
-    }
+// ユーザーの記事関係テスト
+test('user can have articles', function () {
+    $articles = Article::factory(3)->create(['user_id' => $this->user->id]);
 
-    /**
-     * ユーザーの記事関係テスト
-     */
-    public function test_user_can_have_articles(): void
-    {
-        $articles = Article::factory(3)->create(['user_id' => $this->user->id]);
+    expect($this->user->articles()->count())->toBe(3);
+    expect($this->user->articles->contains($articles->first()))->toBeTrue();
+});
 
-        $this->assertEquals(3, $this->user->articles()->count());
-        $this->assertTrue($this->user->articles->contains($articles->first()));
-    }
+// ユーザーのチーム所有関係テスト
+test('user can own teams', function () {
+    $team = Team::factory()->create(['user_id' => $this->user->id]);
 
-    /**
-     * ユーザーのチーム所有関係テスト
-     */
-    public function test_user_can_own_teams(): void
-    {
-        $team = Team::factory()->create(['user_id' => $this->user->id]);
+    expect($this->user->ownedTeams()->count())->toBe(1);
+    expect($this->user->ownedTeams->contains($team))->toBeTrue();
+});
 
-        $this->assertEquals(1, $this->user->ownedTeams()->count());
-        $this->assertTrue($this->user->ownedTeams->contains($team));
-    }
+// ユーザーのチーム参加関係テスト
+test('user can be member of teams', function () {
+    $team = Team::factory()->create();
+    $team->users()->attach($this->user->id);
 
-    /**
-     * ユーザーのチーム参加関係テスト
-     */
-    public function test_user_can_be_member_of_teams(): void
-    {
-        $team = Team::factory()->create();
-        $team->users()->attach($this->user->id);
+    expect($this->user->teams()->count())->toBe(1);
+    expect($this->user->teams->contains($team))->toBeTrue();
+});
 
-        $this->assertEquals(1, $this->user->teams()->count());
-        $this->assertTrue($this->user->teams->contains($team));
-    }
-
-    /**
-     * プロフィール写真URLのテスト
-     */
-    public function test_profile_photo_url_accessor(): void
-    {
-        // デフォルトのプロフィール写真URL
-        $defaultUrl = $this->user->profile_photo_url;
-        $this->assertStringContains('ui-avatars.com', $defaultUrl);
-        $this->assertStringContains($this->user->name, $defaultUrl);
-    }
-}
+// プロフィール写真URLのテスト
+test('profile photo url accessor works correctly', function () {
+    // デフォルトのプロフィール写真URL
+    $defaultUrl = $this->user->profile_photo_url;
+    expect($defaultUrl)->toContain('ui-avatars.com');
+    expect($defaultUrl)->toContain($this->user->name);
+});
 ```
 
 ### 4. 認証・認可のテスト
@@ -685,102 +569,81 @@ class UserTest extends TestCase
 ```php
 <?php
 
-namespace Tests\Feature\Auth;
-
 use App\Models\User;
 use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 
-class UserAuthorizationTest extends TestCase
-{
-    use RefreshDatabase;
+uses(RefreshDatabase::class);
 
-    /**
-     * チーム所有者によるユーザー情報アクセステスト
-     */
-    public function test_team_owner_can_access_member_info(): void
-    {
-        $owner = User::factory()->create();
-        $member = User::factory()->create();
+// チーム所有者によるユーザー情報アクセステスト
+test('team owner can access member info', function () {
+    $owner = User::factory()->create();
+    $member = User::factory()->create();
 
-        $team = Team::factory()->create(['user_id' => $owner->id]);
-        $team->users()->attach($member->id);
+    $team = Team::factory()->create(['user_id' => $owner->id]);
+    $team->users()->attach($member->id);
 
-        Sanctum::actingAs($owner);
+    Sanctum::actingAs($owner);
 
-        $response = $this->get(route('users.show', $member));
-        $response->assertStatus(200);
-    }
+    $response = $this->get(route('users.show', $member));
+    $response->assertStatus(200);
+});
 
-    /**
-     * フォロワーによるユーザー情報アクセステスト
-     */
-    public function test_follower_can_access_user_info(): void
-    {
-        $user = User::factory()->create();
-        $follower = User::factory()->create();
+// フォロワーによるユーザー情報アクセステスト
+test('follower can access user info', function () {
+    $user = User::factory()->create();
+    $follower = User::factory()->create();
 
-        // フォロー関係を作成
-        $follower->following()->attach($user->id);
+    // フォロー関係を作成
+    $follower->following()->attach($user->id);
 
-        Sanctum::actingAs($follower);
+    Sanctum::actingAs($follower);
 
-        $response = $this->get(route('users.show', $user));
-        $response->assertStatus(200);
-    }
+    $response = $this->get(route('users.show', $user));
+    $response->assertStatus(200);
+});
 
-    /**
-     * 認証済みユーザーのアクセス権限テスト
-     */
-    public function test_authenticated_user_can_access_user_profiles(): void
-    {
-        $user = User::factory()->create();
-        $targetUser = User::factory()->create();
+// 認証済みユーザーのアクセス権限テスト
+test('authenticated user can access user profiles', function () {
+    $user = User::factory()->create();
+    $targetUser = User::factory()->create();
 
-        Sanctum::actingAs($user);
+    Sanctum::actingAs($user);
 
-        $response = $this->get(route('users.show', $targetUser));
-        $response->assertStatus(200);
-    }
+    $response = $this->get(route('users.show', $targetUser));
+    $response->assertStatus(200);
+});
 
-    /**
-     * APIトークンスコープのテスト
-     */
-    public function test_api_token_scopes(): void
-    {
-        $user = User::factory()->create();
-        $targetUser = User::factory()->create();
+// APIトークンスコープのテスト
+test('api token scopes work correctly', function () {
+    $user = User::factory()->create();
+    $targetUser = User::factory()->create();
 
-        // 限定スコープでトークン作成
-        $token = $user->createToken('test', ['user:read']);
-        $this->actingAs($user, 'sanctum');
+    // 限定スコープでトークン作成
+    $token = $user->createToken('test', ['user:read']);
+    $this->actingAs($user, 'sanctum');
 
-        // 読み取り系API（許可）
-        $response = $this->getJson(route('api.users.show', $targetUser));
-        $response->assertStatus(200);
+    // 読み取り系API（許可）
+    $response = $this->getJson(route('api.users.show', $targetUser));
+    $response->assertStatus(200);
 
-        // 書き込み系API（フォロー）
-        $response = $this->putJson(route('api.users.follow', $targetUser));
-        // スコープに応じてアクセス制御をテスト
-    }
+    // 書き込み系API（フォロー）
+    $response = $this->putJson(route('api.users.follow', $targetUser));
+    // スコープに応じてアクセス制御をテスト
+});
 
-    /**
-     * 無効なトークンでのアクセステスト
-     */
-    public function test_invalid_token_access(): void
-    {
-        $user = User::factory()->create();
+// 無効なトークンでのアクセステスト
+test('invalid token access is denied', function () {
+    $user = User::factory()->create();
 
-        // 無効なトークンでアクセス
-        $response = $this->withHeaders([
-            'Authorization' => 'Bearer invalid-token'
-        ])->getJson(route('api.users.show', $user));
+    // 無効なトークンでアクセス
+    $response = $this->withHeaders([
+        'Authorization' => 'Bearer invalid-token'
+    ])->getJson(route('api.users.show', $user));
 
-        $response->assertStatus(401);
-    }
-}
+    $response->assertStatus(401);
+});
 ```
 
 ## テスト設定・ユーティリティ
@@ -793,6 +656,8 @@ class UserAuthorizationTest extends TestCase
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -846,6 +711,65 @@ abstract class TestCase extends BaseTestCase
 
         return [$team, $owner, $members];
     }
+}
+```
+
+### Pestヘルパー関数の追加（新規）
+
+#### ファイル: `tests/Pest.php` への追加
+
+```php
+<?php
+
+use App\Models\User;
+use App\Models\Team;
+use Laravel\Sanctum\Sanctum;
+
+// Pestカスタムヘルパー関数
+
+/**
+ * GraphQLクエリのヘルパー関数
+ */
+function graphQL(string $query, array $variables = [], array $headers = []) {
+    return test()->postJson('/graphql', [
+        'query' => $query,
+        'variables' => $variables
+    ], $headers);
+}
+
+/**
+ * 認証済みユーザーでのGraphQLクエリ
+ */
+function authenticatedGraphQL(string $query, array $variables = [], ?User $user = null) {
+    if (!$user) {
+        $user = User::factory()->create();
+    }
+
+    Sanctum::actingAs($user);
+
+    return graphQL($query, $variables);
+}
+
+/**
+ * フォロー関係を作成するヘルパー
+ */
+function createFollowRelation(User $follower, User $followed): void {
+    $follower->following()->attach($followed->id);
+}
+
+/**
+ * テスト用チームとメンバーを作成するヘルパー
+ */
+function createTeamWithMembers(int $memberCount = 3): array {
+    $owner = User::factory()->create();
+    $team = Team::factory()->create(['user_id' => $owner->id]);
+
+    $members = User::factory($memberCount)->create();
+    foreach ($members as $member) {
+        $team->users()->attach($member->id);
+    }
+
+    return [$team, $owner, $members];
 }
 ```
 
