@@ -17,17 +17,17 @@ $finder = PhpCsFixer\Finder::create()
 $config = new PhpCsFixer\Config();
 return $config
     ->setRules([
-        '@PSR12' => true,
+        // '@PSR12' => true, // PSR-12ルールセットを無効化
         'array_syntax' => ['syntax' => 'short'],
         'ordered_imports' => ['sort_algorithm' => 'alpha'],
         'no_unused_imports' => true,
-        'not_operator_with_successor_space' => true,
+        'not_operator_with_successor_space' => false,
         'trailing_comma_in_multiline' => true,
         'phpdoc_scalar' => true,
-        'unary_operator_spaces' => true,
+        'unary_operator_spaces' => false,
         'binary_operator_spaces' => true,
         'blank_line_before_statement' => [
-            'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
+            'statements' => ['continue', 'declare', 'throw', 'try'],
         ],
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,
@@ -38,11 +38,11 @@ return $config
             ],
         ],
         'method_argument_space' => [
-            'on_multiline' => 'ensure_fully_multiline',
+            'on_multiline' => 'ignore',
             'keep_multiple_spaces_after_comma' => true,
         ],
         'single_trait_insert_per_statement' => true,
-        'declare_strict_types' => true,
+        'declare_strict_types' => false,
         'strict_param' => true,
         'no_trailing_whitespace' => true,
         'no_whitespace_in_blank_line' => true,
@@ -74,8 +74,9 @@ return $config
         'standardize_not_equals' => true,
         'ternary_operator_spaces' => true,
         'trim_array_spaces' => true,
-        'unary_operator_spaces' => true,
+        'unary_operator_spaces' => false,
         'whitespace_after_comma_in_array' => true,
+        'new_with_braces' => false,
     ])
     ->setFinder($finder)
     ->setRiskyAllowed(true)
