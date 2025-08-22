@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\User;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
@@ -67,14 +67,14 @@ test('api token authentication works correctly', function () {
 
     $response = $this->postJson('/graphql', [
         'query' => $query,
-        'variables' => ['id' => (string)$targetUser->id]
+        'variables' => ['id' => (string)$targetUser->id],
     ]);
 
     $response->assertStatus(200);
     $response->assertJsonStructure([
         'data' => [
-            'user' => ['id', 'name', 'email']
-        ]
+            'user' => ['id', 'name', 'email'],
+        ],
     ]);
 });
 
@@ -84,7 +84,7 @@ test('invalid token access is denied', function () {
 
     // 無効なトークンでアクセス
     $response = $this->withHeaders([
-        'Authorization' => 'Bearer invalid-token'
+        'Authorization' => 'Bearer invalid-token',
     ])->putJson(route('api.users.follow', $user));
 
     $response->assertStatus(401);
@@ -114,14 +114,14 @@ test('unauthenticated graphql access returns error', function () {
 
     $response = $this->postJson('/graphql', [
         'query' => $query,
-        'variables' => ['id' => (string)$user->id]
+        'variables' => ['id' => (string)$user->id],
     ]);
 
     $response->assertStatus(200);
     $response->assertJsonStructure([
         'errors' => [
-            '*' => ['message']
-        ]
+            '*' => ['message'],
+        ],
     ]);
 });
 
@@ -167,14 +167,14 @@ test('sanctum guard configuration works correctly', function () {
     ';
 
     $response = $this->postJson('/graphql', [
-        'query' => $query
+        'query' => $query,
     ]);
 
     $response->assertStatus(200);
     $response->assertJsonStructure([
         'data' => [
-            'loginUser' => ['id', 'name', 'email']
-        ]
+            'loginUser' => ['id', 'name', 'email'],
+        ],
     ]);
 
     $loginUserData = $response->json('data.loginUser');
@@ -208,7 +208,7 @@ test('token validation works correctly', function () {
     $token = $user->createToken('test-token');
 
     $response = $this->withHeaders([
-        'Authorization' => 'Bearer ' . $token->plainTextToken
+        'Authorization' => 'Bearer ' . $token->plainTextToken,
     ])->putJson(route('api.users.follow', $targetUser));
 
     $response->assertStatus(200);
@@ -217,11 +217,11 @@ test('token validation works correctly', function () {
     $user->tokens()->delete();
 
     $response = $this->withHeaders([
-        'Authorization' => 'Bearer ' . $token->plainTextToken
+        'Authorization' => 'Bearer ' . $token->plainTextToken,
     ])->putJson(route('api.users.follow', $targetUser));
 
     // 現在の実装では削除されたトークンでも200が返される場合がある
-    expect(in_array($response->status(), [200, 401]))->toBeTrue();
+    expect(in_array($response->status(), [200, 401], true))->toBeTrue();
 });
 
 // 認証が必要なルートのテスト
@@ -241,7 +241,7 @@ test('protected routes require authentication', function () {
             $response->assertRedirect(route('login'));
         } else {
             // APIルートでは401または302のリダイレクトが返される場合がある
-            expect(in_array($response->status(), [401, 302]))->toBeTrue();
+            expect(in_array($response->status(), [401, 302], true))->toBeTrue();
         }
     }
 });

@@ -20,7 +20,6 @@ class StoreArticleRequest extends FormRequest
         return true;
     }
 
-
     protected function model(): string
     {
         return Article::class;

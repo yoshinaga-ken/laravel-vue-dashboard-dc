@@ -1,8 +1,6 @@
 <?php
 
 use App\Models\User;
-use App\Models\Article;
-use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
@@ -50,7 +48,7 @@ test('can follow user successfully', function () {
 
     $response->assertStatus(200);
     $response->assertJsonStructure([
-        'id', 'name'
+        'id', 'name',
     ]);
 
     // データベースでフォロー関係を確認
@@ -125,13 +123,13 @@ test('api follow returns json when wants json', function () {
     Sanctum::actingAs($this->user, ['*']);
 
     $response = $this->putJson(route('api.users.follow', $this->targetUser), [], [
-        'Accept' => 'application/json'
+        'Accept' => 'application/json',
     ]);
 
     $response->assertStatus(200);
     $response->assertJson([
         'id' => $this->targetUser->id,
-        'name' => $this->targetUser->name
+        'name' => $this->targetUser->name,
     ]);
 });
 
@@ -140,7 +138,7 @@ test('web follow redirects back', function () {
     $this->actingAs($this->user);
 
     $response = $this->put(route('api.users.follow', $this->targetUser), [], [
-        'Accept' => 'text/html'
+        'Accept' => 'text/html',
     ]);
 
     $response->assertRedirect();

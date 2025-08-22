@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Events\ArticleCreated;
 use App\Models\Article;
-use App\Models\Tag;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
@@ -14,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 final class CreateArticle implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, SerializesModels, Queueable;
+    use Dispatchable;use InteractsWithQueue;use SerializesModels;use Queueable;
 
     /**
      * Create a new job instance.

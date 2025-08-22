@@ -15,7 +15,7 @@ class BaseFilter
 
         return [
             'firstname' => current($nameParts),
-            'lastname'  => $nameParts[1] ?? '',
+            'lastname' => $nameParts[1] ?? '',
         ];
     }
 

@@ -43,10 +43,10 @@ test('all users can see all teams in the system', function () {
     $this->actingAs($user1)
         ->get('/teams')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->contains('name', 'Test Team') &&
-                collect($teams)->contains('name', $user1->name . "'s Team") &&
-                collect($teams)->contains('name', $user2->name . "'s Team")
+            ->where('teams', fn ($teams)
+                => collect($teams)->contains('name', 'Test Team')
+                && collect($teams)->contains('name', $user1->name . "'s Team")
+                && collect($teams)->contains('name', $user2->name . "'s Team")
             )
         );
 
@@ -54,10 +54,10 @@ test('all users can see all teams in the system', function () {
     $this->actingAs($user2)
         ->get('/teams')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->contains('name', 'Test Team') &&
-                collect($teams)->contains('name', $user1->name . "'s Team") &&
-                collect($teams)->contains('name', $user2->name . "'s Team")
+            ->where('teams', fn ($teams)
+                => collect($teams)->contains('name', 'Test Team')
+                && collect($teams)->contains('name', $user1->name . "'s Team")
+                && collect($teams)->contains('name', $user2->name . "'s Team")
             )
         );
 });
@@ -84,9 +84,9 @@ test('teams can be filtered by search term', function () {
     $this->actingAs($user)
         ->get('/teams?search=Searchable')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->contains('name', 'Searchable Team') &&
-                !collect($teams)->contains('name', 'Other Team')
+            ->where('teams', fn ($teams)
+                => collect($teams)->contains('name', 'Searchable Team')
+                && !collect($teams)->contains('name', 'Other Team')
             )
             ->where('filters.search', 'Searchable')
         );
@@ -108,8 +108,8 @@ test('teams can be filtered by type', function () {
     $this->actingAs($user)
         ->get('/teams?type=personal')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->every(fn ($team) => $team['personal_team'] === true)
+            ->where('teams', fn ($teams)
+                => collect($teams)->every(fn ($team) => $team['personal_team'] === true)
             )
             ->where('filters.type', 'personal')
         );
@@ -118,8 +118,8 @@ test('teams can be filtered by type', function () {
     $this->actingAs($user)
         ->get('/teams?type=shared')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->every(fn ($team) => $team['personal_team'] === false)
+            ->where('teams', fn ($teams)
+                => collect($teams)->every(fn ($team) => $team['personal_team'] === false)
             )
             ->where('filters.type', 'shared')
         );
@@ -153,8 +153,8 @@ test('teams can be filtered by role', function () {
     $this->actingAs($owner)
         ->get('/teams?role_filter=owner')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->every(fn ($team) => $team['is_owner'] === true)
+            ->where('teams', fn ($teams)
+                => collect($teams)->every(fn ($team) => $team['is_owner'] === true)
             )
             ->where('filters.role_filter', 'owner')
         );
@@ -163,8 +163,8 @@ test('teams can be filtered by role', function () {
     $this->actingAs($owner)
         ->get('/teams?role_filter=member')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->every(fn ($team) => $team['is_owner'] === false)
+            ->where('teams', fn ($teams)
+                => collect($teams)->every(fn ($team) => $team['is_owner'] === false)
             )
             ->where('filters.role_filter', 'member')
         );
@@ -173,8 +173,8 @@ test('teams can be filtered by role', function () {
     $this->actingAs($owner)
         ->get('/teams?role_filter=all')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->count() >= 3 // personal + owned + member team
+            ->where('teams', fn ($teams)
+                => collect($teams)->count() >= 3 // personal + owned + member team
             )
             ->where('filters.role_filter', 'all')
         );
@@ -358,11 +358,11 @@ test('teams can be filtered by multiple criteria', function () {
     $this->actingAs($owner)
         ->get('/teams?search=Owned&type=shared&role_filter=owner')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->every(fn ($team) =>
-                    str_contains($team['name'], 'Owned') &&
-                    $team['personal_team'] === false &&
-                    $team['is_owner'] === true
+            ->where('teams', fn ($teams)
+                => collect($teams)->every(fn ($team)
+                    => str_contains($team['name'], 'Owned')
+                    && $team['personal_team'] === false
+                    && $team['is_owner'] === true
                 )
             )
             ->where('filters.search', 'Owned')
@@ -374,10 +374,10 @@ test('teams can be filtered by multiple criteria', function () {
     $this->actingAs($owner)
         ->get('/teams?search=Member&role_filter=member')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->every(fn ($team) =>
-                    str_contains($team['name'], 'Member') &&
-                    $team['is_owner'] === false
+            ->where('teams', fn ($teams)
+                => collect($teams)->every(fn ($team)
+                    => str_contains($team['name'], 'Member')
+                    && $team['is_owner'] === false
                 )
             )
             ->where('filters.search', 'Member')
@@ -457,10 +457,10 @@ test('role filter works with member count filter', function () {
     $this->actingAs($owner)
         ->get('/teams?role_filter=owner&member_count=1')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->every(fn ($team) =>
-                    $team['is_owner'] === true &&
-                    $team['members_count'] === 1
+            ->where('teams', fn ($teams)
+                => collect($teams)->every(fn ($team)
+                    => $team['is_owner'] === true
+                    && $team['members_count'] === 1
                 )
             )
             ->where('filters.role_filter', 'owner')
@@ -471,11 +471,11 @@ test('role filter works with member count filter', function () {
     $this->actingAs($owner)
         ->get('/teams?role_filter=owner&member_count=2-5')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->every(fn ($team) =>
-                    $team['is_owner'] === true &&
-                    $team['members_count'] >= 2 &&
-                    $team['members_count'] <= 5
+            ->where('teams', fn ($teams)
+                => collect($teams)->every(fn ($team)
+                    => $team['is_owner'] === true
+                    && $team['members_count'] >= 2
+                    && $team['members_count'] <= 5
                 )
             )
             ->where('filters.role_filter', 'owner')

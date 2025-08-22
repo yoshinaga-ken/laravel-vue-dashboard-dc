@@ -35,7 +35,7 @@ class HtmlValidationRule implements Rule
             if (str_contains($filePath, 'CheckinController.php')) {
                 return [];
             }
-            
+
             return [
                 RuleErrorBuilder::message(
                     'HTML img tag should have an alt attribute for accessibility'

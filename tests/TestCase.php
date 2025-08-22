@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use App\Models\User;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Sanctum\Sanctum;
 
@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
     {
         return $this->postJson('/graphql', [
             'query' => $query,
-            'variables' => $variables
+            'variables' => $variables,
         ], $headers);
     }
 

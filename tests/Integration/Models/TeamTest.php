@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\User;
-use Laravel\Jetstream\Jetstream;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Jetstream\Jetstream;
 use Tests\TestCase;
 
 uses(TestCase::class);
@@ -58,26 +58,26 @@ test('team member counts are calculated correctly', function () {
 
     // メンバー2名
     expect($team->users->count())->toBe(2);
-    
+
     // オーナー + メンバー2名 = 3名
     expect($team->allUsers()->count())->toBe(3);
-    
+
     // 実際のカウントを確認
     $actualCount = $team->users->count();
     expect($actualCount)->toBeGreaterThanOrEqual(2); // 最低2人（オーナー + メンバー）
-    
+
     // 実際のユーザーIDを確認（メンバーのみ）
     $userIds = $team->users->pluck('id')->toArray();
     expect($userIds)->not->toContain($owner->id); // オーナーは含まれない
     expect($userIds)->toContain($member1->id);
     expect($userIds)->toContain($member2->id);
-    
+
     // 全ユーザーIDを確認（オーナー + メンバー）
     $allUserIds = $team->allUsers()->pluck('id')->toArray();
     expect($allUserIds)->toContain($owner->id);
     expect($allUserIds)->toContain($member1->id);
     expect($allUserIds)->toContain($member2->id);
-    
+
     // メンバーシップを確認
     expect($owner->belongsToTeam($team))->toBeTrue();
     expect($member1->belongsToTeam($team))->toBeTrue();

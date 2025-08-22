@@ -9,8 +9,8 @@ uses(
     RefreshDatabase::class
 );
 
-const FollowJsonStructure =
-[
+const FollowJsonStructure
+= [
     'id',
     'name',
 ];
@@ -46,4 +46,3 @@ it('api.users.follow|unfollow', function () {
     $this->deleteJson(route('api.users.unfollow', $user->id))
         ->assertStatus(404);
 });
-

@@ -23,7 +23,7 @@ class ArticleFactory extends Factory
         return [
             'user_id' => $user->id,
             'title' => fake()->sentence(),
-            'body' => fake()->text()
+            'body' => fake()->text(),
         ];
     }
 }

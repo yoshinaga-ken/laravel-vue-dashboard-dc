@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\User;
 use App\Models\Article;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 
@@ -32,7 +32,7 @@ test('user query returns basic information', function () {
 
     $response = $this->postJson('/graphql', [
         'query' => $query,
-        'variables' => ['id' => (string)$this->targetUser->id]
+        'variables' => ['id' => (string)$this->targetUser->id],
     ]);
 
     $response->assertStatus(200);
@@ -40,9 +40,9 @@ test('user query returns basic information', function () {
         'data' => [
             'user' => [
                 'id', 'name', 'email', 'profile_photo_url',
-                'created_at', 'updated_at'
-            ]
-        ]
+                'created_at', 'updated_at',
+            ],
+        ],
     ]);
 
     $userData = $response->json('data.user');
@@ -85,8 +85,8 @@ test('user query returns articles with pagination', function () {
         'variables' => [
             'id' => (string)$this->targetUser->id,
             'first' => 10,
-            'page' => 1
-        ]
+            'page' => 1,
+        ],
     ]);
 
     $response->assertStatus(200);
@@ -101,14 +101,14 @@ test('user query returns articles with pagination', function () {
             'user' => [
                 'articles' => [
                     'data' => [
-                        '*' => ['id', 'title', 'body']
+                        '*' => ['id', 'title', 'body'],
                     ],
                     'paginatorInfo' => [
-                        'count', 'currentPage', 'total', 'lastPage'
-                    ]
-                ]
-            ]
-        ]
+                        'count', 'currentPage', 'total', 'lastPage',
+                    ],
+                ],
+            ],
+        ],
     ]);
 
     $articlesData = $response->json('data.user.articles');
@@ -146,7 +146,7 @@ test('user query returns followers list', function () {
 
     $response = $this->postJson('/graphql', [
         'query' => $query,
-        'variables' => ['id' => (string)$this->targetUser->id]
+        'variables' => ['id' => (string)$this->targetUser->id],
     ]);
 
     $response->assertStatus(200);
@@ -185,7 +185,7 @@ test('user query returns following list', function () {
 
     $response = $this->postJson('/graphql', [
         'query' => $query,
-        'variables' => ['id' => (string)$this->targetUser->id]
+        'variables' => ['id' => (string)$this->targetUser->id],
     ]);
 
     $response->assertStatus(200);
@@ -221,7 +221,7 @@ test('user query returns teams information', function () {
 
     $response = $this->postJson('/graphql', [
         'query' => $query,
-        'variables' => ['id' => (string)$this->targetUser->id]
+        'variables' => ['id' => (string)$this->targetUser->id],
     ]);
 
     $response->assertStatus(200);
@@ -229,13 +229,13 @@ test('user query returns teams information', function () {
         'data' => [
             'user' => [
                 'ownedTeams' => [
-                    '*' => ['id', 'name']
+                    '*' => ['id', 'name'],
                 ],
                 'teams' => [
-                    '*' => ['id', 'name']
-                ]
-            ]
-        ]
+                    '*' => ['id', 'name'],
+                ],
+            ],
+        ],
     ]);
 
     $userData = $response->json('data.user');
@@ -256,14 +256,14 @@ test('user query requires authentication', function () {
 
     $response = $this->postJson('/graphql', [
         'query' => $query,
-        'variables' => ['id' => (string)$this->targetUser->id]
+        'variables' => ['id' => (string)$this->targetUser->id],
     ]);
 
     $response->assertStatus(200);
     $response->assertJsonStructure([
         'errors' => [
-            '*' => ['message']
-        ]
+            '*' => ['message'],
+        ],
     ]);
 });
 
@@ -282,7 +282,7 @@ test('user query returns null for nonexistent user', function () {
 
     $response = $this->postJson('/graphql', [
         'query' => $query,
-        'variables' => ['id' => '99999']
+        'variables' => ['id' => '99999'],
     ]);
 
     $response->assertStatus(200);
@@ -318,8 +318,8 @@ test('users query returns paginated list', function () {
         'query' => $query,
         'variables' => [
             'first' => 5,
-            'page' => 1
-        ]
+            'page' => 1,
+        ],
     ]);
 
     $response->assertStatus(200);
@@ -327,13 +327,13 @@ test('users query returns paginated list', function () {
         'data' => [
             'users' => [
                 'data' => [
-                    '*' => ['id', 'name', 'email']
+                    '*' => ['id', 'name', 'email'],
                 ],
                 'paginatorInfo' => [
-                    'count', 'currentPage', 'total', 'lastPage'
-                ]
-            ]
-        ]
+                    'count', 'currentPage', 'total', 'lastPage',
+                ],
+            ],
+        ],
     ]);
 
     $usersData = $response->json('data.users');
@@ -357,16 +357,16 @@ test('login user query returns current user', function () {
     ';
 
     $response = $this->postJson('/graphql', [
-        'query' => $query
+        'query' => $query,
     ]);
 
     $response->assertStatus(200);
     $response->assertJsonStructure([
         'data' => [
             'loginUser' => [
-                'id', 'name', 'email', 'profile_photo_url'
-            ]
-        ]
+                'id', 'name', 'email', 'profile_photo_url',
+            ],
+        ],
     ]);
 
     $loginUserData = $response->json('data.loginUser');

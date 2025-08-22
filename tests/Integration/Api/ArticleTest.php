@@ -18,8 +18,8 @@ uses(
 
 beforeEach(fn() => $this->seed());
 
-const ArticleJsonStructure =
-[
+const ArticleJsonStructure
+= [
     'id',
     'title',
     'body',
@@ -37,13 +37,13 @@ const ArticleJsonStructure =
     ],
     'tags' => [
         [
-            "id",
-            "name",
-            "created_at",
-            "updated_at",
-        ]
+            'id',
+            'name',
+            'created_at',
+            'updated_at',
+        ],
     ],
-    'likes'
+    'likes',
 ];
 
 it('api.articles.index', function () {
@@ -66,7 +66,7 @@ it('api.articles.index', function () {
     // Validation が実装されているか？
     // 🚀記事一覧取得
     $j = $this->getJson(route('api.articles.index', ['from' => -1, 'to' => 2]));
-    $j->assertJsonStructure(['message','errors' => []]);
+    $j->assertJsonStructure(['message', 'errors' => []]);
 });
 
 it('api.articles.index - param:search', function () {
@@ -106,10 +106,9 @@ it('api.articles.index - param:user_id', function () {
 
     $from = 1; $to = 3;
     // 🚀記事一覧取得
-    $j = $this->getJson(route('api.articles.index', ['user_id' => $user->id,'from' => $from, 'to' => $to]));
+    $j = $this->getJson(route('api.articles.index', ['user_id' => $user->id, 'from' => $from, 'to' => $to]));
     $j->assertJsonCount($to - $from + 1);
 });
-
 
 it('api.articles.store|update', function (string $method) {
     $user = User::factory()->create();
@@ -165,7 +164,7 @@ it('api.articles.store|update', function (string $method) {
     } else {
         $j = $this->postJson(route('api.articles.store'), $data);
     }
-    $j->assertJsonStructure(['message','errors' => []]);
+    $j->assertJsonStructure(['message', 'errors' => []]);
 })->with('dataset.article.store|update');
 
 dataset('dataset.article.store|update', [

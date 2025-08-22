@@ -26,7 +26,7 @@ test('users can create articles', function () {
     $response = $this->post('/articles', [
         'title' => 'Test title',
         'body' => 'Test body',
-        'tags' => ['tag1', 'tag2']
+        'tags' => ['tag1', 'tag2'],
     ]);
 
     $article = Article::latest()->first(); // 最後に作成された記事を取得
@@ -47,7 +47,7 @@ test('users can update articles', function () {
     $this->put("/articles/{$article->id}", [
         'title' => 'Updated title',
         'body' => 'Updated body',
-        'tags' => ['tag1', 'tag2']
+        'tags' => ['tag1', 'tag2'],
     ])
         ->assertRedirect(route('articles.edit', $article->id))
         ->assertSessionHas('success', __('Article updated', ['id' => $article->id]));
@@ -77,4 +77,3 @@ test('users cannot delete an article they do not own', function () {
     $this->delete("/articles/{$article->id}")
         ->assertForbidden();
 });
-

@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\User;
-use Laravel\Jetstream\Jetstream;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Jetstream\Jetstream;
 use Tests\TestCase;
 
 uses(TestCase::class);
@@ -103,15 +103,15 @@ test('team data includes correct relationship information', function () {
     $response = $this->actingAs($owner)->get('/teams?type=shared');
 
     $response->assertInertia(fn ($page) => $page
-        ->where('teams', fn ($teams) =>
-            collect($teams)->contains(fn ($teamData) =>
-                $teamData['name'] === 'Test Team' &&
-                $teamData['is_owner'] === true &&
-                $teamData['members_count'] >= 1 && // owner + member (最低1人)
-                $teamData['invitations_count'] >= 0 && // 招待は0以上
-                $teamData['user_role'] === 'owner' &&
-                $teamData['permissions']['canUpdate'] === true &&
-                $teamData['permissions']['canDelete'] === true
+        ->where('teams', fn ($teams)
+            => collect($teams)->contains(fn ($teamData)
+                => $teamData['name'] === 'Test Team'
+                && $teamData['is_owner'] === true
+                && $teamData['members_count'] >= 1 // owner + member (最低1人)
+                && $teamData['invitations_count'] >= 0 // 招待は0以上
+                && $teamData['user_role'] === 'owner'
+                && $teamData['permissions']['canUpdate'] === true
+                && $teamData['permissions']['canDelete'] === true
             )
         )
     );
@@ -135,12 +135,12 @@ test('team permissions are correctly evaluated in API response', function () {
     $this->actingAs($owner)
         ->get('/teams')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->contains(fn ($teamData) =>
-                    $teamData['name'] === 'Test Team' &&
-                    $teamData['permissions']['canView'] === true &&
-                    $teamData['permissions']['canUpdate'] === true &&
-                    $teamData['permissions']['canDelete'] === true
+            ->where('teams', fn ($teams)
+                => collect($teams)->contains(fn ($teamData)
+                    => $teamData['name'] === 'Test Team'
+                    && $teamData['permissions']['canView'] === true
+                    && $teamData['permissions']['canUpdate'] === true
+                    && $teamData['permissions']['canDelete'] === true
                 )
             )
         );
@@ -149,12 +149,12 @@ test('team permissions are correctly evaluated in API response', function () {
     $this->actingAs($member)
         ->get('/teams')
         ->assertInertia(fn ($page) => $page
-            ->where('teams', fn ($teams) =>
-                collect($teams)->contains(fn ($teamData) =>
-                    $teamData['name'] === 'Test Team' &&
-                    $teamData['permissions']['canView'] === true &&
-                    $teamData['permissions']['canUpdate'] === false &&
-                    $teamData['permissions']['canDelete'] === false
+            ->where('teams', fn ($teams)
+                => collect($teams)->contains(fn ($teamData)
+                    => $teamData['name'] === 'Test Team'
+                    && $teamData['permissions']['canView'] === true
+                    && $teamData['permissions']['canUpdate'] === false
+                    && $teamData['permissions']['canDelete'] === false
                 )
             )
         );
@@ -167,14 +167,14 @@ test('personal team has correct properties in API response', function () {
     $response = $this->actingAs($user)->get('/teams');
 
     $response->assertInertia(fn ($page) => $page
-        ->where('teams', fn ($teams) =>
-            collect($teams)->contains(fn ($teamData) =>
-                $teamData['personal_team'] === true &&
-                $teamData['is_owner'] === true &&
-                $teamData['user_role'] === 'owner' &&
-                $teamData['permissions']['canView'] === true &&
-                $teamData['permissions']['canUpdate'] === true &&
-                $teamData['permissions']['canDelete'] === false // personal team cannot be deleted
+        ->where('teams', fn ($teams)
+            => collect($teams)->contains(fn ($teamData)
+                => $teamData['personal_team'] === true
+                && $teamData['is_owner'] === true
+                && $teamData['user_role'] === 'owner'
+                && $teamData['permissions']['canView'] === true
+                && $teamData['permissions']['canUpdate'] === true
+                && $teamData['permissions']['canDelete'] === false // personal team cannot be deleted
             )
         )
     );
@@ -198,14 +198,14 @@ test('current team is correctly identified in API response', function () {
     $response = $this->actingAs($user)->get('/teams');
 
     $response->assertInertia(fn ($page) => $page
-        ->where('teams', fn ($teams) =>
-            collect($teams)->contains(fn ($teamData) =>
-                $teamData['name'] === 'Test Team' &&
-                $teamData['is_current'] === true
-            ) &&
-            collect($teams)->contains(fn ($teamData) =>
-                $teamData['personal_team'] === true &&
-                $teamData['is_current'] === false
+        ->where('teams', fn ($teams)
+            => collect($teams)->contains(fn ($teamData)
+                => $teamData['name'] === 'Test Team'
+                && $teamData['is_current'] === true
+            )
+            && collect($teams)->contains(fn ($teamData)
+                => $teamData['personal_team'] === true
+                && $teamData['is_current'] === false
             )
         )
     );
@@ -219,8 +219,8 @@ test('jetstream capabilities are correctly provided in API response', function (
 
     $response->assertInertia(fn ($page) => $page
         ->has('jetstream.canCreateTeams')
-        ->where('jetstream.canCreateTeams', fn ($canCreate) =>
-            is_bool($canCreate)
+        ->where('jetstream.canCreateTeams', fn ($canCreate)
+            => is_bool($canCreate)
         )
     );
 });

@@ -35,8 +35,8 @@ class TeamSeeder extends Seeder
             $pivotData = $teamMembers->pluck('id')->mapWithKeys(function ($memberId) {
                 return [
                     $memberId => [
-                        'role' => rand(1, 10) <= 2 ? 'admin' : 'editor' // 2割がadmin、残りがeditor
-                    ]
+                        'role' => rand(1, 10) <= 2 ? 'admin' : 'editor', // 2割がadmin、残りがeditor
+                    ],
                 ];
             })->toArray();
 

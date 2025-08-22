@@ -42,7 +42,7 @@ class TeamController extends Controller
             }])
             ->withCount([
                 'users as members_count',
-                'teamInvitations as invitations_count'
+                'teamInvitations as invitations_count',
             ]);
 
         // 検索フィルター
@@ -128,7 +128,7 @@ class TeamController extends Controller
         $page = $request->get('page', 1);
 
         // per_page バリデーション（32件、128件、全件）
-        if (!in_array($perPage, [32, 128, 9999])) {
+        if (!in_array($perPage, [32, 128, 9999], true)) {
             $perPage = 32;
         }
 

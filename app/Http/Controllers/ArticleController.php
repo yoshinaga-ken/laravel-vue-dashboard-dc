@@ -10,10 +10,8 @@ use App\Http\Resources\UserResource;
 use App\Jobs\CreateArticle;
 use App\Jobs\UpdateArticle;
 use App\Models\Article;
-use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -38,7 +36,7 @@ class ArticleController extends Controller
             'date_range_value' => $request->input('date_range_value'), // 追加：日付範囲検索パラメータ
         ];
 
-        $user_id = $request->input('user_id','');
+        $user_id = $request->input('user_id', '');
 
         $sort = $request->input('sort', 'updated_at');
         $order = $request->input('order', 'desc');

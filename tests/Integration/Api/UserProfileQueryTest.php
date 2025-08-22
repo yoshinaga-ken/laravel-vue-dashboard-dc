@@ -1,14 +1,12 @@
 <?php
 
 use App\Models\User;
-use App\Models\Article;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 uses(TestCase::class);
 uses(RefreshDatabase::class);
-
 
 // ユーザープロフィールクエリ - 基本的なユーザーデータ
 test('user profile query - basic user data', function () {

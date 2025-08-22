@@ -13,14 +13,10 @@ return [
     */
 
     'route' => [
-        /*
-         * The URI the endpoint responds to, e.g. mydomain.com/graphql.
-         */
+        // The URI the endpoint responds to, e.g. mydomain.com/graphql.
         'uri' => '/graphql',
 
-        /*
-         * Lighthouse creates a named route for convenient URL generation and redirects.
-         */
+        // Lighthouse creates a named route for convenient URL generation and redirects.
         'name' => 'graphql',
 
         /*
@@ -42,9 +38,7 @@ return [
             // Nuwave\Lighthouse\Http\Middleware\LogGraphQLQueries::class,
         ],
 
-        /*
-         * The `prefix`, `domain` and `where` configuration options are optional.
-         */
+        // The `prefix`, `domain` and `where` configuration options are optional.
         // 'prefix' => '',
         // 'domain' => '',
         // 'where' => [],
@@ -87,14 +81,10 @@ return [
     */
 
     'schema_cache' => [
-        /*
-         * Setting to true enables schema caching.
-         */
+        // Setting to true enables schema caching.
         'enable' => env('LIGHTHOUSE_SCHEMA_CACHE_ENABLE', env('APP_ENV') !== 'local'),
 
-        /*
-         * File path to store the lighthouse schema.
-         */
+        // File path to store the lighthouse schema.
         'path' => env('LIGHTHOUSE_SCHEMA_CACHE_PATH', base_path('bootstrap/cache/lighthouse-schema.php')),
     ],
 
@@ -118,19 +108,13 @@ return [
     */
 
     'query_cache' => [
-        /*
-         * Setting to true enables query caching.
-         */
+        // Setting to true enables query caching.
         'enable' => env('LIGHTHOUSE_QUERY_CACHE_ENABLE', true),
 
-        /*
-         * Allows using a specific cache store, uses the app's default if set to null.
-         */
+        // Allows using a specific cache store, uses the app's default if set to null.
         'store' => env('LIGHTHOUSE_QUERY_CACHE_STORE', null),
 
-        /*
-         * Duration in seconds the query should remain cached, null means forever.
-         */
+        // Duration in seconds the query should remain cached, null means forever.
         'ttl' => env('LIGHTHOUSE_QUERY_CACHE_TTL', 24 * 60 * 60),
     ],
 
@@ -144,19 +128,13 @@ return [
     */
 
     'validation_cache' => [
-        /*
-         * Setting to true enables validation caching.
-         */
+        // Setting to true enables validation caching.
         'enable' => env('LIGHTHOUSE_VALIDATION_CACHE_ENABLE', false),
 
-        /*
-         * Allows using a specific cache store, uses the app's default if set to null.
-         */
+        // Allows using a specific cache store, uses the app's default if set to null.
         'store' => env('LIGHTHOUSE_VALIDATION_CACHE_STORE', null),
 
-        /*
-         * Duration in seconds the validation result should remain cached, null means forever.
-         */
+        // Duration in seconds the validation result should remain cached, null means forever.
         'ttl' => env('LIGHTHOUSE_VALIDATION_CACHE_TTL', 24 * 60 * 60),
     ],
 
@@ -397,14 +375,10 @@ return [
     */
 
     'subscriptions' => [
-        /*
-         * Determines if broadcasts should be queued by default.
-         */
+        // Determines if broadcasts should be queued by default.
         'queue_broadcasts' => env('LIGHTHOUSE_QUEUE_BROADCASTS', true),
 
-        /*
-         * Determines the queue to use for broadcasting queue jobs.
-         */
+        // Determines the queue to use for broadcasting queue jobs.
         'broadcasts_queue_name' => env('LIGHTHOUSE_BROADCASTS_QUEUE_NAME', null),
 
         /*
@@ -423,14 +397,10 @@ return [
          */
         'storage_ttl' => env('LIGHTHOUSE_SUBSCRIPTION_STORAGE_TTL', null),
 
-        /*
-         * Default subscription broadcaster.
-         */
+        // Default subscription broadcaster.
         'broadcaster' => env('LIGHTHOUSE_BROADCASTER', 'pusher'),
 
-        /*
-         * Subscription broadcasting drivers with config options.
-         */
+        // Subscription broadcasting drivers with config options.
         'broadcasters' => [
             'log' => [
                 'driver' => 'log',
@@ -494,9 +464,7 @@ return [
     */
 
     'federation' => [
-        /*
-         * Location of resolver classes when resolving the `_entities` field.
-         */
+        // Location of resolver classes when resolving the `_entities` field.
         'entities_resolver_namespace' => 'App\\GraphQL\\Entities',
     ],
 

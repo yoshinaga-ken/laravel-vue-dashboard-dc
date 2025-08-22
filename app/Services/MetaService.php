@@ -7,8 +7,8 @@ use Illuminate\Support\Str;
 class MetaService
 {
     private array $filterFiles;
-    private array $metaConfig;
 
+    private array $metaConfig;
 
     public function __construct() {
         // MEMO:ここは resources/js/Components/DcChart.vue:2661 "filer_files": と同期
@@ -52,7 +52,7 @@ class MetaService
                 //'favicon' => '/img/cross.gif',
                 'keywords' => '新型コロナウイルス,コロナ,感染,感染者数,可視化,グラフ,チャート',
                 'description' => '新型コロナウイルスの感染状況をリアルタイムで可視化。感染者数の推移や地域別の状況を多次元チャートで表示します。',
-                'og:image' => 'covid19-japan.jpg'
+                'og:image' => 'covid19-japan.jpg',
             ],
         ];
     }
@@ -101,7 +101,7 @@ class MetaService
                 'description' => "{$title}の一覧を多次元チャートで可視化。発売年やジャンル、メーカーなど様々な視点から分析できます。",
                 'og:image' => $this->getImageFile($data),
             ];
-        } else {
+        }
             $titles = [
                 'food-ramen' => '全国有名ラーメン店一覧',
                 'ja-quake' => '能登半島地震安否不明者一覧',
@@ -129,6 +129,6 @@ class MetaService
                 'description' => "{$title}を多次元チャートで可視化。チャートの任意の項目のクリックやキーワード検索によって全チャートをフィルタリングして表示する事ができます。",
                 'og:image' => $this->getImageFile($data),
             ];
-        }
+
     }
 }

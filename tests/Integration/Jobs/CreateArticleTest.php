@@ -21,13 +21,13 @@ it('we can create article', function () {
 
     // タグを作成
     $tag = Tag::factory()->create(['name' => 'tag1']);
-    $newTagName = "new tag"; // 新規作成されるタグ
+    $newTagName = 'new tag'; // 新規作成されるタグ
     $tagCount = Tag::count();
 
     $data = [
         'title' => 'Sample Article',
         'body' => 'This is a sample article.',
-        'tags' => [$tag->name, $newTagName]
+        'tags' => [$tag->name, $newTagName],
     ];
     $user = User::factory()->create();
 
@@ -38,7 +38,7 @@ it('we can create article', function () {
         'id' => $articleId,
         'title' => 'Sample Article',
         'body' => 'This is a sample article.',
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ]);
 
     $this->assertDatabaseHas('tags', ['name' => $tag->name]);
@@ -65,7 +65,7 @@ it('we can update article', function () {
         'id' => $articleId,
         'title' => 'Updated Title',
         'body' => $article->body,
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ]);
 
     $this->assertDatabaseHas('tags', ['name' => 'tag1']);
@@ -91,4 +91,3 @@ it('we can not update article when transaction failed', function () {
     $this->assertDatabaseHas('articles', ['id' => $article->id, 'title' => 'Original Title']);
     Event::assertNotDispatched(ArticleCreated::class);
 });
-
