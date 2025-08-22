@@ -36,21 +36,21 @@ class ArticleController extends Controller
             'date_range_value' => $request->input('date_range_value'), // 追加：日付範囲検索パラメータ
         ];
 
-        $user_id = $request->input('user_id', '');
+        $userId = $request->input('user_id', '');
 
         $sort = $request->input('sort', 'updated_at');
         $order = $request->input('order', 'desc');
 
         $from = $request->input('from', 0);
-        $ARTICLE_MAX = 1024;
-        $to = $request->input('to', $from + $ARTICLE_MAX - 1);
+        $articleMax = 1024;
+        $to = $request->input('to', $from + $articleMax - 1);
 
         return $isWantsJson
             ? response()->json(ArticleResource::collection(
                 Article::with(['user', 'likes', 'tags'])
                     ->search($search)
-                    ->when($user_id !== '', function ($query) use ($user_id) {
-                        return $query->where('user_id', $user_id);
+                    ->when($userId !== '', function ($query) use ($userId) {
+                        return $query->where('user_id', $userId);
                     })
                     ->orderBy($sort, $order)
                     ->offset($from)
@@ -59,16 +59,16 @@ class ArticleController extends Controller
             ))
             : Inertia::render('Articles/Index', [
                 'search' => $search,
-                'articles' => function () use ($user_id, $request, $sort, $order, $search) {
+                'articles' => function () use ($userId, $request, $sort, $order, $search) {
                     $articles = Article::with(['user', 'tags', 'likes'])
                         ->search($search)
-                        ->when($user_id !== '', function ($query) use ($user_id) {
-                            return $query->where('user_id', $user_id);
+                        ->when($userId !== '', function ($query) use ($userId) {
+                            return $query->where('user_id', $userId);
                         })
                         ->orderBy($sort, $order)
                         ->paginate(Article::PAGE_SIZE)
                         ->withQueryString()
-                        ->through(fn(Article $article) => [
+                        ->through(fn (Article $article) => [
                             'id' => $article->id,
                             'title' => $article->title,
                             'created_at' => $article->created_at,
@@ -122,7 +122,9 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return Inertia::render('Articles/Show', [
+        return Inertia::render(
+            'Articles/Show',
+            [
                 'article' => function () use ($article) {
                     $article->load('user', 'tags', 'likes')->is_liked_by = $article->isLikedBy();
                     return $article;
@@ -140,7 +142,9 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        return Inertia::render('Articles/Edit', [
+        return Inertia::render(
+            'Articles/Edit',
+            [
                 'article' => function () use ($article) {
                     $article->load('user', 'tags', 'likes')->is_liked_by = $article->isLikedBy();
                     return $article;
@@ -196,10 +200,10 @@ class ArticleController extends Controller
 
         $article->likedBy($request->user());
 
-        $user_id = $request->user()->id;
+        $userId = $request->user()->id;
         return $isWantsJson
             ? response()->json(new ArticleResource(Article::with(['user', 'likes', 'tags'])->find($article->id)))
-            : Redirect::back()->with('success', __('Article liked', ['id' => $article->id, 'user_id' => $user_id]));
+            : Redirect::back()->with('success', __('Article liked', ['id' => $article->id, 'user_id' => $userId]));
     }
 
     public function dislike(Request $request, Article $article)
@@ -208,9 +212,9 @@ class ArticleController extends Controller
 
         $article->dislikedBy($request->user());
 
-        $user_id = $request->user()->id;
+        $userId = $request->user()->id;
         return $isWantsJson
             ? response()->json(new ArticleResource(Article::with(['user', 'likes', 'tags'])->find($article->id)))
-            : Redirect::back()->with('success', __('Article disliked', ['id' => $article->id, 'user_id' => $user_id]));
+            : Redirect::back()->with('success', __('Article disliked', ['id' => $article->id, 'user_id' => $userId]));
     }
 }

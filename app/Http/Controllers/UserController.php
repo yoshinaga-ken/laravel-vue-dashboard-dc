@@ -9,14 +9,14 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function show(Request $request, int $userId)
+    public function show(int $userId)
     {
         return Inertia::render('Users/Show', [
             'userId' => $userId,
         ]);
     }
 
-    public function edit(Request $request, int $userId)
+    public function edit(int $userId)
     {
         return Inertia::render('Users/Edit', [
             'userId' => $userId,
@@ -28,7 +28,7 @@ class UserController extends Controller
         $isWantsJson = $request->wantsJson();
         $followedUser = $request->user();
         if ($user->id === $followedUser->id) {
-            return abort('404', 'Cannot follow yourself.');
+            return abort(404, 'Cannot follow yourself.');
         }
 
         $user->followedBy($followedUser);
@@ -43,7 +43,7 @@ class UserController extends Controller
         $isWantsJson = $request->wantsJson();
         $followedUser = $request->user();
         if ($user->id === $followedUser->id) {
-            return abort('404', 'Cannot unfollow yourself.');
+            return abort(404, 'Cannot unfollow yourself.');
         }
 
         $user->unfollowedBy($followedUser);
