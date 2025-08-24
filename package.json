@@ -110,6 +110,9 @@
     "wanakana": "^5.3.1"
   },
   "lint-staged": {
+    "app/**/*.php": [
+      "composer cs-fix"
+    ],
     "resources/js/Composables/**/*.ts": [
       "eslint --fix",
       "prettier --write"

@@ -1,2 +1,3 @@
 pnpm run lint-staged
+# vendor/bin/pest
 # pnpm test
