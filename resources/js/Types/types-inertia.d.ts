@@ -69,11 +69,35 @@ export interface BasePageProps {
 
 /**
  * Ziggy ルートヘルパーの型定義
+ * 元の Ziggy の型定義を簡略化したもの
  */
+
+// ルートパラメーターの型定義
+type RawParameterValue = string | number
+type DefaultRoutable = { id: RawParameterValue } & Record<string, unknown>
+type ParameterValue = RawParameterValue | DefaultRoutable
+type RouteParams = Record<string, unknown> | unknown[]
+
+// Router インターフェース（簡略版）
+interface SimpleRouter {
+  current(): string | undefined
+  current(name: string, params?: ParameterValue | RouteParams): boolean
+  readonly params: Record<string, string>
+  readonly routeParams: Record<string, string>
+  readonly queryParams: Record<string, unknown>
+  has(name: string): boolean
+}
+
 declare global {
   interface Window {
-    route: (name: string, params?: Record<string, unknown>) => string
+    route: {
+      (): SimpleRouter
+      (name: string, params?: ParameterValue | RouteParams, absolute?: boolean): string
+    }
   }
 
-  const route: (name: string, params?: Record<string, unknown>) => string
+  const route: {
+    (): SimpleRouter
+    (name: string, params?: ParameterValue | RouteParams, absolute?: boolean): string
+  }
 }

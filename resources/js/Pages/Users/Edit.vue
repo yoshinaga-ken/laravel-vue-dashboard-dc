@@ -1,71 +1,71 @@
 <script lang="ts" setup>
-  import AppLayout from '@/Layouts/AppLayout.vue'
-  import type { User } from '@/Types/types-graphql'
-  import { ref, watch } from 'vue'
-  import { useQuery } from '@vue/apollo-composable'
-  import gql from 'graphql-tag'
-  import ArticleTagsFrom from '@/Components/ArticleTagsForm.vue'
+import AppLayout from '@/Layouts/AppLayout.vue'
+import type { User } from '@/Types/types-graphql'
+import { ref, watch } from 'vue'
+import { useQuery } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
+import ArticleTagsFrom from '@/Components/ArticleTagsForm.vue'
 
-  const props = defineProps<{
-    userId: number
-  }>()
+const props = defineProps<{
+  userId: number
+}>()
 
-  const user = ref<User | null>(null)
+const user = ref<User | null>(null)
 
-  const { result, loading, error } = useQuery(
-    gql`
-      query GetUser($id: ID!) {
-        user(id: $id) {
-          id
-          name
-          email
-          current_team_id
-          profile_photo_path
-          profile_photo_url
-          articles(first: 4, page: 1) {
-            paginatorInfo {
-              count
-              total
-            }
-            data {
-              id
-              title
-              tags {
-                name
-              }
-            }
+const { result, loading, error } = useQuery(
+  gql`
+    query GetUser($id: ID!) {
+      user(id: $id) {
+        id
+        name
+        email
+        current_team_id
+        profile_photo_path
+        profile_photo_url
+        articles(first: 4, page: 1) {
+          paginatorInfo {
+            count
+            total
           }
-          followers(first: 16, page: 1) {
-            data {
+          data {
+            id
+            title
+            tags {
               name
             }
           }
-          following(first: 16, page: 1) {
-            data {
-              name
-            }
-          }
-          ownedTeams {
-            name
-          }
-          teams {
+        }
+        followers(first: 16, page: 1) {
+          data {
             name
           }
         }
+        following(first: 16, page: 1) {
+          data {
+            name
+          }
+        }
+        ownedTeams {
+          name
+        }
+        teams {
+          name
+        }
       }
-    `,
-    {
-      id: props.userId,
-      fetchPolicy: 'network-only',
     }
-  )
+  `,
+  {
+    id: props.userId,
+    fetchPolicy: 'network-only',
+  }
+)
 
-  watch(result, newResult => {
-    console.log('watch(result)')
-    if (newResult?.user) {
-      user.value = newResult.user
-    }
-  })
+watch(result, newResult => {
+  console.log('watch(result)')
+  if (newResult?.user) {
+    user.value = newResult.user
+  }
+})
 </script>
 
 <template>
@@ -77,7 +77,9 @@
     </template>
     <div>
       <div class="mx-auto max-w-7xl py-5 sm:px-6 lg:px-8">
-        <div class="col-span-6">
+        <div v-if="loading">Loading...</div>
+        <div v-else-if="error">エラーが発生しました</div>
+        <div v-else-if="user" class="col-span-6">
           <div class="mt-2 flex items-center">
             <img
               class="size-12 rounded-full object-cover"

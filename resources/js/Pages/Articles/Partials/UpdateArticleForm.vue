@@ -10,7 +10,6 @@ import ElTextTagsInput from '@/Components/ElTextTagsInput.vue'
 import ElMentionTextarea from '@/Components/ElMentionTextarea.vue'
 import { useTranslation } from '@/Composables/useTranslation.js'
 import ArticleLikeButton from '@/Components/ArticleLikeButton.vue'
-import { route } from '../../../../../vendor/tightenco/ziggy'
 import type { Article, Permission } from '@/Types/types'
 
 const { t } = useTranslation()

@@ -11,17 +11,6 @@ vi.mock('@inertiajs/vue3', () => ({
   },
 }))
 
-// Ziggy route のモック
-vi.mock('../../../../../vendor/tightenco/ziggy', () => ({
-  route: vi.fn((name: string, params?: any) => {
-    const routes: Record<string, string> = {
-      'teams.show': `/teams/${params}`,
-      'current-team.update': '/current-team',
-    }
-    return routes[name] || `/${name}`
-  }),
-}))
-
 // テスト用モックデータ
 const createMockTeam = (overrides: Partial<Team> = {}): Team => ({
   id: 1,

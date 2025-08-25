@@ -126,7 +126,6 @@
 <script lang="ts" setup>
   import { ref, computed, onMounted } from 'vue'
   import { router, usePage } from '@inertiajs/vue3'
-  import { route } from '../../../../vendor/tightenco/ziggy'
   import AppLayout from '@/Layouts/AppLayout.vue'
   import TeamCard from '@/Components/Teams/TeamCard.vue'
   import TeamFiltersComponent from '@/Components/Teams/TeamFilters.vue'

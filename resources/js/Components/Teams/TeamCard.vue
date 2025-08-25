@@ -205,7 +205,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { router } from '@inertiajs/vue3'
-import { route } from '../../../../vendor/tightenco/ziggy'
 import {
   ElAvatar,
   ElTag,

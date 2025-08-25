@@ -105,11 +105,9 @@ describe('useUserProfile', () => {
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useUserFollow } from '@/Composables/useUserFollow'
 import axios from 'axios'
-import { route } from '../../../../../../../vendor/tightenco/ziggy'
 
 // Axios と route のモック
 vi.mock('axios')
-vi.mock('../../../../../../../vendor/tightenco/ziggy')
 
 describe('useUserFollow', () => {
   const mockAxios = vi.mocked(axios)

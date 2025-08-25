@@ -14,7 +14,6 @@ import PrimaryButton from '@/Components/PrimaryButton.vue'
 import SecondaryButton from '@/Components/SecondaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 import { useTranslation } from '@/Composables/useTranslation.js'
-import { route } from '../../../vendor/tightenco/ziggy'
 import axios from '@/Utils/axios.js'
 import type { Article, Permission } from '@/types'
 

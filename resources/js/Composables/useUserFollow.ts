@@ -1,6 +1,5 @@
 import { ref } from 'vue'
 import axios from '@/Utils/axios.js'
-import { route } from '../../../vendor/tightenco/ziggy'
 
 export function useUserFollow() {
   const isFollowing = ref(false)

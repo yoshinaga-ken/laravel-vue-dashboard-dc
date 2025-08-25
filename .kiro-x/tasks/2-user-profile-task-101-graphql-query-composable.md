@@ -178,7 +178,6 @@ export function useUserProfile(userId: string | number) {
 ```typescript
 import { ref } from 'vue'
 import axios from 'axios'
-import { route } from '../../../../../vendor/tightenco/ziggy'
 
 export function useUserFollow() {
   const isFollowing = ref(false)
