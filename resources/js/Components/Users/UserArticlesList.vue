@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { ElCard, ElTag, ElEmpty, ElButton, ElIcon } from 'element-plus'
 import { Reading, Calendar } from '@element-plus/icons-vue'
 import type { Article } from '@/Types/types-graphql'
 
-const props = defineProps<{
+defineProps<{
   articlesCount: number
   articles: Article[]
   loading?: boolean
@@ -15,10 +14,6 @@ const emit = defineEmits<{
   'tag-click': [tagName: string]
   'view-all-click': []
 }>()
-
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('ja-JP')
-}
 
 const truncateText = (text: string, maxLength: number = 100) => {
   if (text.length <= maxLength) return text

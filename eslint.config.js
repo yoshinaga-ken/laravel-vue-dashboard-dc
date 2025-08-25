@@ -62,6 +62,8 @@ export default [
     files: [
       'resources/js/Pages/Articles/**/*.vue',
       'resources/js/Pages/Users/**/*.vue',
+      'resources/js/Components/Teams/*.vue',
+      'resources/js/Components/Users/*.vue',
       'resources/js/Components/ArticleTagsForm.vue',
       'resources/js/Components/VfTextTagsInput.vue',
       'resources/js/Components/ElMentionTextarea.vue',

@@ -4,7 +4,7 @@ import { ElCard, ElButton, ElAvatar, ElCollapse, ElCollapseItem, ElIcon } from '
 import { ArrowDown, ArrowUp } from '@element-plus/icons-vue'
 import type { User } from '@/Types/types-graphql'
 
-const props = defineProps<{
+defineProps<{
   followersCount: number
   followingCount: number
   followersList: User[]

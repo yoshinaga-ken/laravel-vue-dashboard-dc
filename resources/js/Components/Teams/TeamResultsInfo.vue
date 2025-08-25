@@ -1,74 +1,3 @@
-<template>
-  <div class="border-b border-gray-200 bg-gray-50 px-6 py-3 dark:border-gray-700 dark:bg-gray-800">
-    <div class="flex items-center justify-between">
-      <!-- 結果表示情報 -->
-      <div class="text-sm text-gray-700 dark:text-gray-300">
-        <span v-if="stats.filtered === 0" class="text-gray-500"> チームが見つかりません </span>
-        <span v-else-if="hasActiveFilters" class="space-x-1">
-          <span class="font-medium">全{{ stats.total }}件中</span>
-          <span class="text-blue-600 dark:text-blue-400">
-            （フィルター結果: {{ stats.filtered }}件）
-          </span>
-          <span v-if="pagination.from && pagination.to">
-            {{ pagination.from }}-{{ pagination.to }}件表示
-          </span>
-          <span v-else> {{ stats.showing }}件表示 </span>
-        </span>
-        <span v-else>
-          <span class="font-medium">全{{ stats.total }}件中</span>
-          <span v-if="pagination.from && pagination.to">
-            {{ pagination.from }}-{{ pagination.to }}件表示
-          </span>
-          <span v-else> {{ stats.showing }}件表示 </span>
-        </span>
-      </div>
-
-      <!-- ページ件数選択 -->
-      <div class="flex items-center space-x-2">
-        <span class="text-sm text-gray-500 dark:text-gray-400">表示件数:</span>
-        <ElSelect
-          :model-value="pagination.per_page"
-          placeholder="件数"
-          size="small"
-          style="width: 80px"
-          @change="handlePerPageChange"
-        >
-          <ElOption
-            v-for="option in perPageOptions"
-            :key="option"
-            :label="option === 9999 ? '全件' : `${option}件`"
-            :value="option"
-          />
-        </ElSelect>
-      </div>
-    </div>
-
-    <!-- アクティブフィルター表示 -->
-    <div v-if="activeFilters.length > 0" class="mt-3 flex flex-wrap gap-2">
-      <span class="text-xs text-gray-500 dark:text-gray-400">アクティブなフィルター:</span>
-      <ElTag
-        v-for="filter in activeFilters"
-        :key="filter.key"
-        :closable="true"
-        size="small"
-        type="info"
-        @close="handleFilterRemove(filter.key)"
-      >
-        {{ filter.label }}: {{ filter.value }}
-      </ElTag>
-      <ElButton
-        v-if="activeFilters.length > 1"
-        size="small"
-        type="primary"
-        text
-        @click="handleClearAllFilters"
-      >
-        すべてクリア
-      </ElButton>
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { ElSelect, ElOption, ElTag, ElButton } from 'element-plus'
@@ -176,6 +105,77 @@ const handleClearAllFilters = () => {
   emit('allFiltersCleared')
 }
 </script>
+
+<template>
+  <div class="border-b border-gray-200 bg-gray-50 px-6 py-3 dark:border-gray-700 dark:bg-gray-800">
+    <div class="flex items-center justify-between">
+      <!-- 結果表示情報 -->
+      <div class="text-sm text-gray-700 dark:text-gray-300">
+        <span v-if="stats.filtered === 0" class="text-gray-500"> チームが見つかりません </span>
+        <span v-else-if="hasActiveFilters" class="space-x-1">
+          <span class="font-medium">全{{ stats.total }}件中</span>
+          <span class="text-blue-600 dark:text-blue-400">
+            （フィルター結果: {{ stats.filtered }}件）
+          </span>
+          <span v-if="pagination.from && pagination.to">
+            {{ pagination.from }}-{{ pagination.to }}件表示
+          </span>
+          <span v-else> {{ stats.showing }}件表示 </span>
+        </span>
+        <span v-else>
+          <span class="font-medium">全{{ stats.total }}件中</span>
+          <span v-if="pagination.from && pagination.to">
+            {{ pagination.from }}-{{ pagination.to }}件表示
+          </span>
+          <span v-else> {{ stats.showing }}件表示 </span>
+        </span>
+      </div>
+
+      <!-- ページ件数選択 -->
+      <div class="flex items-center space-x-2">
+        <span class="text-sm text-gray-500 dark:text-gray-400">表示件数:</span>
+        <ElSelect
+          :model-value="pagination.per_page"
+          placeholder="件数"
+          size="small"
+          style="width: 80px"
+          @change="handlePerPageChange"
+        >
+          <ElOption
+            v-for="option in perPageOptions"
+            :key="option"
+            :label="option === 9999 ? '全件' : `${option}件`"
+            :value="option"
+          />
+        </ElSelect>
+      </div>
+    </div>
+
+    <!-- アクティブフィルター表示 -->
+    <div v-if="activeFilters.length > 0" class="mt-3 flex flex-wrap gap-2">
+      <span class="text-xs text-gray-500 dark:text-gray-400">アクティブなフィルター:</span>
+      <ElTag
+        v-for="filter in activeFilters"
+        :key="filter.key"
+        :closable="true"
+        size="small"
+        type="info"
+        @close="handleFilterRemove(filter.key)"
+      >
+        {{ filter.label }}: {{ filter.value }}
+      </ElTag>
+      <ElButton
+        v-if="activeFilters.length > 1"
+        size="small"
+        type="primary"
+        text
+        @click="handleClearAllFilters"
+      >
+        すべてクリア
+      </ElButton>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 /* Element Plusのスタイル調整 */

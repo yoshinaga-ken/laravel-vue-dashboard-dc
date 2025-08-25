@@ -27,7 +27,6 @@
   // ログインユーザーのフォローリストを取得
   const {
     result: currentUserResult,
-    loading: followingLoading,
     refetch: refetchFollowing,
   } = useQuery(
     GET_CURRENT_USER_FOLLOWING,

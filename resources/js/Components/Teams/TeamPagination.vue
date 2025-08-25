@@ -1,3 +1,44 @@
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { ElPagination, ElButton, ElIcon } from 'element-plus'
+import { ArrowLeft, ArrowRight, Loading } from '@element-plus/icons-vue'
+import type { PaginationMeta } from '@/Types/types-team'
+
+// Props定義
+const props = defineProps<{
+  pagination: PaginationMeta
+  loading?: boolean
+}>()
+
+// Emits定義
+const emit = defineEmits<{
+  pageChanged: [page: number]
+  perPageChanged: [perPage: number]
+}>()
+
+// 件数選択オプション
+const perPageSizes = [6, 12, 24, 48]
+
+// ページネーション表示判定
+const shouldShowPagination = computed(() => {
+  return props.pagination.total > props.pagination.per_page || props.pagination.last_page > 1
+})
+
+// ページ変更時の処理
+const handleCurrentChange = (page: number) => {
+  if (page >= 1 && page <= props.pagination.last_page && !props.loading) {
+    emit('pageChanged', page)
+  }
+}
+
+// 件数変更時の処理
+const handleSizeChange = (size: number) => {
+  if (perPageSizes.includes(size) && !props.loading) {
+    emit('perPageChanged', size)
+  }
+}
+</script>
+
 <template>
   <div
     v-if="shouldShowPagination"
@@ -75,47 +116,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { computed } from 'vue'
-import { ElPagination, ElButton, ElIcon } from 'element-plus'
-import { ArrowLeft, ArrowRight, Loading } from '@element-plus/icons-vue'
-import type { PaginationMeta } from '@/Types/types-team'
-
-// Props定義
-const props = defineProps<{
-  pagination: PaginationMeta
-  loading?: boolean
-}>()
-
-// Emits定義
-const emit = defineEmits<{
-  pageChanged: [page: number]
-  perPageChanged: [perPage: number]
-}>()
-
-// 件数選択オプション
-const perPageSizes = [6, 12, 24, 48]
-
-// ページネーション表示判定
-const shouldShowPagination = computed(() => {
-  return props.pagination.total > props.pagination.per_page || props.pagination.last_page > 1
-})
-
-// ページ変更時の処理
-const handleCurrentChange = (page: number) => {
-  if (page >= 1 && page <= props.pagination.last_page && !props.loading) {
-    emit('pageChanged', page)
-  }
-}
-
-// 件数変更時の処理
-const handleSizeChange = (size: number) => {
-  if (perPageSizes.includes(size) && !props.loading) {
-    emit('perPageChanged', size)
-  }
-}
-</script>
 
 <style scoped>
 /* Element Plus Pagination カスタマイズ */
