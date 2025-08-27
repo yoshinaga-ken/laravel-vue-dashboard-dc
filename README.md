@@ -186,22 +186,23 @@ Server running on <http://127.0.0.1:8000>
 # Setup configuration:
 cp .env.example .env
 
+# Install Composer dependencies
+composer install
+
+# Install NPM dependencies
+pnpm install
+
 # Generate application key:
 php artisan key:generate
 
 # Create a database in the DB_DATABASE field in the .env file.
+# set .env DB_PASSWORD
 
 # Run database migrations:
 php artisan migrate
 
 # Run database seeder:
 php artisan db:seed
-
-# Install Composer dependencies
-composer install
-
-# Install NPM dependencies
-pnpm install
 ```
 
 
@@ -226,7 +227,7 @@ pnpm test
 
 # Frontend e2e test
 $ cd e2e
-e2e$ npx playwright test
+e2e$ pnpm test
 
 ```
 
