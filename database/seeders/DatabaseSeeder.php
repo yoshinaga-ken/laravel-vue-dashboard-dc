@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             LikeSeeder::class,
             FollowerSeeder::class,
             TeamSeeder::class,
+            PersonalAccessTokenSeeder::class,
         ]);
     }
 }
