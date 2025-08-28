@@ -10,6 +10,7 @@ on:
 jobs:
   # バックエンドのテスト
   backend-tests:
+    if: true
     runs-on: ubuntu-latest
 
     services:
@@ -75,6 +76,7 @@ jobs:
 
   # フロントエンドのテスト
   frontend-tests:
+    if: true
     runs-on: ubuntu-latest
 
     steps:
@@ -105,4 +107,166 @@ jobs:
       - name: Run unit tests
         run: pnpm test
 
+  # E2Eテスト
+  e2e-tests:
+    if: false
+    runs-on: ubuntu-latest
 
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MYSQL_ROOT_PASSWORD: pass
+          MYSQL_DATABASE: laravel_vue_dashboard_dc_test
+        ports:
+          - 3307:3306
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          extensions: mbstring, dom, fileinfo, mysql, pdo_mysql
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache/files
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-interaction
+
+      - name: Install MariaDB client
+        run: |
+          sudo apt-get update && sudo apt-get install -y mariadb-client
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
+
+      - name: Cache e2e node modules
+        uses: actions/cache@v3
+        with:
+          path: e2e/node_modules
+          key: ${{ runner.os }}-e2e-pnpm-${{ hashFiles('e2e/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-e2e-pnpm-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('e2e/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-playwright-
+
+      - name: Install Node dependencies
+        run: pnpm install
+
+      - name: Create storage directories
+        run: |
+          mkdir -p storage/framework/cache/data
+          mkdir -p storage/framework/sessions
+          mkdir -p storage/framework/testing
+          mkdir -p storage/framework/views
+          mkdir -p storage/app/public
+          mkdir -p storage/logs
+          chmod -R 777 storage
+          chmod -R 777 bootstrap/cache
+
+      - name: Copy .env file
+        run: cp .env.testing.ci .env
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Set testing environment
+        run: |
+          sed -i 's/DB_PORT=3306/DB_PORT=3307/g' .env
+
+      - name: Run database migrations
+        run: php artisan migrate:fresh --seed
+
+      - name: Install E2E dependencies
+        run: |
+          cd e2e
+          pnpm install
+
+      - name: Install Playwright browsers (optimized)
+        run: |
+          cd e2e
+          # 使用するブラウザのみインストール（chromium, webkit）
+          npx playwright install chromium webkit
+          npx playwright install-deps chromium webkit
+
+      - name: Ensure public assets exist for build
+        run: |
+          # jQuery UI CSS themes ディレクトリの確認と作成
+          mkdir -p public/jquery-ui/themes/dark-hive
+          mkdir -p public/jquery-ui-iconfont
+          mkdir -p public/jquery-jvectormap/data
+
+          # 必要なファイルが存在しない場合はダミーファイルを作成
+          if [ ! -f public/jquery-ui/themes/dark-hive/jquery-ui.min.css ]; then
+            touch public/jquery-ui/themes/dark-hive/jquery-ui.min.css
+          fi
+
+          if [ ! -f public/jquery-ui-iconfont/jquery-ui-1.12.icon-font.min.css ]; then
+            touch public/jquery-ui-iconfont/jquery-ui-1.12.icon-font.min.css
+          fi
+
+          # jvectormap JSONファイルの作成（空のオブジェクトで初期化）
+          if [ ! -f public/jquery-jvectormap/data/jquery-jvectormap-jp-merc.json ]; then
+            echo '{}' > public/jquery-jvectormap/data/jquery-jvectormap-jp-merc.json
+          fi
+
+          if [ ! -f public/jquery-jvectormap/data/jquery-jvectormap-world-mill.json ]; then
+            echo '{}' > public/jquery-jvectormap/data/jquery-jvectormap-world-mill.json
+          fi
+
+      - name: Build frontend assets
+        run: pnpm run dev &
+
+      - name: Start Laravel server
+        run: |
+          php artisan serve &
+          # サーバーが起動するまで待機
+          echo "Waiting for Laravel server to start..."
+          timeout 30 sh -c 'until curl -s http://127.0.0.1:8000 > /dev/null; do sleep 1; done' || echo "Server might not be ready"
+          sleep 2
+
+      - name: Run E2E tests
+        env:
+          E2E_DOMAIN_FOR_TEST: 127.0.0.1:8000
+          E2E_TEST_ADMIN_USER_EMAIL: test@example.com
+          E2E_TEST_ADMIN_USER_PASSWORD: password
+        run: |
+          cd e2e
+          # pnpm test
+          pnpm test:chrome tests/articles/article.spec.ts
+
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: e2e/playwright-report/
+          retention-days: 30
