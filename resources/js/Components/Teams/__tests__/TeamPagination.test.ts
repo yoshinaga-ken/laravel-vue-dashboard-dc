@@ -1,19 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import TeamPagination from '../TeamPagination.vue'
+import { ElPagination, ElButton, ElIcon } from 'element-plus'
 import type { PaginationMeta } from '@/Types/types-team'
-
-// Element Plus のモック（TeamCard.test.tsパターン）
-vi.mock('element-plus', () => ({
-  ElPagination: true,
-  ElButton: true,
-  ElIcon: true,
-}))
 
 // Element Plus Icons のモック
 vi.mock('@element-plus/icons-vue', () => ({
-  ArrowLeft: true,
-  ArrowRight: true,
+  ArrowLeft: vi.fn(),
+  ArrowRight: vi.fn(),
+  Loading: vi.fn(),
 }))
 
 describe('TeamPagination.vue', () => {
@@ -44,12 +39,26 @@ describe('TeamPagination.vue', () => {
         ...props,
       },
       global: {
+        components: {
+          ElPagination,
+          ElButton,
+          ElIcon,
+        },
         stubs: {
-          ElPagination: true,
-          ElButton: true,
           ElIcon: true,
-          ArrowLeft: true,
-          ArrowRight: true,
+          ElPagination: {
+            template: '<div><slot /></div>',
+            emits: ['size-change', 'current-change'],
+            props: [
+              'current-page',
+              'page-size',
+              'total',
+              'page-sizes',
+              'disabled',
+              'layout',
+              'background',
+            ],
+          },
         },
       },
     })

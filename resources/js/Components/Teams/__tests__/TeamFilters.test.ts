@@ -1,14 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import TeamFilters from '../TeamFilters.vue'
+import { ElSelect, ElOption, ElInput, ElButton, ElTag, ElIcon } from 'element-plus'
 
-// Element Plus のモック（TeamCard.test.tsパターン）
-vi.mock('element-plus', () => ({
-  ElSelect: true,
-  ElOption: true,
-  ElInput: true,
-  ElButton: true,
-  ElTag: true,
+// Element Plus のアイコンコンポーネントのモック
+vi.mock('@element-plus/icons-vue', () => ({
+  Search: vi.fn(),
 }))
 
 // VueUse の debounce 機能をモック
@@ -29,6 +26,7 @@ describe('TeamFilters.vue', () => {
       filters: {
         search: '',
         type: 'all',
+        roleFilter: 'all',
         memberCount: '',
         sortBy: 'name_asc',
       },
@@ -40,12 +38,21 @@ describe('TeamFilters.vue', () => {
         ...props,
       },
       global: {
+        components: {
+          ElSelect,
+          ElOption,
+          ElInput,
+          ElButton,
+          ElTag,
+          ElIcon,
+        },
         stubs: {
-          ElSelect: true,
-          ElOption: true,
-          ElInput: true,
-          ElButton: true,
-          ElTag: true,
+          ElIcon: true,
+          ElTag: {
+            template: '<span><slot /></span>',
+            emits: ['close'],
+            props: ['type', 'closable'],
+          },
         },
       },
     })
@@ -61,6 +68,7 @@ describe('TeamFilters.vue', () => {
       filters: {
         search: 'テスト検索',
         type: 'all',
+        roleFilter: 'all',
         memberCount: '',
         sortBy: 'name_asc',
       },
@@ -73,6 +81,7 @@ describe('TeamFilters.vue', () => {
       filters: {
         search: '',
         type: 'personal',
+        roleFilter: 'all',
         memberCount: '',
         sortBy: 'name_asc',
       },
@@ -85,6 +94,7 @@ describe('TeamFilters.vue', () => {
       filters: {
         search: '',
         type: 'all',
+        roleFilter: 'all',
         memberCount: '5+',
         sortBy: 'name_asc',
       },
@@ -97,6 +107,7 @@ describe('TeamFilters.vue', () => {
       filters: {
         search: '',
         type: 'all',
+        roleFilter: 'all',
         memberCount: '',
         sortBy: 'created_desc',
       },
@@ -131,6 +142,7 @@ describe('TeamFilters.vue', () => {
       filters: {
         search: 'テスト',
         type: 'shared',
+        roleFilter: 'owner',
         memberCount: '3-10',
         sortBy: 'members_desc',
       },
@@ -143,6 +155,7 @@ describe('TeamFilters.vue', () => {
       filters: {
         search: '',
         type: 'all',
+        roleFilter: 'all',
         memberCount: '',
         sortBy: 'name_asc',
       },

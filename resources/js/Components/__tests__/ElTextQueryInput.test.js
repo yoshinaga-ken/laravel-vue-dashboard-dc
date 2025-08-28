@@ -1,7 +1,15 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import ElTextQueryInput from '@/Components/ElTextQueryInput.vue'
-import { ElTag, ElAutocomplete, ElButton, ElDatePicker, ElIcon, ElOption } from 'element-plus'
+import {
+  ElTag,
+  ElAutocomplete,
+  ElButton,
+  ElDatePicker,
+  ElIcon,
+  ElOption,
+  ElSelect,
+} from 'element-plus'
 
 // Element Plusのアイコンコンポーネントのモック
 vi.mock('@element-plus/icons-vue', () => ({
@@ -82,9 +90,18 @@ describe('ElTextQueryInput', () => {
           ElDatePicker,
           ElIcon,
           ElOption,
+          ElSelect,
         },
         stubs: {
           ElIcon: true,
+          ElDatePicker: {
+            template: '<div><input /></div>',
+            emits: ['change'],
+            props: ['modelValue', 'type'],
+            methods: {
+              focus: vi.fn(),
+            },
+          },
         },
       },
     })
@@ -175,8 +192,9 @@ describe('ElTextQueryInput', () => {
     const tags = wrapper.findAllComponents(ElTag)
     expect(tags).toHaveLength(3) // キー、オペレーター、値の3つのタグがあるはず
 
-    // closeイベントを発生させる
-    await tags[0].vm.$emit('close')
+    // closeイベントを発生させる（MouseEventを模擬）
+    const mockEvent = new MouseEvent('click')
+    await tags[0].vm.$emit('close', mockEvent)
 
     // トークンが削除されたことを確認
     expect(wrapper.findAllComponents(ElTag)).toHaveLength(0)
@@ -483,9 +501,19 @@ describe('ElTextQueryInput', () => {
           ElButton,
           ElDatePicker,
           ElIcon,
+          ElOption,
+          ElSelect,
         },
         stubs: {
           ElIcon: true,
+          ElDatePicker: {
+            template: '<div><input /></div>',
+            emits: ['change'],
+            props: ['modelValue', 'type'],
+            methods: {
+              focus: vi.fn(),
+            },
+          },
         },
       },
     })
@@ -538,9 +566,19 @@ describe('ElTextQueryInput', () => {
           ElButton,
           ElDatePicker,
           ElIcon,
+          ElOption,
+          ElSelect,
         },
         stubs: {
           ElIcon: true,
+          ElDatePicker: {
+            template: '<div><input /></div>',
+            emits: ['change'],
+            props: ['modelValue', 'type'],
+            methods: {
+              focus: vi.fn(),
+            },
+          },
         },
       },
     })
@@ -581,9 +619,19 @@ describe('ElTextQueryInput', () => {
           ElButton,
           ElDatePicker,
           ElIcon,
+          ElOption,
+          ElSelect,
         },
         stubs: {
           ElIcon: true,
+          ElDatePicker: {
+            template: '<div><input /></div>',
+            emits: ['change'],
+            props: ['modelValue', 'type'],
+            methods: {
+              focus: vi.fn(),
+            },
+          },
         },
       },
     })

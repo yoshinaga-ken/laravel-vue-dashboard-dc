@@ -1,15 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import TeamResultsInfo from '../TeamResultsInfo.vue'
+import { ElSelect, ElOption, ElTag, ElButton } from 'element-plus'
 import type { PaginationMeta, TeamFilters, TeamStatsWithPagination } from '@/Types/types-team'
-
-// Element Plus のモック（TeamCard.test.tsパターン）
-vi.mock('element-plus', () => ({
-  ElSelect: true,
-  ElOption: true,
-  ElTag: true,
-  ElButton: true,
-}))
 
 describe('TeamResultsInfo.vue', () => {
   beforeEach(() => {
@@ -54,11 +47,18 @@ describe('TeamResultsInfo.vue', () => {
         ...props,
       },
       global: {
+        components: {
+          ElSelect,
+          ElOption,
+          ElTag,
+          ElButton,
+        },
         stubs: {
-          ElSelect: true,
-          ElOption: true,
-          ElTag: true,
-          ElButton: true,
+          ElTag: {
+            template: '<span><slot /></span>',
+            emits: ['close'],
+            props: ['type', 'closable', 'size'],
+          },
         },
       },
     })
