@@ -2211,6 +2211,7 @@ const setupPanelWatch = () => {
     () => pnl.date.isShow,
     (newVal, oldVal) => {
       handleChartVisibilityChange(mm.composite, newVal, oldVal)
+      if (newVal) mm.composite.render()
     },
     showWatchOptions
   )
