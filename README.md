@@ -1,6 +1,6 @@
 # Laravel + Vue3 + 📊Dimensional chart Dashboard template
 A template project for an admin panel with a dashboard using 📊dimensional charts, implemented with laravel and vue.
-- [Live demo](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=covid19-data-2021-02-28)
+- [Live demo](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28)
 
 [![img.png](doc/img/dashboard-covid19.png)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=covid19-data-2021-02-28)
 - [Dimensional chart](http://dc-js.github.io/dc.js/) can be switched and compared with one click, making it easy to analyze in multiple dimensions.
@@ -9,7 +9,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
 
 ## Features
 - Dashboard with [Dimensional chart(dc.js)](http://dc-js.github.io/dc.js/)
-  - [Articles Dashboard](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=test-article-like)
+  - [Articles Dashboard](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-article-like)
   - [Dashboard with many more dimensional charts](#link-dc-demo)
   - Dashboard Mode: 📊Chart | <img src="public/img/google-map-48.png" width="16">GoogleMap | <img src="public/img/icons8-street-view-60.png" width="16">StreetView | <img src="public/img/yutube.gif" width="16">YouTube
       <details>
