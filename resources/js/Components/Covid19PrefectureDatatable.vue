@@ -27,6 +27,12 @@ import {
   loadScriptSparkline,
 } from '@/Utils/utils.js'
 
+import { useBreakpointsConfig } from '@/Composables/useBreakpointsConfig'
+const { isMobile } = useBreakpointsConfig()
+
+// const isSp = computed(() => isMobile.value) // リアクティブな関係を維持する場合
+const isSp = isMobile.value // 初期化時固定
+
 const props = defineProps({
   data: {
     type: Object, // Format @see public/data/covid19-data-2021-02-28.options.json
@@ -62,8 +68,6 @@ const props = defineProps({
     default: false,
   },
 })
-
-const isSp = window.innerWidth <= 768
 
 const mm = {
   tbl_pref: null,
