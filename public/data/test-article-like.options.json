@@ -1,6 +1,6 @@
 {
   "dataType": 0,
-  "title": "記事のいいねの数",
+  "title": "📰記事の👍いいねの数",
   "description": "記事カテゴリ別・投稿時間帯別・著者別SNS記事のいいね数データの多次元分析",
   "chartDate2": {
     "chartType": "lines"
@@ -82,7 +82,34 @@
   "chartCond": {},
   "chartJob": {},
   "chartJobCat": {},
-  "chartEx": [],
+  "chartEx": [
+    {
+      "name": "👨‍💻記事の読者層",
+      "isHidden": 0,
+      "isShow": 1
+    },
+    {
+      "name": "記事のSEO",
+      "isHidden": 0,
+      "isShow": 1
+    },
+    {
+      "name": "🗂️大・🔖中・👨‍💻小分類",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "🗂️$5/🔖$3/👨‍💻$9",
+        "width": 600,
+        "height": 600
+      },
+      "legend": {
+        "isShow": false
+      }
+    }
+  ],
   "chartDetail": {},
   "editUrl": "https://docs.google.com/spreadsheets/d/1mx7FOTfVavh9sw_XUHWxuzdQa-uNTiwwS5mgeAbsg4A/edit?gid=433668396#gid=433668396",
   "dataReference": "<ul><li>※性別・年齢・職業・都道府県は、「記事作成者」の情報</li></ul>"
