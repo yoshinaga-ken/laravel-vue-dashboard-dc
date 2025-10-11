@@ -4295,6 +4295,23 @@ const mm = {
 
     return txt
   },
+  setHeaderFilterTxt: function () {
+    const ft = mm.getFilterTxt()
+    const fth = ft.join(' ').trim()
+
+    if (gg.dt === DT_COVID) {
+      $('.hdr_flt')
+        .show()
+        .text((fth === '' ? '全国' : fth) + ' の状況')
+    } else {
+      $('.hdr_flt')
+        .show()
+        .text(fth === '' ? '　' : fth + ' の場合') // ※レイアウトがずれないように空でも空文字を入れる
+    }
+  },
+  setHeaderFilterTxtDebounced: _.debounce(function () {
+    mm.setHeaderFilterTxt()
+  }, 300),
   filterPrefChart: function (prefs) {
     const chart = mm.opt.chartMap.refData === 'city' ? mm.chartCity : mm.chartName
     const names = mm.opt.chartMap.refData === 'city' ? mm.citys : mm.names
@@ -5715,46 +5732,6 @@ const mm = {
     if (mm.map.doDraw) drawJapanMap()
     mm.map.doDraw = 1
 
-    let ft = mm.getFilterTxt()
-
-    let fth = ft.join(' ').trim()
-    if (gg.dt === DT_COVID) {
-      $('.hdr_flt')
-        .show()
-        .text((fth === '' ? '全国' : fth) + ' の状況')
-    } else {
-      $('.hdr_flt')
-        .show()
-        .text(fth === '' ? '　' : fth + ' の場合') // ※レイアウトがずれないように空でも空文字を入れる
-    }
-    if (mm.sel_tab === 'tabs_c') {
-      ft[1] = ''
-    }
-
-    ft[2] = ''
-    ft[0] = ''
-    fth = ft.join(' ').trim()
-    if (fth !== '') {
-      if (mm.last_fth !== fth) {
-        $('#chk_tbl_spkflt')
-          .checkboxradio({
-            label:
-              '<i class="fa fa-filter"></i>[' +
-              fth +
-              ' ]' +
-              (isSp.value ? '<br />' : '') +
-              'でフィルタ',
-          })
-          //.checkboxradio('refresh')
-          .prop('checked', true)
-          .trigger('click') //off
-      }
-      $('#chk_tbl_spkflt_l').show()
-    } else {
-      $('#chk_tbl_spkflt_l').hide()
-    }
-    mm.last_fth = fth
-
     pnl.date.cnt = php_number_format(
       mm.ndx
         .groupAll()
@@ -5845,6 +5822,8 @@ const mm = {
         }
       }
     }
+
+    mm.setHeaderFilterTxtDebounced()
   },
   chartDateLegendUpdate2: function () {
     let flt_len = mm.chartName.filters().length
