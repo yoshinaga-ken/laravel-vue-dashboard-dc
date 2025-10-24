@@ -111,14 +111,13 @@
 
             <span v-if="!isSp">&nbsp;</span>
 
-            <label
+            <button
               class="emj ui-button ui-corner-all ui-widget mb-0 dark:text-white"
-              :title="isDark ? '☀ライトモードへ' : '🌛ダークモードへ'"
-              for="darkmode"
+              title="設定画面を表示します。"
+              @click="onClickSettings()"
             >
-              {{ isDark ? '☀' : '🌛' }}
-              <input type="checkbox" v-model="isDark" id="darkmode" class="hidden" />
-            </label>
+              ⚙️️
+            </button>
           </div>
 
           <div v-if="!isSp" class="ui-button ui-corner-all ui-widget">
@@ -1244,9 +1243,47 @@
       />
     </div>
   </div>
+
+  <!-- 設定画面 ドロワー -->
+  <ElDrawer
+    v-model="settingsDrawerVisible"
+    :with-header="false"
+    direction="btt"
+    title="⚙️設定"
+    :resizable="true"
+    :size="isSp ? '30%' : '20%'"
+    style="z-index: 10"
+    :class="{ dark: isDark }"
+  >
+    <div class="settings-content text-theme-col">
+      <div class="mb-4 flex items-center justify-between">
+        <h3 class="text-lg font-medium text-theme-col">⚙️設定</h3>
+        <ElButton @click="settingsDrawerVisible = false" round class="close-button">
+          <span class="ui-icon ui-icon-close btn_close" />
+        </ElButton>
+      </div>
+
+      <div class="settings-item mb-4 flex items-center gap-4">
+        <label class="text-sm font-medium text-theme-col">テーマ：</label>
+        <ElRadioGroup v-model="isDark" @change="onThemeChange">
+          <ElRadioButton :value="false">☀️ライト</ElRadioButton>
+          <ElRadioButton :value="true">🌛ダーク</ElRadioButton>
+        </ElRadioGroup>
+      </div>
+
+      <div class="settings-item mb-4 flex items-center gap-4">
+        <label class="text-sm font-medium text-theme-col">Version：</label>
+        <span
+          >{{ APP_VERSION }}<span class="ml-3">({{ APP_VERSION_DATE }})</span></span
+        >
+      </div>
+    </div>
+  </ElDrawer>
 </template>
 
 <script setup>
+const APP_VERSION = '0.9.12'
+const APP_VERSION_DATE = '2025/09/08'
 import { onMounted, ref, watch, reactive, nextTick } from 'vue'
 import { useElementHover } from '@vueuse/core'
 import * as d3 from 'd3'
@@ -1326,6 +1363,7 @@ import {
   loadScriptJQueryUIDatepickerJa,
   loadScriptVectormap,
 } from '@/Utils/utils.js'
+import { ElDrawer } from 'element-plus'
 
 const BASE = import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT
 const G_IS_LOCAL = import.meta.env.DEV
@@ -1503,6 +1541,7 @@ const gg = reactive({
 const isSp = window.innerWidth <= 768
 const dataImgSrc = ref('')
 const headerRef = ref(null)
+const settingsDrawerVisible = ref(false)
 
 const pnl = reactive({
   common: {
@@ -1820,7 +1859,7 @@ const pnlShows = ref(null)
 const isDarkLs =
   localStorage.theme === 'dark' ||
   (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-const isDark = ref(!isDarkLs)
+const isDark = ref(isDarkLs)
 IMG_NO = isDarkLs ? '/img/noimage-dark.png' : '/img/noimage.png'
 
 const settingsName = () => {
@@ -2364,9 +2403,11 @@ const setupPanelWatch = () => {
       }
     }
   )
-  watch(isDark, newVal => {
+
+  // テーマ切り替え処理
+  const applyTheme = isDarkMode => {
     const head = document.querySelector('#chart_map .ui-widget-header')
-    if (newVal) {
+    if (isDarkMode) {
       head?.classList.remove('light')
       document.body.style.backgroundColor = '#1F2937'
       document.body.classList.add('dark')
@@ -2387,6 +2428,14 @@ const setupPanelWatch = () => {
       IMG_NO = '/img/noimage.png'
       localStorage.theme = 'light'
     }
+  }
+
+  // 初期化時にテーマを適用
+  applyTheme(isDark.value)
+
+  // isDark の変更を監視
+  watch(isDark, newVal => {
+    applyTheme(newVal)
   })
 }
 
@@ -9888,6 +9937,14 @@ const onClickStyleReset = () => {
     settingsSave()
   }
   $('.dc_panel').removeClass('opacity-80')
+}
+
+const onClickSettings = () => {
+  settingsDrawerVisible.value = true
+}
+
+const onThemeChange = value => {
+  isDark.value = value
 }
 </script>
 
