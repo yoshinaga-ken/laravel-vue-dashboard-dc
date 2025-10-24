@@ -32,13 +32,12 @@
               title="全てのチャートのフィルタをクリアします"
               href="#"
             >
-              <span class="ui-icon ui-icon-closethick"></span><span v-if="!isSp">クリア</span>
+              <span class="ui-icon ui-icon-closethick"></span><span class="sp_hidden">クリア</span>
             </button>
             <button
-              v-if="!isSp"
               id="btn_search_keyboard"
               title="キーパッドを表示します"
-              class="ui-button ui-corner-all ui-widget ui-button-min"
+              class="ui-button ui-corner-all ui-widget ui-button-min sp_hidden"
             >
               <span style="font-size: 1.6em">⌨</span>
             </button>
@@ -46,20 +45,18 @@
             <input type="text" id="btn_date" value="" style="display: none" />
 
             <button
-              v-if="!isSp"
               id="btn_download_csv"
               title="フィルタリングされたグラフのデータをCSV形式でダウンロードします。"
-              class="btn_export_file"
+              class="btn_export_file sp_hidden"
             >
-              <i v-if="!isSp" class="ui-icon ui-icon-arrowstop-1-s"></i>
+              <i class="ui-icon ui-icon-arrowstop-1-s sp_hidden"></i>
               <img width="20" src="/img/csv.png" />
             </button>
 
             <button
-              v-if="!isSp"
               id="btn_edit_csv"
               title="チャートのデータをGoogleスプレッドシートで編集します。"
-              class="emj ui-button ui-corner-all ui-widget dark:text-white"
+              class="emj ui-button ui-corner-all ui-widget sp_hidden dark:text-white"
               disabled="true"
             >
               ✏
@@ -76,8 +73,7 @@
               <img src="/img/google-map-48.png" width="20" />
             </button>
             <button
-              v-if="!isSp"
-              class="emj ui-button ui-corner-all ui-widget mb-0 dark:text-white"
+              class="emj ui-button ui-corner-all ui-widget sp_hidden mb-0 dark:text-white"
               title="レイアウトを「ストリートビューベース」にします"
               @click="onClickStyleLoad('sview')"
             >
@@ -109,7 +105,7 @@
               ✖️
             </button>
 
-            <span v-if="!isSp">&nbsp;</span>
+            <span class="sp_hidden">&nbsp;</span>
 
             <button
               class="emj ui-button ui-corner-all ui-widget mb-0 dark:text-white"
@@ -1282,7 +1278,7 @@
 </template>
 
 <script setup>
-const APP_VERSION = '0.9.12'
+const APP_VERSION = '0.9.13'
 const APP_VERSION_DATE = '2025/09/08'
 import { onMounted, ref, watch, reactive, nextTick } from 'vue'
 import { useElementHover } from '@vueuse/core'
@@ -1311,6 +1307,8 @@ import '@/Utils/font-awesome/css/v4-shims.min.css'
 
 import 'virtual-keyboard/dist/css/keyboard.min.css'
 import 'virtual-keyboard/dist/js/jquery.keyboard.min.js'
+
+import { useBreakpointsConfig } from '@/Composables/useBreakpointsConfig'
 
 // Components
 import DcSunburstChart from '@/Components/DcSunburstChart.vue'
@@ -1538,7 +1536,7 @@ const gg = reactive({
   isPrefTable: false,
   isShowPrefTable: false,
 })
-const isSp = window.innerWidth <= 768
+const { isMobile: isSp } = useBreakpointsConfig()
 const dataImgSrc = ref('')
 const headerRef = ref(null)
 const settingsDrawerVisible = ref(false)
@@ -1608,7 +1606,7 @@ const pnl = reactive({
     isShow: true,
     title: '<i class="fa fa-map"></i>日本地図',
     subTitle: '',
-    style: isSp ? 'width:100%;height:100%;' : 'width:460px;height:450px;',
+    style: isSp.value ? 'width:100%;height:100%;' : 'width:460px;height:450px;',
     colors: [
       ['1000人以上', '#8c0a00', 999],
       ['500人以上', '#ea5432', 499],
@@ -1945,7 +1943,7 @@ const settingsLoad = (settingsJson = null) => {
   if (settingsJson === null) return null
   const settings = JSON.parse(settingsJson)
 
-  if (isSp) {
+  if (isSp.value) {
     // スタイルはロード除外
     _.forEach(settings, v => {
       if (v.style) {
@@ -2470,7 +2468,7 @@ onMounted(async () => {
 
     mm.setPanelFromDataOptionsAfterLoad()
 
-    if (!isSp) setupToolbarWatch()
+    if (!isSp.value) setupToolbarWatch()
 
     setupPanelWatch()
 
@@ -2488,9 +2486,9 @@ const mm = {
   config: {
     urlParamDataReplace: true,
     mouseLongClickDuration: 300, //マウスの長押しクリックと判定する時の長押し時間
-    panelDraggable: !isSp,
+    panelDraggable: !isSp.value,
     panelDragSnapThreshold: 10,
-    panelResizable: !isSp,
+    panelResizable: !isSp.value,
     defaultMargins: { top: 0, right: 0, bottom: 20, left: 40 },
     cName: {
       itemHeight: 29,
@@ -3049,7 +3047,7 @@ const mm = {
   },
   // 呼順3:データオプション(mm.opt)系をpnlに反映 - データロード後
   setPanelFromDataOptionsAfterLoad: () => {
-    if (isSp) pnl.common.toolbar.isShow = true
+    if (isSp.value) pnl.common.toolbar.isShow = true
     pnl.common.toolbar.isDivShow = pnl.common.toolbar.isShow
 
     if (gg.dt === DT_COVID) {
@@ -3114,7 +3112,7 @@ const mm = {
   pref_tbl_last_cnt: {},
   //pref_tbl_city_cnt:{},
   spk: {},
-  SPARK_SX: isSp ? 60 : 25,
+  SPARK_SX: isSp.value ? 60 : 25,
   ac_data: [],
   ac_data_tbl: [],
 
@@ -3236,7 +3234,7 @@ const mm = {
       const h = parseInt(window.innerHeight - pos.top + 20)
       $('#panels').css('height', h + 'px')
 
-      if (!isSp) {
+      if (!isSp.value) {
         if (pnl.year.style === '') $('#panel_year').width(mm.chartYear.width())
         if (pnl.week.style === '') $('#panel_week').width(mm.chartWeek.width())
         if (pnl.age.style === '') $('#panel_age').width(mm.chartAge.width())
@@ -3707,7 +3705,7 @@ const mm = {
       return ret
     },
     shortTitle: (text, maxLength = 8) => {
-      if (isSp) return text
+      if (isSp.value) return text
 
       // string-widthを使用してより正確な文字幅計算
       let currentLength = 0
@@ -4945,7 +4943,7 @@ const mm = {
       return ret
     },
     setImageLink: function (chart, dataType, ttFmt, lazyLoadDomId = null) {
-      const useLazy = !isSp
+      const useLazy = !isSp.value
       chart.selectAll('text.row').attr('x', IMG_THUMBNAIL_W + 4)
       chart.selectAll('rect').attr('x', IMG_THUMBNAIL_W)
       chart
@@ -4986,11 +4984,11 @@ const mm = {
         .on('touchstart', function (e, d) {
           d.t = e.timeStamp
         })
-        .on(isSp ? 'touchend' : 'click', function (e, d) {
+        .on(isSp.value ? 'touchend' : 'click', function (e, d) {
           // sp:長押しopen pc:clickでopen
           const SP_PRESS_MS = 300
           let isOpen = true
-          if (isSp) {
+          if (isSp.value) {
             isOpen = e.timeStamp - d.t > SP_PRESS_MS
           }
           if (isOpen) {
@@ -5204,7 +5202,7 @@ const mm = {
 
         // 詳細表示(right) サムネイル画像
         if (
-          (isSp
+          (isSp.value
             ? pnl.detail.details.length < TUBE_THUMBNAIL_MAX
             : pnl.detail.details.length === 0) &&
           pnl.tube.vids.length > 1
@@ -5741,7 +5739,11 @@ const mm = {
         $('#chk_tbl_spkflt')
           .checkboxradio({
             label:
-              '<i class="fa fa-filter"></i>[' + fth + ' ]' + (isSp ? '<br />' : '') + 'でフィルタ',
+              '<i class="fa fa-filter"></i>[' +
+              fth +
+              ' ]' +
+              (isSp.value ? '<br />' : '') +
+              'でフィルタ',
           })
           //.checkboxradio('refresh')
           .prop('checked', true)
@@ -6032,7 +6034,7 @@ const mm = {
     let pl = o.find('g.row:contains("' + name + '")')
     if (pl.length) {
       let top
-      if (isSp) {
+      if (isSp.value) {
         top = pl.attr('transform').replace(')', '').split(',')[1] - 40
       } else {
         //not work iOS Safari
@@ -6450,7 +6452,7 @@ const initChartName = () => {
 
   // 高さ調整
   const height = 24 + mm.names.length * mm.config.cName.itemHeight
-  if (!isSp) {
+  if (!isSp.value) {
     if (height < window.innerHeight) {
       $('#panel_name').height(height + 8)
     }
@@ -6459,7 +6461,7 @@ const initChartName = () => {
   mm.chartName = new dc.RowChart('#chart_name', CGRP_SHOW)
   mm.chartName.dataIndex = D_PL1
   mm.chartName
-    .width(isSp ? parseInt(window.innerWidth / 2) + 15 : 205)
+    .width(isSp.value ? parseInt(window.innerWidth / 2) + 15 : 205)
     .titleLabelOffsetX(50)
     .height(height)
     .useViewBoxResizing(mm.config.panelResizable)
@@ -6528,7 +6530,7 @@ const initChartName = () => {
         }
       }
       let s = zenkakuName
-      const wordNum = gg.dt === DT_COVID ? 4 : isSp ? 6 : 8 // 何文字目から数字を表示するか？都道府県名は4文字
+      const wordNum = gg.dt === DT_COVID ? 4 : isSp.value ? 6 : 8 // 何文字目から数字を表示するか？都道府県名は4文字
       for (var i = 0; i < wordNum - zenkakuName.length; i++) s += '　'
       s += ' '
       const is_filtered = mm.gpName_all[d.key] !== d.value
@@ -6582,7 +6584,7 @@ const initChartCity = () => {
 
   // 高さ調整
   const height = 24 + Object.keys(mm.gpCity.all()).length * mm.config.cCity.itemHeight
-  if (!isSp) {
+  if (!isSp.value) {
     if (height < window.innerHeight) {
       $('#panel_city').height(height + 8)
     }
@@ -6591,7 +6593,7 @@ const initChartCity = () => {
   mm.chartCity = new dc.RowChart('#chart_city', CGRP_SHOW)
   mm.chartCity.dataIndex = D_PL2
   mm.chartCity
-    .width(isSp ? parseInt(window.innerWidth / 2) - 30 : 230)
+    .width(isSp.value ? parseInt(window.innerWidth / 2) - 30 : 230)
     .height(height)
     .useViewBoxResizing(mm.config.panelResizable)
     .fixedBarHeight(24)
@@ -6627,7 +6629,7 @@ const initChartCity = () => {
     .renderLabel(true) //LeftLabel
     .label(function (d) {
       let s = d.key
-      const wordNum = isSp ? 6 : 8 // 何文字目から数字を表示するか？都道府県名は4文字
+      const wordNum = isSp.value ? 6 : 8 // 何文字目から数字を表示するか？都道府県名は4文字
       for (var i = 0; i < wordNum - d.key.length; i++) s += '　'
       s += ' '
       return (
@@ -7137,7 +7139,7 @@ const initChartDate2Covid = chartDateW => {
     .legend(
       dc
         .legend()
-        .x(isSp ? chartDateW - 350 : 60)
+        .x(isSp.value ? chartDateW - 350 : 60)
         .y(0)
     )
     .x(mm.domainDate ? d3.scaleTime().domain(mm.domainDate) : d3.scaleTime())
@@ -7354,7 +7356,7 @@ const initChartWeek = (chartSexW, chartSexH) => {
     })
 
   let chartWeekW = 350
-  if (isSp) {
+  if (isSp.value) {
     chartWeekW = window.innerWidth - $('#chart_sex').width() - 40
     $('#chart_week').css('width', chartWeekW + 5 + 'px')
   }
@@ -7469,7 +7471,7 @@ const initChartSex = (chartSexW, chartSexH) => {
 
     mm.chartSex.dataIndex = D_SEX
 
-    if (isSp) $(panelDomId).css('width', '100%')
+    if (isSp.value) $(panelDomId).css('width', '100%')
     $(chartDomId).css('width', '100%')
 
     if (mm.opt.chartSex.unit !== null) {
@@ -7592,7 +7594,7 @@ const initChartAge = (chartSexW, chartSexH) => {
   const n = mm.ages.length
   const barW = n > 16 ? parseInt(0.75 * mm.config.cAge.barWidth) : mm.config.cAge.barWidth
   const chartW = (n + 1) * barW
-  if (!isSp) $('#panel_age').width(chartW)
+  if (!isSp.value) $('#panel_age').width(chartW)
 
   mm.chartAge
     .width(chartW)
@@ -7723,7 +7725,7 @@ const initChartCond = (chartSexW, chartSexH, colCondTbl) => {
   const n = mm.conds.length
   const barW = n > 16 ? parseInt(0.75 * mm.config.cCond.barWidth) : mm.config.cCond.barWidth
   const chartW = (n + 1) * barW
-  if (!isSp) $('#panel_cond').width(chartW)
+  if (!isSp.value) $('#panel_cond').width(chartW)
 
   mm.chartCond
     .width(chartW)
@@ -7851,7 +7853,7 @@ const initChartJob = (chartSexW, chartSexH) => {
   const n = mm.is_job_cate ? mm.gpJobCat.all().length : mm.gpJob.all().length
   const barW = n > 16 ? parseInt(0.75 * mm.config.cJob.barWidth) : mm.config.cJob.barWidth
   const chartW = (n + 1) * barW
-  if (!isSp) $('#panel_job').width(chartW)
+  if (!isSp.value) $('#panel_job').width(chartW)
 
   mm.chartJob = new dc.BarChart('#chart_job', CGRP_SHOW)
   mm.chartJob.dataIndex = D_JOB
@@ -8064,7 +8066,7 @@ const initDc = data => {
   initChartCity()
 
   mm.config.cDate.width = mm.opt.chartDate.width ?? 1180
-  if (isSp) mm.config.cDate.width = window.innerWidth + 800
+  if (isSp.value) mm.config.cDate.width = window.innerWidth + 800
 
   initChartDate(mm.config.cDate.width)
 
@@ -8160,7 +8162,7 @@ const initDc = data => {
   }
   pnl.date.stack_type = STACK_CND
 
-  if (!isSp && mm.opt.chartDate.width && localStorage.getItem(settingsName()) === null) {
+  if (!isSp.value && mm.opt.chartDate.width && localStorage.getItem(settingsName()) === null) {
     const w = mm.opt.chartDate.width + 20
     $('#panel_date').css('width', w + 'px')
     pnl.date.style = 'width:' + w + 'px'
@@ -8299,7 +8301,7 @@ const initTabs = () => {
           location.href = 'covid19-world.html'
           break
       }
-      if (!isSp) $('#input-search').focus().select()
+      if (!isSp.value) $('#input-search').focus().select()
     },
   })
 }
@@ -8523,12 +8525,12 @@ const drawJapanMap = () => {
   map = $('#japan-map')
     .vectorMap({
       map: mm.map.isMapJapan ? 'jp_merc' : 'world_mill',
-      panOnDrag: !isSp,
+      panOnDrag: !isSp.value,
       focusOn: mm.map.isMapJapan
         ? {
             x: 0.45,
             y: 0.48,
-            scale: !isSp ? 1.7 : 1,
+            scale: !isSp.value ? 1.7 : 1,
             animate: false,
           }
         : {
@@ -8581,7 +8583,7 @@ const drawJapanMap = () => {
         ],
       },
 
-      onRegionTipShow: !isSp
+      onRegionTipShow: !isSp.value
         ? (e, el, code) => {
             //hover
             let name = map.mapData.paths[code].name
@@ -8653,7 +8655,7 @@ const onFilteredSunburstChart = (i, { chart }) => {
 }
 
 const onDocumentReady = () => {
-  if (isSp) {
+  if (isSp.value) {
     $('#toolbar_win_toggle').insertAfter('#panels')
   }
   $('#data_img').on('change', function (event) {
@@ -8699,7 +8701,7 @@ const onDocumentReady = () => {
     }
   })
 
-  if (isSp) {
+  if (isSp.value) {
     $('#input-search')
       .attr({
         placeholder: 'フィルタ',
@@ -8731,7 +8733,7 @@ const onDocumentReady = () => {
   $('#input-search').on('focus', function (e) {
     _.delay(() => $(this).select(), 7)
   })
-  if (!isSp) $('#input-search').focus() //.select();
+  if (!isSp.value) $('#input-search').focus() //.select();
 
   //
   // クリアボタン
@@ -8771,7 +8773,7 @@ const onDocumentReady = () => {
     document.querySelector('#div_city').scrollTop = 0
 
     if ($('#ui-datepicker-div').is(':visible')) mm.datePick.datepicker('show')
-    if (!isSp) $('#input-search').focus()
+    if (!isSp.value) $('#input-search').focus()
     chartDatePlayStop()
     pnl.date.play.from = null
 
@@ -8790,9 +8792,9 @@ const onDocumentReady = () => {
       // showOptions: {effect: "show",duration:3000,easing:'easeOutQuart'},
       duration: mm.config.mouseLongClickDuration + 100,
       showOtherMonths: true,
-      numberOfMonths: isSp ? [10, 1] : [3, 8],
-      showCurrentAtPos: isSp ? 2 : 0,
-      stepMonths: isSp ? 3 : 4 * 8,
+      numberOfMonths: isSp.value ? [10, 1] : [3, 8],
+      showCurrentAtPos: isSp.value ? 2 : 0,
+      stepMonths: isSp.value ? 3 : 4 * 8,
       position: {
         //左
         of: $(window),
@@ -8856,7 +8858,7 @@ const onDocumentReady = () => {
         //位置を調整
         var dpDiv = inst.dpDiv
         setTimeout(function () {
-          if (isSp) {
+          if (isSp.value) {
             dpDiv.position({
               my: 'left top',
               at: 'left bottom',
@@ -8980,7 +8982,7 @@ const onDocumentReady = () => {
   })
 
   $('.btn_close,.btn_winsize').button()
-  if (isSp) $('#toolbar_win_toggle label').button()
+  if (isSp.value) $('#toolbar_win_toggle label').button()
 
   if (mm.config.panelDraggable) {
     const $parent = $('#panels')
@@ -9198,10 +9200,10 @@ const onDocumentReady = () => {
   $('.chart-filter-toggle').on('click', function (e, opt = { doFocus: 1, doKeyboardOpen: 1 }) {
     const input = $($(this).data('toggle_target'))
     if (input.is(':visible')) {
-      if (!isSp) input.getkeyboard()?.close()
+      if (!isSp.value) input.getkeyboard()?.close()
       input.val('').trigger('change').hide()
     } else {
-      if (!isSp && opt.doKeyboardOpen) input.getkeyboard()?.reveal()
+      if (!isSp.value && opt.doKeyboardOpen) input.getkeyboard()?.reveal()
       input.val(input.data('keyboard_Input_val')).show().trigger('change')
       if (opt.doFocus) input.focus()
     }
@@ -9407,7 +9409,7 @@ const onDocumentReady = () => {
     })
 
   //スクロール同期
-  if (isSp) {
+  if (isSp.value) {
     let wL = '#div_date'
     let wR = '#div_date2'
     $(wL).on('scroll', function (event) {
@@ -9579,7 +9581,11 @@ const onDocumentReady = () => {
   $('#panel_detail').tooltip({
     items: '.tt_text',
     show: { effect: 'show', delay: 20 },
-    position: { my: isSp ? 'left top+1200' : 'left+200 top', at: 'left top', collision: 'flipfit' },
+    position: {
+      my: isSp.value ? 'left top+1200' : 'left+200 top',
+      at: 'left top',
+      collision: 'flipfit',
+    },
     hide: 0,
     // track: true
     tooltipClass: 'tt_text-tooltip',
@@ -9588,7 +9594,7 @@ const onDocumentReady = () => {
     },
   })
 
-  if (isSp) {
+  if (isSp.value) {
     $('.jFiler-theme-dragdropbox').tooltip({
       items: '.fs_popup_none',
       show: { effect: 'show', delay: 300 },
@@ -9612,7 +9618,11 @@ const onDocumentReady = () => {
   $(document).tooltip({
     items: '.tt_image',
     show: { effect: 'show', delay: 20 },
-    position: { my: isSp ? 'left top+1200' : 'left+240 top', at: 'left top', collision: 'flipfit' },
+    position: {
+      my: isSp.value ? 'left top+1200' : 'left+240 top',
+      at: 'left top',
+      collision: 'flipfit',
+    },
     hide: 0,
     tooltipClass: 'emj',
     content: function () {
@@ -9885,7 +9895,7 @@ const onClickStyleLoad = type => {
       settingsSave()
       break
     case 'tube':
-      if (isSp) {
+      if (isSp.value) {
         settingsLoad(isSm ? sTubeSmAbs : sTubeMdAbs)
       } else {
         if (pnl.gmap.isShow || pnl.sview.isShow || pnl.map.isShow) {
@@ -10898,8 +10908,7 @@ path.campaign {
 }
 
 /*===========================================================================*/
-@media screen and (min-width: 768px) {
-  /* md: 768px以上 */
+@media screen and (min-width: 768px) /* BP:PC版: md: 768px以上 */ {
   .dc-chart text,
   .dc-chart .axis text {
     font-family:
@@ -11103,10 +11112,14 @@ path.campaign {
 /* for_wide_screen */
 
 /*===========================================================================*/
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) /* BP:SP版: sm: 768px未満 */ {
   /* sm: 768px未満 */
   .sp_icon {
     font-size: 1em !important;
+  }
+
+  .sp_hidden {
+    display: none !important;
   }
 
   .sp_center {
