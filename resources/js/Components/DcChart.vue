@@ -1241,40 +1241,13 @@
   </div>
 
   <!-- 設定画面 ドロワー -->
-  <ElDrawer
-    v-model="settingsDrawerVisible"
-    :with-header="false"
-    direction="btt"
-    title="⚙️設定"
-    :resizable="true"
-    :size="isSp ? '30%' : '20%'"
-    style="z-index: 10"
-    :class="{ dark: isDark }"
-  >
-    <div class="settings-content text-theme-col">
-      <div class="mb-4 flex items-center justify-between">
-        <h3 class="text-lg font-medium text-theme-col">⚙️設定</h3>
-        <ElButton @click="settingsDrawerVisible = false" round class="close-button">
-          <span class="ui-icon ui-icon-close btn_close" />
-        </ElButton>
-      </div>
-
-      <div class="settings-item mb-4 flex items-center gap-4">
-        <label class="text-sm font-medium text-theme-col">テーマ：</label>
-        <ElRadioGroup v-model="isDark" @change="onThemeChange">
-          <ElRadioButton :value="false">☀️ライト</ElRadioButton>
-          <ElRadioButton :value="true">🌛ダーク</ElRadioButton>
-        </ElRadioGroup>
-      </div>
-
-      <div class="settings-item mb-4 flex items-center gap-4">
-        <label class="text-sm font-medium text-theme-col">Version：</label>
-        <span
-          >{{ APP_VERSION }}<span class="ml-3">({{ APP_VERSION_DATE }})</span></span
-        >
-      </div>
-    </div>
-  </ElDrawer>
+  <DcChartSettingsDrawer
+    v-model:settingsDrawerVisible="settingsDrawerVisible"
+    v-model:isDark="isDark"
+    :is-sp="isSp"
+    :version="APP_VERSION"
+    :version-date="APP_VERSION_DATE"
+  />
 </template>
 
 <script setup>
@@ -1318,6 +1291,7 @@ import DcPanelAnalyze from '@/Components/DcPanelAnalyze.vue'
 import Covid19PrefectureDatatable from '@/Components/Covid19PrefectureDatatable.vue'
 // import FilerDialogButton from "@/Components/FilerDialogButton.vue";
 import FileSelectMenu from '@/Components/FileSelectMenu.vue'
+import DcChartSettingsDrawer from '@/Components/DcChartSettingsDrawer.vue'
 
 import {
   PREFECTURES,
@@ -9930,10 +9904,6 @@ const onClickStyleReset = () => {
 
 const onClickSettings = () => {
   settingsDrawerVisible.value = true
-}
-
-const onThemeChange = value => {
-  isDark.value = value
 }
 </script>
 
