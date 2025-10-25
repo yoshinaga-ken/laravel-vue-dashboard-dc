@@ -1,13 +1,16 @@
 # Laravel + Vue3 + 📊Dimensional chart Dashboard template
+
 A template project for an admin panel with a dashboard using 📊dimensional charts, implemented with laravel and vue.
+
 - [Live demo](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28)
 
 [![img.png](doc/img/dashboard-covid19.png)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=covid19-data-2021-02-28)
-- [Dimensional chart](http://dc-js.github.io/dc.js/) can be switched and compared with one click, making it easy to analyze in multiple dimensions.
-![image](doc/img/covid19-dc-demo-v1.gif)
 
+- [Dimensional chart](http://dc-js.github.io/dc.js/) can be switched and compared with one click, making it easy to analyze in multiple dimensions.
+  ![image](doc/img/covid19-dc-demo-v1.gif)
 
 ## Features
+
 - Dashboard with [Dimensional chart(dc.js)](http://dc-js.github.io/dc.js/)
   - [Articles Dashboard](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-article-like)
   - [Dashboard with many more dimensional charts](#link-dc-demo)
@@ -68,19 +71,20 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - Two Factor Authentication
   - Browser Sessions
   - Teams Management
-- Articles Management 
+- Articles Management
   - CRUD Operations
   - article like/dislike operations
   - RestFul API
   - Creating data for [a dashboard to analyze article likes](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc?data=test-article-like)
-- User Management 
+- User Management
   - user follow/unfollow operations
   - Creating dashboard data to analyze user behavior
 - GraphQL
 
 ## Technology Stack
+
 - backend
-  - [Laravel 12](https://laravel.com/) 
+  - [Laravel 12](https://laravel.com/)
     - [Eloquent ORM](https://laravel.com/docs/12.x/eloquent-relationships)
   - [inertiajs](https://inertiajs.com/)
   - RestFul API
@@ -98,7 +102,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - [GraphQL](https://graphql.org/) with [Vue Apollo](https://apollo.vuejs.org/)
   - [Google Maps API](https://developers.google.com/maps/documentation/javascript/reference?hl=en)
   - [YouTube API](https://developers.google.com/youtube/v3/docs?hl=en)
-  - test 
+  - test
     - [vitest](https://vitest.dev/)
     - e2e with [playwright](https://playwright.dev/)
   - [Storybook 9](https://storybook.js.org/)
@@ -110,10 +114,13 @@ A detailed explanation of the contents of this repository can be found on the De
 [Read this repository on DeepWiki](https://deepwiki.com/yoshinaga-ken/laravel-vue-dashboard-dc)
 
 ## Database
+
 - [mariadb-schema.sql](database/schema/mariadb-schema.sql)
-  ![er](doc/database/er-mwb.png)
+  - [detail](doc/database/er-mwb.png)
+  - <img src="doc/database/er-a5er.png" alt="er" width="50%">
 - [<img src="https://graphql.org/img/logo.svg" alt="GraphQL Logo" style="width: 1em; height: 1em; vertical-align: middle;">
-GraphQL schema](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/graphql-playground)
+  GraphQL schema](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/graphql-playground)
+
 ```mermaid
 erDiagram
     users ||--o{ articles : hasMany
@@ -167,17 +174,18 @@ erDiagram
     }
 
 ```
- 
+
 ## Quick Start
 
 ```bash [Terminal]
-# backend - run web server 
+# backend - run web server
 php artisan serve
 
 # frontend - watch build
 pnpm run dev
 
 ```
+
 Server running on <http://127.0.0.1:8000>
 
 ## Setup
@@ -205,7 +213,6 @@ php artisan migrate
 php artisan db:seed
 ```
 
-
 ## Production
 
 Build a production-ready Vue.js frontend application
@@ -232,6 +239,7 @@ e2e$ pnpm test
 ```
 
 ## Storybook
+
 ```bash
 # Build and launch storybook to see the components in the browser
 pnpm storybook
@@ -240,16 +248,20 @@ pnpm storybook
 pnpm build-storybook
 # Output directory: ./storybook-static/
 
-````
+```
+
 Storybook running on <http://localhost:6007/> [🚀demo](https://sakanaclub.xsrv.jp/laravel-sports-hp/storybook-static/?path=/docs/configure-your-project--docs)
 
 <a id="link-dc-demo"></a>
+
 ## 📊Dimensional chart demo for other fields
+
 [Details chart data](./public/data/README.md)
+
 - [List of missing persons due to Noto Peninsula earthquake @2024/1/1](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - [Tokyo gubernatorial election votes by candidate @2024/7/7](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-tokyo-gubernatorial-election.csv)
 - 📺🎮Tv Game in Japan
-  - home video game consoles 
+  - home video game consoles
     - [4th generation](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-gen4.csv)
       - [NES](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc.csv) | [SNES](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-smc.csv) | [Genesis](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-smd.csv) | [TurboGrafx-16](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-pce.csv)
     - [3~5th generatio](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-gen3.csv)
@@ -323,5 +335,6 @@ Storybook running on <http://localhost:6007/> [🚀demo](https://sakanaclub.xsrv
     - [Number of 👍likes for the 📄article](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-article-like)
 
 ## Related Repos
+
 - [covid19-dc](https://github.com/yoshinaga-ken/covid19-dc)
 - [nuxt-ui-pro-dashboard-dc](https://github.com/yoshinaga-ken/nuxt-ui-pro-dashboard-dc)
