@@ -1251,7 +1251,7 @@
 </template>
 
 <script setup>
-const APP_VERSION = '0.9.14'
+const APP_VERSION = '0.9.15'
 const APP_VERSION_DATE = '2025/09/08'
 import { onMounted, ref, watch, reactive, nextTick } from 'vue'
 import { useElementHover } from '@vueuse/core'
@@ -1471,6 +1471,7 @@ const props = defineProps({
       'ja-weather-temperature-3.jpg': 'ja-weather-temperature-3.csv',
       'ja-quake-noto-safety.jpg': 'ja-quake-noto-safety.csv',
       'ja-tokyo-gubernatorial-election.jpg': 'ja-tokyo-gubernatorial-election.csv',
+      'ja-election-sangiin-2025.jpg': 'ja-election-sangiin-2025.csv',
       'resas-agriculture.jpg': 'resas-agriculture.csv',
       'resas-product-sales.jpg': 'resas-product-sales.csv',
       'resas-tourism-foreigners.jpg': 'resas-tourism-foreigners.csv',

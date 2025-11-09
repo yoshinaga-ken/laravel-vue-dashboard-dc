@@ -3471,19 +3471,3 @@
 2024-07-07,1,37,ネオ幕府アキノリ党,アキノリ将軍未満♂(37),八丈町,会社員,0,0
 2024-07-07,1,37,ネオ幕府アキノリ党,アキノリ将軍未満♂(37),青ヶ島村,会社員,0,0
 2024-07-07,1,37,ネオ幕府アキノリ党,アキノリ将軍未満♂(37),小笠原村,会社員,0,1
-@CsvOptions:,,,,,,,,
-dataType=0,,,,,,,,
-title=東京都知事選挙　候補者別得票数 2024/7/7(日) ※年齢・性別・職業は候補者ベース,,,,,,,,
-searchPrefix=東京都知事選挙,,,,,,,,
-"dataReference=<ul><li><a target%3d'_blank' href%3d'https://www.nhk.or.jp/senkyo/database/local/shutoken/20336/skh54664.html'"">NHK選挙WEB 東京都知事選挙2024 選挙結果(7月7日投票)@NHK</a><li><a target%3d'_blank' href%3d'https://www.senkyo.metro.tokyo.lg.jp/election/tochiji-all/tochiji-sokuhou2024/csv/'"">東京都知事選挙東京都知事選挙（令和6年7月7日執行） 投開票結果@東京都</a><li>wikipedia</ul>",,,,,,,,
-detailType=name_light,,,,,,,,
-isMakeAutocompleteData=1,,,,,,,,
-removeLabelSufixType=1,,,,,,,,
-chartGMap[isShow]=1,,,,,,,,
-chartMap[isShow]=0,,,,,,,,
-chartName[imagePath]=/img/person,,,,,,,,
-chartName[imageTooltip]=1,,,,,,,,
-chartDate[width]=300,,,,,,,,
-chartAge[unit]=null,,,,,,,,
-chartAge[scale]=10,,,,,,,,
-editUrl=https://docs.google.com/spreadsheets/d/1gqFfn4uaQJhA7X-uwSyous1O6nvZR5jriNg6JZwBTsM/edit?gid=14801973#gid=14801973,,,,,,,,

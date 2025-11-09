@@ -1,0 +1,176 @@
+{
+  "dataType": 0,
+  "common": {
+    "unit": "議席",
+    "unitPrefix": "獲得議席"
+  },
+  "chartGMap": {
+    "isShow": false
+  },
+  "chartSView": {},
+  "chartTube": {},
+  "chartMap": {
+    "isShow": true,
+    "colors": [
+      [
+        "6議席以上",
+        "#8c0a00",
+        5
+      ],
+      [
+        "5議席以上",
+        "#ea5432",
+        4
+      ],
+      [
+        "4議席以上",
+        "#ff781d",
+        3
+      ],
+      [
+        "3議席以上",
+        "#ff9d57",
+        2
+      ],
+      [
+        "2議席以上",
+        "#ffceab",
+        1
+      ],
+      [
+        "1議席以上",
+        "#f5deb3",
+        0
+      ],
+      [
+        "0議席",
+        "#dadada",
+        0
+      ],
+      [
+        "選択中",
+        "#ffffff",
+        0
+      ]
+    ]
+  },
+  "chartName": {},
+  "chartCity": {
+    "imagePath": "/img/person/sangiin",
+    "imageTooltip": "all",
+    "orderYmd": false
+  },
+  "chartDate": {
+    "isShow": false,
+    "elasticY": false,
+    "isRangeChart": false,
+    "isFilterMissingCorrect": false,
+    "labelType": 0,
+    "width": 300
+  },
+  "chartDate2": {
+    "chartType": "lines",
+    "elasticY": false,
+    "elasticYMinMax": false,
+    "isRangeChart": false,
+    "isFilterMissingCorrect": true,
+    "labelType": 0
+  },
+  "chartYear": {
+    "isLegend": true
+  },
+  "chartSeason": {},
+  "chartWeek": {},
+  "chartSex": {},
+  "chartAge": {
+    "unit": null,
+    "scale": 10
+  },
+  "chartCond": {
+    "hasWindRoseChart": false
+  },
+  "chartJob": {},
+  "chartJobCat": {},
+  "chartEx": [
+    {
+      "name": "職業カテゴリ",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "name": "現職・元職・新人",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "name": "当選回数",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "name": "推薦",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    }
+  ],
+  "chartDetail": {},
+  "title": "参議院選挙2025 選挙区 当選当確一覧 2025/7/20(日)",
+  "searchPrefix": "参議院選挙2025",
+  "dataReference": "<ul><li><a target='_blank' href='https://news.web.nhk/senkyo/database/sangiin/00/teiin.html'>NHK 参議院選挙2025 定員別当選当確一覧@NHK</a></li></ul>",
+  "detailType": "name_light",
+  "isMakeAutocompleteData": true,
+  "removeLabelSufixType": "1",
+  "editUrl": "https://docs.google.com/spreadsheets/d/1gqFfn4uaQJhA7X-uwSyous1O6nvZR5jriNg6JZwBTsM/edit?gid"
+}
