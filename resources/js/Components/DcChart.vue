@@ -4288,6 +4288,11 @@ const mm = {
     }
   },
   setHeaderFilterTxtDebounced: _.debounce(function () {
+    if (pnl.map.isShow) {
+      if (mm.map.doDraw) drawJapanMap()
+      mm.map.doDraw = 1
+    }
+
     mm.setHeaderFilterTxt()
   }, 300),
   filterPrefChart: function (prefs) {
@@ -5706,9 +5711,6 @@ const mm = {
         mm.chart.barChartRedrawGroup(chart)
       })
     )
-
-    if (mm.map.doDraw) drawJapanMap()
-    mm.map.doDraw = 1
 
     pnl.date.cnt = php_number_format(
       mm.ndx
