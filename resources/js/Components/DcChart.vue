@@ -1251,7 +1251,7 @@
 </template>
 
 <script setup>
-const APP_VERSION = '0.9.13'
+const APP_VERSION = '0.9.14'
 const APP_VERSION_DATE = '2025/09/08'
 import { onMounted, ref, watch, reactive, nextTick } from 'vue'
 import { useElementHover } from '@vueuse/core'
@@ -3015,8 +3015,12 @@ const mm = {
 
     // chartEx
     pnl.ex.forEach((panel, index) => {
-      if (panel.isHidden) return
-      panel.isShow = mm.opt.chartEx[index]?.isShow ? true : false
+      if (mm.opt.chartEx[index]?.isHidden) {
+        panel.isHidden = Boolean(parseInt(mm.opt.chartEx[index]?.isHidden))
+      }
+      if (mm.opt.chartEx[index]?.isShow) {
+        panel.isShow = Boolean(parseInt(mm.opt.chartEx[index]?.isShow))
+      }
     })
   },
   // 呼順3:データオプション(mm.opt)系をpnlに反映 - データロード後
