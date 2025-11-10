@@ -1,0 +1,253 @@
+{
+  "dataType": 0,
+  "common": {
+    "unit": "議席",
+    "unitPrefix": "獲得議席"
+  },
+  "chartGMap": {
+    "isShow": false
+  },
+  "chartSView": {},
+  "chartTube": {},
+  "chartMap": {
+    "isShow": true,
+    "colors": [
+      [
+        "6議席以上",
+        "#8c0a00",
+        5
+      ],
+      [
+        "5議席以上",
+        "#ea5432",
+        4
+      ],
+      [
+        "4議席以上",
+        "#ff781d",
+        3
+      ],
+      [
+        "3議席以上",
+        "#ff9d57",
+        2
+      ],
+      [
+        "2議席以上",
+        "#ffceab",
+        1
+      ],
+      [
+        "1議席以上",
+        "#f5deb3",
+        0
+      ],
+      [
+        "0議席",
+        "#dadada",
+        0
+      ],
+      [
+        "選択中",
+        "#ffffff",
+        0
+      ]
+    ]
+  },
+  "chartName": {},
+  "chartCity": {
+    "imagePath": "/img/person/shugiin",
+    "imageTooltip": "all",
+    "orderYmd": false
+  },
+  "chartDate": {
+    "isShow": false,
+    "elasticY": false,
+    "isRangeChart": false,
+    "isFilterMissingCorrect": false,
+    "labelType": 0,
+    "width": 300
+  },
+  "chartDate2": {
+    "chartType": "lines",
+    "elasticY": false,
+    "elasticYMinMax": false,
+    "isRangeChart": false,
+    "isFilterMissingCorrect": true,
+    "labelType": 0
+  },
+  "chartYear": {
+    "isLegend": true
+  },
+  "chartSeason": {},
+  "chartWeek": {},
+  "chartSex": {
+    "unit": null
+  },
+  "chartAge": {
+    "unit": null,
+    "scale": 10,
+    "labelSuffix": "代"
+  },
+  "chartCond": {
+    "hasWindRoseChart": false
+  },
+  "chartJob": {},
+  "chartJobCat": {},
+  "chartEx": [
+    {
+      "name": "職業カテゴリ",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "name": "選挙区",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "labelSuffix": "区"
+    },
+    {
+      "name": "現職・元職・新人",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "name": "当選回数",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "name": "推薦",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "name": "性別 > 年齢",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "$1/$2:10:代",
+        "width": 300,
+        "height": 300,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.05
+      },
+      "legend": {
+        "isShow": false
+      }
+    },
+    {
+      "name": "政党 > 性別",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "$3/$1",
+        "width": 400,
+        "height": 400,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.1
+      },
+      "legend": {
+        "isShow": false
+      }
+    },
+    {
+      "name": "政党 > 年齢",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "#keyIndex": "$3/$2:10:代",
+        "keyIndex": "$3/$2",
+        "width": 400,
+        "height": 400,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.05
+      },
+      "legend": {
+        "isShow": false
+      }
+    },
+    {
+      "name": "政党 > 都道府県",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "$3/$4",
+        "width": 600,
+        "height": 600,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.05
+      },
+      "legend": {
+        "isShow": false
+      }
+    },
+    {
+      "name": "政党 > 職業カテゴリ",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "$3/$9",
+        "width": 600,
+        "height": 600,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.05
+      },
+      "legend": {
+        "isShow": true
+      }
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    }
+  ],
+  "chartDetail": {},
+  "title": "衆議院選挙2024 小選挙区 当選当確一覧 2024/10/28(月)",
+  "searchPrefix": "衆議院選挙2024",
+  "dataReference": "<ul><li><a target='_blank' href='https://news.web.nhk/senkyo/database/shugiin/00/tousen_toukaku_senkyoku.html'>NHK 衆議院選挙2024 小選挙区 当選当確一覧@NHK</a></li></ul>",
+  "detailType": "name_light",
+  "isMakeAutocompleteData": true,
+  "removeLabelSufixType": "1",
+  "editUrl": "https://docs.google.com/spreadsheets/d/1gqFfn4uaQJhA7X-uwSyous1O6nvZR5jriNg6JZwBTsM/edit?gid"
+}

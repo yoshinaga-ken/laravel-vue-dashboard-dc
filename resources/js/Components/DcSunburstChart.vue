@@ -271,6 +271,7 @@ const initChart = () => {
       .width(chartWidth.value)
       .height(chartHeight.value)
       .dimension(dimension)
+      .minAngleForLabel(0.2)
       .group(group)
       .colors(d3.scaleOrdinal(d3SchemeCategory20b))
       .innerRadius(props.innerRadius)
