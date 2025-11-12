@@ -1,3 +1,5 @@
+**English** | [日本語](./README.ja.md)
+
 # Laravel + Vue3 + 📊Dimensional chart Dashboard template
 
 A template project for an admin panel with a dashboard using 📊dimensional charts, implemented with laravel and vue.
@@ -260,8 +262,8 @@ Storybook running on <http://localhost:6007/> [🚀demo](https://sakanaclub.xsrv
 
 - [List of missing persons due to Noto Peninsula earthquake @2024/1/1](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - [Tokyo gubernatorial election votes by candidate @2024/7/7](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-tokyo-election-gubernatorial-2024.csv)
-- [List of confirmed winners of the House of Councillors election @2025/7/20](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025)
-- [List of winners of the House of Representatives election @2024/10/20](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-2024)
+- [List of confirmed winners of the House of Councillors election @2025 2022 2019](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025)
+- [List of winners of the House of Representatives election @2024 2021](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-2024)
 - 📺🎮Tv Game in Japan
   - home video game consoles
     - [4th generation](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-gen4.csv)

@@ -77,14 +77,21 @@
     "labelType": 0
   },
   "chartYear": {
-    "isLegend": true
+    "isShow": true,
+    "isLegend": true,
+    "margins": {
+      "left": 220
+    }
   },
   "chartSeason": {},
   "chartWeek": {},
-  "chartSex": {},
+  "chartSex": {
+    "unit": null
+  },
   "chartAge": {
     "unit": null,
-    "scale": 10
+    "scale": 10,
+    "labelSuffix": "代"
   },
   "chartCond": {
     "hasWindRoseChart": false
@@ -94,6 +101,12 @@
   "chartEx": [
     {
       "name": "職業カテゴリ",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "name": "選挙制度",
       "isHidden": 0,
       "isShow": 1,
       "isLegend": 0
@@ -117,28 +130,94 @@
       "isLegend": 0
     },
     {
-      "scale": false,
-      "isLegend": false
+      "name": "性別 > 年齢",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "$1/$2",
+        "width": 300,
+        "height": 300,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.05
+      },
+      "legend": {
+        "isShow": false
+      }
     },
     {
-      "scale": false,
-      "isLegend": false
+      "name": "政党 > 性別",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "$3/$1",
+        "width": 400,
+        "height": 400,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.1
+      },
+      "legend": {
+        "isShow": false
+      }
     },
     {
-      "scale": false,
-      "isLegend": false
+      "name": "政党 > 年齢 > 性別",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "$3/$2/$1",
+        "width": 600,
+        "height": 600,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.05
+      },
+      "legend": {
+        "isShow": false
+      }
     },
     {
-      "scale": false,
-      "isLegend": false
+      "name": "政党 > 都道府県",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "$3/$4",
+        "width": 600,
+        "height": 600,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.05
+      },
+      "legend": {
+        "isShow": false
+      }
     },
     {
-      "scale": false,
-      "isLegend": false
-    },
-    {
-      "scale": false,
-      "isLegend": false
+      "name": "政党 > 職業カテゴリ",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "orderDesc": 1,
+      "isDcSunburstChart": 1,
+      "dcSunburstChart": {
+        "keyIndex": "$3/$9",
+        "width": 600,
+        "height": 600,
+        "equalRingSizes": true,
+        "minAngleForLabel": 0.05
+      },
+      "legend": {
+        "isShow": true
+      }
     },
     {
       "scale": false,
@@ -166,9 +245,9 @@
     }
   ],
   "chartDetail": {},
-  "title": "参議院選挙2025 選挙区 当選当確一覧 2025/7/20(日)",
-  "searchPrefix": "参議院選挙2025",
-  "dataReference": "<ul><li><a target='_blank' href='https://news.web.nhk/senkyo/database/sangiin/00/teiin.html'>NHK 参議院選挙2025 定員別当選当確一覧@NHK</a></li></ul>",
+  "title": "参議院選挙 当選当確一覧 2025年,2022年,2019年",
+  "searchPrefix": "参議院選挙",
+  "dataReference": "<ul><li><a target='_blank' href='https://news.web.nhk/senkyo/database/sangiin/00/teiin.html'>参議院選挙 2025/7/20(日) 定員別当選当確一覧@NHK</a></li><li><a target='_blank' href='https://news.web.nhk/senkyo/database/sangiin/2022/00/teiin.html'>参議院選挙 2022/7/10(日) 定員別当選当確一覧@NHK</a></li><li><a target='_blank' href='https://news.web.nhk/senkyo/database/sangiin/2019/00/teiin.html'>参議院選挙 2019/7/21(日) 定員別当選当確一覧@NHK</a></li></ul>",
   "detailType": "name_light",
   "isMakeAutocompleteData": true,
   "removeLabelSufixType": "1",
