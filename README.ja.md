@@ -280,6 +280,8 @@ Storybook は <http://localhost:6007/> で実行されます [🚀デモ](https:
   - [アーケードビデオゲーム 1974～2024](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ac.csv)
   - パーソナルコンピュータ
     - [MSX](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-msx.csv)
+  - ゲームタイトル
+    - [ドラゴンクエスト3 モンスター一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-title-dq3-monster)
 - 天気
   - [日本の主要12都市の「🌡️平均気温」の推移 @1986年～（40年間）](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-weather-temperature)
   - [日本の主要12都市の「☔降水量」の推移 @1986年～（40年間）](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-weather-precipitation.csv)

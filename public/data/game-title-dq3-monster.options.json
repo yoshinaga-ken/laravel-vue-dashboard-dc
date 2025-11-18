@@ -1,0 +1,234 @@
+{
+  "dataType": 0,
+  "title": "ドラゴンクエスト3 モンスター一覧",
+  "description": "ドラゴンクエスト3 モンスター一覧の多次元分析",
+  "searchPrefix": "ドラクエ3 モンスター",
+  "detailType": "city",
+  "dataReference": "<ul><li><a target='_blank' href='https://dqwiz.net/dq3re/monster.html'>ドラゴンクエストIII （SFC/GBC）モンスター紹介@Sword and Magic</a></li>※「アイテムの入手確率」S:1/1=100% A:1/8 B:1/16 C:1/32 D:1/64 E:1/128 F:1/256 G:1/1024</li><li>※「耐性」炎:炎呪文 ヒ:ヒャド バ:バギ デ:デイン 死:即死 犠:メガンテ 光:ニフラム 幻:幻惑 眠:眠り 吸:MP吸収 封:呪文封印 乱:混乱 守:守備力低下 早:素早さ低下</li><li>※「耐性」 ×…よく効く △…効きやすい ○…効きにくい ◎…基本的にまったく効かない</li><ul></ul>",
+  "common": {
+    "#unit": "体",
+    "#unitPrefix": "数",
+    "colorTheme": "dark",
+    "stackType": 2
+  },
+  "isMakeAutocompleteData": true,
+  "chartGMap": {},
+  "chartSView": {},
+  "chartTube": {},
+  "chartMap": {
+    "isShow": 1,
+    "mapType": "image",
+    "mapImageUrl": "/im/dq3.gif",
+    "#mapImageUrl": "http://dq3.opatil.com/data/media/map01.gif",
+    "#mapImageUrl": "http://dq3.opatil.com/data/media/map02.gif"
+  },
+  "chartName": {
+    "name": "出現地方",
+    "orderYmd": true
+  },
+  "chartCity": {
+    "name": "モンスター名",
+    "imageTooltip": "all",
+    "imagePath": "/img/game/dq3",
+    "orderYmd": true,
+    "orderUI": false
+  },
+  "chartDate": {
+    "isShow": false,
+    "elasticY": false,
+    "#yDomain": [10, 40],
+    "isRangeChart": true,
+    "isFilterMissingCorrect": false,
+    "labelType": 2,
+    "format": "YYYY-MM-DD",
+    "margins": {
+      "left": 80
+    }
+  },
+  "chartDate2": {
+    "isShow": false,
+    "elasticY": true,
+    "elasticYMinMax": true,
+    "#yDomain": [10, 40],
+    "#chartType": "stacks",
+    "renderArea": true,
+    "renderDataPoints": true,
+    "isFilterMissingCorrect": true,
+    "isLabel": true,
+    "labelType": 2
+  },
+  "chartYear": {
+    "isShow": true,
+    "isLegend": true,
+    "margins": {
+      "left": 80
+    }
+  },
+  "chartSeason": {},
+  "chartWeek": {},
+  "chartSex": {
+    "name": "タイプ",
+    "chartType": "pie",
+    "unit": null,
+    "isLegend": true,
+    "margins": {
+      "top": 20,
+      "left": 100
+    }
+  },
+  "chartAge": {
+    "name": "LV",
+    "scale": 10,
+    "unit": null,
+    "labelSuffix": "代"
+  },
+  "chartCond": {
+    "name": "調子",
+    "#scale": 100,
+    "#labelSuffix": "代"
+  },
+  "chartJob": {},
+  "chartJobCat": {},
+  "chartEx": [
+    {
+      "i": "9:0",
+      "name": "HP",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "scale": 10,
+      "labelSuffix": "代",
+      "isStackSelect": 1
+    },
+    {
+      "i": "10:1",
+      "name": "MP",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "scale": 5,
+      "labelSuffix": "代",
+      "isStackSelect": 1
+    },
+    {
+      "i": "11:2",
+      "name": "攻撃力",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "scale": 5,
+      "labelSuffix": "代"
+    },
+    {
+      "i": "12:3",
+      "name": "守備力",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "scale": 5,
+      "labelSuffix": "代"
+    },
+    {
+      "i": "13:4",
+      "name": "素早さ",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "scale": 10,
+      "labelSuffix": "代"
+    },
+    {
+      "i": "14:5",
+      "name": "賢さ",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "i": "15:6",
+      "name": "身かわし",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "i": "16:7",
+      "name": "経験値",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "scale": 100,
+      "labelSuffix": "代"
+    },
+    {
+      "i": "17:8",
+      "name": "GOLD",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0,
+      "scale": 10,
+      "labelSuffix": "代"
+    },
+    {
+      "i": "18:9",
+      "name": "行動",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "i": "19:10",
+      "name": "🪄魔法",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "i": "20:11",
+      "name": "にげるか？",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "i": "21:12",
+      "name": "仲間をよぶか？",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "i": "22:13",
+      "name": "ドロップアイテム",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "i": "23:14",
+      "name": "アイテムの入手確率",
+      "isHidden": 0,
+      "isShow": 1,
+      "isLegend": 0
+    },
+    {
+      "i": "24:14",
+      "name": "耐性",
+      "isHidden": 0,
+      "isShow": 0,
+      "isLegend": 0
+    }
+  ],
+  "chartDetail": {},
+  "favoriteVideos": [
+    {
+      "value": "https://www.youtube.com/watch?v=P2de_DGoUZc&t=10s",
+      "vid": "P2de_DGoUZc&t=10s",
+      "thumbnailId": "P2de_DGoUZc",
+      "title": "FC　ドラゴンクエスト3　どんな物語だったのか　ちょっとかいつまんでご紹介したいと思います！　ファミコン",
+      "isFavorite": true,
+      "playCount": 0,
+      "registeredAt": "2020-10-02T06:58:06.298Z"
+    }
+  ]
+}
