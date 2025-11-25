@@ -1,5 +1,5 @@
-import type { Preview } from "@storybook/vue3";
-import { setup } from "@storybook/vue3";
+import type { Preview } from "@storybook/vue3-vite";
+import { setup } from "@storybook/vue3-vite";
 import { withThemeByClassName } from "@storybook/addon-themes";
 import { provide } from 'vue';
 import { DefaultApolloClient } from '@vue/apollo-composable';
@@ -55,6 +55,7 @@ const preview: Preview = {
       },
     },
   },
+
   decorators: [
     withThemeByClassName({
       themes: {
@@ -72,6 +73,8 @@ const preview: Preview = {
       template: '<div><story /></div>',
     }),
   ],
+
+  tags: ['autodocs']
 };
 
 export default preview;

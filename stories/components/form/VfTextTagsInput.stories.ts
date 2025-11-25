@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import VfTextTagsInput from '@/Components/VfTextTagsInput.vue';
 
 const meta = {

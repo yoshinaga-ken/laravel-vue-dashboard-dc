@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import YoutubeVidInput from '@/Components/YoutubeVidInput.vue';
 
 const meta = {
