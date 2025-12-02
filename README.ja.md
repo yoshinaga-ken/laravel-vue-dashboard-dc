@@ -290,6 +290,7 @@ Storybook は <http://localhost:6007/> で実行されます [🚀デモ](https:
 - スポーツ
   - [⚾日本の高校野球選手権大会リスト](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=sports-hsb.csv)
   - [🏸スポーツサークル参加動向](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=checkin-sakana)
+  - [🏸スポーツサークルHPアクセス動向](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=sakana-hp-access)
 - 食べ物
   - [🍜日本のラーメンリスト](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen.csv)
 - 市場分析
