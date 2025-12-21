@@ -25,10 +25,11 @@ type Article
   id: ID!
   title: String!
   body: String!
+  created_at: DateTime!
+  updated_at: DateTime!
   user: User! @belongsTo
   tags: [Tag!]! @belongsToMany
 }
-
 type Tag {
   id: ID!
   name: String!

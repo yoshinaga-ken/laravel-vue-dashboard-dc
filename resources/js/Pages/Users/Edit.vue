@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 import type { User } from '@/Types/types-graphql'
 import { useUserProfile } from '@/Composables/useUserProfile'
 import UpdateUserProfileForm from '@/Components/Users/UpdateUserProfileForm.vue'
+import UserArticlesListForm from '@/Components/Users/UserArticlesListForm.vue'
 
 const props = defineProps<{
   userId: number
@@ -32,8 +33,20 @@ const handleUserUpdated = (updatedUser: User) => {
         <p>エラーが発生しました: {{ error.message || '不明なエラー' }}</p>
       </div>
 
-      <div v-else class="overflow-hidden bg-white p-6 shadow-xl sm:rounded-lg dark:bg-gray-800">
-        <UpdateUserProfileForm :user-id="userId" @updated="handleUserUpdated" />
+      <div v-else>
+        <!-- プロフィール情報編集 -->
+        <div class="mb-6 overflow-hidden bg-white p-6 shadow-xl sm:rounded-lg dark:bg-gray-800">
+          <UpdateUserProfileForm :user-id="userId" @updated="handleUserUpdated" />
+        </div>
+
+        <div class="overflow-hidden bg-white p-6 shadow-xl sm:rounded-lg dark:bg-gray-800">
+          <UserArticlesListForm :user-id="userId" />
+        </div>
+
+        <div class="grid grid-cols-1 gap-4">
+          <div>🙋‍♂️ user 情報</div>
+          <pre class="text-sm">{{ JSON.stringify(user, null, 2) }}</pre>
+        </div>
       </div>
     </div>
   </AppLayout>
