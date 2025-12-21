@@ -152,6 +152,11 @@ input UpdateArticleInput {
   user_id: ID @rules(apply: ["exists:users,id"])
 }
 
+input UpdateUserInput {
+  name: String @rules(apply: ["string", "max:255"])
+  email: String @rules(apply: ["email", "max:255"])
+}
+
 #type ArticleResponse {
 #  success: Boolean
 #  message: String
@@ -225,4 +230,14 @@ type Mutation
   ): Article
   @canFind(ability: "update", find: "id")
   @field(resolver: "App\\GraphQL\\Mutations\\Articles\\ArticleMutation@syncTagsByName")
+
+  # user - update
+  updateUser(
+    id: ID!
+    @whereKey
+    @rules(apply: ["required", "exists:users,id"])
+    input: UpdateUserInput! @spread
+  ): User!
+  @field(resolver: "App\\GraphQL\\Mutations\\Users\\UserMutation@update")
+  @canFind(ability: "update", find: "id")
 }
