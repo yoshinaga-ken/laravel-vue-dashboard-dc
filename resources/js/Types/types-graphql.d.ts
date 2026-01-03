@@ -20,9 +20,11 @@ export type Scalars = {
 export type Article = {
   __typename?: 'Article';
   body: Scalars['String']['output'];
+  created_at: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   tags: Array<Tag>;
   title: Scalars['String']['output'];
+  updated_at: Scalars['DateTime']['output'];
   user: User;
 };
 
@@ -33,6 +35,12 @@ export type ArticlePaginator = {
   data: Array<Article>;
   /** Pagination information about the list of items. */
   paginatorInfo: PaginatorInfo;
+};
+
+export type ArticleTag = {
+  __typename?: 'ArticleTag';
+  created_at: Scalars['DateTime']['output'];
+  updated_at: Scalars['DateTime']['output'];
 };
 
 export type CreateArticleInput = {
@@ -66,6 +74,13 @@ export type FilterUserInput = {
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Membership = {
+  __typename?: 'Membership';
+  created_at: Scalars['DateTime']['output'];
+  role?: Maybe<Scalars['String']['output']>;
+  updated_at: Scalars['DateTime']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   associateUserArticle?: Maybe<Article>;
@@ -76,6 +91,7 @@ export type Mutation = {
   syncTagsArticle?: Maybe<Article>;
   syncTagsByNameArticle?: Maybe<Article>;
   updateArticle: Article;
+  updateUser: User;
 };
 
 
@@ -122,6 +138,12 @@ export type MutationSyncTagsByNameArticleArgs = {
 export type MutationUpdateArticleArgs = {
   id: Scalars['ID']['input'];
   input: UpdateArticleInput;
+};
+
+
+export type MutationUpdateUserArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateUserInput;
 };
 
 /** Allows ordering a list of records. */
@@ -248,6 +270,7 @@ export type Tag = {
   articles_count?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  pivot?: Maybe<ArticleTag>;
 };
 
 
@@ -268,6 +291,7 @@ export type TagPaginator = {
 export type Team = {
   __typename?: 'Team';
   id: Scalars['ID']['output'];
+  membership?: Maybe<Membership>;
   name: Scalars['String']['output'];
   owner?: Maybe<User>;
   personal_team: Scalars['Boolean']['output'];
@@ -314,6 +338,11 @@ export type UpdateArticleInput = {
   user_id?: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type UpdateUserInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type User = {
   __typename?: 'User';
   allTeams: Array<Team>;
@@ -324,6 +353,7 @@ export type User = {
   followers: UserPaginator;
   following: UserPaginator;
   id: Scalars['ID']['output'];
+  membership?: Maybe<Membership>;
   name: Scalars['String']['output'];
   ownedTeams: Array<Team>;
   profile_photo_path?: Maybe<Scalars['String']['output']>;
@@ -358,13 +388,6 @@ export type UserPaginator = {
   /** Pagination information about the list of items. */
   paginatorInfo: PaginatorInfo;
 };
-
-export type GetUserQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, name: string, email: string, current_team_id?: string | null, profile_photo_path?: string | null, articles: { __typename?: 'ArticlePaginator', paginatorInfo: { __typename?: 'PaginatorInfo', count: number, total: number }, data: Array<{ __typename?: 'Article', id: string, title: string, tags: Array<{ __typename?: 'Tag', name: string }> }> }, followers: { __typename?: 'UserPaginator', data: Array<{ __typename?: 'User', name: string }> }, following: { __typename?: 'UserPaginator', data: Array<{ __typename?: 'User', name: string }> }, ownedTeams: Array<{ __typename?: 'Team', name: string }>, teams: Array<{ __typename?: 'Team', name: string }> } | null };
 
 
 
@@ -439,6 +462,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Article: ResolverTypeWrapper<Article>;
   ArticlePaginator: ResolverTypeWrapper<ArticlePaginator>;
+  ArticleTag: ResolverTypeWrapper<ArticleTag>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateArticleInput: CreateArticleInput;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
@@ -448,6 +472,7 @@ export type ResolversTypes = {
   FilterUserInput: FilterUserInput;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Membership: ResolverTypeWrapper<Membership>;
   Mutation: ResolverTypeWrapper<{}>;
   OrderByClause: OrderByClause;
   OrderByRelationAggregateFunction: OrderByRelationAggregateFunction;
@@ -463,6 +488,7 @@ export type ResolversTypes = {
   TeamPaginator: ResolverTypeWrapper<TeamPaginator>;
   Trashed: Trashed;
   UpdateArticleInput: UpdateArticleInput;
+  UpdateUserInput: UpdateUserInput;
   User: ResolverTypeWrapper<User>;
   UserPaginator: ResolverTypeWrapper<UserPaginator>;
 };
@@ -471,6 +497,7 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Article: Article;
   ArticlePaginator: ArticlePaginator;
+  ArticleTag: ArticleTag;
   Boolean: Scalars['Boolean']['output'];
   CreateArticleInput: CreateArticleInput;
   DateTime: Scalars['DateTime']['output'];
@@ -480,6 +507,7 @@ export type ResolversParentTypes = {
   FilterUserInput: FilterUserInput;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
+  Membership: Membership;
   Mutation: {};
   OrderByClause: OrderByClause;
   PaginatorInfo: PaginatorInfo;
@@ -491,15 +519,18 @@ export type ResolversParentTypes = {
   TeamInvitation: TeamInvitation;
   TeamPaginator: TeamPaginator;
   UpdateArticleInput: UpdateArticleInput;
+  UpdateUserInput: UpdateUserInput;
   User: User;
   UserPaginator: UserPaginator;
 };
 
 export type ArticleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Article'] = ResolversParentTypes['Article']> = {
   body?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   tags?: Resolver<Array<ResolversTypes['Tag']>, ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -510,9 +541,22 @@ export type ArticlePaginatorResolvers<ContextType = any, ParentType extends Reso
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type ArticleTagResolvers<ContextType = any, ParentType extends ResolversParentTypes['ArticleTag'] = ResolversParentTypes['ArticleTag']> = {
+  created_at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
 }
+
+export type MembershipResolvers<ContextType = any, ParentType extends ResolversParentTypes['Membership'] = ResolversParentTypes['Membership']> = {
+  created_at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   associateUserArticle?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType, RequireFields<MutationAssociateUserArticleArgs, 'id' | 'user_id'>>;
@@ -523,6 +567,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   syncTagsArticle?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType, RequireFields<MutationSyncTagsArticleArgs, 'id' | 'tagIds'>>;
   syncTagsByNameArticle?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType, RequireFields<MutationSyncTagsByNameArticleArgs, 'id' | 'tagNames'>>;
   updateArticle?: Resolver<ResolversTypes['Article'], ParentType, ContextType, RequireFields<MutationUpdateArticleArgs, 'id' | 'input'>>;
+  updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id' | 'input'>>;
 };
 
 export type PaginatorInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PaginatorInfo'] = ResolversParentTypes['PaginatorInfo']> = {
@@ -554,6 +599,7 @@ export type TagResolvers<ContextType = any, ParentType extends ResolversParentTy
   articles_count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  pivot?: Resolver<Maybe<ResolversTypes['ArticleTag']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -565,6 +611,7 @@ export type TagPaginatorResolvers<ContextType = any, ParentType extends Resolver
 
 export type TeamResolvers<ContextType = any, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  membership?: Resolver<Maybe<ResolversTypes['Membership']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   owner?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   personal_team?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
@@ -596,6 +643,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   followers?: Resolver<ResolversTypes['UserPaginator'], ParentType, ContextType, RequireFields<UserFollowersArgs, 'first'>>;
   following?: Resolver<ResolversTypes['UserPaginator'], ParentType, ContextType, RequireFields<UserFollowingArgs, 'first'>>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  membership?: Resolver<Maybe<ResolversTypes['Membership']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   ownedTeams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
   profile_photo_path?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -614,7 +662,9 @@ export type UserPaginatorResolvers<ContextType = any, ParentType extends Resolve
 export type Resolvers<ContextType = any> = {
   Article?: ArticleResolvers<ContextType>;
   ArticlePaginator?: ArticlePaginatorResolvers<ContextType>;
+  ArticleTag?: ArticleTagResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
+  Membership?: MembershipResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PaginatorInfo?: PaginatorInfoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

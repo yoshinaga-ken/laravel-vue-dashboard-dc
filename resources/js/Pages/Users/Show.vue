@@ -34,7 +34,7 @@ const {
 // ページタイトルの動的生成
 const pageTitle = computed(() => {
   if (loading.value) return 'ユーザープロフィール'
-  if (user.value) return `${user.value.name} - プロフィール`
+  if (user.value) return `ユーザープロフィール : ${user.value.name}`
   return 'ユーザーが見つかりません'
 })
 
