@@ -4,12 +4,20 @@ import type { User } from '@/Types/types-graphql'
 import { useUserProfile } from '@/Composables/useUserProfile'
 import UpdateUserProfileForm from '@/Components/Users/UpdateUserProfileForm.vue'
 import UserArticlesListForm from '@/Components/Users/UserArticlesListForm.vue'
+import { computed } from 'vue'
 
 const props = defineProps<{
   userId: number
 }>()
 
-const { user, error } = useUserProfile(props.userId)
+const { user, loading, error } = useUserProfile(props.userId)
+
+// ページタイトルの動的生成
+const pageTitle = computed(() => {
+  if (loading.value) return 'ユーザープロフィール編集'
+  if (user.value) return `ユーザープロフィール編集 : ${user.value.name}`
+  return 'ユーザーが見つかりません'
+})
 
 const handleUserUpdated = (updatedUser: User) => {
   // ユーザー情報が更新されたときの処理
@@ -18,10 +26,10 @@ const handleUserUpdated = (updatedUser: User) => {
 </script>
 
 <template>
-  <AppLayout :title="`${user?.name || 'User'} Profile Edit`">
+  <AppLayout :title="pageTitle">
     <template #header>
       <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-        ユーザープロフィール編集
+        {{ pageTitle }}
       </h2>
     </template>
 
