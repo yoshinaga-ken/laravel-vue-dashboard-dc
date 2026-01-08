@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\OAuthController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -15,6 +16,12 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+});
+
+// OAuth routes
+Route::middleware(['web'])->group(function () {
+    Route::get('/oauth/redirect/{provider}', [OAuthController::class, 'redirect'])->name('oauth.redirect');
+    Route::get('/oauth/callback/{provider}', [OAuthController::class, 'callback'])->name('oauth.callback');
 });
 
 Route::get('/dashboard-dc-pub', function (Request $request) {

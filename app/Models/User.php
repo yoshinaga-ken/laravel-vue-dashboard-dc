@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'email_verified_at',
     ];
 
     /**
@@ -148,5 +150,26 @@ class User extends Authenticatable
             'follower_id',
             'following_id'
         )->withTimestamps();
+    }
+
+    /**
+     * Get the OAuth accounts for the user.
+     *
+     * @return HasMany<OAuthAccount>
+     */
+    public function oauthAccounts(): HasMany
+    {
+        return $this->hasMany(OAuthAccount::class);
+    }
+
+    /**
+     * Get the OAuth account for a specific provider.
+     *
+     * @param string $provider
+     * @return OAuthAccount|null
+     */
+    public function oauthAccount(string $provider): ?OAuthAccount
+    {
+        return $this->oauthAccounts()->where('provider', $provider)->first();
     }
 }

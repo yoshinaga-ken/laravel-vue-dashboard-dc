@@ -5,6 +5,7 @@ import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
 import Checkbox from '@/Components/Checkbox.vue'
 import InputError from '@/Components/InputError.vue'
 import InputLabel from '@/Components/InputLabel.vue'
+import OAuthButtons from '@/Components/Auth/OAuthButtons.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 
@@ -30,6 +31,8 @@ const submit = () => {
     <template #logo>
       <AuthenticationCardLogo />
     </template>
+
+    <OAuthButtons class="mb-6" />
 
     <form @submit.prevent="submit">
       <div>
