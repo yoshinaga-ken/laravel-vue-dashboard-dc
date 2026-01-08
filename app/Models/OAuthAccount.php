@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use Database\Factories\OAuthAccountFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OAuthAccount extends Model
 {
+    /** @use HasFactory<OAuthAccountFactory> */
+    use HasFactory;
+
     /**
      * The table associated with the model.
      *
