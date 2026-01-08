@@ -5,10 +5,10 @@ namespace App\Actions\Fortify;
 use App\Models\OAuthAccount;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 
 class CreateUserFromOAuth
@@ -23,11 +23,12 @@ class CreateUserFromOAuth
     public function execute(SocialiteUser $socialiteUser, string $provider): User
     {
         return DB::transaction(function () use ($socialiteUser, $provider) {
-            // 新規ユーザーを作成（パスワードは null）
+            // 新規ユーザーを作成（ランダムパスワードを設定 - OAuthユーザーは使用しない）
             $user = User::create([
                 'name' => $socialiteUser->getName() ?? $socialiteUser->getNickname() ?? 'User',
                 'email' => $socialiteUser->getEmail(),
-                'password' => null,
+                'password' => Hash::make(uniqid('', true)), // ランダムパスワードを設定
+                'email_verified_at' => $socialiteUser->getEmail() ? now() : null, // プロバイダーがメール確認済みと仮定
             ]);
 
             // 個人チームを自動作成
@@ -86,8 +87,17 @@ class CreateUserFromOAuth
                 $tempPath = sys_get_temp_dir().'/'.uniqid('oauth_photo_', true).'.jpg';
                 file_put_contents($tempPath, $response->body());
 
+                // UploadedFile を作成（Jetstream の updateProfilePhoto() が期待する型）
+                $uploadedFile = new UploadedFile(
+                    $tempPath,
+                    basename($tempPath),
+                    'image/jpeg',
+                    null,
+                    true // test mode = true (ファイルが移動済みでもエラーにならない)
+                );
+
                 // Jetstream の updateProfilePhoto() で保存
-                $user->updateProfilePhoto(new File($tempPath));
+                $user->updateProfilePhoto($uploadedFile);
 
                 // 一時ファイルを削除
                 @unlink($tempPath);
