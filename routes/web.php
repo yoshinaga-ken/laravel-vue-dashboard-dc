@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -21,6 +22,12 @@ Route::get('/dashboard-dc-pub', function (Request $request) {
     $data = $request->query('data');
     return Inertia::render('DashboardDcPub', ['data' => $data]);
 })->name('dashboard-dc-pub');
+
+// OAuth認証ルート
+Route::prefix('auth')->group(function () {
+    Route::get('/{provider}', [SocialiteController::class, 'redirect'])->name('auth.redirect');
+    Route::get('/{provider}/callback', [SocialiteController::class, 'callback'])->name('auth.callback');
+});
 
 Route::middleware([
     'auth:sanctum',
