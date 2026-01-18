@@ -60,7 +60,13 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - [✈️「Number of visitors by nationality to designated regions」1994～2021](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-tourism-foreigners.csv)
   - [💰「Annual product sales」1994～2021 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-product-sales.csv)
   - [🏢「Number of companies (by city, town, village, industry classification, and industry)」2009～2016 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-municipality-company.csv)
-  - [👥population composition @japan](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
+  - [👥Gender and Age Population Trends by Prefecture 2005-2022: 18 Years @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-population)
+  - [🏥Prefectural Population and Facility (Hospitals, 🏫Schools, etc.) Trends 2005-2022: 18 Years @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-building)
+  - [🌡️Prefectural Average Temperature Trends 2005-2022: 18 Years @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-weather-temperature)
+  - [👥Age Population Trends by Prefecture 1960-2025: 65 Years @japan](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
+  - [👥Gender and Age Population by City, Ward, Town, and Village 2020 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population)
+  - [🏥Population and Various Facilities (Hospitals, 🏫Schools, etc.) by City, Ward, Town, and Village 2022 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-building)
+  - [🏢Population and Various Private Businesses by City, Ward, Town, and Village 2021 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-office)
 - Samples Data Charts
   - For more information about the sample chart below, please see [here](https://github.com/yoshinaga-ken/laravel-vue-dashboard-dc/issues/17)
   - ※All test data is created as samples for the purpose of learning and verification of data analysis methods and visualization techniques.

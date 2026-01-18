@@ -60,7 +60,13 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
   - [✈️「指定地域別外国人訪問者数」1994～2021年](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-tourism-foreigners.csv)
   - [💰「年間商品販売額」1994～2021年 @日本](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-product-sales.csv)
   - [🏢「企業数（市区町村・産業分類・産業別）」2009～2016年 @日本](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-municipality-company.csv)
-  - [👥人口構成 @日本](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
+  - [👥都道府県別の性別・年齢人口推移 2005~2022:18年間](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-population)
+  - [🏥都道府県別の人口と各種施設(病院・🏫学校等)推移 2005~2022:18年間](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-building)
+  - [🌡️都道府県別の平均気温推移 2005~2022:18年間](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-weather-temperature)
+  - [👥都道府県別の年齢人口推移 1960~2025:65年間 @日本](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
+  - [👥市区町村別の性別・年齢人口 2020年](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population)
+  - [🏥市区町村別の人口と各種施設(病院・🏫学校等) 2022年](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-building)
+  - [🏢市区町村別の人口と各種民営事業所 2021年](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-office)
 - サンプルデータチャート
   - 以下のサンプルチャートの詳細については、[こちら](https://github.com/yoshinaga-ken/laravel-vue-dashboard-dc/issues/17) を参照してください。
   - ※すべてのテストデータは、データ分析手法と可視化技術の学習および検証を目的として作成されたサンプルです。
