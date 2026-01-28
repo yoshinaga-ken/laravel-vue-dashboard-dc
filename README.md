@@ -19,7 +19,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
 - [COVID-19 infection status in Japan @2020/4~](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28)
 - [COVID-19 infection status in World @2020/4~](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-world)
 - [List of missing persons due to Noto Peninsula earthquake @2024/1/1](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
-- [Tokyo gubernatorial election votes by candidate @2024/7/7](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-tokyo-election-gubernatorial-2024.csv)
+- [Tokyo gubernatorial election votes by candidate @2024/7/7](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-tokyo-gubernatorial-2024.csv)
 - [List of confirmed winners of the House of Councillors election @2025 2022 2019](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025)
 - [List of winners of the House of Representatives election @2024 2021](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-2024)
 - 📺🎮Tv Game in Japan
@@ -111,43 +111,64 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
 - Dashboard with [Dimensional chart(dc.js)](http://dc-js.github.io/dc.js/)
   - [Example: Article Dashboard](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-article-like)
   - Dashboard Mode: 📊Chart | <img src="public/img/google-map-48.png" width="16">GoogleMap | <img src="public/img/icons8-street-view-60.png" width="16">StreetView | <img src="public/img/yutube.gif" width="16">YouTube
-      <details>
+    - The screen layout will be adjusted to suit each mode.
+      <details open>
         <summary>Expand for details</summary>
         <div style="display: flex; gap: 10px; text-align: center;">
           <div>
-            <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28&layout=default">
-              <div>📊Chart mode</div>
-              <img src="doc/img/dashboard-mode-chart.png" alt="Chart Image">
-            </a>
+              <h3>📊Chart mode</h3>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28&layout=default">
+                <img src="doc/img/dashboard-mode-chart.png" alt="Chart Mode Image">
+                COVID-19 infection status in Japan
+              </a>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025&layout=default">
+                <img src="doc/img/dashboard-mode-chart-ja-election-sangiin-2025.jpg" alt="Chart Mode Image">
+                List of confirmed winners of the House of Councillors election in Japan
+              </a>
           </div>
           <div>
-            <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety&layout=gmap">
-              <div>
+              <h3>
                   <img src="public/img/google-map-48.png" width="20">GoogleMap mode
-              </div>
-              <img src="doc/img/dashboard-mode-gmap.png" alt="Google Map Image">
-            </a>
+              </h3>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety&layout=gmap">
+                <img src="doc/img/dashboard-mode-gmap.png" alt="Google Map Mode Image">
+                Noto Peninsula Earthquake in Japan
+              </a>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-building&name=%E5%8D%83%E8%91%89%E7%9C%8C+%E6%9D%B1%E4%BA%AC%E9%83%BD+%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C+%E5%9F%BC%E7%8E%89%E7%9C%8C+%E8%8C%A8%E5%9F%8E%E7%9C%8C&layout=gmap">
+                <img src="doc/img/dashboard-mode-gmap-ssdse-a-tokyo.jpg" alt="Google Map Mode Image">
+                🏥Population and Various Facilities by City, Ward, Town, and Village in japan
+              </a>
           </div>
           <div>
-            <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety&layout=sview">
-              <div>
+              <h3>
                   <img src="public/img/icons8-street-view-60.png" width="20">StreetView mode
-              </div>
-              <img src="doc/img/dashboard-mode-sview.png" alt="Street View Image">
-            </a>
+              </h3>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety&layout=sview">
+                <img src="doc/img/dashboard-mode-sview.png" alt="Street View Mode Image">
+                Noto Peninsula Earthquake in Japan
+              </a>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-streetview&name2=%E4%BA%AC%E9%83%BD%E5%B8%82%E5%8F%B3%E4%BA%AC%E5%8C%BA%E5%B5%AF%E5%B3%A8%E4%B8%AD%E3%83%8E%E5%B3%B6%E7%94%BA&layout=sview">
+                <img src="doc/img/dashboard-mode-sview-ja-streetview.jpg" alt="Street View Mode Image">
+                🎞️Street View Video
+              </a>
           </div>
           <div>
-            <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc&layout=tube">
-              <div>
+              <h3>
                 <img src="public/img/yutube.gif" width="20">YouTube mode
-              </div>
-              <img src="doc/img/dashboard-mode-tube.png" alt="YouTube Image">
-            </a>
+              </h3>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen&layout=tube">
+                <img src="doc/img/dashboard-mode-tube.jpg" alt="YouTube Mode Image">
+                🍜List of Ramen in Japan
+              </a>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc&layout=tube">
+                <img src="doc/img/dashboard-mode-tube-game-fc.jpg" alt="YouTube Mode Image">
+                Nes(Famicom) game List
+              </a>
           </div>
         </div>
       </details>
   - Time ▶️Play Function
-      <details>
+      <details open>
         <summary>Expand for details</summary>
         <div>
           <div>
