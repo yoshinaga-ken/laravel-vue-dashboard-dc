@@ -317,7 +317,7 @@
 
 ### 17. SSDSE（教育用標準データセット）
 
-統計数理研究所による教育用標準データセット。都道府県・市区町村別の各種統計を多次元で分析可能。
+独立行政法人統計センターによる教育用標準データセット。都道府県・市区町村別の各種統計を多次元で分析可能。
 
 #### 都道府県別の性別・年齢人口推移（2005〜2022年・18年間）
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-population)
@@ -328,7 +328,7 @@
   ```
 - **説明**: 都道府県別の性別・年齢階級別人口の時系列データ。出生、15歳未満、15〜64歳、65歳以上の人口推移が含まれる
 - **用途**: 年度 × 都道府県 × 性別 × 年齢で絞り込み、少子高齢化の地域差や人口構成の変化を即座に把握できます。自治体の人口ビジョンや福祉計画の立案に活用できます。
-- **データ出典**: [SSDSE（教育用標準データセット）@統計数理研究所](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 都道府県別の人口と各種施設推移（2005〜2022年・18年間）
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-building)
@@ -339,7 +339,7 @@
   ```
 - **説明**: 都道府県別の人口と医療・教育施設数の時系列データ。病院、学校、保育所、婚姻・離婚件数などが含まれる
 - **用途**: 年度 × 都道府県 × 施設種別で絞り込み、人口と施設のバランスや過疎地域の把握を即座に行えます。自治体の施設整備計画や地域診断に活用できます。
-- **データ出典**: [SSDSE（教育用標準データセット）@統計数理研究所](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 都道府県別の平均気温推移（2005〜2022年・18年間）
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-weather-temperature)
@@ -350,7 +350,7 @@
   ```
 - **説明**: 都道府県別の気象データの時系列。年平均気温、最高・最低気温、降水量、降水日数が含まれる
 - **用途**: 年度 × 都道府県で絞り込み、地域別の気候傾向や気温・降水の年次変動を即座に比較できます。農業施策や防災計画の検討に活用できます。
-- **データ出典**: [SSDSE（教育用標準データセット）@統計数理研究所](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 市区町村別の性別・年齢人口（2020年）
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population)
@@ -361,7 +361,7 @@
   ```
 - **説明**: 市区町村別の性別・年齢階級別人口（2020年国勢調査ベース）。より細かい地域単位での人口構成が含まれる
 - **用途**: 市区町村 × 性別 × 年齢で絞り込み、街区レベルの人口構成や高齢化の実態を即座に把握できます。市区町村の地域福祉計画や商圏分析に活用できます。
-- **データ出典**: [SSDSE（教育用標準データセット）@統計数理研究所](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 市区町村別の人口と各種施設（2022年）
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-building)
@@ -372,7 +372,7 @@
   ```
 - **説明**: 市区町村別の人口と医療・商業施設数の断面データ。病院、学校、小売店、医師数などが含まれる
 - **用途**: 市区町村 × 施設種別で絞り込み、地域の医療・商業アクセスや人口当たりの施設数を即座に比較できます。出店検討や地域診断に活用できます。
-- **データ出典**: [SSDSE（教育用標準データセット）@統計数理研究所](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 市区町村別の民営事業所（2021年）
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-office)
@@ -383,7 +383,7 @@
   ```
 - **説明**: 市区町村別の産業種別民営事業所数。農業、建設、製造、小売、医療福祉など業種別の事業所分布が含まれる
 - **用途**: 市区町村 × 産業種別で絞り込み、地域の産業構造や事業所密度を即座に把握できます。企業の立地検討や地域経済分析に活用できます。
-- **データ出典**: [SSDSE（教育用標準データセット）@統計数理研究所](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 都道府県別の年齢人口推移（1960〜2025年・65年間）※別アプリ
 - [📊チャート](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)

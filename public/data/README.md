@@ -317,7 +317,7 @@ Each dataset has the following common characteristics:
 
 ### 17. SSDSE (Standard Dataset for Education)
 
-Education-oriented standard dataset by the Institute of Statistical Mathematics. Enables multidimensional analysis of various statistics by prefecture and municipality.
+Education-oriented standard dataset by the National Statistics Center. Enables multidimensional analysis of various statistics by prefecture and municipality.
 
 #### Prefecture-level Gender/Age Population Trends (2005–2022, 18 Years)
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-population)
@@ -328,7 +328,7 @@ Education-oriented standard dataset by the Institute of Statistical Mathematics.
   ```
 - **Description**: Time series of gender and age-group population by prefecture. Includes birth, under 15, 15–64, 65+ population trends
 - **Use Case**: Filter by year × prefecture × gender × age to instantly grasp regional differences in aging and population structure changes. Useful for municipal population vision and welfare plan planning.
-- **Data Source**: [SSDSE @Institute of Statistical Mathematics](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Prefecture-level Population and Facilities Trends (2005–2022, 18 Years)
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-building)
@@ -339,7 +339,7 @@ Education-oriented standard dataset by the Institute of Statistical Mathematics.
   ```
 - **Description**: Time series of population and medical/educational facilities by prefecture. Includes hospitals, schools, nurseries, marriages, divorces
 - **Use Case**: Filter by year × prefecture × facility type to instantly grasp population-facility balance and depopulated areas. Useful for municipal facility planning and regional diagnosis.
-- **Data Source**: [SSDSE @Institute of Statistical Mathematics](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Prefecture-level Average Temperature Trends (2005–2022, 18 Years)
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-weather-temperature)
@@ -350,7 +350,7 @@ Education-oriented standard dataset by the Institute of Statistical Mathematics.
   ```
 - **Description**: Time series of meteorological data by prefecture. Includes annual average temperature, max/min temperature, precipitation, precipitation days
 - **Use Case**: Filter by year × prefecture to instantly compare regional climate trends and annual temperature/precipitation variation. Useful for agricultural policy and disaster prevention planning.
-- **Data Source**: [SSDSE @Institute of Statistical Mathematics](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Municipality-level Gender/Age Population (2020)
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population)
@@ -361,7 +361,7 @@ Education-oriented standard dataset by the Institute of Statistical Mathematics.
   ```
 - **Description**: Gender and age-group population by municipality (2020 Census). Includes finer regional population composition
 - **Use Case**: Filter by municipality × gender × age to instantly grasp block-level population composition and aging reality. Useful for municipal welfare planning and trade area analysis.
-- **Data Source**: [SSDSE @Institute of Statistical Mathematics](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Municipality-level Population and Facilities (2022)
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-building)
@@ -372,7 +372,7 @@ Education-oriented standard dataset by the Institute of Statistical Mathematics.
   ```
 - **Description**: Cross-section of population and medical/commercial facilities by municipality. Includes hospitals, schools, retail stores, physicians
 - **Use Case**: Filter by municipality × facility type to instantly compare regional medical/commercial access and facilities per capita. Useful for store opening consideration and regional diagnosis.
-- **Data Source**: [SSDSE @Institute of Statistical Mathematics](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Municipality-level Private Establishments (2021)
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-office)
@@ -383,7 +383,7 @@ Education-oriented standard dataset by the Institute of Statistical Mathematics.
   ```
 - **Description**: Industry-specific private establishment count by municipality. Includes agriculture, construction, manufacturing, retail, medical/welfare
 - **Use Case**: Filter by municipality × industry type to instantly grasp regional industry structure and establishment density. Useful for company location consideration and regional economic analysis.
-- **Data Source**: [SSDSE @Institute of Statistical Mathematics](https://www.nstac.go.jp/use/literacy/ssdse/)
+- **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Prefecture-level Age Population Trends (1960–2025, 65 Years) *Separate App
 - [📊Chart](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)

@@ -13,6 +13,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
 
 ## 📊Multidimensional Chart Demo List
 
+[Live demo](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-drink&fopen)
 [![img.png](doc/img/dcchart-datas.png)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-drink&fopen)
 [Data details for each chart](./public/data/README.md)
 
@@ -65,6 +66,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - [🌡️Prefectural Average Temperature Trends 2005-2022: 18 Years @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-weather-temperature)
   - [👥Age Population Trends by Prefecture 1960-2025: 65 Years @japan](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
   - [👥Gender and Age Population by City, Ward, Town, and Village 2020 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population)
+  - [👥Population and Various Numbers by City, Town, and Village 2020 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population2)
   - [🏥Population and Various Facilities (Hospitals, 🏫Schools, etc.) by City, Ward, Town, and Village 2022 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-building)
   - [🏢Population and Various Private Businesses by City, Ward, Town, and Village 2021 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-office)
 - Samples Data Charts
