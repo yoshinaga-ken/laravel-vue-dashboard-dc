@@ -28,6 +28,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: COVID-19 infection data including date, gender, age, status (discharged, etc.), location, and occupation
 - **Use Case**: Filter by prefecture × age group × period to instantly grasp infection trends and differences in outbreak waves. Suitable for comparative analysis limited to specific regions or attributes, and for understanding phases of infection spread and containment.
+- **How to use analysis results**:
+  - Use regional and age-specific infection wave patterns to plan priority measures when similar conditions occur again.
+  - When infections concentrate in certain occupation categories, use the results to decide on prevention measures and resource allocation.
 - **Data Source**: Ministry of Health, Labour and Welfare Open Data
 
 #### COVID-19 Infection Data (Global)
@@ -39,6 +42,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Global COVID-19 infection and death data including date, country/region, hemisphere, and status (infected/death)
 - **Use Case**: Filter by country × region × status × period to instantly compare geographic patterns of spread and impact by country. Suitable for international comparison and pandemic analysis.
+- **How to use analysis results**:
+  - Identify common factors in countries that recovered quickly to inform effective countermeasure analysis.
+  - Use as reference for preemptive response when signs of resurgence appear in other countries.
 - **Data Source**: Open data
 
 ### 2. Weather Data
@@ -52,6 +58,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Average temperature data for major cities in Japan. Includes temperature, precipitation, wind speed, wind direction, prefecture, municipality, and other meteorological information
 - **Use Case**: Filter by region × period × weather conditions to instantly obtain climate risk assessments for event scheduling or agricultural planning. Also useful for travel planning and construction weather risk consideration.
+- **How to use analysis results**:
+  - Use regional and seasonal temperature/precipitation patterns to justify event dates and venue selection when holding similar events in the same season.
+  - Identify high-risk conditions (e.g., extreme heat, heavy snow) to decide on preventive measures, insurance, and resource allocation.
 - **Data Source**: [Past Weather Data Download@Japan Meteorological Agency](https://www.data.jma.go.jp/risk/obsdl/)
 
 #### Japan Precipitation Data
@@ -63,6 +72,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Precipitation data for major cities in Japan. Includes precipitation, temperature, wind speed, wind direction, prefecture, municipality, and other meteorological information
 - **Use Case**: Visualize region × season × precipitation patterns to understand flood risk trends, agricultural water planning, and infrastructure priority areas. Suitable for disaster prevention personnel comparing past rainfall patterns.
+- **How to use analysis results**:
+  - Identify conditions prone to flooding from regional and seasonal precipitation to select priority disaster-prevention areas and update hazard maps.
+  - Cross-reference past rainfall patterns with agricultural and construction schedules for water planning and schedule risk assessment.
 - **Data Source**: [Past Weather Data Download@Japan Meteorological Agency](https://www.data.jma.go.jp/risk/obsdl/)
 
 #### Japan Temperature and Precipitation Data (3 Major Cities, 153 Years)
@@ -74,6 +86,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Long-term weather data from 1872 for Fukuoka, Tokyo, and Sapporo (approximately 153 years). Suitable for long-term climate change trend analysis
 - **Use Case**: Filter by city × period (year/month) to instantly grasp long-term climate change trends and inter-city climate differences. Useful for climate research and historical meteorological analysis.
+- **How to use analysis results**:
+  - Use city- and period-specific temperature and precipitation trends to assess regional climate change and prioritize adaptation measures.
+  - Reference impacts of past similar weather conditions to support long-term planning for agriculture, disaster prevention, and infrastructure.
 - **Data Source**: [Past Weather Data Download@Japan Meteorological Agency](https://www.data.jma.go.jp/risk/obsdl/)
 
 ### 3. Video Game Data
@@ -85,6 +100,10 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Game title information for various platforms (FC, GB, PS1, etc.) including release date, rating, genre, manufacturer, price, and sales
 - **Use Case**: Filter by hardware × genre × release year to instantly grasp popular title trends and manufacturer strengths. Useful for collectors narrowing down desired titles and industry analysts for market analysis.
+- **How to use analysis results**:
+  - Use conditions where hit titles concentrate as evidence for next title planning and platform selection.
+  - Compare genre popularity over time to distinguish short-lived booms from long-term trends.
+  - Identify rare, highly rated titles for collection and purchasing decisions.
 - **Data Source**:
   - [Various Game Consoles Cartridge/Software Title List](http://pasofami.game.coocan.jp/game/game.htm)
   - [Famicom & Disk System Software Sales Ranking](https://www.gavas.jp/user_data/famicom_game_ranking.php)
@@ -99,6 +118,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Monster lists for Dragon Quest 3 and 4. Includes appearance location, level, stats, drop items, and resistances
 - **Use Case**: Filter by appearance location × species × level to select leveling spots and optimize equipment collection. Suitable for players searching strategy information.
+- **How to use analysis results**:
+  - Identify combinations with high experience or GOLD efficiency to choose priority leveling and farming spots.
+  - Use appearance conditions for monsters with desired drops to plan equipment collection routes and time estimates.
 - **Data Source**: In-game data, etc.
 
 ### 4. Ramen Shop Data
@@ -110,6 +132,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Ramen shop information including founding year, noodle type, price range, genre, location, shop name, and nearest station
 - **Use Case**: Filter by prefecture × noodle type × price range to select candidate shops for business trips or travel, and for franchise expansion region selection. Suitable for food enthusiasts discovering shops matching their preferences.
+- **How to use analysis results**:
+  - Identify region × noodle type × price combinations where shops concentrate to select expansion locations and assess competitive gaps.
+  - Use trends by founding year or genre to identify common success factors for new openings and menu strategy.
 - **Data Source**: [Famous Ramen Shop Timeline by Era @Ramen Jiyuku](http://ramenjiyuku.web.fc2.com/)
 
 ### 5. Heart Disease Data
@@ -121,6 +146,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Medical data related to heart disease including gender, age, various test results, symptoms, and risk assessment
 - **Use Case**: Filter by age × gender × test values × risk to identify high-risk group characteristics and design prevention awareness targets. Suitable for healthcare professionals analyzing risk factor trends and creating training materials.
+- **How to use analysis results**:
+  - Identify combinations that classify as high risk to select key screening items, follow-up targets, and prevention campaign design.
+  - Use trends in specific test values and symptoms to explain in training why certain groups have higher risk.
 - **Data Source**: [Heart Disease Prediction Dataset@Kaggle](https://www.kaggle.com/datasets/mfarhaannazirkhan/heart-dataset/data)
 
 ### 6. Municipal Company Data
@@ -132,6 +160,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Local government company data including year, region, company type, industry classification, and prefecture
 - **Use Case**: Filter by year × industry × region for municipal staff to grasp industry structure changes and for companies to compare industry distribution in expansion candidate regions. Useful for regional economic policy and attraction strategy planning.
+- **How to use analysis results**:
+  - Use industry × region trends in company count to select industries to attract and prioritize subsidies or special zones.
+  - Compare industry distribution in expansion candidates to select niches with fewer competitors or regions where supply chains can form.
 - **Data Source**:
   - [Industry Structure Map > All Industries > Number of Companies @RESAS API](https://opendata.resas-portal.go.jp/docs/api/v1/municipality/company/perYear.html)
   - [Industry Structure Map > All Industries > Number of Companies @RESAS](https://resas.go.jp/municipality-company/#/graph/13/13101/2014/-/-/0/5.333900736553437/41.42090017812787/142.29371418128918/-)
@@ -145,11 +176,14 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: High school baseball tournament results including year, rank, final score, coach, prefecture, representative school, and famous players
 - **Use Case**: Filter by year × prefecture × rank to instantly grasp regional high school baseball history and strong school transitions. Suitable for sports writers discovering coverage themes and fans checking local school historical performance.
+- **How to use analysis results**:
+  - Use prefecture- and period-specific champion/runner-up patterns to choose coverage themes and test hypotheses about what makes strong teams.
+  - Visualize repeated appearances by school or coach to inform analysis of sustained success and regional development policy.
 - **Data Source**:
   - [Summer Koshien Historical Champions and Runners-up List @baseballking](https://baseballking.jp/ns/161307)
   - [National High School Baseball Championship Historical Winners @Wikipedia](https://ja.wikipedia.org/wiki/全国高等学校野球選手権大会歴代優勝校)
 
-#### Sports Club Participation Trends
+### 8. Sports Club Participation Trends
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=checkin-sakana)
 - **File**: `checkin-sakana.csv`, `checkin-sakana.light.csv`
 - **Format**:
@@ -158,9 +192,12 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Participation records for badminton club "Sakana". Includes year/month, participants, gymnasium, and hometown
 - **Use Case**: Filter by year/month × gymnasium × hometown to instantly grasp participation trends and venue-specific usage. Useful for club managers for practice scheduling and venue selection.
+- **How to use analysis results**:
+  - Use venue- and period-specific participation trends to identify popular or quiet venues and decide on schedule changes or venue retention.
+  - Use participation patterns by hometown or condition to improve event planning and recruitment.
 - **Data Source**: Club operation data
 
-#### Sports Club Website Access Trends
+### 9. Sports Club Website Access Trends
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=sakana-hp-access)
 - **File**: `sakana-hp-access.csv`
 - **Format**:
@@ -169,9 +206,12 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Sports club website access data including date, club, prefecture, COVID wave, and practice participation numbers
 - **Use Case**: Filter by date × club × prefecture to instantly grasp the relationship between website access and practice participation and COVID impact. Useful for managers considering content improvement and promotion strategies.
+- **How to use analysis results**:
+  - Identify conditions that boost access (e.g., days before practice, COVID wave) to decide update timing and notification intensity.
+  - Use correlation between access and participation to set content improvement priorities and decide whether to continue or revise promotion.
 - **Data Source**: Access logs and participation records
 
-### 8. Article Likes Data
+### 10. Article Likes Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-article-like)
 - **File**: `test-article-like.csv`
 - **Format**:
@@ -180,9 +220,12 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Article like count data including creation date, author information, article type, theme, like count, and audience
 - **Use Case**: Filter by article type × theme × author attributes × period to instantly determine which content resonates with which audience. Useful for editors in planning and marketers for target-specific content strategy.
+- **How to use analysis results**:
+  - Use combinations of article type × theme × audience where likes concentrate to justify next themes and assignment.
+  - Use differences by period or author attributes to decide which content to continue and which to change, and set priority of initiatives.
 - **Data Source**: Sample data *Note: Gender, age, occupation, and prefecture are for the article author
 
-### 9. Noto Earthquake Safety Confirmation Data
+### 11. Noto Earthquake Safety Confirmation Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - **File**: `ja-quake-noto-safety.csv`
 - **Format**:
@@ -191,11 +234,14 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Safety confirmation data for the Noto Peninsula Earthquake including missing person count, gender, age, confirmation status, location, and names
 - **Use Case**: Grasp time series × region × situation in multiple dimensions for support prioritization and response status organization based on damage. Suitable for overall disaster response overview.
+- **How to use analysis results**:
+  - Identify regions and conditions requiring priority support to inform support planning.
+  - Use changes in support status over time to find improvements in resource allocation.
 - **Data Source**:
   - [Information on the 2024 Noto Peninsula Earthquake @Ishikawa Prefecture](https://www.pref.ishikawa.lg.jp/saigai/202401jishin-taisakuhonbu.html#higai)
   - Wikipedia
 
-### 10. Business Trends and DI Index Data
+### 12. Business Trends and DI Index Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=store-di)
 - **File**: `store-di.csv`
 - **Format**:
@@ -204,9 +250,12 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Business trend survey DI (Diffusion Index) indicator data including month/year, business trend, current status/outlook, change, and DI value
 - **Use Case**: Filter by period × business trend item × current/outlook to instantly grasp retail industry sentiment trends. Useful for managers judging industry trends and analysts for investment reference.
+- **How to use analysis results**:
+  - Use item- and period-specific DI trends to form hypotheses on what is driving industry deterioration or improvement and to decide on investment, hiring, and inventory.
+  - Reference subsequent movements in past periods with similar DI levels to consider expansion or contraction in the next phase.
 - **Data Source**: [Supermarket Business Trend/Economic Sentiment Survey @Japan Supermarket Association](http://www.j-sosm.jp/dl/index.html)
 
-### 11. Agriculture-Related Data
+### 13. Agriculture-Related Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-agriculture)
 - **File**: `resas-agriculture.csv`
 - **Format**:
@@ -215,11 +264,14 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Agricultural statistics data including year, item classification, prefecture, and agricultural organization
 - **Use Case**: Filter by year × item × prefecture to instantly grasp output value trends by producing region and item strengths. Useful for agricultural policy makers and JA/wholesalers for producing region comparison and sales channel development.
+- **How to use analysis results**:
+  - Use item × region trends in output value to select priority items for subsidies and producing regions to develop.
+  - Identify producing regions with strong items to guide wholesalers’ and retailers’ supplier selection and farmers’ cropping and diversification.
 - **Data Source**:
   - [Agricultural Output by Item @RESAS API](https://opendata.resas-portal.go.jp/docs/api/v1/agriculture/all/forStackedBar.html)
   - [Industry Structure Map > Agriculture > Agricultural Structure @RESAS](https://resas.go.jp/agriculture-all/#/rate/5.333900736553437/41.42090017812787/142.29371418128918/13/13101/0/2016/1/-/-)
 
-### 12. Wood Ear Mushroom Cultivation Data
+### 14. Wood Ear Mushroom Cultivation Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-agr-kikurage)
 - **File**: `test-agr-kikurage.csv`
 - **Format**:
@@ -228,10 +280,13 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Wood ear mushroom cultivation and sales data including variety, cultivation method, region, sales format, and revenue
 - **Use Case**: Filter by variety × cultivation method × region × sales format to instantly grasp best-selling combinations and efficient cultivation patterns. Useful for farmers considering business improvement and wholesalers/retailers for supplier selection.
+- **How to use analysis results**:
+  - Identify high-revenue combinations of variety × cultivation method × sales format to set next-season variety and cultivation strategy and sales priorities.
+  - Use regional best-seller patterns for supplier selection (wholesalers/retailers) and for farmers to consider differentiation by region.
 - **Data Source**: Sample data
   - ※"Other Elements" is a string representing multiple attributes (average temperature, average humidity, protein content, dietary fiber content) with grades A through D
 
-### 13. Foreign Tourist Data
+### 15. Foreign Tourist Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-tourism-foreigners)
 - **File**: `resas-tourism-foreigners.csv`
 - **Format**:
@@ -240,11 +295,14 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Data on foreign tourists visiting Japan including visit year, purpose, visitor nationality/region, visited prefecture, and tourist attractions
 - **Use Case**: Filter by year × nationality × visit purpose × visited prefecture to instantly grasp target country visit trends and attraction policy effectiveness. Suitable for municipal tourism officers considering inbound strategy.
+- **How to use analysis results**:
+  - Use nationality × purpose × region combinations where visits concentrate to select target countries and purposes and to revise promotion content.
+  - Reference recovery patterns under similar conditions to set preparation priorities for the next inbound recovery phase.
 - **Data Source**:
   - [Number of Visitors by Nationality to Specified Region @RESAS API](https://opendata.resas-portal.go.jp/docs/api/v1/tourism/foreigners/forFrom.html)
   - [Tourism Map > Foreigners > Foreign Visitor Analysis @RESAS](https://resas.go.jp/tourism-foreigners/#/to-transition/5.333900736553437/41.42090017812787/142.29371418128918/13/13101/100/0/0.0/2020/5/-/-/1/-/-)
 
-#### Annual Product Sales Data
+### 16. Annual Product Sales Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-product-sales)
 - **File**: `resas-product-sales.csv`
 - **Format**:
@@ -253,9 +311,12 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Regional annual product sales data (1994–2021). Includes industry classification and sales by prefecture and municipality
 - **Use Case**: Filter by year × industry × region to instantly grasp regional economic industry structure and retail/wholesale trends. Useful for commercial policy planning and store opening consideration.
+- **How to use analysis results**:
+  - Use industry × region sales trends to select priority industries and regions for commercial policy and to narrow store opening candidates.
+  - Reference past trends under similar conditions to time investment or contraction and to support medium- to long-term planning.
 - **Data Source**: [RESAS API](https://opendata.resas-portal.go.jp/)
 
-### 14. Municipal Tax Data
+### 17. Municipal Tax Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-municipality-taxes)
 - **File**: `resas-municipality-taxes.csv`
 - **Format**:
@@ -264,25 +325,44 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Local government tax revenue data including year, tax category, prefecture, municipality, and industry
 - **Use Case**: Filter by year × tax category × region to instantly grasp municipal fiscal health and tax structure changes. Useful for administrative staff for budget planning and companies comparing investment region fiscal conditions.
+- **How to use analysis results**:
+  - Use tax category × region trends in revenue to inform revenue projections and to decide whether to emphasize investment or savings in the budget.
+  - Compare tax revenue trends of candidate regions to select fiscally stable areas and assess risk.
 - **Data Source**:
   - [Local Finance Map > Per Capita Local Tax @RESAS API](https://opendata.resas-portal.go.jp/docs/api/v1/municipality/taxes/perYear.html)
   - [Local Finance Map > Per Capita Local Tax @RESAS](https://resas.go.jp/municipality-taxes/#/graph/13/13101/2016/1/7.39231742277876/35.998703685/139.883857/-)
 
-### 15. Tokyo Gubernatorial Election Data
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-tokyo-gubernatorial-2024.csv) (July 2024)
-- **File**: `ja-election-tokyo-gubernatorial-2024.csv`
+### 18. Election Data
+
+#### House of Representatives Election - List of Candidates
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-candidates)
+- **File**: `ja-election-shugiin-candidates.csv`
 - **Format**:
   ```
-  Date,Gender(Candidate),Age(Candidate),Party(Candidate),Candidate,Municipality,Occupation(Candidate),Occupation Category,Count
+  Date,Gender,Age,Party,Prefecture,Candidate Name,Occupation,Occupation Category(Unused),Seats,Elected/Defeated,Votes,Vote Share(%),Occupation Category,Election System,Single-Member District,Incumbent/Former/Newcomer,Terms Elected,Recommendation,🔖Q.Consumption tax reduction,🔖Q.U.S. diplomacy,🔖Q.Nuclear power dependency,etc.
   ```
-- **Description**: Tokyo gubernatorial election voting data including election date, candidate information (gender, age, party, occupation), and vote counts by municipality
-- **Use Case**: Filter by candidate × municipality × party to instantly grasp regional vote trends and support base distribution. Useful for political analysts and media for election coverage.
-- **Data Source**:
-  - [NHK Election WEB Tokyo Gubernatorial Election 2024 @NHK](https://www.nhk.or.jp/senkyo/database/local/shutoken/20336/skh54664.html)
-  - [Tokyo Gubernatorial Election Voting Results @Tokyo](https://www.senkyo.metro.tokyo.lg.jp/election/tochiji-all/tochiji-sokuhou2024/csv/)
-  - Wikipedia
+- **Description**: House of Representatives election candidate list (2026/2024/2021). Covers all candidates including both elected and defeated. Includes candidate information, party, single-member district, proportional, elected/defeated, seats, votes, vote share (%), occupation category, and policy survey responses (e.g. consumption tax reduction, U.S. diplomacy, nuclear power dependency).
+- **Use Case**: Filter by election year × party × election system × elected/defeated to instantly grasp candidate attributes, vote patterns, and policy stance distribution. Useful for election coverage, political research, and candidate analysis.
+- **How to use analysis results**:
+  - Compare attributes (occupation, age, incumbency, etc.) between elected and defeated candidates to inform campaign strategy and candidate selection.
+  - Use policy survey responses and vote share correlation to support voter segment and issue analysis.
+- **Data Source**: NHK Election WEB, Wikipedia House of Representatives general election, etc.
 
-#### House of Councillors Election Winners
+#### House of Representatives Election - List of Elected
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-2024)
+- **File**: `ja-election-shugiin-2024.csv`
+- **Format**:
+  ```
+  Date,Gender,Age,Party,Prefecture,Candidate Name,Occupation,Seats,Votes,Vote Share(%),Election System,Single-Member District,Former/Former/New,Terms Elected,etc.
+  ```
+- **Description**: House of Representatives election winner data (2024/2021). Includes candidate information, party, single-member district, proportional, plus seats, votes, and vote share (%)
+- **Use Case**: Filter by election year × party × election system to instantly grasp vote patterns in single-member vs. proportional and party power transitions. Useful for election coverage and political research.
+- **How to use analysis results**:
+  - Use regional support gaps to refine campaign strategy and messaging.
+  - Use as input for identifying priority areas and voter segments in future elections.
+- **Data Source**: NHK Election WEB, etc.
+
+#### House of Councillors Election - List of Elected
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025)
 - **File**: `ja-election-sangiin-2025.csv`
 - **Format**:
@@ -291,18 +371,27 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: House of Councillors election winner data (2025/2022/2019). Includes candidate information, party, prefecture, electoral district/proportional
 - **Use Case**: Filter by election year × party × prefecture to instantly grasp party seat acquisition trends and regional power balance. Useful for political analysts and media election analysis.
+- **How to use analysis results**:
+  - Use regional support gaps to refine campaign strategy and messaging.
+  - Use as input for identifying priority areas and voter segments in future elections.
 - **Data Source**: NHK Election WEB, etc.
 
-#### House of Representatives Election Winners
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-2024)
-- **File**: `ja-election-shugiin-2024.csv`
+#### Tokyo Gubernatorial Election Data
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-tokyo-gubernatorial-2024.csv) (July 2024)
+- **File**: `ja-election-tokyo-gubernatorial-2024.csv`
 - **Format**:
   ```
-  Date,Gender,Age,Party,Prefecture,Candidate Name,Occupation,Election System,Single-Member District,Former/Former/New,Terms Elected,etc.
+  Date,Gender(Candidate),Age(Candidate),Party(Candidate),Candidate,Municipality,Occupation(Candidate),Occupation Category,Count
   ```
-- **Description**: House of Representatives election winner data (2024/2021). Includes candidate information, party, single-member district, proportional
-- **Use Case**: Filter by election year × party × election system to instantly grasp vote patterns in single-member vs. proportional and party power transitions. Useful for election coverage and political research.
-- **Data Source**: NHK Election WEB, etc.
+- **Description**: Tokyo gubernatorial election voting data including election date, candidate information (gender, age, party, occupation), and vote counts by municipality
+- **Use Case**: Filter by candidate × municipality × party to instantly grasp regional vote trends and support base distribution. Useful for political analysts and media for election coverage.
+- **How to use analysis results**:
+  - Use regional support gaps to refine campaign strategy and messaging.
+  - Use as input for identifying priority areas and voter segments in future elections.
+- **Data Source**:
+  - [NHK Election WEB Tokyo Gubernatorial Election 2024 @NHK](https://www.nhk.or.jp/senkyo/database/local/shutoken/20336/skh54664.html)
+  - [Tokyo Gubernatorial Election Voting Results @Tokyo](https://www.senkyo.metro.tokyo.lg.jp/election/tochiji-all/tochiji-sokuhou2024/csv/)
+  - Wikipedia
 
 ### 16. Store Count Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=store-cnt)
@@ -313,6 +402,9 @@ Each dataset has the following common characteristics:
   ```
 - **Description**: Store count statistics including year/month, store type, and store count by prefecture
 - **Use Case**: Filter by period × store type × prefecture to instantly grasp retail industry expansion trends and regional store density. Useful for companies planning store openings and analysts for industry analysis.
+- **How to use analysis results**:
+  - Use store type × region trends in store count to select expansion locations, assess competitor density, and inform M&A or exit decisions.
+  - Reference past store count under similar conditions to time expansion or contraction and set regional priorities.
 - **Data Source**: [Supermarket Store Count @Japan Supermarket Association](http://www.j-sosm.jp/dl/index.html)
 
 ### 17. SSDSE (Standard Dataset for Education)
@@ -328,6 +420,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   ```
 - **Description**: Time series of gender and age-group population by prefecture. Includes birth, under 15, 15–64, 65+ population trends
 - **Use Case**: Filter by year × prefecture × gender × age to instantly grasp regional differences in aging and population structure changes. Useful for municipal population vision and welfare plan planning.
+- **How to use analysis results**:
+  - Use regional and age-group population changes to prioritize facility planning (welfare, childcare, education) and to design trade areas and store targeting.
+  - Reference past population under similar conditions to validate projection assumptions and evaluate policy impact.
 - **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Prefecture-level Population and Facilities Trends (2005–2022, 18 Years)
@@ -339,6 +434,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   ```
 - **Description**: Time series of population and medical/educational facilities by prefecture. Includes hospitals, schools, nurseries, marriages, divorces
 - **Use Case**: Filter by year × prefecture × facility type to instantly grasp population-facility balance and depopulated areas. Useful for municipal facility planning and regional diagnosis.
+- **How to use analysis results**:
+  - Identify regions and facility types with low facilities per capita to set planning priorities and subsidy allocation.
+  - Compare population and facility trends to assess concentration and depopulation and to support consolidation or new facility decisions.
 - **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Prefecture-level Average Temperature Trends (2005–2022, 18 Years)
@@ -350,6 +448,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   ```
 - **Description**: Time series of meteorological data by prefecture. Includes annual average temperature, max/min temperature, precipitation, precipitation days
 - **Use Case**: Filter by year × prefecture to instantly compare regional climate trends and annual temperature/precipitation variation. Useful for agricultural policy and disaster prevention planning.
+- **How to use analysis results**:
+  - Use regional variation in temperature and precipitation to assess agricultural and disaster risk and to prioritize insurance and stockpiling.
+  - Identify conditions similar to past extreme weather to prioritize response when similar situations recur.
 - **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Municipality-level Gender/Age Population (2020)
@@ -361,6 +462,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   ```
 - **Description**: Gender and age-group population by municipality (2020 Census). Includes finer regional population composition
 - **Use Case**: Filter by municipality × gender × age to instantly grasp block-level population composition and aging reality. Useful for municipal welfare planning and trade area analysis.
+- **How to use analysis results**:
+  - Use municipality- and age-group population composition to prioritize welfare and childcare and to design trade areas and store targeting.
+  - Identify municipalities with high aging rates to prioritize medical and care facilities and senior-oriented business location.
 - **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Municipality-level Population and Facilities (2022)
@@ -372,6 +476,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   ```
 - **Description**: Cross-section of population and medical/commercial facilities by municipality. Includes hospitals, schools, retail stores, physicians
 - **Use Case**: Filter by municipality × facility type to instantly compare regional medical/commercial access and facilities per capita. Useful for store opening consideration and regional diagnosis.
+- **How to use analysis results**:
+  - Identify municipalities and facility types with low facilities per capita to select store locations and administrative planning priorities.
+  - Identify areas with weak medical or commercial access to consider gap strategies and public service reinforcement.
 - **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Municipality-level Private Establishments (2021)
@@ -383,6 +490,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   ```
 - **Description**: Industry-specific private establishment count by municipality. Includes agriculture, construction, manufacturing, retail, medical/welfare
 - **Use Case**: Filter by municipality × industry type to instantly grasp regional industry structure and establishment density. Useful for company location consideration and regional economic analysis.
+- **How to use analysis results**:
+  - Identify municipality × industry combinations where establishments concentrate or are absent to select location candidates and assess competitor/supplier distribution.
+  - Use regional industry structure bias to set priority industries for municipal promotion and to inform company expansion or exit decisions.
 - **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### Prefecture-level Age Population Trends (1960–2025, 65 Years) *Separate App
@@ -390,6 +500,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **File**: `population.csv`
 - **Description**: Long-term time series of age-group population by prefecture (approximately 65 years). Displayed in [prefecture-population-dc](https://sakanaclub.xsrv.jp/prefecture-population-dc/) app
 - **Use Case**: Filter by prefecture × age × period to grasp long-term population structure changes from postwar to present. Suitable for population statistics education and research.
+- **How to use analysis results**:
+  - Use prefecture- and age-group long-term trends to assess regional demographic change and to validate assumptions and prioritize adaptation in projections.
+  - Reference past periods with similar population structure to anticipate future changes in labor force and social security demand.
 - **Data Source**: Census, etc.
 
 ### 18. Test Data
@@ -400,10 +513,14 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-drink)
   - **Format**:
     ```
-    Date,Gender,Age,Rating,Prefecture,Product Name,Occupation,Unused,Count
+    Date,Gender,Age,Rating,Prefecture,Product Name,Occupation,Unused,Sales Volume,Maker/Category,Maker,❄️Cool/🔥Hot,Category
     ```
-  - **Description**: Beverage product evaluation data including date, evaluator information (gender, age, occupation), product name, and rating
-  - **Use Case**: Filter by product × rating × gender/age to instantly grasp target segment preferences and popular product trends. Useful for product development and marketers for sales strategy.
+  - **Description**: Beverage product evaluation and sales data. Includes date, evaluator information (gender, age, occupation), product name, rating (⭐1–⭐5, 5-level), sales volume, plus maker, category (mineral water, tea, carbonated, energy drink, etc.), and cool/hot type
+  - **Use Case**: Filter by maker × category × cool/hot × rating × region to instantly grasp target segment preferences and popular product and sales volume trends. Useful for product development and marketers when considering sales strategy and product lineup.
+  - **How to use analysis results**:
+    - Use rating and sales volume gaps by maker, category, and cool/hot to consider product improvement and new product or line expansion.
+    - Use region × attribute combinations with high ratings or sales to decide area-specific assortment and promotion focus.
+    - Use products and categories with stable high ratings and sales as standard candidates and shelf priority.
   - **Data Source**: Sample data
 
 - **Lunch Purchase Data**: `test-lunch.csv`
@@ -414,6 +531,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Lunch product purchase data including buyer information (gender, age, occupation), product name, store, and prefecture
   - **Use Case**: Filter by product × store × buyer attributes to instantly grasp store-specific popular menus and target segment preferences. Useful for restaurant menu revision and store opening consideration.
+  - **How to use analysis results**:
+    - Use popular product × store combinations by attribute to decide menu improvements and target-specific lineup.
+    - Use stable high-sales store × product combinations as standard menu and location selection criteria for new stores.
   - **Data Source**: Sample data
 
 #### Education Field Test Data
@@ -426,6 +546,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: University entrance examination data including basic student information, department, applicants, deviation value, accepted, exam count, and tuition
   - **Use Case**: Filter by department × application type × region to instantly grasp applicant trends and admission difficulty. Useful for career guidance and universities for admission strategy.
+  - **How to use analysis results**:
+    - Use department × application type trends in applicants and accepted students to inform guidance and university recruitment and exam design.
+    - Use regional differences in difficulty and popularity to select priority outreach regions and to support student choice of schools.
   - **Data Source**: Sample data
 
 - **Academic Achievement Test Data**: `test-academic-achievement.csv`
@@ -436,6 +559,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Academic test results data including average scores by subject, school size, regional category, proficiency level, test takers, deviation value, and study hours
   - **Use Case**: Filter by subject × region × school type to identify challenging subjects/regions and consider proficiency-specific guidance. Suitable for education boards and schools judging improvement priorities.
+  - **How to use analysis results**:
+    - Identify subject × region × proficiency combinations where challenges concentrate to set priority subjects and regions and resource allocation.
+    - Use the relationship between average score and study hours to replicate effective instruction patterns and to decide whether to continue or revise initiatives.
   - **Data Source**: Sample data
 
 #### Transportation and Mobility Field Test Data
@@ -448,6 +574,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Traffic accident data including accident type, weather, road type, vehicle type, time period, and injuries
   - **Use Case**: Filter by accident type × region × time × weather to instantly identify danger spots and high-risk conditions. Useful for police and municipalities for traffic safety measures and driver awareness.
+  - **How to use analysis results**:
+    - Identify accident type × region × time × weather combinations where incidents concentrate to prioritize patrols and enforcement and awareness campaigns.
+    - Reference risk when similar conditions recur to decide on advance warnings and temporary measures.
   - **Data Source**: Sample data
 
 - **Public Transportation Usage Data**: `test-public-transport.csv`
@@ -458,6 +587,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Public transportation usage data allowing analysis by route, time period, day category, and seasonal variation
   - **Use Case**: Filter by route × station × time × day to instantly grasp congestion peaks and quiet sections. Useful for railway companies for schedule improvement and municipalities for transportation policy.
+  - **How to use analysis results**:
+    - Identify routes, stations, and times where congestion concentrates to prioritize schedule and capacity and pricing.
+    - Use quiet sections and seasonal variation to consider service reduction or alternative transport in low-demand areas.
   - **Data Source**: Sample data
 
 #### Housing and Real Estate Field Test Data
@@ -470,6 +602,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Real estate transaction data allowing analysis by property type, age, area, price, station distance, and layout
   - **Use Case**: Filter by region × property type × price range × age to instantly grasp market price trends and well-conditioned property distribution. Useful for buyers finding areas matching budget/conditions and agents for supply-demand analysis.
+  - **How to use analysis results**:
+    - Use region × property type × price combinations with high transaction activity to select purchase candidates and sales strategy focus.
+    - Use price and supply-demand trends to time sale or purchase and to set development or acquisition priorities.
   - **Data Source**: Sample data
 
 - **Housing Construction Statistics**: `test-housing-construction.csv`
@@ -480,6 +615,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Housing construction data for trend analysis of structure type, building type, use category, floor area, construction cost, and housing starts
   - **Use Case**: Filter by region × structure × use × period to instantly grasp housing market demand and building-type trends. Useful for house builders and construction industry for market analysis and business planning.
+  - **How to use analysis results**:
+    - Identify region × structure × use combinations where housing starts are growing to set product lineup and sales focus.
+    - Reference past starts under similar conditions to time capacity and investment allocation.
   - **Data Source**: Sample data
 
 #### Consumer Behavior Field Test Data
@@ -492,6 +630,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Household consumption behavior data allowing analysis by expenditure item, age group, and occupation
   - **Use Case**: Filter by expenditure item × age group × occupation × region to instantly grasp target segment consumption trends. Useful for company sales strategy and administrative consumer policy.
+  - **How to use analysis results**:
+    - Use age group × occupation × expenditure combinations where spending concentrates to design product and messaging targets and policy focus.
+    - Use regional consumption propensity differences to set store and advertising focus and policy priorities.
   - **Data Source**: Sample data
 
 - **E-commerce Data**: `test-ecommerce.csv`
@@ -502,6 +643,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: E-commerce purchase data allowing detailed analysis by product category, device type, payment method, and usage time
   - **Use Case**: Filter by product category × device × user attributes × time to instantly grasp purchase patterns and campaign effectiveness. Useful for EC managers for product display and marketing improvement.
+  - **How to use analysis results**:
+    - Use category × device × time combinations where purchases concentrate to optimize display, campaigns, and send timing.
+    - Use attribute-based purchase patterns to decide which initiatives to continue or change and to set budget priorities.
   - **Data Source**: Sample data
 
 #### Environment and Energy Field Test Data
@@ -514,6 +658,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Environmental pollution measurement data allowing analysis by pollutant, weather, season, and regional characteristics
   - **Use Case**: Filter by pollutant × region × season × weather to instantly identify high-concentration conditions and areas. Useful for environmental staff and residents for improvement measure consideration.
+  - **How to use analysis results**:
+    - Identify pollutant × region × condition combinations with high concentrations to prioritize regulation, monitoring, and awareness timing.
+    - Reference risk when similar weather or season conditions recur to decide on advance measures and public communication.
   - **Data Source**: Sample data
 
 #### Labor and Employment Field Test Data
@@ -526,6 +673,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Job market data allowing analysis of job trends and salary levels by job type, industry, and age group
   - **Use Case**: Filter by job type × industry × region × age group to instantly grasp job trends and salary levels. Useful for job seekers understanding the market and HR for recruitment/salary strategy.
+  - **How to use analysis results**:
+    - Use job type × industry × region combinations where openings concentrate to set recruitment focus and salary levels.
+    - Use age-group supply-demand balance to anticipate hiring difficulty and to prioritize training and retention.
   - **Data Source**: Sample data
 
 #### International and Global Data Field Test Data
@@ -538,6 +688,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Global environmental and climate change data allowing multifaceted analysis of CO2 emissions, renewable energy ratio, forest coverage, air pollution index, etc.
   - **Use Case**: Filter by country × continent × environmental indicator to instantly grasp international comparison and SDGs progress. Useful for environmental policy staff and NGOs judging international cooperation priority regions.
+  - **How to use analysis results**:
+    - Identify countries or regions with notable improvement or deterioration by indicator to select aid priorities and technology transfer focus.
+    - Compare policies across countries with similar levels to identify success patterns and inform policy recommendations.
   - **Data Source**: Sample data
 
 - **Global Education and Human Development Data**: `test-global-education-human-development.csv`
@@ -548,6 +701,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Global education and human development indicator data allowing international comparative analysis of literacy, university enrollment, R&D, patent applications, innovation index
   - **Use Case**: Filter by country × economic level × education indicator to instantly grasp international education gaps and investment effectiveness. Useful for ODA staff and education researchers for support country selection and policy recommendations.
+  - **How to use analysis results**:
+    - Identify countries or regions with large gaps by economic level × education indicator to select ODA and scholarship priorities.
+    - Use conditions in improving countries to inform policy recommendations for similar countries.
   - **Data Source**: Sample data
 
 - **Global Health and Medical Systems Data**: `test-global-health-medical-systems.csv`
@@ -558,6 +714,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     ```
   - **Description**: Global health and medical system data allowing international comparative analysis of life expectancy, healthcare expenditure, physicians, hospital beds, vaccination rates
   - **Use Case**: Filter by country × income group × medical indicator to instantly grasp healthcare access gaps and system effectiveness. Useful for international health organizations and development aid staff judging priority support regions.
+  - **How to use analysis results**:
+    - Identify countries with large gaps by income group × medical indicator to select funding and capacity-building priorities.
+    - Reference policies in improving countries to inform recommendations and technical cooperation for others.
   - **Data Source**: Sample data
 
 #### Other Field Test Data
@@ -566,60 +725,90 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-crime-statistics)
   - **Description**: Crime occurrence statistics allowing analysis by crime type, time period, and region
   - **Use Case**: Filter by crime type × region × time to instantly grasp danger spots and occurrence patterns. Useful for police and municipalities for crime prevention measures and resident safety awareness.
+  - **How to use analysis results**:
+    - Identify crime type × region × time combinations where incidents concentrate to prioritize patrols and surveillance placement.
+    - Reference past periods when incidents increased under similar conditions to decide on awareness and temporary measures.
   - **Data Source**: Sample data
 
 - **Internet Usage Data**: `test-internet-usage.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-internet-usage)
   - **Description**: Internet usage data allowing analysis by age group, purpose, and device type
   - **Use Case**: Filter by age group × purpose × device to instantly grasp generation-specific usage and service improvement hints. Useful for digital marketers and service planners for user understanding.
+  - **How to use analysis results**:
+    - Use age group × purpose × device combinations where usage concentrates to prioritize UI and feature improvements and targeting.
+    - Use generation-specific usage gaps to revise outreach and to decide whether to continue or change service direction.
   - **Data Source**: Sample data
 
 - **Investment Trust Data**: `test-investment-trust.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-investment-trust)
   - **Description**: Investment trust management data allowing analysis by fund type, investment region, and risk category
   - **Use Case**: Filter by fund type × investment region × risk to instantly grasp performance trends and diversification candidates. Useful for individual investors for portfolio design and financial planners for proposals.
+  - **How to use analysis results**:
+    - Use type × region × risk combinations with stable performance as portfolio candidates and recommended products.
+    - Identify low-correlation combinations to support diversification and rebalancing decisions.
   - **Data Source**: Sample data
 
 - **Medical Survey Data**: `test-medical-survey.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-medical-survey)
   - **Description**: Medical survey data allowing analysis by department, age group, and region
   - **Use Case**: Filter by department × region × age group to instantly grasp medical need distribution and underserved areas. Useful for hospital department placement and municipal healthcare planning.
+  - **How to use analysis results**:
+    - Identify department × region × age combinations where need concentrates to prioritize hospital capacity and regional healthcare.
+    - Use low-utilization regions or departments to set access improvement and outreach priorities.
   - **Data Source**: Sample data
 
 - **Movie Box Office Data**: `test-movie-box-office.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-movie-box-office)
   - **Description**: Movie box office performance data allowing analysis by genre, screening period, and audience numbers
   - **Use Case**: Filter by genre × screening period × box office to instantly grasp hit trends and distribution patterns. Useful for film distributors for release strategy and theaters for programming.
+  - **How to use analysis results**:
+    - Use genre × screening period combinations that drive attendance to set release schedule and theater programming.
+    - Reference past hit patterns under similar conditions to plan marketing spend and screen counts for future releases.
   - **Data Source**: Sample data
 
 - **Museum Visitor Data**: `test-museum-visitor.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-museum-visitor)
   - **Description**: Museum and gallery visitor data allowing analysis by facility type, exhibition content, and age group
   - **Use Case**: Filter by facility type × exhibition content × age group to instantly grasp visitor segments and popular exhibition trends. Useful for curators for planning and municipalities for cultural facility improvement.
+  - **How to use analysis results**:
+    - Use facility type × exhibition content × age combinations where visits concentrate to design next themes and targeting.
+    - Use conditions behind popular exhibitions to replicate similar programs elsewhere and to set budget priorities.
   - **Data Source**: Sample data
 
 - **Patent Application Data**: `test-patent-application.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-patent-application)
   - **Description**: Patent application data allowing analysis by technology field, applicant type, and region
   - **Use Case**: Filter by technology field × applicant type × region to instantly grasp technology trends and competitor filing trends. Useful for corporate R&D and IP departments for technology strategy.
+  - **How to use analysis results**:
+    - Use technology field × applicant type combinations where filings concentrate to set R&D focus and filing strategy.
+    - Use competitor filing trends to prioritize licensing and infringement review and to inform entry or exit decisions.
   - **Data Source**: Sample data
 
 - **Retail Survey Data**: `test-retail-survey.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-retail-survey)
   - **Description**: Retail industry survey data allowing analysis by business format, location, and sales trends
   - **Use Case**: Filter by format × location × period to instantly grasp sales trends and success factors. Useful for retailers for store opening consideration and trading companies for supplier selection.
+  - **How to use analysis results**:
+    - Identify format × location combinations where sales are growing to select store locations and format.
+    - Reference past trends under similar conditions to time expansion or contraction and to set investment priorities.
   - **Data Source**: Sample data
 
 - **International Trade Data**: `test-international-trade.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-international-trade)
   - **Description**: International trade statistics allowing analysis by product, partner country, and import/export trends
   - **Use Case**: Filter by product × partner country × import/export to instantly grasp trade structure changes and supply/demand by country. Useful for trading companies for product selection and economic analysts for market analysis.
+  - **How to use analysis results**:
+    - Use product × partner country combinations where trade concentrates to select products and routes and to assess diversification.
+    - Use trade structure change trends to time market entry or exit and to inform strategy.
   - **Data Source**: Sample data
 
 - **Foreign Visitor Consumption Data**: `test-foreign-visitor-consumption.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-foreign-visitor-consumption)
   - **Description**: Foreign visitor consumption behavior data allowing analysis by nationality, expenditure category, and region
   - **Use Case**: Filter by nationality × expenditure × region to instantly grasp target country preferences and best-sellers. Useful for tourist area souvenir shops and duty-free stores for product lineup and promotion strategy.
+  - **How to use analysis results**:
+    - Use nationality × expenditure × region combinations where consumption concentrates to set product lineup, display, and promotion focus.
+    - Use target-country best-sellers to plan inventory and assortment for the next inbound recovery phase.
   - **Data Source**: Sample data
 
 *Each test dataset is created as a sample for multidimensional chart analysis using DC.js and can be utilized for learning and verification of actual data analysis methods and visualization techniques.
