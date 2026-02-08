@@ -7,86 +7,151 @@
     "unitPrefix": "販売数"
   },
   "isMakeAutocompleteData": true,
-  "chartAge_unit": "null",
-  "chartGMap": {},
-  "chartSView": {},
-  "chartTube": {},
+  "chartGMap": {
+    "isHidden": 0,
+    "isShow": 0
+  },
+  "chartSView": {
+    "isHidden": 0,
+    "isShow": 0
+  },
+  "chartTube": {
+    "isHidden": 0,
+    "isShow": 0
+  },
   "chartMap": {
     "isShow": 1
   },
-  "chartName": {},
-  "chartCity": {},
+  "chartName": {
+    "name": "都道府県"
+  },
+  "chartCity": {
+    "imageTooltip": "all",
+    "imagePath": "/img/drink.png",
+    "orderUI": false,
+    "order" : "desc",
+    "orderYmd": false
+  },
   "chartDate": {
-    "elasticY": false,
-    "#yDomain": [10,40],
-    "isRangeChart": true,
-    "isFilterMissingCorrect": false,
-    "labelType": 2
+    "format": "YYYY-MM",
+    "isFilterMissingCollect": false,
+    "isRangeChart": true
   },
   "chartDate2": {
     "isShow": true,
-    "elasticY": true,
-    "elasticYMinMax": true,
-    "#yDomain": [10,40],
-    "#chartType": "stacks",
+    "chartType": "lines",
     "renderArea": true,
     "renderDataPoints": true,
-    "isFilterMissingCorrect": true,
-    "isLabel": true,
-    "labelType": 1
+    "isFilterMissingCollect": true
   },
   "chartYear": {
-    "isLegend": true,
-    "margins": {
-      "left": 100
-    }
+    "isHidden": 0,
+    "isShow": 1,
+    "isLegend": true
   },
-  "chartSeason": {},
-  "chartWeek": {},
+  "chartSeason": {
+    "isHidden": 0,
+    "isShow": 1
+  },
+  "chartWeek": {
+    "isHidden": 0,
+    "isShow": 1
+  },
   "chartSex": {
+    "name": "性別",
     "unit": [
       "不明",
       "♂男",
       "♀女"
-    ],
-    "chartType": "pie",
-    "isLegend": true,
-    "margins": {
-      "top": 20,
-      "left": 100
-    }
+    ]
   },
   "chartAge": {
+    "name": "年齢",
+    "isHidden": 0,
+    "isShow": 1,
     "scale": 10,
     "unit": null,
     "labelSuffix": "代"
   },
-  "chartCond": {},
-  "chartJob": {},
-  "chartJobCat": {},
+  "chartCond": {
+    "name": "評価",
+    "isHidden": 0,
+    "isShow": 1
+  },
+  "chartJob": {
+    "name": "職業",
+    "isHidden": 0,
+    "isShow": 1
+  },
+  "chartJobCat": {
+    "name": "未使用",
+    "isHidden": 1,
+    "isShow": 0
+  },
   "chartEx": [
     {
+      "i": 9,
+      "name": "🏢メーカー > 🔖種別",
+      "isHidden": 0,
+      "isShow": 1,
       "isDcSunburstChart": true,
       "dcSunburstChart": {
+        "keyIndex": "🏢$10/🔖$12",
         "width": 600,
-        "height": 600,
-        "margins": {
-          "left": 100
-        },
-        "legend": {
-          "x": 2,
-          "y": 2
-        }
+        "height": 600
       },
-      "isLegend": true
+      "legend": {
+        "isShow": false
+      }
     },
     {
+      "i": 10,
+      "name": "🏢メーカー",
+      "isHidden": 0,
+      "isShow": 1,
       "isDcSunburstChart": false,
-      "isLegend": true,
-      "margins": {
-        "left": 100
+      "legend": {
+        "isShow": false
+      }
+    },
+    {
+      "i": 11,
+      "name": "❄️クール/🔥ホット",
+      "isHidden": 0,
+      "isShow": 1,
+      "isDcSunburstChart": true,
+      "legend": {
+        "isShow": false
+      }
+    },
+    {
+      "i": 12,
+      "name": "🔖種別",
+      "isHidden": 0,
+      "isShow": 1,
+      "isDcSunburstChart": false,
+      "legend": {
+        "isShow": false
+      }
+    },
+    {
+      "i": 13,
+      "name": "🗾 > 商品",
+      "isHidden": 0,
+      "isShow": 1,
+      "isDcSunburstChart": true,
+      "dcSunburstChart": {
+        "keyIndex": "$4/$5",
+        "width": 600,
+        "height": 600
+      },
+      "legend": {
+        "isShow": false
       }
     }
   ],
-  "chartDetail": {}
+  "chartDetail": {
+    "isHidden": 0,
+    "isShow": 1
+  }
 }
