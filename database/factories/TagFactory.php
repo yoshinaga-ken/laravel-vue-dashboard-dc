@@ -25,7 +25,8 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->text(8),
+            // tags.name is unique; keep factory-generated names unique to avoid flaky test collisions.
+            'name' => $this->faker->unique()->bothify('tag-????-####'),
         ];
     }
 }
