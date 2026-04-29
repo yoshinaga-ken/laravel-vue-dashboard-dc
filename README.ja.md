@@ -121,7 +121,7 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
               <h3>📊Chart モード</h3>
               <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28&layout=default">
                 <img src="doc/img/dashboard-mode-chart.png" alt="Chart Mode Image">
-                新型コロナウイルス 日本国内 感染状況
+                🌡️新型コロナウイルス 日本国内 感染状況
               </a>
               <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025&layout=default">
                 <img src="doc/img/dashboard-mode-chart-ja-election-sangiin-2025.jpg" alt="Chart Mode Image">
@@ -140,6 +140,10 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
                 <img src="doc/img/dashboard-mode-gmap-ssdse-a-tokyo.jpg" alt="Google Map Mode Image">
                 🏥市区町村別の人口と各種施設
               </a>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28&is_gmap_3d=1&name=%E5%A4%A7%E9%98%AA%E5%BA%9C">
+                <img alt="Image" src="https://github.com/user-attachments/assets/3ee31c05-ffbd-4464-bcd4-bbee38ea8c0a" />
+                🌡️新型コロナウイルス 日本国内 大阪府 感染状況 (🌏3D表示モード) 
+              </a>      
           </div>
           <div>
               <h3>
@@ -149,7 +153,7 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
                 <img src="doc/img/dashboard-mode-sview.png" alt="Street View Mode Image">
                 能登半島地震
               </a>
-              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-streetview&name2=%E4%BA%AC%E9%83%BD%E5%B8%82%E5%8F%B3%E4%BA%AC%E5%8C%BA%E5%B5%AF%E5%B3%A8%E4%B8%AD%E3%83%8E%E5%B3%B6%E7%94%BA&layout=sview">
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-streetview&name2=%E4%BA%AC%E9%83%BD%E5%B8%82%E5%8F%B3%E4%BA%AC%E5%8C%BA%E5%B5%AF%E5%B3%A8%E4%B8%AD%E3%83%8E%E5%B3%B6%E7%94%BA&layout=sview&is_gmap_3d=1">
                 <img src="doc/img/dashboard-mode-sview-ja-streetview.jpg" alt="Street View Mode Image">
                 🎞️ストリートビュー動画
               </a>
@@ -351,7 +355,7 @@ composer test
 # フロントエンド vitest
 pnpm test
 
-# フロントエンド e2e テスト
+# e2e テスト
 $ cd e2e
 e2e$ pnpm test
 
