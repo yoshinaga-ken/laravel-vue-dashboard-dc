@@ -66,7 +66,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - [🌡️Prefectural Average Temperature Trends 2005-2022: 18 Years @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-weather-temperature)
   - [👥Age Population Trends by Prefecture 1960-2025: 65 Years @japan](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
   - [👥Gender and Age Population by City, Ward, Town, and Village 2020 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population)
-  - [👥Population and Various Numbers by City, Town, and Village 2020 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population2)
+  - [👥Population and Various Numbers by City, Town, and Village 2020 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population2) 
   - [🏥Population and Various Facilities (Hospitals, 🏫Schools, etc.) by City, Ward, Town, and Village 2022 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-building)
   - [🏢Population and Various Private Businesses by City, Ward, Town, and Village 2021 @japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-office)
 - Samples Data Charts
@@ -121,7 +121,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
               <h3>📊Chart mode</h3>
               <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28&layout=default">
                 <img src="doc/img/dashboard-mode-chart.png" alt="Chart Mode Image">
-                COVID-19 infection status in Japan
+                🌡️COVID-19 infection status in Japan
               </a>
               <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025&layout=default">
                 <img src="doc/img/dashboard-mode-chart-ja-election-sangiin-2025.jpg" alt="Chart Mode Image">
@@ -140,6 +140,10 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
                 <img src="doc/img/dashboard-mode-gmap-ssdse-a-tokyo.jpg" alt="Google Map Mode Image">
                 🏥Population and Various Facilities by City, Ward, Town, and Village in japan
               </a>
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28&is_gmap_3d=1&name=%E5%A4%A7%E9%98%AA%E5%BA%9C">
+                <img alt="Image" src="https://github.com/user-attachments/assets/3ee31c05-ffbd-4464-bcd4-bbee38ea8c0a" />
+                🌡️COVID-19 Infection Situation in Osaka Prefecture, Japan (🌏3D Mode)
+              </a>      
           </div>
           <div>
               <h3>
@@ -149,7 +153,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
                 <img src="doc/img/dashboard-mode-sview.png" alt="Street View Mode Image">
                 Noto Peninsula Earthquake in Japan
               </a>
-              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-streetview&name2=%E4%BA%AC%E9%83%BD%E5%B8%82%E5%8F%B3%E4%BA%AC%E5%8C%BA%E5%B5%AF%E5%B3%A8%E4%B8%AD%E3%83%8E%E5%B3%B6%E7%94%BA&layout=sview">
+              <a href="https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-streetview&name2=%E4%BA%AC%E9%83%BD%E5%B8%82%E5%8F%B3%E4%BA%AC%E5%8C%BA%E5%B5%AF%E5%B3%A8%E4%B8%AD%E3%83%8E%E5%B3%B6%E7%94%BA&layout=sview&is_gmap_3d=1">
                 <img src="doc/img/dashboard-mode-sview-ja-streetview.jpg" alt="Street View Mode Image">
                 🎞️Street View Video
               </a>
@@ -351,7 +355,7 @@ composer test
 # Frontend vitest
 pnpm test
 
-# Frontend e2e test
+# e2e test
 $ cd e2e
 e2e$ pnpm test
 
