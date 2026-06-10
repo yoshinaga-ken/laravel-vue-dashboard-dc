@@ -93,7 +93,7 @@ Each dataset has the following common characteristics:
 
 ### 3. Video Game Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc)
-- **File**: `game-fc.csv`, `game-gb.csv`, `game-ps1.csv`, etc.
+- **File**: `game-fc.csv`, `game-gb.csv`, `game-ps1.csv`, `game-ps3.csv`, `game-ps4.csv`, `game-ps5.csv`, `game-switch.csv`, `game-ds.csv`, `game-3ds.csv`, `game-xbox.csv`, `game-xbox360.csv`, `game-dreamcast.csv`, `game-xboxone.csv`, etc.
 - **Format**:
   ```
   Release Date,Cross Review(Rating),Capacity(bit),Genre,Manufacturer,Title,Price,Job Category,Sales TOP50,Hardware,Cartridge Color,Label,Best "Versus" Game,Best "High Score" Game,Most Difficult to Clear
@@ -108,6 +108,151 @@ Each dataset has the following common characteristics:
   - [Various Game Consoles Cartridge/Software Title List](http://pasofami.game.coocan.jp/game/game.htm)
   - [Famicom & Disk System Software Sales Ranking](https://www.gavas.jp/user_data/famicom_game_ranking.php)
   - [Famicom National Vote](https://www.nintendo.com/jp/famicom/vote/index.html)
+
+#### 🎮PlayStation 3 Software List
+- **File**: `game-ps3.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps3&layout=tube)
+  - **Format**: Same as `game-ps1.csv` (Release Date, Cross Review, Price Range, Genre, Manufacturer, Title, Series, ID, Sales (10k units), …)
+  - **Description**: 981 PS3 release titles. Sales matched from TOP50 ranking (45 titles). Cross-review scores and genres matched from soft-db hall of fame (30–40 points, 515 titles, including fuzzy title matching).
+  - **Use Case**: Analyze PS3 software by manufacturer × series × release year × sales × cross review score.
+  - **How to use analysis results**:
+    - Identify manufacturer and series trends among top-selling titles.
+    - Track title count by release year to understand the platform lifecycle.
+    - Compare genre and manufacturer distribution among highly rated cross-review titles.
+  - **Data Source**: [PlayStation 3 game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_3%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7), [PS3 sales ranking@PicoPico Encyclopedia](https://www.gavas.jp/user_data/playstation3_game_ranking.php), [PS3 cross-review hall of fame@soft-db](https://ps3.soft-db.net/dendo/dendo_40.html)
+
+#### 🎮Xbox Software List
+- **File**: `game-xbox.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xbox&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 222 Xbox release titles (2002–2006, Japan releases). Uses the Japan release date column from the Wikipedia list.
+  - **Use Case**: Analyze 6th-generation Xbox software by manufacturer × release date.
+  - **Data Source**: [Xbox game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/Xbox%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮Dreamcast Software List
+- **File**: `game-dreamcast.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-dreamcast&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 497 Dreamcast release titles (1998–2007, Japan releases). Uses the Japan release date column from the Wikipedia list.
+  - **Use Case**: Analyze Dreamcast software by manufacturer × release date.
+  - **Data Source**: [Dreamcast game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%AA%E3%83%BC%E3%83%A0%E3%82%AD%E3%83%A3%E3%82%B9%E3%83%88%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮Xbox 360 Software List
+- **File**: `game-xbox360.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xbox360&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 724 Xbox 360 release titles (2005–2021, Japan releases). Package bundle flag from media column (◎/blank=YES, ○=download-only).
+  - **Use Case**: Analyze Xbox 360 software by manufacturer × release date × package bundle availability.
+  - **Data Source**: [Xbox 360 game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/Xbox_360%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮Xbox One Software List
+- **File**: `game-xboxone.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xboxone&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 2,777 Xbox One titles (2014–2025, Japan). Combines Wikipedia package titles (173, YES), download-only, and ACA NEOGEO. Release dates from h3 year headings + `M/D` cells.
+  - **Use Case**: Analyze Xbox One software by manufacturer × release date × package bundle availability.
+  - **How to use analysis results**:
+    - Compare manufacturer distribution between packaged and download-only titles.
+    - Track title counts by release year to understand the shift toward digital releases in the late 8th generation.
+    - Explore launch-period (Sep 2014) vs. later-title trends over time.
+  - **Data Source**: [Xbox One game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/Xbox_One%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮PlayStation 4 Software List
+- **File**: `game-ps4.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps4&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 2,497 PS4 release titles (2014–2026). Cross-review scores and genres matched from soft-db hall of fame (30–40 points, 821 titles, including fuzzy title matching).
+  - **Use Case**: Analyze PS4 software by manufacturer × genre × release date × package bundle availability.
+  - **How to use analysis results**:
+    - Compare manufacturer and genre distribution between packaged and download-only titles.
+    - Track title counts by release year from launch (2014) through the late PS4 era.
+    - Explore highly rated titles by cross-review score band and manufacturer.
+  - **Data Source**:
+    - [PlayStation 4 game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_4%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+    - [PS4/PS5 cross-review hall of fame@soft-db](https://ps4.soft-db.net/dendo.html)
+
+#### 🎮PlayStation 5 Software List
+- **File**: `game-ps5.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps5&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 2,152 PS5 release titles (2020–2027). Cross-review scores and genres matched from soft-db hall of fame (30–40 points, 509 titles). PS4-compatible titles share the same score and genre in both `game-ps4.csv` and `game-ps5.csv`.
+  - **Use Case**: Analyze PS5 software by manufacturer × genre × release date × package bundle availability.
+  - **How to use analysis results**:
+    - Track title counts by release year to understand PS5 software growth.
+    - Compare manufacturer distribution between packaged and download-only titles.
+    - Explore launch-period (Nov 2020) vs. later-title trends over time.
+  - **Data Source**:
+    - [PlayStation 5 game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_5%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+    - [PS4/PS5 cross-review hall of fame@soft-db](https://ps4.soft-db.net/dendo.html)
+    - [PS5 2020-2021@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_5%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7_(2020%E5%B9%B4-2021%E5%B9%B4))
+    - [PS5 2022@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_5%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7_(2022%E5%B9%B4))
+    - [PS5 2023@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_5%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7_(2023%E5%B9%B4))
+
+#### 🎮Nintendo Switch Software List
+- **File**: `game-switch.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-switch&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 9,850 Nintendo Switch release titles (2017–2026).
+  - **Use Case**: Analyze Switch software by manufacturer × genre × release date × package bundle availability.
+  - **How to use analysis results**:
+    - Track title counts by release year to understand Switch software growth.
+    - Compare manufacturer distribution between packaged and download-only titles.
+    - Explore launch-period (Mar 2017) vs. later-title trends over time.
+  - **Data Source**:
+    - [Nintendo Switch game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/Nintendo_Switch%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮Nintendo DS Software List
+- **File**: `game-ds.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ds&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 1,839 Nintendo DS release titles (2004–2012).
+  - **Use Case**: Analyze DS software by manufacturer × genre × release date. Retro gamers can explore classics by era.
+  - **How to use analysis results**:
+    - Track title counts by release year to understand the DS peak period (2007–2008).
+    - Compare genre distribution by manufacturer between Nintendo and third parties.
+    - Explore launch-period (Dec 2004) vs. later-title trends over time.
+  - **Data Source**:
+    - [Nintendo DS game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E3%83%8B%E3%83%B3%E3%83%86%E3%83%B3%E3%83%89DS%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮Nintendo 3DS Software List
+- **File**: `game-3ds.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-3ds&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 1,369 Nintendo 3DS release titles (2011–2019).
+  - **Use Case**: Analyze 3DS software by manufacturer × genre × release date × package bundle availability.
+  - **How to use analysis results**:
+    - Track title counts by release year to identify the 3DS software peak.
+    - Compare manufacturer distribution between packaged and download-only titles.
+    - Explore launch-period (Feb 2011) vs. later-title trends over time.
+  - **Data Source**:
+    - [Nintendo 3DS game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E3%83%8B%E3%83%B3%E3%83%86%E3%83%B3%E3%83%89%E3%83%BC3DS%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
 #### Game Title Data (Dragon Quest Monsters)
 - [📊Dragon Quest 3 Monsters](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-title-dq3-monster) | [📊Dragon Quest 4 Monsters](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-title-dq4-monster)
@@ -136,6 +281,62 @@ Each dataset has the following common characteristics:
   - Identify region × noodle type × price combinations where shops concentrate to select expansion locations and assess competitive gaps.
   - Use trends by founding year or genre to identify common success factors for new openings and menu strategy.
 - **Data Source**: [Famous Ramen Shop Timeline by Era @Ramen Jiyuku](http://ramenjiyuku.web.fc2.com/)
+
+### 4-2. 🏯Japanese Castle List Data
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle)
+- **File**: `ja-castle.csv`
+- **Format**:
+  ```
+  Date,Castle Name,Type,Elevation,Prefecture,Municipality,Province,Unused,,🔖Tags,Latitude/Longitude
+  ```
+- **Description**: Castle and castle ruin information across all 47 prefectures in Japan. Includes castle name, type (hill castle, flatland-mountain castle, etc.), elevation, location, historical province (ryōkyoku), structural remains (earthworks, moats, stone walls, etc.), and Google Maps coordinates. Approximately 11,200 records.
+- **Use Case**: Filter by prefecture × type × elevation × historical province to explore castles for travel planning, historical research, or regional comparison. Suitable for castle enthusiasts discovering ruins and famous castles on a map.
+- **How to use analysis results**:
+  - Identify concentrations of specific castle types or remains by region to plan sightseeing routes and prioritize visits.
+  - Use the map view to find castles near a destination and filter by tags (stone walls, moats, etc.) to match interests.
+- **DcChart visualization highlights**:
+  - **Google Maps markers**: Each castle is plotted on Google Maps from latitude/longitude in the CSV. Filtered results are shown as markers, so you can see where castles are distributed across Japan at a glance.
+  - **Chart–map linkage**: Clicking a castle name or region in the chart pans the map to that castle's marker, making it easy to jump from list analysis to on-site location.
+  - **3D map mode**: Enable the **🌏3D** checkbox on the map panel (or open with `&is_gmap_3d=1`) to view terrain in three dimensions. This helps you understand *why* a castle was built there—ridges, valleys, rivers, and elevation in context—especially useful for comparing hill castles (`山城`) and flatland-mountain castles (`平山城`) against actual topography.
+  - [📊Chart (3D map)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
+- **Data Source**: [Shiro Kōrōki (Castle Wanderings) @hb.pei.jp](https://www.hb.pei.jp/shiro/)
+
+### 4-3. ♨️Hot Spring Usage by Prefecture (Japan)
+- **File**: `ja-onsen.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-onsen)
+  - **Format**:
+    ```
+    Survey Year,High-Temp Source Ratio Band,Onsen Area Count,Source Count Band,Region,Prefecture,High-Temp Source Count,Unused,Flow Rate (L/min),Source Count,Lodging Facilities,Annual Lodgers,Capacity
+    ```
+  - **Description**: Onsen statistics for all 47 prefectures based on the Ministry of the Environment FY2014 (Heisei 25) hot spring usage survey (as of March 2014). Analyze by onsen area count, source count (by temperature), flow rate (L/min), lodging facilities, and annual lodgers.
+  - **Use Case**: Filter by prefecture × region × source count band × high-temperature source ratio to compare regions rich in hot spring resources and lodging scale. Useful for travel planning and onsen tours.
+  - **How to use analysis results**:
+    - Identify prefectures with high flow rates and source counts to prioritize onsen tour areas.
+    - Find prefectures where lodging use is concentrated by relating high-temperature source ratio bands to annual lodgers.
+    - Compare onsen area distribution by region to understand regional hot spring culture.
+  - **Data Source**:
+    - [Hot Spring Usage by Prefecture@Ministry of the Environment Statistics](https://www.env.go.jp/doc/toukei/contents/index.html)
+    - [Hot Spring Usage Data@Ministry of the Environment](https://www.env.go.jp/nature/onsen/data/)
+    - [Prefecture Rankings (reposted MOE data)](https://uub.jp/pdr/ss/hotspring_6a.html)
+
+### 4-4. 🚃Station Passenger Volume by Line (Japan)
+- **File**: `ja-rail-passenger.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-rail-passenger)
+  - **Format**:
+    ```
+    Survey Year,Rank,Operator Type,Passenger Volume Band,Line Name,Station Name,Operator,Unused,Passengers,Prefecture
+    ```
+  - **Description**: Top 100 station-by-line daily passenger volumes for FY2023. Same station names may appear multiple times per operator and line. Passenger counts are per day.
+  - **Use Case**: Filter by line × operator × operator type × prefecture to compare congestion at major terminals and JR vs. private railway usage. Reference data for rail fans and commuters.
+  - **How to use analysis results**:
+    - Map top lines by operator and regional distribution of passenger volume.
+    - Compare line-by-line breakdown at the same station name (Shinjuku, Ikebukuro, Shibuya, etc.) to see which line is busiest.
+    - Analyze usage scale differences by operator type (JR / private / municipal subway).
+  - **Data Source**:
+    - [Passenger Traffic@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E9%80%9A%E9%81%8E%E4%BA%BA%E5%93%A1) (FY2023 station-by-line ranking table)
+    - [National Land Numerical Information: Station Passengers FY2023](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2023.html)
+    - [Station Passenger Ranking 100@Open Portal](https://opendata-web.site/station/rank/)
+  - **Note**: Each railway operator calculates passenger counts independently; there is no unified standard. For combined totals at the same station name, see the separate table in the Wikipedia article.
 
 ### 5. Heart Disease Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=kaggle-heart-disease)
@@ -505,7 +706,64 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - Reference past periods with similar population structure to anticipate future changes in labor force and social security demand.
 - **Data Source**: Census, etc.
 
-### 18. Test Data
+### 18. 🎬Movie Data
+
+#### 🎬Studio Ghibli Theatrical Films
+- **File**: `ja-movie-ghibli-films.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-ghibli-films)
+  - **Format**:
+    ```
+    Release Date,Gender,Runtime,Rating,Director,Title,Screenwriter,Unused,Box Office,Production,Distributor,Audience (10k)
+    ```
+  - **Description**: 24 feature films from Studio Ghibli. Analyze by release year, director, box office revenue (100M yen), audience (10k), and runtime. Row chart thumbnails use [ghibli.jp/images](https://www.ghibli.jp/images/) via `@pathColExt`.
+  - **Use Case**: Filter by director × release year × box office to compare hit trends and signature works by director.
+  - **How to use analysis results**:
+    - Track box office trends across Hayao Miyazaki's directorial works.
+    - Compare runtime vs. box office performance.
+    - Identify hits by balancing audience and revenue.
+  - **Data Source**: [Studio Ghibli@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%AA%E3%82%B8%E3%83%96%E3%83%AA), [Works@Ghibli.jp](https://www.ghibli.jp/works/)
+
+#### 🎬Top 200 Japanese Box Office Films (All-Time)
+- **File**: `ja-movie-top200.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-top200)
+  - **Format**:
+    ```
+    Release Date,Rank,Unused1,Type,Country,Title,Distributor,Unused2,Box Office Revenue,Distributor Revenue
+    ```
+  - **Description**: Top 200 films from Wikipedia's combined all-time Japanese box office ranking. Analyze by box office revenue (100M yen), rank, country of production, type (anime/live-action), distributor, and release year.
+  - **Use Case**: Filter by country × type × release year × distributor to grasp hit trends in the Japanese market.
+  - **How to use analysis results**:
+    - Compare domestic vs. foreign and anime vs. live-action ratios among top-grossing titles.
+    - Track box office distribution by release year to identify market expansion periods.
+    - Analyze hit share by distributor.
+  - **Data Source**: [List of highest-grossing films in Japan@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E6%AD%B4%E4%BB%A3%E8%88%88%E8%A1%8C%E6%88%90%E7%B8%BE%E4%B8%8A%E4%BD%8D%E3%81%AE%E6%98%A0%E7%94%BB%E4%B8%80%E8%A6%A7)
+
+### 18-2. 🎵Music Data
+
+#### 🎵Japanese Hit Song Rankings
+- **File**: `ja-song-hit.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit)
+  - **Format**:
+    ```
+    Year,Rank,Unused1,Type,Artist,Song,Decade,Unused3,Sales (10k units),Drama Theme Song,Summer Song,Love Song,Wedding Song,Graduation Song,Cheer Song
+    ```
+  - **Description**: Japanese hit song rankings from Nendai-Ryuukou (1950–2025, 1,346 songs). Ranks 1–10 per year for 1950–2000; ranks 1–50 per year from 2010 onward. Analyze by year, rank, artist, song, decade (10-year buckets), sales (10k units), drama theme song, and specialty lists (summer/love/wedding/graduation/cheer). Specialty columns show `YES` when matched (blank otherwise). Commas in song titles are replaced with periods for CSV safety.
+  - **Use Case**: Filter by year × artist × rank × sales × drama/specialty tags to track hit music trends and tie-in song patterns.
+  - **How to use analysis results**:
+    - Compare top-selling songs by decade to see shifts in hit trends (idol, R&B, etc.).
+    - Analyze hit share by artist.
+    - Use the year filter to follow each year's #1 song over time.
+    - Cross-check drama theme songs and specialty lists (summer, graduation, etc.) against hit chart entries.
+  - **Data Source**:
+    - [Japanese Hit Song Rankings@Nendai-Ryuukou](https://nendai-ryuukou.com/song.html)
+    - [Drama Theme Song CD Sales Ranking@Nendai-Ryuukou](https://nendai-ryuukou.com/article/023.html)
+    - [Summer Song Ranking@Nendai-Ryuukou](https://nendai-ryuukou.com/article/075.html)
+    - [Love Song Ranking@Nendai-Ryuukou](https://nendai-ryuukou.com/article/080.html)
+    - [Wedding Song@Nendai-Ryuukou](https://nendai-ryuukou.com/article/148.html)
+    - [Graduation Song Ranking@Nendai-Ryuukou](https://nendai-ryuukou.com/article/084.html)
+    - [Cheer Song Ranking@Nendai-Ryuukou](https://nendai-ryuukou.com/article/151.html)
+
+### 19. Test Data
 
 #### Basic Test Data
 
