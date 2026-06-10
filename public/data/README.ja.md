@@ -93,7 +93,7 @@
 
 ### 3. ゲームデータ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc)
-- **ファイル**: `game-fc.csv`, `game-gb.csv`, `game-ps1.csv` など
+- **ファイル**: `game-fc.csv`, `game-gb.csv`, `game-ps1.csv`, `game-ps3.csv`, `game-ps4.csv`, `game-ps5.csv`, `game-switch.csv`, `game-ds.csv`, `game-3ds.csv`, `game-psp.csv`, `game-vita.csv`, `game-xbox.csv`, `game-xbox360.csv`, `game-dreamcast.csv`, `game-xboxone.csv`, `game-xboxseries.csv` など
 - **フォーマット**:
   ```
   発売日,クロスレビュー(評価),容量(bit),ジャンル,メーカー,タイトル,価格,ジョブカテゴリ,売り上げ本数TOP50,ハード,カセットカラー,ラベル,「対戦」といえば？,「ハイスコア」といえば？,「クリアできなかった」といえば？
@@ -108,6 +108,200 @@
   - [各種ゲーム機 カセット・ソフトタイトルリスト](http://pasofami.game.coocan.jp/game/game.htm)
   - [ファミコン＆ディスクシステム歴代ソフト売上ランキング](https://www.gavas.jp/user_data/famicom_game_ranking.php)
   - [ファミコン国民投票](https://www.nintendo.com/jp/famicom/vote/index.html)
+
+#### 🎮プレイステーション3ソフト一覧
+- **ファイル**: `game-ps3.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps3&layout=tube)
+  - **フォーマット**: `発売日, クロスレビュー, 価格帯, ジャンル(ID), メーカー, タイトル, シリーズ, ID, 売り上げ本数(万本), ジャンル(詳細), …`（ジャンルIDは `#0-game-genre.md` 準拠）
+  - **説明**: PS3 発売ソフト981タイトル。売上本数は TOP50 ランキングから45件照合。クロスレビュー・ジャンルは soft-db 殿堂（30〜40点）から515件照合（表記ゆれ対応含む）。
+  - **用途**: メーカー×シリーズ×発売年×売上×クロスレビューで PS3 ソフトを分析。
+  - **分析結果の活用例**:
+    - 売上 TOP タイトルのメーカー・シリーズ傾向を把握する。
+    - 発売年別のタイトル数推移からプラットフォームのライフサイクルを見る。
+    - クロスレビュー高評価タイトルのジャンル・メーカー分布を比較する。
+  - **データ出典**: 
+    - [PlayStation 3のゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/PlayStation_3%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+    - [PS3売上ランキング@ピコピコ大百科](https://www.gavas.jp/user_data/playstation3_game_ranking.php)
+    - [PS3クロスレビュー殿堂@soft-db](https://ps3.soft-db.net/dendo/dendo_40.html)
+
+#### 🎮Xboxソフト一覧
+- **ファイル**: `game-xbox.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xbox&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル,メーカー,タイトル,開発元,未使用,販売本数,プラットフォーム
+    ```
+  - **説明**: Xbox 発売ソフト222タイトル（2002〜2006年・日本発売）。Wikipedia 一覧の日本発売日列を使用。
+  - **用途**: メーカー×発売日で第6世代 Xbox ソフトを分析。
+  - **データ出典**: [Xboxのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/Xbox%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮ドリームキャストソフト一覧
+- **ファイル**: `game-dreamcast.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-dreamcast&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル,メーカー,タイトル,開発元,未使用,販売本数,プラットフォーム
+    ```
+  - **説明**: ドリームキャスト発売ソフト497タイトル（1998〜2007年・日本発売）。Wikipedia 一覧の日本発売日列を使用。
+  - **用途**: メーカー×発売日でドリームキャストソフトを分析。
+  - **データ出典**: [ドリームキャストのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%AA%E3%83%BC%E3%83%A0%E3%82%AD%E3%83%A3%E3%82%B9%E3%83%88%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮Xbox 360ソフト一覧
+- **ファイル**: `game-xbox360.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xbox360&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル,メーカー,タイトル,開発元,未使用,販売本数,プラットフォーム
+    ```
+  - **説明**: Xbox 360 発売ソフト724タイトル（2005〜2021年・日本発売）。媒体列（◎/無印=パッケージ併売 YES、○=DL専売）を取得。
+  - **用途**: メーカー×発売日×パッケージ併売有無で Xbox 360 ソフトを分析。
+  - **データ出典**: [Xbox 360のゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/Xbox_360%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮Xbox Oneソフト一覧
+- **ファイル**: `game-xboxone.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xboxone&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル,メーカー,タイトル,開発元,未使用,販売本数,プラットフォーム
+    ```
+  - **説明**: Xbox One ソフト2,777タイトル（2014〜2025年・日本）。Wikipedia のパッケージタイトル（173件・YES）・配信専用・アケアカNEOGEO を統合。h3 年度見出し + `M月D日` から発売日を組み立て。
+  - **用途**: メーカー×発売日×パッケージ併売有無で Xbox One ソフトを分析。
+  - **分析結果の活用例**:
+    - パッケージ版と配信専用タイトルのメーカー分布を比較する。
+    - 発売年別のタイトル数推移から第8世代後期の配信増加傾向を把握する。
+    - ローンチ時期（2014年9月）と後期タイトルの傾向を時系列で探索する。
+  - **データ出典**: [Xbox Oneのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/Xbox_One%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮プレイステーション4ソフト一覧
+- **ファイル**: `game-ps4.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps4&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),メーカー,タイトル,開発元,未使用,販売本数,ジャンル(詳細),プラットフォーム
+    ```
+  - **説明**: PS4 発売ソフト2,497タイトル（2014〜2026年）。クロスレビュー・ジャンルは soft-db 殿堂（30〜40点）から821件照合（表記ゆれ対応含む）。
+  - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で PS4 ソフトを分析。
+  - **分析結果の活用例**:
+    - パッケージ併売タイトルとダウンロード専売タイトルのメーカー・ジャンル分布を比較する。
+    - 発売年別のタイトル数推移からローンチ期（2014年）から後期までの PS4 ソフトの傾向を把握する。
+    - クロスレビュー評価帯とメーカーの組合せで高評価タイトルを探索する。
+  - **データ出典**:
+    - [PlayStation 4のゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/PlayStation_4%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+    - [PS4/PS5クロスレビュー殿堂@soft-db](https://ps4.soft-db.net/dendo.html)
+
+#### 🎮プレイステーション5ソフト一覧
+- **ファイル**: `game-ps5.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps5&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),メーカー,タイトル,開発元,未使用,販売本数,ジャンル(詳細),プラットフォーム
+    ```
+  - **説明**: PS5 発売ソフト2,152タイトル（2020〜2027年）。クロスレビュー・ジャンルは soft-db 殿堂（30〜40点）から509件照合。PS4互換タイトルは game-ps4 と同一点数・ジャンル。
+  - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で PS5 ソフトを分析。
+  - **分析結果の活用例**:
+    - 発売年別のタイトル数推移から PS5 ソフトの増加ペースを把握する。
+    - パッケージ併売とダウンロード専売のメーカー分布を比較する。
+    - ローンチ時期（2020年11月）と後期タイトルの傾向を時系列で探索する。
+  - **データ出典**:
+    - [PlayStation 5のゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/PlayStation_5%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+    - [PS4/PS5クロスレビュー殿堂@soft-db](https://ps4.soft-db.net/dendo.html)
+
+#### 🎮Xbox Series X/Sソフト一覧
+- **ファイル**: `game-xboxseries.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xboxseries&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル,メーカー,タイトル,開発元,未使用,販売本数,プラットフォーム
+    ```
+  - **説明**: Xbox Series X/S ソフト777タイトル（2014〜2027年・日本）。Wikipedia のパッケージタイトル（40件・YES）・ダウンロードコード版（4件）・配信専用・アケアカ2NEOGEO を統合。スマートデリバリー対応タイトル含む。h3 年度見出し + `M月D日` から発売日を組み立て。
+  - **用途**: メーカー×発売日×パッケージ併売有無で Xbox Series X/S ソフトを分析。
+  - **分析結果の活用例**:
+    - パッケージ版と配信専用タイトルのメーカー分布を比較する。
+    - 発売年別のタイトル数推移から第9世代の配信増加傾向を把握する。
+    - ローンチ時期（2020年11月）と後期タイトルの傾向を時系列で探索する。
+  - **データ出典**: [Xbox Series X/Sのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/Xbox_Series_X/S%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮Nintendo Switchソフト一覧
+- **ファイル**: `game-switch.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-switch&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),メーカー,タイトル,開発元,未使用,販売本数,ジャンル(詳細),プラットフォーム
+    ```
+  - **説明**: Switch 発売ソフト9,850タイトル（2017〜2026年）。クロスレビュー・ジャンルは soft-db 殿堂（30〜40点）から759件照合（表記ゆれ対応含む）。
+  - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で Switch ソフトを分析。
+  - **分析結果の活用例**:
+    - 発売年別のタイトル数推移から Switch ソフトの増加ペースを把握する。
+    - パッケージ併売とダウンロード専売のメーカー分布を比較する。
+    - ローンチ時期（2017年3月）と後期タイトルの傾向を時系列で探索する。
+  - **データ出典**:
+    - [Nintendo Switchのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/Nintendo_Switch%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+    - [NintendoSwitchクロスレビュー殿堂@soft-db](https://switch.soft-db.net/dendo.html)
+
+#### 🎮ニンテンドーDSソフト一覧
+- **ファイル**: `game-ds.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ds&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル,メーカー,タイトル,開発元,未使用,販売本数,プラットフォーム
+    ```
+  - **説明**: DS 発売ソフト1,839タイトル（2004〜2012年）。
+  - **用途**: メーカー×ジャンル×発売日で DS ソフトを分析。レトロゲームファンが年代別に名作を探索。
+  - **分析結果の活用例**:
+    - 発売年別のタイトル数推移から DS 全盛期（2007〜2008年）の傾向を把握する。
+    - メーカー別のジャンル分布から任天堂・サードパーティの強みを比較する。
+    - ローンチ時期（2004年12月）と後期タイトルの傾向を時系列で探索する。
+  - **データ出典**:
+    - [ニンテンドーDSのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%8B%E3%83%B3%E3%83%86%E3%83%B3%E3%83%89DS%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮PlayStation Portableソフト一覧
+- **ファイル**: `game-psp.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-psp&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル,メーカー,タイトル,開発元,未使用,販売本数,プラットフォーム
+    ```
+  - **説明**: PSP 発売ソフト1,564タイトル（2004〜2016年・日本）。DL列（×/△/□/◎/●）からパッケージ併売383件を取得。
+  - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で PSP ソフトを分析。
+  - **分析結果の活用例**:
+    - 発売年別のタイトル数推移から PSP 全盛期（2010年）の傾向を把握する。
+    - パッケージ併売とダウンロード専売のメーカー分布を比較する。
+    - ローンチ時期（2004年12月）と後期タイトルの傾向を時系列で探索する。
+  - **データ出典**:
+    - [PlayStation Portableのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/PlayStation_Portable%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮ニンテンドー3DSソフト一覧
+- **ファイル**: `game-3ds.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-3ds&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル,メーカー,タイトル,開発元,未使用,販売本数,プラットフォーム
+    ```
+  - **説明**: 3DS 発売ソフト1,369タイトル（2011〜2019年）。日本未発売の海外向けタイトルは除外。
+  - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で 3DS ソフトを分析。
+  - **分析結果の活用例**:
+    - 発売年別のタイトル数推移から 3DS ソフトのピーク年を把握する。
+    - パッケージ併売とダウンロード専売のメーカー分布を比較する。
+    - ローンチ時期（2011年2月）と後期タイトルの傾向を時系列で探索する。
+  - **データ出典**:
+    - [ニンテンドー3DSのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%8B%E3%83%B3%E3%83%86%E3%83%B3%E3%83%89%E3%83%BC3DS%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
+#### 🎮PlayStation Vitaソフト一覧
+- **ファイル**: `game-vita.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-vita&layout=tube)
+  - **フォーマット**:
+    ```
+    発売日,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),メーカー,タイトル,開発元,未使用,販売本数,ジャンル(詳細),プラットフォーム
+    ```
+  - **説明**: PS Vita 発売ソフト1,174タイトル（2011〜2021年・日本）。パ列（●）からパッケージ併売840件。クロスレビュー・ジャンルは [PSVITAクロスレビュー殿堂@soft-db](https://psvita.soft-db.net/dendo.html) から287件照合。
+  - **用途**: メーカー×ジャンル×発売日×クロスレビュー×パッケージ併売有無で PS Vita ソフトを分析。
+  - **分析結果の活用例**:
+    - 殿堂入りタイトルのジャンル・メーカー分布から高評価作品の傾向を把握する。
+    - パッケージ併売とダウンロード専売のメーカー分布を比較する。
+    - ローンチ時期（2011年12月）と後期タイトルの傾向を時系列で探索する。
+  - **データ出典**:
+    - [PlayStation Vitaのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/PlayStation_Vita%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+    - [PSVITAクロスレビュー殿堂@soft-db](https://psvita.soft-db.net/dendo.html)
 
 #### ゲームタイトルデータ（ドラゴンクエストモンスター）
 - [📊ドラゴンクエスト3 モンスター](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-title-dq3-monster) | [📊ドラゴンクエスト4 モンスター](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-title-dq4-monster)
@@ -136,6 +330,62 @@
   - 地域×麺の種類×価格帯で店舗が集中している組み合わせを把握し、出店候補地の選定や競合空白エリアの判断材料にできます。
   - 創業年やジャンルで絞り込んだ傾向から、成功している店の共通条件を特定し、新規出店・メニュー方針の検討に活用できます。
 - **データ出典**: [有名ラーメン店の創業年表｜年代別@らーめん自由区](http://ramenjiyuku.web.fc2.com/)
+
+### 4-2. 🏯日本の城一覧データ
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle)
+- **ファイル**: `ja-castle.csv`
+- **フォーマット**:
+  ```
+  日付,城名,タイプ,標高,都道府県,市区町村,令制国,未使用,,🔖タグ,緯度経度
+  ```
+- **説明**: 日本全国47都道府県の城・城跡データ。城名、タイプ（山城・平山城・平城など）、標高、所在地、令制国、遺構（土塁・堀・石垣など）、Google Maps 座標が含まれる。約11,200件。
+- **用途**: 都道府県 × タイプ × 標高 × 令制国で絞り込み、旅行計画・歴史調査・地域比較に活用できます。城郭好きが地図上で名城や城跡を探すのに適しています。
+- **分析結果の活用例**:
+  - 地域別に城のタイプや遺構の分布を把握し、観光ルートの計画や訪問優先順位の決定に使えます。
+  - 地図表示と連動して目的地周辺の城を探し、タグ（石垣・堀など）で絞り込んで興味に合う城跡を見つけられます。
+- **DcChart での可視化のポイント**:
+  - **Google Maps マーカー表示**: CSV の緯度経度に基づき、各城の位置にマーカーを Google 地図上に表示します。フィルタ結果がマーカーとして地図に反映されるため、城の分布を一目で把握できます。
+  - **チャートと地図の連動**: 城名や地域のチャート項目をクリックすると、地図がその城のマーカー位置へパン移動します。一覧での分析から現地の位置確認へスムーズに移行できます。
+  - **3D 地図モード**: 地図パネルの **🌏3D** チェックをオン（または URL に `&is_gmap_3d=1` を付与）すると、地形を立体的に表示できます。山城・平山城がどのような地形（尾根・谷・河川・標高差）に築かれたかを、実際の地形と照らし合わせて分析できるのが大きな特徴です。
+  - [📊チャート（3D地図）](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
+- **データ出典**: [城郭放浪記 @hb.pei.jp](https://www.hb.pei.jp/shiro/)
+
+### 4-3. ♨️日本の温泉利用状況（都道府県別）
+- **ファイル**: `ja-onsen.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-onsen)
+  - **フォーマット**:
+    ```
+    調査基準年,高温源泉比率帯,温泉地数,源泉数帯,地方区分,都道府県,高温源泉数,未使用,湧出量,源泉数,宿泊施設数,延べ宿泊利用人数,収容定員
+    ```
+  - **説明**: 環境省「平成25年度温泉利用状況」（2014年3月末）に基づく47都道府県の温泉統計。温泉地数・源泉数（温度別内訳）・湧出量（L/分）・宿泊施設数・延べ宿泊利用人数で分析可能。
+  - **用途**: 都道府県 × 地方区分 × 源泉数帯 × 高温源泉比率で絞り込み、温泉資源が豊富な地域や宿泊利用の規模を即座に比較できます。旅行計画や温泉巡りの候補地選びに活用できます。
+  - **分析結果の活用例**:
+    - 湧出量・源泉数が多い都道府県を把握し、温泉地巡りの優先エリアを決める。
+    - 高温源泉比率帯と宿泊利用人数の関係から、温泉旅館が集中する県を特定する。
+    - 地方区分別に温泉地数の分布を比較し、地域の温泉文化の違いを理解する。
+  - **データ出典**:
+    - [環境統計集 温泉利用状況（都道府県別）@環境省](https://www.env.go.jp/doc/toukei/contents/index.html)
+    - [温泉利用状況等@環境省](https://www.env.go.jp/nature/onsen/data/)
+    - [都道府県別ランキング（環境省データ再掲）](https://uub.jp/pdr/ss/hotspring_6a.html)
+
+### 4-4. 🚃日本の駅別乗降客数（路線別）
+- **ファイル**: `ja-rail-passenger.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-rail-passenger)
+  - **フォーマット**:
+    ```
+    調査年度,順位,事業者区分,乗降客数帯,路線名,駅名,運営会社,未使用,乗降客数,都道府県
+    ```
+  - **説明**: 2023年度の駅別・路線別乗降客数ランキング上位100件。同一駅でも運営会社・路線ごとにレコード化。乗降客数は人/日。
+  - **用途**: 路線 × 運営会社 × 事業者区分 × 都道府県で絞り込み、主要ターミナル駅の混雑規模や私鉄/JRの利用分布を比較できます。鉄道ファン・通勤検討者の参考データとして活用できます。
+  - **分析結果の活用例**:
+    - 乗降客数 TOP 路線の運営会社・地域分布を把握する。
+    - 同一駅名（新宿・池袋・渋谷等）の路線別内訳を比較し、どの線が最も混雑しているかを見る。
+    - 事業者区分（JR/私鉄/公営地下鉄）別の利用規模の違いを分析する。
+  - **データ出典**:
+    - [乗降人員@Wikipedia](https://ja.wikipedia.org/wiki/%E9%80%9A%E9%81%8E%E4%BA%BA%E5%93%A1)（2023年 駅別・路線別ランキング表）
+    - [国土数値情報 駅別乗降客数データ（2023年度）](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-S12-2023.html)
+    - [駅乗降客数ランキング100@オープンポータル](https://opendata-web.site/station/rank/)
+  - **注意**: 各鉄道事業者が独自に算出した乗降客数であり、統一基準ではありません。同一駅名の合算値は Wikipedia 記事内の別表を参照してください。
 
 ### 5. 心臓病データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=kaggle-heart-disease)
@@ -505,7 +755,64 @@
   - 過去に同様の人口構成だった時期を参照し、次の社会変化（労働力、社会保障需要など）の予測に活用できます。
 - **データ出典**: 国勢調査等
 
-### 21. テスト用データ
+### 21. 🎬映画データ
+
+#### 🎬スタジオジブリ劇場公開作品一覧
+- **ファイル**: `ja-movie-ghibli-films.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-ghibli-films)
+  - **フォーマット**:
+    ```
+    公開日,性別,上映時間,評価,監督,作品名,脚本,未使用,興行収入,製作,配給,観客動員数
+    ```
+  - **説明**: スタジオジブリの劇場公開長編作品24作。公開年・監督・興行収入（億円）・観客動員数（万人）・上映時間で分析可能。rowChart サムネイルは [ghibli.jp/images](https://www.ghibli.jp/images/) を `@pathColExt` で参照。
+  - **用途**: 監督×公開年×興行収入で絞り込み、ヒット作の傾向や監督別の代表作を比較する。
+  - **分析結果の活用例**:
+    - 宮崎駿監督作品の興行推移から公開時期の傾向を把握する。
+    - 上映時間と興行収入の関係から作品尺の傾向を比較する。
+    - 観客動員数と興行収入のバランスからヒット作を特定する。
+  - **データ出典**: [スタジオジブリ@Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%AA%E3%82%B8%E3%83%96%E3%83%AA)、[作品一覧@スタジオジブリ](https://www.ghibli.jp/works/)
+
+#### 🎬日本歴代興行成績上位の映画一覧
+- **ファイル**: `ja-movie-top200.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-top200)
+  - **フォーマット**:
+    ```
+    公開日,順位,未使用1,種類,製作国,作品名,配給会社,未使用2,興行収入,配給収入
+    ```
+  - **説明**: Wikipedia「日本歴代興行成績上位の映画一覧」総合ランキング上位200作品。興行収入（億円）・順位・製作国・種類（アニメ/実写）・配給会社・公開年で分析可能。
+  - **用途**: 製作国×種類×公開年×配給で絞り込み、日本市場のヒット作傾向を把握する。
+  - **分析結果の活用例**:
+    - 興行収入 TOP 作品の邦画/洋画・アニメ/実写比率を比較する。
+    - 公開年別の興行収入分布から市場拡大期を把握する。
+    - 配給会社別のヒット作シェアを分析する。
+  - **データ出典**: [日本歴代興行成績上位の映画一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E6%AD%B4%E4%BB%A3%E8%88%88%E8%A1%8C%E6%88%90%E7%B8%BE%E4%B8%8A%E4%BD%8D%E3%81%AE%E6%98%A0%E7%94%BB%E4%B8%80%E8%A6%A7)
+
+### 21-2. 🎵音楽データ
+
+#### 🎵邦楽ヒット曲ランキング
+- **ファイル**: `ja-song-hit.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit)
+  - **フォーマット**:
+    ```
+    年,順位,未使用1,種類,歌手名,曲名,年代,未使用3,売上枚数,ドラマ主題歌,夏の曲,LOVEソング,結婚式・ウェディングソング,卒業ソング,応援ソング
+    ```
+  - **説明**: 年代流行の邦楽ヒット曲ランキング（1950年〜2025年、1,346曲）。1950〜2000年代は各年1〜10位、2010年以降は各年1〜50位。年・順位・歌手名・曲名・年代（10年単位）・売上枚数（万枚）・ドラマ主題歌・特集曲（夏/LOVE/ウェディング/卒業/応援）で分析可能。特集列は該当曲のみ `YES`（非該当は空欄）。曲名にカンマが含まれる場合はピリオドに置換済み。
+  - **用途**: 年×歌手×順位×売上枚数×ドラマ・特集タグで絞り込み、邦楽ヒットの時代潮流やタイアップ曲の傾向を把握する。
+  - **分析結果の活用例**:
+    - 年代別の売上トップ曲からヒット傾向（アイドル・R&B 等）の変遷を比較する。
+    - 歌手別のヒット作シェアを分析する。
+    - 公開年フィルタで各年の1位曲を時系列で追う。
+    - ドラマ主題歌・夏の曲・卒業ソング等の特集リストとヒット曲の重なりを確認する。
+  - **データ出典**:
+    - [邦楽ヒット曲ランキング@年代流行](https://nendai-ryuukou.com/song.html)
+    - [ドラマ主題歌CD売上枚数ランキング@年代流行](https://nendai-ryuukou.com/article/023.html)
+    - [夏の曲ランキング@年代流行](https://nendai-ryuukou.com/article/075.html)
+    - [LOVEソングランキング@年代流行](https://nendai-ryuukou.com/article/080.html)
+    - [結婚式・ウェディングソング@年代流行](https://nendai-ryuukou.com/article/148.html)
+    - [卒業ソングランキング@年代流行](https://nendai-ryuukou.com/article/084.html)
+    - [応援ソングランキング@年代流行](https://nendai-ryuukou.com/article/151.html)
+
+### 22. テスト用データ
 
 #### 基本テストデータ
 
@@ -535,6 +842,33 @@
     - 属性別に人気の商品・店舗の組み合わせを把握し、メニュー改良やターゲット特化型の品揃えの判断に使えます。
     - 高売上が安定している店舗・商品の条件を特定し、新店舗の定番メニューや出店候補地の選定材料にできます。
   - **データ出典**: サンプルデータ
+
+- **盆栽データ**: `test-bonsai.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-bonsai)
+  - **フォーマット**:
+    ```
+    日付,性別,年齢,評価,樹種カテゴリ,樹種名,用途,未使用,販売点数,サイズ分類,価格帯,産地,樹形
+    ```
+  - **説明**: 盆栽の販売・人気動向データ。樹種カテゴリ（松柏類・雑木類・花物類・実物類・草物類）、樹種名（黒松・五葉松・紅葉・梅・南天など）、サイズ分類（大品・中品・小品・ミニ・プチ・豆）、価格帯、産地（都道府県）、樹形（直幹・模様木・斜幹・吹き流し・懸崖）、購入者属性・用途が含まれる。盆栽妙・Wikipedia 等の分類を参考にした多次元データ。
+  - **用途**: 樹種カテゴリ × 樹種名 × サイズ × 価格帯 × 産地 × 樹形で絞り込み、人気樹種や価格帯別・産地別の販売傾向を即座に把握できます。盆栽店の品揃えや初心者向けおすすめの検討に活用できます。
+  - **分析結果の活用例**:
+    - 樹種カテゴリ×サイズ×価格帯で販売が集中する組み合わせを把握し、在庫計画や陳列の重点設定に使えます。
+    - 産地×樹形で人気の条件を特定し、仕入れ先やラインナップの見直し材料にできます。
+  - **データ出典**: サンプルデータ
+
+- **盆栽種類一覧カタログ**: `test-bonsai-catalog.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-bonsai-catalog)
+  - **フォーマット**:
+    ```
+    日付,性別,年齢,評価,種類,樹種名,樹形,未使用,カウント,品種,樹齢帯,神と舎利,管理,鉢の種類,産地,サイズ分類
+    ```
+  - **説明**: 盆栽を植物としての種類・品種・樹形・産地等で多次元分析するためのカタログ形式データ。種類（松柏盆栽・雑木盆栽・花物盆栽・実物盆栽・草物盆栽）、樹種名、樹形（直幹・懸崖・模様木・吹き流し等）、品種（八房・銀八房五葉・旭竜等）、樹齢帯、神と舎利、管理（松の管理・一般・ドライ盆栽）、鉢の種類、主な産地（さいたま市大宮盆栽村・香川県鬼無等）、サイズ分類を含む。
+  - **用途**: 種類 × 樹種 × 樹形 × 品種 × 産地 × 管理 × 樹齢帯で絞り込み、盆栽の植物学的な分類・特徴の傾向を即座に把握できます。盆栽の学習やカタログ検索、品種・樹形の比較分析に活用できます。
+  - **分析結果の活用例**:
+    - 松柏類の品種（八房・銀八・石化系等）と樹形・産地の組み合わせを把握し、銘品の傾向分析に使えます。
+    - 産地×樹種×樹齢帯で分布を可視化し、名産地や銘品の条件を理解する材料にできます。
+    - ドライ盆栽・石付・寄せ植えなど特殊タイプの樹種・樹形を抽出できます。
+  - **データ出典**: [Wikipedia 盆栽](https://ja.wikipedia.org/wiki/盆栽), [盆栽妙 樹種別育て方](https://www.bonsaimyo.com/blogs/sodatekata-treetype), [盆栽の学校 種類と分類](https://bonsai-school.com/note/8/)
 
 #### 教育分野のテストデータ
 
@@ -786,6 +1120,19 @@
   - **分析結果の活用例**:
     - ジャンル×上映期間で動員が伸びる組み合わせを把握し、配給・上映スケジュールの決定や館のプログラミングに使えます。
     - 過去の同条件でのヒットパターンを参照し、次回作の宣伝投資や上映館数の見積もりに活用できます。
+
+- **スタジオジブリ劇場公開作品一覧**: `test-ghibli-films.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ghibli-films)
+  - **フォーマット**:
+    ```
+    公開日,性別,上映時間,評価,監督,作品名,脚本,未使用,興行収入,製作,配給,観客動員数
+    ```
+  - **説明**: スタジオジブリの劇場公開長編作品。公開年・監督・興行収入（億円）・観客動員数（万人）・上映時間で分析可能。rowChart サムネイルは [ghibli.jp/images](https://www.ghibli.jp/images/) を `@pathColExt` で参照。観客動員数は Wikipedia ランキング表より（未掲載作品は空欄）。
+  - **用途**: 監督×公開年×興行収入で絞り込み、ヒット作の傾向や監督別の代表作を比較する。
+  - **分析結果の活用例**:
+    - 宮崎駿監督作品の興行推移から公開時期の選定を検討する。
+    - 上映時間と興行の関係から作品尺の傾向を把握する。
+  - **データ出典**: [スタジオジブリ@Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%AA%E3%82%B8%E3%83%96%E3%83%AA)、[作品一覧@ジブリ](https://www.ghibli.jp/works/)
 
 - **博物館来館データ**: `test-museum-visitor.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-museum-visitor)
