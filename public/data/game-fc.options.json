@@ -4,7 +4,7 @@
   "common": {
     "unit": "タイトル"
   },
-  "searchPrefixDataIndex": 5,
+  "searchPrefixDataIndex": 2,
   "searchPrefix": "ファミコン",
   "dataReference": "<ul><li><a target='_blank' href='http://pasofami.game.coocan.jp/game/game.htm'>各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target='_blank' href='https://www.gavas.jp/user_data/famicom_game_ranking.php'>ファミコン＆ディスクシステム歴代ソフト売上ランキング＠ピコピコ大百科</a></li><li><a target='_blank' href='https://www.nintendo.com/jp/famicom/vote/index.html'>ファミコン国民投票＠Nitendo</a></li><li><a target='_blank' href='https://www.ne.jp/asahi/dq/dq/meisaku/1986.html'>ファミ通のゲームクロスレビュー 1986年～＠Game mein</a></li><li><a target='_blank' href='https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%83%9F%E3%83%AA%E3%83%BC%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7'>ファミリーコンピュータのゲームタイトル一覧＠Wikipedia</a></li></ul>",
   "detailType": "city",
@@ -40,7 +40,10 @@
   "chartWeek": {},
   "chartSex": {
     "chartType": "bar",
-    "unit": null
+    "unit": null,
+    "margins": {
+      "left": 230
+    }
   },
   "chartAge": {
     "unit": [

@@ -1,0 +1,211 @@
+{
+  "dataType": 0,
+  "title": "🌏世界各国の社会経済指標",
+  "description": "世界各国の社会経済指標をまとめたデータセットです。各国の人口、GDP、医療費、教育水準などの情報が含まれています。",
+  "common": {
+    "unit": "",
+    "unitPrefix": ""
+  },
+  "chartGMap": {},
+  "chartSView": {},
+  "chartTube": {},
+  "chartMap": {
+    "isShow": true,
+    "mapType": "world",
+    "colors": [
+      [
+        "High",
+        "#8c0a00",
+        999
+      ],
+      [
+        " ",
+        "#ea5432",
+        499
+      ],
+      [
+        "  ",
+        "#ff781d",
+        99
+      ],
+      [
+        "   ",
+        "#ff9d57",
+        49
+      ],
+      [
+        "    ",
+        "#ffceab",
+        9
+      ],
+      [
+        "     ",
+        "#f5deb3",
+        4
+      ],
+      [
+        "Low",
+        "#dadada",
+        0
+      ],
+      [
+        "選択中",
+        "#ffffff",
+        0
+      ]
+    ],
+    "isDetailTooltip": "1"
+  },
+  "chartName": {
+    "name": "国名",
+    "imagePath": "/img/world",
+    "imageTooltip": "all",
+    "isLabelAlphabet": true,
+    "isHideLabelValue": "1"
+  },
+  "chartCity": {
+    "name": "地域",
+    "isHidden": false,
+    "imagePath": "@tube",
+    "imageTooltip": "all",
+    "orderYmd": false
+  },
+  "chartDate": {
+    "name": "日付",
+    "elasticY": false,
+    "isRangeChart": false,
+    "isFilterMissingCorrect": false,
+    "labelType": 0,
+    "isHidden": true,
+    "width": 1000,
+    "format": "YYYY",
+    "isShow": false
+  },
+  "chartDate2": {
+    "chartType": "lines",
+    "elasticY": false,
+    "elasticYMinMax": false,
+    "isRangeChart": false,
+    "isFilterMissingCorrect": true,
+    "labelType": 0
+  },
+  "chartYear": {
+    "isLegend": true
+  },
+  "chartSeason": {},
+  "chartWeek": {},
+  "chartSex": {
+    "name": "💔5歳未満児の死亡数(1000人中)",
+    "chartType": "bar",
+    "unit": null,
+    "scale": 10,
+    "labelSuffix": "人",
+    "isLegend": true,
+    "margins": {
+      "left": 200
+    }
+  },
+  "chartAge": {
+    "name": "👶子供の数(女性1人中)",
+    "unit": null,
+    "scale": "@round:0",
+    "labelSuffix": "人"
+  },
+  "chartCond": {
+    "name": "平均寿命",
+    "hasWindRoseChart": false,
+    "scale": "5",
+    "labelSuffix": "歳"
+  },
+  "chartJob": {
+    "name": "人口密度",
+    "isHidden": true,
+    "isShow": false
+  },
+  "chartJobCat": {
+    "isHidden": true,
+    "isShow": false
+  },
+  "chartEx": [
+    {
+      "name": "🏥医療費:1人当たりのGDPに対する割合%",
+      "scale": "@round:0",
+      "isLegend": 1,
+      "labelSuffix": "％"
+    },
+    {
+      "name": "💰所得(平均年収):ドル",
+      "scale": 5000,
+      "isLegend": 1
+    },
+    {
+      "name": "輸出:1人当たりの輸出:GDPに対する割合%",
+      "scale": 10,
+      "isLegend": 0,
+      "labelSuffix": "％"
+    },
+    {
+      "name": "輸入:1人当たりの輸出:GDPに対する割合%",
+      "scale": 10,
+      "isLegend": 0,
+      "labelSuffix": "％"
+    },
+    {
+      "name": "💰一人当たりのGDP:ドル",
+      "scale": 5000,
+      "isLegend": 0
+    },
+    {
+      "name": "📈インフレ:総GDPの年間成長率:%",
+      "scale": "@round:0",
+      "labelSuffix": "％",
+      "isLegend": 0
+    },
+    {
+      "scale": 0,
+      "isLegend": 0
+    },
+    {
+      "scale": 0,
+      "isLegend": 0
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    },
+    {
+      "scale": false,
+      "isLegend": false
+    }
+  ],
+  "chartDetail": {},
+  "searchPrefix": "SocioeconomicIndicators",
+  "dataReference": "<ul><li><a target='_blank' href='https://www.kaggle.com/datasets/samira1992/countries-intermediate-dataset'>🌏 Countries- Intermediate 🗃️ Dataset@kaggle</a></li></ul>",
+  "editURL": "https://docs.google.com/spreadsheets/d/1z8gw2dLQ8IVM81ONfp3Sli7MYg8zPaZJB1Uyo1VPEaY/edit?gid",
+  "detailType": "name",
+  "isMakeAutocompleteData": true
+}
