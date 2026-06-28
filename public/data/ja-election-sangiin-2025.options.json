@@ -137,7 +137,7 @@
       "orderDesc": 1,
       "isDcSunburstChart": 1,
       "dcSunburstChart": {
-        "keyIndex": "$1/$2",
+        "keyIndex": "$3/$4",
         "width": 300,
         "height": 300,
         "equalRingSizes": true,
@@ -155,7 +155,7 @@
       "orderDesc": 1,
       "isDcSunburstChart": 1,
       "dcSunburstChart": {
-        "keyIndex": "$3/$1",
+        "keyIndex": "$5/$3",
         "width": 400,
         "height": 400,
         "equalRingSizes": true,
@@ -173,7 +173,7 @@
       "orderDesc": 1,
       "isDcSunburstChart": 1,
       "dcSunburstChart": {
-        "keyIndex": "$3/$2/$1",
+        "keyIndex": "$5/$4/$3",
         "width": 600,
         "height": 600,
         "equalRingSizes": true,
@@ -191,7 +191,7 @@
       "orderDesc": 1,
       "isDcSunburstChart": 1,
       "dcSunburstChart": {
-        "keyIndex": "$3/$4",
+        "keyIndex": "$5/$1",
         "width": 600,
         "height": 600,
         "equalRingSizes": true,
@@ -209,7 +209,7 @@
       "orderDesc": 1,
       "isDcSunburstChart": 1,
       "dcSunburstChart": {
-        "keyIndex": "$3/$9",
+        "keyIndex": "$5/$9",
         "width": 600,
         "height": 600,
         "equalRingSizes": true,

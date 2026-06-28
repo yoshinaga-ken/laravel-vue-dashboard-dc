@@ -4,7 +4,7 @@
   "common": {
     "unit": "タイトル"
   },
-  "searchPrefixDataIndex": 5,
+  "searchPrefixDataIndex": 2,
   "searchPrefix": "ファミコン",
   "dataReference": "<ul><li><a target='_blank' href='http://pasofami.game.coocan.jp/game/game.htm'>各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target='_blank' href='https://www.gavas.jp/user_data/famicom_game_ranking.php'>ファミコン＆ディスクシステム歴代ソフト売上ランキング＠ピコピコ大百科</a></li><li>wikipedia</li></ul>",
   "editUrl": "https://docs.google.com/spreadsheets/d/1PBGUk6X-phs_ApA_IYRN-49GPyZt7FxjKMAw5GBSEPo/edit?gid=1229582080#gid=1229582080",
@@ -74,7 +74,7 @@
       "isDcSunburstChart": true,
       "isLegend": true,
       "dcSunburstChart": {
-        "keyIndex": "🏢$4/🙋‍♂️$9",
+        "keyIndex": "🏢$1/🙋‍♂️$9",
         "width": 600,
         "height": 600,
         "legend": {

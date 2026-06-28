@@ -4,7 +4,7 @@
   "common": {
     "unit": "店"
   },
-  "searchPrefixDataIndex": 4,
+  "searchPrefixDataIndex": 1,
   "searchPrefix": "ラーメン",
   "dataReference": "<ul><li><a target='_blank' href='http://ramenjiyuku.web.fc2.com/'>有名ラーメン店の創業年表｜年代別@らーめん自由区</a></li></ul>",
   "detailType": "city",

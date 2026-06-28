@@ -4,7 +4,7 @@
   "common": {
     "unit": "タイトル"
   },
-  "searchPrefixDataIndex": 1,
+  "searchPrefixDataIndex": 2,
   "searchPrefix": "ゲーム機",
   "dataReference": "<ul><li><a target='_blank' href=\"http://pasofami.game.coocan.jp/game/game.htm\">各種ゲーム機 カセット・ソフトタイトルリスト@pasofami</a></li><li><a target='_blank' href='https://www.gavas.jp/user_data/superfamicom_game_ranking.php'>各ゲーム機歴代ソフト売上ランキング＠ピコピコ大百科</a></li><li>wikipedia等</li></ul>",
   "detailType": "city",

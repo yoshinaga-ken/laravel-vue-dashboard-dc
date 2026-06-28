@@ -24,7 +24,7 @@ Each dataset has the following common characteristics:
 - **File**: `covid19-data-*.csv` (multiple versions by date)
 - **Format**:
   ```
-  Date,Gender,Age,Status,Prefecture,Municipality,Occupation,Occupation Category,Count
+  Date,Prefecture,Municipality,Gender,Age,Status,Occupation,Occupation Category,Count
   ```
 - **Description**: COVID-19 infection data including date, gender, age, status (discharged, etc.), location, and occupation
 - **Use Case**: Filter by prefecture × age group × period to instantly grasp infection trends and differences in outbreak waves. Suitable for comparative analysis limited to specific regions or attributes, and for understanding phases of infection spread and containment.
@@ -38,7 +38,7 @@ Each dataset has the following common characteristics:
 - **File**: `covid19-world.csv`
 - **Format**:
   ```
-  Date,Sex,Age,Status,Country,Region,Hemisphere,nouse,Count
+  Date,Country,Region,Sex,Age,Status,Hemisphere,nouse,Count
   ```
 - **Description**: Global COVID-19 infection and death data including date, country/region, hemisphere, and status (infected/death)
 - **Use Case**: Filter by country × region × status × period to instantly compare geographic patterns of spread and impact by country. Suitable for international comparison and pandemic analysis.
@@ -54,7 +54,7 @@ Each dataset has the following common characteristics:
 - **File**: `ja-weather-temperature.csv`
 - **Format**:
   ```
-  🌡️Average Temperature Total(℃),☔Precipitation Total(mm),💨Average Wind Speed(m/s),🧭Most Common Wind Direction(16 points),🏢Prefecture,🏙️Municipality,❄️Snowfall Total(cm),⚪Unused,🌡️Average Temperature(℃),💧Average Humidity(%),☁️Average Cloud Cover,♨️Average Vapor Pressure(hPa),🔄Average Local Pressure(hPa),☀️Sunshine Hours,🌨️Snow Days,⚡Thunder Days,🌫️Fog Days
+  🌡️Average Temperature Total(℃),🏢Prefecture,🏙️Municipality,☔Precipitation Total(mm),💨Average Wind Speed(m/s),🧭Most Common Wind Direction(16 points),❄️Snowfall Total(cm),⚪Unused,🌡️Average Temperature(℃),💧Average Humidity(%),☁️Average Cloud Cover,♨️Average Vapor Pressure(hPa),🔄Average Local Pressure(hPa),☀️Sunshine Hours,🌨️Snow Days,⚡Thunder Days,🌫️Fog Days
   ```
 - **Description**: Average temperature data for major cities in Japan. Includes temperature, precipitation, wind speed, wind direction, prefecture, municipality, and other meteorological information
 - **Use Case**: Filter by region × period × weather conditions to instantly obtain climate risk assessments for event scheduling or agricultural planning. Also useful for travel planning and construction weather risk consideration.
@@ -68,7 +68,7 @@ Each dataset has the following common characteristics:
 - **File**: `ja-weather-precipitation.csv`
 - **Format**:
   ```
-  ☔Precipitation Total(mm),🌡️Average Temperature(℃),💨Average Wind Speed(m/s),🧭Most Common Wind Direction(16 points),🏢Prefecture,🏙️Municipality,❄️Snowfall Total(cm),⚪Unused,☔Precipitation Total(mm):Base,💧Average Humidity(%),☁️Average Cloud Cover,♨️Average Vapor Pressure(hPa),🔄Average Local Pressure(hPa),☀️Sunshine Hours,🌨️Snow Days,⚡Thunder Days,🌫️Fog Days
+  ☔Precipitation Total(mm),🏢Prefecture,🏙️Municipality,🌡️Average Temperature(℃),💨Average Wind Speed(m/s),🧭Most Common Wind Direction(16 points),❄️Snowfall Total(cm),⚪Unused,☔Precipitation Total(mm):Base,💧Average Humidity(%),☁️Average Cloud Cover,♨️Average Vapor Pressure(hPa),🔄Average Local Pressure(hPa),☀️Sunshine Hours,🌨️Snow Days,⚡Thunder Days,🌫️Fog Days
   ```
 - **Description**: Precipitation data for major cities in Japan. Includes precipitation, temperature, wind speed, wind direction, prefecture, municipality, and other meteorological information
 - **Use Case**: Visualize region × season × precipitation patterns to understand flood risk trends, agricultural water planning, and infrastructure priority areas. Suitable for disaster prevention personnel comparing past rainfall patterns.
@@ -82,7 +82,7 @@ Each dataset has the following common characteristics:
 - **File**: `ja-weather-temperature-3.csv`, `ja-weather-precipitation-3.csv`
 - **Format**:
   ```
-  🌡️Average Temperature(℃),☔Precipitation(mm),💨Average Wind Speed,🧭Most Common Wind Direction,🏢Prefecture,🏙️Municipality,Various meteorological indicators
+  🌡️Average Temperature(℃),🏢Prefecture,🏙️Municipality,☔Precipitation(mm),💨Average Wind Speed,🧭Most Common Wind Direction,Various meteorological indicators
   ```
 - **Description**: Long-term weather data from 1872 for Fukuoka, Tokyo, and Sapporo (approximately 153 years). Suitable for long-term climate change trend analysis
 - **Use Case**: Filter by city × period (year/month) to instantly grasp long-term climate change trends and inter-city climate differences. Useful for climate research and historical meteorological analysis.
@@ -96,7 +96,7 @@ Each dataset has the following common characteristics:
 - **File**: `game-fc.csv`, `game-gb.csv`, `game-ps1.csv`, `game-ps3.csv`, `game-ps4.csv`, `game-ps5.csv`, `game-switch.csv`, `game-ds.csv`, `game-3ds.csv`, `game-xbox.csv`, `game-xbox360.csv`, `game-dreamcast.csv`, `game-xboxone.csv`, etc.
 - **Format**:
   ```
-  Release Date,Cross Review(Rating),Capacity(bit),Genre,Manufacturer,Title,Price,Job Category,Sales TOP50,Hardware,Cartridge Color,Label,Best "Versus" Game,Best "High Score" Game,Most Difficult to Clear
+  Release Date,Manufacturer,Title,Cross Review(Rating),Capacity(bit),Genre,Price,Price range,Sales TOP50,Hardware,Cartridge Color,Label,Best "Versus" Game,Best "High Score" Game,Most Difficult to Clear
   ```
 - **Description**: Game title information for various platforms (FC, GB, PS1, etc.) including release date, rating, genre, manufacturer, price, and sales
 - **Use Case**: Filter by hardware × genre × release year to instantly grasp popular title trends and manufacturer strengths. Useful for collectors narrowing down desired titles and industry analysts for market analysis.
@@ -112,21 +112,21 @@ Each dataset has the following common characteristics:
 #### 🎮PlayStation 3 Software List
 - **File**: `game-ps3.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps3&layout=tube)
-  - **Format**: Same as `game-ps1.csv` (Release Date, Cross Review, Price Range, Genre, Manufacturer, Title, Series, ID, Sales (10k units), …)
-  - **Description**: 981 PS3 release titles. Sales matched from TOP50 ranking (45 titles). Cross-review scores and genres matched from soft-db hall of fame (30–40 points, 515 titles, including fuzzy title matching).
+  - **Format**: Same as `game-ps1.csv`(Release Date,Manufacturer,Title,Cross Review,Price Range,Genre,Series,ID,Sales (10k units),…)
+  - **Description**: 981 PS3 release titles. Sales matched from TOP50 ranking (45 titles). Cross-review scores and genres matched from soft-db hall of fame (30–40 points,515 titles,including fuzzy title matching).
   - **Use Case**: Analyze PS3 software by manufacturer × series × release year × sales × cross review score.
   - **How to use analysis results**:
     - Identify manufacturer and series trends among top-selling titles.
     - Track title count by release year to understand the platform lifecycle.
     - Compare genre and manufacturer distribution among highly rated cross-review titles.
-  - **Data Source**: [PlayStation 3 game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_3%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7), [PS3 sales ranking@PicoPico Encyclopedia](https://www.gavas.jp/user_data/playstation3_game_ranking.php), [PS3 cross-review hall of fame@soft-db](https://ps3.soft-db.net/dendo/dendo_40.html)
+  - **Data Source**: [PlayStation 3 game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_3%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7),[PS3 sales ranking@PicoPico Encyclopedia](https://www.gavas.jp/user_data/playstation3_game_ranking.php),[PS3 cross-review hall of fame@soft-db](https://ps3.soft-db.net/dendo/dendo_40.html)
 
 #### 🎮Xbox Software List
-- **File**: `game-xbox.csv`
+- **File**:`game-xbox.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xbox&layout=tube)
   - **Format**:
     ```
-    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
     ```
   - **Description**: 222 Xbox release titles (2002–2006, Japan releases). Uses the Japan release date column from the Wikipedia list.
   - **Use Case**: Analyze 6th-generation Xbox software by manufacturer × release date.
@@ -137,7 +137,7 @@ Each dataset has the following common characteristics:
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-dreamcast&layout=tube)
   - **Format**:
     ```
-    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
     ```
   - **Description**: 497 Dreamcast release titles (1998–2007, Japan releases). Uses the Japan release date column from the Wikipedia list.
   - **Use Case**: Analyze Dreamcast software by manufacturer × release date.
@@ -148,7 +148,7 @@ Each dataset has the following common characteristics:
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xbox360&layout=tube)
   - **Format**:
     ```
-    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
     ```
   - **Description**: 724 Xbox 360 release titles (2005–2021, Japan releases). Package bundle flag from media column (◎/blank=YES, ○=download-only).
   - **Use Case**: Analyze Xbox 360 software by manufacturer × release date × package bundle availability.
@@ -159,7 +159,7 @@ Each dataset has the following common characteristics:
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xboxone&layout=tube)
   - **Format**:
     ```
-    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
     ```
   - **Description**: 2,777 Xbox One titles (2014–2025, Japan). Combines Wikipedia package titles (173, YES), download-only, and ACA NEOGEO. Release dates from h3 year headings + `M/D` cells.
   - **Use Case**: Analyze Xbox One software by manufacturer × release date × package bundle availability.
@@ -174,7 +174,7 @@ Each dataset has the following common characteristics:
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps4&layout=tube)
   - **Format**:
     ```
-    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
     ```
   - **Description**: 2,497 PS4 release titles (2014–2026). Cross-review scores and genres matched from soft-db hall of fame (30–40 points, 821 titles, including fuzzy title matching).
   - **Use Case**: Analyze PS4 software by manufacturer × genre × release date × package bundle availability.
@@ -191,7 +191,7 @@ Each dataset has the following common characteristics:
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps5&layout=tube)
   - **Format**:
     ```
-    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
     ```
   - **Description**: 2,152 PS5 release titles (2020–2027). Cross-review scores and genres matched from soft-db hall of fame (30–40 points, 509 titles). PS4-compatible titles share the same score and genre in both `game-ps4.csv` and `game-ps5.csv`.
   - **Use Case**: Analyze PS5 software by manufacturer × genre × release date × package bundle availability.
@@ -211,7 +211,7 @@ Each dataset has the following common characteristics:
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-switch&layout=tube)
   - **Format**:
     ```
-    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
     ```
   - **Description**: 9,850 Nintendo Switch release titles (2017–2026).
   - **Use Case**: Analyze Switch software by manufacturer × genre × release date × package bundle availability.
@@ -227,7 +227,7 @@ Each dataset has the following common characteristics:
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ds&layout=tube)
   - **Format**:
     ```
-    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
     ```
   - **Description**: 1,839 Nintendo DS release titles (2004–2012).
   - **Use Case**: Analyze DS software by manufacturer × genre × release date. Retro gamers can explore classics by era.
@@ -243,7 +243,7 @@ Each dataset has the following common characteristics:
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-3ds&layout=tube)
   - **Format**:
     ```
-    Release Date,Cross Review (Score),Package Bundle,Genre,Manufacturer,Title,Developer,Unused,Sales Count,Platform
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
     ```
   - **Description**: 1,369 Nintendo 3DS release titles (2011–2019).
   - **Use Case**: Analyze 3DS software by manufacturer × genre × release date × package bundle availability.
@@ -273,7 +273,7 @@ Each dataset has the following common characteristics:
 - **File**: `food-ramen.csv`
 - **Format**:
   ```
-  Founding Year,Noodle Type(Sample),Price Range(Sample),Genre(Sample),Prefecture,🍜Ramen Shop Name,🚉Nearest Station/Address,Job Category,Count
+  Founding Year,Prefecture,🍜Ramen Shop Name,Noodle Type(Sample),Price Range(Sample),Genre(Sample),🚉Nearest Station/Address,Job Category,Count
   ```
 - **Description**: Ramen shop information including founding year, noodle type, price range, genre, location, shop name, and nearest station
 - **Use Case**: Filter by prefecture × noodle type × price range to select candidate shops for business trips or travel, and for franchise expansion region selection. Suitable for food enthusiasts discovering shops matching their preferences.
@@ -287,7 +287,7 @@ Each dataset has the following common characteristics:
 - **File**: `ja-castle.csv`
 - **Format**:
   ```
-  Date,Castle Name,Type,Elevation,Prefecture,Municipality,Province,Unused,,🔖Tags,Latitude/Longitude
+  Construction Year,Prefecture,Municipality,Castle Name,Type,Elevation,Province,Unused,,🔖Tags,Latitude/Longitude
   ```
 - **Description**: Castle and castle ruin information across all 47 prefectures in Japan. Includes castle name, type (hill castle, flatland-mountain castle, etc.), elevation, location, historical province (ryōkyoku), structural remains (earthworks, moats, stone walls, etc.), and Google Maps coordinates. Approximately 11,200 records.
 - **Use Case**: Filter by prefecture × type × elevation × historical province to explore castles for travel planning, historical research, or regional comparison. Suitable for castle enthusiasts discovering ruins and famous castles on a map.
@@ -301,12 +301,24 @@ Each dataset has the following common characteristics:
   - [📊Chart (3D map)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
 - **Data Source**: [Shiro Kōrōki (Castle Wanderings) @hb.pei.jp](https://www.hb.pei.jp/shiro/)
 
+### 4-2-1. 🌸Cherry Blossom Spots in Japan
+- **File**: `ja-cherry-blossom.csv`
+  - [📊Chart](http://127.0.0.1:8000/dashboard-dc-pub?data=ja-cherry-blossom)
+  - **Format**:
+    ```
+    Establishment Year,Prefecture,Name,Star Rating,Scale Index,Category,Type,Unused,Main Index,Latitude/Longitude
+    ```
+  - **Description**: Cherry blossom viewing spots from Japan's Top 100 Sakura Sites (selected in 1990). Supports map-linked analysis by prefecture, spot name, and coordinates.
+  - **Use Case**: Plan hanami (cherry blossom viewing) trips
+  - **Data Source**:
+    - [Japan's Top 100 Sakura Sites @Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%95%E3%81%8F%E3%82%89%E5%90%8D%E6%89%80100%E9%81%B8)
+
 ### 4-3. ♨️Hot Spring Usage by Prefecture (Japan)
 - **File**: `ja-onsen.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-onsen)
   - **Format**:
     ```
-    Survey Year,High-Temp Source Ratio Band,Onsen Area Count,Source Count Band,Region,Prefecture,High-Temp Source Count,Unused,Flow Rate (L/min),Source Count,Lodging Facilities,Annual Lodgers,Capacity
+    Survey Year,Region,Prefecture,High-Temp Source Ratio Band,Onsen Area Count,Source Count Band,High-Temp Source Count,Unused,Flow Rate (L/min),Source Count,Lodging Facilities,Annual Lodgers,Capacity
     ```
   - **Description**: Onsen statistics for all 47 prefectures based on the Ministry of the Environment FY2014 (Heisei 25) hot spring usage survey (as of March 2014). Analyze by onsen area count, source count (by temperature), flow rate (L/min), lodging facilities, and annual lodgers.
   - **Use Case**: Filter by prefecture × region × source count band × high-temperature source ratio to compare regions rich in hot spring resources and lodging scale. Useful for travel planning and onsen tours.
@@ -343,7 +355,7 @@ Each dataset has the following common characteristics:
 - **File**: `kaggle-heart-disease.csv`
 - **Format**:
   ```
-  Date,Gender,Age,Chest Pain Type,Number of Major Vessels,Thalassemia Type,ST Segment Slope,Unused,Count,🔖Resting Blood Pressure,🔖Serum Cholesterol,Fasting Blood Sugar > 120 mg/dl,Resting ECG Results,🔖Maximum Heart Rate,Exercise Induced Angina,ST Depression,⚠Heart Attack Risk
+  Date,Number of Major Vessels,Thalassemia Type,Gender,Age,Chest Pain Type,ST Segment Slope,Unused,Count,🔖Resting Blood Pressure,🔖Serum Cholesterol,Fasting Blood Sugar > 120 mg/dl,Resting ECG Results,🔖Maximum Heart Rate,Exercise Induced Angina,ST Depression,⚠Heart Attack Risk
   ```
 - **Description**: Medical data related to heart disease including gender, age, various test results, symptoms, and risk assessment
 - **Use Case**: Filter by age × gender × test values × risk to identify high-risk group characteristics and design prevention awareness targets. Suitable for healthcare professionals analyzing risk factor trends and creating training materials.
@@ -357,7 +369,7 @@ Each dataset has the following common characteristics:
 - **File**: `resas-municipality-company.csv`
 - **Format**:
   ```
-  Year,Region,Company,Industry Major Classification(Horizontal),Prefecture,Industry Major Classification,Industry Middle Classification,Unused,Count
+  Year,Prefecture,Industry Major Classification,Region,Company,Industry Major Classification(Horizontal),Industry Middle Classification,Unused,Count
   ```
 - **Description**: Local government company data including year, region, company type, industry classification, and prefecture
 - **Use Case**: Filter by year × industry × region for municipal staff to grasp industry structure changes and for companies to compare industry distribution in expansion candidate regions. Useful for regional economic policy and attraction strategy planning.
@@ -373,7 +385,7 @@ Each dataset has the following common characteristics:
 - **File**: `sports-hsb.csv`
 - **Format**:
   ```
-  Year,Rank,Final Score,Coach(Sample),Prefecture,Representative School,Famous Players(Sample),Unused,Count
+  Year,Prefecture,Representative School,Rank,Final Score,Coach(Sample),Famous Players(Sample),Unused,Count
   ```
 - **Description**: High school baseball tournament results including year, rank, final score, coach, prefecture, representative school, and famous players
 - **Use Case**: Filter by year × prefecture × rank to instantly grasp regional high school baseball history and strong school transitions. Suitable for sports writers discovering coverage themes and fans checking local school historical performance.
@@ -389,7 +401,7 @@ Each dataset has the following common characteristics:
 - **File**: `checkin-sakana.csv`, `checkin-sakana.light.csv`
 - **Format**:
   ```
-  Year/Month,Gender,Badminton Class,Condition,Player,Hometown,Gymnasium,Count
+  Year/Month,Player,Hometown,Gender,Badminton Class,Condition,Gymnasium,Count
   ```
 - **Description**: Participation records for badminton club "Sakana". Includes year/month, participants, gymnasium, and hometown
 - **Use Case**: Filter by year/month × gymnasium × hometown to instantly grasp participation trends and venue-specific usage. Useful for club managers for practice scheduling and venue selection.
@@ -403,7 +415,7 @@ Each dataset has the following common characteristics:
 - **File**: `sakana-hp-access.csv`
 - **Format**:
   ```
-  Date,Gender,Age,Days Before Practice,Club,Prefecture,Device,Count,COVID-19 Wave,Practice Participants
+  Date,Club,Prefecture,Gender,Age,Days Before Practice,Device,Count,COVID-19 Wave,Practice Participants
   ```
 - **Description**: Sports club website access data including date, club, prefecture, COVID wave, and practice participation numbers
 - **Use Case**: Filter by date × club × prefecture to instantly grasp the relationship between website access and practice participation and COVID impact. Useful for managers considering content improvement and promotion strategies.
@@ -417,7 +429,7 @@ Each dataset has the following common characteristics:
 - **File**: `test-article-like.csv`
 - **Format**:
   ```
-  Date(Author),Gender(Author),Age(Author),🔖Article Type,Prefecture(Author),🔖Article Theme/Genre,Occupation(Author),Unused,Number of Likes,🔖Article Audience,🔖Article SEO
+  Date(Author),Prefecture(Author),🔖Article Theme/Genre,Gender(Author),Age(Author),🔖Article Type,Occupation(Author),Unused,Number of Likes,🔖Article Audience,🔖Article SEO
   ```
 - **Description**: Article like count data including creation date, author information, article type, theme, like count, and audience
 - **Use Case**: Filter by article type × theme × author attributes × period to instantly determine which content resonates with which audience. Useful for editors in planning and marketers for target-specific content strategy.
@@ -431,7 +443,7 @@ Each dataset has the following common characteristics:
 - **File**: `ja-quake-noto-safety.csv`
 - **Format**:
   ```
-  Number of Missing Persons(By Announcement Date),Gender,Age,Safety Confirmation Status,City,Municipality,Name,Occupation Category,Count
+  Number of Missing Persons(By Announcement Date),City,Municipality,Gender,Age,Safety Confirmation Status,Name,Occupation Category,Count
   ```
 - **Description**: Safety confirmation data for the Noto Peninsula Earthquake including missing person count, gender, age, confirmation status, location, and names
 - **Use Case**: Grasp time series × region × situation in multiple dimensions for support prioritization and response status organization based on damage. Suitable for overall disaster response overview.
@@ -447,7 +459,7 @@ Each dataset has the following common characteristics:
 - **File**: `store-di.csv`
 - **Format**:
   ```
-  Year/Month,Business Trend/Economic Sentiment,Current Status/Outlook,Change,DI,Unused1,Unused4,Job Category,Count
+  Year/Month,DI,Unused1,Business Trend/Economic Sentiment,Current Status/Outlook,Change,Unused4,Job Category,Count
   ```
 - **Description**: Business trend survey DI (Diffusion Index) indicator data including month/year, business trend, current status/outlook, change, and DI value
 - **Use Case**: Filter by period × business trend item × current/outlook to instantly grasp retail industry sentiment trends. Useful for managers judging industry trends and analysts for investment reference.
@@ -461,7 +473,7 @@ Each dataset has the following common characteristics:
 - **File**: `resas-agriculture.csv`
 - **Format**:
   ```
-  Year,Item Major Classification,Item Classification,Item Name(Horizontal),Prefecture,Item Name,Agricultural Organization(Sample),Unused5,Count
+  Year,Prefecture,Item Name,Item Major Classification,Item Classification,Item Name(Horizontal),Agricultural Organization(Sample),Unused5,Count
   ```
 - **Description**: Agricultural statistics data including year, item classification, prefecture, and agricultural organization
 - **Use Case**: Filter by year × item × prefecture to instantly grasp output value trends by producing region and item strengths. Useful for agricultural policy makers and JA/wholesalers for producing region comparison and sales channel development.
@@ -477,7 +489,7 @@ Each dataset has the following common characteristics:
 - **File**: `test-agr-kikurage.csv`
 - **Format**:
   ```
-  Date,Variety,Spawn Source,Cultivation Method,Cultivation Prefecture,Product Name,Other Elements※,Sales Format,Sales
+  Date,Cultivation Prefecture,Product Name,Variety,Spawn Source,Cultivation Method,Other Elements※,Sales Format,Sales
   ```
 - **Description**: Wood ear mushroom cultivation and sales data including variety, cultivation method, region, sales format, and revenue
 - **Use Case**: Filter by variety × cultivation method × region × sales format to instantly grasp best-selling combinations and efficient cultivation patterns. Useful for farmers considering business improvement and wholesalers/retailers for supplier selection.
@@ -492,7 +504,7 @@ Each dataset has the following common characteristics:
 - **File**: `resas-tourism-foreigners.csv`
 - **Format**:
   ```
-  Year,Visit Purpose,Visitor Region,Visitor Nationality(Horizontal),Visited Prefecture,Visitor Nationality,Tourist Attraction(Sample),Unused,Count
+  Year,Visited Prefecture,Visitor Nationality,Visit Purpose,Visitor Region,Visitor Nationality(Horizontal),Tourist Attraction(Sample),Unused,Count
   ```
 - **Description**: Data on foreign tourists visiting Japan including visit year, purpose, visitor nationality/region, visited prefecture, and tourist attractions
 - **Use Case**: Filter by year × nationality × visit purpose × visited prefecture to instantly grasp target country visit trends and attraction policy effectiveness. Suitable for municipal tourism officers considering inbound strategy.
@@ -508,7 +520,7 @@ Each dataset has the following common characteristics:
 - **File**: `resas-product-sales.csv`
 - **Format**:
   ```
-  Year,Industry Major Classification,Era,Industry Middle Classification,Prefecture,Municipality,Company(Sample),Count
+  Year,Prefecture,Municipality,Industry Major Classification,Era,Industry Middle Classification,Company(Sample),Count
   ```
 - **Description**: Regional annual product sales data (1994–2021). Includes industry classification and sales by prefecture and municipality
 - **Use Case**: Filter by year × industry × region to instantly grasp regional economic industry structure and retail/wholesale trends. Useful for commercial policy planning and store opening consideration.
@@ -522,7 +534,7 @@ Each dataset has the following common characteristics:
 - **File**: `resas-municipality-taxes.csv`
 - **Format**:
   ```
-  Year,Unused1,Tax Category,Unused2,Prefecture,Municipality,Industry(Sample),Unused,Count
+  Year,Prefecture,Municipality,Unused1,Tax Category,Unused2,Industry(Sample),Unused,Count
   ```
 - **Description**: Local government tax revenue data including year, tax category, prefecture, municipality, and industry
 - **Use Case**: Filter by year × tax category × region to instantly grasp municipal fiscal health and tax structure changes. Useful for administrative staff for budget planning and companies comparing investment region fiscal conditions.
@@ -540,7 +552,7 @@ Each dataset has the following common characteristics:
 - **File**: `ja-election-shugiin-candidates.csv`
 - **Format**:
   ```
-  Date,Gender,Age,Party,Prefecture,Candidate Name,Occupation,Occupation Category(Unused),Seats,Elected/Defeated,Votes,Vote Share(%),Occupation Category,Election System,Single-Member District,Incumbent/Former/Newcomer,Terms Elected,Recommendation,🔖Q.Consumption tax reduction,🔖Q.U.S. diplomacy,🔖Q.Nuclear power dependency,etc.
+  Date,Prefecture,Candidate Name,Gender,Age,Party,Occupation,Occupation Category(Unused),Seats,Elected/Defeated,Votes,Vote Share(%),Occupation Category,Election System,Single-Member District,Incumbent/Former/Newcomer,Terms Elected,Recommendation,🔖Q.Consumption tax reduction,🔖Q.U.S. diplomacy,🔖Q.Nuclear power dependency,etc.
   ```
 - **Description**: House of Representatives election candidate list (2026/2024/2021). Covers all candidates including both elected and defeated. Includes candidate information, party, single-member district, proportional, elected/defeated, seats, votes, vote share (%), occupation category, and policy survey responses (e.g. consumption tax reduction, U.S. diplomacy, nuclear power dependency).
 - **Use Case**: Filter by election year × party × election system × elected/defeated to instantly grasp candidate attributes, vote patterns, and policy stance distribution. Useful for election coverage, political research, and candidate analysis.
@@ -554,7 +566,7 @@ Each dataset has the following common characteristics:
 - **File**: `ja-election-shugiin-2024.csv`
 - **Format**:
   ```
-  Date,Gender,Age,Party,Prefecture,Candidate Name,Occupation,Seats,Votes,Vote Share(%),Election System,Single-Member District,Former/Former/New,Terms Elected,etc.
+  Date,Prefecture,Candidate Name,Gender,Age,Party,Occupation,Seats,Votes,Vote Share(%),Election System,Single-Member District,Former/Former/New,Terms Elected,etc.
   ```
 - **Description**: House of Representatives election winner data (2024/2021). Includes candidate information, party, single-member district, proportional, plus seats, votes, and vote share (%)
 - **Use Case**: Filter by election year × party × election system to instantly grasp vote patterns in single-member vs. proportional and party power transitions. Useful for election coverage and political research.
@@ -568,7 +580,7 @@ Each dataset has the following common characteristics:
 - **File**: `ja-election-sangiin-2025.csv`
 - **Format**:
   ```
-  Date,Gender,Age,Party,Prefecture,Candidate Name,Occupation,Election System,Incumbent/Former/Newcomer,Terms Elected,Recommendation,etc.
+  Date,Prefecture,Candidate Name,Gender,Age,Party,Occupation,Election System,Incumbent/Former/Newcomer,Terms Elected,Recommendation,etc.
   ```
 - **Description**: House of Councillors election winner data (2025/2022/2019). Includes candidate information, party, prefecture, electoral district/proportional
 - **Use Case**: Filter by election year × party × prefecture to instantly grasp party seat acquisition trends and regional power balance. Useful for political analysts and media election analysis.
@@ -582,7 +594,7 @@ Each dataset has the following common characteristics:
 - **File**: `ja-election-tokyo-gubernatorial-2024.csv`
 - **Format**:
   ```
-  Date,Gender(Candidate),Age(Candidate),Party(Candidate),Candidate,Municipality,Occupation(Candidate),Occupation Category,Count
+  Date,Candidate,Municipality,Gender(Candidate),Age(Candidate),Party(Candidate),Occupation(Candidate),Occupation Category,Count
   ```
 - **Description**: Tokyo gubernatorial election voting data including election date, candidate information (gender, age, party, occupation), and vote counts by municipality
 - **Use Case**: Filter by candidate × municipality × party to instantly grasp regional vote trends and support base distribution. Useful for political analysts and media for election coverage.
@@ -599,7 +611,7 @@ Each dataset has the following common characteristics:
 - **File**: `store-cnt.csv`
 - **Format**:
   ```
-  Year/Month,Unused2,Unused3,Store Type,Prefecture,Unused1,Unused4,Job Category,Count
+  Year/Month,Prefecture,Unused1,Unused2,Unused3,Store Type,Unused4,Job Category,Count
   ```
 - **Description**: Store count statistics including year/month, store type, and store count by prefecture
 - **Use Case**: Filter by period × store type × prefecture to instantly grasp retail industry expansion trends and regional store density. Useful for companies planning store openings and analysts for industry analysis.
@@ -617,7 +629,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **File**: `ssdse-b-population.csv`
 - **Format**:
   ```
-  Year,Sex,Age,Prefecture,Municipality,Count
+  Year,Prefecture,Municipality,Sex,Age,Unused1,Unused2,Unused3,Count
   ```
 - **Description**: Time series of gender and age-group population by prefecture. Includes birth, under 15, 15–64, 65+ population trends
 - **Use Case**: Filter by year × prefecture × gender × age to instantly grasp regional differences in aging and population structure changes. Useful for municipal population vision and welfare plan planning.
@@ -631,7 +643,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **File**: `ssdse-b-building.csv`
 - **Format**:
   ```
-  Year,Births,Building Starts,Prefecture,Total Population,Hospitals,Clinics,Schools,Nurseries,etc.
+  Year,Prefecture,Municipality,Births,Building Starts,Unused1,Unused2,Unused3,Total Population,Hospitals,Clinics,Dental Clinics,Nurseries,Kindergartens,Elementary Schools,Junior High Schools,High Schools,etc.
   ```
 - **Description**: Time series of population and medical/educational facilities by prefecture. Includes hospitals, schools, nurseries, marriages, divorces
 - **Use Case**: Filter by year × prefecture × facility type to instantly grasp population-facility balance and depopulated areas. Useful for municipal facility planning and regional diagnosis.
@@ -645,7 +657,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **File**: `ssdse-b-weather-temperature.csv`
 - **Format**:
   ```
-  Year,Precipitation,Precipitation Days,Prefecture,Average Temperature,Max Temperature,Min Temperature
+  Year,Prefecture,Municipality,Precipitation,Precipitation Days,Unused1,Unused2,Unused3,Average Temperature,Max Temperature,Min Temperature
   ```
 - **Description**: Time series of meteorological data by prefecture. Includes annual average temperature, max/min temperature, precipitation, precipitation days
 - **Use Case**: Filter by year × prefecture to instantly compare regional climate trends and annual temperature/precipitation variation. Useful for agricultural policy and disaster prevention planning.
@@ -659,7 +671,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **File**: `ssdse-a-population.csv`
 - **Format**:
   ```
-  Year,Sex,Age,Prefecture,Municipality,Population
+  Year,Prefecture,Municipality,Sex,Age,Unused1,Unused2,Unused3,Population
   ```
 - **Description**: Gender and age-group population by municipality (2020 Census). Includes finer regional population composition
 - **Use Case**: Filter by municipality × gender × age to instantly grasp block-level population composition and aging reality. Useful for municipal welfare planning and trade area analysis.
@@ -673,7 +685,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **File**: `ssdse-a-building.csv`
 - **Format**:
   ```
-  Year,Births,Total Population,Prefecture,Municipality,Hospitals,Clinics,Schools,Retail Stores,Restaurants,Physicians,etc.
+  Year,Prefecture,Municipality,Births,Total Population,Unused1,Population Density,Total Population,Hospitals,Clinics,Dental Clinics,Nurseries,Kindergartens,Elementary Schools,Junior High Schools,High Schools,etc.
   ```
 - **Description**: Cross-section of population and medical/commercial facilities by municipality. Includes hospitals, schools, retail stores, physicians
 - **Use Case**: Filter by municipality × facility type to instantly compare regional medical/commercial access and facilities per capita. Useful for store opening consideration and regional diagnosis.
@@ -687,7 +699,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **File**: `ssdse-a-office.csv`
 - **Format**:
   ```
-  Year,Industry Type(Agriculture,Construction,Manufacturing,Retail,etc.),Prefecture,Municipality,Establishment Count,etc.
+  Year,Prefecture,Municipality,Agriculture/Forestry,Total Population,Unused1,Services,Unused3,Total Population,Fisheries,Mining,Construction,Manufacturing,Electricity/Gas,etc.
   ```
 - **Description**: Industry-specific private establishment count by municipality. Includes agriculture, construction, manufacturing, retail, medical/welfare
 - **Use Case**: Filter by municipality × industry type to instantly grasp regional industry structure and establishment density. Useful for company location consideration and regional economic analysis.
@@ -696,9 +708,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - Use regional industry structure bias to set priority industries for municipal promotion and to inform company expansion or exit decisions.
 - **Data Source**: [SSDSE @National Statistics Center](https://www.nstac.go.jp/use/literacy/ssdse/)
 
-#### Prefecture-level Age Population Trends (1960–2025, 65 Years) *Separate App
+#### Prefecture-level Age Population Trends (1960–2025,65 Years) *Separate App
 - [📊Chart](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
-- **File**: `population.csv`
+- **File**:,construction,manufacturing,retail`population.csv`
 - **Description**: Long-term time series of age-group population by prefecture (approximately 65 years). Displayed in [prefecture-population-dc](https://sakanaclub.xsrv.jp/prefecture-population-dc/) app
 - **Use Case**: Filter by prefecture × age × period to grasp long-term population structure changes from postwar to present. Suitable for population statistics education and research.
 - **How to use analysis results**:
@@ -713,7 +725,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-ghibli-films)
   - **Format**:
     ```
-    Release Date,Gender,Runtime,Rating,Director,Title,Screenwriter,Unused,Box Office,Production,Distributor,Audience (10k)
+    Release Date,Director,Title,Gender,Runtime,Rating,Screenwriter,Unused,Box Office,Production,Distributor,Audience (10k)
     ```
   - **Description**: 24 feature films from Studio Ghibli. Analyze by release year, director, box office revenue (100M yen), audience (10k), and runtime. Row chart thumbnails use [ghibli.jp/images](https://www.ghibli.jp/images/) via `@pathColExt`.
   - **Use Case**: Filter by director × release year × box office to compare hit trends and signature works by director.
@@ -728,7 +740,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-top200)
   - **Format**:
     ```
-    Release Date,Rank,Unused1,Type,Country,Title,Distributor,Unused2,Box Office Revenue,Distributor Revenue
+    Release Date,Country,Title,Rank,Unused1,Type,Distributor,Unused2,Box Office Revenue,Distributor Revenue
     ```
   - **Description**: Top 200 films from Wikipedia's combined all-time Japanese box office ranking. Analyze by box office revenue (100M yen), rank, country of production, type (anime/live-action), distributor, and release year.
   - **Use Case**: Filter by country × type × release year × distributor to grasp hit trends in the Japanese market.
@@ -771,7 +783,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-drink)
   - **Format**:
     ```
-    Date,Gender,Age,Rating,Prefecture,Product Name,Occupation,Unused,Sales Volume,Maker/Category,Maker,❄️Cool/🔥Hot,Category
+    Date,Prefecture,Product Name,Gender,Age,Rating,Occupation,Unused,Sales Volume,Maker/Category,Maker,❄️Cool/🔥Hot,Category
     ```
   - **Description**: Beverage product evaluation and sales data. Includes date, evaluator information (gender, age, occupation), product name, rating (⭐1–⭐5, 5-level), sales volume, plus maker, category (mineral water, tea, carbonated, energy drink, etc.), and cool/hot type
   - **Use Case**: Filter by maker × category × cool/hot × rating × region to instantly grasp target segment preferences and popular product and sales volume trends. Useful for product development and marketers when considering sales strategy and product lineup.
@@ -785,7 +797,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-lunch)
   - **Format**:
     ```
-    Number of Buyers,Gender,Age,Product Name,Prefecture,Store,Occupation,Unused,Count
+    Number of Buyers,Prefecture,Store,Gender,Age,Product Name,Occupation,Unused,Count
     ```
   - **Description**: Lunch product purchase data including buyer information (gender, age, occupation), product name, store, and prefecture
   - **Use Case**: Filter by product × store × buyer attributes to instantly grasp store-specific popular menus and target segment preferences. Useful for restaurant menu revision and store opening consideration.
@@ -800,9 +812,8 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-university-entrance)
   - **Format**:
     ```csv
-    Date,Gender,Age,Department,Prefecture,Municipality,Application Type,Unused,Applicants,Deviation Value,Accepted,Exam Count,Public/Private,Tuition
-    ```
-  - **Description**: University entrance examination data including basic student information, department, applicants, deviation value, accepted, exam count, and tuition
+    Date,Prefecture,Municipality,Gender,Age,Department,Application Type,Unused,Applicants,Deviation Value,Accepted,Exam Count,Public/Private,Tuition```
+- **Description**: University entrance examination data including basic student information, department, applicants, deviation value, accepted, exam count, and tuition
   - **Use Case**: Filter by department × application type × region to instantly grasp applicant trends and admission difficulty. Useful for career guidance and universities for admission strategy.
   - **How to use analysis results**:
     - Use department × application type trends in applicants and accepted students to inform guidance and university recruitment and exam design.
@@ -812,10 +823,10 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Academic Achievement Test Data**: `test-academic-achievement.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-academic-achievement)
   - **Format**:
-    ```csv
-    Date,Gender,Age,Subject,Prefecture,Municipality,School Type,Unused,Average Score,School Size,Regional Category,Proficiency Level,Test Takers,National Rank,Deviation Value,Study Hours
-    ```
-  - **Description**: Academic test results data including average scores by subject, school size, regional category, proficiency level, test takers, deviation value, and study hours
+    
+```csv
+    Date,Prefecture,Municipality,Gender,Age,Subject,School Type,Unused,Average Score,School Size,Regional Category,Proficiency Level,Test Takers,National Rank,Deviation Value,Study Hours```
+- **Description**: Academic test results data including average scores by subject, school size, regional category, proficiency level, test takers, deviation value, and study hours
   - **Use Case**: Filter by subject × region × school type to identify challenging subjects/regions and consider proficiency-specific guidance. Suitable for education boards and schools judging improvement priorities.
   - **How to use analysis results**:
     - Identify subject × region × proficiency combinations where challenges concentrate to set priority subjects and regions and resource allocation.
@@ -827,10 +838,10 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Traffic Accident Data**: `test-traffic-accident.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-traffic-accident)
   - **Format**:
-    ```csv
-    Date/Time,Gender,Age,Accident Type,Prefecture,Municipality,Occupation,Unused,Count,Weather,Road Type,Vehicle Type,Time Period,Injuries
-    ```
-  - **Description**: Traffic accident data including accident type, weather, road type, vehicle type, time period, and injuries
+    
+```csv
+    Date/Time,Prefecture,Municipality,Gender,Age,Accident Type,Occupation,Unused,Count,Weather,Road Type,Vehicle Type,Time Period,Injuries```
+- **Description**: Traffic accident data including accident type, weather, road type, vehicle type, time period, and injuries
   - **Use Case**: Filter by accident type × region × time × weather to instantly identify danger spots and high-risk conditions. Useful for police and municipalities for traffic safety measures and driver awareness.
   - **How to use analysis results**:
     - Identify accident type × region × time × weather combinations where incidents concentrate to prioritize patrols and enforcement and awareness campaigns.
@@ -840,13 +851,14 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Public Transportation Usage Data**: `test-public-transport.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-public-transport)
   - **Format**:
-    ```csv
+    
+```csv
     Year/Month,Route Name,Station Name,Prefecture,Passengers,Time Period,Day Category,Season,Transportation Mode
     ```
-  - **Description**: Public transportation usage data allowing analysis by route, time period, day category, and seasonal variation
+- **Description**: Public transportation usage data allowing analysis by route, time period, day category, and seasonal variation
   - **Use Case**: Filter by route × station × time × day to instantly grasp congestion peaks and quiet sections. Useful for railway companies for schedule improvement and municipalities for transportation policy.
   - **How to use analysis results**:
-    - Identify routes, stations, and times where congestion concentrates to prioritize schedule and capacity and pricing.
+- Identify routes, stations, and times where congestion concentrates to prioritize schedule and capacity and pricing.
     - Use quiet sections and seasonal variation to consider service reduction or alternative transport in low-demand areas.
   - **Data Source**: Sample data
 
@@ -855,10 +867,11 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Real Estate Transaction Data**: `test-real-estate.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-real-estate)
   - **Format**:
-    ```csv
+    
+```csv
     Year/Month,Prefecture,Municipality,Property Type,Age,Area,Price,Station Distance,Layout,Transactions
     ```
-  - **Description**: Real estate transaction data allowing analysis by property type, age, area, price, station distance, and layout
+- **Description**: Real estate transaction data allowing analysis by property type, age, area, price, station distance, and layout
   - **Use Case**: Filter by region × property type × price range × age to instantly grasp market price trends and well-conditioned property distribution. Useful for buyers finding areas matching budget/conditions and agents for supply-demand analysis.
   - **How to use analysis results**:
     - Use region × property type × price combinations with high transaction activity to select purchase candidates and sales strategy focus.
@@ -868,10 +881,11 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Housing Construction Statistics**: `test-housing-construction.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-housing-construction)
   - **Format**:
-    ```csv
+    
+```csv
     Year/Month,Prefecture,Structure Type,Building Type,Use Category,Floor Area,Construction Cost,Housing Starts,Household Composition
     ```
-  - **Description**: Housing construction data for trend analysis of structure type, building type, use category, floor area, construction cost, and housing starts
+- **Description**: Housing construction data for trend analysis of structure type, building type, use category, floor area, construction cost, and housing starts
   - **Use Case**: Filter by region × structure × use × period to instantly grasp housing market demand and building-type trends. Useful for house builders and construction industry for market analysis and business planning.
   - **How to use analysis results**:
     - Identify region × structure × use combinations where housing starts are growing to set product lineup and sales focus.
@@ -883,10 +897,11 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Household Survey Data**: `test-household-survey.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-household-survey)
   - **Format**:
-    ```csv
+    
+```csv
     Year/Month,Prefecture,Household Size,Age Group,Occupation,Expenditure Item,Expenditure Amount,Income,Savings,Consumption Propensity
     ```
-  - **Description**: Household consumption behavior data allowing analysis by expenditure item, age group, and occupation
+- **Description**: Household consumption behavior data allowing analysis by expenditure item, age group, and occupation
   - **Use Case**: Filter by expenditure item × age group × occupation × region to instantly grasp target segment consumption trends. Useful for company sales strategy and administrative consumer policy.
   - **How to use analysis results**:
     - Use age group × occupation × expenditure combinations where spending concentrates to design product and messaging targets and policy focus.
@@ -896,13 +911,13 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **E-commerce Data**: `test-ecommerce.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ecommerce)
   - **Format**:
-    ```csv
-    Date,Gender,Age,Product Category,Prefecture,Municipality,Occupation,Unused,Purchase Amount,Device Type,Payment Method,Purchase Count,Delivery Method,Satisfaction,Member Rank,Usage Time
-    ```
-  - **Description**: E-commerce purchase data allowing detailed analysis by product category, device type, payment method, and usage time
+    
+```csv
+    Date,Prefecture,Municipality,Gender,Age,Product Category,Occupation,Unused,Purchase Amount,Device Type,Payment Method,Purchase Count,Delivery Method,Satisfaction,Member Rank,Usage Time```
+- **Description**: E-commerce purchase data allowing detailed analysis by product category, device type, payment method, and usage time
   - **Use Case**: Filter by product category × device × user attributes × time to instantly grasp purchase patterns and campaign effectiveness. Useful for EC managers for product display and marketing improvement.
   - **How to use analysis results**:
-    - Use category × device × time combinations where purchases concentrate to optimize display, campaigns, and send timing.
+- Use category × device × time combinations where purchases concentrate to optimize display, campaigns, and send timing.
     - Use attribute-based purchase patterns to decide which initiatives to continue or change and to set budget priorities.
   - **Data Source**: Sample data
 
@@ -911,13 +926,14 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Environmental Survey Data**: `test-environment-survey.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-environment-survey)
   - **Format**:
-    ```csv
+    
+```csv
     Date/Time,Prefecture,Monitoring Station,Pollutant,Concentration,Weather Conditions,Season,Regional Characteristics,Measurement Count
     ```
-  - **Description**: Environmental pollution measurement data allowing analysis by pollutant, weather, season, and regional characteristics
+- **Description**: Environmental pollution measurement data allowing analysis by pollutant, weather, season, and regional characteristics
   - **Use Case**: Filter by pollutant × region × season × weather to instantly identify high-concentration conditions and areas. Useful for environmental staff and residents for improvement measure consideration.
   - **How to use analysis results**:
-    - Identify pollutant × region × condition combinations with high concentrations to prioritize regulation, monitoring, and awareness timing.
+- Identify pollutant × region × condition combinations with high concentrations to prioritize regulation, monitoring, and awareness timing.
     - Reference risk when similar weather or season conditions recur to decide on advance measures and public communication.
   - **Data Source**: Sample data
 
@@ -926,10 +942,11 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Employment and Labor Data**: `test-employment-labor.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-employment-labor)
   - **Format**:
-    ```csv
+    
+```csv
     Year/Month,Prefecture,Job Type,Industry,Age Group,Gender,Job Openings,Average Salary,Employment Type,Experience Years
     ```
-  - **Description**: Job market data allowing analysis of job trends and salary levels by job type, industry, and age group
+- **Description**: Job market data allowing analysis of job trends and salary levels by job type, industry, and age group
   - **Use Case**: Filter by job type × industry × region × age group to instantly grasp job trends and salary levels. Useful for job seekers understanding the market and HR for recruitment/salary strategy.
   - **How to use analysis results**:
     - Use job type × industry × region combinations where openings concentrate to set recruitment focus and salary levels.
@@ -941,10 +958,11 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Global Climate and Environmental Data**: `test-global-climate-environmental.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-climate-environmental)
   - **Format**:
-    ```csv
-    Date,Average Temperature Change(℃),Forest Coverage(%),CO2 Emissions(tons/person),Country Name,Continent,Unused,Renewable Energy Ratio,Count,Renewable Energy Ratio(%),Water Resources,Air Pollution Index(PM2.5),Environmental Policy Score,Energy Consumption,Sea Level Rise Impact(mm/year)
+    
+```csv
+Date,Country Name,Continent,Average Temperature Change(℃),Forest Coverage(%),CO2 Emissions(tons/person),Unused,Renewable Energy Ratio,Count,Renewable Energy Ratio(%),Water Resources,Air Pollution Index(PM2.5),Environmental Policy Score,Energy Consumption,Sea Level Rise Impact(mm/year)
     ```
-  - **Description**: Global environmental and climate change data allowing multifaceted analysis of CO2 emissions, renewable energy ratio, forest coverage, air pollution index, etc.
+- **Description**: Global environmental and climate change data allowing multifaceted analysis of CO2 emissions, renewable energy ratio, forest coverage, air pollution index, etc.
   - **Use Case**: Filter by country × continent × environmental indicator to instantly grasp international comparison and SDGs progress. Useful for environmental policy staff and NGOs judging international cooperation priority regions.
   - **How to use analysis results**:
     - Identify countries or regions with notable improvement or deterioration by indicator to select aid priorities and technology transfer focus.
@@ -954,10 +972,11 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Global Education and Human Development Data**: `test-global-education-human-development.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-education-human-development)
   - **Format**:
-    ```csv
+    
+```csv
     Year,Gender,Age,Country/Region,Continent,Economic Level,Political System,Unused,Literacy Rate,University Enrollment Rate,R&D Expenditure Rate,Patent Applications,Education Budget Rate,Average Education Years,Digital Literacy Rate,Innovation Index
     ```
-  - **Description**: Global education and human development indicator data allowing international comparative analysis of literacy, university enrollment, R&D, patent applications, innovation index
+- **Description**: Global education and human development indicator data allowing international comparative analysis of literacy, university enrollment, R&D, patent applications, innovation index
   - **Use Case**: Filter by country × economic level × education indicator to instantly grasp international education gaps and investment effectiveness. Useful for ODA staff and education researchers for support country selection and policy recommendations.
   - **How to use analysis results**:
     - Identify countries or regions with large gaps by economic level × education indicator to select ODA and scholarship priorities.
@@ -967,7 +986,8 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Global Health and Medical Systems Data**: `test-global-health-medical-systems.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-health-medical-systems)
   - **Format**:
-    ```csv
+    
+```csv
     Year,Gender,Age,Country/Region,Continent,Income Group,Healthcare System Type,Unused,Life Expectancy,Infant Mortality Rate,Healthcare Expenditure Rate,Physician Rate,Hospital Bed Rate,Vaccination Rate,Infectious Disease Rate,Healthcare Access Index
     ```
   - **Description**: Global health and medical system data allowing international comparative analysis of life expectancy, healthcare expenditure, physicians, hospital beds, vaccination rates

@@ -141,7 +141,7 @@
       "isShow": 1,
       "isDcSunburstChart": true,
       "dcSunburstChart": {
-        "keyIndex": "$4/$5",
+        "keyIndex": "$1/$2",
         "width": 600,
         "height": 600
       },

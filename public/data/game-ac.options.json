@@ -4,7 +4,7 @@
   "common": {
     "unit": "タイトル"
   },
-  "searchPrefixDataIndex": 5,
+  "searchPrefixDataIndex": 2,
   "searchPrefix": "アーケードゲーム",
   "dataReference": "<ul><li><a target='_blank' href=\"https://ja.wikipedia.org/wiki/アーケードゲームのタイトル一覧\">アーケードゲームのタイトル一覧@Wikipedia</a></li></ul>",
   "detailType": "city",
