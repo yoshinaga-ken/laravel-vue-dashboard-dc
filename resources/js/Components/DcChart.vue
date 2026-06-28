@@ -450,7 +450,15 @@
               :src="'https://www.youtube.com/embed/' + pnl.tube.vid"
               title="YouTube video player"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+                web-share;
+              "
               referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen
             ></iframe>
@@ -1345,16 +1353,16 @@ const G_IS_TUBE_SEARCH = import.meta.env.PROD // YoutubeAPIを呼ぶか? ※開�
 const DT_DEF = 0 //0:汎用的なDCデータ
 const DT_COVID = 1 //1:新型コロナウイルス感染状況のデータ
 // データのカラムのタイプ
-const D_YMD = 0 // 日付。 例:2020-01-30
-const D_SEX = 1 // 性別ID。INT。0:不明 1:男 2:女 。data_opt.chartSex_unitで定義可
-const D_AGE = 2 // 年齢。  INT。-1:不明 0:幼児 1:10歳未満 / 10~N:10~N代。data_opt.chartAge_unitで定義可
-const D_CND = 3 // 状態。 例:無症,退院,感染。状態ワード(無症状,退院,入院,肺炎,...)から4つのレベル(無症・退院,感染,肺炎・入院,酸投...)に集約される
-const D_PL1 = 4 // 都道府県。 例:福岡県
-const D_PL2 = 5 // 市区町村。 例:福岡市
-const D_JOB = 6 // 職業。 例:会社員
-const D_JOBCAT = 7 // ジョブカテゴリID。 INT。例:'教職員'=>['教職員','大学職員','小学校教諭','専門学校職員...]。定義が0or種類が1つしかない場合使用しない
+const D_YMD = 0 // 日付。 例:2020-01-30。対応chart:chartDate(BarChart)
+const D_PL1 = 1 // 都道府県。 例:福岡県。対応chart:chartName(RowChart)
+const D_PL2 = 2 // 市区町村。 例:福岡市。対応chart:chartCity(RowChart)
+const D_SEX = 3 // 性別ID。INT。0:不明 1:男 2:女 。対応chart:chartSex(PieChart)
+const D_AGE = 4 // 年齢。  INT。-1:不明 0:幼児 1:10歳未満 / 10~N:10~N代。対応chart:chartAge(BarChart)
+const D_CND = 5 // 状態。 例:無症,退院,感染。状態。対応chart:chartCond(BarChart)
+const D_JOB = 6 // 職業。 例:会社員。対応chart:chartJob(BarChart)
+const D_JOBCAT = 7 // 職業カテゴリID。 INT。.options.jsonの"jobcates": ["","無職","教職員",..]のindex
 const D_CNT = 8 // カウント。INT。(未必須:ない場合:1)
-const D_EX0 = 9 // chartEx用データ始点
+const D_EX0 = 9 // chartEx用データ始点。対応chart:chartEx[](BarChart)
 // データ3のカラムのタイプ
 const D3_YMD = 0
 const D3_PL1 = 1
