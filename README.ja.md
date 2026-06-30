@@ -74,6 +74,15 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
   - [🎵邦楽ヒット曲ランキング](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit&layout=tube)
 - 歴史・文化
   - [🏯日本の城一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
+- 自然・植物
+  - [☘️植物観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1)
+  - [☘️トウカエデ観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
+  - [☘️クロマツ観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
+  - [☘️ツバキ属観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
+  - [☘️ヤブツバキ観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
+  - [☘️ミカン科観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
+  - [☘️ニシキギ科観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
+  - [☘️ビャクシン属観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
 - 災害・防災
   - [能登半島地震による行方不明者リスト @2024/1/1](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - 市場分析

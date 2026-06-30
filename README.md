@@ -74,6 +74,15 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - [🎵Japanese Hit Song Rankings](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit&layout=tube)
 - History & Culture
   - [🏯List of Castles in Japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
+- Nature & Plants
+  - [☘️Plant Observation Records@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1)
+  - [☘️Acer buergerianum Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
+  - [☘️Pinus thunbergii Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
+  - [☘️Camellia Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
+  - [☘️Camellia japonica Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
+  - [☘️Rutaceae Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
+  - [☘️Celastraceae Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
+  - [☘️Syringa Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
 - Disasters & Disaster Prevention
   - [List of missing persons due to Noto Peninsula earthquake @2024/1/1](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - Market Analysis
