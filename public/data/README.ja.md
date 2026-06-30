@@ -824,6 +824,24 @@
     - [卒業ソングランキング@年代流行](https://nendai-ryuukou.com/article/084.html)
     - [応援ソングランキング@年代流行](https://nendai-ryuukou.com/article/151.html)
 
+### 21-3. ☘️iNaturalist植物観測データ
+
+#### ☘️植物観測記録@iNaturalist
+- **ファイル**: `inature-1.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1)
+  - **フォーマット**:
+    ```
+    観測日,国名,州名・県名,植物名,未使用,分類群ID,種,ID_IMG,CNT,緯度経度,ID_URL
+    ```
+  - **説明**: iNaturalist 観測エクスポート（taxon 753472）から生成した植物観測データ（330件）。国×州・県×植物名×分類群ID×種で分析可能。rowChart サムネイルは iNaturalist オープンデータ S3 の写真 ID を参照。観測地点の緯度経度で GoogleMap マーカー連動。
+  - **用途**: 国×州・県×植物名×観測月で絞り込み、世界分布やタクソン別の観測傾向を把握する。
+  - **分析結果の活用例**:
+    - 国・地域別の観測件数から分布の偏りを比較する。
+    - 植物名（和名）フィルタで特定タクソンの観測地点を地図上で確認する。
+    - 観測月の推移から季節的な観測パターンを探索する。
+  - **データ出典**: [iNaturalist](https://www.inaturalist.org/)
+  - **再生成**: `node tools/generate-inature-1.cjs`（詳細は `.cursor/skills/inature-dcchart/SKILL.md`）
+
 ### 22. テスト用データ
 
 #### 基本テストデータ
@@ -887,10 +905,9 @@
 - **大学受験データ**: `test-university-entrance.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-university-entrance)
   - **フォーマット**:
-
-    ```csv
-    日付,都道府県,市区町村,性別,年齢,学部系統,志望区分,未使用,志願者数,偏差値,合格者数,受験回数,私立公立,学費```
-
+    ```
+    日付,都道府県,市区町村,性別,年齢,学部系統,志望区分,未使用,志願者数,偏差値,合格者数,受験回数,私立公立,学費
+    ```
   - **説明**: 大学受験に関するデータ。受験生の基本情報、学部系統、志願者数、偏差値、合格者数、受験回数、学費などが含まれる
   - **用途**: 学部系統 × 志望区分 × 地域で絞り込み、志願者動向や合格難易度の傾向を即座に把握できます。進路指導担当者が生徒への助言材料を得たり、大学が入試戦略を検討するのに活用できます。
   - **分析結果の活用例**:
@@ -901,11 +918,9 @@
 - **学力テスト結果データ**: `test-academic-achievement.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-academic-achievement)
   - **フォーマット**:
-
-    
-```csv
-    日付,都道府県,市区町村,性別,年齢,教科,学校種別,未使用,平均点,学校規模,地域区分,習熟度レベル,受験者数,全国順位,偏差値,学習時間```
-
+    ```
+    日付,都道府県,市区町村,性別,年齢,教科,学校種別,未使用,平均点,学校規模,地域区分,習熟度レベル,受験者数,全国順位,偏差値,学習時間
+    ```
   - **説明**: 学力テストの結果データ。教科別平均点、学校規模、地域区分、習熟度レベル、受験者数、偏差値、学習時間などが含まれる
   - **用途**: 教科 × 地域 × 学校種別で絞り込み、課題のある教科・地域の特定や習熟度別の指導方針検討に活用できます。教育委員会や学校が改善重点を判断する際の材料として適しています。
   - **分析結果の活用例**:
@@ -918,11 +933,9 @@
 - **交通事故データ**: `test-traffic-accident.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-traffic-accident)
   - **フォーマット**:
-
-    
-```csv
-    日時,都道府県,市区町村,性別,年齢,事故類型,職業,未使用,カウント,天候,道路種別,車両種別,時間帯,負傷者数```
-
+    ```
+    日時,都道府県,市区町村,性別,年齢,事故類型,職業,未使用,カウント,天候,道路種別,車両種別,時間帯,負傷者数
+    ```
   - **説明**: 交通事故に関するデータ。事故類型、天候、道路種別、車両種別、時間帯、負傷者数などの詳細情報が含まれる
   - **用途**: 事故類型 × 地域 × 時間帯 × 天候で絞り込み、危険箇所や高リスク条件の特定を即座に行えます。警察や自治体の交通安全施策立案、ドライバーの注意喚起に活用できます。
   - **分析結果の活用例**:
@@ -933,12 +946,9 @@
 - **公共交通利用データ**: `test-public-transport.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-public-transport)
   - **フォーマット**:
-
-    
-```csv
+    ```
     年月,路線名,駅名,都道府県,利用者数,時間帯,曜日区分,季節,交通手段
     ```
-
   - **説明**: 公共交通機関の利用状況データ。路線別、時間帯別、曜日区分、季節変動の分析が可能
   - **用途**: 路線 × 駅 × 時間帯 × 曜日で絞り込み、混雑ピークや閑散区間を即座に把握できます。鉄道会社のダイヤ改善や自治体の交通政策検討に活用できます。
   - **分析結果の活用例**:
@@ -951,12 +961,9 @@
 - **不動産取引データ**: `test-real-estate.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-real-estate)
   - **フォーマット**:
-
-    
-```csv
+    ```
     年月,都道府県,市区町村,物件種別,築年数,面積,価格,最寄り駅距離,間取り,取引件数
     ```
-
   - **説明**: 不動産取引に関するデータ。物件種別、築年数、面積、価格、駅距離、間取り別の取引動向が分析可能
   - **用途**: 地域 × 物件種別 × 価格帯 × 築年数で絞り込み、市場価格の傾向や好条件物件の分布を即座に把握できます。購入検討者が予算・条件に合うエリアを絞り込んだり、不動産業者が需給分析に活用できます。
   - **分析結果の活用例**:
@@ -967,12 +974,9 @@
 - **住宅着工統計**: `test-housing-construction.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-housing-construction)
   - **フォーマット**:
-
-    
-```csv
+    ```
     年月,都道府県,構造区分,建て方,利用関係,床面積,工事費予定額,着工戸数,世帯構成
     ```
-
   - **説明**: 住宅着工に関するデータ。構造区分、建て方、利用関係、床面積、工事費、着工戸数の動向分析
   - **用途**: 地域 × 構造 × 利用関係 × 時期で絞り込み、住宅市場の需要動向や建て方別のトレンドを即座に把握できます。ハウスメーカーや建築業界の関係者が市場分析や事業計画に活用できます。
   - **分析結果の活用例**:
@@ -985,12 +989,9 @@
 - **家計調査データ**: `test-household-survey.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-household-survey)
   - **フォーマット**:
-
-    
-```csv
+    ```
     年月,都道府県,世帯人員,年齢階級,職業,支出項目,支出金額,収入,貯蓄額,消費性向
     ```
-
   - **説明**: 家計の消費行動データ。支出項目別、年齢階級別、職業別の消費動向分析が可能
   - **用途**: 支出項目 × 年齢階級 × 職業 × 地域で絞り込み、ターゲット層別の消費傾向を即座に把握できます。企業の販売戦略立案や、行政の消費者政策検討に活用できます。
   - **分析結果の活用例**:
@@ -1001,11 +1002,9 @@
 - **電子商取引データ**: `test-ecommerce.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ecommerce)
   - **フォーマット**:
-
-    
-```csv
-    日付,都道府県,市区町村,性別,年齢,商品カテゴリ,職業,未使用,購入金額,デバイス種別,決済方法,購入回数,配送方法,満足度,会員ランク,利用時間帯```
-
+    ```
+    日付,都道府県,市区町村,性別,年齢,商品カテゴリ,職業,未使用,購入金額,デバイス種別,決済方法,購入回数,配送方法,満足度,会員ランク,利用時間帯
+    ```
   - **説明**: EC（電子商取引）の購入データ。商品カテゴリ別、デバイス種別、決済方法、利用時間帯などの詳細分析が可能
   - **用途**: 商品カテゴリ × デバイス × 利用者属性 × 時間帯で絞り込み、購買パターンやキャンペーン効果を即座に把握できます。EC担当者が商品陳列やマーケティング施策の改善に活用できます。
   - **分析結果の活用例**:
@@ -1018,12 +1017,9 @@
 - **環境調査データ**: `test-environment-survey.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-environment-survey)
   - **フォーマット**:
-
-    
-```csv
+    ```
     日時,都道府県,測定局名,汚染物質,濃度,気象条件,季節,地域特性,測定値数
     ```
-
   - **説明**: 環境汚染の測定データ。汚染物質別、気象条件別、季節変動、地域特性の分析が可能
   - **用途**: 汚染物質 × 地域 × 季節 × 気象条件で絞り込み、高濃度が観測される条件や地域を即座に特定できます。環境行政担当者や地域住民が改善施策の検討材料を得るのに活用できます。
   - **分析結果の活用例**:
@@ -1036,12 +1032,9 @@
 - **雇用・労働データ**: `test-employment-labor.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-employment-labor)
   - **フォーマット**:
-
-    
-```csv
+    ```
     年月,都道府県,職種,業界,年齢層,性別,求人数,平均給与,雇用形態,経験年数
     ```
-
   - **説明**: 求人・転職市場のデータ。職種別、業界別、年齢層別の求人動向と給与水準の分析が可能
   - **用途**: 職種 × 業界 × 地域 × 年齢層で絞り込み、求人トレンドや給与相場を即座に把握できます。転職検討者が市場を理解したり、人事が採用・給与戦略を検討するのに活用できます。
   - **分析結果の活用例**:
@@ -1054,12 +1047,9 @@
 - **世界環境・気候変動データ**: `test-global-climate-environmental.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-climate-environmental)
   - **フォーマット**:
-
-    
-```csv
-日付,国名,大陸,平均気温変化(℃),森林被覆率(%),CO2排出量(トン/人),未使用,再生可能エネルギー比率,カウント,再生可能エネルギー比率(%),水資源量(1人当たり立方メートル),大気汚染指数(PM2.5濃度),環境政策スコア(100点満点),エネルギー消費量(1人当たりTOE),海面上昇影響度(mm/年)
     ```
-
+    日付,国名,大陸,平均気温変化(℃),森林被覆率(%),CO2排出量(トン/人),未使用,再生可能エネルギー比率,カウント,再生可能エネルギー比率(%),水資源量(1人当たり立方メートル),大気汚染指数(PM2.5濃度),環境政策スコア(100点満点),エネルギー消費量(1人当たりTOE),海面上昇影響度(mm/年)
+    ```
   - **説明**: 世界各国の環境・気候変動データ。CO2排出量、再生可能エネルギー比率、森林被覆率、大気汚染指数など多角的な環境指標の分析が可能
   - **用途**: 国 × 大陸 × 環境指標で絞り込み、国際比較やSDGs関連の進捗を即座に把握できます。環境政策担当者やNGOが国際協力の優先地域を判断するのに活用できます。
   - **分析結果の活用例**:
@@ -1070,12 +1060,9 @@
 - **世界教育・人材開発データ**: `test-global-education-human-development.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-education-human-development)
   - **フォーマット**:
-
-    
-```csv
+    ```
     年度,性別,年齢,国・地域名,大陸,経済レベル,政治体制,未使用,識字率,大学進学率,研究開発費率,特許出願数,教育予算率,平均教育年数,デジタルリテラシー率,イノベーション指数
     ```
-
   - **説明**: 世界各国の教育・人材開発指標データ。識字率、大学進学率、研究開発費、特許出願数、イノベーション指数の国際比較分析が可能
   - **用途**: 国 × 経済レベル × 教育指標で絞り込み、国際的な教育格差や投資効果を即座に把握できます。ODA担当者や教育研究者が支援対象国の選定や政策提言に活用できます。
   - **分析結果の活用例**:
@@ -1086,12 +1073,9 @@
 - **世界保健・医療システムデータ**: `test-global-health-medical-systems.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-health-medical-systems)
   - **フォーマット**:
-
-    
-```csv
+    ```
     年度,性別,年齢,国・地域名,大陸,所得グループ,医療制度型,未使用,平均寿命,乳児死亡率,医療費率,医師数率,病床数率,ワクチン接種率,感染症発生率,医療アクセス指数
     ```
-
   - **説明**: 世界各国の保健・医療システムデータ。平均寿命、医療費、医師数、病床数、ワクチン接種率など医療システムの国際比較分析が可能
   - **用途**: 国 × 所得グループ × 医療指標で絞り込み、医療アクセスの格差や制度効果を即座に把握できます。国際保健機関や開発援助関係者が優先支援地域を判断するのに活用できます。
   - **分析結果の活用例**:
@@ -1144,9 +1128,8 @@
 - **スタジオジブリ劇場公開作品一覧**: `test-ghibli-films.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ghibli-films)
   - **フォーマット**:
-    
-```
-公開日,監督,作品名,性別,上映時間,評価,脚本,未使用,興行収入,製作,配給,観客動員数
+    ```
+    公開日,監督,作品名,性別,上映時間,評価,脚本,未使用,興行収入,製作,配給,観客動員数
     ```
   - **説明**: スタジオジブリの劇場公開長編作品。公開年・監督・興行収入（億円）・観客動員数（万人）・上映時間で分析可能。rowChart サムネイルは [ghibli.jp/images](https://www.ghibli.jp/images/) を `@pathColExt` で参照。観客動員数は Wikipedia ランキング表より（未掲載作品は空欄）。
   - **用途**: 監督×公開年×興行収入で絞り込み、ヒット作の傾向や監督別の代表作を比較する。
@@ -1194,6 +1177,46 @@
   - **分析結果の活用例**:
     - 国籍×消費項目×地域で消費が集中する組み合わせを把握し、品揃え・陳列・プロモーションの重点設定に使えます。
     - ターゲット国別の売れ筋を特定し、次のインバウンド回復期に備えた仕入れ・在庫計画の材料にできます。
+
+### iNaturalist 植物観測データ
+
+[iNaturalist](https://www.inaturalist.org/) の観測エクスポートから生成した植物観測データセット。地図（GMap）・国・州/県・植物名（写真サムネイル付き rowChart）で絞り込み可能。英語版は `<id>-en`（例: `inature-337792-en.csv`）。
+
+#### トウカエデ（*Acer buergerianum*, taxon 337792）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
+- **ファイル**: `inature-337792.csv`（3,102 件）
+- **説明**: トウカエデの iNaturalist 観測記録。観測日・国・州/県・和名+日付サフィックスの植物名・iNaturalist 写真リンク
+- **データ出典**: [Acer buergerianum（taxon 337792）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=337792)
+
+#### クロマツ（*Pinus thunbergii*, taxon 135655）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
+- **ファイル**: `inature-135655.csv`（2,439 件）
+- **データ出典**: [Pinus thunbergii（taxon 135655）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=135655)
+
+#### ツバキ属（*Camellia*, taxon 83058）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
+- **ファイル**: `inature-83058.csv`（7,331 件）
+- **データ出典**: [Camellia（taxon 83058）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83058)
+
+#### ヤブツバキ（*Camellia japonica*, taxon 83056）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
+- **ファイル**: `inature-83056.csv`（2,203 件）
+- **データ出典**: [Camellia japonica（taxon 83056）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83056)
+
+#### ミカン科（*Rutaceae*, taxon 50623）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
+- **ファイル**: `inature-50623.csv`（4,999 件）
+- **データ出典**: [Rutaceae（taxon 50623）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=50623)
+
+#### ニシキギ科（*Celastraceae*, taxon 47539）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
+- **ファイル**: `inature-47539.csv`（9,864 件）
+- **データ出典**: [Celastraceae（taxon 47539）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47539)
+
+#### ビャクシン属（*Syringa*, taxon 47574）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
+- **ファイル**: `inature-47574.csv`（9,456 件）
+- **データ出典**: [Syringa（taxon 47574）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47574)
 
 ※各テストデータは、DC.jsを使用した多次元チャート分析のサンプルとして作成されており、実際のデータ分析手法や可視化技術の学習・検証に活用できます。
 

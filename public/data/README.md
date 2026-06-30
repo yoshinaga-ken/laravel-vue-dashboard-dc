@@ -775,6 +775,24 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     - [Graduation Song Ranking@Nendai-Ryuukou](https://nendai-ryuukou.com/article/084.html)
     - [Cheer Song Ranking@Nendai-Ryuukou](https://nendai-ryuukou.com/article/151.html)
 
+### 18-3. ☘️iNaturalist Plant Observation Data
+
+#### ☘️Plant Observation Records@iNaturalist
+- **File**: `inature-1.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1)
+  - **Format**:
+    ```
+    Observed Month,Country,State/Province,Plant Name,Unused,Taxon ID,Species,ID_IMG,CNT,Lat/Lon,ID_URL
+    ```
+  - **Description**: Plant observation data (330 records) generated from an iNaturalist export (taxon 753472). Analyze by country × state/province × plant name × taxon ID × species. Row chart thumbnails reference photo IDs on the iNaturalist open-data S3 bucket. Latitude/longitude enables Google Map marker panning.
+  - **Use Case**: Filter by country × state/province × plant name × observation month to explore global distribution and taxon-specific observation trends.
+  - **How to use analysis results**:
+    - Compare observation counts by country/region to see distribution bias.
+    - Filter by plant name (common name) to locate observation sites on the map.
+    - Explore seasonal observation patterns via observation month trends.
+  - **Data Source**: [iNaturalist](https://www.inaturalist.org/)
+  - **Regenerate**: `node tools/generate-inature-1.cjs` (see `.cursor/skills/inature-dcchart/SKILL.md`)
+
 ### 19. Test Data
 
 #### Basic Test Data
@@ -811,8 +829,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **University Entrance Data**: `test-university-entrance.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-university-entrance)
   - **Format**:
-    ```csv
-    Date,Prefecture,Municipality,Gender,Age,Department,Application Type,Unused,Applicants,Deviation Value,Accepted,Exam Count,Public/Private,Tuition```
+    ```
+    Date,Prefecture,Municipality,Gender,Age,Department,Application Type,Unused,Applicants,Deviation Value,Accepted,Exam Count,Public/Private,Tuition
+    ```
 - **Description**: University entrance examination data including basic student information, department, applicants, deviation value, accepted, exam count, and tuition
   - **Use Case**: Filter by department × application type × region to instantly grasp applicant trends and admission difficulty. Useful for career guidance and universities for admission strategy.
   - **How to use analysis results**:
@@ -823,9 +842,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Academic Achievement Test Data**: `test-academic-achievement.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-academic-achievement)
   - **Format**:
-    
-```csv
-    Date,Prefecture,Municipality,Gender,Age,Subject,School Type,Unused,Average Score,School Size,Regional Category,Proficiency Level,Test Takers,National Rank,Deviation Value,Study Hours```
+    ```
+    Date,Prefecture,Municipality,Gender,Age,Subject,School Type,Unused,Average Score,School Size,Regional Category,Proficiency Level,Test Takers,National Rank,Deviation Value,Study Hours
+    ```
 - **Description**: Academic test results data including average scores by subject, school size, regional category, proficiency level, test takers, deviation value, and study hours
   - **Use Case**: Filter by subject × region × school type to identify challenging subjects/regions and consider proficiency-specific guidance. Suitable for education boards and schools judging improvement priorities.
   - **How to use analysis results**:
@@ -838,9 +857,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Traffic Accident Data**: `test-traffic-accident.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-traffic-accident)
   - **Format**:
-    
-```csv
-    Date/Time,Prefecture,Municipality,Gender,Age,Accident Type,Occupation,Unused,Count,Weather,Road Type,Vehicle Type,Time Period,Injuries```
+    ```
+    Date/Time,Prefecture,Municipality,Gender,Age,Accident Type,Occupation,Unused,Count,Weather,Road Type,Vehicle Type,Time Period,Injuries
+    ```
 - **Description**: Traffic accident data including accident type, weather, road type, vehicle type, time period, and injuries
   - **Use Case**: Filter by accident type × region × time × weather to instantly identify danger spots and high-risk conditions. Useful for police and municipalities for traffic safety measures and driver awareness.
   - **How to use analysis results**:
@@ -851,8 +870,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Public Transportation Usage Data**: `test-public-transport.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-public-transport)
   - **Format**:
-    
-```csv
+    ```
     Year/Month,Route Name,Station Name,Prefecture,Passengers,Time Period,Day Category,Season,Transportation Mode
     ```
 - **Description**: Public transportation usage data allowing analysis by route, time period, day category, and seasonal variation
@@ -867,8 +885,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Real Estate Transaction Data**: `test-real-estate.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-real-estate)
   - **Format**:
-    
-```csv
+    ```
     Year/Month,Prefecture,Municipality,Property Type,Age,Area,Price,Station Distance,Layout,Transactions
     ```
 - **Description**: Real estate transaction data allowing analysis by property type, age, area, price, station distance, and layout
@@ -881,8 +898,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Housing Construction Statistics**: `test-housing-construction.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-housing-construction)
   - **Format**:
-    
-```csv
+    ```
     Year/Month,Prefecture,Structure Type,Building Type,Use Category,Floor Area,Construction Cost,Housing Starts,Household Composition
     ```
 - **Description**: Housing construction data for trend analysis of structure type, building type, use category, floor area, construction cost, and housing starts
@@ -897,8 +913,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Household Survey Data**: `test-household-survey.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-household-survey)
   - **Format**:
-    
-```csv
+    ```
     Year/Month,Prefecture,Household Size,Age Group,Occupation,Expenditure Item,Expenditure Amount,Income,Savings,Consumption Propensity
     ```
 - **Description**: Household consumption behavior data allowing analysis by expenditure item, age group, and occupation
@@ -911,9 +926,9 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **E-commerce Data**: `test-ecommerce.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ecommerce)
   - **Format**:
-    
-```csv
-    Date,Prefecture,Municipality,Gender,Age,Product Category,Occupation,Unused,Purchase Amount,Device Type,Payment Method,Purchase Count,Delivery Method,Satisfaction,Member Rank,Usage Time```
+    ```
+    Date,Prefecture,Municipality,Gender,Age,Product Category,Occupation,Unused,Purchase Amount,Device Type,Payment Method,Purchase Count,Delivery Method,Satisfaction,Member Rank,Usage Time
+    ```
 - **Description**: E-commerce purchase data allowing detailed analysis by product category, device type, payment method, and usage time
   - **Use Case**: Filter by product category × device × user attributes × time to instantly grasp purchase patterns and campaign effectiveness. Useful for EC managers for product display and marketing improvement.
   - **How to use analysis results**:
@@ -926,8 +941,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Environmental Survey Data**: `test-environment-survey.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-environment-survey)
   - **Format**:
-    
-```csv
+    ```
     Date/Time,Prefecture,Monitoring Station,Pollutant,Concentration,Weather Conditions,Season,Regional Characteristics,Measurement Count
     ```
 - **Description**: Environmental pollution measurement data allowing analysis by pollutant, weather, season, and regional characteristics
@@ -942,8 +956,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Employment and Labor Data**: `test-employment-labor.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-employment-labor)
   - **Format**:
-    
-```csv
+    ```
     Year/Month,Prefecture,Job Type,Industry,Age Group,Gender,Job Openings,Average Salary,Employment Type,Experience Years
     ```
 - **Description**: Job market data allowing analysis of job trends and salary levels by job type, industry, and age group
@@ -958,9 +971,8 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
 - **Global Climate and Environmental Data**: `test-global-climate-environmental.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-climate-environmental)
   - **Format**:
-    
-```csv
-Date,Country Name,Continent,Average Temperature Change(℃),Forest Coverage(%),CO2 Emissions(tons/person),Unused,Renewable Energy Ratio,Count,Renewable Energy Ratio(%),Water Resources,Air Pollution Index(PM2.5),Environmental Policy Score,Energy Consumption,Sea Level Rise Impact(mm/year)
+    ```
+    Date,Country Name,Continent,Average Temperature Change(℃),Forest Coverage(%),CO2 Emissions(tons/person),Unused,Renewable Energy Ratio,Count,Renewable Energy Ratio(%),Water Resources,Air Pollution Index(PM2.5),Environmental Policy Score,Energy Consumption,Sea Level Rise Impact(mm/year)
     ```
 - **Description**: Global environmental and climate change data allowing multifaceted analysis of CO2 emissions, renewable energy ratio, forest coverage, air pollution index, etc.
   - **Use Case**: Filter by country × continent × environmental indicator to instantly grasp international comparison and SDGs progress. Useful for environmental policy staff and NGOs judging international cooperation priority regions.
@@ -972,8 +984,7 @@ Date,Country Name,Continent,Average Temperature Change(℃),Forest Coverage(%),C
 - **Global Education and Human Development Data**: `test-global-education-human-development.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-education-human-development)
   - **Format**:
-    
-```csv
+    ```
     Year,Gender,Age,Country/Region,Continent,Economic Level,Political System,Unused,Literacy Rate,University Enrollment Rate,R&D Expenditure Rate,Patent Applications,Education Budget Rate,Average Education Years,Digital Literacy Rate,Innovation Index
     ```
 - **Description**: Global education and human development indicator data allowing international comparative analysis of literacy, university enrollment, R&D, patent applications, innovation index
@@ -986,8 +997,7 @@ Date,Country Name,Continent,Average Temperature Change(℃),Forest Coverage(%),C
 - **Global Health and Medical Systems Data**: `test-global-health-medical-systems.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-health-medical-systems)
   - **Format**:
-    
-```csv
+    ```
     Year,Gender,Age,Country/Region,Continent,Income Group,Healthcare System Type,Unused,Life Expectancy,Infant Mortality Rate,Healthcare Expenditure Rate,Physician Rate,Hospital Bed Rate,Vaccination Rate,Infectious Disease Rate,Healthcare Access Index
     ```
   - **Description**: Global health and medical system data allowing international comparative analysis of life expectancy, healthcare expenditure, physicians, hospital beds, vaccination rates
@@ -1088,6 +1098,45 @@ Date,Country Name,Continent,Average Temperature Change(℃),Forest Coverage(%),C
     - Use nationality × expenditure × region combinations where consumption concentrates to set product lineup, display, and promotion focus.
     - Use target-country best-sellers to plan inventory and assortment for the next inbound recovery phase.
   - **Data Source**: Sample data
+
+### iNaturalist Plant Observation Data
+
+Plant observation datasets generated from [iNaturalist](https://www.inaturalist.org/) exports. Filter by map (GMap), country, state/prefecture, and plant name (rowChart with photo thumbnails). English versions use `<id>-en` (e.g. `inature-337792-en.csv`).
+
+#### Trident Maple (*Acer buergerianum*, taxon 337792)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
+- **File**: `inature-337792.csv` (3,102 records)
+- **Data Source**: [Acer buergerianum (taxon 337792) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=337792)
+
+#### Japanese Black Pine (*Pinus thunbergii*, taxon 135655)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
+- **File**: `inature-135655.csv` (2,439 records)
+- **Data Source**: [Pinus thunbergii (taxon 135655) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=135655)
+
+#### Camellia genus (*Camellia*, taxon 83058)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
+- **File**: `inature-83058.csv` (7,331 records)
+- **Data Source**: [Camellia (taxon 83058) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83058)
+
+#### Japanese Camellia (*Camellia japonica*, taxon 83056)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
+- **File**: `inature-83056.csv` (2,203 records)
+- **Data Source**: [Camellia japonica (taxon 83056) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83056)
+
+#### Rue family (*Rutaceae*, taxon 50623)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
+- **File**: `inature-50623.csv` (4,999 records)
+- **Data Source**: [Rutaceae (taxon 50623) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=50623)
+
+#### Celastraceae (*Celastraceae*, taxon 47539)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
+- **File**: `inature-47539.csv` (9,864 records)
+- **Data Source**: [Celastraceae (taxon 47539) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47539)
+
+#### Lilac genus (*Syringa*, taxon 47574)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
+- **File**: `inature-47574.csv` (9,456 records)
+- **Data Source**: [Syringa (taxon 47574) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47574)
 
 *Each test dataset is created as a sample for multidimensional chart analysis using DC.js and can be utilized for learning and verification of actual data analysis methods and visualization techniques.
 
