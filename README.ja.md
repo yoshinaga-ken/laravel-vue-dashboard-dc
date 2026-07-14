@@ -20,11 +20,11 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
 - 感染症・公衆衛生
   - [新型コロナウイルス 日本国内 感染状況 @2020/4~](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28)
   - [新型コロナウイルス 全世界 感染状況 @2020/4~](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-world)
-- 選挙
+- [選挙](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-candidates&fopen=1&fopen_filter=ja-election-)
   - [参議院選挙 当選当確一覧 @2025 2022 2019](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025)
   - [衆議院選挙 当選当確一覧 @2024 2021](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-2024)
   - [東京都知事選挙 候補者別得票数 @2024/7/7](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-tokyo-gubernatorial-2024.csv)
-- 📺🎮日本のテレビゲーム
+- [📺🎮日本のテレビゲーム](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc&layout=tube&fopen=1&fopen_filter=game-)
   - 据置型ゲーム機
     - [第4世代](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-gen4.csv&layout=tube)
       - [ファミコン](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc.csv&layout=tube) | [スーパーファミコン](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-smc.csv&layout=tube) | [メガドライブ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-smd.csv&layout=tube) | [PCエンジン](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-pce.csv&layout=tube)
@@ -68,21 +68,28 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
 - 食べ物
   - [🍜日本のラーメンリスト](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen.csv)
 - 映画
-  - [🎬日本歴代興行成績上位の映画一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-top200&layout=tube)
-  - [🎬スタジオジブリ劇場公開作品一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ghibli-films&name6_order=0)
+  - [🎬日本映画一覧（興行上位＋高評価選）](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-list&layout=tube2)
+  - [🎬スタジオジブリ劇場公開作品一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-ghibli-films)
 - 音楽
   - [🎵邦楽ヒット曲ランキング](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit&layout=tube)
 - 歴史・文化
   - [🏯日本の城一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
-- 自然・植物
-  - [☘️植物観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1)
-  - [☘️トウカエデ観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
-  - [☘️クロマツ観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
-  - [☘️ツバキ属観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
-  - [☘️ヤブツバキ観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
-  - [☘️ミカン科観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
-  - [☘️ニシキギ科観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
-  - [☘️ビャクシン属観測記録@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
+- [自然・植物](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-timeline&layout=gmap3&fopen&fopen_filter=inature-)
+  - [☘️植物観測記録](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1&layout=gmap3)
+  - [☘️クロマツ観測記録](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655&layout=gmap)
+  - [☘️トウカエデ観測記録](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792&layout=gmap)
+  - [☘️イロハモミジ観測記録](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-63512&layout=gmap3)
+  - [☘️ニシキギ科観測記録](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539&layout=gmap3)
+  - [☘️ビャクシン属観測記録](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574&layout=gmap3)
+  - [☘️ミカン科観測記録🌎3D](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623&layout=gmap3&is_gmap_3d=1)
+  - [☘️ヤブツバキ観測記録🌎3D](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056&layout=gmap3&is_gmap_3d=1&gmap_3d_mode=fca)
+  - [☘️ツバキ属観測記録🌎3D](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058&layout=gmap3&is_gmap_3d=1&gmap_3d_mode=fca)
+  - [🐟メダカ属（Oryzias）観測記録(taxon:90534)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-90534&layout=gmap3)
+  - [🪲カブトムシ族（Dynastinae）観測記録(taxon:324734)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-324734&layout=gmap3)
+  - [🦦カワウソ属（Lutra）観測記録(taxon:41848)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-41848&layout=gmap3)
+  - [🌈トンボ科（Libellulidae）観測記録(taxon:47819)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47819&layout=gmap3)
+  - [🐕イヌ（Canis familiaris）観測記録(taxon:47144)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47144&layout=gmap3)
+  - [🐈ネコ（Felis catus）観測記録(taxon:118552)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-118552&layout=gmap3)
 - 災害・防災
   - [能登半島地震による行方不明者リスト @2024/1/1](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - 市場分析
