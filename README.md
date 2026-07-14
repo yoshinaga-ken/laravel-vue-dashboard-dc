@@ -20,11 +20,11 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
 - Infectious Diseases & Public Health
   - [COVID-19 infection status in Japan @2020/4~](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28)
   - [COVID-19 infection status in World @2020/4~](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-world)
-- Elections
+- [Elections](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-candidates&fopen=1&fopen_filter=ja-election-)
   - [List of confirmed winners of the House of Councillors election @2025 2022 2019](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025)
   - [List of winners of the House of Representatives election @2024 2021](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-2024)
   - [Tokyo gubernatorial election votes by candidate @2024/7/7](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-tokyo-gubernatorial-2024.csv)
-- 📺🎮Tv Game in Japan
+- [📺🎮Tv Game in Japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc&layout=tube&fopen=1&fopen_filter=game-)
   - home video game consoles
     - [4th generation](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-gen4.csv&layout=tube)
       - [NES](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc.csv&layout=tube) | [SNES](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-smc.csv&layout=tube) | [Genesis](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-smd.csv&layout=tube) | [TurboGrafx-16](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-pce.csv&layout=tube)
@@ -68,21 +68,28 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
 - Food
   - [🍜List of Ramen in Japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen.csv)
 - Movies
-  - [🎬Top 200 Japanese Box Office Films](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-top200&layout=tube)
-  - [🎬Studio Ghibli Theatrical Films](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ghibli-films&name6_order=0)
+  - [🎬Japanese Film List (Box Office + Highly Rated)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-list&layout=tube2)
+  - [🎬Studio Ghibli Theatrical Films](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-ghibli-films)
 - Music
   - [🎵Japanese Hit Song Rankings](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit&layout=tube)
 - History & Culture
   - [🏯List of Castles in Japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
-- Nature & Plants
-  - [☘️Plant Observation Records@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1)
-  - [☘️Acer buergerianum Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
-  - [☘️Pinus thunbergii Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
-  - [☘️Camellia Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
-  - [☘️Camellia japonica Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
-  - [☘️Rutaceae Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
-  - [☘️Celastraceae Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
-  - [☘️Syringa Observation Record@iNaturalist](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
+- [Nature & Plants](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-timeline&layout=gmap3&fopen&fopen_filter=inature-)
+  - [☘️Plant Observation Records](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1-en&layout=gmap3)
+  - [☘️Pinus thunbergii Observation Record](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655-en&layout=gmap)
+  - [☘️Acer buergerianum Observation Record](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792-en&layout=gmap)
+  - [☘️Acer palmatum Observation Record](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-63512-en&layout=gmap3)
+  - [☘️Celastraceae Observation Record](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539-en&layout=gmap3)
+  - [☘️Syringa Observation Record](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574-en&layout=gmap3)
+  - [☘️Rutaceae Observation Record🌎3D](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623-en&layout=gmap3&is_gmap_3d=1)
+  - [☘️Camellia japonica Observation Record🌎3D](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056-en&layout=gmap3&is_gmap_3d=1&gmap_3d_mode=fca)
+  - [☘️Camellia Observation Record🌎3D](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058-en&layout=gmap3&is_gmap_3d=1&gmap_3d_mode=fca)
+  - [🐟Oryzias Observation Record(taxon:90534)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-90534&layout=gmap3)
+  - [🪲Dynastinae Observation Record(taxon:324734)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-324734&layout=gmap3)
+  - [🦦Lutra Observation Record(taxon:41848)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-41848&layout=gmap3)
+  - [🌈Libellulidae Observation Record(taxon:47819)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47819&layout=gmap3)
+  - [🐕Canis familiaris Observation Record(taxon:47144)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47144&layout=gmap3)
+  - [🐈Felis catus Observation Record(taxon:118552)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-118552&layout=gmap3)
 - Disasters & Disaster Prevention
   - [List of missing persons due to Noto Peninsula earthquake @2024/1/1](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - Market Analysis

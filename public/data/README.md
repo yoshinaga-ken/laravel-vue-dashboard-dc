@@ -17,7 +17,7 @@ Each dataset has the following common characteristics:
 
 ## Data Types and Formats
 
-### 1. COVID-19 Infection Data
+### COVID-19 Infection Data
 
 #### Domestic Infection Status (Japan)
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28) (Example: 2021-02-28)
@@ -47,7 +47,7 @@ Each dataset has the following common characteristics:
   - Use as reference for preemptive response when signs of resurgence appear in other countries.
 - **Data Source**: Open data
 
-### 2. Weather Data
+### Weather Data
 
 #### Japan Temperature Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-weather-temperature)
@@ -91,7 +91,7 @@ Each dataset has the following common characteristics:
   - Reference impacts of past similar weather conditions to support long-term planning for agriculture, disaster prevention, and infrastructure.
 - **Data Source**: [Past Weather Data Download@Japan Meteorological Agency](https://www.data.jma.go.jp/risk/obsdl/)
 
-### 3. Video Game Data
+### [Video Game Data](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc&layout=tube&fopen=1&fopen_filter=game-)
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc)
 - **File**: `game-fc.csv`, `game-gb.csv`, `game-ps1.csv`, `game-ps3.csv`, `game-ps4.csv`, `game-ps5.csv`, `game-switch.csv`, `game-ds.csv`, `game-3ds.csv`, `game-xbox.csv`, `game-xbox360.csv`, `game-dreamcast.csv`, `game-xboxone.csv`, etc.
 - **Format**:
@@ -206,6 +206,21 @@ Each dataset has the following common characteristics:
     - [PS5 2022@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_5%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7_(2022%E5%B9%B4))
     - [PS5 2023@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_5%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7_(2023%E5%B9%B4))
 
+#### 🎮Xbox Series X/S Software List
+- **File**: `game-xboxseries.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xboxseries&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 777 Xbox Series X/S titles released in Japan from 2014 to 2027. Combines packaged titles (40, marked YES), download-code editions (4), download-only titles, and ACA NEOGEO 2 titles from Wikipedia. Includes Smart Delivery titles. Release dates are assembled from year headings and `Month Day` entries.
+  - **Use Case**: Analyze Xbox Series X/S software by manufacturer × release date × package bundle availability.
+  - **How to use analysis results**:
+    - Compare manufacturer distribution between packaged and download-only titles.
+    - Track title counts by release year to understand the growth of digital distribution in the ninth console generation.
+    - Explore launch-period (Nov 2020) vs. later-title trends over time.
+  - **Data Source**: [Xbox Series X/S game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/Xbox_Series_X/S%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
 #### 🎮Nintendo Switch Software List
 - **File**: `game-switch.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-switch&layout=tube)
@@ -238,6 +253,22 @@ Each dataset has the following common characteristics:
   - **Data Source**:
     - [Nintendo DS game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E3%83%8B%E3%83%B3%E3%83%86%E3%83%B3%E3%83%89DS%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
+#### 🎮PlayStation Portable Software List
+- **File**: `game-psp.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-psp&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre,Developer,Unused,Sales Count,Platform
+    ```
+  - **Description**: 1,564 PSP titles released in Japan from 2004 to 2016. Package availability was derived for 383 titles from the download column symbols.
+  - **Use Case**: Analyze PSP software by manufacturer × genre × release date × package bundle availability.
+  - **How to use analysis results**:
+    - Track title counts by release year to understand the PSP peak period around 2010.
+    - Compare manufacturer distribution between packaged and download-only titles.
+    - Explore launch-period (Dec 2004) vs. later-title trends over time.
+  - **Data Source**:
+    - [PlayStation Portable game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_Portable%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+
 #### 🎮Nintendo 3DS Software List
 - **File**: `game-3ds.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-3ds&layout=tube)
@@ -254,6 +285,23 @@ Each dataset has the following common characteristics:
   - **Data Source**:
     - [Nintendo 3DS game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E3%83%8B%E3%83%B3%E3%83%86%E3%83%B3%E3%83%89%E3%83%BC3DS%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
+#### 🎮PlayStation Vita Software List
+- **File**: `game-vita.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-vita&layout=tube)
+  - **Format**:
+    ```
+    Release Date,Manufacturer,Title,Cross Review (Score),Package Bundle,Genre (ID),Developer,Unused,Sales Count,Genre (Detail),Platform
+    ```
+  - **Description**: 1,174 PS Vita titles released in Japan from 2011 to 2021. Package availability covers 840 titles. Cross-review scores and genres were matched for 287 titles from the [PS Vita cross-review hall of fame@soft-db](https://psvita.soft-db.net/dendo.html).
+  - **Use Case**: Analyze PS Vita software by manufacturer × genre × release date × cross-review score × package bundle availability.
+  - **How to use analysis results**:
+    - Analyze genre and manufacturer distribution among hall-of-fame titles to identify highly rated title trends.
+    - Compare manufacturer distribution between packaged and download-only titles.
+    - Explore launch-period (Dec 2011) vs. later-title trends over time.
+  - **Data Source**:
+    - [PlayStation Vita game titles@Wikipedia (JA)](https://ja.wikipedia.org/wiki/PlayStation_Vita%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
+    - [PS Vita cross-review hall of fame@soft-db](https://psvita.soft-db.net/dendo.html)
+
 #### Game Title Data (Dragon Quest Monsters)
 - [📊Dragon Quest 3 Monsters](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-title-dq3-monster) | [📊Dragon Quest 4 Monsters](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-title-dq4-monster)
 - **File**: `game-title-dq3-monster.csv`, `game-title-dq4-monster.csv`
@@ -268,7 +316,7 @@ Each dataset has the following common characteristics:
   - Use appearance conditions for monsters with desired drops to plan equipment collection routes and time estimates.
 - **Data Source**: In-game data, etc.
 
-### 4. Ramen Shop Data
+### Ramen Shop Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen)
 - **File**: `food-ramen.csv`
 - **Format**:
@@ -282,7 +330,7 @@ Each dataset has the following common characteristics:
   - Use trends by founding year or genre to identify common success factors for new openings and menu strategy.
 - **Data Source**: [Famous Ramen Shop Timeline by Era @Ramen Jiyuku](http://ramenjiyuku.web.fc2.com/)
 
-### 4-2. 🏯Japanese Castle List Data
+### 🏯Japanese Castle List Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle)
 - **File**: `ja-castle.csv`
 - **Format**:
@@ -301,7 +349,43 @@ Each dataset has the following common characteristics:
   - [📊Chart (3D map)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
 - **Data Source**: [Shiro Kōrōki (Castle Wanderings) @hb.pei.jp](https://www.hb.pei.jp/shiro/)
 
-### 4-2-1. 🌸Cherry Blossom Spots in Japan
+### 🏯Sengoku Period Historical Figures
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-sengoku-figures)
+- **File**: `ja-hist-sengoku-figures.csv`
+- **Format**:
+  Birth Date,Prefecture,Municipality,Person Name,Person Type,Field,Related Castle,Lat;Lon,Count,Sex,Era,Faction,Death Year,Wikidata,Image
+- **Description**: About 219 historical figures active in the Sengoku through Azuchi–Momoyama periods. Supports multidimensional analysis by birth year, birthplace, person type, field, related castle, sex, and faction.
+- **Use Case**: Cross-filter contemporaries and regions on a map and timeline for castle tourism and history study.
+- **How to use analysis results**:
+  - Sweep the birth-year range to see how faction geography shifts over time
+  - Compare role bias with person type × field
+  - Filter by related castle and compare with `ja-castle` for home bases
+  - Pan Google Maps markers to birthplaces / strongholds
+- **Data Sources**:
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - [Sengoku daimyō @Wikipedia](https://ja.wikipedia.org/wiki/戦国大名)
+  - [Category:Sengoku bushō @Wikipedia](https://ja.wikipedia.org/wiki/Category:戦国武将)
+  - [Sengoku bushō list @Token World](https://www.meihaku.jp/warlords-list/) (reference)
+
+### ⚔️Battles in Japanese History
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-battles)
+- **File**: `ja-hist-battles.csv`
+- **Format**:
+  Year,Prefecture,Municipality,Battle Name,Kind,Field,Era,Lat;Lon,Count,Key Figure1,Key Figure2,Key Figure3,Key Figure4,Key Figure5,Winner Faction,Loser Faction,Wikidata,Image,Source URL
+- **Description**: About 370 major battles, wars, rebellions, incidents, and campaigns from Asuka through modern Japan. Supports multidimensional analysis by year, battlefield, kind, era, and key figures.
+- **Use Case**: Track how main battlefields shift across eras on a map for castle tourism and history study.
+- **How to use analysis results**:
+  - Filter by key figures to see the geography of battles involving the same warrior (compare with `ja-hist-sengoku-figures`)
+  - Sweep the year range for Sengoku–Azuchi–Momoyama geographic peaks
+  - Compare conflict character with kind (battle/war/rebellion/incident/campaign) × era
+  - Pan from the battle-name row chart to Google Maps markers for historic sites
+  - Cross-check people and castles with `ja-castle` / `ja-hist-sengoku-figures`
+- **Data Sources**:
+  - [List of battles in Japan @Wikipedia](https://ja.wikipedia.org/wiki/日本の合戦一覧)
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - [Battle history timeline @Token World](https://www.touken-world.jp/battle_history/) (reference)
+
+### 🌸Cherry Blossom Spots in Japan
 - **File**: `ja-cherry-blossom.csv`
   - [📊Chart](http://127.0.0.1:8000/dashboard-dc-pub?data=ja-cherry-blossom)
   - **Format**:
@@ -313,7 +397,7 @@ Each dataset has the following common characteristics:
   - **Data Source**:
     - [Japan's Top 100 Sakura Sites @Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%95%E3%81%8F%E3%82%89%E5%90%8D%E6%89%80100%E9%81%B8)
 
-### 4-3. ♨️Hot Spring Usage by Prefecture (Japan)
+### ♨️Hot Spring Usage by Prefecture (Japan)
 - **File**: `ja-onsen.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-onsen)
   - **Format**:
@@ -331,7 +415,7 @@ Each dataset has the following common characteristics:
     - [Hot Spring Usage Data@Ministry of the Environment](https://www.env.go.jp/nature/onsen/data/)
     - [Prefecture Rankings (reposted MOE data)](https://uub.jp/pdr/ss/hotspring_6a.html)
 
-### 4-4. 🚃Station Passenger Volume by Line (Japan)
+### 🚃Station Passenger Volume by Line (Japan)
 - **File**: `ja-rail-passenger.csv`
   - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-rail-passenger)
   - **Format**:
@@ -350,7 +434,7 @@ Each dataset has the following common characteristics:
     - [Station Passenger Ranking 100@Open Portal](https://opendata-web.site/station/rank/)
   - **Note**: Each railway operator calculates passenger counts independently; there is no unified standard. For combined totals at the same station name, see the separate table in the Wikipedia article.
 
-### 5. Heart Disease Data
+### Heart Disease Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=kaggle-heart-disease)
 - **File**: `kaggle-heart-disease.csv`
 - **Format**:
@@ -364,7 +448,7 @@ Each dataset has the following common characteristics:
   - Use trends in specific test values and symptoms to explain in training why certain groups have higher risk.
 - **Data Source**: [Heart Disease Prediction Dataset@Kaggle](https://www.kaggle.com/datasets/mfarhaannazirkhan/heart-dataset/data)
 
-### 6. Municipal Company Data
+### Municipal Company Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-municipality-company)
 - **File**: `resas-municipality-company.csv`
 - **Format**:
@@ -380,7 +464,7 @@ Each dataset has the following common characteristics:
   - [Industry Structure Map > All Industries > Number of Companies @RESAS API](https://opendata.resas-portal.go.jp/docs/api/v1/municipality/company/perYear.html)
   - [Industry Structure Map > All Industries > Number of Companies @RESAS](https://resas.go.jp/municipality-company/#/graph/13/13101/2014/-/-/0/5.333900736553437/41.42090017812787/142.29371418128918/-)
 
-### 7. High School Baseball Data
+### High School Baseball Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=sports-hsb)
 - **File**: `sports-hsb.csv`
 - **Format**:
@@ -396,7 +480,7 @@ Each dataset has the following common characteristics:
   - [Summer Koshien Historical Champions and Runners-up List @baseballking](https://baseballking.jp/ns/161307)
   - [National High School Baseball Championship Historical Winners @Wikipedia](https://ja.wikipedia.org/wiki/全国高等学校野球選手権大会歴代優勝校)
 
-### 8. Sports Club Participation Trends
+### Sports Club Participation Trends
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=checkin-sakana)
 - **File**: `checkin-sakana.csv`, `checkin-sakana.light.csv`
 - **Format**:
@@ -410,7 +494,7 @@ Each dataset has the following common characteristics:
   - Use participation patterns by hometown or condition to improve event planning and recruitment.
 - **Data Source**: Club operation data
 
-### 9. Sports Club Website Access Trends
+### Sports Club Website Access Trends
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=sakana-hp-access)
 - **File**: `sakana-hp-access.csv`
 - **Format**:
@@ -424,7 +508,7 @@ Each dataset has the following common characteristics:
   - Use correlation between access and participation to set content improvement priorities and decide whether to continue or revise promotion.
 - **Data Source**: Access logs and participation records
 
-### 10. Article Likes Data
+### Article Likes Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-article-like)
 - **File**: `test-article-like.csv`
 - **Format**:
@@ -438,7 +522,7 @@ Each dataset has the following common characteristics:
   - Use differences by period or author attributes to decide which content to continue and which to change, and set priority of initiatives.
 - **Data Source**: Sample data *Note: Gender, age, occupation, and prefecture are for the article author
 
-### 11. Noto Earthquake Safety Confirmation Data
+### Noto Earthquake Safety Confirmation Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - **File**: `ja-quake-noto-safety.csv`
 - **Format**:
@@ -454,7 +538,7 @@ Each dataset has the following common characteristics:
   - [Information on the 2024 Noto Peninsula Earthquake @Ishikawa Prefecture](https://www.pref.ishikawa.lg.jp/saigai/202401jishin-taisakuhonbu.html#higai)
   - Wikipedia
 
-### 12. Business Trends and DI Index Data
+### Business Trends and DI Index Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=store-di)
 - **File**: `store-di.csv`
 - **Format**:
@@ -468,7 +552,7 @@ Each dataset has the following common characteristics:
   - Reference subsequent movements in past periods with similar DI levels to consider expansion or contraction in the next phase.
 - **Data Source**: [Supermarket Business Trend/Economic Sentiment Survey @Japan Supermarket Association](http://www.j-sosm.jp/dl/index.html)
 
-### 13. Agriculture-Related Data
+### Agriculture-Related Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-agriculture)
 - **File**: `resas-agriculture.csv`
 - **Format**:
@@ -484,7 +568,7 @@ Each dataset has the following common characteristics:
   - [Agricultural Output by Item @RESAS API](https://opendata.resas-portal.go.jp/docs/api/v1/agriculture/all/forStackedBar.html)
   - [Industry Structure Map > Agriculture > Agricultural Structure @RESAS](https://resas.go.jp/agriculture-all/#/rate/5.333900736553437/41.42090017812787/142.29371418128918/13/13101/0/2016/1/-/-)
 
-### 14. Wood Ear Mushroom Cultivation Data
+### Wood Ear Mushroom Cultivation Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-agr-kikurage)
 - **File**: `test-agr-kikurage.csv`
 - **Format**:
@@ -499,7 +583,7 @@ Each dataset has the following common characteristics:
 - **Data Source**: Sample data
   - ※"Other Elements" is a string representing multiple attributes (average temperature, average humidity, protein content, dietary fiber content) with grades A through D
 
-### 15. Foreign Tourist Data
+### Foreign Tourist Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-tourism-foreigners)
 - **File**: `resas-tourism-foreigners.csv`
 - **Format**:
@@ -515,7 +599,7 @@ Each dataset has the following common characteristics:
   - [Number of Visitors by Nationality to Specified Region @RESAS API](https://opendata.resas-portal.go.jp/docs/api/v1/tourism/foreigners/forFrom.html)
   - [Tourism Map > Foreigners > Foreign Visitor Analysis @RESAS](https://resas.go.jp/tourism-foreigners/#/to-transition/5.333900736553437/41.42090017812787/142.29371418128918/13/13101/100/0/0.0/2020/5/-/-/1/-/-)
 
-### 16. Annual Product Sales Data
+### Annual Product Sales Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-product-sales)
 - **File**: `resas-product-sales.csv`
 - **Format**:
@@ -529,7 +613,7 @@ Each dataset has the following common characteristics:
   - Reference past trends under similar conditions to time investment or contraction and to support medium- to long-term planning.
 - **Data Source**: [RESAS API](https://opendata.resas-portal.go.jp/)
 
-### 17. Municipal Tax Data
+### Municipal Tax Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-municipality-taxes)
 - **File**: `resas-municipality-taxes.csv`
 - **Format**:
@@ -545,7 +629,7 @@ Each dataset has the following common characteristics:
   - [Local Finance Map > Per Capita Local Tax @RESAS API](https://opendata.resas-portal.go.jp/docs/api/v1/municipality/taxes/perYear.html)
   - [Local Finance Map > Per Capita Local Tax @RESAS](https://resas.go.jp/municipality-taxes/#/graph/13/13101/2016/1/7.39231742277876/35.998703685/139.883857/-)
 
-### 18. Election Data
+### [Election Data](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-candidates&fopen=1&fopen_filter=ja-election-)
 
 #### House of Representatives Election - List of Candidates
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-candidates)
@@ -606,7 +690,7 @@ Each dataset has the following common characteristics:
   - [Tokyo Gubernatorial Election Voting Results @Tokyo](https://www.senkyo.metro.tokyo.lg.jp/election/tochiji-all/tochiji-sokuhou2024/csv/)
   - Wikipedia
 
-### 16. Store Count Data
+### Store Count Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=store-cnt)
 - **File**: `store-cnt.csv`
 - **Format**:
@@ -620,7 +704,7 @@ Each dataset has the following common characteristics:
   - Reference past store count under similar conditions to time expansion or contraction and set regional priorities.
 - **Data Source**: [Supermarket Store Count @Japan Supermarket Association](http://www.j-sosm.jp/dl/index.html)
 
-### 17. SSDSE (Standard Dataset for Education)
+### [SSDSE (Standard Dataset for Education)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-population&fopen=1&fopen_filter=ssdse-)
 
 Education-oriented standard dataset by the National Statistics Center. Enables multidimensional analysis of various statistics by prefecture and municipality.
 
@@ -718,7 +802,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - Reference past periods with similar population structure to anticipate future changes in labor force and social security demand.
 - **Data Source**: Census, etc.
 
-### 18. 🎬Movie Data
+### 🎬Movie Data
 
 #### 🎬Studio Ghibli Theatrical Films
 - **File**: `ja-movie-ghibli-films.csv`
@@ -750,7 +834,24 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     - Analyze hit share by distributor.
   - **Data Source**: [List of highest-grossing films in Japan@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E6%AD%B4%E4%BB%A3%E8%88%88%E8%A1%8C%E6%88%90%E7%B8%BE%E4%B8%8A%E4%BD%8D%E3%81%AE%E6%98%A0%E7%94%BB%E4%B8%80%E8%A6%A7)
 
-### 18-2. 🎵Music Data
+#### 🎬Japanese Film List (Box-Office Top + Critically Acclaimed)
+- **File**: `ja-movie-list.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-list&layout=tube2)
+  - **Format**:
+    ```
+    Release Date,Country,Title,⭐Rating,Type,Genre,Distributor,Unused,List Segment,Box Office Revenue,Distributor Revenue
+    ```
+  - **Description**: Merges ~200 all-time Japan box-office titles with critically acclaimed / cult films and popular classics outside the major chart (Saving Private Ryan, The Rock, Seagal films, original Star Wars trilogy, etc.; ~320 total). Analyze by genre (action, suspense, human drama, etc.), list segment (box-office / acclaimed), country, type (anime/live-action), release year, and box office revenue.
+  - **Use Case**: Filter by genre × list segment × release year to compare blockbusters and acclaimed smaller films on one dashboard.
+  - **How to use analysis results**:
+    - Filter to “acclaimed” only to see genre distribution of critically favored titles.
+    - Compare box-office vs. acclaimed bias within genres such as human drama or suspense.
+    - Use the year range filter to juxtapose contemporary hits and cult favorites.
+  - **Data Source**:
+    - [List of highest-grossing films in Japan@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E6%AD%B4%E4%BB%A3%E8%88%88%E8%A1%8C%E6%88%90%E7%B8%BE%E4%B8%8A%E4%BD%8D%E3%81%AE%E6%98%A0%E7%94%BB%E4%B8%80%E8%A6%A7)
+    - [Kinema Junpo Best Ten@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%8D%E3%83%9E%E6%97%AC%E5%A0%B1%E3%83%99%E3%82%B9%E3%83%88%E3%83%BB%E3%83%86%E3%83%B3)
+
+### 🎵Music Data
 
 #### 🎵Japanese Hit Song Rankings
 - **File**: `ja-song-hit.csv`
@@ -775,7 +876,7 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     - [Graduation Song Ranking@Nendai-Ryuukou](https://nendai-ryuukou.com/article/084.html)
     - [Cheer Song Ranking@Nendai-Ryuukou](https://nendai-ryuukou.com/article/151.html)
 
-### 18-3. ☘️iNaturalist Plant Observation Data
+### [☘️iNaturalist Plant Observation Data](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-timeline&layout=gmap3&fopen&fopen_filter=inature-)
 
 #### ☘️Plant Observation Records@iNaturalist
 - **File**: `inature-1.csv`
@@ -793,7 +894,68 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
   - **Data Source**: [iNaturalist](https://www.inaturalist.org/)
   - **Regenerate**: `node tools/generate-inature-1.cjs` (see `.cursor/skills/inature-dcchart/SKILL.md`)
 
-### 19. Test Data
+[iNaturalist](https://www.inaturalist.org/) observation datasets. Filter by map (GMap), country, state/prefecture, and observation name (rowChart with photo thumbnails). English versions use `<id>-en` (e.g. `inature-337792-en.csv`).
+
+#### Trident Maple (*Acer buergerianum*, taxon 337792)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
+- **File**: `inature-337792.csv` (3,102 records)
+- **Data Source**: [Acer buergerianum (taxon 337792) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=337792)
+
+#### Japanese Black Pine (*Pinus thunbergii*, taxon 135655)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
+- **File**: `inature-135655.csv` (2,439 records)
+- **Data Source**: [Pinus thunbergii (taxon 135655) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=135655)
+
+#### Camellia genus (*Camellia*, taxon 83058)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
+- **File**: `inature-83058.csv` (7,331 records)
+- **Data Source**: [Camellia (taxon 83058) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83058)
+
+#### Japanese Camellia (*Camellia japonica*, taxon 83056)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
+- **File**: `inature-83056.csv` (2,203 records)
+- **Data Source**: [Camellia japonica (taxon 83056) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83056)
+
+#### Rue family (*Rutaceae*, taxon 50623)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
+- **File**: `inature-50623.csv` (4,999 records)
+- **Data Source**: [Rutaceae (taxon 50623) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=50623)
+
+#### Celastraceae (*Celastraceae*, taxon 47539)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
+- **File**: `inature-47539.csv` (9,864 records)
+- **Data Source**: [Celastraceae (taxon 47539) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47539)
+
+#### Lilac genus (*Syringa*, taxon 47574)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
+- **File**: `inature-47574.csv` (9,456 records)
+- **Data Source**: [Syringa (taxon 47574) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47574)
+
+#### Medaka genus (*Oryzias*, taxon 90534)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-90534)
+- **File**: `inature-90534.csv` (749 records)
+- **Description**: iNaturalist observation records for the medaka genus, including Chinese ricefish, Javan ricefish, Indian ricefish, and five other species. GMap + rowChart photo thumbnails
+- **Data Source**: [Oryzias (taxon 90534) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=90534)
+
+#### Rhinoceros beetle subfamily (*Dynastinae*, taxon 324734)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-324734)
+- **File**: `inature-324734.csv` (4,376 records)
+- **Description**: iNaturalist observation records for Dynastinae, including Trypoxylus dichotomus tsunobosonis, Japanese rhinoceros beetle, and related taxa. Focused on Taiwan, China, Japan, and South Korea. GMap + rowChart photo thumbnails
+- **Data Source**: [Dynastinae (taxon 324734) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=324734)
+
+#### Otter genus (*Lutra*, taxon 41848)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-41848)
+- **File**: `inature-41848.csv` (136 records)
+- **Description**: iNaturalist observation records for the otter genus, including Eurasian otter and Cape clawless otter. GMap + rowChart photo thumbnails
+- **Data Source**: [Lutra (taxon 41848) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=41848)
+
+#### Skimmer family (*Libellulidae*, taxon 47819)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47819)
+- **File**: `inature-47819.csv` (3,134 records)
+- **Description**: iNaturalist observation records for Libellulidae, including wandering glider, four-spotted chaser, and scarlet skimmer. GMap + rowChart photo thumbnails
+- **Data Source**: [Libellulidae (taxon 47819) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47819)
+
+### Test Data
 
 #### Basic Test Data
 
@@ -823,6 +985,33 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     - Use popular product × store combinations by attribute to decide menu improvements and target-specific lineup.
     - Use stable high-sales store × product combinations as standard menu and location selection criteria for new stores.
   - **Data Source**: Sample data
+
+- **Bonsai Sales Data**: `test-bonsai.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-bonsai)
+  - **Format**:
+    ```
+    Date,Tree Category,Tree Name,Gender,Age,Rating,Purpose,Unused,Units Sold,Size Class,Price Range,Origin,Style
+    ```
+  - **Description**: Bonsai sales and popularity data. Includes tree categories (conifer, deciduous, flowering, fruiting, and herbaceous), tree names such as Japanese black pine, Japanese white pine, maple, plum, and nandina, size class, price range, prefecture of origin, style, buyer attributes, and purpose. The multidimensional data references classifications from Bonsai Myo and Wikipedia.
+  - **Use Case**: Filter by tree category × tree name × size × price range × origin × style to understand popular species and sales trends by price and origin. Useful for bonsai shop assortment planning and beginner recommendations.
+  - **How to use analysis results**:
+    - Identify tree category × size × price combinations where sales concentrate to plan inventory and display priorities.
+    - Identify popular origin × style combinations to review suppliers and product lineups.
+  - **Data Source**: Sample data
+
+- **Bonsai Species Catalog**: `test-bonsai-catalog.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-bonsai-catalog)
+  - **Format**:
+    ```
+    Date,Type,Tree Name,Gender,Age,Rating,Style,Unused,Count,Cultivar,Age Range,Jin and Shari,Care,Pot Type,Origin,Size Class
+    ```
+  - **Description**: Catalog data for multidimensional analysis of bonsai by botanical type, cultivar, style, origin, and related attributes. Includes bonsai type, tree name, style, cultivar, age range, jin and shari, care method, pot type, major production area, and size class.
+  - **Use Case**: Filter by type × tree species × style × cultivar × origin × care × age range to understand bonsai classifications and characteristics. Useful for learning, catalog searches, and comparing cultivars and styles.
+  - **How to use analysis results**:
+    - Analyze combinations of conifer cultivars, styles, and origins to identify masterpiece trends.
+    - Visualize origin × species × age-range distributions to understand major production areas and valued characteristics.
+    - Extract special types such as dry bonsai, root-over-rock, and group planting.
+  - **Data Source**: [Bonsai@Wikipedia](https://en.wikipedia.org/wiki/Bonsai), [Bonsai Myo species care guide](https://www.bonsaimyo.com/blogs/sodatekata-treetype), [Bonsai School types and classifications](https://bonsai-school.com/note/8/)
 
 #### Education Field Test Data
 
@@ -1098,45 +1287,6 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     - Use nationality × expenditure × region combinations where consumption concentrates to set product lineup, display, and promotion focus.
     - Use target-country best-sellers to plan inventory and assortment for the next inbound recovery phase.
   - **Data Source**: Sample data
-
-### iNaturalist Plant Observation Data
-
-Plant observation datasets generated from [iNaturalist](https://www.inaturalist.org/) exports. Filter by map (GMap), country, state/prefecture, and plant name (rowChart with photo thumbnails). English versions use `<id>-en` (e.g. `inature-337792-en.csv`).
-
-#### Trident Maple (*Acer buergerianum*, taxon 337792)
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
-- **File**: `inature-337792.csv` (3,102 records)
-- **Data Source**: [Acer buergerianum (taxon 337792) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=337792)
-
-#### Japanese Black Pine (*Pinus thunbergii*, taxon 135655)
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
-- **File**: `inature-135655.csv` (2,439 records)
-- **Data Source**: [Pinus thunbergii (taxon 135655) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=135655)
-
-#### Camellia genus (*Camellia*, taxon 83058)
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
-- **File**: `inature-83058.csv` (7,331 records)
-- **Data Source**: [Camellia (taxon 83058) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83058)
-
-#### Japanese Camellia (*Camellia japonica*, taxon 83056)
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
-- **File**: `inature-83056.csv` (2,203 records)
-- **Data Source**: [Camellia japonica (taxon 83056) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83056)
-
-#### Rue family (*Rutaceae*, taxon 50623)
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
-- **File**: `inature-50623.csv` (4,999 records)
-- **Data Source**: [Rutaceae (taxon 50623) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=50623)
-
-#### Celastraceae (*Celastraceae*, taxon 47539)
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
-- **File**: `inature-47539.csv` (9,864 records)
-- **Data Source**: [Celastraceae (taxon 47539) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47539)
-
-#### Lilac genus (*Syringa*, taxon 47574)
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
-- **File**: `inature-47574.csv` (9,456 records)
-- **Data Source**: [Syringa (taxon 47574) @iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47574)
 
 *Each test dataset is created as a sample for multidimensional chart analysis using DC.js and can be utilized for learning and verification of actual data analysis methods and visualization techniques.
 

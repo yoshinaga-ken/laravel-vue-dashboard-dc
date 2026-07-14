@@ -17,7 +17,7 @@
 
 ## データ種類とフォーマット
 
-### 1. コロナ感染者データ
+### コロナ感染者データ
 
 #### 日本国内 感染状況
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28)（代表例: 2021-02-28）
@@ -47,7 +47,7 @@
   - 他国で再流行の兆候が見えた際の、事前対応判断の材料になります。
 - **データ出典**: [厚生労働省の発表資料](https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00086.html)
 
-### 2. 気象データ
+### 気象データ
 
 #### 日本の気温データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-weather-temperature)
@@ -91,7 +91,7 @@
   - 過去に類似した気象条件が再来した場合の影響を参照し、農業・防災・インフラの長期計画の根拠にできます。
 - **データ出典**: [過去の気象データ・ダウンロード@気象庁](https://www.data.jma.go.jp/risk/obsdl/)
 
-### 3. ゲームデータ
+### [ゲームデータ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc&layout=tube&fopen=1&fopen_filter=game-)
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc)
 - **ファイル**: `game-fc.csv`, `game-gb.csv`, `game-ps1.csv`, `game-ps3.csv`, `game-ps4.csv`, `game-ps5.csv`, `game-switch.csv`, `game-ds.csv`, `game-3ds.csv`, `game-psp.csv`, `game-vita.csv`, `game-xbox.csv`, `game-xbox360.csv`, `game-dreamcast.csv`, `game-xboxone.csv`, `game-xboxseries.csv` など
 - **フォーマット**:
@@ -317,7 +317,7 @@
   - 欲しいドロップが出るモンスターの出現条件を把握し、装備収集のルート設計や時間見積もりの材料にできます。
 - **データ出典**: ゲーム内データ等
 
-### 4. ラーメン店データ
+### ラーメン店データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen)
 - **ファイル**: `food-ramen.csv`
 - **フォーマット**:
@@ -331,7 +331,7 @@
   - 創業年やジャンルで絞り込んだ傾向から、成功している店の共通条件を特定し、新規出店・メニュー方針の検討に活用できます。
 - **データ出典**: [有名ラーメン店の創業年表｜年代別@らーめん自由区](http://ramenjiyuku.web.fc2.com/)
 
-### 4-2. 🏯日本の城一覧データ
+### 🏯日本の城一覧データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle)
 - **ファイル**: `ja-castle.csv`
 - **フォーマット**:
@@ -350,7 +350,43 @@
   - [📊チャート（3D地図）](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
 - **データ出典**: [城郭放浪記 @hb.pei.jp](https://www.hb.pei.jp/shiro/)
 
-### 4-2-1. 🌸日本の桜の名所
+### 🏯戦国時代の歴史人物一覧
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-sengoku-figures)
+- **ファイル**: `ja-hist-sengoku-figures.csv`
+- **フォーマット**:
+  生年,都道府県,市区町村,人物名,人物タイプ,分野,関連城,緯度;経度,カウント,性別,時代,勢力,没年,Wikidata,画像
+- **説明**: 戦国〜安土桃山期に活躍した歴史人物（約219人）。生年・出身地、人物タイプ、分野、関連城、性別、勢力で多次元分析できる。
+- **用途**: 同時代・同地域の人物を地図と時系列で横断し、城巡りや歴史学習に活用する。
+- **分析結果の活用例**:
+  - 生年レンジを動かして勢力の地理分布の変化を見る
+  - 人物タイプ×分野で役割の偏りを比較する
+  - 関連城で絞り込み、`ja-castle` と並べて本拠を確認する
+  - Google Maps マーカーで人物の出身/本拠へパン移動する
+- **データ出典**:
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - [戦国大名@Wikipedia](https://ja.wikipedia.org/wiki/戦国大名)
+  - [Category:戦国武将@Wikipedia](https://ja.wikipedia.org/wiki/Category:戦国武将)
+  - [戦国武将一覧@刀剣ワールド](https://www.meihaku.jp/warlords-list/)（参考）
+
+### ⚔️日本の合戦一覧
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-battles)
+- **ファイル**: `ja-hist-battles.csv`
+- **フォーマット**:
+  発生年,都道府県,市区町村,合戦名,種別,分野,時代,緯度;経度,カウント,キー人物1,キー人物2,キー人物3,キー人物4,キー人物5,勝者勢力,敗者勢力,Wikidata,画像,出典URL
+- **説明**: 飛鳥〜近代の主な合戦・戦い・乱・変・役（約370件）。発生年・主戦場・種別・時代・キー人物で多次元分析できる。
+- **用途**: 時代ごとの主戦場の移動を地図で把握し、城巡り・歴史学習に活用する。
+- **分析結果の活用例**:
+  - キー人物で絞り込み、同一武将が関与した合戦の地理分布を見る（`ja-hist-sengoku-figures` と照合）
+  - 発生年レンジで戦国〜安土桃山の地理ピークを見る
+  - 種別（戦い/乱/変/役）×時代で衝突の性格を比較する
+  - 合戦名 row から Google Maps マーカーへパンし古戦場を確認する
+  - `ja-castle` / `ja-hist-sengoku-figures` と並べて人物・城と照合する
+- **データ出典**:
+  - [日本の合戦一覧@Wikipedia](https://ja.wikipedia.org/wiki/日本の合戦一覧)
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - [合戦歴史年表@刀剣ワールド](https://www.touken-world.jp/battle_history/)（参考）
+
+### 🌸日本の桜の名所
 - **ファイル**: `ja-cherry-blossom.csv`
   - [📊チャート](http://127.0.0.1:8000/dashboard-dc-pub?data=ja-cherry-blossom)
   - **フォーマット**:
@@ -362,7 +398,7 @@
   - **データ出典**:
     - [日本さくら名所100選@Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%95%E3%81%8F%E3%82%89%E5%90%8D%E6%89%80100%E9%81%B8)
 
-### 4-3. ♨️日本の温泉利用状況（都道府県別）
+### ♨️日本の温泉利用状況（都道府県別）
 - **ファイル**: `ja-onsen.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-onsen)
   - **フォーマット**:
@@ -380,7 +416,7 @@
     - [温泉利用状況等@環境省](https://www.env.go.jp/nature/onsen/data/)
     - [都道府県別ランキング（環境省データ再掲）](https://uub.jp/pdr/ss/hotspring_6a.html)
 
-### 4-4. 🚃日本の駅別乗降客数（路線別）
+### 🚃日本の駅別乗降客数（路線別）
 - **ファイル**: `ja-rail-passenger.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-rail-passenger)
   - **フォーマット**:
@@ -399,7 +435,7 @@
     - [駅乗降客数ランキング100@オープンポータル](https://opendata-web.site/station/rank/)
   - **注意**: 各鉄道事業者が独自に算出した乗降客数であり、統一基準ではありません。同一駅名の合算値は Wikipedia 記事内の別表を参照してください。
 
-### 5. 心臓病データ
+### 心臓病データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=kaggle-heart-disease)
 - **ファイル**: `kaggle-heart-disease.csv`
 - **フォーマット**:
@@ -413,7 +449,7 @@
   - 特定の検査値・症状の傾向から仮説を立て、研修や教材で「なぜその層でリスクが高いか」を説明する根拠として使えます。
 - **データ出典**: [Heart Disease Prediction Dataset@kaggle](https://www.kaggle.com/datasets/mfarhaannazirkhan/heart-dataset/data)
 
-### 6. 自治体企業データ
+### 自治体企業データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-municipality-company)
 - **ファイル**: `resas-municipality-company.csv`
 - **フォーマット**:
@@ -429,7 +465,7 @@
   - [産業構造マップ > 全産業 > 企業数 @RESAS(地域経済分析システム)API](https://opendata.resas-portal.go.jp/docs/api/v1/municipality/company/perYear.html)
   - [産業構造マップ > 全産業 > 企業数 @RESAS](https://resas.go.jp/municipality-company/#/graph/13/13101/2014/-/-/0/5.333900736553437/41.42090017812787/142.29371418128918/-)
 
-### 7. 高校野球データ
+### 高校野球データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=sports-hsb)
 - **ファイル**: `sports-hsb.csv`
 - **フォーマット**:
@@ -445,7 +481,7 @@
   - [【夏の甲子園】歴代優勝・準優勝校一覧＠baseballking](https://baseballking.jp/ns/161307)
   - [全国高等学校野球選手権大会歴代優勝校＠wikipedia](https://ja.wikipedia.org/wiki/全国高等学校野球選手権大会歴代優勝校)
 
-### 8. スポーツサークル参加動向
+### スポーツサークル参加動向
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=checkin-sakana)
 - **ファイル**: `checkin-sakana.csv`, `checkin-sakana.light.csv`
 - **フォーマット**:
@@ -459,7 +495,7 @@
   - 出身地や調子などで層を分けた参加傾向を把握し、イベント企画や募集方法の改善に活用できます。
 - **データ出典**: サークル運営データ
 
-### 9. スポーツサークルHPアクセス動向
+### スポーツサークルHPアクセス動向
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=sakana-hp-access)
 - **ファイル**: `sakana-hp-access.csv`
 - **フォーマット**:
@@ -473,7 +509,7 @@
   - アクセスと参加人数の相関から、コンテンツ改善の優先度や集客施策の継続・見直しを決める材料にできます。
 - **データ出典**: アクセスログ・参加記録
 
-### 10. 記事いいねデータ
+### 記事いいねデータ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-article-like)
 - **ファイル**: `test-article-like.csv`
 - **フォーマット**:
@@ -487,7 +523,7 @@
   - 時期や作成者属性で評価が分かれる傾向から、続けるコンテンツと切り替えるコンテンツを判断し、施策の優先度を決められます。
 - **データ出典**: サンプルデータ ※性別・年齢・職業・都道府県は、「記事作成者」の情報
 
-### 11. 能登地震安否確認データ
+### 能登地震安否確認データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - **ファイル**: `ja-quake-noto-safety.csv`
 - **フォーマット**:
@@ -503,7 +539,7 @@
   - [令和6年（2024年）能登半島地震に関する情報（対策本部・被災状況）@石川県](https://www.pref.ishikawa.lg.jp/saigai/202401jishin-taisakuhonbu.html#higai)
   - Wikipedia
 
-### 12. 経営動向・DI指標データ
+### 経営動向・DI指標データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=store-di)
 - **ファイル**: `store-di.csv`
 - **フォーマット**:
@@ -517,7 +553,7 @@
   - 過去に同水準のDIだった時期のその後の動きを参照し、次の景気局面での施策（拡張／縮小）の検討材料にできます。
 - **データ出典**: [スーパーマーケット 経営動向・景況感 調査結果@一般社団法人全国スーパーマーケット協会](http://www.j-sosm.jp/dl/index.html)
 
-### 13. 農業関連データ
+### 農業関連データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-agriculture)
 - **ファイル**: `resas-agriculture.csv`
 - **フォーマット**:
@@ -533,7 +569,7 @@
   - [品目別農業産出額 @RESAS(地域経済分析システム)API](https://opendata.resas-portal.go.jp/docs/api/v1/agriculture/all/forStackedBar.html)
   - [産業構造マップ > 農業 > 農業の構造 @RESAS](https://resas.go.jp/agriculture-all/#/rate/5.333900736553437/41.42090017812787/142.29371418128918/13/13101/0/2016/1/-/-)
 
-### 14. きくらげ栽培データ
+### きくらげ栽培データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-agr-kikurage)
 - **ファイル**: `test-agr-kikurage.csv`
 - **フォーマット**:
@@ -548,7 +584,7 @@
 - **データ出典**: サンプルデータ
   - ※「その他要素」は、複数の要素(平均温度、平均湿度、タンパク質含有量、食物繊維含有量)の各項目をA～Dで表した文字列
 
-### 15. 訪日外国人観光データ
+### 訪日外国人観光データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-tourism-foreigners)
 - **ファイル**: `resas-tourism-foreigners.csv`
 - **フォーマット**:
@@ -564,7 +600,7 @@
   - [指定地域への国籍別訪問者数 @RESAS(地域経済分析システム)API](https://opendata.resas-portal.go.jp/docs/api/v1/tourism/foreigners/forFrom.html)
   - [観光マップ > 外国人 > 外国人訪問分析 @RESAS](https://resas.go.jp/tourism-foreigners/#/to-transition/5.333900736553437/41.42090017812787/142.29371418128918/13/13101/100/0/0.0/2020/5/-/-/1/-/-)
 
-### 16. 年間商品販売額データ
+### 年間商品販売額データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-product-sales)
 - **ファイル**: `resas-product-sales.csv`
 - **フォーマット**:
@@ -578,7 +614,7 @@
   - 過去の同条件での推移を参照し、次の投資・縮小のタイミング判断や中長期計画の根拠にできます。
 - **データ出典**: [RESAS(地域経済分析システム)API](https://opendata.resas-portal.go.jp/)
 
-### 17. 自治体税金データ
+### 自治体税金データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-municipality-taxes)
 - **ファイル**: `resas-municipality-taxes.csv`
 - **フォーマット**:
@@ -594,7 +630,7 @@
   - [地方財政マップ > 一人当たり地方税 @RESAS(地域経済分析システム)API](https://opendata.resas-portal.go.jp/docs/api/v1/municipality/taxes/perYear.html)
   - [地方財政マップ > 一人当たり地方税 @RESAS](https://resas.go.jp/municipality-taxes/#/graph/13/13101/2016/1/7.39231742277876/35.998703685/139.883857/-)
 
-### 18. 選挙データ
+### [選挙データ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-candidates&fopen=1&fopen_filter=ja-election-)
 
 #### 衆議院選挙 立候補者一覧
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-candidates)
@@ -655,7 +691,7 @@
   - [東京都知事選挙東京都知事選挙（令和6年7月7日執行） 投開票結果@東京都](https://www.senkyo.metro.tokyo.lg.jp/election/tochiji-all/tochiji-sokuhou2024/csv/)
   - Wikipedia
 
-### 19. 店舗数データ
+### 店舗数データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=store-cnt)
 - **ファイル**: `store-cnt.csv`
 - **フォーマット**:
@@ -669,7 +705,7 @@
   - 過去の同条件での店舗数推移を参照し、次の拡張・縮小のタイミングや地域の優先度を検討する根拠にできます。
 - **データ出典**: [スーパーマーケット店舗数@一般社団法人全国スーパーマーケット協会](http://www.j-sosm.jp/dl/index.html)
 
-### 20. SSDSE（教育用標準データセット）
+### [SSDSE（教育用標準データセット）](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-population&fopen=1&fopen_filter=ssdse-)
 
 独立行政法人統計センターによる教育用標準データセット。都道府県・市区町村別の各種統計を多次元で分析可能。
 
@@ -767,7 +803,7 @@
   - 過去に同様の人口構成だった時期を参照し、次の社会変化（労働力、社会保障需要など）の予測に活用できます。
 - **データ出典**: 国勢調査等
 
-### 21. 🎬映画データ
+### 🎬映画データ
 
 #### 🎬スタジオジブリ劇場公開作品一覧
 - **ファイル**: `ja-movie-ghibli-films.csv`
@@ -799,7 +835,24 @@
     - 配給会社別のヒット作シェアを分析する。
   - **データ出典**: [日本歴代興行成績上位の映画一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E6%AD%B4%E4%BB%A3%E8%88%88%E8%A1%8C%E6%88%90%E7%B8%BE%E4%B8%8A%E4%BD%8D%E3%81%AE%E6%98%A0%E7%94%BB%E4%B8%80%E8%A6%A7)
 
-### 21-2. 🎵音楽データ
+#### 🎬日本映画一覧（興行上位＋高評価選）
+- **ファイル**: `ja-movie-list.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-list&layout=tube2)
+  - **フォーマット**:
+    ```
+    公開日,製作国,作品名,⭐評価点,種類,ジャンル,配給会社,未使用,リスト区分,興行収入,配給収入
+    ```
+  - **説明**: 興行収入上位約200本に、キネマ旬報・批評家評価・カルト人気などに基づく高評価マイナー作品、および洋画クラシック／アクション人気作（プライベート・ライアン、ザ・ロック、セガール作品、スター・ウォーズ旧三部作など）をマージ（計約320本）。ジャンル（アクション／サスペンス／ヒューマンドラマ等）・リスト区分（興行上位／高評価選）・製作国・種類・公開年・興行収入で分析可能。
+  - **用途**: ジャンル×リスト区分×公開年で絞り込み、大ヒット作と高評価小品を同じ画面で比較する。
+  - **分析結果の活用例**:
+    - 「高評価選」のみに絞り、ジャンル別の名作分布を把握する。
+    - ヒューマンドラマやサスペンスなどジャンル別に、興行上位と批評家評価作の偏りを比較する。
+    - 公開年レンジで絞り、同時代のヒット作とカルト作を並べて見る。
+  - **データ出典**:
+    - [日本歴代興行成績上位の映画一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E6%AD%B4%E4%BB%A3%E8%88%88%E8%A1%8C%E6%88%90%E7%B8%BE%E4%B8%8A%E4%BD%8D%E3%81%AE%E6%98%A0%E7%94%BB%E4%B8%80%E8%A6%A7)
+    - [キネマ旬報ベスト・テン@Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%8D%E3%83%9E%E6%97%AC%E5%A0%B1%E3%83%99%E3%82%B9%E3%83%88%E3%83%BB%E3%83%86%E3%83%B3)
+
+### 🎵音楽データ
 
 #### 🎵邦楽ヒット曲ランキング
 - **ファイル**: `ja-song-hit.csv`
@@ -824,7 +877,7 @@
     - [卒業ソングランキング@年代流行](https://nendai-ryuukou.com/article/084.html)
     - [応援ソングランキング@年代流行](https://nendai-ryuukou.com/article/151.html)
 
-### 21-3. ☘️iNaturalist植物観測データ
+### [☘️iNaturalist植物観測データ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-timeline&layout=gmap3&fopen&fopen_filter=inature-)
 
 #### ☘️植物観測記録@iNaturalist
 - **ファイル**: `inature-1.csv`
@@ -842,7 +895,69 @@
   - **データ出典**: [iNaturalist](https://www.inaturalist.org/)
   - **再生成**: `node tools/generate-inature-1.cjs`（詳細は `.cursor/skills/inature-dcchart/SKILL.md`）
 
-### 22. テスト用データ
+[iNaturalist](https://www.inaturalist.org/) の観測エクスポートから生成したデータセット。地図（GMap）・国・州/県・観測対象名（写真サムネイル付き rowChart）で絞り込み可能。英語版は `<id>-en`（例: `inature-337792-en.csv`）。
+
+#### トウカエデ（*Acer buergerianum*, taxon 337792）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
+- **ファイル**: `inature-337792.csv`（3,102 件）
+- **説明**: トウカエデの iNaturalist 観測記録。観測日・国・州/県・和名+日付サフィックスの植物名・iNaturalist 写真リンク
+- **データ出典**: [Acer buergerianum（taxon 337792）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=337792)
+
+#### クロマツ（*Pinus thunbergii*, taxon 135655）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
+- **ファイル**: `inature-135655.csv`（2,439 件）
+- **データ出典**: [Pinus thunbergii（taxon 135655）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=135655)
+
+#### ツバキ属（*Camellia*, taxon 83058）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
+- **ファイル**: `inature-83058.csv`（7,331 件）
+- **データ出典**: [Camellia（taxon 83058）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83058)
+
+#### ヤブツバキ（*Camellia japonica*, taxon 83056）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
+- **ファイル**: `inature-83056.csv`（2,203 件）
+- **データ出典**: [Camellia japonica（taxon 83056）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83056)
+
+#### ミカン科（*Rutaceae*, taxon 50623）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
+- **ファイル**: `inature-50623.csv`（4,999 件）
+- **データ出典**: [Rutaceae（taxon 50623）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=50623)
+
+#### ニシキギ科（*Celastraceae*, taxon 47539）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
+- **ファイル**: `inature-47539.csv`（9,864 件）
+- **データ出典**: [Celastraceae（taxon 47539）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47539)
+
+#### ビャクシン属（*Syringa*, taxon 47574）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
+- **ファイル**: `inature-47574.csv`（9,456 件）
+- **データ出典**: [Syringa（taxon 47574）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47574)
+
+#### メダカ属（*Oryzias*, taxon 90534）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-90534)
+- **ファイル**: `inature-90534.csv`（749 件）
+- **説明**: メダカ属の iNaturalist 観測記録。チュウゴクメダカ・ジャワメダカ・インドメダカ等 7 種。GMap + rowChart 写真サムネイル
+- **データ出典**: [Oryzias（taxon 90534）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=90534)
+
+#### カブトムシ族（*Dynastinae*, taxon 324734）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-324734)
+- **ファイル**: `inature-324734.csv`（4,376 件）
+- **説明**: カブトムシ族の iNaturalist 観測記録。ツノボソカブト・カブトムシ・カブトムシ本土亜種等。台湾・中国・日本・韓国中心。GMap + rowChart 写真サムネイル
+- **データ出典**: [Dynastinae（taxon 324734）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=324734)
+
+#### カワウソ属（*Lutra*, taxon 41848）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-41848)
+- **ファイル**: `inature-41848.csv`（136 件）
+- **説明**: カワウソ属の iNaturalist 観測記録。ユーラシアカワウソ・ツメナシカワウソ等。GMap + rowChart 写真サムネイル
+- **データ出典**: [Lutra（taxon 41848）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=41848)
+
+#### トンボ科（*Libellulidae*, taxon 47819）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47819)
+- **ファイル**: `inature-47819.csv`（3,134 件）
+- **説明**: トンボ科の iNaturalist 観測記録。ウスバキトンボ・アカネ属・ヨツボシトンボ・シオカラトンボ等。GMap + rowChart 写真サムネイル
+- **データ出典**: [Libellulidae（taxon 47819）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47819)
+
+### テスト用データ
 
 #### 基本テストデータ
 
@@ -1125,19 +1240,6 @@
     - ジャンル×上映期間で動員が伸びる組み合わせを把握し、配給・上映スケジュールの決定や館のプログラミングに使えます。
     - 過去の同条件でのヒットパターンを参照し、次回作の宣伝投資や上映館数の見積もりに活用できます。
 
-- **スタジオジブリ劇場公開作品一覧**: `test-ghibli-films.csv`
-  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ghibli-films)
-  - **フォーマット**:
-    ```
-    公開日,監督,作品名,性別,上映時間,評価,脚本,未使用,興行収入,製作,配給,観客動員数
-    ```
-  - **説明**: スタジオジブリの劇場公開長編作品。公開年・監督・興行収入（億円）・観客動員数（万人）・上映時間で分析可能。rowChart サムネイルは [ghibli.jp/images](https://www.ghibli.jp/images/) を `@pathColExt` で参照。観客動員数は Wikipedia ランキング表より（未掲載作品は空欄）。
-  - **用途**: 監督×公開年×興行収入で絞り込み、ヒット作の傾向や監督別の代表作を比較する。
-  - **分析結果の活用例**:
-    - 宮崎駿監督作品の興行推移から公開時期の選定を検討する。
-    - 上映時間と興行の関係から作品尺の傾向を把握する。
-  - **データ出典**: [スタジオジブリ@Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%AA%E3%82%B8%E3%83%96%E3%83%AA)、[作品一覧@ジブリ](https://www.ghibli.jp/works/)
-
 - **博物館来館データ**: `test-museum-visitor.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-museum-visitor)
   - **説明**: 博物館・美術館の来館者データ。施設種別、展示内容別、年齢層別の来館動向分析
@@ -1177,46 +1279,6 @@
   - **分析結果の活用例**:
     - 国籍×消費項目×地域で消費が集中する組み合わせを把握し、品揃え・陳列・プロモーションの重点設定に使えます。
     - ターゲット国別の売れ筋を特定し、次のインバウンド回復期に備えた仕入れ・在庫計画の材料にできます。
-
-### iNaturalist 植物観測データ
-
-[iNaturalist](https://www.inaturalist.org/) の観測エクスポートから生成した植物観測データセット。地図（GMap）・国・州/県・植物名（写真サムネイル付き rowChart）で絞り込み可能。英語版は `<id>-en`（例: `inature-337792-en.csv`）。
-
-#### トウカエデ（*Acer buergerianum*, taxon 337792）
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
-- **ファイル**: `inature-337792.csv`（3,102 件）
-- **説明**: トウカエデの iNaturalist 観測記録。観測日・国・州/県・和名+日付サフィックスの植物名・iNaturalist 写真リンク
-- **データ出典**: [Acer buergerianum（taxon 337792）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=337792)
-
-#### クロマツ（*Pinus thunbergii*, taxon 135655）
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
-- **ファイル**: `inature-135655.csv`（2,439 件）
-- **データ出典**: [Pinus thunbergii（taxon 135655）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=135655)
-
-#### ツバキ属（*Camellia*, taxon 83058）
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
-- **ファイル**: `inature-83058.csv`（7,331 件）
-- **データ出典**: [Camellia（taxon 83058）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83058)
-
-#### ヤブツバキ（*Camellia japonica*, taxon 83056）
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
-- **ファイル**: `inature-83056.csv`（2,203 件）
-- **データ出典**: [Camellia japonica（taxon 83056）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83056)
-
-#### ミカン科（*Rutaceae*, taxon 50623）
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
-- **ファイル**: `inature-50623.csv`（4,999 件）
-- **データ出典**: [Rutaceae（taxon 50623）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=50623)
-
-#### ニシキギ科（*Celastraceae*, taxon 47539）
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
-- **ファイル**: `inature-47539.csv`（9,864 件）
-- **データ出典**: [Celastraceae（taxon 47539）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47539)
-
-#### ビャクシン属（*Syringa*, taxon 47574）
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
-- **ファイル**: `inature-47574.csv`（9,456 件）
-- **データ出典**: [Syringa（taxon 47574）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47574)
 
 ※各テストデータは、DC.jsを使用した多次元チャート分析のサンプルとして作成されており、実際のデータ分析手法や可視化技術の学習・検証に活用できます。
 
