@@ -1289,7 +1289,6 @@ import YoutubeVidInput from '@/Components/YoutubeVidInput.vue'
 import GoogleMap from '@/Components/GoogleMap.vue'
 import DcPanelAnalyze from '@/Components/DcPanelAnalyze.vue'
 import Covid19PrefectureDatatable from '@/Components/Covid19PrefectureDatatable.vue'
-// import FilerDialogButton from "@/Components/FilerDialogButton.vue";
 import FileSelectMenu from '@/Components/FileSelectMenu.vue'
 import DcChartSettingsDrawer from '@/Components/DcChartSettingsDrawer.vue'
 
@@ -8624,20 +8623,12 @@ const onDocumentReady = () => {
     let src = $(this).val()
     src = _.last(src.split('/'))
     const f = mm.url_data.filer_files[src]
-    if (f) {
-      if (0) {
-        // データのみリロード
-        // mm.reLoadDcData(f);
-      } else {
-        //新しいデータファイルでページリロード。
-        location.href = location.pathname + '?data=' + f
-      }
-    } else {
-      ch_alert('このデータはありません', {
-        title: '新型コロナウイルス感染状況',
-        dialog_class: 'alert',
-      })
+    if (!f) {
+      window.alert(`データが見つかりませんでした。\n\n${src}`)
+      return
     }
+    //新しいデータファイルでページリロード。
+    window.location.assign(location.pathname + '?data=' + encodeURIComponent(f))
   })
 
   if (gg.dt === DT_COVID) {
