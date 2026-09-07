@@ -316,19 +316,91 @@ Each dataset has the following common characteristics:
   - Use appearance conditions for monsters with desired drops to plan equipment collection routes and time estimates.
 - **Data Source**: In-game data, etc.
 
-### Ramen Shop Data
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen)
-- **File**: `food-ramen.csv`
+### [History & Culture](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers&fopen=1&fopen_filter=-hist-)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers)
+- **File**: `ja-hist-rulers.csv`, `ja-hist-sengoku-figures.csv`, `ja-hist-battles.csv`, `ja-hist-diplomacy.csv`
 - **Format**:
   ```
-  Founding Year,Prefecture,🍜Ramen Shop Name,Noodle Type(Sample),Price Range(Sample),Genre(Sample),🚉Nearest Station/Address,Job Category,Count
+  Year,Prefecture,Municipality,Name,Kind,Field,Seat/Place,Lat;Lon,Count,Era, …
   ```
-- **Description**: Ramen shop information including founding year, noodle type, price range, genre, location, shop name, and nearest station
-- **Use Case**: Filter by prefecture × noodle type × price range to select candidate shops for business trips or travel, and for franchise expansion region selection. Suitable for food enthusiasts discovering shops matching their preferences.
+- **Description**: Japanese history datasets covering rulers (reigns), Sengoku figures, battles, and diplomatic events. Filter by year, prefecture, and kind to track how capitals, shogunal seats, battlefields, and departure/signing sites move on a map and timeline.
+- **Use Case**: Filter by era × region × people/battles/diplomacy for castle tourism and history study. Compare with `ja-castle` to match home bases and historic battlefields.
 - **How to use analysis results**:
-  - Identify region × noodle type × price combinations where shops concentrate to select expansion locations and assess competitive gaps.
-  - Use trends by founding year or genre to identify common success factors for new openings and menu strategy.
-- **Data Source**: [Famous Ramen Shop Timeline by Era @Ramen Jiyuku](http://ramenjiyuku.web.fc2.com/)
+  - Sweep the year range to see how political centers, battlefields, and diplomatic seats move geographically
+  - Cross the same person as ruler, Sengoku figure, battle key figure, and diplomatic actor
+  - Match battles with treaties and missions in the same year to see war and diplomacy together
+- **Data Sources**:
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - Wikipedia (list of emperors, Sei-i Taishōgun, Sengoku daimyō, battles in Japan, Kentōshi, etc.)
+
+#### 👑Japanese Historical Rulers (Reigns)
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers)
+- **File**: `ja-hist-rulers.csv`
+- **Format**:
+  Accession Year,Prefecture,Municipality,Ruler Name,Office Type,Field,Seat,Lat;Lon,Count,Era,Regime,Source URL,Wikidata,Image
+- **Description**: 157 reigns of emperors, shoguns, and sesshō/kanpaku. One row = one reign. Column 1 is the political center while in office (not birthplace). Supports multidimensional analysis by accession year, prefecture, office type, field, and seat.
+- **Use Case**: Track how capitals and shogunal seats move on a map with a time-range filter.
+- **How to use analysis results**:
+  - Sweep the year range to see the political center move Nara → Kyoto → Kamakura → Edo → Tokyo
+  - Split by office type (emperor / shogun / sesshō) and compare years with `ja-hist-battles`
+  - Open Wikipedia from the ruler-name row portraits and pan Google Maps markers to seats
+- **Data Sources**:
+  - [List of emperors of Japan @Wikipedia](https://ja.wikipedia.org/wiki/天皇の一覧)
+  - [Sei-i Taishōgun @Wikipedia](https://ja.wikipedia.org/wiki/征夷大将軍)
+
+#### 🏯Sengoku Period Historical Figures
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-sengoku-figures)
+- **File**: `ja-hist-sengoku-figures.csv`
+- **Format**:
+  Birth Date,Prefecture,Municipality,Person Name,Person Type,Field,Related Castle,Lat;Lon,Count,Sex,Era,Faction,Death Year,Wikidata,Image
+- **Description**: About 219 historical figures active in the Sengoku through Azuchi–Momoyama periods. Supports multidimensional analysis by birth year, birthplace, person type, field, related castle, sex, and faction.
+- **Use Case**: Cross-filter contemporaries and regions on a map and timeline for castle tourism and history study.
+- **How to use analysis results**:
+  - Sweep the birth-year range to see how faction geography shifts over time
+  - Compare role bias with person type × field
+  - Filter by related castle and compare with `ja-castle` for home bases
+  - Pan Google Maps markers to birthplaces / strongholds
+- **Data Sources**:
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - [Sengoku daimyō @Wikipedia](https://ja.wikipedia.org/wiki/戦国大名)
+  - [Category:Sengoku bushō @Wikipedia](https://ja.wikipedia.org/wiki/Category:戦国武将)
+  - [Sengoku bushō list @Token World](https://www.meihaku.jp/warlords-list/) (reference)
+
+#### ⚔️Battles in Japanese History
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-battles)
+- **File**: `ja-hist-battles.csv`
+- **Format**:
+  Year,Prefecture,Municipality,Battle Name,Kind,Field,Era,Lat;Lon,Count,Key Figure1,Key Figure2,Key Figure3,Key Figure4,Key Figure5,Winner Faction,Loser Faction,Wikidata,Image,Source URL
+- **Description**: About 370 major battles, wars, rebellions, incidents, and campaigns from Asuka through modern Japan. Supports multidimensional analysis by year, battlefield, kind, era, and key figures.
+- **Use Case**: Track how main battlefields shift across eras on a map for castle tourism and history study.
+- **How to use analysis results**:
+  - Filter by key figures to see the geography of battles involving the same warrior (compare with `ja-hist-sengoku-figures`)
+  - Sweep the year range for Sengoku–Azuchi–Momoyama geographic peaks
+  - Compare conflict character with kind (battle/war/rebellion/incident/campaign) × era
+  - Pan from the battle-name row chart to Google Maps markers for historic sites
+  - Cross-check people and castles with `ja-castle` / `ja-hist-sengoku-figures`
+- **Data Sources**:
+  - [List of battles in Japan @Wikipedia](https://ja.wikipedia.org/wiki/日本の合戦一覧)
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - [Battle history timeline @Token World](https://www.touken-world.jp/battle_history/) (reference)
+
+#### 🌏Diplomatic Events in Japanese History
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-diplomacy)
+- **File**: `ja-hist-diplomacy.csv`
+- **Format**:
+  Year,Prefecture,Municipality,Event Name,Diplomacy Type,Field,Era,Lat;Lon,Count,Counterpart Region,Person1,Person2,Person3,Person4,Person5,Source URL
+- **Description**: 97 missions, treaties, and arrivals. One row = one event. Overseas signings keep columns 1–2 on Tokyo/Chiyoda (foreign-affairs seat) so the domestic map still works. Supports multidimensional analysis by year, prefecture, diplomacy type, field, and counterpart region.
+- **Use Case**: Track how departure and signing sites move on a map with a year-range filter.
+- **How to use analysis results**:
+  - Watch departure and signing sites shift from the Kinai core toward treaty ports
+  - Cross-check the same years with peace treaties in `ja-hist-battles`
+  - Open the source Wikipedia page from the event-name row and pan Google Maps markers to seats
+  - Use 👥人物1–3 to see co-occurrence (e.g. Ii Naosuke and Townsend Harris on the same treaty)
+- **Data Sources**:
+  - [Kentōshi @Wikipedia](https://ja.wikipedia.org/wiki/遣唐使)
+  - [Kenminshi @Wikipedia](https://ja.wikipedia.org/wiki/遣明使)
+  - [Joseon Tongsinsa @Wikipedia](https://ja.wikipedia.org/wiki/朝鮮通信使)
+  - [Convention of Kanagawa @Wikipedia](https://ja.wikipedia.org/wiki/日米和親条約)
 
 ### 🏯Japanese Castle List Data
 - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle)
@@ -349,42 +421,6 @@ Each dataset has the following common characteristics:
   - [📊Chart (3D map)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
 - **Data Source**: [Shiro Kōrōki (Castle Wanderings) @hb.pei.jp](https://www.hb.pei.jp/shiro/)
 
-### 🏯Sengoku Period Historical Figures
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-sengoku-figures)
-- **File**: `ja-hist-sengoku-figures.csv`
-- **Format**:
-  Birth Date,Prefecture,Municipality,Person Name,Person Type,Field,Related Castle,Lat;Lon,Count,Sex,Era,Faction,Death Year,Wikidata,Image
-- **Description**: About 219 historical figures active in the Sengoku through Azuchi–Momoyama periods. Supports multidimensional analysis by birth year, birthplace, person type, field, related castle, sex, and faction.
-- **Use Case**: Cross-filter contemporaries and regions on a map and timeline for castle tourism and history study.
-- **How to use analysis results**:
-  - Sweep the birth-year range to see how faction geography shifts over time
-  - Compare role bias with person type × field
-  - Filter by related castle and compare with `ja-castle` for home bases
-  - Pan Google Maps markers to birthplaces / strongholds
-- **Data Sources**:
-  - [Wikidata Query Service](https://query.wikidata.org/)
-  - [Sengoku daimyō @Wikipedia](https://ja.wikipedia.org/wiki/戦国大名)
-  - [Category:Sengoku bushō @Wikipedia](https://ja.wikipedia.org/wiki/Category:戦国武将)
-  - [Sengoku bushō list @Token World](https://www.meihaku.jp/warlords-list/) (reference)
-
-### ⚔️Battles in Japanese History
-- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-battles)
-- **File**: `ja-hist-battles.csv`
-- **Format**:
-  Year,Prefecture,Municipality,Battle Name,Kind,Field,Era,Lat;Lon,Count,Key Figure1,Key Figure2,Key Figure3,Key Figure4,Key Figure5,Winner Faction,Loser Faction,Wikidata,Image,Source URL
-- **Description**: About 370 major battles, wars, rebellions, incidents, and campaigns from Asuka through modern Japan. Supports multidimensional analysis by year, battlefield, kind, era, and key figures.
-- **Use Case**: Track how main battlefields shift across eras on a map for castle tourism and history study.
-- **How to use analysis results**:
-  - Filter by key figures to see the geography of battles involving the same warrior (compare with `ja-hist-sengoku-figures`)
-  - Sweep the year range for Sengoku–Azuchi–Momoyama geographic peaks
-  - Compare conflict character with kind (battle/war/rebellion/incident/campaign) × era
-  - Pan from the battle-name row chart to Google Maps markers for historic sites
-  - Cross-check people and castles with `ja-castle` / `ja-hist-sengoku-figures`
-- **Data Sources**:
-  - [List of battles in Japan @Wikipedia](https://ja.wikipedia.org/wiki/日本の合戦一覧)
-  - [Wikidata Query Service](https://query.wikidata.org/)
-  - [Battle history timeline @Token World](https://www.touken-world.jp/battle_history/) (reference)
-
 ### 🌸Cherry Blossom Spots in Japan
 - **File**: `ja-cherry-blossom.csv`
   - [📊Chart](http://127.0.0.1:8000/dashboard-dc-pub?data=ja-cherry-blossom)
@@ -396,6 +432,20 @@ Each dataset has the following common characteristics:
   - **Use Case**: Plan hanami (cherry blossom viewing) trips
   - **Data Source**:
     - [Japan's Top 100 Sakura Sites @Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%95%E3%81%8F%E3%82%89%E5%90%8D%E6%89%80100%E9%81%B8)
+
+### Ramen Shop Data
+- [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen)
+- **File**: `food-ramen.csv`
+- **Format**:
+  ```
+  Founding Year,Prefecture,🍜Ramen Shop Name,Noodle Type(Sample),Price Range(Sample),Genre(Sample),🚉Nearest Station/Address,Job Category,Count
+  ```
+- **Description**: Ramen shop information including founding year, noodle type, price range, genre, location, shop name, and nearest station
+- **Use Case**: Filter by prefecture × noodle type × price range to select candidate shops for business trips or travel, and for franchise expansion region selection. Suitable for food enthusiasts discovering shops matching their preferences.
+- **How to use analysis results**:
+  - Identify region × noodle type × price combinations where shops concentrate to select expansion locations and assess competitive gaps.
+  - Use trends by founding year or genre to identify common success factors for new openings and menu strategy.
+- **Data Source**: [Famous Ramen Shop Timeline by Era @Ramen Jiyuku](http://ramenjiyuku.web.fc2.com/)
 
 ### ♨️Hot Spring Usage by Prefecture (Japan)
 - **File**: `ja-onsen.csv`

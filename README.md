@@ -72,8 +72,12 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - [🎬Studio Ghibli Theatrical Films](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-ghibli-films)
 - Music
   - [🎵Japanese Hit Song Rankings](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit&layout=tube)
-- History & Culture
+- [History & Culture](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers&fopen=1&fopen_filter=-hist-)
   - [🏯List of Castles in Japan](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
+  - [👑Japanese Historical Rulers (Reigns)](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers)
+  - [🏯Sengoku Period Historical Figures](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-sengoku-figures)
+  - [⚔️Battles in Japanese History](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-battles)
+  - [🌏Diplomatic Events in Japanese History](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-diplomacy)
 - [Nature & Plants](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-timeline&layout=gmap3&fopen&fopen_filter=inature-)
   - [☘️Plant Observation Records](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1-en&layout=gmap3)
   - [☘️Pinus thunbergii Observation Record](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655-en&layout=gmap)

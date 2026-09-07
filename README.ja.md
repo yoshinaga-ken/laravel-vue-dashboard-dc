@@ -72,8 +72,12 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
   - [🎬スタジオジブリ劇場公開作品一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-ghibli-films)
 - 音楽
   - [🎵邦楽ヒット曲ランキング](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit&layout=tube)
-- 歴史・文化
+- [歴史・文化](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers&fopen=1&fopen_filter=-hist-)
   - [🏯日本の城一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
+  - [👑日本史の歴代統治者（在位）](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers)
+  - [🏯戦国時代の歴史人物一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-sengoku-figures)
+  - [⚔️日本の合戦一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-battles)
+  - [🌏日本史の外交イベント一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-diplomacy)
 - [自然・植物](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-timeline&layout=gmap3&fopen&fopen_filter=inature-)
   - [☘️植物観測記録](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1&layout=gmap3)
   - [☘️クロマツ観測記録](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655&layout=gmap)
