@@ -317,19 +317,91 @@
   - 欲しいドロップが出るモンスターの出現条件を把握し、装備収集のルート設計や時間見積もりの材料にできます。
 - **データ出典**: ゲーム内データ等
 
-### ラーメン店データ
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen)
-- **ファイル**: `food-ramen.csv`
+### [歴史・文化](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers&fopen=1&fopen_filter=-hist-)
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers)
+- **ファイル**: `ja-hist-rulers.csv`, `ja-hist-sengoku-figures.csv`, `ja-hist-battles.csv`, `ja-hist-diplomacy.csv`
 - **フォーマット**:
   ```
-  創業年,都道府県,🍜ラーメン店名,麺の種類(サンプル),価格帯(サンプル),ジャンル(サンプル),🚉最寄り駅・住所,ジョブカテゴリ,カウント
+  年,都道府県,市区町村,名称,種別,分野,拠点/場所,緯度;経度,カウント,時代, …
   ```
-- **説明**: ラーメン店の情報。創業年、麺の種類、価格帯、ジャンル、地域情報、店名、最寄り駅が含まれる
-- **用途**: 都道府県 × 麺の種類 × 価格帯で絞り込み、出張先や旅行先での候補店選びや、フランチャイズ展開の地域選定に活用できます。美食家が自分の好みに合う店を効率的に発見するのにも適しています。
+- **説明**: 日本史の統治者（在位）・戦国人物・合戦・外交イベントを、年・都道府県・種別で横断できるデータ群。地図と時系列で都・幕府・主戦場・出発地の移動を追える。
+- **用途**: 時代 × 地域 × 人物/合戦/外交で絞り込み、城巡りや歴史学習の下調べに活用できます。`ja-castle` と並べて本拠・古戦場を照合できます。
 - **分析結果の活用例**:
-  - 地域×麺の種類×価格帯で店舗が集中している組み合わせを把握し、出店候補地の選定や競合空白エリアの判断材料にできます。
-  - 創業年やジャンルで絞り込んだ傾向から、成功している店の共通条件を特定し、新規出店・メニュー方針の検討に活用できます。
-- **データ出典**: [有名ラーメン店の創業年表｜年代別@らーめん自由区](http://ramenjiyuku.web.fc2.com/)
+  - 時間レンジを動かして政治中心・主戦場・外交拠点の地理移動を見る
+  - 同一人物を統治者・戦国人物・合戦キー人物・外交関係者として横断する
+  - 合戦と同年の講和・来航を突き合わせ、戦と外交の対応を見る
+- **データ出典**:
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - Wikipedia（天皇の一覧、征夷大将軍、戦国大名、日本の合戦一覧、遣唐使 等）
+
+#### 👑日本史の歴代統治者（在位）
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers)
+- **ファイル**: `ja-hist-rulers.csv`
+- **フォーマット**:
+  即位年,都道府県,市区町村,👤統治者名,役職タイプ,分野,🏯拠点,緯度;経度,カウント,時代,政権,出典URL,Wikidata,画像
+- **説明**: 天皇・将軍・摂関の在位（157件）。1行＝1在位。列1は在任中の政治中心（出身地ではない）。即位年・都道府県・役職タイプ・分野・拠点で多次元分析できる。
+- **用途**: 時間レンジと都道府県で都・幕府所在の移動を地図上で追う。
+- **分析結果の活用例**:
+  - 時間レンジを動かして奈良→京都→鎌倉→江戸→東京への政治中心の移動を見る
+  - 役職タイプ（天皇/将軍/摂関）で分け、`ja-hist-battles` と年を照合する
+  - 統治者名 row の肖像から Wikipedia へ飛び、Google Maps マーカーで拠点へパンする
+- **データ出典**:
+  - [天皇の一覧@Wikipedia](https://ja.wikipedia.org/wiki/天皇の一覧)
+  - [征夷大将軍@Wikipedia](https://ja.wikipedia.org/wiki/征夷大将軍)
+
+#### 🏯戦国時代の歴史人物一覧
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-sengoku-figures)
+- **ファイル**: `ja-hist-sengoku-figures.csv`
+- **フォーマット**:
+  生年,都道府県,市区町村,人物名,人物タイプ,分野,関連城,緯度;経度,カウント,性別,時代,勢力,没年,Wikidata,画像
+- **説明**: 戦国〜安土桃山期に活躍した歴史人物（約219人）。生年・出身地、人物タイプ、分野、関連城、性別、勢力で多次元分析できる。
+- **用途**: 同時代・同地域の人物を地図と時系列で横断し、城巡りや歴史学習に活用する。
+- **分析結果の活用例**:
+  - 生年レンジを動かして勢力の地理分布の変化を見る
+  - 人物タイプ×分野で役割の偏りを比較する
+  - 関連城で絞り込み、`ja-castle` と並べて本拠を確認する
+  - Google Maps マーカーで人物の出身/本拠へパン移動する
+- **データ出典**:
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - [戦国大名@Wikipedia](https://ja.wikipedia.org/wiki/戦国大名)
+  - [Category:戦国武将@Wikipedia](https://ja.wikipedia.org/wiki/Category:戦国武将)
+  - [戦国武将一覧@刀剣ワールド](https://www.meihaku.jp/warlords-list/)（参考）
+
+#### ⚔️日本の合戦一覧
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-battles)
+- **ファイル**: `ja-hist-battles.csv`
+- **フォーマット**:
+  発生年,都道府県,市区町村,合戦名,種別,分野,時代,緯度;経度,カウント,キー人物1,キー人物2,キー人物3,キー人物4,キー人物5,勝者勢力,敗者勢力,Wikidata,画像,出典URL
+- **説明**: 飛鳥〜近代の主な合戦・戦い・乱・変・役（約370件）。発生年・主戦場・種別・時代・キー人物で多次元分析できる。
+- **用途**: 時代ごとの主戦場の移動を地図で把握し、城巡り・歴史学習に活用する。
+- **分析結果の活用例**:
+  - キー人物で絞り込み、同一武将が関与した合戦の地理分布を見る（`ja-hist-sengoku-figures` と照合）
+  - 発生年レンジで戦国〜安土桃山の地理ピークを見る
+  - 種別（戦い/乱/変/役）×時代で衝突の性格を比較する
+  - 合戦名 row から Google Maps マーカーへパンし古戦場を確認する
+  - `ja-castle` / `ja-hist-sengoku-figures` と並べて人物・城と照合する
+- **データ出典**:
+  - [日本の合戦一覧@Wikipedia](https://ja.wikipedia.org/wiki/日本の合戦一覧)
+  - [Wikidata Query Service](https://query.wikidata.org/)
+  - [合戦歴史年表@刀剣ワールド](https://www.touken-world.jp/battle_history/)（参考）
+
+#### 🌏日本史の外交イベント一覧
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-diplomacy)
+- **ファイル**: `ja-hist-diplomacy.csv`
+- **フォーマット**:
+  発生年,都道府県,市区町村,出来事名,外交種別,分野,時代,緯度;経度,カウント,相手地域,👥人物1,👥人物2,👥人物3,👥人物4,👥人物5,出典URL
+- **説明**: 使節・条約・来航（97件）。1行＝1出来事。海外調印は列1・2を東京都/千代田区（外務当局）に寄せて国内地図を維持する。発生年・都道府県・外交種別・分野・相手地域で多次元分析できる。
+- **用途**: 日付レンジと都道府県で出発地・調印地の移動を地図上で追う。
+- **分析結果の活用例**:
+  - 出発地・調印地が畿内から開港場へ移る様子を見る
+  - `ja-hist-battles` と同年の講和条約を突き合わせる
+  - 出来事名 row から出典 Wikipedia へ飛び、Google Maps マーカーで拠点へパンする
+  - 👥人物1〜3 で井伊直弼やハリスなど、同一条約・使節の関係者を共起として見る
+- **データ出典**:
+  - [遣唐使@Wikipedia](https://ja.wikipedia.org/wiki/遣唐使)
+  - [遣明使@Wikipedia](https://ja.wikipedia.org/wiki/遣明使)
+  - [朝鮮通信使@Wikipedia](https://ja.wikipedia.org/wiki/朝鮮通信使)
+  - [日米和親条約@Wikipedia](https://ja.wikipedia.org/wiki/日米和親条約)
 
 ### 🏯日本の城一覧データ
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle)
@@ -350,42 +422,6 @@
   - [📊チャート（3D地図）](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
 - **データ出典**: [城郭放浪記 @hb.pei.jp](https://www.hb.pei.jp/shiro/)
 
-### 🏯戦国時代の歴史人物一覧
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-sengoku-figures)
-- **ファイル**: `ja-hist-sengoku-figures.csv`
-- **フォーマット**:
-  生年,都道府県,市区町村,人物名,人物タイプ,分野,関連城,緯度;経度,カウント,性別,時代,勢力,没年,Wikidata,画像
-- **説明**: 戦国〜安土桃山期に活躍した歴史人物（約219人）。生年・出身地、人物タイプ、分野、関連城、性別、勢力で多次元分析できる。
-- **用途**: 同時代・同地域の人物を地図と時系列で横断し、城巡りや歴史学習に活用する。
-- **分析結果の活用例**:
-  - 生年レンジを動かして勢力の地理分布の変化を見る
-  - 人物タイプ×分野で役割の偏りを比較する
-  - 関連城で絞り込み、`ja-castle` と並べて本拠を確認する
-  - Google Maps マーカーで人物の出身/本拠へパン移動する
-- **データ出典**:
-  - [Wikidata Query Service](https://query.wikidata.org/)
-  - [戦国大名@Wikipedia](https://ja.wikipedia.org/wiki/戦国大名)
-  - [Category:戦国武将@Wikipedia](https://ja.wikipedia.org/wiki/Category:戦国武将)
-  - [戦国武将一覧@刀剣ワールド](https://www.meihaku.jp/warlords-list/)（参考）
-
-### ⚔️日本の合戦一覧
-- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-battles)
-- **ファイル**: `ja-hist-battles.csv`
-- **フォーマット**:
-  発生年,都道府県,市区町村,合戦名,種別,分野,時代,緯度;経度,カウント,キー人物1,キー人物2,キー人物3,キー人物4,キー人物5,勝者勢力,敗者勢力,Wikidata,画像,出典URL
-- **説明**: 飛鳥〜近代の主な合戦・戦い・乱・変・役（約370件）。発生年・主戦場・種別・時代・キー人物で多次元分析できる。
-- **用途**: 時代ごとの主戦場の移動を地図で把握し、城巡り・歴史学習に活用する。
-- **分析結果の活用例**:
-  - キー人物で絞り込み、同一武将が関与した合戦の地理分布を見る（`ja-hist-sengoku-figures` と照合）
-  - 発生年レンジで戦国〜安土桃山の地理ピークを見る
-  - 種別（戦い/乱/変/役）×時代で衝突の性格を比較する
-  - 合戦名 row から Google Maps マーカーへパンし古戦場を確認する
-  - `ja-castle` / `ja-hist-sengoku-figures` と並べて人物・城と照合する
-- **データ出典**:
-  - [日本の合戦一覧@Wikipedia](https://ja.wikipedia.org/wiki/日本の合戦一覧)
-  - [Wikidata Query Service](https://query.wikidata.org/)
-  - [合戦歴史年表@刀剣ワールド](https://www.touken-world.jp/battle_history/)（参考）
-
 ### 🌸日本の桜の名所
 - **ファイル**: `ja-cherry-blossom.csv`
   - [📊チャート](http://127.0.0.1:8000/dashboard-dc-pub?data=ja-cherry-blossom)
@@ -397,6 +433,20 @@
   - **用途**: お花見計画に使う
   - **データ出典**:
     - [日本さくら名所100選@Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%95%E3%81%8F%E3%82%89%E5%90%8D%E6%89%80100%E9%81%B8)
+
+### ラーメン店データ
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen)
+- **ファイル**: `food-ramen.csv`
+- **フォーマット**:
+  ```
+  創業年,都道府県,🍜ラーメン店名,麺の種類(サンプル),価格帯(サンプル),ジャンル(サンプル),🚉最寄り駅・住所,ジョブカテゴリ,カウント
+  ```
+- **説明**: ラーメン店の情報。創業年、麺の種類、価格帯、ジャンル、地域情報、店名、最寄り駅が含まれる
+- **用途**: 都道府県 × 麺の種類 × 価格帯で絞り込み、出張先や旅行先での候補店選びや、フランチャイズ展開の地域選定に活用できます。美食家が自分の好みに合う店を効率的に発見するのにも適しています。
+- **分析結果の活用例**:
+  - 地域×麺の種類×価格帯で店舗が集中している組み合わせを把握し、出店候補地の選定や競合空白エリアの判断材料にできます。
+  - 創業年やジャンルで絞り込んだ傾向から、成功している店の共通条件を特定し、新規出店・メニュー方針の検討に活用できます。
+- **データ出典**: [有名ラーメン店の創業年表｜年代別@らーめん自由区](http://ramenjiyuku.web.fc2.com/)
 
 ### ♨️日本の温泉利用状況（都道府県別）
 - **ファイル**: `ja-onsen.csv`
