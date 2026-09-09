@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { ref, computed, watch } from 'vue'
-  import { ElForm, ElFormItem, ElInput, ElButton, ElAvatar, ElMessage, ElMessageBox } from 'element-plus'
+  import { ElForm, ElFormItem, ElInput, ElButton, ElAvatar, ElMessage } from 'element-plus'
   import { useUpdateUser, type UpdateUserInput } from '@/Composables/useUpdateUser'
   import { useUserProfile } from '@/Composables/useUserProfile'
   import type { User } from '@/Types/types-graphql'
