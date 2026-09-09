@@ -103,7 +103,7 @@
     "string-width": "^8.2.2",
     "virtual-keyboard": "^1.30.4",
     "vue3-google-map": "^0.23.1",
-    "vuetify": "^3.13.3",
+    "vuetify": "^4.2.0",
     "wanakana": "^5.3.1"
   },
   "lint-staged": {
