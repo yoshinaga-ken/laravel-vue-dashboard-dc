@@ -112,7 +112,7 @@ const handleRetry = () => {
 <template>
   <AppLayout :title="pageTitle">
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+      <h2 class="text-xl leading-tight font-semibold text-gray-800 dark:text-gray-200">
         {{ pageTitle }}
       </h2>
     </template>
@@ -127,7 +127,7 @@ const handleRetry = () => {
               <div class="mt-4">
                 <button
                   @click="handleRetry"
-                  class="rounded bg-red-100 px-3 py-1 text-sm text-red-800 transition-colors hover:bg-red-200"
+                  class="rounded-sm bg-red-100 px-3 py-1 text-sm text-red-800 transition-colors hover:bg-red-200"
                 >
                   再試行
                 </button>
@@ -209,6 +209,8 @@ const handleRetry = () => {
 </template>
 
 <style scoped>
+@reference '#app.css';
+
 /* レスポンシブ調整 */
 @media (max-width: 1023px) {
   .py-12 {

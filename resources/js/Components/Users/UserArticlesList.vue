@@ -67,7 +67,7 @@ const handleViewAllClick = () => {
     <div v-else class="space-y-4">
       <!-- 記事統計 -->
       <div
-        class="rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 p-4 text-center dark:from-blue-900/20 dark:to-indigo-900/20"
+        class="rounded-lg bg-linear-to-r from-blue-50 to-indigo-50 p-4 text-center dark:from-blue-900/20 dark:to-indigo-900/20"
       >
         <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">
           {{ articlesCount }}
@@ -141,6 +141,8 @@ const handleViewAllClick = () => {
 </template>
 
 <style scoped>
+@reference '#app.css';
+
 .user-articles-list {
   @apply w-full;
 }

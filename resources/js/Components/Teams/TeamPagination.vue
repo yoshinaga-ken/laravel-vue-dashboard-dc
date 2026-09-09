@@ -108,7 +108,7 @@ const handleSizeChange = (size: number) => {
     <!-- ローディング状態 -->
     <div
       v-if="loading"
-      class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-75"
+      class="absolute inset-0 flex items-center justify-center bg-white/75 dark:bg-gray-800/75"
     >
       <ElIcon class="animate-spin text-xl text-gray-400">
         <Loading />

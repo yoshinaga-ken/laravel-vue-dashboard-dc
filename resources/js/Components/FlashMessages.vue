@@ -30,11 +30,11 @@ watch(
   <div>
     <div
       v-if="page.props.flash?.success && show"
-      class="mb-8 flex items-center justify-between rounded bg-green-500"
+      class="mb-8 flex items-center justify-between rounded-sm bg-green-500"
     >
       <div class="flex items-center">
         <svg
-          class="ml-4 mr-2 h-4 w-4 shrink-0 fill-white"
+          class="mr-2 ml-4 h-4 w-4 shrink-0 fill-white"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >
@@ -58,11 +58,11 @@ watch(
     </div>
     <div
       v-if="(page.props.flash?.error || Object.keys(page.props.errors).length > 0) && show"
-      class="mb-8 flex items-center justify-between rounded bg-red-500"
+      class="mb-8 flex items-center justify-between rounded-sm bg-red-500"
     >
       <div class="flex items-center">
         <svg
-          class="ml-4 mr-2 h-4 w-4 shrink-0 fill-white"
+          class="mr-2 ml-4 h-4 w-4 shrink-0 fill-white"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >

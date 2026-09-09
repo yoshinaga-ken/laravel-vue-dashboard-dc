@@ -139,7 +139,7 @@ const displayableRole = role => {
                 v-for="(role, i) in availableRoles"
                 :key="role.key"
                 type="button"
-                class="relative inline-flex w-full rounded-lg px-4 py-3 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
+                class="relative inline-flex w-full rounded-lg px-4 py-3 focus:z-10 focus:border-indigo-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
                 :class="{
                   'rounded-t-none border-t border-gray-200 focus:border-none dark:border-gray-700':
                     i > 0,
@@ -231,7 +231,7 @@ const displayableRole = role => {
                 <!-- Cancel Team Invitation -->
                 <button
                   v-if="userPermissions.canRemoveTeamMembers"
-                  class="ms-6 cursor-pointer text-sm text-red-500 focus:outline-none"
+                  class="ms-6 cursor-pointer text-sm text-red-500 focus:outline-hidden"
                   @click="cancelTeamInvitation(invitation)"
                 >
                   Cancel
@@ -322,7 +322,7 @@ const displayableRole = role => {
               v-for="(role, i) in availableRoles"
               :key="role.key"
               type="button"
-              class="relative inline-flex w-full rounded-lg px-4 py-3 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
+              class="relative inline-flex w-full rounded-lg px-4 py-3 focus:z-10 focus:border-indigo-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 dark:focus:border-indigo-600 dark:focus:ring-indigo-600"
               :class="{
                 'rounded-t-none border-t border-gray-200 focus:border-none dark:border-gray-700':
                   i > 0,

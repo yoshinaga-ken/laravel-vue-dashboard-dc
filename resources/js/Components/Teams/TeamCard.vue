@@ -105,7 +105,7 @@ const handleAction = (command: string) => {
     }"
   >
     <!-- カードヘッダー -->
-    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 dark:from-gray-800 dark:to-gray-700">
+    <div class="bg-linear-to-r from-blue-50 to-indigo-50 p-6 dark:from-gray-800 dark:to-gray-700">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-4">
           <!-- チームアバター -->
@@ -249,7 +249,7 @@ const handleAction = (command: string) => {
           <div
             v-for="invitation in team.recent_invitations || []"
             :key="invitation.id"
-            class="flex items-center justify-between rounded bg-yellow-50 p-2 dark:bg-yellow-900/20"
+            class="flex items-center justify-between rounded-sm bg-yellow-50 p-2 dark:bg-yellow-900/20"
           >
             <span class="text-sm text-gray-700 dark:text-gray-300">
               {{ invitation.email }}

@@ -73,6 +73,8 @@ const handleInputConfirm = () => {
 </template>
 
 <style>
+@reference '#app.css';
+
 .v-autocomplete #tags-messages {
   display: none;
 }

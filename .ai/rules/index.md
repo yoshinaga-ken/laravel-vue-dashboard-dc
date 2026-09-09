@@ -4,4 +4,5 @@ Before planning or editing, find the row whose globs match the file's path and r
 
 | Applies to | Rule file |
 | --- | --- |
+| resources/css/** | .ai/rules/css.md |
 | package.json, pnpm-workspace.yaml | .ai/rules/general.md |
