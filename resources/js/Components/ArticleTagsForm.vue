@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { watch, computed, ref as vueRef } from 'vue'
-import { useMutation, useQuery } from '@vue/apollo-composable'
+import { CombinedGraphQLErrors } from '@apollo/client/errors'
+import { useMutation, useQuery } from '@vue/apollo-composable/compat'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import ElTextTagsInput from '@/Components/ElTextTagsInput.vue'
 import { gql } from 'graphql-tag'
@@ -118,15 +119,15 @@ const updateTags = () => {
       }
     })
     .catch((e: unknown) => {
-      const graphQLError = (
-        e as { graphQLErrors?: Array<{ extensions?: { debugMessage?: string } }> }
-      )?.graphQLErrors?.[0]
-      if (graphQLError?.extensions?.debugMessage) {
-        form.errors = JSON.parse(graphQLError.extensions.debugMessage as string)
-        console.log(form.errors)
-      } else {
-        form.errors.tags = '予期しないエラーが発生しました。'
+      if (CombinedGraphQLErrors.is(e)) {
+        const graphQLError = e.errors[0]
+        if (graphQLError?.extensions?.debugMessage) {
+          form.errors = JSON.parse(graphQLError.extensions.debugMessage as string)
+          console.log(form.errors)
+          return
+        }
       }
+      form.errors.tags = '予期しないエラーが発生しました。'
     })
 }
 

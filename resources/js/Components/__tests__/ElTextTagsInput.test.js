@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import ElTextTagsInput from '@/Components/ElTextTagsInput.vue'
 import { ElTag, ElInput, ElButton, ElAutocomplete } from 'element-plus'
 
-vi.mock('@vue/apollo-composable', () => ({
+vi.mock('@vue/apollo-composable/compat', () => ({
   useQuery: () => ({
     result: {
       value: {

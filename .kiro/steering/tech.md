@@ -6,8 +6,8 @@
 
 ## Core Technologies
 
-- **Backend Language**: PHP 8.2+
-- **Backend Framework**: Laravel 12
+- **Backend Language**: PHP 8.3+
+- **Backend Framework**: Laravel 13
 - **Frontend Framework**: Vue 3 (Composition API)
 - **Type System**: TypeScript (strict mode)
 - **Build Tool**: Vite 7
@@ -60,7 +60,7 @@
 ## Development Environment
 
 ### Required Tools
-- PHP 8.2+
+- PHP 8.3+
 - Composer
 - Node.js (pnpm 推奨)
 - MariaDB (開発環境)

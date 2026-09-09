@@ -13,13 +13,13 @@ const props = defineProps({
         <div
           v-if="link.url === null"
           :key="key"
-          class="mb-1 mr-1 rounded border px-4 py-3 text-sm leading-4 text-gray-400"
+          class="mr-1 mb-1 rounded-sm border px-4 py-3 text-sm leading-4 text-gray-400"
           v-html="link.label"
         />
         <Link
           v-else
           :key="`link-${key}`"
-          class="mb-1 mr-1 rounded border px-4 py-3 text-sm leading-4 text-white hover:bg-white focus:border-indigo-500 focus:text-indigo-500"
+          class="mr-1 mb-1 rounded-sm border px-4 py-3 text-sm leading-4 text-white hover:bg-white focus:border-indigo-500 focus:text-indigo-500"
           :class="{ 'bg-indigo-500': link.active }"
           :href="link.url"
           v-html="link.label"

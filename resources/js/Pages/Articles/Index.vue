@@ -19,7 +19,7 @@ import {
   FilterArticleInput,
   ArticlePaginator,
 } from '@/Types/types-graphql'
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery } from '@vue/apollo-composable/compat'
 import gql from 'graphql-tag'
 
 const { t } = useTranslation()
@@ -455,7 +455,7 @@ const onClickArticleDelete = (article: IndexArticle) => {
 <template>
   <AppLayout title="Article">
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Articles</h2>
+      <h2 class="text-xl leading-tight font-semibold text-gray-800 dark:text-gray-200">Articles</h2>
     </template>
 
     <div class="m-2 flex items-center gap-2">
@@ -495,7 +495,7 @@ const onClickArticleDelete = (article: IndexArticle) => {
 
       <Link
         v-if="permissions.canCreateArticle"
-        class="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-500 px-4 py-2 text-xs font-semibold tracking-widest text-white transition duration-150 ease-in-out hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:bg-red-700 dark:focus:ring-offset-gray-800"
+        class="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-500 px-4 py-2 text-xs font-semibold tracking-widest text-white transition duration-150 ease-in-out hover:bg-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-hidden active:bg-red-700 dark:focus:ring-offset-gray-800"
         :href="route('articles.create')"
       >
         <v-icon icon="mdi-file-document-plus" />
@@ -508,7 +508,7 @@ const onClickArticleDelete = (article: IndexArticle) => {
       <Pagination :links="articles.links" />
     </div>
 
-    <div class="mx-3 overflow-x-auto rounded-md px-6 text-gray-800 shadow dark:text-gray-200">
+    <div class="mx-3 overflow-x-auto rounded-md px-6 text-gray-800 shadow-sm dark:text-gray-200">
       <table aria-label="Articles List" class="w-full table-auto">
         <thead>
           <tr class="text-left font-bold">
@@ -629,6 +629,8 @@ const onClickArticleDelete = (article: IndexArticle) => {
 </template>
 
 <style scoped>
+@reference '#app.css';
+
 div {
   @apply text-gray-800 dark:text-gray-200;
 }
@@ -638,7 +640,7 @@ table thead {
 }
 
 table thead th {
-  @apply px-6 pb-4 pt-6;
+  @apply px-6 pt-6 pb-4;
 }
 
 table td {

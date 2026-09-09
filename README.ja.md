@@ -237,6 +237,7 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
   - 二要素認証
   - ブラウザセッション
   - チーム管理
+  - [Socialite](https://laravel.com/docs/13.x/socialite) による OAuth ログイン（Google、GitHub）
 - 記事管理
   - CRUD 操作
   - 記事のいいね/よくないね操作
@@ -250,28 +251,33 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
 ## 技術スタック
 
 - バックエンド
-  - [Laravel 12](https://laravel.com/)
-    - [Eloquent ORM](https://laravel.com/docs/12.x/eloquent-relationships)
-  - [inertiajs](https://inertiajs.com/)
+  - PHP 8.3
+  - [Laravel 13](https://laravel.com/)
+    - [Eloquent ORM](https://laravel.com/docs/13.x/eloquent-relationships)
+  - [Inertia.js 3](https://inertiajs.com/)
   - RESTful API
-  - [GraphQL](https://graphql.org/) with [lighthouse](https://lighthouse-php.com/)
-  - [sanctum](https://laravel.com/docs/12.x/sanctum) による認証
+  - [GraphQL](https://graphql.org/) with [Lighthouse](https://lighthouse-php.com/)
+  - [Sanctum](https://laravel.com/docs/13.x/sanctum) と [Socialite](https://laravel.com/docs/13.x/socialite) による認証
   - テスト
-    - [pest](https://pestphp.com/)
+    - [Pest 4](https://pestphp.com/)
 - フロントエンド
-  - [vue 3](https://vuejs.org/)
-  - [tailwindcss](https://tailwindcss.com/)
+  - [Vue 3](https://vuejs.org/)
+  - [Vite 8](https://vite.dev/)
+  - [Tailwind CSS 4](https://tailwindcss.com/)
     - ダークモード
   - UI コンポーネント
-    - [vuetify](https://vuetifyjs.com/en/)
-    - [element-plus](https://element-plus.org/en-US/)
-  - [Vue Apollo](https://apollo.vuejs.org/) を使用した [GraphQL](https://graphql.org/)
+    - [Vuetify 4](https://vuetifyjs.com/en/)
+    - [Element Plus](https://element-plus.org/en-US/)
+  - チャート: [dc.js](http://dc-js.github.io/dc.js/) / [D3](https://d3js.org/) / [Crossfilter](https://github.com/crossfilter/crossfilter)
+  - [Apollo Client 4](https://www.apollographql.com/docs/react) と [Vue Apollo 5](https://apollo.vuejs.org/) を使用した [GraphQL](https://graphql.org/)
   - [Google Maps API](https://developers.google.com/maps/documentation/javascript/reference?hl=en)
   - [YouTube API](https://developers.google.com/youtube/v3/docs?hl=en)
   - テスト
-    - [vitest](https://vitest.dev/)
-    - [playwright](https://playwright.dev/) による e2e テスト
+    - [Vitest 5](https://vitest.dev/)
+    - [Playwright](https://playwright.dev/) による e2e テスト
   - [Storybook 10](https://storybook.js.org/)
+- 開発
+  - [Laravel Boost](https://laravel.com/docs/13.x/boost)（AI ガイドライン / MCP）
 
 ## DeepWiki 説明
 

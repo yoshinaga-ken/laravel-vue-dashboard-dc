@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, onBeforeUnmount, computed, watchEffect, watch } from 'vue'
 import { ElMention } from 'element-plus'
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery } from '@vue/apollo-composable/compat'
 import gql from 'graphql-tag'
 import { debounce } from 'lodash'
 import type { MentionOption } from 'element-plus'

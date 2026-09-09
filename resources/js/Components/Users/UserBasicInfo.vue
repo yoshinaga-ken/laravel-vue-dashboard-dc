@@ -105,6 +105,8 @@ const avatarFallback = computed(() => {
 </template>
 
 <style scoped>
+@reference '#app.css';
+
 .user-basic-info {
   @apply w-full;
 }

@@ -450,7 +450,15 @@
               :src="'https://www.youtube.com/embed/' + pnl.tube.vid"
               title="YouTube video player"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+                web-share;
+              "
               referrerpolicy="strict-origin-when-cross-origin"
               allowfullscreen
             ></iframe>
@@ -822,7 +830,7 @@
                 >
                   <img
                     src="/img/chart-sort-asc.svg"
-                    class="-rotate-90 -scale-y-100 dark:invert"
+                    class="-scale-y-100 -rotate-90 dark:invert"
                     style="width: 1.2em"
                   />
                   <input type="checkbox" v-model="pnl.sex.elasticX" class="hidden" />
@@ -899,7 +907,7 @@
               >
                 <img
                   src="/img/chart-sort-asc.svg"
-                  class="-rotate-90 -scale-y-100 dark:invert"
+                  class="-scale-y-100 -rotate-90 dark:invert"
                   style="width: 1.2em"
                 />
                 <input type="checkbox" v-model="pnl.age.elasticX" class="hidden" />
@@ -951,7 +959,7 @@
               >
                 <img
                   src="/img/chart-sort-asc.svg"
-                  class="-rotate-90 -scale-y-100 dark:invert"
+                  class="-scale-y-100 -rotate-90 dark:invert"
                   style="width: 1.2em"
                 />
                 <input type="checkbox" v-model="pnl.cond.elasticX" class="hidden" />
@@ -987,7 +995,7 @@
           <!-- DC_PANEL Job -->
           <div
             id="panel_job"
-            class="scrollbar-thin dc_panel drag panel_job bg-theme-col2"
+            class="dc_panel drag panel_job scrollbar-thin bg-theme-col2"
             :style="pnl.job.style"
             v-show="pnl.job.isShow"
           >
@@ -1010,7 +1018,7 @@
               >
                 <img
                   src="/img/chart-sort-asc.svg"
-                  class="-rotate-90 -scale-y-100 dark:invert"
+                  class="-scale-y-100 -rotate-90 dark:invert"
                   style="width: 1.2em"
                 />
                 <input type="checkbox" v-model="pnl.job.elasticX" class="hidden" />
@@ -1062,7 +1070,7 @@
                 >
                   <img
                     src="/img/chart-sort-asc.svg"
-                    class="-rotate-90 -scale-y-100 dark:invert"
+                    class="-scale-y-100 -rotate-90 dark:invert"
                     style="width: 1.2em"
                   />
                   <input type="checkbox" v-model="item.elasticX" class="hidden" />
@@ -8663,7 +8671,7 @@ const onDocumentReady = () => {
         event.preventDefault()
         $(this).css('width', '11em')
       })
-      .on('blur', function (event) {
+      .on('blur-sm', function (event) {
         event.preventDefault()
         $(this).css('width', '6em')
       })
@@ -8704,6 +8712,7 @@ const onDocumentReady = () => {
 
     mm.dimJob.filterAll()
     dc.filterAll(CGRP_SHOW)
+    dc.filterAll(CGRP_HIDE)
 
     mm.map.doDraw = 1
     mm.renderAllChart()

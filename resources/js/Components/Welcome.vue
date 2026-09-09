@@ -5,7 +5,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue'
 <template>
   <div>
     <div
-      class="border-b border-gray-200 bg-white p-6 lg:p-8 dark:border-gray-700 dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent"
+      class="border-b border-gray-200 bg-white p-6 lg:p-8 dark:border-gray-700 dark:bg-gray-800 dark:bg-linear-to-bl dark:from-gray-700/50 dark:via-transparent"
     >
       <ApplicationLogo class="block h-12 w-auto" />
 
@@ -23,7 +23,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue'
     </div>
 
     <div
-      class="grid grid-cols-1 gap-6 bg-gray-200 bg-opacity-25 p-6 md:grid-cols-2 lg:gap-8 lg:p-8 dark:bg-gray-800"
+      class="grid grid-cols-1 gap-6 bg-gray-200/25 p-6 md:grid-cols-2 lg:gap-8 lg:p-8 dark:bg-gray-800"
     >
       <div>
         <div class="flex items-center">

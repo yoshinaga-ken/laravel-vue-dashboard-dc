@@ -158,6 +158,8 @@ const getDisplayName = (user: User) => {
 </template>
 
 <style scoped>
+@reference '#app.css';
+
 .user-follow-info {
   @apply w-full;
 }

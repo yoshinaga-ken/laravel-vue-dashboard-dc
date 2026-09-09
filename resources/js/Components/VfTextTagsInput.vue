@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery } from '@vue/apollo-composable/compat'
 import gql from 'graphql-tag'
 import type { FilterTagInput, TagPaginator } from '@/Types/types-graphql'
 
@@ -73,6 +73,8 @@ const handleInputConfirm = () => {
 </template>
 
 <style>
+@reference '#app.css';
+
 .v-autocomplete #tags-messages {
   display: none;
 }

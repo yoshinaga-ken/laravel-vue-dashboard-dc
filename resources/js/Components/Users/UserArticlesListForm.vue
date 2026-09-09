@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { ref, computed } from 'vue'
   import { ElTable, ElTableColumn, ElInput, ElMessage } from 'element-plus'
-  import { useMutation, useQuery } from '@vue/apollo-composable'
+  import { useMutation, useQuery } from '@vue/apollo-composable/compat'
   import gql from 'graphql-tag'
   import ArticleTagsForm from '@/Components/ArticleTagsForm.vue'
   import type { Article } from '@/Types/types-graphql'

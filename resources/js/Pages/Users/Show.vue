@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { CombinedGraphQLErrors, ServerError } from '@apollo/client/errors'
 import { computed } from 'vue'
 import { router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
@@ -42,16 +43,16 @@ const pageTitle = computed(() => {
 const errorMessage = computed(() => {
   if (!error.value) return ''
 
-  if (error.value.networkError) {
-    return 'ネットワークエラーが発生しました。しばらく待ってから再度お試しください。'
-  }
-
-  if (error.value.graphQLErrors?.length > 0) {
-    const firstError = error.value.graphQLErrors[0]
-    if (firstError.extensions?.category === 'authorization') {
+  if (CombinedGraphQLErrors.is(error.value)) {
+    const firstError = error.value.errors[0]
+    if (firstError?.extensions?.category === 'authorization') {
       return 'このユーザーの情報を表示する権限がありません。'
     }
-    return firstError.message || '予期しないエラーが発生しました。'
+    return firstError?.message || '予期しないエラーが発生しました。'
+  }
+
+  if (ServerError.is(error.value)) {
+    return 'ネットワークエラーが発生しました。しばらく待ってから再度お試しください。'
   }
 
   return '予期しないエラーが発生しました。'
@@ -112,7 +113,7 @@ const handleRetry = () => {
 <template>
   <AppLayout :title="pageTitle">
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+      <h2 class="text-xl leading-tight font-semibold text-gray-800 dark:text-gray-200">
         {{ pageTitle }}
       </h2>
     </template>
@@ -127,7 +128,7 @@ const handleRetry = () => {
               <div class="mt-4">
                 <button
                   @click="handleRetry"
-                  class="rounded bg-red-100 px-3 py-1 text-sm text-red-800 transition-colors hover:bg-red-200"
+                  class="rounded-sm bg-red-100 px-3 py-1 text-sm text-red-800 transition-colors hover:bg-red-200"
                 >
                   再試行
                 </button>
@@ -209,6 +210,8 @@ const handleRetry = () => {
 </template>
 
 <style scoped>
+@reference '#app.css';
+
 /* レスポンシブ調整 */
 @media (max-width: 1023px) {
   .py-12 {

@@ -1,5 +1,5 @@
 import { ref, computed, watch } from 'vue'
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery } from '@vue/apollo-composable/compat'
 import { usePage } from '@inertiajs/vue3'
 import type { User } from '@/Types/types-graphql'
 import { GET_USER_PROFILE } from '@/Graphql/queries/GetUserProfile'

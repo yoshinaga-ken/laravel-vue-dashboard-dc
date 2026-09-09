@@ -237,6 +237,7 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
   - Two Factor Authentication
   - Browser Sessions
   - Teams Management
+  - OAuth login (Google, GitHub) with [Socialite](https://laravel.com/docs/13.x/socialite)
 - Articles Management
   - CRUD Operations
   - article like/dislike operations
@@ -250,28 +251,33 @@ A template project for an admin panel with a dashboard using 📊dimensional cha
 ## Technology Stack
 
 - backend
-  - [Laravel 12](https://laravel.com/)
-    - [Eloquent ORM](https://laravel.com/docs/12.x/eloquent-relationships)
-  - [inertiajs](https://inertiajs.com/)
+  - PHP 8.3
+  - [Laravel 13](https://laravel.com/)
+    - [Eloquent ORM](https://laravel.com/docs/13.x/eloquent-relationships)
+  - [Inertia.js 3](https://inertiajs.com/)
   - RestFul API
-  - [GraphQL](https://graphql.org/) with [lighthouse](https://lighthouse-php.com/)
-  - Authentication with [sanctum](https://laravel.com/docs/12.x/sanctum)
+  - [GraphQL](https://graphql.org/) with [Lighthouse](https://lighthouse-php.com/)
+  - Authentication with [Sanctum](https://laravel.com/docs/13.x/sanctum) and [Socialite](https://laravel.com/docs/13.x/socialite)
   - test
-    - [pest](https://pestphp.com/)
+    - [Pest 4](https://pestphp.com/)
 - frontend
-  - [vue 3](https://vuejs.org/)
-  - [tailwindcss](https://tailwindcss.com/)
+  - [Vue 3](https://vuejs.org/)
+  - [Vite 8](https://vite.dev/)
+  - [Tailwind CSS 4](https://tailwindcss.com/)
     - dark mode
   - ui components
-    - [vuetify](https://vuetifyjs.com/en/)
-    - [element-plus](https://element-plus.org/en-US/)
-  - [GraphQL](https://graphql.org/) with [Vue Apollo](https://apollo.vuejs.org/)
+    - [Vuetify 4](https://vuetifyjs.com/en/)
+    - [Element Plus](https://element-plus.org/en-US/)
+  - Charts: [dc.js](http://dc-js.github.io/dc.js/) / [D3](https://d3js.org/) / [Crossfilter](https://github.com/crossfilter/crossfilter)
+  - [GraphQL](https://graphql.org/) with [Apollo Client 4](https://www.apollographql.com/docs/react) and [Vue Apollo 5](https://apollo.vuejs.org/)
   - [Google Maps API](https://developers.google.com/maps/documentation/javascript/reference?hl=en)
   - [YouTube API](https://developers.google.com/youtube/v3/docs?hl=en)
   - test
-    - [vitest](https://vitest.dev/)
-    - e2e with [playwright](https://playwright.dev/)
+    - [Vitest 5](https://vitest.dev/)
+    - e2e with [Playwright](https://playwright.dev/)
   - [Storybook 10](https://storybook.js.org/)
+- development
+  - [Laravel Boost](https://laravel.com/docs/13.x/boost) (AI guidelines and MCP)
 
 ## DeepWiki explanation
 

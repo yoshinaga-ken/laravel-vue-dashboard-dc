@@ -74,7 +74,7 @@ const getTeamTypeTag = (team: Team) => {
         </div>
 
         <div
-          class="cursor-pointer rounded-lg border border-amber-200 bg-gradient-to-r from-amber-50 to-yellow-50 p-4 transition-shadow hover:shadow-md dark:border-amber-700 dark:from-amber-900/20 dark:to-yellow-900/20"
+          class="cursor-pointer rounded-lg border border-amber-200 bg-linear-to-r from-amber-50 to-yellow-50 p-4 transition-shadow hover:shadow-md dark:border-amber-700 dark:from-amber-900/20 dark:to-yellow-900/20"
           @click="handleTeamClick(currentTeam.id)"
         >
           <div class="flex items-center justify-between">
@@ -191,6 +191,8 @@ const getTeamTypeTag = (team: Team) => {
 </template>
 
 <style scoped>
+@reference '#app.css';
+
 .user-teams-info {
   @apply w-full;
 }

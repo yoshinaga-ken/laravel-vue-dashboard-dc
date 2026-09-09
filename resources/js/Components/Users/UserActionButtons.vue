@@ -4,7 +4,7 @@
   import { Plus, Check, Edit, UserFilled } from '@element-plus/icons-vue'
   import { useForm, Link } from '@inertiajs/vue3'
   import { useRoute } from '@/Composables/useRoute'
-  import { useQuery } from '@vue/apollo-composable'
+  import { useQuery } from '@vue/apollo-composable/compat'
   import { GET_CURRENT_USER_FOLLOWING } from '@/Graphql/queries/GetCurrentUserFollowing'
   import axios from '@/Utils/axios.js'
   import type { User } from '@/Types/types-graphql'
@@ -130,7 +130,7 @@
       <template v-if="isOwnProfile">
         <Link
           :href="route('users.edit', targetUser.id)"
-          class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm transition-colors duration-150 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+          class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-xs transition-colors duration-150 hover:bg-blue-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
         >
           <ElIcon class="mr-2">
             <Edit />

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { ref, computed, watch } from 'vue'
-  import { ElForm, ElFormItem, ElInput, ElButton, ElAvatar, ElMessage, ElMessageBox } from 'element-plus'
+  import { ElForm, ElFormItem, ElInput, ElButton, ElAvatar, ElMessage } from 'element-plus'
   import { useUpdateUser, type UpdateUserInput } from '@/Composables/useUpdateUser'
   import { useUserProfile } from '@/Composables/useUserProfile'
   import type { User } from '@/Types/types-graphql'
@@ -28,13 +28,13 @@
   // フォームバリデーションルール
   const rules = {
     name: [
-      { required: true, message: '名前を入力してください', trigger: 'blur' },
-      { max: 255, message: '名前は255文字以内で入力してください', trigger: 'blur' },
+      { required: true, message: '名前を入力してください', trigger: 'blur-sm' },
+      { max: 255, message: '名前は255文字以内で入力してください', trigger: 'blur-sm' },
     ],
     email: [
-      { required: true, message: 'メールアドレスを入力してください', trigger: 'blur' },
-      { type: 'email', message: '有効なメールアドレスを入力してください', trigger: 'blur' },
-      { max: 255, message: 'メールアドレスは255文字以内で入力してください', trigger: 'blur' },
+      { required: true, message: 'メールアドレスを入力してください', trigger: 'blur-sm' },
+      { type: 'email', message: '有効なメールアドレスを入力してください', trigger: 'blur-sm' },
+      { max: 255, message: 'メールアドレスは255文字以内で入力してください', trigger: 'blur-sm' },
     ],
   }
 
