@@ -7,7 +7,7 @@
 ## Core Technologies
 
 - **Backend Language**: PHP 8.3+
-- **Backend Framework**: Laravel 12
+- **Backend Framework**: Laravel 13
 - **Frontend Framework**: Vue 3 (Composition API)
 - **Type System**: TypeScript (strict mode)
 - **Build Tool**: Vite 7
