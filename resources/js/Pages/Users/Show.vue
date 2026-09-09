@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { CombinedGraphQLErrors, ServerError } from '@apollo/client/errors'
 import { computed } from 'vue'
 import { router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
@@ -42,16 +43,16 @@ const pageTitle = computed(() => {
 const errorMessage = computed(() => {
   if (!error.value) return ''
 
-  if (error.value.networkError) {
-    return 'ネットワークエラーが発生しました。しばらく待ってから再度お試しください。'
-  }
-
-  if (error.value.graphQLErrors?.length > 0) {
-    const firstError = error.value.graphQLErrors[0]
-    if (firstError.extensions?.category === 'authorization') {
+  if (CombinedGraphQLErrors.is(error.value)) {
+    const firstError = error.value.errors[0]
+    if (firstError?.extensions?.category === 'authorization') {
       return 'このユーザーの情報を表示する権限がありません。'
     }
-    return firstError.message || '予期しないエラーが発生しました。'
+    return firstError?.message || '予期しないエラーが発生しました。'
+  }
+
+  if (ServerError.is(error.value)) {
+    return 'ネットワークエラーが発生しました。しばらく待ってから再度お試しください。'
   }
 
   return '予期しないエラーが発生しました。'

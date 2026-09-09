@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import VfTextTagsInput from '@/Components/VfTextTagsInput.vue'
 
 // GraphQL のモック
-vi.mock('@vue/apollo-composable', () => ({
+vi.mock('@vue/apollo-composable/compat', () => ({
   useQuery: () => ({
     result: {
       value: {

@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { useMutation } from '@vue/apollo-composable'
+import { useMutation } from '@vue/apollo-composable/compat'
 import { UPDATE_USER } from '@/Graphql/mutations/UpdateUser'
 import type { User } from '@/Types/types-graphql'
 

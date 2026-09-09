@@ -4,7 +4,7 @@ import ElMentionTextarea from '@/Components/ElMentionTextarea.vue'
 import { ElMention } from 'element-plus'
 
 // GraphQL関連のモック
-vi.mock('@vue/apollo-composable', () => ({
+vi.mock('@vue/apollo-composable/compat', () => ({
   useQuery: vi.fn(),
 }))
 
@@ -61,7 +61,7 @@ describe('ElMentionTextarea', () => {
         refetch: mockRefetchUsers,
       })
 
-    const { useQuery } = await import('@vue/apollo-composable')
+    const { useQuery } = await import('@vue/apollo-composable/compat')
     useQuery.mockImplementation(mockUseQuery)
 
     wrapper = mount(ElMentionTextarea, {
@@ -200,7 +200,7 @@ describe('ElMentionTextarea', () => {
         refetch: mockRefetchUsersLarge,
       })
 
-    const { useQuery } = await import('@vue/apollo-composable')
+    const { useQuery } = await import('@vue/apollo-composable/compat')
     useQuery.mockImplementation(mockUseQueryLarge)
 
     const wrapperLarge = mount(ElMentionTextarea, {
@@ -452,7 +452,7 @@ describe('ElMentionTextarea', () => {
         refetch: mockRefetchUsersDefault,
       })
 
-    const { useQuery } = await import('@vue/apollo-composable')
+    const { useQuery } = await import('@vue/apollo-composable/compat')
     useQuery.mockImplementation(mockUseQueryDefault)
 
     const defaultWrapper = mount(ElMentionTextarea, {

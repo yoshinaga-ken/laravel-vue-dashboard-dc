@@ -19,7 +19,7 @@ import {
   FilterArticleInput,
   ArticlePaginator,
 } from '@/Types/types-graphql'
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery } from '@vue/apollo-composable/compat'
 import gql from 'graphql-tag'
 
 const { t } = useTranslation()
