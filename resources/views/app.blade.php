@@ -7,7 +7,7 @@
     @php
         $meta = app(App\Services\MetaService::class)->getMetaData(request()->query('data'));
     @endphp
-    <title inertia>{{ $meta['title'] }}</title>
+    <title data-inertia>{{ $meta['title'] }}</title>
     <link rel="shortcut icon" href="{{ $meta['favicon'] }}">
     <meta name="keywords" content="{{ $meta['keywords'] }}">
     <meta name="description" content="{{ $meta['description'] }}">
