@@ -8712,6 +8712,7 @@ const onDocumentReady = () => {
 
     mm.dimJob.filterAll()
     dc.filterAll(CGRP_SHOW)
+    dc.filterAll(CGRP_HIDE)
 
     mm.map.doDraw = 1
     mm.renderAllChart()
