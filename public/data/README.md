@@ -901,6 +901,30 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     - [List of highest-grossing films in Japan@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E6%AD%B4%E4%BB%A3%E8%88%88%E8%A1%8C%E6%88%90%E7%B8%BE%E4%B8%8A%E4%BD%8D%E3%81%AE%E6%98%A0%E7%94%BB%E4%B8%80%E8%A6%A7)
     - [Kinema Junpo Best Ten@Wikipedia (JA)](https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%8D%E3%83%9E%E6%97%AC%E5%A0%B1%E3%83%99%E3%82%B9%E3%83%88%E3%83%BB%E3%83%86%E3%83%B3)
 
+### 🎤Entertainment Talent Data
+
+#### 🎤Japanese Entertainers / Talent Catalog
+- **File**: `ja-talent-list.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-talent-list)
+  - **Format**:
+    ```
+    Birth date,Prefecture,City,👤Person,Age band,Occupation,Agency,Lat;Lon,Count,Sex,Height,Blood type,Signature work,Comedy award,Debut year,Wikidata,Image,Living status,Career years,Group name
+    ```
+  - **Description**: About 432 Japanese entertainers. Filter by birthplace, age band, and occupation, plus living/deceased, career years, and group name. Comedy names are seeded from Wikipedia Category:お笑い芸人; singers from musicmachine.jp’s all-time top 30 (one representative member per band; AKB48 excluded).
+  - **Use Case**: Click combinations such as “Osaka × comedy × 40s” or “singer × group name” and watch the other charts update together.
+  - **How to use analysis results**:
+    - Move the birth-year range to see how prefecture shares shift.
+    - Compare generation gaps among comedy, acting, and singing via occupation × age band.
+    - Filter living status to deceased and inspect group names vs. birthplace.
+    - Filter to singers and inspect group names such as Southern All Stars or B'z with their representative members.
+  - **Data Source**:
+    - [Wikidata Query Service](https://query.wikidata.org/)
+    - [List of Japanese male actors@Wikipedia (JA)](https://ja.wikipedia.org/wiki/日本の男優一覧)
+    - [List of Japanese actresses@Wikipedia (JA)](https://ja.wikipedia.org/wiki/日本の女優一覧)
+    - [Category:お笑い芸人@Wikipedia (JA)](https://ja.wikipedia.org/wiki/Category:お笑い芸人)
+    - [Greatest Japanese music artists of all time@musicmachine](https://www.musicmachine.jp/)
+    - [Career-year list (comedians)@atwiki](https://w.atwiki.jp/celebritytalent/pages/10.html)
+
 ### 🎵Music Data
 
 #### 🎵Japanese Hit Song Rankings
@@ -1062,6 +1086,17 @@ Education-oriented standard dataset by the National Statistics Center. Enables m
     - Visualize origin × species × age-range distributions to understand major production areas and valued characteristics.
     - Extract special types such as dry bonsai, root-over-rock, and group planting.
   - **Data Source**: [Bonsai@Wikipedia](https://en.wikipedia.org/wiki/Bonsai), [Bonsai Myo species care guide](https://www.bonsaimyo.com/blogs/sodatekata-treetype), [Bonsai School types and classifications](https://bonsai-school.com/note/8/)
+
+- **User Directory Usage**: `test-user-directory.csv`
+  - [📊Chart](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-user-directory)
+  - **Format**:
+    ```
+    Date,🏢Department,🙋User,📁Directory,Age,💼Job,⏳Tenure,Unused,Size,📄File Type,🤖AI Token Usage,Gender
+    ```
+  - **Description**: Analyze each user's directory usage over a period by department, job, and age, including file type and AI token usage. Paths are `directory/subdirectory/file` (2022-01 to 2026-09, 2,000 rows). Size is in KB. Extensions are biased by job, and each user favors one directory. AI token usage follows the [yearly trend](https://chatgpt.com/share/6ab4f192-a6d0-83ee-a86d-1dabffb70cae) (small in early 2024, a sharp rise by 2026), scaled to personal steps (0 / 100 / 1,000 / 10,000 / 30,000 / 100,000 / 300,000). Younger engineering, research, and support staff use more; legal, finance, executives, and administration stay near zero.
+  - **Use Case**: Use the sunburst to see directory priority while filtering by date, job, and department.
+  - **How to use analysis results**: Engineering concentrates on `📁src`, design on `📁design`, and fig / md / ts increase after 2024.
+  - **Data Source**: Sample data (synthetic)
 
 #### Education Field Test Data
 
