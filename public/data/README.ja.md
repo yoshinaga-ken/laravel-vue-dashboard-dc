@@ -902,6 +902,30 @@
     - [日本歴代興行成績上位の映画一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E6%AD%B4%E4%BB%A3%E8%88%88%E8%A1%8C%E6%88%90%E7%B8%BE%E4%B8%8A%E4%BD%8D%E3%81%AE%E6%98%A0%E7%94%BB%E4%B8%80%E8%A6%A7)
     - [キネマ旬報ベスト・テン@Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%8D%E3%83%9E%E6%97%AC%E5%A0%B1%E3%83%99%E3%82%B9%E3%83%88%E3%83%BB%E3%83%86%E3%83%B3)
 
+### 🎤芸能データ
+
+#### 🎤日本の芸能人・タレント一覧
+- **ファイル**: `ja-talent-list.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-talent-list)
+  - **フォーマット**:
+    ```
+    生年,都道府県,市区町村,👤人物名,年代,職業ジャンル,所属事務所,緯度;経度,カウント,性別,身長,血液型,代表作品,お笑い賞,デビュー年,Wikidata,画像,存命,芸歴,グループ名
+    ```
+  - **説明**: 日本の芸能人（約432人）。出身地・年代・職業ジャンルに加え、存命/故人・芸歴・グループ名で絞れる。お笑いは Wikipedia Category:お笑い芸人、歌手は musicmachine.jp 歴代30（バンドは代表メンバー1人、AKB48は除外）を種に補完。
+  - **用途**: 「大阪出身 × お笑い × 40代」や「歌手 × グループ名」のようにクリックして、他チャートが連動する発見に使う。
+  - **分析結果の活用例**:
+    - 生年レンジを動かして出身都道府県の分布の変化を見る
+    - 職業ジャンル×年代で、お笑いと俳優・歌手の世代差を比較する
+    - 存命チャートで故人に絞り、グループ名と出身地を見る
+    - 歌手に絞り、サザンオールスターズや B'z などグループ名と代表メンバーを見る
+  - **データ出典**:
+    - [Wikidata Query Service](https://query.wikidata.org/)
+    - [日本の男優一覧@Wikipedia](https://ja.wikipedia.org/wiki/日本の男優一覧)
+    - [日本の女優一覧@Wikipedia](https://ja.wikipedia.org/wiki/日本の女優一覧)
+    - [Category:お笑い芸人@Wikipedia](https://ja.wikipedia.org/wiki/Category:お笑い芸人)
+    - [日本の偉大な音楽アーティスト歴代@musicmachine](https://www.musicmachine.jp/)
+    - [芸歴一覧 芸人編@atwiki](https://w.atwiki.jp/celebritytalent/pages/10.html)
+
 ### 🎵音楽データ
 
 #### 🎵邦楽ヒット曲ランキング
@@ -1064,6 +1088,17 @@
     - 産地×樹種×樹齢帯で分布を可視化し、名産地や銘品の条件を理解する材料にできます。
     - ドライ盆栽・石付・寄せ植えなど特殊タイプの樹種・樹形を抽出できます。
   - **データ出典**: [Wikipedia 盆栽](https://ja.wikipedia.org/wiki/盆栽), [盆栽妙 樹種別育て方](https://www.bonsaimyo.com/blogs/sodatekata-treetype), [盆栽の学校 種類と分類](https://bonsai-school.com/note/8/)
+
+- **ユーザー別ディレクトリ使用量**: `test-user-directory.csv`
+  - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-user-directory)
+  - **フォーマット**:
+    ```
+    日付,🏢部署,🙋ユーザー,📁ディレクトリ,年齢,💼職種,⏳勤続年数,未使用,容量,📄ファイルタイプ,🤖AIトークン使用量,性別
+    ```
+  - **説明**: ある期間の、部署・職種・年齢ごとの各ユーザーのディレクトリ使用量を分析。ファイルタイプやAIトークン使用量などからも分析。📁ディレクトリは `ディレクトリ/サブディレクトリ/ファイル`（2022-01〜2026-09、2000件）。容量の単位は KB。職種ごとに扱いやすい拡張子へ偏らせ、同一ユーザーは得意フォルダに寄る。AIトークン使用量は [年度推移](https://chatgpt.com/share/6ab4f192-a6d0-83ee-a86d-1dabffb70cae) の形（2024年初は小さく、2026年に急増）を個人の段階値（0 / 100 / 1,000 / 10,000 / 30,000 / 100,000 / 300,000）に縮小。若い開発・研究・サポートは多く、法務・財務・経営・総務はほぼ0。
+  - **用途**: サンバーストでディレクトリ優先を見ながら、日付・職種・部署で絞る。
+  - **分析結果の活用例**: ⚙️開発で `📁src`、🎨デザインで `📁design`、2024年以降の fig / md / ts の増加。
+  - **データ出典**: サンプルデータ（合成）
 
 #### 教育分野のテストデータ
 

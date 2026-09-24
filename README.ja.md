@@ -72,6 +72,8 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
   - [🎬スタジオジブリ劇場公開作品一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-ghibli-films)
 - 音楽
   - [🎵邦楽ヒット曲ランキング](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit&layout=tube)
+- 🎤芸能データ
+  - [🎤日本の芸能人・タレント一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-talent-list)
 - [歴史・文化](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers&fopen=1&fopen_filter=-hist-)
   - [🏯日本の城一覧](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle&is_gmap_3d=1)
   - [👑日本史の歴代統治者（在位）](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers)
@@ -118,6 +120,7 @@ Laravel と Vue で実装された、📊次元チャートを使用したダッ
   - 基本テストデータ
     - [🍹飲料評価データ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-drink)
     - [🍱昼食購入データ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-lunch)
+    - [📁ユーザー別ディレクトリ使用量](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-user-directory)
   - 教育分野テストデータ
     - [🎓大学入試データ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-university-entrance)
     - [📚学力テストデータ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-academic-achievement)
