@@ -1,5 +1,9 @@
 {
   "dataType": 0,
+  "common": {
+    "unit": "名",
+    "cntColumnValue": 1
+  },
   "chartGMap": {},
   "chartSView": {},
   "chartTube": {},

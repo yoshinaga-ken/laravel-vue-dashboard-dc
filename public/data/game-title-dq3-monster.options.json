@@ -9,7 +9,8 @@
     "#unit": "体",
     "#unitPrefix": "数",
     "colorTheme": "dark",
-    "stackType": 2
+    "stackType": 2,
+    "cntColumnValue": 1
   },
   "isMakeAutocompleteData": true,
   "chartGMap": {},
@@ -91,7 +92,7 @@
   "chartJobCat": {},
   "chartEx": [
     {
-      "i": "9:0",
+      "i": "8:0",
       "name": "HP",
       "isHidden": 0,
       "isShow": 1,
@@ -101,7 +102,7 @@
       "isStackSelect": 1
     },
     {
-      "i": "10:1",
+      "i": "9:1",
       "name": "MP",
       "isHidden": 0,
       "isShow": 1,
@@ -111,7 +112,7 @@
       "isStackSelect": 1
     },
     {
-      "i": "11:2",
+      "i": "10:2",
       "name": "攻撃力",
       "isHidden": 0,
       "isShow": 1,
@@ -120,7 +121,7 @@
       "labelSuffix": "代"
     },
     {
-      "i": "12:3",
+      "i": "11:3",
       "name": "守備力",
       "isHidden": 0,
       "isShow": 1,
@@ -129,7 +130,7 @@
       "labelSuffix": "代"
     },
     {
-      "i": "13:4",
+      "i": "12:4",
       "name": "素早さ",
       "isHidden": 0,
       "isShow": 1,
@@ -138,21 +139,21 @@
       "labelSuffix": "代"
     },
     {
-      "i": "14:5",
+      "i": "13:5",
       "name": "賢さ",
       "isHidden": 0,
       "isShow": 1,
       "isLegend": 0
     },
     {
-      "i": "15:6",
+      "i": "14:6",
       "name": "身かわし",
       "isHidden": 0,
       "isShow": 1,
       "isLegend": 0
     },
     {
-      "i": "16:7",
+      "i": "15:7",
       "name": "経験値",
       "isHidden": 0,
       "isShow": 1,
@@ -161,7 +162,7 @@
       "labelSuffix": "代"
     },
     {
-      "i": "17:8",
+      "i": "16:8",
       "name": "GOLD",
       "isHidden": 0,
       "isShow": 1,
@@ -170,49 +171,49 @@
       "labelSuffix": "代"
     },
     {
-      "i": "18:9",
+      "i": "17:9",
       "name": "行動",
       "isHidden": 0,
       "isShow": 1,
       "isLegend": 0
     },
     {
-      "i": "19:10",
+      "i": "18:10",
       "name": "🪄魔法",
       "isHidden": 0,
       "isShow": 1,
       "isLegend": 0
     },
     {
-      "i": "20:11",
+      "i": "19:11",
       "name": "にげるか？",
       "isHidden": 0,
       "isShow": 1,
       "isLegend": 0
     },
     {
-      "i": "21:12",
+      "i": "20:12",
       "name": "仲間をよぶか？",
       "isHidden": 0,
       "isShow": 1,
       "isLegend": 0
     },
     {
-      "i": "22:13",
+      "i": "21:13",
       "name": "ドロップアイテム",
       "isHidden": 0,
       "isShow": 1,
       "isLegend": 0
     },
     {
-      "i": "23:14",
+      "i": "22:14",
       "name": "アイテムの入手確率",
       "isHidden": 0,
       "isShow": 1,
       "isLegend": 0
     },
     {
-      "i": "24:14",
+      "i": "23:14",
       "name": "耐性",
       "isHidden": 0,
       "isShow": 0,

@@ -1,7 +1,8 @@
 {
   "dataType": 0,
   "common": {
-    "unit": "タイトル"
+    "unit": "タイトル",
+    "cntColumnValue": 1
   },
   "searchPrefixDataIndex": 2,
   "searchPrefix": "ゲームキューブ",
@@ -52,7 +53,7 @@
       "orderDesc": 1,
       "isDcSunburstChart": true,
       "dcSunburstChart": {
-        "keyIndex": "👨‍💼$10/👨‍💻$11/🎨$12",
+        "keyIndex": "👨‍💼$9/👨‍💻$10/🎨$11",
         "width": 600,
         "height": 600
       },

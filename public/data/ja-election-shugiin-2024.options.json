@@ -2,7 +2,8 @@
   "dataType": 0,
   "common": {
     "unit": "議席",
-    "unitPrefix": "獲得議席"
+    "unitPrefix": "獲得議席",
+    "cntColumnValue": 1
   },
   "chartGMap": {
     "isShow": false
@@ -216,7 +217,7 @@
       "orderDesc": 1,
       "isDcSunburstChart": 1,
       "dcSunburstChart": {
-        "keyIndex": "$5/$9",
+        "keyIndex": "$5/$8",
         "width": 600,
         "height": 600,
         "equalRingSizes": true,
