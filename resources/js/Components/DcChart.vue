@@ -1261,7 +1261,7 @@
 <script setup>
 const APP_VERSION = '0.9.15'
 const APP_VERSION_DATE = '2025/09/08'
-import { onMounted, ref, watch, reactive, nextTick } from 'vue'
+import { onMounted, ref, watch, reactive, nextTick, provide } from 'vue'
 import { useElementHover } from '@vueuse/core'
 import * as d3 from 'd3'
 
@@ -1342,6 +1342,12 @@ import {
   loadScriptJQueryUIDatepickerJa,
   loadScriptVectormap,
 } from '@/Utils/utils.js'
+import {
+  DC_CNT_COLUMN_VALUE_KEY,
+  parseCntColumnValue,
+  parseCountCell,
+  resolveChartExExclusiveEnd,
+} from '@/Utils/dcChartColumnIndex.js'
 import { ElDrawer } from 'element-plus'
 
 const BASE = import.meta.env.DEV ? '/' : import.meta.env.VITE_DOCUMENT_ROOT
@@ -1360,8 +1366,24 @@ const D_AGE = 4 // 年齢。  INT。-1:不明 0:幼児 1:10歳未満 / 10~N:10~N
 const D_CND = 5 // 状態。 例:無症,退院,感染。状態。対応chart:chartCond(BarChart)
 const D_JOB = 6 // 職業。 例:会社員。対応chart:chartJob(BarChart)
 const D_JOBCAT = 7 // 職業カテゴリID。 INT。.options.jsonの"jobcates": ["","無職","教職員",..]のindex
-const D_CNT = 8 // カウント。INT。(未必須:ない場合:1)
-const D_EX0 = 9 // chartEx用データ始点。対応chart:chartEx[](BarChart)
+const D_EX0 = 8 // chartEx用データ始点。件数列の直前まで。対応chart:chartEx[](BarChart)
+// D_CNT: カウント列 index。cntColumnValue があるときは列数（最終列も chartEx。配列アクセスしない）
+let D_CNT = 8
+/** common.cntColumnValue。null のときカウント列を読む（既定は最終列、cntColumnIndex で上書き） */
+const cntColumnValue = ref(null)
+provide(DC_CNT_COLUMN_VALUE_KEY, cntColumnValue)
+const setCntColumnFromHeader = header => {
+  cntColumnValue.value = parseCntColumnValue(mm.opt)
+  D_CNT = resolveChartExExclusiveEnd(header?.length, mm.opt)
+}
+/** 集計値。定数カウント中かつ index が D_CNT のときは列を読まない。0 / 欠損は 1 */
+const readCntCell = (row, index) => {
+  if (cntColumnValue.value != null && index === D_CNT) {
+    return cntColumnValue.value
+  }
+  const n = Number(row?.[index])
+  return Number.isFinite(n) && n !== 0 ? n : 1
+}
 // データ3のカラムのタイプ
 const D3_YMD = 0
 const D3_PL1 = 1
@@ -2156,7 +2178,7 @@ const setupPanelWatch = () => {
       }
 
       // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
-      mm.group_reduce.base = v ? d => d[D_CNT] || 1 : d => 1
+      mm.group_reduce.base = v ? d => readCntCell(d, D_CNT) : d => 1
 
       // 以下全チャート再計算
       initChartName()
@@ -3349,7 +3371,7 @@ const mm = {
           let dataStartIndex = 1
           let optionsStartIndex = null
 
-          // ヘッダーをパース
+          // ヘッダーをパース。件数は最終列、または common.cntColumnIndex。cntColumnValue 時は列なし
           header = mm.util.parseCSVLine(lines[0])
 
           // オプションを探してパースする
@@ -3374,13 +3396,20 @@ const mm = {
             if (doParseOptions) mm.parseCsvOptions(urlQueryString)
           }
 
+          setCntColumnFromHeader(header)
+
           // DT_COVID以外の場合のhiddenなインデックスをキャッシュ
           let hiddenExIndicesSet = null
           if (gg.dt !== DT_COVID) {
             hiddenExIndicesSet = new Set()
             for (let j = 0; j < mm.opt.chartEx.length; j++) {
-              if (mm.opt.chartEx[j] !== undefined && mm.opt.chartEx[j].isHidden) {
-                hiddenExIndicesSet.add(D_EX0 + j)
+              const exIndex = D_EX0 + j
+              if (
+                exIndex < D_CNT &&
+                mm.opt.chartEx[j] !== undefined &&
+                mm.opt.chartEx[j].isHidden
+              ) {
+                hiddenExIndicesSet.add(exIndex)
               }
             }
           }
@@ -3415,7 +3444,12 @@ const mm = {
                   row = newRow
                 }
               }
-              if (row[D_CNT] !== undefined) row[D_CNT] = parseInt(row[D_CNT])
+              if (cntColumnValue.value == null) {
+                if (row.length <= D_CNT) {
+                  row.length = D_CNT + 1
+                }
+                row[D_CNT] = parseCountCell(row[D_CNT])
+              }
 
               data.push(row)
             }
@@ -3719,10 +3753,14 @@ const mm = {
   // group_reduce function set (CND,PL1,AGE)
   group_reduce: {
     base: d => {
-      return d[D_CNT] || 1
+      return readCntCell(d, D_CNT)
     },
     baseZero: d => {
-      return d[D_CNT] || 0
+      if (cntColumnValue.value != null) {
+        return cntColumnValue.value
+      }
+      const n = Number(d?.[D_CNT])
+      return Number.isFinite(n) ? n : 0
     },
     add: (p, v, dir) => {
       const c = dir * mm.group_reduce.base(v)
@@ -6545,7 +6583,7 @@ const initChartCity = () => {
 
   if (pnl.city.orderUI) {
     // ここだけ、Sum(cnt)　(例: 売り上げ本数合計)へ、
-    mm.gpCity = dimCity.group().reduceSum(d => d[D_CNT] || 1)
+    mm.gpCity = dimCity.group().reduceSum(d => readCntCell(d, D_CNT))
   } else {
     mm.gpCity = dimCity.group().reduceSum(d => (d[D_PL2] === DN_PL2 ? 0 : mm.group_reduce.base(d)))
   }
@@ -7943,7 +7981,7 @@ const initChartEx = (chartIndex, dataIndex, title, height) => {
   }
 }
 const initAllChartEx = height => {
-  for (let i = D_EX0; i < mm.data_hdr.length; i++) {
+  for (let i = D_EX0; i < D_CNT; i++) {
     let ii = i - D_EX0
     if (mm.opt.chartEx[ii] === undefined) {
       // オプションが未定義の場合は初期化
@@ -7959,6 +7997,7 @@ const initAllChartEx = height => {
 const initDc = data => {
   mm.data_hdr = data.shift()
   mm.data = data
+  setCntColumnFromHeader(mm.data_hdr)
 
   // ローカルストレージより設定をロード
   if (settingsLoad() === null) {
@@ -8016,7 +8055,7 @@ const initDc = data => {
   mm.ndx = crossfilter(mm.data)
 
   // Sum/Countタイプの切り替え。(例: 売り上げ本数合計/タイトル数)
-  mm.group_reduce.base = !pnl.city.orderUI ? d => d[D_CNT] || 1 : d => 1
+  mm.group_reduce.base = !pnl.city.orderUI ? d => readCntCell(d, D_CNT) : d => 1
 
   let chartSexW = 148
   let chartSexH = 158
@@ -9599,7 +9638,7 @@ const onDocumentReady = () => {
       // 1件目のデータを取得。制約:dimensionのgroupデータが1件のデータである事)
       const d = mm.data.find(d2 => d2[type] === name)
       if (d !== undefined) {
-        const n = this?.__data__?.value ?? d[D_CNT]
+        const n = this?.__data__?.value ?? readCntCell(d, D_CNT)
         const chartDetails = mm.util.getChartDetailsHtml(d, mm.opt.detailType)
         const exChartDetails = mm.util.getExChartDetailsHtml(d)
 
