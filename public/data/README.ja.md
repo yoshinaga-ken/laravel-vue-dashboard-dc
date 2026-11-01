@@ -9,17 +9,31 @@
 各データセットには、以下の共通の特徴があります：
 
 1. **複数のディメンション**: 全てのデータが複数のカラムを持ち、様々な軸で分析可能
-2. **カウント列の存在**: 多くのデータが「カウント」カラムを持ち、数値指標として利用
+2. **カウント列**: 件数・販売本数などの数値指標。既定では **CSV の最終列**（空セルは 1）。`.options.json` の `common.cntColumnValue` があるデータは **カウント列を持たない**
 3. **日付/時間軸**: 時系列データとして分析できる日付または年月の列を持つケースが多い
 4. **地理情報**: 都道府県や市区町村などの地理的情報を含むケースが多い
 5. **カテゴリー情報**: ジャンル、職業、ステータスなどカテゴリーデータを含む
 6. **数値指標**: 年齢、価格、評価、数量などの数値データを含む
+
+## CSV カラムの並び
+
+DcChart は次の並びに従います（index は 0 始まり）。
+
+|              index | 役割                                                                                                        |
+| -----------------: | ----------------------------------------------------------------------------------------------------------- |
+|               0〜7 | 固定ディメンション（日付、都道府県/メーカー、市区町村/タイトル、性別、年齢、状態、職業、職業カテゴリ など） |
+|             8 以降 | 拡張列（chartEx）。メーカー、タグ、階層キー、緯度経度など。カウント列があるときはその直前まで               |
+| **最終列（既定）** | **カウント列**。件数・販売本数・総人口などの集計値                                                          |
+
+- `common.cntColumnIndex` を指定した場合は、最終列ではなくその index をカウント列として使います。
+- `common.cntColumnValue`（整数）を指定した場合は **CSV にカウント列は不要** です。
 
 ## データ種類とフォーマット
 
 ### コロナ感染者データ
 
 #### 日本国内 感染状況
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-data-2021-02-28)（代表例: 2021-02-28）
 - **ファイル**: `covid19-data-*.csv`（日付指定で複数バージョンあり）
 - **フォーマット**:
@@ -34,6 +48,7 @@
 - **データ出典**: 厚生労働省オープンデータ
 
 #### コロナ感染者データ（全世界）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=covid19-world)
 - **ファイル**: `covid19-world.csv`
 - **フォーマット**:
@@ -50,6 +65,7 @@
 ### 気象データ
 
 #### 日本の気温データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-weather-temperature)
 - **ファイル**: `ja-weather-temperature.csv`
 - **フォーマット**:
@@ -64,11 +80,12 @@
 - **データ出典**: [過去の気象データ・ダウンロード@気象庁](https://www.data.jma.go.jp/risk/obsdl/)
 
 #### 日本の降水量データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-weather-precipitation)
 - **ファイル**: `ja-weather-precipitation.csv`
 - **フォーマット**:
   ```
-  ☔降水量の合計(mm),🏢都道府県,🏙️市区町村,🌡️平均気温(℃),💨平均風速(m/s),🧭最多風向(16方位),❄️降雪量合計(cm),⚪未使用,☔降水量の合計(mm):Base,💧平均湿度(％),☁️平均雲量(10分比),♨️平均蒸気圧(hPa),🔄平均現地気圧(hPa),☀️日照時間(時間),🌨️雪日数(日),⚡雷日数(日),🌫️霧日数(日)
+  ☔降水量の合計(mm),🏢都道府県,🏙️市区町村,🌡️平均気温(℃),💨平均風速(m/s),🧭最多風向(16方位),❄️降雪量合計(cm),⚪未使用,💧平均湿度(％),☁️平均雲量(10分比),♨️平均蒸気圧(hPa),🔄平均現地気圧(hPa),☀️日照時間(時間),🌨️雪日数(日),⚡雷日数(日),🌫️霧日数(日),☔降水量の合計(mm):Base
   ```
 - **説明**: 日本の主要都市の降水量データ。降水量、平均気温、風速、風向、都道府県、市区町村、その他の気象情報（湿度、雲量、気圧、日照時間、雪日数など）が含まれる
 - **用途**: 地域 × 季節 × 降水パターンを同時に可視化し、水害リスクの傾向把握や農業用水計画、インフラ整備の優先地域判断に活用できます。防災担当者が過去の降雨傾向を比較する際にも適しています。
@@ -78,6 +95,7 @@
 - **データ出典**: [過去の気象データ・ダウンロード@気象庁](https://www.data.jma.go.jp/risk/obsdl/)
 
 #### 日本の気温・降水量データ（主要3都市・153年間）
+
 - [📊気温チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-weather-temperature-3) | [📊降水量チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-weather-precipitation-3)
 - **ファイル**: `ja-weather-temperature-3.csv`, `ja-weather-precipitation-3.csv`
 - **フォーマット**:
@@ -92,11 +110,12 @@
 - **データ出典**: [過去の気象データ・ダウンロード@気象庁](https://www.data.jma.go.jp/risk/obsdl/)
 
 ### [ゲームデータ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc&layout=tube&fopen=1&fopen_filter=game-)
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-fc)
 - **ファイル**: `game-fc.csv`, `game-gb.csv`, `game-ps1.csv`, `game-ps3.csv`, `game-ps4.csv`, `game-ps5.csv`, `game-switch.csv`, `game-ds.csv`, `game-3ds.csv`, `game-psp.csv`, `game-vita.csv`, `game-xbox.csv`, `game-xbox360.csv`, `game-dreamcast.csv`, `game-xboxone.csv`, `game-xboxseries.csv` など
 - **フォーマット**:
   ```
-  発売日,メーカー,タイトル,クロスレビュー(評価),容量(bit),ジャンル,価格,価格帯,売り上げ本数TOP50,ハード,カセットカラー,ラベル,「対戦」といえば？,「ハイスコア」といえば？,「クリアできなかった」といえば？
+  発売日,メーカー,タイトル,クロスレビュー(評価),容量(bit),ジャンル,価格,価格帯,ハード,カセットカラー,ラベル,「対戦」といえば？,「ハイスコア」といえば？,「クリアできなかった」といえば？,売り上げ本数TOP50
   ```
 - **説明**: 様々なゲームプラットフォーム（FC、GB、PS1など）のゲームタイトル情報。発売日、評価、ジャンル、メーカー、価格、売上などが含まれる
 - **用途**: ハード × ジャンル × 発売年の組合せで絞り込み、人気作品の傾向やメーカー別の強みを即座に把握できます。ゲームコレクターが欲しい作品を絞り込んだり、業界関係者が市場分析に活用できます。
@@ -110,59 +129,64 @@
   - [ファミコン国民投票](https://www.nintendo.com/jp/famicom/vote/index.html)
 
 #### 🎮プレイステーション3ソフト一覧
+
 - **ファイル**: `game-ps3.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps3&layout=tube)
-  - **フォーマット**: `発売日, メーカー, タイトル, クロスレビュー, 価格帯, ジャンル(ID), シリーズ, ID, 売り上げ本数(万本), ジャンル(詳細), …`（ジャンルIDは `#0-game-genre.md` 準拠）
+  - **フォーマット**: `発売日, メーカー, タイトル, クロスレビュー, 価格帯, ジャンル(ID), シリーズ, ID, ジャンル(詳細), …, 売り上げ本数(万本)`（ジャンルIDは `#0-game-genre.md` 準拠）
   - **説明**: PS3 発売ソフト981タイトル。売上本数は TOP50 ランキングから45件照合。クロスレビュー・ジャンルは soft-db 殿堂（30〜40点）から515件照合（表記ゆれ対応含む）。
   - **用途**: メーカー×シリーズ×発売年×売上×クロスレビューで PS3 ソフトを分析。
   - **分析結果の活用例**:
     - 売上 TOP タイトルのメーカー・シリーズ傾向を把握する。
     - 発売年別のタイトル数推移からプラットフォームのライフサイクルを見る。
     - クロスレビュー高評価タイトルのジャンル・メーカー分布を比較する。
-  - **データ出典**: 
+  - **データ出典**:
     - [PlayStation 3のゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/PlayStation_3%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
     - [PS3売上ランキング@ピコピコ大百科](https://www.gavas.jp/user_data/playstation3_game_ranking.php)
     - [PS3クロスレビュー殿堂@soft-db](https://ps3.soft-db.net/dendo/dendo_40.html)
 
 #### 🎮Xboxソフト一覧
+
 - **ファイル**: `game-xbox.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xbox&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,販売本数,プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,プラットフォーム
     ```
   - **説明**: Xbox 発売ソフト222タイトル（2002〜2006年・日本発売）。Wikipedia 一覧の日本発売日列を使用。
   - **用途**: メーカー×発売日で第6世代 Xbox ソフトを分析。
   - **データ出典**: [Xboxのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/Xbox%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
 #### 🎮ドリームキャストソフト一覧
+
 - **ファイル**: `game-dreamcast.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-dreamcast&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,販売本数,プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,プラットフォーム
     ```
   - **説明**: ドリームキャスト発売ソフト497タイトル（1998〜2007年・日本発売）。Wikipedia 一覧の日本発売日列を使用。
   - **用途**: メーカー×発売日でドリームキャストソフトを分析。
   - **データ出典**: [ドリームキャストのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%AA%E3%83%BC%E3%83%A0%E3%82%AD%E3%83%A3%E3%82%B9%E3%83%88%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
 #### 🎮Xbox 360ソフト一覧
+
 - **ファイル**: `game-xbox360.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xbox360&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,販売本数,プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,プラットフォーム
     ```
   - **説明**: Xbox 360 発売ソフト724タイトル（2005〜2021年・日本発売）。媒体列（◎/無印=パッケージ併売 YES、○=DL専売）を取得。
   - **用途**: メーカー×発売日×パッケージ併売有無で Xbox 360 ソフトを分析。
   - **データ出典**: [Xbox 360のゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/Xbox_360%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
 #### 🎮Xbox Oneソフト一覧
+
 - **ファイル**: `game-xboxone.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xboxone&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,販売本数,プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,プラットフォーム
     ```
   - **説明**: Xbox One ソフト2,777タイトル（2014〜2025年・日本）。Wikipedia のパッケージタイトル（173件・YES）・配信専用・アケアカNEOGEO を統合。h3 年度見出し + `M月D日` から発売日を組み立て。
   - **用途**: メーカー×発売日×パッケージ併売有無で Xbox One ソフトを分析。
@@ -173,11 +197,12 @@
   - **データ出典**: [Xbox Oneのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/Xbox_One%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
 #### 🎮プレイステーション4ソフト一覧
+
 - **ファイル**: `game-ps4.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps4&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),開発元,未使用,販売本数,ジャンル(詳細),プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),開発元,未使用,ジャンル(詳細),プラットフォーム
     ```
   - **説明**: PS4 発売ソフト2,497タイトル（2014〜2026年）。クロスレビュー・ジャンルは soft-db 殿堂（30〜40点）から821件照合（表記ゆれ対応含む）。
   - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で PS4 ソフトを分析。
@@ -190,11 +215,12 @@
     - [PS4/PS5クロスレビュー殿堂@soft-db](https://ps4.soft-db.net/dendo.html)
 
 #### 🎮プレイステーション5ソフト一覧
+
 - **ファイル**: `game-ps5.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ps5&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),開発元,未使用,販売本数,ジャンル(詳細),プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),開発元,未使用,ジャンル(詳細),プラットフォーム
     ```
   - **説明**: PS5 発売ソフト2,152タイトル（2020〜2027年）。クロスレビュー・ジャンルは soft-db 殿堂（30〜40点）から509件照合。PS4互換タイトルは game-ps4 と同一点数・ジャンル。
   - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で PS5 ソフトを分析。
@@ -207,11 +233,12 @@
     - [PS4/PS5クロスレビュー殿堂@soft-db](https://ps4.soft-db.net/dendo.html)
 
 #### 🎮Xbox Series X/Sソフト一覧
+
 - **ファイル**: `game-xboxseries.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-xboxseries&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,販売本数,プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,プラットフォーム
     ```
   - **説明**: Xbox Series X/S ソフト777タイトル（2014〜2027年・日本）。Wikipedia のパッケージタイトル（40件・YES）・ダウンロードコード版（4件）・配信専用・アケアカ2NEOGEO を統合。スマートデリバリー対応タイトル含む。h3 年度見出し + `M月D日` から発売日を組み立て。
   - **用途**: メーカー×発売日×パッケージ併売有無で Xbox Series X/S ソフトを分析。
@@ -222,11 +249,12 @@
   - **データ出典**: [Xbox Series X/Sのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/Xbox_Series_X/S%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
 #### 🎮Nintendo Switchソフト一覧
+
 - **ファイル**: `game-switch.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-switch&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),開発元,未使用,販売本数,ジャンル(詳細),プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),開発元,未使用,ジャンル(詳細),プラットフォーム
     ```
   - **説明**: Switch 発売ソフト9,850タイトル（2017〜2026年）。クロスレビュー・ジャンルは soft-db 殿堂（30〜40点）から759件照合（表記ゆれ対応含む）。
   - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で Switch ソフトを分析。
@@ -239,11 +267,12 @@
     - [NintendoSwitchクロスレビュー殿堂@soft-db](https://switch.soft-db.net/dendo.html)
 
 #### 🎮ニンテンドーDSソフト一覧
+
 - **ファイル**: `game-ds.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-ds&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,販売本数,プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,プラットフォーム
     ```
   - **説明**: DS 発売ソフト1,839タイトル（2004〜2012年）。
   - **用途**: メーカー×ジャンル×発売日で DS ソフトを分析。レトロゲームファンが年代別に名作を探索。
@@ -255,11 +284,12 @@
     - [ニンテンドーDSのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%8B%E3%83%B3%E3%83%86%E3%83%B3%E3%83%89DS%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
 #### 🎮PlayStation Portableソフト一覧
+
 - **ファイル**: `game-psp.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-psp&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,販売本数,プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,プラットフォーム
     ```
   - **説明**: PSP 発売ソフト1,564タイトル（2004〜2016年・日本）。DL列（×/△/□/◎/●）からパッケージ併売383件を取得。
   - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で PSP ソフトを分析。
@@ -271,11 +301,12 @@
     - [PlayStation Portableのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/PlayStation_Portable%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
 #### 🎮ニンテンドー3DSソフト一覧
+
 - **ファイル**: `game-3ds.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-3ds&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,販売本数,プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル,開発元,未使用,プラットフォーム
     ```
   - **説明**: 3DS 発売ソフト1,369タイトル（2011〜2019年）。日本未発売の海外向けタイトルは除外。
   - **用途**: メーカー×ジャンル×発売日×パッケージ併売有無で 3DS ソフトを分析。
@@ -287,11 +318,12 @@
     - [ニンテンドー3DSのゲームタイトル一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E3%83%8B%E3%83%B3%E3%83%86%E3%83%B3%E3%83%89%E3%83%BC3DS%E3%81%AE%E3%82%B2%E3%83%BC%E3%83%A0%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB%E4%B8%80%E8%A6%A7)
 
 #### 🎮PlayStation Vitaソフト一覧
+
 - **ファイル**: `game-vita.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-vita&layout=tube)
   - **フォーマット**:
     ```
-    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),開発元,未使用,販売本数,ジャンル(詳細),プラットフォーム
+    発売日,メーカー,タイトル,⭐クロスレビュー(評価),パッケージ併売,ジャンル(ID),開発元,未使用,ジャンル(詳細),プラットフォーム
     ```
   - **説明**: PS Vita 発売ソフト1,174タイトル（2011〜2021年・日本）。パ列（●）からパッケージ併売840件。クロスレビュー・ジャンルは [PSVITAクロスレビュー殿堂@soft-db](https://psvita.soft-db.net/dendo.html) から287件照合。
   - **用途**: メーカー×ジャンル×発売日×クロスレビュー×パッケージ併売有無で PS Vita ソフトを分析。
@@ -304,6 +336,7 @@
     - [PSVITAクロスレビュー殿堂@soft-db](https://psvita.soft-db.net/dendo.html)
 
 #### ゲームタイトルデータ（ドラゴンクエストモンスター）
+
 - [📊ドラゴンクエスト3 モンスター](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-title-dq3-monster) | [📊ドラゴンクエスト4 モンスター](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=game-title-dq4-monster)
 - **ファイル**: `game-title-dq3-monster.csv`, `game-title-dq4-monster.csv`
 - **フォーマット**:
@@ -318,11 +351,12 @@
 - **データ出典**: ゲーム内データ等
 
 ### [歴史・文化](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers&fopen=1&fopen_filter=-hist-)
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers)
 - **ファイル**: `ja-hist-rulers.csv`, `ja-hist-sengoku-figures.csv`, `ja-hist-battles.csv`, `ja-hist-diplomacy.csv`
 - **フォーマット**:
   ```
-  年,都道府県,市区町村,名称,種別,分野,拠点/場所,緯度;経度,カウント,時代, …
+  年, 都道府県, 市区町村, 名称, 種別, 分野, 拠点/場所, 緯度;経度, 時代, …
   ```
 - **説明**: 日本史の統治者（在位）・戦国人物・合戦・外交イベントを、年・都道府県・種別で横断できるデータ群。地図と時系列で都・幕府・主戦場・出発地の移動を追える。
 - **用途**: 時代 × 地域 × 人物/合戦/外交で絞り込み、城巡りや歴史学習の下調べに活用できます。`ja-castle` と並べて本拠・古戦場を照合できます。
@@ -335,10 +369,11 @@
   - Wikipedia（天皇の一覧、征夷大将軍、戦国大名、日本の合戦一覧、遣唐使 等）
 
 #### 👑日本史の歴代統治者（在位）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-rulers)
 - **ファイル**: `ja-hist-rulers.csv`
 - **フォーマット**:
-  即位年,都道府県,市区町村,👤統治者名,役職タイプ,分野,🏯拠点,緯度;経度,カウント,時代,政権,出典URL,Wikidata,画像
+  即位年,都道府県,市区町村,👤統治者名,役職タイプ,分野,🏯拠点,緯度;経度,時代,政権,出典URL,Wikidata,画像
 - **説明**: 天皇・将軍・摂関の在位（157件）。1行＝1在位。列1は在任中の政治中心（出身地ではない）。即位年・都道府県・役職タイプ・分野・拠点で多次元分析できる。
 - **用途**: 時間レンジと都道府県で都・幕府所在の移動を地図上で追う。
 - **分析結果の活用例**:
@@ -350,10 +385,11 @@
   - [征夷大将軍@Wikipedia](https://ja.wikipedia.org/wiki/征夷大将軍)
 
 #### 🏯戦国時代の歴史人物一覧
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-sengoku-figures)
 - **ファイル**: `ja-hist-sengoku-figures.csv`
 - **フォーマット**:
-  生年,都道府県,市区町村,人物名,人物タイプ,分野,関連城,緯度;経度,カウント,性別,時代,勢力,没年,Wikidata,画像
+  生年,都道府県,市区町村,人物名,人物タイプ,分野,関連城,緯度;経度,性別,時代,勢力,没年,Wikidata,画像
 - **説明**: 戦国〜安土桃山期に活躍した歴史人物（約219人）。生年・出身地、人物タイプ、分野、関連城、性別、勢力で多次元分析できる。
 - **用途**: 同時代・同地域の人物を地図と時系列で横断し、城巡りや歴史学習に活用する。
 - **分析結果の活用例**:
@@ -368,10 +404,11 @@
   - [戦国武将一覧@刀剣ワールド](https://www.meihaku.jp/warlords-list/)（参考）
 
 #### ⚔️日本の合戦一覧
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-battles)
 - **ファイル**: `ja-hist-battles.csv`
 - **フォーマット**:
-  発生年,都道府県,市区町村,合戦名,種別,分野,時代,緯度;経度,カウント,キー人物1,キー人物2,キー人物3,キー人物4,キー人物5,勝者勢力,敗者勢力,Wikidata,画像,出典URL
+  発生年,都道府県,市区町村,合戦名,種別,分野,時代,緯度;経度,キー人物1,キー人物2,キー人物3,キー人物4,キー人物5,勝者勢力,敗者勢力,Wikidata,画像,出典URL
 - **説明**: 飛鳥〜近代の主な合戦・戦い・乱・変・役（約370件）。発生年・主戦場・種別・時代・キー人物で多次元分析できる。
 - **用途**: 時代ごとの主戦場の移動を地図で把握し、城巡り・歴史学習に活用する。
 - **分析結果の活用例**:
@@ -386,10 +423,11 @@
   - [合戦歴史年表@刀剣ワールド](https://www.touken-world.jp/battle_history/)（参考）
 
 #### 🌏日本史の外交イベント一覧
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-hist-diplomacy)
 - **ファイル**: `ja-hist-diplomacy.csv`
 - **フォーマット**:
-  発生年,都道府県,市区町村,出来事名,外交種別,分野,時代,緯度;経度,カウント,相手地域,👥人物1,👥人物2,👥人物3,👥人物4,👥人物5,出典URL
+  発生年,都道府県,市区町村,出来事名,外交種別,分野,時代,緯度;経度,相手地域,👥人物1,👥人物2,👥人物3,👥人物4,👥人物5,出典URL
 - **説明**: 使節・条約・来航（97件）。1行＝1出来事。海外調印は列1・2を東京都/千代田区（外務当局）に寄せて国内地図を維持する。発生年・都道府県・外交種別・分野・相手地域で多次元分析できる。
 - **用途**: 日付レンジと都道府県で出発地・調印地の移動を地図上で追う。
 - **分析結果の活用例**:
@@ -404,11 +442,12 @@
   - [日米和親条約@Wikipedia](https://ja.wikipedia.org/wiki/日米和親条約)
 
 ### 🏯日本の城一覧データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-castle)
 - **ファイル**: `ja-castle.csv`
 - **フォーマット**:
   ```
-  築城年,都道府県,市区町村,城名,タイプ,標高,令制国,未使用,,🔖タグ,緯度経度
+  築城年,都道府県,市区町村,城名,タイプ,標高,令制国,未使用,🔖タグ,緯度経度
   ```
 - **説明**: 日本全国47都道府県の城・城跡データ。城名、タイプ（山城・平山城・平城など）、標高、所在地、令制国、遺構（土塁・堀・石垣など）、Google Maps 座標が含まれる。約11,200件。
 - **用途**: 都道府県 × タイプ × 標高 × 令制国で絞り込み、旅行計画・歴史調査・地域比較に活用できます。城郭好きが地図上で名城や城跡を探すのに適しています。
@@ -423,11 +462,12 @@
 - **データ出典**: [城郭放浪記 @hb.pei.jp](https://www.hb.pei.jp/shiro/)
 
 ### 🌸日本の桜の名所
+
 - **ファイル**: `ja-cherry-blossom.csv`
   - [📊チャート](http://127.0.0.1:8000/dashboard-dc-pub?data=ja-cherry-blossom)
   - **フォーマット**:
     ```
-    設立・開業年,都道府県,名称,⭐評価,規模指標,カテゴリ,種別,未使用,主要指標,緯度経度
+    設立・開業年,都道府県,名称,⭐評価,規模指標,カテゴリ,種別,未使用,緯度経度
     ```
   - **説明**: 日本さくら名所100選（1990年選定）の桜の名所データ。都道府県・名称・緯度経度で地図連動分析が可能。
   - **用途**: お花見計画に使う
@@ -435,6 +475,7 @@
     - [日本さくら名所100選@Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E3%81%95%E3%81%8F%E3%82%89%E5%90%8D%E6%89%80100%E9%81%B8)
 
 ### ラーメン店データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=food-ramen)
 - **ファイル**: `food-ramen.csv`
 - **フォーマット**:
@@ -449,11 +490,12 @@
 - **データ出典**: [有名ラーメン店の創業年表｜年代別@らーめん自由区](http://ramenjiyuku.web.fc2.com/)
 
 ### ♨️日本の温泉利用状況（都道府県別）
+
 - **ファイル**: `ja-onsen.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-onsen)
   - **フォーマット**:
     ```
-    調査基準年,地方区分,都道府県,高温源泉比率帯,温泉地数,源泉数帯,高温源泉数,未使用,湧出量,源泉数,宿泊施設数,延べ宿泊利用人数,収容定員
+    調査基準年,地方区分,都道府県,高温源泉比率帯,温泉地数,源泉数帯,高温源泉数,未使用,源泉数,宿泊施設数,延べ宿泊利用人数,収容定員,湧出量
     ```
   - **説明**: 環境省「平成25年度温泉利用状況」（2014年3月末）に基づく47都道府県の温泉統計。温泉地数・源泉数（温度別内訳）・湧出量（L/分）・宿泊施設数・延べ宿泊利用人数で分析可能。
   - **用途**: 都道府県 × 地方区分 × 源泉数帯 × 高温源泉比率で絞り込み、温泉資源が豊富な地域や宿泊利用の規模を即座に比較できます。旅行計画や温泉巡りの候補地選びに活用できます。
@@ -467,11 +509,12 @@
     - [都道府県別ランキング（環境省データ再掲）](https://uub.jp/pdr/ss/hotspring_6a.html)
 
 ### 🚃日本の駅別乗降客数（路線別）
+
 - **ファイル**: `ja-rail-passenger.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-rail-passenger)
   - **フォーマット**:
     ```
-    調査年度,順位,事業者区分,乗降客数帯,路線名,駅名,運営会社,未使用,乗降客数,都道府県
+    調査年度,順位,事業者区分,乗降客数帯,路線名,駅名,運営会社,未使用,都道府県,乗降客数
     ```
   - **説明**: 2023年度の駅別・路線別乗降客数ランキング上位100件。同一駅でも運営会社・路線ごとにレコード化。乗降客数は人/日。
   - **用途**: 路線 × 運営会社 × 事業者区分 × 都道府県で絞り込み、主要ターミナル駅の混雑規模や私鉄/JRの利用分布を比較できます。鉄道ファン・通勤検討者の参考データとして活用できます。
@@ -486,11 +529,12 @@
   - **注意**: 各鉄道事業者が独自に算出した乗降客数であり、統一基準ではありません。同一駅名の合算値は Wikipedia 記事内の別表を参照してください。
 
 ### 心臓病データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=kaggle-heart-disease)
 - **ファイル**: `kaggle-heart-disease.csv`
 - **フォーマット**:
   ```
-  日付,主要血管の数,サラセミアのタイプ,性別,年齢,胸痛のタイプ,ピーク運動STセグメントの傾斜,未使用,カウント,🔖安静時血圧,🔖血清コレステロール値,空腹時血糖値120 mg/dl以上,安静時心電図の結果,🔖最大心拍数,運動誘発性狭心症,安静時と比較した運動によるST低下,⚠心臓発作のリスク
+  日付,主要血管の数,サラセミアのタイプ,性別,年齢,胸痛のタイプ,ピーク運動STセグメントの傾斜,未使用,🔖安静時血圧,🔖血清コレステロール値,空腹時血糖値120 mg/dl以上,安静時心電図の結果,🔖最大心拍数,運動誘発性狭心症,安静時と比較した運動によるST低下,⚠心臓発作のリスク
   ```
 - **説明**: 心臓病に関連する医療データ。性別、年齢、各種検査結果、症状、リスク評価などが含まれる
 - **用途**: 年齢 × 性別 × 検査値 × リスクを多次元で絞り込み、高リスク群の特徴把握や予防啓発のターゲット設計に活用できます。医療関係者がリスク因子の傾向分析や研修教材づくりに利用するのに適しています。
@@ -500,6 +544,7 @@
 - **データ出典**: [Heart Disease Prediction Dataset@kaggle](https://www.kaggle.com/datasets/mfarhaannazirkhan/heart-dataset/data)
 
 ### 自治体企業データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-municipality-company)
 - **ファイル**: `resas-municipality-company.csv`
 - **フォーマット**:
@@ -516,6 +561,7 @@
   - [産業構造マップ > 全産業 > 企業数 @RESAS](https://resas.go.jp/municipality-company/#/graph/13/13101/2014/-/-/0/5.333900736553437/41.42090017812787/142.29371418128918/-)
 
 ### 高校野球データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=sports-hsb)
 - **ファイル**: `sports-hsb.csv`
 - **フォーマット**:
@@ -532,6 +578,7 @@
   - [全国高等学校野球選手権大会歴代優勝校＠wikipedia](https://ja.wikipedia.org/wiki/全国高等学校野球選手権大会歴代優勝校)
 
 ### スポーツサークル参加動向
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=checkin-sakana)
 - **ファイル**: `checkin-sakana.csv`, `checkin-sakana.light.csv`
 - **フォーマット**:
@@ -546,11 +593,12 @@
 - **データ出典**: サークル運営データ
 
 ### スポーツサークルHPアクセス動向
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=sakana-hp-access)
 - **ファイル**: `sakana-hp-access.csv`
 - **フォーマット**:
   ```
-  日付,サークル,都道府県,性別,年齢,練習日N日前,端末,カウント,新型コロナウィルス,練習参加人数
+  日付,サークル,都道府県,性別,年齢,練習日N日前,端末,新型コロナウィルス,練習参加人数,カウント
   ```
 - **説明**: スポーツサークルHPのアクセスデータ。日付、サークル、都道府県、コロナの波、練習参加人数などが含まれる
 - **用途**: 日付 × サークル × 都道府県で絞り込み、HPアクセスと練習参加の関係やコロナ影響を即座に把握できます。運営者がコンテンツ改善や集客施策の検討に活用できます。
@@ -560,11 +608,12 @@
 - **データ出典**: アクセスログ・参加記録
 
 ### 記事いいねデータ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-article-like)
 - **ファイル**: `test-article-like.csv`
 - **フォーマット**:
   ```
-  日付(記事作成者),都道府県(記事作成者),🔖記事のテーマ・ジャンル,性別(記事作成者),年齢(記事作成者),🔖記事の種類,職業(記事作成者),未使用,いいねの数,🔖記事の読者層,🔖記事のSEO
+  日付(記事作成者),都道府県(記事作成者),🔖記事のテーマ・ジャンル,性別(記事作成者),年齢(記事作成者),🔖記事の種類,職業(記事作成者),未使用,🔖記事の読者層,🔖記事のSEO,いいねの数
   ```
 - **説明**: 記事のいいね数データ。記事作成日、作成者情報、記事の種類、テーマ、いいね数、読者層などが含まれる
 - **用途**: 記事の種類 × テーマ × 作成者属性 × 時期で絞り込み、どの層に刺さるコンテンツかを即座に判断できます。編集者が企画立案や、マーケターがターゲット別のコンテンツ戦略検討に活用できます。
@@ -574,11 +623,12 @@
 - **データ出典**: サンプルデータ ※性別・年齢・職業・都道府県は、「記事作成者」の情報
 
 ### 能登地震安否確認データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-quake-noto-safety.csv)
 - **ファイル**: `ja-quake-noto-safety.csv`
 - **フォーマット**:
   ```
-  安否不明者数(公表日別),市,市区町村,性別,年齢,安否確認状態,氏名,職業カテゴリ,カウント
+  安否不明者数(公表日別),市,市区町村,性別,年齢,安否確認状態,氏名,職業カテゴリ
   ```
 - **説明**: 能登半島地震の安否確認データ。安否不明者数、性別、年齢、確認状態、地域情報、氏名などが含まれる
 - **用途**: 時系列 × 地域 × 状況を多次元で把握し、被害状況に応じた支援優先度や対応状況の整理に活用できます。災害対応の全体像把握に適しています。
@@ -590,6 +640,7 @@
   - Wikipedia
 
 ### 経営動向・DI指標データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=store-di)
 - **ファイル**: `store-di.csv`
 - **フォーマット**:
@@ -604,6 +655,7 @@
 - **データ出典**: [スーパーマーケット 経営動向・景況感 調査結果@一般社団法人全国スーパーマーケット協会](http://www.j-sosm.jp/dl/index.html)
 
 ### 農業関連データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-agriculture)
 - **ファイル**: `resas-agriculture.csv`
 - **フォーマット**:
@@ -620,6 +672,7 @@
   - [産業構造マップ > 農業 > 農業の構造 @RESAS](https://resas.go.jp/agriculture-all/#/rate/5.333900736553437/41.42090017812787/142.29371418128918/13/13101/0/2016/1/-/-)
 
 ### きくらげ栽培データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-agr-kikurage)
 - **ファイル**: `test-agr-kikurage.csv`
 - **フォーマット**:
@@ -635,6 +688,7 @@
   - ※「その他要素」は、複数の要素(平均温度、平均湿度、タンパク質含有量、食物繊維含有量)の各項目をA～Dで表した文字列
 
 ### 訪日外国人観光データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-tourism-foreigners)
 - **ファイル**: `resas-tourism-foreigners.csv`
 - **フォーマット**:
@@ -651,6 +705,7 @@
   - [観光マップ > 外国人 > 外国人訪問分析 @RESAS](https://resas.go.jp/tourism-foreigners/#/to-transition/5.333900736553437/41.42090017812787/142.29371418128918/13/13101/100/0/0.0/2020/5/-/-/1/-/-)
 
 ### 年間商品販売額データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-product-sales)
 - **ファイル**: `resas-product-sales.csv`
 - **フォーマット**:
@@ -665,6 +720,7 @@
 - **データ出典**: [RESAS(地域経済分析システム)API](https://opendata.resas-portal.go.jp/)
 
 ### 自治体税金データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=resas-municipality-taxes)
 - **ファイル**: `resas-municipality-taxes.csv`
 - **フォーマット**:
@@ -683,11 +739,12 @@
 ### [選挙データ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-candidates&fopen=1&fopen_filter=ja-election-)
 
 #### 衆議院選挙 立候補者一覧
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-candidates)
 - **ファイル**: `ja-election-shugiin-candidates.csv`
 - **フォーマット**:
   ```
-  日付,都道府県,立候補者名,性別,年齢,政党,職業,職業カテゴリ(未使用),議席数,当選・落選,得票数,得票率(%),職業カテゴリ,選挙制度,小選挙区,前・元・新,当選回数,推薦,🔖Q.消費税減税,🔖Q.対米外交,🔖Q.原子力発電の依存度 等
+  日付,都道府県,立候補者名,性別,年齢,政党,職業,職業カテゴリ(未使用),当選・落選,得票数,得票率(%),職業カテゴリ,選挙制度,小選挙区,前・元・新,当選回数,推薦,🔖Q.消費税減税,🔖Q.対米外交,議席数,🔖Q.原子力発電の依存度 等
   ```
 - **説明**: 衆議院選挙（2026/2024/2021年）の立候補者一覧データ。当選者に加え落選者も含む全立候補者を対象とし、立候補者情報・政党・小選挙区・比例のほか、当選・落選、議席数・得票数・得票率(%)、職業カテゴリ、政策アンケート回答（消費税減税・対米外交・原子力発電の依存度等）を含む
 - **用途**: 選挙年 × 政党 × 選挙制度 × 当選・落選で絞り込み、候補者属性や得票パターン、政策スタンスの分布を即座に把握できます。選挙報道・政治研究・候補者分析に活用できます。
@@ -697,11 +754,12 @@
 - **データ出典**: NHK選挙WEB・Wikipedia 衆議院議員総選挙等
 
 #### 衆議院選挙 当選者一覧
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-shugiin-2024)
 - **ファイル**: `ja-election-shugiin-2024.csv`
 - **フォーマット**:
   ```
-  日付,都道府県,立候補者名,性別,年齢,政党,職業,議席数,得票数,得票率(%),選挙制度,小選挙区,前・元・新,当選回数 等
+  日付,都道府県,立候補者名,性別,年齢,政党,職業,得票率(%),選挙制度,小選挙区,前・元・新,得票数,当選回数 等
   ```
 - **説明**: 衆議院選挙（2026/2024/2021年）の当選者データ。立候補者情報、政党、小選挙区・比例のほか、議席数・得票数・得票率(%)を含む
 - **用途**: 選挙年 × 政党 × 選挙制度で絞り込み、小選挙区と比例の得票パターンや政党勢力の変遷を即座に把握できます。選挙報道や政治研究に活用できます。
@@ -711,6 +769,7 @@
 - **データ出典**: NHK選挙WEB等
 
 #### 参議院選挙 当選者一覧
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-sangiin-2025)
 - **ファイル**: `ja-election-sangiin-2025.csv`
 - **フォーマット**:
@@ -725,6 +784,7 @@
 - **データ出典**: NHK選挙WEB等
 
 #### 東京都知事選挙データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-election-tokyo-gubernatorial-2024.csv)（2024年7月執行）
 - **ファイル**: `ja-election-tokyo-gubernatorial-2024.csv`
 - **フォーマット**:
@@ -742,6 +802,7 @@
   - Wikipedia
 
 ### 店舗数データ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=store-cnt)
 - **ファイル**: `store-cnt.csv`
 - **フォーマット**:
@@ -760,6 +821,7 @@
 独立行政法人統計センターによる教育用標準データセット。都道府県・市区町村別の各種統計を多次元で分析可能。
 
 #### 都道府県別の性別・年齢人口推移（2005〜2022年・18年間）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-population)
 - **ファイル**: `ssdse-b-population.csv`
 - **フォーマット**:
@@ -774,11 +836,12 @@
 - **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 都道府県別の人口と各種施設推移（2005〜2022年・18年間）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-building)
 - **ファイル**: `ssdse-b-building.csv`
 - **フォーマット**:
   ```
-  年度,都道府県,市区町村,出生数,着工建築物数,未1,未2,未3,総人口,病院数,診療所数,歯科診療所数,保育所数,幼稚園数,小学校数,中学校数,高等学校数 等
+  年度,都道府県,市区町村,出生数,着工建築物数,未1,未2,未3,病院数,診療所数,歯科診療所数,保育所数,幼稚園数,小学校数,中学校数,総人口,高等学校数 等
   ```
 - **説明**: 都道府県別の人口と医療・教育施設数の時系列データ。病院、学校、保育所、婚姻・離婚件数などが含まれる
 - **用途**: 年度 × 都道府県 × 施設種別で絞り込み、人口と施設のバランスや過疎地域の把握を即座に行えます。自治体の施設整備計画や地域診断に活用できます。
@@ -788,11 +851,12 @@
 - **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 都道府県別の平均気温推移（2005〜2022年・18年間）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-b-weather-temperature)
 - **ファイル**: `ssdse-b-weather-temperature.csv`
 - **フォーマット**:
   ```
-  年度,都道府県,市区町村,降水量,降水日数,未1,未2,未3,平均気温,最高気温,最低気温
+  年度,都道府県,市区町村,降水量,降水日数,未1,未2,未3,最高気温,最低気温,平均気温
   ```
 - **説明**: 都道府県別の気象データの時系列。年平均気温、最高・最低気温、降水量、降水日数が含まれる
 - **用途**: 年度 × 都道府県で絞り込み、地域別の気候傾向や気温・降水の年次変動を即座に比較できます。農業施策や防災計画の検討に活用できます。
@@ -802,6 +866,7 @@
 - **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 市区町村別の性別・年齢人口（2020年）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-population)
 - **ファイル**: `ssdse-a-population.csv`
 - **フォーマット**:
@@ -816,6 +881,7 @@
 - **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 市区町村別の人口と各種施設（2022年）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-building)
 - **ファイル**: `ssdse-a-building.csv`
 - **フォーマット**:
@@ -830,11 +896,12 @@
 - **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 市区町村別の民営事業所（2021年）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ssdse-a-office)
 - **ファイル**: `ssdse-a-office.csv`
 - **フォーマット**:
   ```
-  年度,都道府県,市区町村,農業・林業,総人口,未1,サービス業,未3,総人口,漁業,鉱業,建設業,製造業,電気・ガス 等
+  年度,都道府県,市区町村,農業・林業,総人口,未1,サービス業,未3,漁業,鉱業,建設業,製造業,総人口,電気・ガス 等
   ```
 - **説明**: 市区町村別の産業種別民営事業所数。農業、建設、製造、小売、医療福祉など業種別の事業所分布が含まれる
 - **用途**: 市区町村 × 産業種別で絞り込み、地域の産業構造や事業所密度を即座に把握できます。企業の立地検討や地域経済分析に活用できます。
@@ -844,6 +911,7 @@
 - **データ出典**: [SSDSE（教育用標準データセット）@独立行政法人統計センター](https://www.nstac.go.jp/use/literacy/ssdse/)
 
 #### 都道府県別の年齢人口推移（1960〜2025年・65年間）※別アプリ
+
 - [📊チャート](https://sakanaclub.xsrv.jp/prefecture-population-dc/?data=population.csv)
 - **ファイル**: `population.csv`
 - **説明**: 都道府県別の年齢階級別人口の長期時系列（約65年間）。[prefecture-population-dc](https://sakanaclub.xsrv.jp/prefecture-population-dc/) アプリで表示
@@ -856,11 +924,12 @@
 ### 🎬映画データ
 
 #### 🎬スタジオジブリ劇場公開作品一覧
+
 - **ファイル**: `ja-movie-ghibli-films.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-ghibli-films)
   - **フォーマット**:
     ```
-    公開日,監督,作品名,性別,上映時間,評価,脚本,未使用,興行収入,製作,配給,観客動員数
+    公開日,監督,作品名,性別,上映時間,評価,脚本,未使用,製作,配給,観客動員数,興行収入
     ```
   - **説明**: スタジオジブリの劇場公開長編作品24作。公開年・監督・興行収入（億円）・観客動員数（万人）・上映時間で分析可能。rowChart サムネイルは [ghibli.jp/images](https://www.ghibli.jp/images/) を `@pathColExt` で参照。
   - **用途**: 監督×公開年×興行収入で絞り込み、ヒット作の傾向や監督別の代表作を比較する。
@@ -871,11 +940,12 @@
   - **データ出典**: [スタジオジブリ@Wikipedia](https://ja.wikipedia.org/wiki/%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%AA%E3%82%B8%E3%83%96%E3%83%AA)、[作品一覧@スタジオジブリ](https://www.ghibli.jp/works/)
 
 #### 🎬日本歴代興行成績上位の映画一覧
+
 - **ファイル**: `ja-movie-top200.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-top200)
   - **フォーマット**:
     ```
-    公開日,製作国,作品名,順位,未使用1,種類,配給会社,未使用2,興行収入,配給収入
+    公開日,製作国,作品名,順位,未使用1,種類,配給会社,未使用2,配給収入,興行収入
     ```
   - **説明**: Wikipedia「日本歴代興行成績上位の映画一覧」総合ランキング上位200作品。興行収入（億円）・順位・製作国・種類（アニメ/実写）・配給会社・公開年で分析可能。
   - **用途**: 製作国×種類×公開年×配給で絞り込み、日本市場のヒット作傾向を把握する。
@@ -886,6 +956,7 @@
   - **データ出典**: [日本歴代興行成績上位の映画一覧@Wikipedia](https://ja.wikipedia.org/wiki/%E6%97%A5%E6%9C%AC%E6%AD%B4%E4%BB%A3%E8%88%88%E8%A1%8C%E6%88%90%E7%B8%BE%E4%B8%8A%E4%BD%8D%E3%81%AE%E6%98%A0%E7%94%BB%E4%B8%80%E8%A6%A7)
 
 #### 🎬日本映画一覧（興行上位＋高評価選）
+
 - **ファイル**: `ja-movie-list.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-movie-list&layout=tube2)
   - **フォーマット**:
@@ -905,11 +976,12 @@
 ### 🎤芸能データ
 
 #### 🎤日本の芸能人・タレント一覧
+
 - **ファイル**: `ja-talent-list.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-talent-list)
   - **フォーマット**:
     ```
-    生年,都道府県,市区町村,👤人物名,年代,職業ジャンル,所属事務所,緯度;経度,カウント,性別,身長,血液型,代表作品,お笑い賞,デビュー年,Wikidata,画像,存命,芸歴,グループ名
+    生年,都道府県,市区町村,👤人物名,年代,職業ジャンル,所属事務所,緯度;経度,性別,身長,血液型,代表作品,お笑い賞,デビュー年,Wikidata,画像,存命,芸歴,グループ名
     ```
   - **説明**: 日本の芸能人（約432人）。出身地・年代・職業ジャンルに加え、存命/故人・芸歴・グループ名で絞れる。お笑いは Wikipedia Category:お笑い芸人、歌手は musicmachine.jp 歴代30（バンドは代表メンバー1人、AKB48は除外）を種に補完。
   - **用途**: 「大阪出身 × お笑い × 40代」や「歌手 × グループ名」のようにクリックして、他チャートが連動する発見に使う。
@@ -929,6 +1001,7 @@
 ### 🎵音楽データ
 
 #### 🎵邦楽ヒット曲ランキング
+
 - **ファイル**: `ja-song-hit.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=ja-song-hit)
   - **フォーマット**:
@@ -954,11 +1027,12 @@
 ### [☘️iNaturalist植物観測データ](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-timeline&layout=gmap3&fopen&fopen_filter=inature-)
 
 #### ☘️植物観測記録@iNaturalist
+
 - **ファイル**: `inature-1.csv`
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-1)
   - **フォーマット**:
     ```
-    観測日,国名,州名・県名,植物名,未使用,分類群ID,種,ID_IMG,CNT,緯度経度,ID_URL
+    観測日,国名,州名・県名,植物名,未使用,分類群ID,種,ID_IMG,緯度経度,ID_URL
     ```
   - **説明**: iNaturalist 観測エクスポート（taxon 753472）から生成した植物観測データ（330件）。国×州・県×植物名×分類群ID×種で分析可能。rowChart サムネイルは iNaturalist オープンデータ S3 の写真 ID を参照。観測地点の緯度経度で GoogleMap マーカー連動。
   - **用途**: 国×州・県×植物名×観測月で絞り込み、世界分布やタクソン別の観測傾向を把握する。
@@ -967,65 +1041,91 @@
     - 植物名（和名）フィルタで特定タクソンの観測地点を地図上で確認する。
     - 観測月の推移から季節的な観測パターンを探索する。
   - **データ出典**: [iNaturalist](https://www.inaturalist.org/)
-  - **再生成**: `node tools/generate-inature-1.cjs`（詳細は `.cursor/skills/inature-dcchart/SKILL.md`）
 
 [iNaturalist](https://www.inaturalist.org/) の観測エクスポートから生成したデータセット。地図（GMap）・国・州/県・観測対象名（写真サムネイル付き rowChart）で絞り込み可能。英語版は `<id>-en`（例: `inature-337792-en.csv`）。
 
-#### トウカエデ（*Acer buergerianum*, taxon 337792）
+#### トウカエデ（_Acer buergerianum_, taxon 337792）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-337792)
 - **ファイル**: `inature-337792.csv`（3,102 件）
 - **説明**: トウカエデの iNaturalist 観測記録。観測日・国・州/県・和名+日付サフィックスの植物名・iNaturalist 写真リンク
 - **データ出典**: [Acer buergerianum（taxon 337792）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=337792)
 
-#### クロマツ（*Pinus thunbergii*, taxon 135655）
+#### クロマツ（_Pinus thunbergii_, taxon 135655）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-135655)
 - **ファイル**: `inature-135655.csv`（2,439 件）
 - **データ出典**: [Pinus thunbergii（taxon 135655）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=135655)
 
-#### ツバキ属（*Camellia*, taxon 83058）
+#### ツバキ属（_Camellia_, taxon 83058）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83058)
 - **ファイル**: `inature-83058.csv`（7,331 件）
 - **データ出典**: [Camellia（taxon 83058）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83058)
 
-#### ヤブツバキ（*Camellia japonica*, taxon 83056）
+#### ヤブツバキ（_Camellia japonica_, taxon 83056）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-83056)
 - **ファイル**: `inature-83056.csv`（2,203 件）
 - **データ出典**: [Camellia japonica（taxon 83056）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=83056)
 
-#### ミカン科（*Rutaceae*, taxon 50623）
+#### ミカン科（_Rutaceae_, taxon 50623）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-50623)
 - **ファイル**: `inature-50623.csv`（4,999 件）
 - **データ出典**: [Rutaceae（taxon 50623）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=50623)
 
-#### ニシキギ科（*Celastraceae*, taxon 47539）
+#### ニシキギ科（_Celastraceae_, taxon 47539）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47539)
 - **ファイル**: `inature-47539.csv`（9,864 件）
 - **データ出典**: [Celastraceae（taxon 47539）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47539)
 
-#### ビャクシン属（*Syringa*, taxon 47574）
+#### ビャクシン属（_Syringa_, taxon 47574）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47574)
 - **ファイル**: `inature-47574.csv`（9,456 件）
 - **データ出典**: [Syringa（taxon 47574）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=47574)
 
-#### メダカ属（*Oryzias*, taxon 90534）
+#### メダカ属（_Oryzias_, taxon 90534）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-90534)
 - **ファイル**: `inature-90534.csv`（749 件）
 - **説明**: メダカ属の iNaturalist 観測記録。チュウゴクメダカ・ジャワメダカ・インドメダカ等 7 種。GMap + rowChart 写真サムネイル
 - **データ出典**: [Oryzias（taxon 90534）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=90534)
 
-#### カブトムシ族（*Dynastinae*, taxon 324734）
+#### カブトムシ族（_Dynastinae_, taxon 324734）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-324734)
 - **ファイル**: `inature-324734.csv`（4,376 件）
 - **説明**: カブトムシ族の iNaturalist 観測記録。ツノボソカブト・カブトムシ・カブトムシ本土亜種等。台湾・中国・日本・韓国中心。GMap + rowChart 写真サムネイル
 - **データ出典**: [Dynastinae（taxon 324734）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=324734)
 
-#### カワウソ属（*Lutra*, taxon 41848）
+#### クヌギとカブトムシ族（_Quercus acutissima_ + _Dynastinae_, taxon 167634, 324734）
+
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-324734-167634)
+- **ファイル**: `inature-324734-167634.csv`（6,490 件）
+- **説明**: クヌギとカブトムシ族の iNaturalist 観測記録。クヌギ・ツノボソカブト・カブトムシ・カブトムシ本土亜種等。界〜種は日本語名（動物界・植物界、クヌギ、カブトムシなど）。GMap + rowChart 写真サムネイル
+- **データ出典**: [Quercus acutissima（taxon 167634）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=167634)、[Dynastinae（taxon 324734）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=324734)
+- **英語版**: `inature-324734-167634-en.csv`（界〜種は学名。チャートは `data=inature-324734-167634-en`。サムネイルは `inature-324734-167634-en.jpg`）
+
+#### カブトムシ・クワガタ・カナブンとクヌギ・コナラ（taxon 324734, 167634, 49083, 359972, 359934）
+
+- [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-324734-167634-49083-359972-359934)
+- **ファイル**: `inature-324734-167634-49083-359972-359934.csv`（7,999 件）
+- **説明**: カブトムシ属・クヌギ・クワガタムシ科・コナラ・カナブンの iNaturalist 観測記録。写真・和名・緯度経度が揃った記録を分類群ごとに観測日順で間引き。界〜種は日本語名。GMap + rowChart 写真サムネイル
+- **データ出典**: [Trypoxylus（taxon 324734）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=324734)、[Quercus acutissima（taxon 167634）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=167634)、[Lucanidae（taxon 49083）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=49083)、[Quercus serrata（taxon 359972）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=359972)、[Pseudotorynorrhina japonica（taxon 359934）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=359934)
+- **英語版**: `inature-324734-167634-49083-359972-359934-en.csv`（界〜種は学名。チャートは `data=inature-324734-167634-49083-359972-359934-en`。サムネイルは `inature-324734-167634-49083-359972-359934-en.jpg`）
+
+#### カワウソ属（_Lutra_, taxon 41848）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-41848)
 - **ファイル**: `inature-41848.csv`（136 件）
 - **説明**: カワウソ属の iNaturalist 観測記録。ユーラシアカワウソ・ツメナシカワウソ等。GMap + rowChart 写真サムネイル
 - **データ出典**: [Lutra（taxon 41848）@iNaturalist](https://www.inaturalist.org/observations?subview=map&taxon_id=41848)
 
-#### トンボ科（*Libellulidae*, taxon 47819）
+#### トンボ科（_Libellulidae_, taxon 47819）
+
 - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=inature-47819)
 - **ファイル**: `inature-47819.csv`（3,134 件）
 - **説明**: トンボ科の iNaturalist 観測記録。ウスバキトンボ・アカネ属・ヨツボシトンボ・シオカラトンボ等。GMap + rowChart 写真サムネイル
@@ -1039,7 +1139,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-drink)
   - **フォーマット**:
     ```
-    日付,都道府県,商品名,性別,年齢,評価,職業,未使用,販売本数,メーカー/種別,メーカー,❄️クール/🔥ホット,種別
+    日付,都道府県,商品名,性別,年齢,評価,職業,未使用,メーカー/種別,メーカー,❄️クール/🔥ホット,種別,販売本数
     ```
   - **説明**: 飲料商品の評価・販売データ。日付、評価者情報（性別、年齢、職業）、商品名、評価（⭐1〜⭐5の5段階）、販売本数に加え、メーカー、種別（ミネラルウォーター・お茶・炭酸・エナジードリンク等）、クール/ホット区分が含まれる
   - **用途**: メーカー × 種別 × クール/ホット × 評価 × 地域で絞り込み、ターゲット層別の嗜好や人気商品・販売本数の傾向を即座に把握できます。商品開発担当やマーケターが販売戦略・品揃えを検討する際の判断材料として活用できます。
@@ -1079,7 +1179,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-bonsai-catalog)
   - **フォーマット**:
     ```
-    日付,種類,樹種名,性別,年齢,評価,樹形,未使用,カウント,品種,樹齢帯,神と舎利,管理,鉢の種類,産地,サイズ分類
+    日付,種類,樹種名,性別,年齢,評価,樹形,未使用,品種,樹齢帯,神と舎利,管理,鉢の種類,産地,サイズ分類
     ```
   - **説明**: 盆栽を植物としての種類・品種・樹形・産地等で多次元分析するためのカタログ形式データ。種類（松柏盆栽・雑木盆栽・花物盆栽・実物盆栽・草物盆栽）、樹種名、樹形（直幹・懸崖・模様木・吹き流し等）、品種（八房・銀八房五葉・旭竜等）、樹齢帯、神と舎利、管理（松の管理・一般・ドライ盆栽）、鉢の種類、主な産地（さいたま市大宮盆栽村・香川県鬼無等）、サイズ分類を含む。
   - **用途**: 種類 × 樹種 × 樹形 × 品種 × 産地 × 管理 × 樹齢帯で絞り込み、盆栽の植物学的な分類・特徴の傾向を即座に把握できます。盆栽の学習やカタログ検索、品種・樹形の比較分析に活用できます。
@@ -1093,7 +1193,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-user-directory)
   - **フォーマット**:
     ```
-    日付,🏢部署,🙋ユーザー,📁ディレクトリ,年齢,💼職種,⏳勤続年数,未使用,容量,📄ファイルタイプ,🤖AIトークン使用量,性別
+    日付,🏢部署,🙋ユーザー,📁ディレクトリ,年齢,💼職種,⏳勤続年数,未使用,📄ファイルタイプ,🤖AIトークン使用量,性別,容量
     ```
   - **説明**: ある期間の、部署・職種・年齢ごとの各ユーザーのディレクトリ使用量を分析。ファイルタイプやAIトークン使用量などからも分析。📁ディレクトリは `ディレクトリ/サブディレクトリ/ファイル`（2022-01〜2026-09、2000件）。容量の単位は KB。職種ごとに扱いやすい拡張子へ偏らせ、同一ユーザーは得意フォルダに寄る。AIトークン使用量は [年度推移](https://chatgpt.com/share/6ab4f192-a6d0-83ee-a86d-1dabffb70cae) の形（2024年初は小さく、2026年に急増）を個人の段階値（0 / 100 / 1,000 / 10,000 / 30,000 / 100,000 / 300,000）に縮小。若い開発・研究・サポートは多く、法務・財務・経営・総務はほぼ0。
   - **用途**: サンバーストでディレクトリ優先を見ながら、日付・職種・部署で絞る。
@@ -1106,7 +1206,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-university-entrance)
   - **フォーマット**:
     ```
-    日付,都道府県,市区町村,性別,年齢,学部系統,志望区分,未使用,志願者数,偏差値,合格者数,受験回数,私立公立,学費
+    日付,都道府県,市区町村,性別,年齢,学部系統,志望区分,未使用,偏差値,合格者数,受験回数,私立公立,学費,志願者数
     ```
   - **説明**: 大学受験に関するデータ。受験生の基本情報、学部系統、志願者数、偏差値、合格者数、受験回数、学費などが含まれる
   - **用途**: 学部系統 × 志望区分 × 地域で絞り込み、志願者動向や合格難易度の傾向を即座に把握できます。進路指導担当者が生徒への助言材料を得たり、大学が入試戦略を検討するのに活用できます。
@@ -1119,7 +1219,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-academic-achievement)
   - **フォーマット**:
     ```
-    日付,都道府県,市区町村,性別,年齢,教科,学校種別,未使用,平均点,学校規模,地域区分,習熟度レベル,受験者数,全国順位,偏差値,学習時間
+    日付,都道府県,市区町村,性別,年齢,教科,学校種別,未使用,学校規模,地域区分,習熟度レベル,受験者数,全国順位,偏差値,学習時間,平均点
     ```
   - **説明**: 学力テストの結果データ。教科別平均点、学校規模、地域区分、習熟度レベル、受験者数、偏差値、学習時間などが含まれる
   - **用途**: 教科 × 地域 × 学校種別で絞り込み、課題のある教科・地域の特定や習熟度別の指導方針検討に活用できます。教育委員会や学校が改善重点を判断する際の材料として適しています。
@@ -1134,7 +1234,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-traffic-accident)
   - **フォーマット**:
     ```
-    日時,都道府県,市区町村,性別,年齢,事故類型,職業,未使用,カウント,天候,道路種別,車両種別,時間帯,負傷者数
+    日時,都道府県,市区町村,性別,年齢,事故類型,職業,未使用,天候,道路種別,車両種別,時間帯,負傷者数,カウント
     ```
   - **説明**: 交通事故に関するデータ。事故類型、天候、道路種別、車両種別、時間帯、負傷者数などの詳細情報が含まれる
   - **用途**: 事故類型 × 地域 × 時間帯 × 天候で絞り込み、危険箇所や高リスク条件の特定を即座に行えます。警察や自治体の交通安全施策立案、ドライバーの注意喚起に活用できます。
@@ -1203,7 +1303,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-ecommerce)
   - **フォーマット**:
     ```
-    日付,都道府県,市区町村,性別,年齢,商品カテゴリ,職業,未使用,購入金額,デバイス種別,決済方法,購入回数,配送方法,満足度,会員ランク,利用時間帯
+    日付,都道府県,市区町村,性別,年齢,商品カテゴリ,職業,未使用,デバイス種別,決済方法,購入回数,配送方法,満足度,会員ランク,利用時間帯,購入金額
     ```
   - **説明**: EC（電子商取引）の購入データ。商品カテゴリ別、デバイス種別、決済方法、利用時間帯などの詳細分析が可能
   - **用途**: 商品カテゴリ × デバイス × 利用者属性 × 時間帯で絞り込み、購買パターンやキャンペーン効果を即座に把握できます。EC担当者が商品陳列やマーケティング施策の改善に活用できます。
@@ -1248,7 +1348,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-climate-environmental)
   - **フォーマット**:
     ```
-    日付,国名,大陸,平均気温変化(℃),森林被覆率(%),CO2排出量(トン/人),未使用,再生可能エネルギー比率,カウント,再生可能エネルギー比率(%),水資源量(1人当たり立方メートル),大気汚染指数(PM2.5濃度),環境政策スコア(100点満点),エネルギー消費量(1人当たりTOE),海面上昇影響度(mm/年)
+    日付,国名,大陸,平均気温変化(℃),森林被覆率(%),CO2排出量(トン/人),未使用,再生可能エネルギー比率,再生可能エネルギー比率(%),水資源量(1人当たり立方メートル),大気汚染指数(PM2.5濃度),環境政策スコア(100点満点),エネルギー消費量(1人当たりTOE),海面上昇影響度(mm/年)
     ```
   - **説明**: 世界各国の環境・気候変動データ。CO2排出量、再生可能エネルギー比率、森林被覆率、大気汚染指数など多角的な環境指標の分析が可能
   - **用途**: 国 × 大陸 × 環境指標で絞り込み、国際比較やSDGs関連の進捗を即座に把握できます。環境政策担当者やNGOが国際協力の優先地域を判断するのに活用できます。
@@ -1261,7 +1361,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-education-human-development)
   - **フォーマット**:
     ```
-    年度,性別,年齢,国・地域名,大陸,経済レベル,政治体制,未使用,識字率,大学進学率,研究開発費率,特許出願数,教育予算率,平均教育年数,デジタルリテラシー率,イノベーション指数
+    年度,性別,年齢,国・地域名,大陸,経済レベル,政治体制,未使用,大学進学率,研究開発費率,特許出願数,教育予算率,平均教育年数,デジタルリテラシー率,イノベーション指数,識字率
     ```
   - **説明**: 世界各国の教育・人材開発指標データ。識字率、大学進学率、研究開発費、特許出願数、イノベーション指数の国際比較分析が可能
   - **用途**: 国 × 経済レベル × 教育指標で絞り込み、国際的な教育格差や投資効果を即座に把握できます。ODA担当者や教育研究者が支援対象国の選定や政策提言に活用できます。
@@ -1274,7 +1374,7 @@
   - [📊チャート](https://sakanaclub.xsrv.jp/laravel-sports-hp/public/index.php/dashboard-dc-pub?data=test-global-health-medical-systems)
   - **フォーマット**:
     ```
-    年度,性別,年齢,国・地域名,大陸,所得グループ,医療制度型,未使用,平均寿命,乳児死亡率,医療費率,医師数率,病床数率,ワクチン接種率,感染症発生率,医療アクセス指数
+    年度,性別,年齢,国・地域名,大陸,所得グループ,医療制度型,未使用,乳児死亡率,医療費率,医師数率,病床数率,ワクチン接種率,感染症発生率,医療アクセス指数,平均寿命
     ```
   - **説明**: 世界各国の保健・医療システムデータ。平均寿命、医療費、医師数、病床数、ワクチン接種率など医療システムの国際比較分析が可能
   - **用途**: 国 × 所得グループ × 医療指標で絞り込み、医療アクセスの格差や制度効果を即座に把握できます。国際保健機関や開発援助関係者が優先支援地域を判断するのに活用できます。
@@ -1370,5 +1470,5 @@
 ## 使用方法
 
 1. CSVファイルを基本データとし、対応する`.options.json`ファイルに表示設定を定義
-2. `DcChart.vue`コンポーネントでデータを読み込み、多次元チャートを表示
+2. `DcChart.vue`コンポーネントでデータを読み込み、多次元チャートを表示（既定は **最終列がカウント**。`common.cntColumnValue` があるときはカウント列なし）
 3. `FileSelectMenu.vue`コンポーネントを使用してデータファイルを選択可能
