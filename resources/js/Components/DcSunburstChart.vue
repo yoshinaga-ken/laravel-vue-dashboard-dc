@@ -11,13 +11,19 @@ import {
   defineModel,
   onUnmounted,
   nextTick,
+  inject,
+  unref,
+  type Ref,
 } from 'vue'
+import { DC_CNT_COLUMN_VALUE_KEY } from '@/Utils/dcChartColumnIndex.js'
 import { useDcBaseChart } from '@/Composables/useDcBaseChart'
 
 // v-model for filters
 const filters = defineModel<Array<any>>('filters', {
   default: () => [],
 })
+
+const cntColumnValue = inject<Ref<number | null> | null>(DC_CNT_COLUMN_VALUE_KEY, null)
 
 const props = defineProps({
   ndx: {
@@ -263,6 +269,10 @@ const initChart = () => {
     })
 
     group = dimension.group().reduceSum(function (d) {
+      const constant = cntColumnValue ? unref(cntColumnValue) : null
+      if (typeof constant === 'number' && Number.isFinite(constant)) {
+        return constant
+      }
       return d[props.valueIndex] || 1
     })
 
