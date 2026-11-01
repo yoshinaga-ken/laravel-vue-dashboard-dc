@@ -1,5 +1,9 @@
 {
   "dataType": 0,
+  "common": {
+    "unit": "名",
+    "cntColumnValue": 1
+  },
   "title": "能登半島地震安否不明者一覧 2024/1/1(月)",
   "searchPrefix": "能登半島地震",
   "isMakeAutocompleteData": true,

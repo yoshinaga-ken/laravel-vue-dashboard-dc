@@ -3,8 +3,9 @@
   "title": "🌏世界各国の社会経済指標",
   "description": "世界各国の社会経済指標をまとめたデータセットです。各国の人口、GDP、医療費、教育水準などの情報が含まれています。",
   "common": {
-    "unit": "",
-    "unitPrefix": ""
+    "unit": "ヵ国",
+    "unitPrefix": "",
+    "cntColumnValue": 1
   },
   "chartGMap": {},
   "chartSView": {},
